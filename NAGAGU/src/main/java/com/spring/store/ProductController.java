@@ -257,7 +257,7 @@ public class ProductController {
 
 		System.out.println("파일 없을 때 2");
 		
-		String path = "C:\\Project138\\NAGAGUproductupload\\"; 
+		String path = "C:\\Project138\\upload\\"; 
 		File fileDir = new File(path); 
 		if (!fileDir.exists()) { 
 			fileDir.mkdirs(); 
@@ -364,7 +364,7 @@ public class ProductController {
 		
 		System.out.println("REVIEW_FILE = " + REVIEW_FILE);
 		
-		String path = "C:\\Project138\\NAGAGUproductupload\\"; 
+		String path = "C:\\Project138\\upload\\"; 
 		String fullPath = "";
 		String[] f = REVIEW_FILE.split(",");
 		int length = f.length;
@@ -432,7 +432,7 @@ public class ProductController {
 			fileList = request.getFiles("REVIEW_FILE"); 
 		} 	
 		
-		String path = "C:\\Project138\\NAGAGUproductupload\\"; 
+		String path = "C:\\Project138\\upload\\"; 
 		File fileDir = new File(path); 
 		if (!fileDir.exists()) { 
 			fileDir.mkdirs(); 
@@ -547,7 +547,7 @@ public class ProductController {
 		MultipartFile mf = request.getFile("REVIEW_FILE");
 
 		if(!mf.isEmpty()) {
-			String uploadPath = "C:\\Project138\\NAGAGUproductupload\\";
+			String uploadPath = "C:\\Project138\\upload\\";
 			String originalFileExtension = mf.getOriginalFilename().substring(mf.getOriginalFilename().lastIndexOf("."));
 			String storedFileName = UUID.randomUUID().toString().replaceAll("-", "") + originalFileExtension;
 			System.out.println("originalFileExtension = " + originalFileExtension);
@@ -568,7 +568,7 @@ public class ProductController {
 		
 		
 		reviewVO.setREVIEW_NUM(0); //시퀀스 이용
-		reviewVO.setREVIEW_MEMBER(0); //회원번호는 멤버 테이블에서 가져와야함(또는 세션)
+		reviewVO.setREVIEW_MEMBER(1); //회원번호는 멤버 테이블에서 가져와야함(또는 세션)
 		reviewVO.setREVIEW_PRODUCT(Integer.parseInt(request.getParameter("REVIEW_PRODUCT")));
 		reviewVO.setREVIEW_DATE(new Timestamp(System.currentTimeMillis()));
 		
