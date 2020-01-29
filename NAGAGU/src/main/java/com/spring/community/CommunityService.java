@@ -14,6 +14,7 @@ public interface CommunityService {
 	int insertPics(PicsVO picsVO);
 	int deletePics(PicsVO picsVO);
 	int updatePics(PicsVO picsVO);
+	int deletePicsFile(PicsVO picsVO);
 	
 	//삭제예정
 	//ArrayList<PicsVO> getPicsCategory(HashMap<String, Object> map);

@@ -4,14 +4,17 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Map;
 import java.util.UUID;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
@@ -27,7 +30,7 @@ public class CommunityController {
 	@Autowired
 	private PicsCommentService picsCommentService;
 	@RequestMapping(value = "/community.cm")
-	public String CommunityList(PicsVO picsVO, Model model,MemberVO memberVO, HttpServletRequest request) {
+	public String CommunityList(PicsVO picsVO, Model model,MemberVO memberVO, HttpServletRequest request, HttpSession session) {
 		
 		//페이지
 		int page = 1;
@@ -105,7 +108,12 @@ public class CommunityController {
 		
 		if (endpage > maxpage)
 			endpage = maxpage;
-		
+		//-----------------------------------------------------------------------------------------------------------------
+		//멤버디테일 구하기(이메일)
+		memberVO.setMEMBER_EMAIL((String)session.getAttribute("MEMBER_EMAIL"));
+		System.out.println(memberVO.getMEMBER_EMAIL()); 
+		MemberVO memberDetailbyEmail = memberService.getMemberDetailbyEmail(memberVO);
+		model.addAttribute("memberDetailbyEmail",memberDetailbyEmail);
 		
 		model.addAttribute("page", page);
 		model.addAttribute("maxpage", maxpage);
@@ -128,7 +136,6 @@ public class CommunityController {
 		ArrayList<PicsVO> memberPicsList = communityService.getPicsOfMemberUpload(picsVO);
 		MemberVO memberDetail = memberService.getMemberDetail(memberVO);
 		
-		System.out.println("picsnum=");
 		//댓글 리스트
 		//ArrayList<PicsCommentDB> commentList = picsCommentService.getCommentList(picsVO.getPICS_NUM());
 		
@@ -265,12 +272,89 @@ public class CommunityController {
 				}
 			}
 		}
+//		for (int i = 1; i < 4; i++) {
+//			if (!request.getFile("PICS_FILE_" + i).isEmpty()) {
+//				MultipartFile mf = request.getFile("PICS_FILE_" + i);
+//				String originalFileExtnesion = mf.getOriginalFilename().substring(mf.getOriginalFilename().lastIndexOf("."));
+//				String storedFileName = UUID.randomUUID().toString().replaceAll("-", "") + originalFileExtnesion;
+//				// 파일저장
+//				if (mf.getSize() != 0) {
+//					mf.transferTo(new File(uploadPath + storedFileName));
+//				}
+//				if (i == 1) {
+//					picsVO.setPICS_FILE_1(storedFileName);
+//				}
+//				if (i == 2) {
+//					picsVO.setPICS_FILE_2(storedFileName);
+//				}
+//				if (i == 3) {
+//					picsVO.setPICS_FILE_3(storedFileName);
+//				}
+//			}
+//		}
+		
 		System.out.println("file1은"+picsVO.getPICS_FILE_1());
 		System.out.println("file2은"+picsVO.getPICS_FILE_2());
 		System.out.println("file3은"+picsVO.getPICS_FILE_3());
 		communityService.updatePics(picsVO);
 		return "redirect:./community.cm";	
 	}
+	
+	@RequestMapping(value = "/deletePicsFile.cm")
+	public @ResponseBody Map<String, Object> deletePicsFile(PicsVO picsVO,HttpServletRequest request) {
+		String src = request.getParameter("src");
+		String uploadPath="C://Project138//upload";
+		String path = uploadPath + src;
+		System.out.println(path);
+		File file =	new File(path);  
+		if(file.exists() == true){ 
+			file.delete(); 
+		}
+		String index = request.getParameter("index");
+		if(index =="1") {
+			picsVO.setPICS_FILE_1("");
+		}if(index =="2") {
+			picsVO.setPICS_FILE_2("");
+		}if(index =="3") {
+			picsVO.setPICS_FILE_3("");
+		}
+		
+		picsVO.setPICS_NUM(Integer.parseInt(request.getParameter("picNum")));
+		Map<String, Object> retVal = new HashMap<String, Object>();
+		try {
+			int result = communityService.deletePicsFile(picsVO);
+			retVal.put("res", "OK");
+		}catch(Exception e) {
+			retVal.put("res", "FAIL");
+			retVal.put("message", "Failure");
+		}
+		return retVal;
+	} 
+	@RequestMapping(value = "/insertMemberLike.cm")
+	public @ResponseBody Map<String, Object> getLikeUpdate(PicsVO picsVO,HttpServletRequest request) {
+		System.out.println("insert컨트롤러 시작");
+		String memberNum = request.getParameter("memberNum");
+		String picsNum = request.getParameter("picsNum");
+		
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		map.put("memberNum", memberNum);
+		map.put("picsNum", picsNum);
+		
+		//picsVO.setPICS_NUM(Integer.parseInt(request.getParameter("picNum")));
+		Map<String, Object> retVal = new HashMap<String, Object>();
+		
+		
+		
+		
+		try {
+			int result = memberService.insertMemberLike(map);
+			retVal.put("res", "OK");
+		}catch(Exception e) {
+			retVal.put("res", "FAIL");
+			retVal.put("message", "Failure");
+		}
+		return retVal;
+	} 
 	 
 	
 }

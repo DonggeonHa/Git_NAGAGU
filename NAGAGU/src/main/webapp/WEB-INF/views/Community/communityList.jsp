@@ -9,6 +9,7 @@
 	ArrayList<PicsVO> picsList = (ArrayList<PicsVO>) request.getAttribute("picsList");
 	ArrayList<MemberVO> memberList = (ArrayList<MemberVO>) request.getAttribute("memberList"); 
 	
+	MemberVO memberVO = (MemberVO)request.getAttribute("memberDetailbyEmail");
 	
 	int listcount = ((Integer) request.getAttribute("listcount")).intValue(); // (전체/카테고리)글 개수
 	int nowpage = ((Integer) request.getAttribute("page")).intValue();
@@ -215,7 +216,7 @@ img {
 							<img src="/communityupload/image/<%=pics_vo.getPICS_FILE_1()%>" class="img" />
 							<div class="hover-image" id="test">
 								<a href="#"> 
-								<span class="button"> 
+								<span class="button likeBtn" id="<%=pics_vo.getPICS_NUM()%>" name="a">  
 								<i class="far fa-heart fa-2x" id="far"></i>
 								</span><%=pics_vo.getPICS_LIKE()%>
 								</a> 
@@ -311,17 +312,41 @@ img {
 		integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU="
 		crossorigin="anonymous"></script>
 	<script>
-		$(function(){
-			  $(document).on("click","#far",function addClass() {
-			    if($(this).attr('data-prefix') === "far"){
-			      $(this).removeClass("far fa-heart fa-2x");
-				   $(this).addClass("fas fa-heart fa-2x");
-			    }else{
-			      $(this).removeClass("fas fa-heart fa-2x");
-			      $(this).addClass("far fa-heart fa-2x");
-			    }
-			  });
-			});
+		  $(document).on("click","#far",function addClass() {
+		    if($(this).attr('data-prefix') === "far"){
+		      $(this).removeClass("far fa-heart fa-2x");
+			   $(this).addClass("fas fa-heart fa-2x");
+		    }else{
+		      $(this).removeClass("fas fa-heart fa-2x");
+		      $(this).addClass("far fa-heart fa-2x");
+		    }
+			alert('hi')
+			var picsNum = $("#far").parent().attr('id')
+			var	memberNum = <%=memberVO.getMEMBER_NUM()%>
+			console.log(picsNum)
+		//	console.log(${memberVO.MEMBER_NUM})
+			console.log(<%=memberVO.getMEMBER_NUM()%>)
+		
+			
+ 			$.ajax({
+				url: "/NAGAGU/insertMemberLike.cm",
+                type: "POST",
+                data: { 'memberNum' : memberNum , 'picsNum' : picsNum},
+                contentType:
+    				'application/x-www-form-urlencoded; charset=utf-8',
+                success: function (retVal) {
+		        if(retVal.res=="OK"){
+					alert("insert 성공");
+				}else{
+					alert("update fail");
+				} 
+			},
+			error:function(){
+				alert("ajax통신 실패!!");
+			}
+			}) 
+		    
+		  });
 	</script>
 	<script>
 	var sort='<%=sort%>';
@@ -381,8 +406,6 @@ img {
 	});
 	
 
-	
-	
 	
 	
 	/*var btn = document.getElementById('search_btn');

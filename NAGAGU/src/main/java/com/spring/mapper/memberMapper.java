@@ -17,4 +17,6 @@ public interface memberMapper {
 	
 	ArrayList<MemberVO> getMemberList(HashMap<String, Object> map);
 	MemberVO getMemberDetail(MemberVO memberVO);
+	MemberVO getMemberDetailbyEmail(MemberVO memberVO);
+	int insertMemberLike(HashMap<String, Object> map);
 }

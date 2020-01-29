@@ -23,6 +23,8 @@ public interface CommunityMapper {
 	int deletePics(PicsVO picsVO);
 	//글 업데이트
 	int updatePics(PicsVO picsVO);
+	//사진(수정폼) 삭제
+	int deletePicsFile(PicsVO picsVO);
 //	ArrayList<PicsVO> getPicsCategory(HashMap<String, Object> map);
 //	int getPicsCountAll();
 } 

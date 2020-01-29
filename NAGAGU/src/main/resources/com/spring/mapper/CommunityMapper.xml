@@ -146,10 +146,38 @@ PICS_REF-->
 	UPDATE PICS SET 
 	PICS_CATEGORY=#{PICS_CATEGORY}, PICS_WORKSHOP=#{PICS_WORKSHOP}, PICS_TAG=#{PICS_TAG}, PICS_REVIEW=#{PICS_REVIEW},  
 		PICS_CONTENT_1=#{PICS_CONTENT_1}, PICS_CONTENT_2=#{PICS_CONTENT_2}, PICS_CONTENT_3=#{PICS_CONTENT_3}	
-			, PICS_FILE_1=#{PICS_FILE_1, jdbcType=VARCHAR}
-			, PICS_FILE_2=#{PICS_FILE_2, jdbcType=VARCHAR}
-			, PICS_FILE_3=#{PICS_FILE_3, jdbcType=VARCHAR}
+<!-- 		<if test="PICS_FILE_1 == null">
+			, PICS_FILE_1='noImage'
+		</if> -->
+		<if test="PICS_FILE_1 !=null">
+			, PICS_FILE_1=#{PICS_FILE_1, jdbcType=VARCHAR} 
+		</if>
+<!-- 		<if test="PICS_FILE_2 == null">
+			, PICS_FILE_2='noImage'
+		</if> -->
+		<if test="PICS_FILE_2 !=null">
+			, PICS_FILE_2=#{PICS_FILE_2, jdbcType=VARCHAR} 
+		</if>
+<!-- 		<if test="PICS_FILE_3 == null">
+			, PICS_FILE_3='noImage'
+		</if> -->
+		<if test="PICS_FILE_3 !=null">
+			, PICS_FILE_3=#{PICS_FILE_3, jdbcType=VARCHAR} 
+		</if>
+		<!-- <if test="PICS_FILE_1 !=null">, PICS_FILE_1=#{PICS_FILE_1, jdbcType=VARCHAR} </if>
+		<if test="PICS_FILE_2 !=null">, PICS_FILE_2=#{PICS_FILE_2, jdbcType=VARCHAR} </if>
+		<if test="PICS_FILE_3 !=null">, PICS_FILE_3=#{PICS_FILE_3, jdbcType=VARCHAR} </if> -->
 	 WHERE PICS_NUM=#{PICS_NUM}	
+	</update>
+	
+	<update id="deletePicsFile" parameterType="com.spring.community.PicsVO">	
+		UPDATE PICS 
+		<set> 
+			PICS_FILE_1=#{PICS_FILE_1, jdbcType=VARCHAR}
+			, PICS_FILE_2=#{PICS_FILE_2, jdbcType=VARCHAR}
+			, PICS_FILE_3=#{PICS_FILE_3, jdbcType=VARCHAR} 
+		</set>
+		WHERE PICS_NUM=#{PICS_NUM}
 	</update>
 	
 	
@@ -160,7 +188,7 @@ PICS_REF-->
 		FROM (SELECT * FROM PICS WHERE PICS_CATEGORY=#{PICS_CATEGORY} AND PICS_REVIEW = #{PICS_REVIEW} ORDER BY PICS_DATE DESC))
 		<![CDATA[ WHERE rnum >= #{startrow} AND rnum <= #{endrow} ]]> 
 	</select> -->
-	
+
 
 
 

@@ -186,4 +186,30 @@ public class MemberServiceImpl implements MemberService {
 		}
 		return vo;
 	}
+	@Override
+	public MemberVO getMemberDetailbyEmail(MemberVO memberVO) {
+		MemberVO vo = null;
+		try {
+			memberMapper memberMapper= sqlSession.getMapper(memberMapper.class);
+			vo = memberMapper.getMemberDetailbyEmail(memberVO);
+			System.out.println("vo= "+vo);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return vo;
+	}
+	@Override
+	public int insertMemberLike(HashMap<String, Object> map){
+		int vo = 0;
+		try {
+			
+			memberMapper memberMapper= sqlSession.getMapper(memberMapper.class);
+			vo = memberMapper.insertMemberLike(map);
+			
+			System.out.println("서비스임플 결과= "+vo);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return vo;
+	}
 }

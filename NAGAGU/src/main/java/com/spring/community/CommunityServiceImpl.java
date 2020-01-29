@@ -83,13 +83,19 @@ public class CommunityServiceImpl implements CommunityService{
 		return result;
 	}
 
-
-
 	@Override
 	public int updatePics(PicsVO picsVO) {
 		int result=0;
 		CommunityMapper communityMapper=sqlSession.getMapper(CommunityMapper.class);		
 		result = communityMapper.updatePics(picsVO);
+		System.out.println("result=" + result);
+		return result;
+	}
+	@Override
+	public int deletePicsFile(PicsVO picsVO){
+		int result=0;
+		CommunityMapper communityMapper=sqlSession.getMapper(CommunityMapper.class);		
+		result = communityMapper.deletePicsFile(picsVO);
 		System.out.println("result=" + result);
 		return result;
 	}
