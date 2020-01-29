@@ -152,13 +152,13 @@
 			}
 			
 			/* 로그인 모달 css */
-			.modal-title {
+			.mtitle {
 				margin-left: 140px;
 				text-align: center;
 				margin-top: 20px;
 			}
 			
-			.modal-content {
+			.mcontent {
 				margin: 0 auto;
 				max-width: 450px;
 			}
@@ -275,7 +275,7 @@
 		</script>
 	</head>
 	
-	<body>
+	<body class="order-body">
 		<div class="bg" >
 			<div class="container">
 				<div class="row">
@@ -346,8 +346,9 @@
 											<a href="./logout.ma" id="logout"><button class="dropdown-item btn btn-primary" type="button">로그아웃</button></a>
 											<!-- <button class="dropdown-item" type="button"><a href="./signup.ma">회원가입</a></button> -->
 											<button class="dropdown-item" type="button"><a href="./order_detail.my">주문조회</a></button>
-											<button class="dropdown-item" type="button">내정보수정</button>
-											<button class="dropdown-item" type="button">관심상품</button>
+											<button class="dropdown-item" type="button"><a href="./mypage_edit.my">내정보수정</a></button>
+											<button class="dropdown-item" type="button"><a href="./mypage_like.my">좋아요</a></button>
+											<button class="dropdown-item" type="button"><a href="./workshop.no">공방관리</a></button>
 										</div>
 									</div>
 									<%} %>
@@ -379,9 +380,9 @@
 		<!-- 로그인 모달 -->
 		<div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
 		  <div class="modal-dialog modal-dialog-centered" role="document">
-		    <div class="modal-content">
+		    <div class="modal-content mcontent">
 		      <div class="modal-header">
-		        <h5 class="modal-title" id="exampleModalCenterTitle">로그인을 해주세요.</h5>
+		        <h5 class="modal-title mtitle" id="exampleModalCenterTitle">로그인을 해주세요.</h5>
 		        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
 		          <span aria-hidden="true">&times;</span>
 		        </button>

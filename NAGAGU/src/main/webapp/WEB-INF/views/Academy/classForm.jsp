@@ -397,10 +397,36 @@
 					minHeight: null,
 					maxHeight: null,
 					lang: 'ko-KR',
-					onImageUpload: function(files, editor, welEditable) {
-						sendFile(files[0], editor, welEditable);
-					}
+					callbacks: {
+						  onImageUpload: function(files) {
+							  console.log(files);
+							  sendFile(files[0]);
+						  }
+					  }
 				});
+				
+				function sendFile(file) {
+					  var form_data = new FormData();
+					  form_data.append('file', file);
+					  $.ajax({
+						 data:form_data,
+						 type:"POST",
+						 url:'./test3.ma',
+						 cache: false,
+						 contentType: false,
+						 enctype: 'multitype/form-data',
+						 processData: false,
+						 success: function(url) {
+							 console.log("Success");
+							 console.log(url);
+							 $('#summernote1').summernote('editor.insertImage', url);
+							 $('#image_list > ul').append('<li><img src="'+url+'" width="160" height="160"/></li>');
+						 },
+					 	 error: function() {
+							 console.log("Fail");
+					 	 }
+					  });
+				  }
 			});
 
 			$(document).ready(function() {
@@ -410,10 +436,36 @@
 					minHeight: null,
 					maxHeight: null,
 					lang: 'ko-KR',
-					onImageUpload: function(files, editor, welEditable) {
-						sendFile(files[0], editor, welEditable);
-					}
+					callbacks: {
+						  onImageUpload: function(files) {
+							  console.log(files);
+							  sendFile(files[0]);
+						  }
+					  }
 				});
+				
+				function sendFile(file) {
+					  var form_data = new FormData();
+					  form_data.append('file', file);
+					  $.ajax({
+						 data:form_data,
+						 type:"POST",
+						 url:'./test3.ma',
+						 cache: false,
+						 contentType: false,
+						 enctype: 'multitype/form-data',
+						 processData: false,
+						 success: function(url) {
+							 console.log("Success");
+							 console.log(url);
+							 $('#summernote2').summernote('editor.insertImage', url);
+							 $('#image_list > ul').append('<li><img src="'+url+'" width="160" height="160"/></li>');
+						 },
+					 	 error: function() {
+							 console.log("Fail");
+					 	 }
+					  });
+				  }
 			});
 
 			$(document).ready(function() {
@@ -423,10 +475,36 @@
 					minHeight: null,
 					maxHeight: null,
 					lang: 'ko-KR',
-					onImageUpload: function(files, editor, welEditable) {
-						sendFile(files[0], editor, welEditable);
-					}
+					callbacks: {
+						  onImageUpload: function(files) {
+							  console.log(files);
+							  sendFile(files[0]);
+						  }
+					  }
 				});
+				
+				function sendFile(file) {
+					  var form_data = new FormData();
+					  form_data.append('file', file);
+					  $.ajax({
+						 data:form_data,
+						 type:"POST",
+						 url:'./test3.ma',
+						 cache: false,
+						 contentType: false,
+						 enctype: 'multitype/form-data',
+						 processData: false,
+						 success: function(url) {
+							 console.log("Success");
+							 console.log(url);
+							 $('#summernote3').summernote('editor.insertImage', url);
+							 $('#image_list > ul').append('<li><img src="'+url+'" width="160" height="160"/></li>');
+						 },
+					 	 error: function() {
+							 console.log("Fail");
+					 	 }
+					  });
+				  }
 			});
 			
 			/* File 부분(미리보기) */

@@ -661,7 +661,7 @@
 								<li class="nav-item">
 									<a class="nav-link"	id="pills-kakao-tab" data-toggle="pill" href="#pills-kakao"	role="tab" aria-controls="pills-home" aria-selected="true">
 										<label> 
-											<img width="64"	src="https://w.namu.la/s/853de61a86bba904835a92fd3ebd9105da5c693ab0f1de18d4904a958a0fa0e1477416606cee4418c36782d7d680c34c08fda9622d712688037bc064839ed3c758aa18ccd516af55556c982897fa94a53f9cc26bfa21811a9a54d0703e5858fdf403cf2f7c56d7ea701df1a9cb92521c" alt="Kakao">
+											<img width="64"	src="https://www.google.com/url?sa=i&source=images&cd=&ved=2ahUKEwiw67TnyKjnAhVafd4KHY1dBAIQjRx6BAgBEAQ&url=https%3A%2F%2Fwww.facebook.com%2Fkakaopay%2F&psig=AOvVaw1BiR-zppKTQk9j9a9g20yP&ust=1580379027671431" alt="Kakao">
 											<div class="text-center">
 												<font color="black">카카오페이</font>
 											</div>

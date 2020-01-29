@@ -10,6 +10,9 @@
 		<meta charset="UTF-8">
 		<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
 		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.2/animate.css">
+		<script src="https://code.jquery.com/jquery-3.4.1.js" integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU=" crossorigin="anonymous"></script>
+  		<script type="text/javascript" src="https://cdn.iamport.kr/js/iamport.payment-1.1.5.js"></script>
+  		
 		<script type="text/javascript">      
 			$(document).ready(function() {
 			  var price = parseInt($("#date_price").text().slice(0, -1).replace(/,/g,""));
@@ -48,6 +51,71 @@
 			
 			    return str.replace(/(\d)(?=(?:\d{3})+(?!\d))/g, '$1,');
 			  }
+			});
+			
+			$("#Payment_Card").click(function() {
+				var IMP = window.IMP; // 생략가능
+				IMP.init('imp91912911');
+				// 'iamport' 대신 부여받은 "가맹점 식별코드"를 사용
+				// i'mport 관리자 페이지 -> 내정보 -> 가맹점식별코드
+				IMP.request_pay({
+					pg : 'danal', // version 1.1.0부터 지원.
+					/*
+						'kakao':카카오페이,
+						html5_inicis':이니시스(웹표준결제)
+						'nice':나이스페이
+						'jtnet':제이티넷
+						'uplus':LG유플러스
+						'danal':다날
+						'payco':페이코
+						'syrup':시럽페이
+						'paypal':페이팔
+					 */
+					pay_method : 'card',
+					/*
+						'samsung':삼성페이,
+						'card':신용카드,
+						'trans':실시간계좌이체,
+						'vbank':가상계좌,
+						'phone':휴대폰소액결제
+					 */
+					merchant_uid : 'merchant_' + new Date().getTime(),
+					/*
+						merchant_uid에 경우
+						https://docs.iamport.kr/implementation/payment
+						위에 url에 따라가시면 넣을 수 있는 방법이 있습니다.
+						참고하세요.
+						나중에 포스팅 해볼게요.
+					 */
+					name : '주문명:결제테스트',
+					//결제창에서 보여질 이름
+					amount : 1000,
+					//가격
+					buyer_email : 'iamport@siot.do',
+					buyer_name : '구매자이름',
+					buyer_tel : '010-1234-5678',
+					buyer_addr : '서울특별시 강남구 삼성동',
+					buyer_postcode : '123-456',
+					m_redirect_url : 'https://www.yourdomain.com/payments/complete'
+					/*
+						모바일 결제시,
+						결제가 끝나고 랜딩되는 URL을 지정
+						(카카오페이, 페이코, 다날의 경우는 필요없음. PC와 마찬가지로 callback함수로 결과가 떨어짐)
+					 */
+				}, function(rsp) {
+					console.log(rsp);
+					if (rsp.success) {
+						var msg = '결제가 완료되었습니다.';
+						msg += '고유ID : ' + rsp.imp_uid;
+						msg += '상점 거래ID : ' 	+ rsp.merchant_uid;
+						msg += '결제 금액 : ' + rsp.paid_amount;
+						msg += '카드 승인번호 : ' + rsp.apply_num;
+					} else {
+						var msg = '결제에 실패하였습니다.';
+						msg += '에러내용 : ' + rsp.error_msg;
+					}
+					alert(msg);
+				});
 			});
 		</script>
 		<style>
@@ -170,11 +238,11 @@
 				background-color: #EAEAEA !important;
 			}
 			
-			.modal-body {
+			.mbody {
 				padding: 2rem !important;
 			}
 			
-			.modal-header {
+			.mheader {
 				padding: 2rem !important;
 			}
 			
@@ -484,7 +552,7 @@
 							</table>
 						</div>
 						<div class="btnArea text-center">
-							<button type="button" class="btn btn-outline-dark btn-lg" data-toggle="modal" data-target=".bd-example-modal-lg">예약 하기</button>
+							<button type="button" class="btn btn-outline-dark btn-lg" data-toggle="modal" data-target="#Booking">예약 하기</button>
 							<a href="#" class="btn btn-outline-dark btn-lg" role="button" aria-pressed="true">
 								<i class="far fa-heart"></i>
 							</a>
@@ -497,29 +565,28 @@
 		</div>
 		
 		<!-- Modal -->
-		<div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog"	aria-labelledby="myExtraLargeModalLabel" aria-hidden="true">
-			<div class="modal-dialog modal-lg" role="document">
+		<div class="modal fade bd-example-modal-lg" id="Booking" tabindex="-1" role="dialog" aria-labelledby="myExtraLargeModalLabel" aria-hidden="true">
+  			<div class="modal-dialog modal-lg" role="document">
 				<div class="modal-content">
-					<div class="modal-header">
-						<h5 class="modal-title" id="exampleModalLongTitle">우드슬랩 테이블&벤치
-							만들기</h5>
-						<button type="button" class="close" data-dismiss="modal"
-							aria-label="Close">
+					<div class="modal-header mheader">
+						<h5 class="modal-title" id="myExtraLargeModalLabel">우드슬랩 테이블&벤치 만들기</h5>
+						<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 							<span aria-hidden="true">&times;</span>
 						</button>
 					</div>
-					<div class="modal-body">
+					<div class="modal-body mbody">
 						<p>스툴로 제작되는 원목 소가구 이며 아래 선반이 들어가는 형태로 사이드 테이블이나 화분 받침대로도 사용가능한 심플한 디자인.</p>
 						<div class="row">
 							<div class="col-12" id="detail">
 								<div id="progress_time">진행시간</div>
 								<div style="margin-top: 10px; margin-bottom: 10px; font-size: small;">3시간</div>
 								<div id="progress_time">
-									예약 날짜 / 시 <span style="color: red"><i
-										class="far fa-calendar-alt blue" id="calendar"></i></span>
+									예약 날짜 / 시 
+									<span style="color: red">
+										<i class="far fa-calendar-alt blue" id="calendar"></i>
+									</span>
 								</div>
-								<div style="margin-top: 10px; font-size: small;">2019.12.27.(금)
-									오전 09:00 ~ 오후 12:00</div>
+								<div style="margin-top: 10px; font-size: small;">2019.12.27.(금) 오전 09:00 ~ 오후 12:00</div>
 							</div>
 						</div>
 						<div class="row">
@@ -603,7 +670,7 @@
 						<div>
 							<ul class="nav nav-pills mb-3 table table-bordered" id="pills-tab" role="tablist">
 								<li class="nav-item">
-									<a class="nav-link" id="pills-card-tab"	data-toggle="pill" href="#pills-card" role="tab" aria-controls="pills-home" aria-selected="true"> 
+									<a class="nav-link active" id="pills-card-tab"	data-toggle="pill" href="#pills-card" role="tab" aria-controls="pills-home" aria-selected="true"> 
 										<label>
 											<img width="64" src="https://bucketplace-v2-development.s3.amazonaws.com/pg/card.png" alt="Card">
 											<div class="text-center">
@@ -633,7 +700,7 @@
 									</a>
 								</li>
 								<li class="nav-item">
-									<a class="nav-link active" id="pills-toss-tab" data-toggle="pill" href="#pills-toss" role="tab" aria-controls="pills-home" aria-selected="true">
+									<a class="nav-link" id="pills-toss-tab" data-toggle="pill" href="#pills-toss" role="tab" aria-controls="pills-home" aria-selected="true">
 										<label> 
 											<img width="64"	src="https://bucketplace-v2-development.s3.amazonaws.com/pg/toss.png" alt="Toss">
 											<div class="text-center">
@@ -655,7 +722,7 @@
 								<li class="nav-item">
 									<a class="nav-link"	id="pills-kakao-tab" data-toggle="pill" href="#pills-kakao"	role="tab" aria-controls="pills-home" aria-selected="true">
 										<label> 
-											<img width="64"	src="https://w.namu.la/s/853de61a86bba904835a92fd3ebd9105da5c693ab0f1de18d4904a958a0fa0e1477416606cee4418c36782d7d680c34c08fda9622d712688037bc064839ed3c758aa18ccd516af55556c982897fa94a53f9cc26bfa21811a9a54d0703e5858fdf403cf2f7c56d7ea701df1a9cb92521c" alt="Kakao">
+											<img width="64"	src="https://scontent-icn1-1.xx.fbcdn.net/v/t1.0-9/p960x960/52775098_2282365115374551_3623666965651914752_o.png?_nc_cat=109&_nc_ohc=l2DGRIBJakYAX-7EhT8&_nc_ht=scontent-icn1-1.xx&oh=a98e852e8cfa475f79014246688b9965&oe=5E97B88B" alt="Kakao">
 											<div class="text-center">
 												<font color="black">카카오페이</font>
 											</div>
@@ -664,7 +731,7 @@
 								</li>
 							</ul>
 							<div class="tab-content" id="pills-tabContent">
-								<div class="tab-pane fade" id="pills-card" role="tabpanel" aria-labelledby="pills-card-tab" style="padding-left: 3%;">
+								<div class="tab-pane fade active show" id="pills-card" role="tabpanel" aria-labelledby="pills-card-tab" style="padding-left: 3%;">
 									<dl>
 										<dt>
 											<input type="checkbox" class="custom-control-input"	id="cardControlInline"> 
@@ -674,6 +741,11 @@
 										</dt>
 										<dd>개인정보 제 3자 제공 및 결제대행 서비스 표준 이용약관</dd>
 									</dl>
+									
+									<div class="center" style="padding-bottom: 2rem;">
+										<button type="button" id="Payment_Card" class="btn btn-outline-dark mr-4">예약 신청하기1</button>
+										<button type="button" id="btn" class="btn btn-outline-dark">뒤로</button>
+									</div>
 								</div>
 								<div class="tab-pane fade" id="pills-vbank" role="tabpanel"	aria-labelledby="pills-vbank-tab" style="padding-left: 3%;">
 									<dl>
@@ -685,6 +757,11 @@
 										</dt>
 										<dd>개인정보 제 3자 제공 및 결제대행 서비스 표준 이용약관</dd>
 									</dl>
+									
+									<div class="center" style="padding-bottom: 2rem;">
+										<button type="button" id="btn" class="btn btn-outline-dark mr-4">예약 신청하기2</button>
+										<button type="button" id="btn" class="btn btn-outline-dark">뒤로</button>
+									</div>
 								</div>
 								<div class="tab-pane fade" id="pills-phone" role="tabpanel" aria-labelledby="pills-phone-tab" style="padding-left: 3%;">
 									<dl>
@@ -696,8 +773,13 @@
 										</dt>
 										<dd>개인정보 제 3자 제공 및 결제대행 서비스 표준 이용약관</dd>
 									</dl>
+									
+									<div class="center" style="padding-bottom: 2rem;">
+										<button type="button" id="btn" class="btn btn-outline-dark mr-4">예약 신청하기3</button>
+										<button type="button" id="btn" class="btn btn-outline-dark">뒤로</button>
+									</div>
 								</div>
-								<div class="tab-pane fade active show" id="pills-toss" role="tabpanel" aria-labelledby="pills-toss-tab">
+								<div class="tab-pane fade" id="pills-toss" role="tabpanel" aria-labelledby="pills-toss-tab">
 									<div style="background-color: #EAEAEA; padding: 1%;" class="radius mb-5">
 										<dl>
 											<dt>
@@ -717,6 +799,11 @@
 											</dt>
 											<dd>개인정보 제 3자 제공 및 결제대행 서비스 표준 이용약관</dd>
 										</dl>
+										
+										<div class="center" style="padding-bottom: 2rem;">
+											<button type="button" id="btn" class="btn btn-outline-dark mr-4">예약 신청하기4</button>
+											<button type="button" id="btn" class="btn btn-outline-dark">뒤로</button>
+										</div>
 									</div>
 								</div>
 								<div class="tab-pane fade" id="pills-naver" role="tabpanel" aria-labelledby="pills-naver-tab" style="padding-left: 3%;">
@@ -729,6 +816,11 @@
 										</dt>
 										<dd>개인정보 제 3자 제공 및 결제대행 서비스 표준 이용약관</dd>
 									</dl>
+									
+									<div class="center" style="padding-bottom: 2rem;">
+										<button type="button" id="btn" class="btn btn-outline-dark mr-4">예약 신청하기5</button>
+										<button type="button" id="btn" class="btn btn-outline-dark">뒤로</button>
+									</div>
 								</div>
 								<div class="tab-pane fade" id="pills-kakao" role="tabpanel" aria-labelledby="pills-kakao-tab" style="padding-left: 3%;">
 									<dl>
@@ -740,22 +832,27 @@
 										</dt>
 										<dd>개인정보 제 3자 제공 및 결제대행 서비스 표준 이용약관</dd>
 									</dl>
+									
+									<div class="center" style="padding-bottom: 2rem;">
+										<button type="button" id="btn" class="btn btn-outline-dark mr-4">예약 신청하기6</button>
+										<button type="button" id="btn" class="btn btn-outline-dark">뒤로</button>
+									</div>
 								</div>
 							</div>
 						</div>
 					</div>
-					<div class="center" style="padding-bottom: 2rem;">
-						<button type="button" id="btn" class="btn btn-outline-dark mr-4">
-							예약 신청하기</button>
-						<button type="button" id="btn" class="btn btn-outline-dark">뒤로</button>
-					</div>
+<!-- 					<div class="center" style="padding-bottom: 2rem;"> -->
+<!-- 						<button type="button" id="btn" class="btn btn-outline-dark mr-4"> -->
+<!-- 							예약 신청하기</button> -->
+<!-- 						<button type="button" id="btn" class="btn btn-outline-dark">뒤로</button> -->
+<!-- 					</div> -->
 				</div>
 			</div>
 		</div>
 		
+		
 		<script src="https://use.fontawesome.com/releases/v5.2.0/js/all.js"></script>	
 		<script src="https://kit.fontawesome.com/b74b42490f.js" crossorigin="anonymous"></script>
-		<script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
 		<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
 		<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
 	</body>
