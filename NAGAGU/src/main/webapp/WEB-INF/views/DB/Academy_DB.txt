@@ -1,0 +1,79 @@
+CREATE TABLE REGISTRATION (
+    CLASS_NUMBER number primary key,
+    CLASS_DIVISION varchar2(200),
+    CLASS_NAME varchar2(200),
+    CLASS_ABRIEF varchar2(200),
+    CLASS_AMOUNT number,
+    CLASS_DATE date,
+    CLASS_DATE_CONFIGURATION_1 date,
+    CLASS_DATE_CONFIGURATION_2 date,
+    CLASS_AREA varchar2(200),
+   CLASS_CATEGORY varchar2(200),
+   CLASS_INTRODUCTION_1 varchar2(2000),
+    CLASS_INTRODUCTION_2 varchar2(2000),
+    CLASS_INTRODUCTION_3 varchar2(2000),
+    CLASS_ETC varchar2(200),
+   CLASS_BANNER varchar2(2000),
+   CLASS_IMAGE varchar2(2000),
+   CLASS_ADDRESS varchar2(200),
+    CLASS_DETAIL_ADDRESS varchar2(200)
+);
+
+create sequence REGISTRATION_SEQ
+  start with 1
+  increment by 1
+  maxvalue 100000;
+  
+update REGISTRATION set CLASS_CATEGORY = 'chair' where CLASS_BANNER = './resources/images/Store/chairs/chair01/chair01.jpg';
+
+insert into REGISTRATION values
+(1, '테스트', '공방공방', '공방공방공방', 300000, sysdate, sysdate, sysdate, 'Jongno', 'table', '잘부탁드립니다','반갑습니다',
+'또 만나요', '기타사항','./resources/images/Store/chairs/chair01/chair01.jpg', './resources/images/Store/chairs/chair01/chair01.jpg','서울시','영등포구');
+
+insert into REGISTRATION values
+(2, '테스트2', '공방공방', '공방공방공방', 300000, sysdate, sysdate, sysdate, 'Jongno', 'table', '잘부탁드립니다','반갑습니다',
+'또 만나요', '기타사항','https://cdn.pixabay.com/photo/2015/02/09/14/56/table-629772_960_720.jpg', './resources/images/Store/chairs/chair01/chair01.jpg','서울시','영등포구');
+
+insert into REGISTRATION values
+(3, '테스트3', '공방공방', '공방공방공방', 300000, sysdate, sysdate, sysdate, 'Jongno', 'table', '잘부탁드립니다','반갑습니다',
+'또 만나요', '기타사항','./resources/images/Store/chairs/chair01/chair01.jpg', './resources/images/Store/chairs/chair01/chair01.jpg','서울시','영등포구');
+
+insert into REGISTRATION values
+(4, '테스트4', '공방공방', '공방공방공방', 300000, sysdate, sysdate, sysdate, 'Jongno', 'table', '잘부탁드립니다','반갑습니다',
+'또 만나요', '기타사항','https://cdn.pixabay.com/photo/2015/02/09/14/56/table-629772_960_720.jpg', './resources/images/Store/chairs/chair01/chair01.jpg','서울시','영등포구');
+
+insert into REGISTRATION values
+(5, '테스트5', '공방공방', '공방공방공방', 300000, sysdate, sysdate, sysdate, 'Jongno', 'table', '잘부탁드립니다','반갑습니다',
+'또 만나요', '기타사항','./resources/images/Store/chairs/chair01/chair01.jpg', './resources/images/Store/chairs/chair01/chair01.jpg','서울시','영등포구');
+
+insert into REGISTRATION values
+(6, '테스트6', '공방공방', '공방공방공방', 300000, sysdate, sysdate, sysdate, 'Jongno', 'table', '잘부탁드립니다','반갑습니다',
+'또 만나요', '기타사항','https://cdn.pixabay.com/photo/2015/02/09/14/56/table-629772_960_720.jpg', './resources/images/Store/chairs/chair01/chair01.jpg','서울시','영등포구');
+
+insert into REGISTRATION values
+(7, '테스트7', '공방공방', '공방공방공방', 300000, sysdate, sysdate, sysdate, 'Jongno', 'table', '잘부탁드립니다','반갑습니다',
+'또 만나요', '기타사항','./resources/images/Store/chairs/chair01/chair01.jpg', './resources/images/Store/chairs/chair01/chair01.jpg','서울시','영등포구');
+
+insert into REGISTRATION values
+(8, '테스트8', '공방공방', '공방공방공방', 300000, sysdate, sysdate, sysdate, 'Jongno', 'table', '잘부탁드립니다','반갑습니다',
+'또 만나요', '기타사항','https://cdn.pixabay.com/photo/2015/02/09/14/56/table-629772_960_720.jpg', './resources/images/Store/chairs/chair01/chair01.jpg','서울시','영등포구');
+
+insert into REGISTRATION values
+(9, '테스트9', '공방공방', '공방공방공방', 300000, sysdate, sysdate, sysdate, 'Jongno', 'table', '잘부탁드립니다','반갑습니다',
+'또 만나요', '기타사항','./resources/images/Store/chairs/chair01/chair01.jpg', './resources/images/Store/chairs/chair01/chair01.jpg','서울시','영등포구');
+
+insert into REGISTRATION values
+(10, '테스트10', '공방공방', '공방공방공방', 300000, sysdate, sysdate, sysdate, 'Jongno', 'table', '잘부탁드립니다','반갑습니다',
+'또 만나요', '기타사항','https://cdn.pixabay.com/photo/2015/02/09/14/56/table-629772_960_720.jpg', './resources/images/Store/chairs/chair01/chair01.jpg','서울시','영등포구');
+
+insert into REGISTRATION values
+(11, '테스트11', '공방공방', '공방공방공방', 300000, sysdate, sysdate, sysdate, 'Jongno', 'table', '잘부탁드립니다','반갑습니다',
+'또 만나요', '기타사항','./resources/images/Store/chairs/chair01/chair01.jpg', './resources/images/Store/chairs/chair01/chair01.jpg','서울시','영등포구');
+
+insert into REGISTRATION values
+(12, '테스트12', '공방공방', '공방공방공방', 300000, sysdate, sysdate, sysdate, 'Jongno', 'table', '잘부탁드립니다','반갑습니다',
+'또 만나요', '기타사항','https://cdn.pixabay.com/photo/2015/02/09/14/56/table-629772_960_720.jpg', './resources/images/Store/chairs/chair01/chair01.jpg','서울시','영등포구');
+
+insert into REGISTRATION values
+(13, '테스트13', '공방공방', '공방공방공방', 300000, sysdate, sysdate, sysdate, 'Jongno', 'table', '잘부탁드립니다','반갑습니다',
+'또 만나요', '기타사항','./resources/images/Store/chairs/chair01/chair01.jpg', './resources/images/Store/chairs/chair01/chair01.jpg','서울시','영등포구');

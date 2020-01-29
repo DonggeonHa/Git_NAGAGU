@@ -1,0 +1,34 @@
+@charset "UTF-8";
+
+body{  
+  font-family: 'Do Hyeon', sans-serif !important;  
+}
+.main-content{
+	padding: 100px;
+}
+.main-content a,.main-content a:link,.main-content a:hover{
+  text-decoration: none !important;
+  color: black;
+}
+img {
+	max-width: 100%;
+	height: auto;
+}
+
+.col-md-4 {
+	border: 1px solid lightgray;
+}
+
+.fur_contents {
+	width:70%; 
+	margin:0 auto;
+} 
+.imoji{
+	font-family: "fontello" ;
+	font-size: 10rem ; 
+	color: black ;
+}
+.caption{
+	font-size:2rem ; 
+}
+

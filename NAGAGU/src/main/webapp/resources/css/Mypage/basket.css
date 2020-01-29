@@ -1,0 +1,30 @@
+@charset "UTF-8";
+
+.pd {
+	padding: 5%;
+}
+
+.radius {
+	border-radius: 10px;
+}
+
+.row-style {
+	padding: 0 3%;
+}
+
+.basket-size {
+	width: 70px;
+	height: 70px;
+}
+
+.ordera {
+	color: #000000;
+}
+
+.yang_1 {
+	float: left;
+}
+
+.yang_2 {
+	display: inline-block;
+}

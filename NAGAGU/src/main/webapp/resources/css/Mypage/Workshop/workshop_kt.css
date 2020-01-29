@@ -1,0 +1,52 @@
+
+        .row {
+            margin:0;
+            padding:0;
+        }
+        .col-4 {
+            margin:0;
+            padding:0;
+        }
+
+        div {
+            margin:0;
+            padding:0;
+        }
+
+        a {
+            text-decoration:none;
+        }
+
+        a:hover {
+            text-decoration:none;
+        }
+        .work_container {
+            width:100%;
+            padding:0;
+            display:flex;
+        }
+
+        .work_main {
+            width:100%;
+            margin-left:230px;
+        }
+
+        .work_body {
+            width: 100%;            
+            margin:0 auto;
+            font-size:14px;
+        }
+
+        /* header */
+        .header{
+            background-color: white;
+        }
+        .header2{
+            background-color: white;
+        }
+        .table{
+           
+        }
+        div{
+           
+        }

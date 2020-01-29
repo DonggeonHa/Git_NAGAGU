@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- 
+create table PRODUCT_QNA(
+    QNA_NUM          NUMBER PRIMARY KEY,
+    QNA_MEMBER       NUMBER,
+    QNA_PRODUCT      NUMBER,
+    CONSTRAINT PRODUCT_REVIEW_NUM FOREIGN KEY (REVIEW_PRODUCT) 
+        REFERENCES PRODUCT(PRODUCT_NUM)ON DELETE CASCADE, 
+    QNA_DATE         DATE,
+    QNA_CONTENT      VARCHAR2(1000)
+);
+
+
+create sequence store_qna_seq
+    start with 1
+    increment by 1
+    maxvalue 10000;
+
+-->
+
+<!-- 이 xml문서와 맵핑할 인터페이스 경로, 이름 -->
+<mapper namespace="com.spring.mapper.ProductQnaMapper">
+	<resultMap type="java.util.HashMap" id="hashmapVO">
+		<result property="QNA_NUM" column="QNA_NUM" />	
+		<result property="QNA_MEMBER" column="QNA_MEMBER" />	
+		<result property="QNA_PRODUCT" column="QNA_PRODUCT" />	
+		<result property="QNA_DATE" column="QNA_DATE" />		
+		<result property="QNA_CONTENT" column="QNA_CONTENT" />
+	</resultMap>
+
+	<resultMap type="com.spring.store.Product_qnaVO" id="productQnaResultMap">
+		<result property="QNA_NUM" column="QNA_NUM" />	
+		<result property="QNA_MEMBER" column="QNA_MEMBER" />	
+		<result property="QNA_PRODUCT" column="QNA_PRODUCT" />	
+		<result property="QNA_DATE" column="QNA_DATE" />		
+		<result property="QNA_CONTENT" column="QNA_CONTENT" />	
+	</resultMap>
+
+	<resultMap type="com.spring.member.MemberVO" id="memberqnaResultMap">
+		<result property="MEMBER_NUM" column="MEMBER_NUM" />	
+		<result property="MEMBER_EMAIL" column="MEMBER_EMAIL" />	
+		<result property="MEMBER_PASS" column="MEMBER_PASS" />	
+		<result property="MEMBER_NAME" column="MEMBER_NAME" />	
+		<result property="MEMBER_NICK" column="MEMBER_NICK" />	
+		<result property="MEMBER_PHONE" column="MEMBER_PHONE" />	
+		<result property="MEMBER_DATE" column="MEMBER_DATE" />	
+		<result property="MEMBER_PICTURE" column="MEMBER_PICTURE" />	
+		<result property="MEMBER_LIKE_PRODUCT" column="MEMBER_LIKE_PRODUCT" />	
+		<result property="MEMBER_STATUS" column="MEMBER_STATUS" />
+	</resultMap>
+	
+	
+	<select id="getQnaCount" parameterType="java.util.HashMap" resultType="int">
+		SELECT count(*) FROM PRODUCT_QNA WHERE QNA_PRODUCT=#{PRODUCT_NUM}
+	</select>
+	
+
+	<select id="getQnaList" parameterType="java.util.HashMap" resultMap="productQnaResultMap">
+		SELECT * FROM
+		(SELECT rownum rnum, QNA_NUM, QNA_MEMBER, QNA_PRODUCT, QNA_DATE, QNA_CONTENT
+		 FROM (SELECT * FROM PRODUCT_QNA WHERE QNA_PRODUCT=#{PRODUCT_NUM} ORDER BY QNA_DATE DESC))
+		<![CDATA[ WHERE rnum >= #{qnastartrow} AND rnum <= #{qnaendrow} ]]>
+	</select>
+	
+		
+	<select id="getqnaMemberList" parameterType="java.util.HashMap" resultMap="memberqnaResultMap">
+		SELECT MEMBER_NICK, MEMBER_PICTURE
+		FROM PRODUCT_QNA P, nagagu_member M
+		WHERE P.QNA_MEMBER = M.MEMBER_NUM
+        ORDER BY P.QNA_DATE DESC
+  	</select>
+	
+	
+	
+	
+	
+
+</mapper>
