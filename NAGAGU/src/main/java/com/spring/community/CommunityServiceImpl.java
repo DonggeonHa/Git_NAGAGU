@@ -28,8 +28,6 @@ public class CommunityServiceImpl implements CommunityService{
 		}
 		return PicsAll;
 	}
-	
-
 
 	@Override 
 	public int getPicsCount(HashMap<String, Object> map) {
@@ -90,7 +88,6 @@ public class CommunityServiceImpl implements CommunityService{
 		int result=0;
 		CommunityMapper communityMapper=sqlSession.getMapper(CommunityMapper.class);		
 		result = communityMapper.updatePics(picsVO);
-		System.out.println("result=" + result);
 		return result;
 	}
 	@Override
@@ -98,7 +95,6 @@ public class CommunityServiceImpl implements CommunityService{
 		int result=0;
 		CommunityMapper communityMapper=sqlSession.getMapper(CommunityMapper.class);		
 		result = communityMapper.deletePicsFile(picsVO);
-		System.out.println("result=" + result);
 		return result;
 	}
 	@Override
@@ -135,23 +131,5 @@ public class CommunityServiceImpl implements CommunityService{
 		}
 		return returnInfo;
 	}
-	
-
-//삭제 예정
-//	@Override
-//	public int getPicsCountAll() {
-//		int picsCountAll;
-//		CommunityMapper communityMapper=sqlSession.getMapper(CommunityMapper.class);
-//		picsCountAll= communityMapper.getPicsCountAll();
-//		return picsCountAll;
-//	}
-
-//	@Override
-//	public ArrayList<PicsVO> getPicsCategory(HashMap<String, Object> map) {
-//		ArrayList<PicsVO> PicsCategory= null;
-//		CommunityMapper communityMapper=sqlSession.getMapper(CommunityMapper.class); 
-//		PicsCategory=communityMapper.getPicsCategory(map);
-//		return PicsCategory;
-//	} 
 
 }

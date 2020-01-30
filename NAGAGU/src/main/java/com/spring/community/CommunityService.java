@@ -16,8 +16,4 @@ public interface CommunityService {
 	int updatePics(PicsVO picsVO);
 	int deletePicsFile(PicsVO picsVO);
 	HashMap<String, Object> insertMemberLike(HashMap<String, Object> map);
-	//삭제예정
-	//ArrayList<PicsVO> getPicsCategory(HashMap<String, Object> map);
-	//int getPicsCountAll();
-	
 }

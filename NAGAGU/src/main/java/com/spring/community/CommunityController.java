@@ -27,8 +27,6 @@ public class CommunityController {
 	private CommunityServiceImpl communityService;
 	@Autowired
 	private MemberServiceImpl memberService;
-	@Autowired
-	private PicsCommentService picsCommentService;
 	@RequestMapping(value = "/community.cm")
 	public String CommunityList(PicsVO picsVO, Model model,MemberVO memberVO, HttpServletRequest request, HttpSession session) {
 		
@@ -111,7 +109,6 @@ public class CommunityController {
 		//-----------------------------------------------------------------------------------------------------------------
 		//멤버디테일 구하기(이메일)
 		memberVO.setMEMBER_EMAIL((String)session.getAttribute("MEMBER_EMAIL"));
-		System.out.println(memberVO.getMEMBER_EMAIL()); 
 		MemberVO memberDetailbyEmail = memberService.getMemberDetailbyEmail(memberVO);
 		model.addAttribute("memberDetailbyEmail",memberDetailbyEmail);
 		
@@ -131,7 +128,6 @@ public class CommunityController {
 	
 	@RequestMapping(value = "/community_detail.cm")
 	public String CommunityDetail(PicsVO picsVO, Model model,MemberVO memberVO, HttpServletRequest request) {
-		System.out.println("insert컨트롤러");
 		PicsVO picsDetail = communityService.getPicsDetail(picsVO);	
 		ArrayList<PicsVO> memberPicsList = communityService.getPicsOfMemberUpload(picsVO);
 		MemberVO memberDetail = memberService.getMemberDetail(memberVO);
@@ -272,30 +268,6 @@ public class CommunityController {
 				}
 			}
 		}
-//		for (int i = 1; i < 4; i++) {
-//			if (!request.getFile("PICS_FILE_" + i).isEmpty()) {
-//				MultipartFile mf = request.getFile("PICS_FILE_" + i);
-//				String originalFileExtnesion = mf.getOriginalFilename().substring(mf.getOriginalFilename().lastIndexOf("."));
-//				String storedFileName = UUID.randomUUID().toString().replaceAll("-", "") + originalFileExtnesion;
-//				// 파일저장
-//				if (mf.getSize() != 0) {
-//					mf.transferTo(new File(uploadPath + storedFileName));
-//				}
-//				if (i == 1) {
-//					picsVO.setPICS_FILE_1(storedFileName);
-//				}
-//				if (i == 2) {
-//					picsVO.setPICS_FILE_2(storedFileName);
-//				}
-//				if (i == 3) {
-//					picsVO.setPICS_FILE_3(storedFileName);
-//				}
-//			}
-//		}
-		
-		System.out.println("file1은"+picsVO.getPICS_FILE_1());
-		System.out.println("file2은"+picsVO.getPICS_FILE_2());
-		System.out.println("file3은"+picsVO.getPICS_FILE_3());
 		communityService.updatePics(picsVO);
 		return "redirect:./community.cm";	
 	}

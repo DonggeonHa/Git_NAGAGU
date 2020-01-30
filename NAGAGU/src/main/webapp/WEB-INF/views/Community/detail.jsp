@@ -6,7 +6,7 @@
 <%@ page import="com.spring.member.MemberVO"%>
 <%@ page import="com.spring.community.PicsVO"%>
 <%
-	System.out.println("sdetail_jsp start");
+	System.out.println("detail_jsp start");
 	//ArrayList<PicsVO> picsList = (ArrayList<PicsVO>) request.getAttribute("picsList");
 	//ArrayList<MemberVO> memberList = (ArrayList<MemberVO>) request.getAttribute("memberList"); 
 	
@@ -194,7 +194,6 @@
             <div class="row img-wrap ">
             <%
             		if(picsVO.getPICS_FILE_1()!=null){
-            			System.out.println(picsVO.getPICS_FILE_1()!=null);
             			String content = picsVO.getPICS_CONTENT_1();
             			if(picsVO.getPICS_CONTENT_1()==null){               				
                				content="";

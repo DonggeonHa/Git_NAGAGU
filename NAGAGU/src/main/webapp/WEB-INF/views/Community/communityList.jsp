@@ -6,7 +6,6 @@
 <%@ page import="com.spring.member.MemberVO"%>
 <%
 	System.out.println("pics_jsp start");
-	System.out.println("세션에서 받은 멤버넘버 =" +session.getAttribute("MEMBER_NUM"));
 
 	ArrayList<PicsVO> picsList = (ArrayList<PicsVO>) request.getAttribute("picsList");
 	ArrayList<MemberVO> memberList = (ArrayList<MemberVO>) request.getAttribute("memberList"); 
@@ -22,7 +21,6 @@
 	String PICS_CATEGORY = (String)request.getAttribute("pics_category");
 	String PICS_REVIEW= (String)request.getAttribute("pics_review");
 	String sort = (String)request.getAttribute("sort");
-	//System.out.println("sos"+picsList.size());
 %> 
 <!DOCTYPE html>
 <html>
@@ -187,7 +185,7 @@ img {
 			</div>
 			<div class="row justify-content-end mx-0">
 				<button class="btn btn-outline-dark btn-md my-2 my-sm-0"
-					type="submit" onclick="location.href='community_write.cm?MEMBER_NUM=1'">글쓰기</button>
+					type="submit" onclick="location.href='community_write.cm?MEMBER_NUM=<%=memberVO.getMEMBER_NUM()%>'">글쓰기</button>
 			</div>
 			<!-- images start -->
 			<div class="row pt-2 mt-4">
@@ -309,58 +307,40 @@ img {
 		integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU="
 		crossorigin="anonymous"></script>
 	<script>
-		  $(document).on("click","#far",function (){
-			var picsNum = $(this).parent().attr('id').substring(6)
-			var	memberNum = <%=memberVO.getMEMBER_NUM()%>
-			console.log('picsNum='+picsNum)
-		<%-- 	console.log(${memberVO.MEMBER_NUM})
-			console.log(<%=memberVO.getMEMBER_NUM()%>) --%>
-			
- 			$.ajax({
-				url: "/NAGAGU/insertPicsLike.cm",
-                type: "POST",
-                data: { 'memberNum' : memberNum , 'picsNum' : picsNum},
-                contentType:
-    				'application/x-www-form-urlencoded; charset=utf-8',
-                success: function (retVal) {
-		        if(retVal.res=="OK"){
-		        	var output="";
-						output += '<span class="button likeBtn" id="output'+picsNum+'" name="a">'
-					if(retVal.cnt=='1'){
-						output += '<i class="far fa-heart fa-2x" id="far"></i>'	
-					}else{
-						output += '<i class="fas fa-heart fa-2x" id="far"></i>'
-					}
-						output += '</span>'+retVal.picsLikeCount+''
-		        	$('#output'+picsNum).parent().html(output);
-					console.log(retVal.cnt);
-					console.log(retVal.picsLikeCount);
-					alert("성공");
-
+	
+	//좋아요 기능
+	  $(document).on("click","#far",function (){
+		var picsNum = $(this).parent().attr('id').substring(6)
+		var	memberNum = <%=memberVO.getMEMBER_NUM()%>
+			$.ajax({
+			url: "/NAGAGU/insertPicsLike.cm",
+	              type: "POST",
+	              data: { 'memberNum' : memberNum , 'picsNum' : picsNum},
+	              contentType:
+	  				'application/x-www-form-urlencoded; charset=utf-8',
+	              success: function (retVal) {
+	        if(retVal.res=="OK"){
+	        	var output="";
+					output += '<span class="button likeBtn" id="output'+picsNum+'" name="a">'
+				if(retVal.cnt=='1'){
+					output += '<i class="far fa-heart fa-2x" id="far"></i>'	
 				}else{
-					alert("update fail");
-				} 
-
-			},
-			error:function(){
-				alert("ajax통신 실패!!");
-			}
-			})
-			
-/* 	    	alert('hid')
-		    if($("#far").attr('data-prefix') === "far"){
-			       $("#far").removeClass("far fa-heart fa-2x");
-				   $("#far").addClass("fas fa-heart fa-2x");
-			    }else{
-			       $("#far").removeClass("fas fa-heart fa-2x");
-			       $("#far").addClass("far fa-heart fa-2x");
-			    }  */
- 			event.preventDefault();
- 		    
-		    
-		  });
-	</script>
-	<script>
+					output += '<i class="fas fa-heart fa-2x" id="far"></i>'
+				}
+					output += '</span>'+retVal.picsLikeCount+''
+	        	$('#output'+picsNum).parent().html(output);
+				alert("성공");
+			}else{
+				alert("update fail");
+			} 
+		},
+		error:function(){
+			alert("ajax통신 실패!!");
+		}
+		})
+			event.preventDefault();
+	  });
+	  
 	var sort='<%=sort%>';
 	var review='<%=PICS_REVIEW%>';
 	var category='<%=PICS_CATEGORY%>';
@@ -417,13 +397,6 @@ img {
 		e.preventDefault();
 	});
 	
-
-	
-	
-	/*var btn = document.getElementById('search_btn');
-	 btn.addEventListener("click",function(){
-		location.href='${pageContext.request.contextPath}/community.cm'
-	}); */
 	</script>
 </body>
 </html>
