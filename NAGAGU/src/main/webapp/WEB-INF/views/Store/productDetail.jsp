@@ -276,6 +276,13 @@
 				color : #343A40;
 				font-weight:bold;
 				font-size:0.7rem;			
+			}
+			
+			.review_re_sum {
+				width: 100%; 
+				margin: 0 auto;
+			}
+			
 			
 			/*qna*/
 			.qnas_table {
@@ -539,6 +546,15 @@
 											</a>
 									</div>							
 								</div>
+								<!-- re_space -->
+								<div class="review_re_table">
+									<div class="review_re_sum pt-3 ">
+										<div class="row review_re_space" id="review_re_space<%=reviewVO.getREVIEW_NUM() %>">
+											
+										</div>
+									</div>
+								</div>
+		
 							</div>
 						</div>									
 					</div>
@@ -1593,7 +1609,7 @@
 			// class="col-12" rows="2"
 			
 			//review 답글 달기
-			$('.review_reply').on('click', function() {
+			$('.review_reply').on('click', function(event) {
 				var REVIEW_NUM = $(this).children('input').val();
 				
 				alert(REVIEW_NUM);
@@ -1628,14 +1644,61 @@
 							alert('성공!');
 							
 							
+							var re_form = '';
+							var aa = data.review_RE_REF;
+							var review_DATE = new Date(data.review_DATE);
+							var date = date_format(review_DATE);
+							var rate = 20*data.review_GRADE;
 
+							
+						
+							
+							re_form += '<div class="col-1 justify-content-end">';
+							re_form += '<img src="#" alt="" class="rounded-circle">';
+						//	re_form += '<img src="<=memberVO.getMEMBER_PICTURE() %>" alt="" class="rounded-circle">';
+							re_form += '</div>';
+							re_form += '<div class="col-11">';
+							re_form += '<div class="row">';
+							re_form += '<div class="col-10 justify-content-end name">';
+							re_form += '닉네임';
+							re_form += '</div>';
+							re_form += '<div class="col-2 justify-content-center smallfont">' + date + '</div>';
+							re_form += '</div>';	//row
+							re_form += '<div class="row">';
+							re_form += '<div class="col rep_content">';
+							re_form += data.review_CONTENT; 
+							re_form += '</div>';
+							re_form += '</div>';	//row
+							
+							
+							
+							console.log("re_form:" + re_form);
+				
+							
+							$('#review_re_space'+aa).append(re_form);	
+							alert('답글달기aaa'+aa);
+							$('#review_re_hidden_'+aa).css('display','none');
+							$('#review_re_insert'+aa).css('display','none');
+							$('#review_control'+aa).css('display','block');
+							$('#review_reply'+aa).css('display','block');
+							
+							/* $('#REVIEW_CONTENT').val('');
+							$('#REVIEW_GRADE').val('');
+							$('#input_imgs').val('');
+							$('.imgs_wrap').empty();
+							infochange();
+							$(".review_hidden").css('display','none');
+							$(".review_add").html('댓글 달기');
+							document.getElementById('review_scroll').scrollIntoView();
+														 */
+							alert('anjdi');
 	                  },
 	                  error:function() {
 	                     alert("ajax통신 실패!!!");
 	                  }
 					});
 				}
-				event.preventDefault();
+				
 			});	
 			
 			
