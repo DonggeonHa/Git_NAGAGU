@@ -36,6 +36,8 @@
 		<url-pattern>*.no</url-pattern>
 		<url-pattern>*.su</url-pattern>
 		<url-pattern>*.do</url-pattern> <!-- Store AJAX -->
+		<url-pattern>*.ch</url-pattern> <!-- Chat -->
+		<url-pattern>*.nt</url-pattern> <!-- Note -->
 	</servlet-mapping>
 	
 	<welcome-file-list>

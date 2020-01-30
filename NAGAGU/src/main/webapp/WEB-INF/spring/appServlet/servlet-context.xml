@@ -4,7 +4,9 @@
 	xmlns:beans="http://www.springframework.org/schema/beans"
 	xmlns:context="http://www.springframework.org/schema/context"
 	xmlns:mybatis-spring="http://mybatis.org/schema/mybatis-spring"
-	xsi:schemaLocation="http://www.springframework.org/schema/mvc https://www.springframework.org/schema/mvc/spring-mvc.xsd
+	xmlns:websocket="http://www.springframework.org/schema/websocket"
+	xsi:schemaLocation="http://www.springframework.org/schema/websocket http://www.springframework.org/schema/websocket/spring-websocket-4.3.xsd
+		http://www.springframework.org/schema/mvc https://www.springframework.org/schema/mvc/spring-mvc.xsd
 		http://mybatis.org/schema/mybatis-spring http://mybatis.org/schema/mybatis-spring-1.2.xsd
 		http://www.springframework.org/schema/beans https://www.springframework.org/schema/beans/spring-beans.xsd
 		http://www.springframework.org/schema/context https://www.springframework.org/schema/context/spring-context.xsd">
@@ -54,10 +56,25 @@
 	<!-- NaverLoginBO Class에 대한 bean설정 추가 -->
 	<beans:bean id="naverLoginBO" class="com.spring.member.NaverLoginBO" />
 	
+	<!--  ChatRoom start -->
+	<context:component-scan base-package="com.spring.chat" />
+	<beans:bean id="socketHandler" class="com.spring.chat.SocketHandler"/>
+	
+	<websocket:handlers>
+		<websocket:mapping path="/broadcasting.do" handler="socketHandler"/>
+			<websocket:handshake-interceptors>
+			<!-- WebSocket 에서 HttpSession 객체를 사용할때 -->
+				<beans:bean class="com.spring.chat.HandshakeInterceptor"/>
+			</websocket:handshake-interceptors>
+	</websocket:handlers>
+	<!--  ChatRoom end -->
+	
 	<context:component-scan base-package="com.spring.academy" />
 	<context:component-scan base-package="com.spring.community" />
 	<context:component-scan base-package="com.spring.main" />
 	<context:component-scan base-package="com.spring.mypage" />
 	<context:component-scan base-package="com.spring.member" />
 	<context:component-scan base-package="com.spring.store" />
+	<context:component-scan base-package="com.spring.chat" />
+	<context:component-scan base-package="com.spring.note" />
 </beans:beans>

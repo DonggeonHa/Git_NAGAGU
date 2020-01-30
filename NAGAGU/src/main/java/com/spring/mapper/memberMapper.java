@@ -3,6 +3,7 @@ package com.spring.mapper;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import com.spring.chat.WorkshopVO;
 import com.spring.member.MemberVO;
 
 public interface memberMapper {
@@ -19,6 +20,11 @@ public interface memberMapper {
 	ArrayList<MemberVO> getMemberList(HashMap<String, Object> map);
 	MemberVO getMemberDetail(MemberVO memberVO);
 	
-	
+	/* 기재형 쪽 */
+	public MemberVO getMember(String MEM_MAIL);
+	public WorkshopVO getWorkshop(String MEM_MAIL);
+	public int countMember(String MEM_MAIL);
+	public int countWorkshop(String MEM_MAIL);
+
 	
 }
