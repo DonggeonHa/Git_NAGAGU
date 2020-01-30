@@ -28,8 +28,6 @@ public class CommunityServiceImpl implements CommunityService{
 		}
 		return PicsAll;
 	}
-	
-
 
 	@Override 
 	public int getPicsCount(HashMap<String, Object> map) {
@@ -90,7 +88,6 @@ public class CommunityServiceImpl implements CommunityService{
 		int result=0;
 		CommunityMapper communityMapper=sqlSession.getMapper(CommunityMapper.class);		
 		result = communityMapper.updatePics(picsVO);
-		System.out.println("result=" + result);
 		return result;
 	}
 	@Override
@@ -98,60 +95,41 @@ public class CommunityServiceImpl implements CommunityService{
 		int result=0;
 		CommunityMapper communityMapper=sqlSession.getMapper(CommunityMapper.class);		
 		result = communityMapper.deletePicsFile(picsVO);
-		System.out.println("result=" + result);
 		return result;
 	}
 	@Override
-	public int insertMemberLike(HashMap<String, Object> map){
+	public HashMap<String, Object> insertMemberLike(HashMap<String, Object> map){
+		HashMap<String, Object> returnInfo = new HashMap<String, Object>();
 		int picsLikeCount = 0;
 		int cnt = 0;
 		try {
-			System.out.println(map.get("memberNum"));
-			System.out.println(map.get("picsNum"));
 			CommunityMapper communityMapper= sqlSession.getMapper(CommunityMapper.class);
 			MemberLikeMapper memberlikeMapper=sqlSession.getMapper(MemberLikeMapper.class);
 			PicsVO picsVO = new PicsVO();
 			picsVO.setPICS_NUM(Integer.valueOf((String)map.get("picsNum")));
-			 
+			picsVO = communityMapper.getPicsDetail(picsVO);
 			cnt = memberlikeMapper.selectMemberLike(map);
-			System.out.println("cnt="+cnt);
 			if(cnt==0) {
 				memberlikeMapper.insertMemberLike(map);
 				map.put("count","plus");
 				int re = communityMapper.updatePicsLike(map);
-				picsVO = communityMapper.getPicsDetail(picsVO);
 				picsLikeCount = picsVO.getPICS_LIKE();
+				returnInfo.put("picsLikeCount", picsLikeCount);
+				returnInfo.put("cnt", cnt);
 				System.out.println("사진 좋아요 1증가="+re);
 			}else {
 				memberlikeMapper.deleteMemberLike(map);
 				map.put("count", "minus");
 				int re = communityMapper.updatePicsLike(map);
-				picsVO = communityMapper.getPicsDetail(picsVO);
 				picsLikeCount =  picsVO.getPICS_LIKE();
+				returnInfo.put("picsLikeCount", picsLikeCount);
+				returnInfo.put("cnt", cnt);
 				System.out.println("사진 좋아요 1감소="+re);
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		return picsLikeCount;
+		return returnInfo;
 	}
-	
-
-//삭제 예정
-//	@Override
-//	public int getPicsCountAll() {
-//		int picsCountAll;
-//		CommunityMapper communityMapper=sqlSession.getMapper(CommunityMapper.class);
-//		picsCountAll= communityMapper.getPicsCountAll();
-//		return picsCountAll;
-//	}
-
-//	@Override
-//	public ArrayList<PicsVO> getPicsCategory(HashMap<String, Object> map) {
-//		ArrayList<PicsVO> PicsCategory= null;
-//		CommunityMapper communityMapper=sqlSession.getMapper(CommunityMapper.class); 
-//		PicsCategory=communityMapper.getPicsCategory(map);
-//		return PicsCategory;
-//	} 
 
 }

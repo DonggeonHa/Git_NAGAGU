@@ -211,7 +211,6 @@ public class MemberServiceImpl implements MemberService{
 		try {
 			memberMapper memberMapper= sqlSession.getMapper(memberMapper.class);
 			vo = memberMapper.getMemberDetailbyEmail(memberVO);
-			System.out.println("vo= "+vo);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
