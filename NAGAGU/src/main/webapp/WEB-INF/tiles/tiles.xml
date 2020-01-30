@@ -15,12 +15,24 @@
 		<put-attribute name="content" value="/WEB-INF/views/Mypage/Workshop/{1}.jsp" /> 
 	</definition> 
 	
+	<definition name="Mypage/Note/*" extends="baseEmpty"> 
+		<put-attribute name="content" value="/WEB-INF/views/Mypage/Note/{1}.jsp" /> 
+	</definition> 
+	
 	<definition name="Mypage/Workshop/*/*" extends="baseEmpty"> 
 		<put-attribute name="content" value="/WEB-INF/views/Mypage/Workshop/{1}/{2}.jsp" /> 
 	</definition> 
 	
+	<definition name="Mypage/Note/*/*" extends="baseEmpty"> 
+		<put-attribute name="content" value="/WEB-INF/views/Mypage/Note/{1}/{2}.jsp" /> 
+	</definition> 
+	
 	<definition name="Mypage/Workshop/*/*/*" extends="baseEmpty"> 
 		<put-attribute name="content" value="/WEB-INF/views/Mypage/Workshop/{1}/{2}/{3}.jsp" /> 
+	</definition>
+	
+	<definition name="Mypage/Note/*/*/*" extends="baseEmpty"> 
+		<put-attribute name="content" value="/WEB-INF/views/Mypage/Note/{1}/{2}/{3}.jsp" /> 
 	</definition>
 
 

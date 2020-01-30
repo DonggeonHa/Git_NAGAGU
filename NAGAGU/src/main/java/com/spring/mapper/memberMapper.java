@@ -17,17 +17,23 @@ public interface memberMapper {
 	ArrayList<MemberVO> nick_list();
 	MemberVO selectMember(MemberVO memberVO); // 로그인 시 세션에 넣을 Member_NUM 호출
 	
+	
+	
+	/* 경태 */
 	ArrayList<MemberVO> getMemberList(HashMap<String, Object> map);
 	MemberVO getMemberDetail(MemberVO memberVO);
+	MemberVO getMemberDetailbyEmail(MemberVO memberVO);
+
 	
-	/* 기재형 쪽 */
+	
+	
+	/* 기재 */
 	public MemberVO getMember(String MEM_MAIL);
 	public WorkshopVO getWorkshop(String MEM_MAIL);
 	public int countMember(String MEM_MAIL);
 	public int countWorkshop(String MEM_MAIL);
 
 
-	MemberVO getMemberDetailbyEmail(MemberVO memberVO);
-
+	
 
 }
