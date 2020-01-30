@@ -31,7 +31,6 @@ public class PicsCommentController {
 		public ArrayList<PicsCommentDB> getCommentList(PicsCommentDB db){
 			System.out.println(db.getPICS_RE_PICS());
 			ArrayList<PicsCommentDB> list = picsCommentService.getCommentList(db.getPICS_RE_PICS());
-			System.out.println(list.get(0).getPICS_RE_CONTENT());
 			return list;
 		}
 		@PostMapping(value="/insertComment.cm",produces="application/json;charset=UTF-8")

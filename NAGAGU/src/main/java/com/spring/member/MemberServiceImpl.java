@@ -7,10 +7,11 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.spring.mapper.MemberLikeMapper;
 import com.spring.mapper.memberMapper;
 
 @Service("memberService")
-public class MemberServiceImpl implements MemberService {
+public class MemberServiceImpl implements MemberService{
 
 	@Autowired
 	private SqlSession sqlSession;
@@ -204,4 +205,17 @@ public class MemberServiceImpl implements MemberService {
 		}
 		return vo;
 	}
+	@Override
+	public MemberVO getMemberDetailbyEmail(MemberVO memberVO) {
+		MemberVO vo = null;
+		try {
+			memberMapper memberMapper= sqlSession.getMapper(memberMapper.class);
+			vo = memberMapper.getMemberDetailbyEmail(memberVO);
+			System.out.println("vo= "+vo);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return vo;
+	}
+
 }

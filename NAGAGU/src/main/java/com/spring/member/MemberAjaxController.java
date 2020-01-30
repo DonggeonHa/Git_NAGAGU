@@ -81,6 +81,7 @@ public class MemberAjaxController {
 				session.setAttribute("MEMBER_NICK", member.getMEMBER_NICK());
 //				session.setAttribute("member_pass", memberVO.getMember_pass());
 				
+				
 				retVal.put("res", "login_success");
 				
 			} else if(res == 0) { //아이디,비번은 맞지만 이메일 미인증일 때

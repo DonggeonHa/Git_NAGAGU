@@ -15,4 +15,5 @@ public interface MemberService {
 	
 	ArrayList<MemberVO> getMemberList(HashMap<String, Object> map);
 	MemberVO getMemberDetail(MemberVO memberVO);
+	MemberVO getMemberDetailbyEmail(MemberVO memberVO);
 }

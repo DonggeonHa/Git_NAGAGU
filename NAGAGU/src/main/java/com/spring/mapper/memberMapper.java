@@ -26,5 +26,8 @@ public interface memberMapper {
 	public int countMember(String MEM_MAIL);
 	public int countWorkshop(String MEM_MAIL);
 
-	
+
+	MemberVO getMemberDetailbyEmail(MemberVO memberVO);
+
+
 }

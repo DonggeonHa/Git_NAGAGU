@@ -145,6 +145,9 @@ public class MainController {
 				if(result != 0) {	//성공
 					session.setAttribute("MEMBER_EMAIL", memberVO.getMEMBER_EMAIL());
 					session.setAttribute("MEMBER_PASS", memberVO.getMEMBER_PASS());
+					session.setAttribute("MEMBER_NICK", memberVO.getMEMBER_NICK());
+					session.setAttribute("MEMBER_NAME", memberVO.getMEMBER_NAME());
+					session.setAttribute("MEMBER_NUM", memberVO.getMEMBER_NUM());
 				} else {
 					System.out.println("sns 회원가입 컨트롤러 실패");
 				}

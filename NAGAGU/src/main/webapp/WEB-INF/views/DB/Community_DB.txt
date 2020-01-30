@@ -1,3 +1,4 @@
+
 * 사진 게시판 */
 CREATE TABLE PICS (
 	PICS_NUM NUMBER NOT NULL, /* 사진 ID */
@@ -52,3 +53,22 @@ ALTER TABLE PICS_COMMENT
 		);
         
         select * from pics;
+
+CREATE SEQUENCE SEQ_MEMBER_LIKE
+    START WITH 1
+    INCREMENT BY 1;
+    
+/* 좋아요 */
+CREATE TABLE MEMBER_LIKE (
+	LIKE_NUM NUMBER NOT NULL, /* 좋아요 ID */
+	LIKE_MEMBER NUMBER, /* 회원 번호 */
+	LIKE_PICS NUMBER /* 사진 ID */
+);
+
+ALTER TABLE MEMBER_LIKE
+	ADD
+		CONSTRAINT PK_MEMBER_LIKE
+		PRIMARY KEY (
+			LIKE_NUM
+		);
+
