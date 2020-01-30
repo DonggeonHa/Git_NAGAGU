@@ -63,9 +63,8 @@ create table PRODUCT_REVIEW(
     REVIEW_CATEGORY     VARCHAR2(30),
     REVIEW_FILE         VARCHAR2(2000),
     REVIEW_CONTENT      VARCHAR2(1000),
-    REVIEW_GRADE        NUMBER
-    REVIEW_RE_REF   NUMBER,
-    REVIEW_RE_LEVEL   NUMBER
+    REVIEW_GRADE        NUMBER,
+    REVIEW_RE			NUMBER
 );
 
 create sequence store_review_seq

@@ -312,16 +312,14 @@ public class ProductController {
 		reviewVO.setREVIEW_CONTENT(request.getParameter("REVIEW_CONTENT"));
 		
 		//넘겨받은 REVIEW_RE_REF가 존재하면 답글이고, null이면 원글이다.
-		if(request.getParameter("REVIEW_RE_REF") != null) {	
+		if(request.getParameter("REVIEW_RE") != null) {	
 			//답글 - GRADE=10, REF=NUM, LEVEL=1
 			reviewVO.setREVIEW_GRADE(10);
-			reviewVO.setREVIEW_RE_REF(Integer.parseInt(request.getParameter("REVIEW_RE_REF")));
-			reviewVO.setREVIEW_RE_LEVEL(1);
+			reviewVO.setREVIEW_RE(Integer.parseInt(request.getParameter("REVIEW_RE")));
 		} else {	
 			//원글 - GRADE=GRADE, REF=NUM, LEVEL=0
 			reviewVO.setREVIEW_GRADE(Double.parseDouble(request.getParameter("REVIEW_GRADE")));
-			reviewVO.setREVIEW_RE_REF(0);
-			reviewVO.setREVIEW_RE_LEVEL(0);
+			reviewVO.setREVIEW_RE(0);
 		}
 		
 		//답글일 경우 1을 넣어야함

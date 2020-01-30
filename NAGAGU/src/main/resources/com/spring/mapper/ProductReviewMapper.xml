@@ -36,8 +36,7 @@ create sequence store_review_seq
 		<result property="REVIEW_FILE" column="REVIEW_FILE" />	
 		<result property="REVIEW_CONTENT" column="REVIEW_CONTENT" />	
 		<result property="REVIEW_GRADE" column="REVIEW_GRADE" />	
-		<result property="REVIEW_RE_REF" column="REVIEW_RE_REF" />	
-		<result property="REVIEW_RE_LEVEL" column="REVIEW_RE_LEVEL" />	
+		<result property="REVIEW_RE" column="REVIEW_RE" />	
 	</resultMap>
 
 	<resultMap type="com.spring.store.Product_reviewVO" id="productReviewResultMap">
@@ -48,8 +47,7 @@ create sequence store_review_seq
 		<result property="REVIEW_FILE" column="REVIEW_FILE" />	
 		<result property="REVIEW_CONTENT" column="REVIEW_CONTENT" />	
 		<result property="REVIEW_GRADE" column="REVIEW_GRADE" />	
-		<result property="REVIEW_RE_REF" column="REVIEW_RE_REF" />	
-		<result property="REVIEW_RE_LEVEL" column="REVIEW_RE_LEVEL" />	
+		<result property="REVIEW_RE" column="REVIEW_RE" />		
 	</resultMap>
 
 	<resultMap type="com.spring.member.MemberVO" id="memberReviewResultMap">
@@ -74,7 +72,7 @@ create sequence store_review_seq
 	<select id="getReviewList" parameterType="java.util.HashMap" resultMap="productReviewResultMap">
 		SELECT * FROM
 		(SELECT rownum rnum, REVIEW_NUM, REVIEW_MEMBER, REVIEW_PRODUCT, REVIEW_DATE, 
-				REVIEW_FILE, REVIEW_CONTENT, REVIEW_GRADE, REVIEW_RE_REF, REVIEW_RE_LEVEL
+				REVIEW_FILE, REVIEW_CONTENT, REVIEW_GRADE, REVIEW_RE
 		 FROM (SELECT * FROM PRODUCT_REVIEW WHERE REVIEW_PRODUCT=#{PRODUCT_NUM} ORDER BY REVIEW_DATE DESC))
 		<![CDATA[ WHERE rnum >= #{startrow} AND rnum <= #{endrow} ]]>
 	</select>
@@ -94,7 +92,7 @@ create sequence store_review_seq
 	</selectKey>
 		INSERT INTO PRODUCT_REVIEW VALUES
 		(#{REVIEW_NUM}, #{REVIEW_MEMBER}, #{REVIEW_PRODUCT}, #{REVIEW_DATE}, #{REVIEW_FILE, jdbcType=VARCHAR}, 
-			#{REVIEW_CONTENT}, #{REVIEW_GRADE}, #{REVIEW_RE_REF}, #{REVIEW_RE_LEVEL})
+			#{REVIEW_CONTENT}, #{REVIEW_GRADE}, #{REVIEW_RE})
 	</insert>
 	
 
