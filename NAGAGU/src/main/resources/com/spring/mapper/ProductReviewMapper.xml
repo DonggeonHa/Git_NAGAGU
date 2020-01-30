@@ -13,6 +13,8 @@ create table PRODUCT_REVIEW(
     REVIEW_FILE         VARCHAR2(2000),
     REVIEW_CONTENT      VARCHAR2(1000),
     REVIEW_GRADE        NUMBER
+    REVIEW_RE_REF   NUMBER,
+    REVIEW_RE_LEVEL   NUMBER
 );
 
 
@@ -34,6 +36,8 @@ create sequence store_review_seq
 		<result property="REVIEW_FILE" column="REVIEW_FILE" />	
 		<result property="REVIEW_CONTENT" column="REVIEW_CONTENT" />	
 		<result property="REVIEW_GRADE" column="REVIEW_GRADE" />	
+		<result property="REVIEW_RE_REF" column="REVIEW_RE_REF" />	
+		<result property="REVIEW_RE_LEVEL" column="REVIEW_RE_LEVEL" />	
 	</resultMap>
 
 	<resultMap type="com.spring.store.Product_reviewVO" id="productReviewResultMap">
@@ -44,6 +48,8 @@ create sequence store_review_seq
 		<result property="REVIEW_FILE" column="REVIEW_FILE" />	
 		<result property="REVIEW_CONTENT" column="REVIEW_CONTENT" />	
 		<result property="REVIEW_GRADE" column="REVIEW_GRADE" />	
+		<result property="REVIEW_RE_REF" column="REVIEW_RE_REF" />	
+		<result property="REVIEW_RE_LEVEL" column="REVIEW_RE_LEVEL" />	
 	</resultMap>
 
 	<resultMap type="com.spring.member.MemberVO" id="memberReviewResultMap">
@@ -67,7 +73,8 @@ create sequence store_review_seq
 
 	<select id="getReviewList" parameterType="java.util.HashMap" resultMap="productReviewResultMap">
 		SELECT * FROM
-		(SELECT rownum rnum, REVIEW_NUM, REVIEW_MEMBER, REVIEW_PRODUCT, REVIEW_DATE, REVIEW_FILE, REVIEW_CONTENT, REVIEW_GRADE
+		(SELECT rownum rnum, REVIEW_NUM, REVIEW_MEMBER, REVIEW_PRODUCT, REVIEW_DATE, 
+				REVIEW_FILE, REVIEW_CONTENT, REVIEW_GRADE, REVIEW_RE_REF, REVIEW_RE_LEVEL
 		 FROM (SELECT * FROM PRODUCT_REVIEW WHERE REVIEW_PRODUCT=#{PRODUCT_NUM} ORDER BY REVIEW_DATE DESC))
 		<![CDATA[ WHERE rnum >= #{startrow} AND rnum <= #{endrow} ]]>
 	</select>
@@ -86,7 +93,8 @@ create sequence store_review_seq
 			SELECT store_review_seq.nextval From DUAL
 	</selectKey>
 		INSERT INTO PRODUCT_REVIEW VALUES
-		(#{REVIEW_NUM}, #{REVIEW_MEMBER}, #{REVIEW_PRODUCT}, #{REVIEW_DATE}, #{REVIEW_FILE, jdbcType=VARCHAR}, #{REVIEW_CONTENT}, #{REVIEW_GRADE})
+		(#{REVIEW_NUM}, #{REVIEW_MEMBER}, #{REVIEW_PRODUCT}, #{REVIEW_DATE}, #{REVIEW_FILE, jdbcType=VARCHAR}, 
+			#{REVIEW_CONTENT}, #{REVIEW_GRADE}, #{REVIEW_RE_REF}, #{REVIEW_RE_LEVEL})
 	</insert>
 	
 

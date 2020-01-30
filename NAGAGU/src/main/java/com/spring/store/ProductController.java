@@ -248,6 +248,9 @@ public class ProductController {
 		System.out.println("REVIEW_CONTENT=" + request.getParameter("REVIEW_CONTENT"));
 		System.out.println("REVIEW_GRADE=" + request.getParameter("REVIEW_GRADE"));
 
+		
+		String str = "";
+		if(!request.getFiles("REVIEW_FILE").isEmpty()) {
 		List<MultipartFile> fileList = new ArrayList<MultipartFile>(); 
 		
 		// input file 에 아무것도 없을 경우 (파일을 업로드 하지 않았을 때 처리) 
@@ -264,7 +267,7 @@ public class ProductController {
 		} 
 		
 		long time = System.currentTimeMillis(); 
-		String str = "";
+		
 		for (MultipartFile mf : fileList) { 
 			String originFileName = mf.getOriginalFilename(); // 원본 파일 명 
 			String saveFileName = String.format("%d_%s", time, originFileName);
@@ -294,7 +297,12 @@ public class ProductController {
 		
 		
 	    System.out.println("str 2 = " + str);
-	
+		} else {
+			str = "#";
+		}
+
+	    
+	    
 	   
 	//	reviewVO.setREVIEW_NUM(0); //시퀀스 이용
 		reviewVO.setREVIEW_MEMBER(1); //회원번호는 멤버 테이블에서 가져와야함(또는 세션)
@@ -302,7 +310,22 @@ public class ProductController {
 		reviewVO.setREVIEW_DATE(new Timestamp(System.currentTimeMillis()));
 		reviewVO.setREVIEW_FILE(str);
 		reviewVO.setREVIEW_CONTENT(request.getParameter("REVIEW_CONTENT"));
-		reviewVO.setREVIEW_GRADE(Double.parseDouble(request.getParameter("REVIEW_GRADE")));
+		
+		//넘겨받은 REVIEW_RE_REF가 존재하면 답글이고, null이면 원글이다.
+		if(request.getParameter("REVIEW_RE_REF") != null) {	
+			//답글 - GRADE=10, REF=NUM, LEVEL=1
+			reviewVO.setREVIEW_GRADE(10);
+			reviewVO.setREVIEW_RE_REF(Integer.parseInt(request.getParameter("REVIEW_RE_REF")));
+			reviewVO.setREVIEW_RE_LEVEL(1);
+		} else {	
+			//원글 - GRADE=GRADE, REF=NUM, LEVEL=0
+			reviewVO.setREVIEW_GRADE(Double.parseDouble(request.getParameter("REVIEW_GRADE")));
+			reviewVO.setREVIEW_RE_REF(0);
+			reviewVO.setREVIEW_RE_LEVEL(0);
+		}
+		
+		//답글일 경우 1을 넣어야함
+		
 		System.out.println("확인aaaaaaaaaaaa = "+reviewVO.getREVIEW_FILE());
 		
 		int res = reviewService.insertReview(reviewVO);
@@ -355,12 +378,12 @@ public class ProductController {
 	public String review_img_delete(HttpServletRequest request) throws Exception {
 		String newReviewImg = null;
 		int REVIEW_NUM = Integer.parseInt(request.getParameter("REVIEW_NUM"));
-		String img_src = request.getParameter("img_src");	//삭제할 이미지 소스	
+//		String img_src = request.getParameter("img_src");	//삭제할 이미지 소스	
 		int i = Integer.parseInt(request.getParameter("index"));
 //		String img_src = request.getParameter("img_src");	//삭제할 이미지 소스
 //		System.out.println("img_src = " + img_src);
 		
-		String REVIEW_FILE = reviewService.getREVIEW_FILE(REVIEW_NUM);
+		String REVIEW_FILE = reviewService.getREVIEW_FILE(REVIEW_NUM); //기존 db에 있던 이미지 파일
 		
 		System.out.println("REVIEW_FILE = " + REVIEW_FILE);
 		
@@ -398,7 +421,7 @@ public class ProductController {
 		
 		String str = "";
 		reviewService.deleteReviewImg(map);
-		newReviewImg = reviewService.newReviewImg(REVIEW_NUM);
+		newReviewImg = reviewService.newReviewImg(REVIEW_NUM); //기존 db 이미지 삭제했을 때, review_file(경로)에서 삭제하고 db에 새로 update  
 		ObjectMapper mapper = new ObjectMapper();
 		try {
 
