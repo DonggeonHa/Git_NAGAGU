@@ -10,6 +10,8 @@ public class Product_reviewVO {
 	private String REVIEW_FILE;
 	private String REVIEW_CONTENT;
 	private double REVIEW_GRADE;
+	private int REVIEW_RE_REF;
+	private int REVIEW_RE_LEVEL;
 	
 	
 	public int getREVIEW_NUM() {
@@ -54,6 +56,23 @@ public class Product_reviewVO {
 	public void setREVIEW_GRADE(double rEVIEW_GRADE) {
 		REVIEW_GRADE = rEVIEW_GRADE;
 	}
+	public int getREVIEW_RE_REF() {
+		return REVIEW_RE_REF;
+	}
+	public void setREVIEW_RE_REF(int rEVIEW_RE_REF) {
+		REVIEW_RE_REF = rEVIEW_RE_REF;
+	}
+	public int getREVIEW_RE_LEVEL() {
+		return REVIEW_RE_LEVEL;
+	}
+	public void setREVIEW_RE_LEVEL(int rEVIEW_RE_LEVEL) {
+		REVIEW_RE_LEVEL = rEVIEW_RE_LEVEL;
+	}
+	
+	
+	
+	
+	
 
 	
 	
