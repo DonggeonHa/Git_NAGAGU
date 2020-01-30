@@ -343,8 +343,9 @@ public class CommunityController {
 		//picsVO.setPICS_NUM(Integer.parseInt(request.getParameter("picNum")));
 		Map<String, Object> retVal = new HashMap<String, Object>();
 		try {
-			int picsLikeCount = communityService.insertMemberLike(map);
-			retVal.put("picsLikeCount", picsLikeCount);
+			HashMap<String, Object> returnInfo = communityService.insertMemberLike(map);
+			retVal.put("picsLikeCount", returnInfo.get("picsLikeCount"));
+			retVal.put("cnt", returnInfo.get("cnt"));//0이면 좋아요+, 1이면 좋아요-
 			retVal.put("res", "OK");
 		}catch(Exception e) {
 			retVal.put("res", "FAIL");

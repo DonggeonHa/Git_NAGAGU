@@ -6,6 +6,7 @@ import java.util.Map;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -58,10 +59,9 @@ public class MemberAjaxController {
 	}
 
 	@PostMapping(value = "/login.su", produces = "application/json;charset=UTF-8")
-	public Map<String, Object> login(MemberVO memberVO, HttpSession session) {
+	public Map<String, Object> login(MemberVO memberVO, HttpSession session, Model model) {
 		Map<String, Object> retVal = new HashMap<String, Object>(); // 리턴값 저장
 		System.out.println("컨트롤러 로그인체크: " + memberVO.getMEMBER_EMAIL() + memberVO.getMEMBER_PASS());
-		
 		try {
 			int res = memberService.user_chk(memberVO);
 			System.out.println("res는" + res);
@@ -69,8 +69,6 @@ public class MemberAjaxController {
 			if (res == 1) {	//로그인(아이디,비번 맞음)-이메일 인증 완료
 				session.setAttribute("MEMBER_EMAIL", memberVO.getMEMBER_EMAIL());
 //				session.setAttribute("member_pass", memberVO.getMember_pass());
-				
-				
 				retVal.put("res", "login_success");
 				
 			} else if(res == 0) { //아이디,비번은 맞지만 이메일 미인증일 때

@@ -102,7 +102,8 @@ public class CommunityServiceImpl implements CommunityService{
 		return result;
 	}
 	@Override
-	public int insertMemberLike(HashMap<String, Object> map){
+	public HashMap<String, Object> insertMemberLike(HashMap<String, Object> map){
+		HashMap<String, Object> returnInfo = new HashMap<String, Object>();
 		int picsLikeCount = 0;
 		int cnt = 0;
 		try {
@@ -121,6 +122,8 @@ public class CommunityServiceImpl implements CommunityService{
 				int re = communityMapper.updatePicsLike(map);
 				picsVO = communityMapper.getPicsDetail(picsVO);
 				picsLikeCount = picsVO.getPICS_LIKE();
+				returnInfo.put("picsLikeCount", picsLikeCount);
+				returnInfo.put("cnt", cnt);
 				System.out.println("사진 좋아요 1증가="+re);
 			}else {
 				memberlikeMapper.deleteMemberLike(map);
@@ -128,12 +131,14 @@ public class CommunityServiceImpl implements CommunityService{
 				int re = communityMapper.updatePicsLike(map);
 				picsVO = communityMapper.getPicsDetail(picsVO);
 				picsLikeCount =  picsVO.getPICS_LIKE();
+				returnInfo.put("picsLikeCount", picsLikeCount);
+				returnInfo.put("cnt", cnt);
 				System.out.println("사진 좋아요 1감소="+re);
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		return picsLikeCount;
+		return returnInfo;
 	}
 	
 

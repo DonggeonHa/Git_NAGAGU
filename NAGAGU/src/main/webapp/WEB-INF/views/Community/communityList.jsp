@@ -104,7 +104,7 @@ img {
 	opacity: 0.3;
 }
 
-.img:hover #output {
+.img:hover .output {
 	opacity: 1;
 }
 
@@ -211,9 +211,9 @@ img {
 					<a href="${pageContext.request.contextPath}/community_detail.cm?PICS_NUM=<%=pics_vo.getPICS_NUM()%>&MEMBER_NUM=<%=member_vo.getMEMBER_NUM()%>&PICS_MEMBER=<%=pics_vo.getPICS_MEMBER()%>">
 						<div class="img">
 							<img src="/communityupload/image/<%=pics_vo.getPICS_FILE_1()%>" class="img" />
-							<div class="hover-image" id="output">
+							<div class="hover-image output" id="<%=pics_vo.getPICS_NUM()%>" name="picnum<%=pics_vo.getPICS_NUM()%>">
 								<a href="#"> 
-									<span class="button likeBtn" id="<%=pics_vo.getPICS_NUM()%>" name="a">  
+									<span class="button likeBtn" id="output<%=pics_vo.getPICS_NUM()%>" >  
 										<i class="far fa-heart fa-2x" id="far"></i>
 									</span><%=pics_vo.getPICS_LIKE()%>
 								</a> 
@@ -310,9 +310,9 @@ img {
 		crossorigin="anonymous"></script>
 	<script>
 		  $(document).on("click","#far",function (){
-			var picsNum = $(event.target).parent().attr('id')
+			var picsNum = $(event.target).parent().attr('id').substring(6)
 			var	memberNum = <%=memberVO.getMEMBER_NUM()%>
-			console.log(picsNum)
+			console.log('picsNum='+picsNum)
 		<%-- 	console.log(${memberVO.MEMBER_NUM})
 			console.log(<%=memberVO.getMEMBER_NUM()%>) --%>
 			
@@ -324,35 +324,39 @@ img {
     				'application/x-www-form-urlencoded; charset=utf-8',
                 success: function (retVal) {
 		        if(retVal.res=="OK"){
-		        	//$('#'+idNum).parent().empty();
 		        	var output="";
-					output += '<span class="button likeBtn" id='+picsNum+' name="a">'
-					output += '<i class="far fa-heart fa-2x" id="far"></i>'
-					output += '</span>'+retVal.picsLikeCount+''
-		        	console.log('output:'+output)
-		        	var idNum = $('.likeBtn').attr('id')
-		        	$('#'+idNum).parent().html(output);
-		        	
+						output += '<span class="button likeBtn" id="output'+picsNum+'" name="a">'
+					if(retVal.cnt=='1'){
+						output += '<i class="far fa-heart fa-2x" id="far"></i>'	
+					}else{
+						output += '<i class="fas fa-heart fa-2x" id="far"></i>'
+					}
+						output += '</span>'+retVal.picsLikeCount+''
+		        	$('#output'+picsNum).parent().html(output);
+					console.log(retVal.cnt);
+					console.log(retVal.picsLikeCount);
 					alert("성공");
+
 				}else{
 					alert("update fail");
 				} 
+
 			},
 			error:function(){
 				alert("ajax통신 실패!!");
 			}
 			})
-			event.preventDefault();
-			//addClass()
-/* 		    function addClass() {
-			    if($("#far").attr('data-prefix') === "far"){
-			      $("#far").removeClass("far fa-heart fa-2x");
+			
+/* 	    	alert('hid')
+		    if($("#far").attr('data-prefix') === "far"){
+			       $("#far").removeClass("far fa-heart fa-2x");
 				   $("#far").addClass("fas fa-heart fa-2x");
 			    }else{
-			      $("#far").removeClass("fas fa-heart fa-2x");
-			      $("#far").addClass("far fa-heart fa-2x");
-			    }
-		    } */
+			       $("#far").removeClass("fas fa-heart fa-2x");
+			       $("#far").addClass("far fa-heart fa-2x");
+			    }  */
+ 			event.preventDefault();
+ 		    
 		    
 		  });
 	</script>
