@@ -94,7 +94,7 @@ public class AcademyController {
 		
 		ModelAndView mav = new ModelAndView();
 		mav.addObject("ClassVO", vo);
-		mav.setViewName("Academy/detail2");
+		mav.setViewName("Academy/detail");
 		
 		return mav;
 	}
