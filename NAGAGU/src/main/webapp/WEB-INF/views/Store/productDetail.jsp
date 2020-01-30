@@ -517,7 +517,7 @@
 													<!--검색  -->
 													<input type="hidden" name="REVIEW_PRODUCT" value="<%=reviewVO.getREVIEW_PRODUCT() %>">
 													<input type="hidden" name="REVIEW_NUM" value="<%=reviewVO.getREVIEW_NUM() %>">
-													<input type="hidden" name="REVIEW_RE_REF" value="<%=reviewVO.getREVIEW_NUM() %>">
+													<input type="hidden" name="REVIEW_RE" value="<%=reviewVO.getREVIEW_NUM() %>">
 													<textarea name="REVIEW_CONTENT" placeholder="답글을 작성해주세요!" cols="80%" rows="5"></textarea>
 												</form>
 											</div>
@@ -1645,7 +1645,7 @@
 							
 							
 							var re_form = '';
-							var aa = data.review_RE_REF;
+						//	var aa = data.review_RE;
 							var review_DATE = new Date(data.review_DATE);
 							var date = date_format(review_DATE);
 							var rate = 20*data.review_GRADE;
@@ -1675,12 +1675,12 @@
 							console.log("re_form:" + re_form);
 				
 							
-							$('#review_re_space'+aa).append(re_form);	
-							alert('답글달기aaa'+aa);
-							$('#review_re_hidden_'+aa).css('display','none');
-							$('#review_re_insert'+aa).css('display','none');
-							$('#review_control'+aa).css('display','block');
-							$('#review_reply'+aa).css('display','block');
+							$('#review_re_space'+data.review_RE).append(re_form);	
+							alert('답글달기aaa'+data.review_RE);
+							$('#review_re_hidden_'+data.review_RE).css('display','none');
+							$('#review_re_insert'+data.review_RE).css('display','none');
+							$('#review_control'+data.review_RE).css('display','block');
+							$('#review_reply'+data.review_RE).css('display','block');
 							
 							/* $('#REVIEW_CONTENT').val('');
 							$('#REVIEW_GRADE').val('');
