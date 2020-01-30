@@ -330,7 +330,7 @@ public class CommunityController {
 		}
 		return retVal;
 	} 
-	@RequestMapping(value = "/insertMemberLike.cm")
+	@RequestMapping(value = "/insertPicsLike.cm")
 	public @ResponseBody Map<String, Object> getLikeUpdate(PicsVO picsVO,HttpServletRequest request) {
 		System.out.println("insert컨트롤러 시작");
 		String memberNum = request.getParameter("memberNum");
@@ -342,12 +342,9 @@ public class CommunityController {
 		
 		//picsVO.setPICS_NUM(Integer.parseInt(request.getParameter("picNum")));
 		Map<String, Object> retVal = new HashMap<String, Object>();
-		
-		
-		
-		
 		try {
-			int result = memberService.insertMemberLike(map);
+			int picsLikeCount = communityService.insertMemberLike(map);
+			retVal.put("picsLikeCount", picsLikeCount);
 			retVal.put("res", "OK");
 		}catch(Exception e) {
 			retVal.put("res", "FAIL");

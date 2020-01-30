@@ -85,20 +85,6 @@
 	SELECT * FROM nagagu_member WHERE MEMBER_EMAIL=#{MEMBER_EMAIL}
 	</select>
 	
-	<insert id="insertMemberLike" parameterType="com.spring.member.MemberVO">
-		INSERT INTO MEMBER_LIKE(LIKE_NUM, LIKE_MEMBER, LIKE_PICS)
-		VALUES(SEQ_MEMBER_LIKE.NEXTVAL, #{memberNum}, #{picsNum})
-	</insert>
 	
-<!-- 	<select id="read" resultType="likeVO">
-		select *
-		from tbl_like
-		where bno = #{bno} and uid = #{uid}
-	</select>
-	
-	<delete id="delete">
-		delete from tbl_like
-		where bno = #{bno} and uid = #{uid}
-	</delete> -->
 	
 </mapper>

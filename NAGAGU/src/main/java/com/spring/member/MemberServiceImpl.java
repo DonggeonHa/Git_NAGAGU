@@ -7,10 +7,11 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.spring.mapper.MemberLikeMapper;
 import com.spring.mapper.memberMapper;
 
 @Service("memberService")
-public class MemberServiceImpl implements MemberService {
+public class MemberServiceImpl implements MemberService{
 
 	@Autowired
 	private SqlSession sqlSession;
@@ -198,18 +199,5 @@ public class MemberServiceImpl implements MemberService {
 		}
 		return vo;
 	}
-	@Override
-	public int insertMemberLike(HashMap<String, Object> map){
-		int vo = 0;
-		try {
-			
-			memberMapper memberMapper= sqlSession.getMapper(memberMapper.class);
-			vo = memberMapper.insertMemberLike(map);
-			
-			System.out.println("서비스임플 결과= "+vo);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		return vo;
-	}
+
 }

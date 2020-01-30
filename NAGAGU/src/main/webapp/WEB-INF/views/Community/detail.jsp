@@ -424,7 +424,7 @@
 					$.each(data, function(index,item){
 						var output='';
 						output += '<div class="row"><div class="col-1"><img src=';
-						output += '<%=memberVO.getMEMBER_PICTURE()%> ';
+						output += '<%=memberVO.getMEMBER_PICTURE()%>';
 						output += 'class="img-circle" style="width: 50px; height: 50px; margin: 0 20% auto;"></div>'
 						output += '<div class="col-11"><div class="row reply'+item.pics_RE_NUM+'"><div class="col-10">별명:<%=memberVO.getMEMBER_NICK()%></div>'
 						output += '<div class="col-2 smallfont px-0">날짜:'+item.pics_RE_DATE+'</div>	<div class="row">';
@@ -477,7 +477,7 @@
 		<%-- params += '&PICS_RE_REF='+<%=picsVO.getPICS_RE_NUM()%>; --%>
 		params += '&PICS_RE_PICS='+<%=picsVO.getPICS_NUM()%>;
 		//나중에 세션에서 값 가져오기(멤버)ㄴ
-		params += '&PICS_RE_MEMBER='+1;
+		params += '&PICS_RE_MEMBER='+<%=memberVO.getMEMBER_NUM()%>;
 		alert(params);
 		jQuery.ajax({
 			url: '/NAGAGU/insertComment.cm',

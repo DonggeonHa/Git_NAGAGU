@@ -6,11 +6,13 @@
 <%@ page import="com.spring.member.MemberVO"%>
 <%
 	System.out.println("pics_jsp start");
+	System.out.println("세션에서 받은 멤버넘버 =" +session.getAttribute("MEMBER_NUM"));
+
 	ArrayList<PicsVO> picsList = (ArrayList<PicsVO>) request.getAttribute("picsList");
 	ArrayList<MemberVO> memberList = (ArrayList<MemberVO>) request.getAttribute("memberList"); 
 	
 	MemberVO memberVO = (MemberVO)request.getAttribute("memberDetailbyEmail");
-	
+	 
 	int listcount = ((Integer) request.getAttribute("listcount")).intValue(); // (전체/카테고리)글 개수
 	int nowpage = ((Integer) request.getAttribute("page")).intValue();
 	int maxpage = ((Integer) request.getAttribute("maxpage")).intValue();
@@ -20,12 +22,7 @@
 	String PICS_CATEGORY = (String)request.getAttribute("pics_category");
 	String PICS_REVIEW= (String)request.getAttribute("pics_review");
 	String sort = (String)request.getAttribute("sort");
-	
 	//System.out.println("sos"+picsList.size());
-	
-	
-	
-	
 %> 
 <!DOCTYPE html>
 <html>
@@ -107,7 +104,7 @@ img {
 	opacity: 0.3;
 }
 
-.img:hover #test {
+.img:hover #output {
 	opacity: 1;
 }
 
@@ -214,13 +211,13 @@ img {
 					<a href="${pageContext.request.contextPath}/community_detail.cm?PICS_NUM=<%=pics_vo.getPICS_NUM()%>&MEMBER_NUM=<%=member_vo.getMEMBER_NUM()%>&PICS_MEMBER=<%=pics_vo.getPICS_MEMBER()%>">
 						<div class="img">
 							<img src="/communityupload/image/<%=pics_vo.getPICS_FILE_1()%>" class="img" />
-							<div class="hover-image" id="test">
+							<div class="hover-image" id="output">
 								<a href="#"> 
-								<span class="button likeBtn" id="<%=pics_vo.getPICS_NUM()%>" name="a">  
-								<i class="far fa-heart fa-2x" id="far"></i>
-								</span><%=pics_vo.getPICS_LIKE()%>
+									<span class="button likeBtn" id="<%=pics_vo.getPICS_NUM()%>" name="a">  
+										<i class="far fa-heart fa-2x" id="far"></i>
+									</span><%=pics_vo.getPICS_LIKE()%>
 								</a> 
-								<a href=""><i class="far fa-share-square fa-2x"></i>
+									<a href=""><i class="far fa-share-square fa-2x"></i>
 								</a>
 							</div>
 						</div>
@@ -312,31 +309,31 @@ img {
 		integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU="
 		crossorigin="anonymous"></script>
 	<script>
-		  $(document).on("click","#far",function addClass() {
-		    if($(this).attr('data-prefix') === "far"){
-		      $(this).removeClass("far fa-heart fa-2x");
-			   $(this).addClass("fas fa-heart fa-2x");
-		    }else{
-		      $(this).removeClass("fas fa-heart fa-2x");
-		      $(this).addClass("far fa-heart fa-2x");
-		    }
-			alert('hi')
-			var picsNum = $("#far").parent().attr('id')
+		  $(document).on("click","#far",function (){
+			var picsNum = $(event.target).parent().attr('id')
 			var	memberNum = <%=memberVO.getMEMBER_NUM()%>
 			console.log(picsNum)
-		//	console.log(${memberVO.MEMBER_NUM})
-			console.log(<%=memberVO.getMEMBER_NUM()%>)
-		
+		<%-- 	console.log(${memberVO.MEMBER_NUM})
+			console.log(<%=memberVO.getMEMBER_NUM()%>) --%>
 			
  			$.ajax({
-				url: "/NAGAGU/insertMemberLike.cm",
+				url: "/NAGAGU/insertPicsLike.cm",
                 type: "POST",
                 data: { 'memberNum' : memberNum , 'picsNum' : picsNum},
                 contentType:
     				'application/x-www-form-urlencoded; charset=utf-8',
                 success: function (retVal) {
 		        if(retVal.res=="OK"){
-					alert("insert 성공");
+		        	//$('#'+idNum).parent().empty();
+		        	var output="";
+					output += '<span class="button likeBtn" id='+picsNum+' name="a">'
+					output += '<i class="far fa-heart fa-2x" id="far"></i>'
+					output += '</span>'+retVal.picsLikeCount+''
+		        	console.log('output:'+output)
+		        	var idNum = $('.likeBtn').attr('id')
+		        	$('#'+idNum).parent().html(output);
+		        	
+					alert("성공");
 				}else{
 					alert("update fail");
 				} 
@@ -344,7 +341,18 @@ img {
 			error:function(){
 				alert("ajax통신 실패!!");
 			}
-			}) 
+			})
+			event.preventDefault();
+			//addClass()
+/* 		    function addClass() {
+			    if($("#far").attr('data-prefix') === "far"){
+			      $("#far").removeClass("far fa-heart fa-2x");
+				   $("#far").addClass("fas fa-heart fa-2x");
+			    }else{
+			      $("#far").removeClass("fas fa-heart fa-2x");
+			      $("#far").addClass("far fa-heart fa-2x");
+			    }
+		    } */
 		    
 		  });
 	</script>

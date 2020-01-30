@@ -180,6 +180,17 @@ PICS_REF-->
 		WHERE PICS_NUM=#{PICS_NUM}
 	</update>
 	
+	<!-- 좋아요 수 업데이트 -->
+	<update id="updatePicsLike" parameterType="java.util.HashMap">	
+		UPDATE PICS SET	
+		<if test="count == 'plus'">
+			PICS_LIKE = PICS_LIKE +1
+		</if>
+		<if test="count == 'minus'">
+			PICS_LIKE = PICS_LIKE -1
+		</if>
+		WHERE PICS_NUM=#{picsNum}
+	</update>
 	
 	<!-- 	<select id="getPicsCategory" parameterType="java.util.HashMap" resultMap="picsResultMap">
 		SELECT * FROM

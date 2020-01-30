@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- 
+CREATE TABLE MEMBER_LIKE (
+	LIKE_NUM NUMBER NOT NULL, /* 좋아요 ID */
+	LIKE_MEMBER NUMBER, /* 회원 번호 */
+	LIKE_PICS NUMBER /* 사진 ID */
+);-->
+<!-- 이 xml문서와 맵핑할 인터페이스 경로, 이름 -->
+<mapper namespace="com.spring.mapper.MemberLikeMapper">
+	<resultMap type="java.util.HashMap" id="hashmapVO">
+		<result property="LIKE_NUM" column="LIKE_NUM" />	
+		<result property="LIKE_MEMBER" column="LIKE_MEMBER" />	
+		<result property="LIKE_PICS" column="LIKE_PICS" />	
+	</resultMap>
+	<resultMap type="com.spring.community.LikeVO" id="likeResultMap">
+		<result property="LIKE_NUM" column="LIKE_NUM" />	
+		<result property="LIKE_MEMBER" column="LIKE_MEMBER" />	
+		<result property="LIKE_PICS" column="LIKE_PICS" />	
+	</resultMap>
+	
+	<insert id="insertMemberLike" parameterType="com.spring.community.LikeVO">
+		INSERT INTO MEMBER_LIKE(LIKE_NUM, LIKE_MEMBER, LIKE_PICS)
+		VALUES(SEQ_MEMBER_LIKE.NEXTVAL, #{memberNum}, #{picsNum})
+	</insert>
+	
+	<select id="selectMemberLike" parameterType="java.util.HashMap" resultType="int">
+		SELECT COUNT(*) FROM MEMBER_LIKE WHERE LIKE_MEMBER=#{memberNum} AND LIKE_PICS=#{picsNum}
+	</select>
+	
+	<delete id="deleteMemberLike">
+		DELETE FROM MEMBER_LIKE
+		WHERE LIKE_MEMBER = #{memberNum} AND LIKE_PICS = #{picsNum}
+	</delete>
+
+
+
+</mapper>

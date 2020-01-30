@@ -8,6 +8,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.spring.mapper.CommunityMapper;
+import com.spring.mapper.MemberLikeMapper;
+import com.spring.mapper.memberMapper;
 import com.spring.member.MemberVO;
 @Service
 public class CommunityServiceImpl implements CommunityService{
@@ -99,7 +101,40 @@ public class CommunityServiceImpl implements CommunityService{
 		System.out.println("result=" + result);
 		return result;
 	}
-	
+	@Override
+	public int insertMemberLike(HashMap<String, Object> map){
+		int picsLikeCount = 0;
+		int cnt = 0;
+		try {
+			System.out.println(map.get("memberNum"));
+			System.out.println(map.get("picsNum"));
+			CommunityMapper communityMapper= sqlSession.getMapper(CommunityMapper.class);
+			MemberLikeMapper memberlikeMapper=sqlSession.getMapper(MemberLikeMapper.class);
+			PicsVO picsVO = new PicsVO();
+			picsVO.setPICS_NUM(Integer.valueOf((String)map.get("picsNum")));
+			 
+			cnt = memberlikeMapper.selectMemberLike(map);
+			System.out.println("cnt="+cnt);
+			if(cnt==0) {
+				memberlikeMapper.insertMemberLike(map);
+				map.put("count","plus");
+				int re = communityMapper.updatePicsLike(map);
+				picsVO = communityMapper.getPicsDetail(picsVO);
+				picsLikeCount = picsVO.getPICS_LIKE();
+				System.out.println("사진 좋아요 1증가="+re);
+			}else {
+				memberlikeMapper.deleteMemberLike(map);
+				map.put("count", "minus");
+				int re = communityMapper.updatePicsLike(map);
+				picsVO = communityMapper.getPicsDetail(picsVO);
+				picsLikeCount =  picsVO.getPICS_LIKE();
+				System.out.println("사진 좋아요 1감소="+re);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return picsLikeCount;
+	}
 	
 
 //삭제 예정
