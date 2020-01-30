@@ -310,7 +310,7 @@ img {
 		crossorigin="anonymous"></script>
 	<script>
 		  $(document).on("click","#far",function (){
-			var picsNum = $(event.target).parent().attr('id').substring(6)
+			var picsNum = $(this).parent().attr('id').substring(6)
 			var	memberNum = <%=memberVO.getMEMBER_NUM()%>
 			console.log('picsNum='+picsNum)
 		<%-- 	console.log(${memberVO.MEMBER_NUM})
