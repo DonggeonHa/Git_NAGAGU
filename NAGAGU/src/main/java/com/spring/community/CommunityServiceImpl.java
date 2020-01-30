@@ -107,20 +107,16 @@ public class CommunityServiceImpl implements CommunityService{
 		int picsLikeCount = 0;
 		int cnt = 0;
 		try {
-			System.out.println(map.get("memberNum"));
-			System.out.println(map.get("picsNum"));
 			CommunityMapper communityMapper= sqlSession.getMapper(CommunityMapper.class);
 			MemberLikeMapper memberlikeMapper=sqlSession.getMapper(MemberLikeMapper.class);
 			PicsVO picsVO = new PicsVO();
 			picsVO.setPICS_NUM(Integer.valueOf((String)map.get("picsNum")));
-			 
+			picsVO = communityMapper.getPicsDetail(picsVO);
 			cnt = memberlikeMapper.selectMemberLike(map);
-			System.out.println("cnt="+cnt);
 			if(cnt==0) {
 				memberlikeMapper.insertMemberLike(map);
 				map.put("count","plus");
 				int re = communityMapper.updatePicsLike(map);
-				picsVO = communityMapper.getPicsDetail(picsVO);
 				picsLikeCount = picsVO.getPICS_LIKE();
 				returnInfo.put("picsLikeCount", picsLikeCount);
 				returnInfo.put("cnt", cnt);
@@ -129,7 +125,6 @@ public class CommunityServiceImpl implements CommunityService{
 				memberlikeMapper.deleteMemberLike(map);
 				map.put("count", "minus");
 				int re = communityMapper.updatePicsLike(map);
-				picsVO = communityMapper.getPicsDetail(picsVO);
 				picsLikeCount =  picsVO.getPICS_LIKE();
 				returnInfo.put("picsLikeCount", picsLikeCount);
 				returnInfo.put("cnt", cnt);
