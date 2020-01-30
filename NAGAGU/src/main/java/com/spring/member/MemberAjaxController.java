@@ -63,11 +63,22 @@ public class MemberAjaxController {
 		System.out.println("컨트롤러 로그인체크: " + memberVO.getMEMBER_EMAIL() + memberVO.getMEMBER_PASS());
 		
 		try {
-			int res = memberService.user_chk(memberVO);
+			MemberVO member = null; 
+			member = memberService.selectMember(memberVO);
+			
+			if(member == null) {
+				System.out.println("selectMember 가져오기 실패");
+				return null;
+			}
+			System.out.println("selectMember 가져오기 성공");
+			
+			int res = memberService.user_chk(member);
 			System.out.println("res는" + res);
 			
 			if (res == 1) {	//로그인(아이디,비번 맞음)-이메일 인증 완료
-				session.setAttribute("MEMBER_EMAIL", memberVO.getMEMBER_EMAIL());
+				session.setAttribute("MEMBER_EMAIL", member.getMEMBER_EMAIL());
+				session.setAttribute("MEMBER_NUM", member.getMEMBER_NUM());
+				session.setAttribute("MEMBER_NICK", member.getMEMBER_NICK());
 //				session.setAttribute("member_pass", memberVO.getMember_pass());
 				
 				retVal.put("res", "login_success");

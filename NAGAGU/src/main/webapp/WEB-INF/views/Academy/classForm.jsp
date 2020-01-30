@@ -168,7 +168,7 @@
 							<div class="row">
 								<div>
 									<select name="CLASS_AREA" class="form-control">
-										<option value="지역"selected>지역</option>
+										<option value="지역" selected>지역</option>
 										<option value="종로구">종로구</option>
 										<option value="중구">중구</option>
 										<option value="용산구">용산구</option>
@@ -223,7 +223,7 @@
 	                    <th>공방을 소개해요</th>
 	                    <td>
 							<div class="row">
-								<div id="summernote1" name="CLASS_INTRODUCTION_1"></div>
+								<textarea id="summernote1" name="CLASS_INTRODUCTION_1"></textarea>
 							</div>
 	                    </td>
 	                </tr>
@@ -231,7 +231,7 @@
 	                    <th>이렇게 진행해요</th>
 	                    <td>
 							<div class="row">
-								<div id="summernote2" name="CLASS_INTRODUCTION_2"></div>
+								<textarea id="summernote2" name="CLASS_INTRODUCTION_2"></textarea>
 							</div>
 	                    </td>
 	                </tr>
@@ -239,7 +239,7 @@
 	                    <th>함께하고 싶어요</th>
 	                    <td>
 							<div class="row">
-								<div id="summernote3" name="CLASS_INTRODUCTION_3"></div>
+								<textarea id="summernote3" name="CLASS_INTRODUCTION_3"></textarea>
 							</div>
 	                    </td>
 	                </tr>
@@ -394,8 +394,6 @@
 				$('#summernote1').summernote({
 					width: 670,
 					height: 600,
-					minHeight: null,
-					maxHeight: null,
 					lang: 'ko-KR',
 					callbacks: {
 						  onImageUpload: function(files) {
@@ -411,7 +409,7 @@
 					  $.ajax({
 						 data:form_data,
 						 type:"POST",
-						 url:'./test3.ma',
+						 url:'./summernote.ma',
 						 cache: false,
 						 contentType: false,
 						 enctype: 'multitype/form-data',
@@ -420,7 +418,7 @@
 							 console.log("Success");
 							 console.log(url);
 							 $('#summernote1').summernote('editor.insertImage', url);
-							 $('#image_list > ul').append('<li><img src="'+url+'" width="160" height="160"/></li>');
+							 
 						 },
 					 	 error: function() {
 							 console.log("Fail");
@@ -433,8 +431,6 @@
 				$('#summernote2').summernote({
 					width: 670,
 					height: 600,
-					minHeight: null,
-					maxHeight: null,
 					lang: 'ko-KR',
 					callbacks: {
 						  onImageUpload: function(files) {
@@ -450,7 +446,7 @@
 					  $.ajax({
 						 data:form_data,
 						 type:"POST",
-						 url:'./test3.ma',
+						 url:'./summernote.ma',
 						 cache: false,
 						 contentType: false,
 						 enctype: 'multitype/form-data',
@@ -459,7 +455,7 @@
 							 console.log("Success");
 							 console.log(url);
 							 $('#summernote2').summernote('editor.insertImage', url);
-							 $('#image_list > ul').append('<li><img src="'+url+'" width="160" height="160"/></li>');
+							 
 						 },
 					 	 error: function() {
 							 console.log("Fail");
@@ -472,8 +468,6 @@
 				$('#summernote3').summernote({
 					width: 670,
 					height: 600,
-					minHeight: null,
-					maxHeight: null,
 					lang: 'ko-KR',
 					callbacks: {
 						  onImageUpload: function(files) {
@@ -489,7 +483,7 @@
 					  $.ajax({
 						 data:form_data,
 						 type:"POST",
-						 url:'./test3.ma',
+						 url:'./summernote.ma',
 						 cache: false,
 						 contentType: false,
 						 enctype: 'multitype/form-data',
@@ -498,7 +492,7 @@
 							 console.log("Success");
 							 console.log(url);
 							 $('#summernote3').summernote('editor.insertImage', url);
-							 $('#image_list > ul').append('<li><img src="'+url+'" width="160" height="160"/></li>');
+							 
 						 },
 					 	 error: function() {
 							 console.log("Fail");

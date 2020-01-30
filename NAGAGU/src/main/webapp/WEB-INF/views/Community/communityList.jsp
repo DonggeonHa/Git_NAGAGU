@@ -177,8 +177,7 @@ img {
 							<input type="text" class="form-control"
 								placeholder="Search for..." id="keyword" > <span
 								class="input-group-btn ml-3">
-								<button class="btn btn-outline-secondary btn-md my-2 my-sm-0"
-									type="submit" id="search_btn">Search</button>
+								<button class="btn btn-outline-secondary btn-md my-2 my-sm-0" type="submit" id="search_btn">Search</button>
 							</span>
 						</div>
 						<!-- /input-group -->

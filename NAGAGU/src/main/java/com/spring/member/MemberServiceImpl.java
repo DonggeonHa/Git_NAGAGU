@@ -151,6 +151,22 @@ public class MemberServiceImpl implements MemberService {
 	}
 
 	@Override
+	public MemberVO selectMember(MemberVO memberVO) {
+		MemberVO member = null;
+		
+		try {
+			memberMapper memberMapper = sqlSession.getMapper(memberMapper.class);
+			member = memberMapper.selectMember(memberVO);
+			
+			return member;
+		} catch (Exception e) {
+			System.out.println("멤버 리스트 가져오기 실패!" + e.getMessage());
+		}
+		return null;
+		
+	}
+	
+	@Override
 	public ArrayList<MemberVO> get_nick_list() {
 		try {
 			memberMapper memberMapper = sqlSession.getMapper(memberMapper.class);
@@ -163,6 +179,8 @@ public class MemberServiceImpl implements MemberService {
 		return null;
 		
 	}
+	
+	
 
 	@Override
 	public ArrayList<MemberVO> getMemberList(HashMap<String, Object> map) {

@@ -11,6 +11,7 @@ public interface MemberService {
 	public int insert_sns_member(MemberVO memberVO);	//sns회원가입
 	public int user_chk(MemberVO memberVO);
 	public ArrayList<MemberVO> get_nick_list();
+	public MemberVO selectMember(MemberVO memberVO);
 	
 	ArrayList<MemberVO> getMemberList(HashMap<String, Object> map);
 	MemberVO getMemberDetail(MemberVO memberVO);

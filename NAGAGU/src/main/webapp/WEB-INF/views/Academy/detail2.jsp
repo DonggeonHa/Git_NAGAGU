@@ -1,8 +1,16 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"	pageEncoding="UTF-8"%>
 <%@ page session="false" %>
+<%@ page import="java.util.*"%>
+<%@ page import="org.springframework.util.StringUtils"%>
 <%@ page import = "com.spring.academy.*" %>
+<%@ taglib uri = "http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib prefix = "fmt" uri = "http://java.sun.com/jsp/jstl/fmt" %>
+
 <%
 	ClassVO cl = (ClassVO)request.getAttribute("ClassVO");
+	int bannerImgCount = 0; 
+	bannerImgCount = StringUtils.countOccurrencesOf(cl.getCLASS_BANNER(), ",");
+	System.out.println("test " + cl.getCLASS_INTRODUCTION_3());
 %>
 <!DOCTYPE html>
 <html>
@@ -256,15 +264,32 @@
 			<div class="col-12 text-center" style="padding-bottom: 5%;">
 				<div id="carouselExampleFade" class="carousel slide carousel-fade" data-ride="carousel">
  					<div class="carousel-inner text-center">
-    					<div class="carousel-item active">
-      						<img src="${pageContext.request.contextPath}/resources/images/class/Detail1.jpg" class="d-block w-100" alt="...">
-    					</div>
-    					<div class="carousel-item">
-      						<img src="${pageContext.request.contextPath}/resources/images/class/Detail2.jpg" class="d-block w-100" alt="...">
-    					</div>
-    					<div class="carousel-item">
-      						<img src="${pageContext.request.contextPath}/resources/images/class/Detail3.jpg" class="d-block w-100" alt="...">
-    					</div>
+    					<%
+    						for(int i = 0; i < (bannerImgCount)+1; i++) {
+    							if(cl.getCLASS_BANNER().equals("#")) {	
+    					%>
+    								<div class="carousel-item">
+      									<img src="#" class="d-block w-100" style="display: none;">
+    								</div>
+    					<%
+    							} 
+    							else {
+    								if(i == 0) {
+						%>    				
+										<div class="carousel-item active">
+	    	      							<img src="/communityupload/image/<%=cl.getCLASS_BANNER().split(",")[i]%>" class="d-block w-100" alt="...">
+	    	    						</div>
+    	    			<%
+    	    							continue;
+    								}
+    	    			%>				
+    								<div class="carousel-item">
+    	      							<img src="/communityupload/image/<%=cl.getCLASS_BANNER().split(",")[i]%>" class="d-block w-100" alt="...">
+    	    						</div>    								
+    	    			<%
+    							}
+    						}
+    	    			%>
  					</div>
   					<a class="carousel-control-prev" href="#carouselExampleFade" role="button" data-slide="prev">
     					<span class="carousel-control-prev-icon" aria-hidden="true"></span>
@@ -281,8 +306,8 @@
 				<!-- 제목 -->
 					<div style="line-height: 0.5em;">
 						<dl>
-							<dt><h3>우드슬랩 테이블&벤치 만들기(5회)</h3><br></dt>
-							<dl><h5>합판과 나사못을 전혀 사용하지 않는 원목 가구 클래스</h5></dl>
+							<dt><h3><%=cl.getCLASS_NAME()%></h3><br></dt>
+							<dl><h5><%=cl.getCLASS_ABRIEF()%></h5></dl>
 						</dl>
 					</div>
 					<div class="row sticky">
@@ -311,28 +336,64 @@
 						<!-- 주문 주의사항 -->
 							<div class="mainText" id="t1">
 								<br/><br/> <!-- 상세 설명 -->
-								<div class="group">
-									
-								</div>
 								<dt id="subject"">
 									<strong>공방을 소개해요</strong>
 								</dt> <br/>
-								<dl class="text-center">
-									<dd><img src="${pageContext.request.contextPath}/resources/images/class/Class_Content.jpg" class="img-responsive center-block w-100"></dd>
-									
-									<dd><h5><br><br>합판과 나사못을 사용하지 않는 <br/> 원목 가구 클래스</h5> <br/></dd> 
-									<dd class="text-info"><h3>원목과 짜맞춤만으로 <br/> 무공해 목재가구 만들기</h3> <br><br></dd>
-									
-									<dd>조금 색다른 원목 가구 클래스,</dd>
-									<dd>내가 직접 가구를 만들어보는 경험 한 번 해보고 싶지 않으신가요? <br><br></dd> 
-									
-									<dd><img src="${pageContext.request.contextPath}/resources/images/class/Class_Content2.jpg" class="img-responsive center-block w-100"></dd>
-									<dd><br>한짜임목공방은 <br/> 합판과 나사못을 사용하지 않고</dd>
-									<dd><font color="orange">오로지 원목과 천연 오일로</font></dd>
-									<dd>가구와 원목 소품을 만듭니다. <br><br> </dd>
-									<dd><img src="${pageContext.request.contextPath}/resources/images/class/Class_Content3.jpg" class="img-responsive center-block w-100"></dd>
-									<dd><br>정해진 커리큘럼보다는 <br> 개개인의 목공 기술에 따라 <br> 원하는 디자인에 따라</dd>
-									<dd><font color="orange">1:1 맞춤교육으로 진행</font>됩니다.</dd>
+								<dl>
+									<dd><%=cl.getCLASS_INTRODUCTION_1()%></dd>
+								</dl>
+								<dt id="subject"">
+									<strong>이렇게 진행해요</strong>
+								</dt> <br/>
+								<dl>
+									<dd><%=cl.getCLASS_INTRODUCTION_2()%></dd>
+								</dl>
+								<dt id="subject"">
+									<strong>함께하고 싶어요</strong>
+								</dt> <br/>
+								<dl>
+									<dd><%=cl.getCLASS_INTRODUCTION_3()%></dd>
+								</dl>
+								<dt id="subject"">
+									<strong>환불규정</strong>
+								</dt> <br/>
+								<dl>
+									<dd>
+										<div style="width:690px; font-size:12pt;line-height:16pt;">
+				                			<p>NAGAGU의 결제 취소 및 환불 규정은 관련 법령인 &lt;학원의 설립ㆍ운영 및 과외교습에 관한 법률 시행령 [별표4] [시행 2017.3.21.]&gt;의 &lt;교습비 등 반환기준(제18조 제3항 관련)&gt;을 준수합니다.</p>
+				                			<p>
+				                				<br>
+				                			</p>
+				                			<p><strong>1. 클래스 수업 기간이 1개월 이내인 경우 환불 기준</strong>&nbsp;</p>
+				                			<p>① 클래스 시작 전 - 이미 납부한 교습비 등의 전액&nbsp;</p>
+				                			<p>② 총 클래스 수업시간의 1/3 경과 전 - 이미 납부한 교습비 등의 2/3에 해당하는 금액&nbsp;</p>
+				                			<p>③ 총 클래스 수업시간의 1/2 경과 전 - 이미 납부한 교습비 등의 1/2에 해당하는 금액&nbsp;</p>
+				                			<p>④ 총 클래스 수업시간의 1/2 경과 후 - 반환하지 않음&nbsp;</p>
+				                			<p>
+				                				<br>
+				                			</p>
+				                			<p><strong>2. 클래스 수업 기간이 1개월을 초과하는 경우</strong>&nbsp;</p>
+				                			<p>① 클래스 수업 시작 전 - 이미 납부한 교습비 등의 전액&nbsp;</p>
+				                			<p>② 클래스 수업 시작 후 - 환불사유가 발생한 해당 월의 환불 대상 교습비 등 (클래스 수업 기간이</p>
+				                			<p>1개월 이내인 경우의 기준에 따라 산출한 금액을 말한다)과 나머지 월의 교습비 등의 전액을 합산한 금액&nbsp;</p>
+				                			<p>
+				                				<br>
+				                			</p>
+				                			<p>단 클래스의 특성상 사전 준비(수업재료 준비, 장소 및 식사 사전예약 등)과정에서 불가피하게 손해비용 및 위약금 발생이 예상되는 경우, 마스터는 법령에서 제시한 내용 외에 별도의 환불규정을 수강생에게 고지할 수 있고, 수강생은 마스터가 고지한 환불수수료를 제외한 금액을 환불받을 수 있습니다.</p>
+				                		</div>
+									</dd>
+								</dl>
+								<dt id="subject"">
+									<strong>기타사항</strong>
+								</dt> <br/>
+								<dl>
+									<dd><%=cl.getCLASS_ETC()%></dd>
+								</dl>
+								<dt id="subject"">
+									<strong>공방 장소</strong>
+								</dt> <br/>
+								<dl>
+									<dd><%=cl.getCLASS_ADDRESS()%> &nbsp; <%=cl.getCLASS_DETAIL_ADDRESS()%></dd>
 								</dl>
 							</div>
 							
@@ -350,18 +411,6 @@
 									 	 &gt; 사이즈 : 가구에 따라 다름 
 									 	 &gt; A/S 책임자/전화번호 : 고객센터 1644-1234 
 									</dd>
-								</dl>
-							</div>
-		
-							<div class="location mb-5" id="t2">
-							<!-- 위치 정보 -->
-								<dl>
-									<dt class="row mt-5" id="subject">위치 정보</dt>
-									<dd>한짜임목공방</dd>
-									<dd> &gt; 주소: 경기도 여주시 흥천면 샘다리길 10-15 한짜임목공방</dd>
-									<dd> 전화번호 : 010-9999-9999</dd>
-									<br>
-									<dd><img src="${pageContext.request.contextPath}/resources/images/class/Class_location.png" class="img-responsive w-100"></dd>
 								</dl>
 							</div>
 		
@@ -520,33 +569,33 @@
 							</div><hr>
 							<div class="col-9">
 								<h3><p class="">비트캠프 공방</p></h3>
-								<p><font size="2">합판과 나사못을 전혀 사용하지 않는 원목 가구 클래스</font></p>
+								<p><font size="2"><%=cl.getCLASS_ABRIEF()%></font></p>
 							</div>
 						</div>
 						<div>
 							<table class="table table-borderless">
+								<colgroup>
+									<col style="width:30%">
+									<col style="width:70%">
+								</colgroup>
 							  <thead>
 							    <tr>
 							      <th scope="col">클래스 금액</th>
-							      <th scope="col">500,000원</th>
+							      <th scope="col"><fmt:formatNumber type="number" maxFractionDigits="3" value="<%=cl.getCLASS_AMOUNT()%>" />원 </th>
 							    </tr>
 							  </thead>
 							  <tbody>
 							    <tr>
 							      <th scope="row">카테고리</th>
-							      <td>테이블</td>
+							      <td><%=cl.getCLASS_CATEGORY()%></td>
 							    </tr>
 							    <tr>
 							      <th scope="row">일시</th>
-							      <td>2019.02.12~2020.12.31</td>
-							    </tr>
-							    <tr>
-							      <th scope="row">시간</th>
-							      <td>총1000분(200분씩,5회)</td>
+							      <td><%=cl.getCLASS_DATE_CONFIGURATION_1()%> ~ <%=cl.getCLASS_DATE_CONFIGURATION_2()%></td>
 							    </tr>
 							    <tr>
 							      <th scope="row">지역</th>
-							      <td>(여주)한짜임목공방</td>
+							      <td><%=cl.getCLASS_AREA()%></td>
 							    </tr>
 							  </tbody>
 							</table>
@@ -841,11 +890,6 @@
 							</div>
 						</div>
 					</div>
-<!-- 					<div class="center" style="padding-bottom: 2rem;"> -->
-<!-- 						<button type="button" id="btn" class="btn btn-outline-dark mr-4"> -->
-<!-- 							예약 신청하기</button> -->
-<!-- 						<button type="button" id="btn" class="btn btn-outline-dark">뒤로</button> -->
-<!-- 					</div> -->
 				</div>
 			</div>
 		</div>

@@ -14,7 +14,11 @@ public interface memberMapper {
 	MemberVO user_chk(MemberVO memberVO);		//로그인
 	int member_status_chk(MemberVO memberVO);	//로그인 시 이메일 인증 여부 확인
 	ArrayList<MemberVO> nick_list();
+	MemberVO selectMember(MemberVO memberVO); // 로그인 시 세션에 넣을 Member_NUM 호출
 	
 	ArrayList<MemberVO> getMemberList(HashMap<String, Object> map);
 	MemberVO getMemberDetail(MemberVO memberVO);
+	
+	
+	
 }

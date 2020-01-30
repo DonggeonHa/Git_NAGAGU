@@ -5,6 +5,7 @@ import java.net.URLEncoder;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.UUID;
 
 import javax.servlet.http.HttpServletRequest;
@@ -16,7 +17,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
-import org.springframework.web.multipart.MultipartRequest;
 import org.springframework.web.servlet.ModelAndView;
 @Controller
 public class AcademyController {
@@ -114,44 +114,74 @@ public class AcademyController {
 	@RequestMapping(value = "/addclass.ac", method = RequestMethod.POST)
 	public ModelAndView AddClass(MultipartHttpServletRequest request, HttpServletResponse response) throws Exception {
 		boolean result = false;
-		String downlink = null;
 		response.setCharacterEncoding("utf-8");
 		response.setContentType("text/html; charset=utf-8"); 
+		ClassVO vo = new ClassVO();
 		
-		MultipartFile mf = request.getFile("CLASS_BANNER");
 		MultipartFile mf2 = request.getFile("CLASS_IMAGE");
 
-		if(!mf.isEmpty()) {
-			String uploadPath = "C:\\Project138\\upload\\";
-			String originalFileExtension = mf.getOriginalFilename().substring(mf.getOriginalFilename().lastIndexOf("."));
-			String storedFileName = UUID.randomUUID().toString().replaceAll("-", "") + originalFileExtension;
-			
-			if(mf.getSize() != 0) {
-				mf.transferTo(new File(uploadPath+storedFileName));
+		List<MultipartFile> fileList = new ArrayList<MultipartFile>(); 
+		
+		// input file 에 아무것도 없을 경우 (파일을 업로드 하지 않았을 때 처리) 
+		if(request.getFiles("CLASS_BANNER").get(0).getSize() != 0) { 
+			fileList = request.getFiles("CLASS_BANNER"); 
+		} 
+
+		System.out.println("파일 없을 때 2");
+		
+		String path = "C:\\Project138\\upload\\"; 
+		File fileDir = new File(path); 
+		if (!fileDir.exists()) { 
+			fileDir.mkdirs(); 
+		} 
+		
+		long time = System.currentTimeMillis(); 
+		String str = "";
+		for (MultipartFile mf : fileList) { 
+			String originFileName = mf.getOriginalFilename(); // 원본 파일 명 
+			String saveFileName = String.format("%d_%s", time, originFileName);
+
+			try { // 파일생성
+				mf.transferTo(new File(path, saveFileName)); 
+				str += saveFileName + ",";
+			} catch (Exception e) { 
+				e.printStackTrace(); 
+				} 
 			}
-			
-			downlink = "fileDownload.do?of="+ URLEncoder.encode(storedFileName, "utf-8")
-						+ "&of2=" + URLEncoder.encode(mf.getOriginalFilename(), "utf-8");
+		System.out.println("파일 없을 때 6");
+
+		System.out.println("str = " + str);
+		
+		if(str.length() != 0) {
+			str = str.substring(0, str.length()-1);
 		} else {
-			downlink = "첨부파일 없음";
+			str = "#";
 		}
+		
+		
+		vo.setCLASS_BANNER(str);
+		
 		
 		if(!mf2.isEmpty()) {
 			String uploadPath = "C:\\Project138\\upload\\";
+			File fileDir2 = new File(uploadPath); 
+			if (!fileDir2.exists()) { 
+				fileDir2.mkdirs(); 
+			} 
 			String originalFileExtension = mf2.getOriginalFilename().substring(mf2.getOriginalFilename().lastIndexOf("."));
-			String storedFileName = UUID.randomUUID().toString().replaceAll("-", "") + originalFileExtension;
+			String storedFileName2 = UUID.randomUUID().toString().replaceAll("-", "") + originalFileExtension;
 			
 			if(mf2.getSize() != 0) {
-				mf2.transferTo(new File(uploadPath+storedFileName));
+				mf2.transferTo(new File(uploadPath+storedFileName2));
 			}
 			
-			downlink = "fileDownload.do?of="+ URLEncoder.encode(storedFileName, "utf-8")
-						+ "&of2=" + URLEncoder.encode(mf2.getOriginalFilename(), "utf-8");
+			vo.setCLASS_IMAGE(storedFileName2);
 		} else {
-			downlink = "첨부파일 없음";
+			System.out.println("썸네일 사진 넣지 않음.");
+			return null;
 		}
 		
-		ClassVO vo = new ClassVO();
+		
 		vo.setCLASS_DIVISION(request.getParameter("CLASS_DIVISION"));
 		vo.setCLASS_NAME(request.getParameter("CLASS_NAME"));
 		vo.setCLASS_ABRIEF(request.getParameter("CLASS_ABRIEF"));
@@ -165,8 +195,6 @@ public class AcademyController {
 		vo.setCLASS_INTRODUCTION_2(request.getParameter("CLASS_INTRODUCTION_2"));
 		vo.setCLASS_INTRODUCTION_3(request.getParameter("CLASS_INTRODUCTION_3"));
 		vo.setCLASS_ETC(request.getParameter("CLASS_ETC"));
-		vo.setCLASS_BANNER(mf.getOriginalFilename());
-		vo.setCLASS_IMAGE(mf2.getOriginalFilename());
 		vo.setCLASS_ADDRESS(request.getParameter("CLASS_ADDRESS"));
 		vo.setCLASS_DETAIL_ADDRESS(request.getParameter("CLASS_DETAIL_ADDRESS"));
 		

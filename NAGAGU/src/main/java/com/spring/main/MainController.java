@@ -20,6 +20,9 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
@@ -47,6 +50,9 @@ public class MainController {
 	
 	@Autowired(required = false)
 	private MemberService memberService;
+	
+	@Autowired
+	private MainService Mainservice;
 	
 	@RequestMapping(value = "/index.ma", method = { RequestMethod.GET, RequestMethod.POST })
 	public ModelAndView Index(Model model, HttpSession session) {
@@ -307,5 +313,26 @@ public class MainController {
     }
     
     
-
+    @RequestMapping(value = "/summernote.ma", method=RequestMethod.POST)
+	public @ResponseBody String handlerFileUpload(MultipartHttpServletRequest request) {
+		String img_name = null;
+		MultipartFile file = request.getFile("file");
+		System.out.println(file.getOriginalFilename());
+		
+		String url = "C:/Project138/upload/";
+		
+		try {
+			String uploadedFile = Mainservice.summernote(url, file);
+			
+			img_name = "/communityupload/image/"+uploadedFile;
+			System.out.println(img_name);
+			
+			return img_name;
+		}
+		catch (Exception e) {
+			
+			e.printStackTrace();
+			return img_name;
+		}
+	}
 }

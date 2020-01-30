@@ -54,6 +54,9 @@ public class AcademyServiceImpl implements AcademyService {
 		
 		AcademyMapper classMapper = sqlSession.getMapper(AcademyMapper.class);
 		vo = classMapper.getDetail(academy);
+		System.out.println("CONFIGURATION_1 테스트 : " + vo.getCLASS_INTRODUCTION_1());
+		System.out.println("CONFIGURATION_2 테스트 : " + vo.getCLASS_INTRODUCTION_2());
+		System.out.println("CONFIGURATION_3 테스트 : " + vo.getCLASS_INTRODUCTION_3());
 		
 		return vo;
 	}

@@ -162,8 +162,8 @@
 					%>
 					
 								<div class="col mb-3" style="height: 400px;">
-									<a href="./classdetail.ac?CLASS_NUMBER=<%=cl.getCLASS_NUMBER()%>&CLASS_CATEGORY=<%=cl.getCLASS_CATEGORY()%>&page=<%=nowpage%>">
-										<div class="h-50 pic" style="background:url('<%=cl.getCLASS_BANNER()%>') no-repeat center; background-size:cover;"></div>
+									<a href="./classdetail.ac?CLASS_NUMBER=<%=cl.getCLASS_NUMBER()%>">
+										<div class="h-50 pic" style="background:url('/communityupload/image/<%=cl.getCLASS_IMAGE()%>') no-repeat center; background-size:cover;"></div>
 										<div style="border: 1px solid #EAEAEA;">
 											<div class="default" style="margin: 0 5% 3% 5%;">
 												<p class="title text-center" style="font-size: 1.5rem;"><%=cl.getCLASS_NAME()%></p>
