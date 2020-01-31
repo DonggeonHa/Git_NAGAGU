@@ -53,13 +53,13 @@ public class ProductController {
 		
 		/*로그인 멤버*/
 		MemberVO memberVO = null;
-		if(session.getAttribute("MEMBER_NUM") != null) {
-			memberVO.setMEMBER_NUM((int)session.getAttribute("MEMBER_NUM"));
-			MemberVO LoginMemberVO = reviewService.getLoginMemberbyNUM(memberVO);			
-
-			/*로그인 멤버 관련*/
-			model.addAttribute("LoginMemberVO",LoginMemberVO);		
-		}
+//		if(session.getAttribute("MEMBER_NUM") != null) {
+//			memberVO.setMEMBER_NUM((int)session.getAttribute("MEMBER_NUM"));
+//			MemberVO LoginMemberVO = reviewService.getLoginMemberbyNUM(memberVO);			
+//
+//			/*로그인 멤버 관련*/
+//			model.addAttribute("LoginMemberVO",LoginMemberVO);		
+//		}
 		
 		
 		int page = 1; //초기값 1
