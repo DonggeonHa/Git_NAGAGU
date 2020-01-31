@@ -13,6 +13,7 @@ CREATE TABLE MEMBER_LIKE (
 		<result property="LIKE_MEMBER" column="LIKE_MEMBER" />	
 		<result property="LIKE_PICS" column="LIKE_PICS" />	
 	</resultMap>
+	
 	<resultMap type="com.spring.community.LikeVO" id="likeResultMap">
 		<result property="LIKE_NUM" column="LIKE_NUM" />	
 		<result property="LIKE_MEMBER" column="LIKE_MEMBER" />	
@@ -32,6 +33,15 @@ CREATE TABLE MEMBER_LIKE (
 		DELETE FROM MEMBER_LIKE
 		WHERE LIKE_MEMBER = #{memberNum} AND LIKE_PICS = #{picsNum}
 	</delete>
+	
+    <select id="getMemberLikePics" parameterType="com.spring.member.MemberVO" resultMap="likeResultMap">	
+ 		SELECT * FROM
+ 		(SELECT *
+	    FROM NAGAGU_MEMBER M, MEMBER_LIKE L
+	    WHERE M.MEMBER_NUM = L.LIKE_MEMBER)
+	    WHERE MEMBER_NUM = #{MEMBER_NUM}
+        <!-- <![CDATA[ WHERE rnum >= #{startrow} AND rnum <= #{endrow} ]]> --> 
+	</select>
 
 
 
