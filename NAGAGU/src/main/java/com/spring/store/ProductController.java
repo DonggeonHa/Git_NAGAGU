@@ -9,6 +9,7 @@ import java.util.Map;
 import java.util.UUID;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -21,6 +22,7 @@ import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.view.json.MappingJackson2JsonView;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.spring.member.MemberServiceImpl;
 import com.spring.member.MemberVO;
 
 @Controller
@@ -32,6 +34,9 @@ public class ProductController {
 	private ProductReviewService reviewService;
 	@Autowired
 	private ProductQnaService qnaService;
+	@Autowired
+	private MemberServiceImpl memberService;
+	
 	
 	@Autowired
 	MappingJackson2JsonView jsonView;	
@@ -43,8 +48,19 @@ public class ProductController {
 	}
 	
 	@RequestMapping(value = "/productlist.pro", method = RequestMethod.GET)
-	public String productlist(ProductVO productVO, Model model, HttpServletRequest request) {
+	public String productlist(ProductVO productVO, Model model, HttpServletRequest request, HttpSession session) {
 		System.out.println("/productlist.pro------------------------------");
+		
+		/*로그인 멤버*/
+		MemberVO memberVO = null;
+		if(session.getAttribute("MEMBER_NUM") != null) {
+			memberVO.setMEMBER_NUM((int)session.getAttribute("MEMBER_NUM"));
+			MemberVO LoginMemberVO = reviewService.getLoginMemberbyNUM(memberVO);			
+
+			/*로그인 멤버 관련*/
+			model.addAttribute("LoginMemberVO",LoginMemberVO);		
+		}
+		
 		
 		int page = 1; //초기값 1
 		int limit = 9; //한 페이지당 출력할 글의 수
@@ -79,6 +95,8 @@ public class ProductController {
 		productList = productService.getproductlist(map);			
 		productcount = productService.getproductcount(map);
 		
+		
+		
 		//총 페이지 수
 		int maxpage = (int)((double)productcount / limit + 0.95); // 0.95를 더해서 올림 처리
 		int startpage = (((int) ((double)page / 10 + 0.9)) - 1) * 10 + 1; // 현재 페이지에 보여줄 시작 페이지 수 (1, 11, 21 등...)
@@ -99,9 +117,21 @@ public class ProductController {
 		return "Store/productList";
 	}
 
-
+	
 	@RequestMapping(value = "/productdetail.pro", method = RequestMethod.GET)
-	public String productdetail(ProductVO productVO, Model model, HttpServletRequest request) {
+	public String productdetail(ProductVO productVO, MemberVO memberVO, Model model, HttpServletRequest request, HttpSession session) {
+
+		/*로그인 멤버*/
+		if(session.getAttribute("MEMBER_NUM") != null) {
+			memberVO.setMEMBER_NUM((int)session.getAttribute("MEMBER_NUM"));
+			//int index = ((Integer)(session.getAttribute("index"))).intValue();
+			MemberVO LoginMemberVO = reviewService.getLoginMemberbyNUM(memberVO);			
+
+			/*로그인 멤버 관련*/
+			model.addAttribute("LoginMemberVO",LoginMemberVO);
+		
+		}
+		
 		
 		/*상품 vo 가져오기*/
 		String PRODUCT_CATEGORY = request.getParameter("PRODUCT_CATEGORY");
@@ -127,10 +157,14 @@ public class ProductController {
 		map.put("PRODUCT_NUM", PRODUCT_NUM);
 		
 		int reviewCount;
+		int review_RE_Count;	//RE는 답글
 		ArrayList<Product_reviewVO> reviewList = null;
+		ArrayList<Product_reviewVO> review_RE_List = null;
 		reviewCount = reviewService.getReviewCount(map);
+		review_RE_Count = reviewService.getReview_RE_Count(map);
 		reviewList = reviewService.getReviewList(map);
-				
+		review_RE_List = reviewService.getReview_RE_List(map);
+
 		//리스트 총 페이지 수
 		int maxpage = (int)((double)reviewCount / limit + 0.95); // 0.95를 더해서 올림 처리
 		int startpage = (((int) ((double)reviewpage / 10 + 0.9)) - 1) * 10 + 1; // 현재 페이지에 보여줄 시작 페이지 수 (1, 11, 21 등...)
@@ -143,11 +177,12 @@ public class ProductController {
 		ArrayList<MemberVO> reviewMemberList = null;
 		reviewMemberList = reviewService.getreviewMemberList(map);
 		
-		if(reviewMemberList == null) {
-			System.out.println("reviewMemberList는 null");
-		} else {
-			System.out.println("reviewMemberList는 null이 아님");
-		}
+		
+		
+		//리뷰 답글 멤버
+		ArrayList<MemberVO> review_RE_MemberList = null;
+		review_RE_MemberList = reviewService.getreview_RE_MemberList(map);
+
 		
 		
 		/*qna 리스트*/
@@ -203,6 +238,8 @@ public class ProductController {
 		}		
 		
 		
+		
+		
 		/*상품 상세 관련 */
 		model.addAttribute("productVO", vo);
 		model.addAttribute("PRODUCT_CATEGORY", PRODUCT_CATEGORY);
@@ -214,10 +251,13 @@ public class ProductController {
 		model.addAttribute("startpage", startpage);
 		model.addAttribute("endpage", endpage);
 		model.addAttribute("reviewCount", reviewCount);
+		model.addAttribute("review_RE_Count", review_RE_Count);
 		model.addAttribute("reviewList", reviewList);
+		model.addAttribute("review_RE_List", review_RE_List);
 		
 		/*리뷰 멤버 관련*/
 		model.addAttribute("reviewMemberList", reviewMemberList);
+		model.addAttribute("review_RE_MemberList", review_RE_MemberList);
 		
 		/*qna 댓글 관련 */
 		model.addAttribute("qnapage", qnapage);
@@ -241,7 +281,7 @@ public class ProductController {
 	//다중파일 업로드 됨!!!
 	@RequestMapping(value="/insert_review.do",  produces="application/json;charset=UTF-8")
 	@ResponseBody
-	public String insert_review(MultipartHttpServletRequest request) throws Exception {
+	public String insert_review(MultipartHttpServletRequest request, HttpSession session) throws Exception {
 		System.out.println("컨트롤러 왔다");
 		Product_reviewVO reviewVO = new Product_reviewVO();
 		
@@ -251,52 +291,52 @@ public class ProductController {
 		
 		String str = "";
 		if(!request.getFiles("REVIEW_FILE").isEmpty()) {
-		List<MultipartFile> fileList = new ArrayList<MultipartFile>(); 
-		
-		// input file 에 아무것도 없을 경우 (파일을 업로드 하지 않았을 때 처리) 
-		if(request.getFiles("REVIEW_FILE").get(0).getSize() != 0) { 
-			fileList = request.getFiles("REVIEW_FILE"); 
-		} 
-
-		System.out.println("파일 없을 때 2");
-		
-		String path = "C:\\Project138\\upload\\"; 
-		File fileDir = new File(path); 
-		if (!fileDir.exists()) { 
-			fileDir.mkdirs(); 
-		} 
-		
-		long time = System.currentTimeMillis(); 
-		
-		for (MultipartFile mf : fileList) { 
-			String originFileName = mf.getOriginalFilename(); // 원본 파일 명 
-			String saveFileName = String.format("%d_%s", time, originFileName);
-
-			try { // 파일생성
-				mf.transferTo(new File(path, saveFileName)); 
-				str += saveFileName + ",";
-			} catch (Exception e) { 
-				e.printStackTrace(); 
-				} 
+			List<MultipartFile> fileList = new ArrayList<MultipartFile>(); 
+			
+			// input file 에 아무것도 없을 경우 (파일을 업로드 하지 않았을 때 처리) 
+			if(request.getFiles("REVIEW_FILE").get(0).getSize() != 0) { 
+				fileList = request.getFiles("REVIEW_FILE"); 
+			} 
+	
+			System.out.println("파일 없을 때 2");
+			
+			String path = "C:\\Project138\\upload\\"; 
+			File fileDir = new File(path); 
+			if (!fileDir.exists()) { 
+				fileDir.mkdirs(); 
+			} 
+			
+			long time = System.currentTimeMillis(); 
+			
+			for (MultipartFile mf : fileList) { 
+				String originFileName = mf.getOriginalFilename(); // 원본 파일 명 
+				String saveFileName = String.format("%d_%s", time, originFileName);
+	
+				try { // 파일생성
+					mf.transferTo(new File(path, saveFileName)); 
+					str += saveFileName + ",";
+				} catch (Exception e) { 
+					e.printStackTrace(); 
+					} 
+				}
+			System.out.println("파일 없을 때 6");
+	
+			System.out.println("str = " + str);
+			
+			if(str.length() != 0) {
+				str = str.substring(0, str.length()-1);
+			} else {
+				str = "#";
 			}
-		System.out.println("파일 없을 때 6");
-
-		System.out.println("str = " + str);
-		
-		if(str.length() != 0) {
-			str = str.substring(0, str.length()-1);
-		} else {
-			str = "#";
-		}
-		
-		/*
-	    if (str.length() > 0 && str.charAt(str.length()-1)==',') {
-	        str = str.substring(0, str.length()-1);
-	      }
-		*/
-		
-		
-	    System.out.println("str 2 = " + str);
+			
+			/*
+		    if (str.length() > 0 && str.charAt(str.length()-1)==',') {
+		        str = str.substring(0, str.length()-1);
+		      }
+			*/
+			
+			
+		    System.out.println("str 2 = " + str);
 		} else {
 			str = "#";
 		}
@@ -304,44 +344,35 @@ public class ProductController {
 	    
 	    
 	   
-	//	reviewVO.setREVIEW_NUM(0); //시퀀스 이용
-		reviewVO.setREVIEW_MEMBER(1); //회원번호는 멤버 테이블에서 가져와야함(또는 세션)
+		//reviewVO.setREVIEW_NUM(0); //시퀀스 이용
+		reviewVO.setREVIEW_MEMBER((int)session.getAttribute("MEMBER_NUM"));
 		reviewVO.setREVIEW_PRODUCT(Integer.parseInt(request.getParameter("REVIEW_PRODUCT")));
 		reviewVO.setREVIEW_DATE(new Timestamp(System.currentTimeMillis()));
 		reviewVO.setREVIEW_FILE(str);
 		reviewVO.setREVIEW_CONTENT(request.getParameter("REVIEW_CONTENT"));
 		
-		//넘겨받은 REVIEW_RE_REF가 존재하면 답글이고, null이면 원글이다.
+		//넘겨받은 REVIEW_RE가 존재하면 답글이고(원글의 REVIEW_NUM을 전달해줌), null이면 원글이다.
 		if(request.getParameter("REVIEW_RE") != null) {	
-			//답글 - GRADE=10, REF=NUM, LEVEL=1
+			//답글 - GRADE=10, RE=NUM
 			reviewVO.setREVIEW_GRADE(10);
 			reviewVO.setREVIEW_RE(Integer.parseInt(request.getParameter("REVIEW_RE")));
 		} else {	
-			//원글 - GRADE=GRADE, REF=NUM, LEVEL=0
+			//원글 - GRADE=GRADE, RE=0
 			reviewVO.setREVIEW_GRADE(Double.parseDouble(request.getParameter("REVIEW_GRADE")));
 			reviewVO.setREVIEW_RE(0);
 		}
 		
-		//답글일 경우 1을 넣어야함
-		
-		System.out.println("확인aaaaaaaaaaaa = "+reviewVO.getREVIEW_FILE());
-		
 		int res = reviewService.insertReview(reviewVO);
 		System.out.println("res="+res);		
 	
-		
 		ObjectMapper mapper = new ObjectMapper();
 		try {
 			str = mapper.writeValueAsString(reviewVO);
 			System.out.println(str);
-			System.out.println("아아아");
-			
 		}catch(Exception e) {
-			System.out.println("응?");
 			System.out.println("first() mapper : " + e.getMessage());
 		}
 		
-
 		return str;
 		
 	}		
@@ -349,9 +380,6 @@ public class ProductController {
 	
 	
 		
-	
-	
-	
 	
 	//리뷰 댓글 수정 폼
 	@RequestMapping(value="/modify_review_form.do",  produces="application/json;charset=UTF-8")
@@ -363,6 +391,7 @@ public class ProductController {
 		System.out.println("REVIEW_NUM = " + REVIEW_NUM);
 		
 		Product_reviewVO reviewVO = null;
+		
 		reviewVO = reviewService.getReviewVO(REVIEW_NUM);
 		System.out.println("modify에서 vo 잘 가져왔나?? content 확인 = " + reviewVO.getREVIEW_CONTENT());
 		return reviewVO;
@@ -492,7 +521,6 @@ public class ProductController {
 		System.out.println("확인aaaaaaaaaaaa = "+reviewVO.getREVIEW_FILE());
 		
 		int res = reviewService.modifyReview(reviewVO);
-//		int res = reviewService.modifyReview(reviewVO);
 		System.out.println("res="+res);		
 	
 		
@@ -507,12 +535,8 @@ public class ProductController {
 			System.out.println("first() mapper : " + e.getMessage());
 		}
 		
-
 		return str;
 		
-		
-		
-
 	}		
 
 	
@@ -553,89 +577,18 @@ public class ProductController {
 	
 	
 	
-	//단일 파일 업로드
-	@RequestMapping(value="/insert_review_dododo.do",  produces="application/json;charset=UTF-8")
-	@ResponseBody
-	public String insert_review_dododo(MultipartHttpServletRequest request) throws Exception {
-			
-		Product_reviewVO reviewVO = new Product_reviewVO();
-		
-		System.out.println("REVIEW_CONTENT=" + request.getParameter("REVIEW_CONTENT"));
-		System.out.println("REVIEW_GRADE=" + request.getParameter("REVIEW_GRADE"));
-
-		
-
-		MultipartFile mf = request.getFile("REVIEW_FILE");
-
-		if(!mf.isEmpty()) {
-			String uploadPath = "C:\\Project138\\upload\\";
-			String originalFileExtension = mf.getOriginalFilename().substring(mf.getOriginalFilename().lastIndexOf("."));
-			String storedFileName = UUID.randomUUID().toString().replaceAll("-", "") + originalFileExtension;
-			System.out.println("originalFileExtension = " + originalFileExtension);
-			System.out.println("storedFileName = " + storedFileName);
-			
-			if(mf.getSize() != 0) {
-				mf.transferTo(new File(uploadPath+storedFileName));
-				System.out.println("uploadPath+storedFileName = " + uploadPath + storedFileName);
-			}
-			
-
-//			reviewVO.setREVIEW_FILE(mf.getOriginalFilename());  //stored저장해야하는 거 아니야...?이미지 띄우려면
-			reviewVO.setREVIEW_FILE(storedFileName);  //stored저장해야하는 거 아니야...?이미지 띄우려면
-			
-		} else {
-			reviewVO.setREVIEW_FILE("#");
-		}
-		
-		
-		reviewVO.setREVIEW_NUM(0); //시퀀스 이용
-		reviewVO.setREVIEW_MEMBER(1); //회원번호는 멤버 테이블에서 가져와야함(또는 세션)
-		reviewVO.setREVIEW_PRODUCT(Integer.parseInt(request.getParameter("REVIEW_PRODUCT")));
-		reviewVO.setREVIEW_DATE(new Timestamp(System.currentTimeMillis()));
-		
-		reviewVO.setREVIEW_CONTENT(request.getParameter("REVIEW_CONTENT"));
-		reviewVO.setREVIEW_GRADE(Integer.parseInt(request.getParameter("REVIEW_GRADE")));
-		System.out.println("aaaaaaaaaaaa = "+reviewVO.getREVIEW_FILE());
-		
-		int res = reviewService.insertReview(reviewVO);
-		System.out.println("res="+res);		
-		
-		String str = "";
-		
-		ObjectMapper mapper = new ObjectMapper();
-		try {
-			str = mapper.writeValueAsString(reviewVO);
-			System.out.println(str);
-			System.out.println("아아아");
-			
-		}catch(Exception e) {
-			System.out.println("응?");
-			System.out.println("first() mapper : " + e.getMessage());
-		}
-		
-
-		return str;
-		
-	}		
+	
+	
+	@RequestMapping(value = "/product_write.pro", method = RequestMethod.GET)
+	public String product_write(Model model, HttpServletRequest request, HttpSession session) {
+		int MEMBER_STATUS = (int)session.getAttribute("MEMBER_STATUS");
+				
+		model.addAttribute("MEMBER_STATUS", MEMBER_STATUS);
+		return "Store/productForm";
+	}
 	
 	
 	
-	
-
-	
-	
-	
-	
-	
-//	
-//	
-//	@RequestMapping(value = "/getqna.pro", method = RequestMethod.GET)
-//	public String getqna(HttpServletRequest request, Model model) {
-//		int QNA_PRODUCT = Integer.parseInt(request.getParameter("QNA_PRODUCT"));
-//		ArrayList<Product_qnaVO> qnaVO = qnaService.getqna(QNA_PRODUCT);
-//		
-//		return "Store/estimateList";
-//	}
 	
 	@RequestMapping(value = "/estimate.pro", method = RequestMethod.GET)
 	public String estimate(Model model) {

@@ -16,6 +16,19 @@ public class ProductReviewServiceImpl implements ProductReviewService {
 	
 	@Autowired
 	private SqlSession sqlSession;
+	
+	@Override
+	public MemberVO getLoginMemberbyNUM(MemberVO memberVO) {
+		MemberVO LoginMemberVO = null;
+		try {
+			ProductReviewMapper reviewMapper = sqlSession.getMapper(ProductReviewMapper.class);
+			LoginMemberVO = reviewMapper.getLoginMemberbyNUM(memberVO);
+		} catch(Exception e) {
+			e.printStackTrace();
+		}
+		
+		return LoginMemberVO;
+	}
 
 	@Override
 	public int getReviewCount(HashMap<String, Object> map) {
@@ -23,6 +36,14 @@ public class ProductReviewServiceImpl implements ProductReviewService {
 		int reviewCount;
 		reviewCount = reviewMapper.getReviewCount(map);
 		return reviewCount;
+	}
+	
+	@Override
+	public int getReview_RE_Count(HashMap<String, Object> map) {
+		ProductReviewMapper reviewMapper = sqlSession.getMapper(ProductReviewMapper.class);
+		int review_RE_Count;
+		review_RE_Count = reviewMapper.getReview_RE_Count(map);
+		return review_RE_Count;
 	}
 
 	@Override
@@ -34,6 +55,14 @@ public class ProductReviewServiceImpl implements ProductReviewService {
 	}
 
 	@Override
+	public ArrayList<Product_reviewVO> getReview_RE_List(HashMap<String, Object> map) {
+		ProductReviewMapper reviewMapper = sqlSession.getMapper(ProductReviewMapper.class);
+		ArrayList<Product_reviewVO> review_RE_List = null;
+		review_RE_List = reviewMapper.getReview_RE_List(map);
+		return review_RE_List;
+	}
+	
+	@Override
 	public ArrayList<MemberVO> getreviewMemberList(HashMap<String, Object> map) {
 		ProductReviewMapper reviewMapper = sqlSession.getMapper(ProductReviewMapper.class);
 		ArrayList<MemberVO> reviewMemberList = null;
@@ -41,6 +70,14 @@ public class ProductReviewServiceImpl implements ProductReviewService {
 		return reviewMemberList;
 	}
 	
+	@Override
+	public ArrayList<MemberVO> getreview_RE_MemberList(HashMap<String, Object> map) {
+		ProductReviewMapper reviewMapper = sqlSession.getMapper(ProductReviewMapper.class);
+		ArrayList<MemberVO> review_RE_MemberList = null;
+		review_RE_MemberList = reviewMapper.getreview_RE_MemberList(map);
+		return review_RE_MemberList;
+	}
+
 	@Override
 	public int insertReview(Product_reviewVO reviewVO) {
 		ProductReviewMapper reviewMapper = sqlSession.getMapper(ProductReviewMapper.class);
@@ -95,6 +132,7 @@ public class ProductReviewServiceImpl implements ProductReviewService {
 		newReviewImg = reviewMapper.newReviewImg(REVIEW_NUM);
 		return newReviewImg;
 	}
+
 
 
 
