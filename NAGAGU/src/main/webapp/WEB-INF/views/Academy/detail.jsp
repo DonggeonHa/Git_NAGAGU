@@ -2,14 +2,12 @@
 <%@ page session="false" %>
 <%@ page import="java.util.*"%>
 <%@ page import="org.springframework.util.StringUtils"%>
-<%@ page import = "com.spring.academy.*" %>
-
+<%@ page import = "com.spring.academy.*"%>
 <%@ taglib uri = "http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib prefix = "fmt" uri = "http://java.sun.com/jsp/jstl/fmt" %>
 
 <%
 	ClassVO cl = (ClassVO)request.getAttribute("ClassVO");
-	
 	
 	int bannerImgCount = StringUtils.countOccurrencesOf(cl.getCLASS_BANNER(), ",");
 	
@@ -22,7 +20,6 @@
 		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.2/animate.css">
 		<script src="https://code.jquery.com/jquery-3.4.1.js" integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU=" crossorigin="anonymous"></script>
   		<script type="text/javascript" src="https://cdn.iamport.kr/js/iamport.payment-1.1.5.js"></script>
-  		
 		<script type="text/javascript">      
 			$(document).ready(function() {
 			  var price = parseInt($("#date_price").text().slice(0, -1).replace(/,/g,""));
@@ -147,7 +144,7 @@
 			}
 			
 			.class-detail-container {
-				margin-top: 100px;
+				margin-top: 50px;
 				margin-bottom: 100px;
 			}
 			
@@ -278,15 +275,15 @@
     							else {
     								if(i == 0) {
 						%>    				
-										<div class="carousel-item active">
-	    	      							<img src="/communityupload/image/<%=cl.getCLASS_BANNER().split(",")[i]%>" class="d-block w-100" alt="...">
+										<div class="carousel-item active" style="width: 1300px; height: 530px;">
+	    	      							<img src="/communityupload/image/<%=cl.getCLASS_BANNER().split(",")[i]%>" class="d-block w-100" style="max-width: 100%; height: 100%;">
 	    	    						</div>
     	    			<%
     	    							continue;
     								}
     	    			%>				
-    								<div class="carousel-item">
-    	      							<img src="/communityupload/image/<%=cl.getCLASS_BANNER().split(",")[i]%>" class="d-block w-100" alt="...">
+    								<div class="carousel-item" style="width: 1300px; height: 530px;">
+    	      							<img src="/communityupload/image/<%=cl.getCLASS_BANNER().split(",")[i]%>" class="d-block w-100" style="max-width: 100%; height: 100%;">
     	    						</div>    								
     	    			<%
     							}
@@ -305,7 +302,7 @@
 			</div>
 			<div class="row">
 				<div class="col-8">
-				<!-- 제목 -->
+					<!-- 제목 -->
 					<div style="line-height: 0.5em;">
 						<dl>
 							<dt><h3><%=cl.getCLASS_NAME()%></h3><br></dt>
@@ -316,19 +313,16 @@
 						<div class="col-12">
 							<ul class="nav nav-tabs nav-fill">
 								<li class="nav-item">
-									<a class="nav-link" href="#t1"><h5>예약정보</h5></a>
+									<a class="nav-link" href="#t1"><h5>공방소개</h5></a>
 								</li>
 								<li class="nav-item">
 									<a class="nav-link" href="#t2"><h5>위치정보</h5></a>
 								</li>
 								<li class="nav-item">
-									<a class="nav-link" href="#t3"><h5>예약취소 및 환불</h5></a>
+									<a class="nav-link" href="#t3"><h5>Review</h5></a>
 								</li>
 								<li class="nav-item">
-									<a class="nav-link" href="#t4"><h5>리뷰</h5></a>
-								</li>
-								<li class="nav-item">
-									<a class="nav-link" href="#t5"><h5>Q&A</h5></a>
+									<a class="nav-link" href="#t4"><h5>Q&A</h5></a>
 								</li>
 							</ul>
 						</div>
@@ -338,229 +332,71 @@
 						<!-- 주문 주의사항 -->
 							<div class="mainText" id="t1">
 								<br/><br/> <!-- 상세 설명 -->
-								<dt id="subject"">
+								<dt id="subject">
 									<strong>공방을 소개해요</strong>
 								</dt> <br/>
 								<dl>
 									<dd><%=cl.getCLASS_INTRODUCTION_1()%></dd>
 								</dl>
-								<dt id="subject"">
+								<dt id="subject">
 									<strong>이렇게 진행해요</strong>
 								</dt> <br/>
 								<dl>
 									<dd><%=cl.getCLASS_INTRODUCTION_2()%></dd>
 								</dl>
-								<dt id="subject"">
+								<dt id="subject">
 									<strong>함께하고 싶어요</strong>
 								</dt> <br/>
 								<dl>
 									<dd><%=cl.getCLASS_INTRODUCTION_3()%></dd>
 								</dl>
-								<dt id="subject"">
+								<dt id="subject">
 									<strong>환불규정</strong>
 								</dt> <br/>
 								<dl>
 									<dd>
 										<div style="width:690px; font-size:12pt;line-height:16pt;">
 				                			<p>NAGAGU의 결제 취소 및 환불 규정은 관련 법령인 &lt;학원의 설립ㆍ운영 및 과외교습에 관한 법률 시행령 [별표4] [시행 2017.3.21.]&gt;의 &lt;교습비 등 반환기준(제18조 제3항 관련)&gt;을 준수합니다.</p>
-				                			<p>
-				                				<br>
-				                			</p>
+				                			
 				                			<p><strong>1. 클래스 수업 기간이 1개월 이내인 경우 환불 기준</strong>&nbsp;</p>
 				                			<p>① 클래스 시작 전 - 이미 납부한 교습비 등의 전액&nbsp;</p>
 				                			<p>② 총 클래스 수업시간의 1/3 경과 전 - 이미 납부한 교습비 등의 2/3에 해당하는 금액&nbsp;</p>
 				                			<p>③ 총 클래스 수업시간의 1/2 경과 전 - 이미 납부한 교습비 등의 1/2에 해당하는 금액&nbsp;</p>
 				                			<p>④ 총 클래스 수업시간의 1/2 경과 후 - 반환하지 않음&nbsp;</p>
-				                			<p>
-				                				<br>
-				                			</p>
+				                			
 				                			<p><strong>2. 클래스 수업 기간이 1개월을 초과하는 경우</strong>&nbsp;</p>
 				                			<p>① 클래스 수업 시작 전 - 이미 납부한 교습비 등의 전액&nbsp;</p>
 				                			<p>② 클래스 수업 시작 후 - 환불사유가 발생한 해당 월의 환불 대상 교습비 등 (클래스 수업 기간이</p>
 				                			<p>1개월 이내인 경우의 기준에 따라 산출한 금액을 말한다)과 나머지 월의 교습비 등의 전액을 합산한 금액&nbsp;</p>
-				                			<p>
-				                				<br>
-				                			</p>
+				                			
 				                			<p>단 클래스의 특성상 사전 준비(수업재료 준비, 장소 및 식사 사전예약 등)과정에서 불가피하게 손해비용 및 위약금 발생이 예상되는 경우, 마스터는 법령에서 제시한 내용 외에 별도의 환불규정을 수강생에게 고지할 수 있고, 수강생은 마스터가 고지한 환불수수료를 제외한 금액을 환불받을 수 있습니다.</p>
 				                		</div>
 									</dd>
 								</dl>
-								<dt id="subject"">
+								<dt id="subject">
 									<strong>기타사항</strong>
 								</dt> <br/>
 								<dl>
 									<dd><%=cl.getCLASS_ETC()%></dd>
 								</dl>
-								<dt id="subject"">
+								<dt id="subject" >
 									<strong>공방 장소</strong>
 								</dt> <br/>
 								<dl>
-									<dd><%=cl.getCLASS_ADDRESS()%> &nbsp; <%=cl.getCLASS_DETAIL_ADDRESS()%></dd>
-								</dl>
-							</div>
-							
-							<hr class="hr-class">
-							<!-- 상품 필수 정보 -->
-							<div class="Notice bg-light mb-5">
-								<dl>
-									<dt class="row" id="subject">상품 필수 정보</dt>
-									<dd> 전자상거래 등에서의 상품정보 제공 고시에 따라 작성 되었습니다.</dd>
-									<dd> &gt; 품명 및 모델명: (여주) 우드슬랩 테이블&벤치 만들기(5회)
-										 &gt; 법의 의한 인증, 허가 확인사항 : 해당없음
-									 	 &gt; 제조국 또는 원산지 : 한국 
-									 	 &gt; 제조자 : 한짜임목공방(hanzzaim) 
-									 	 &gt; 재질 : 우드슬랩 통판, 하드우드 제재목 등
-									 	 &gt; 사이즈 : 가구에 따라 다름 
-									 	 &gt; A/S 책임자/전화번호 : 고객센터 1644-1234 
-									</dd>
-								</dl>
-							</div>
-		
-							<div class="paking mb-5">
-							<!-- 주차 안내 -->
-								<dl>
-									<dt class="row" id="subject">주차 안내</dt>
-									<dd>주차 가능합니다.</dd>
-								</dl>
-							</div>
-		
-							<div class="refund" id="t3">
-							<!-- 예약 취소 및 환불 -->
-								<dl>
-									<dt class="row" id="subject">예약 취소 및 환불 안내</dt>
-									<dd>※ 기타 문의사항은 <font color="red">고객센터(1644-1234)</font>를 이용해주시기 바랍니다</dd>
 									<dd>
-										<a href="#" class="btn btn-danger" role="button" aria-pressed="true">고객센터 문의</a>&nbsp;&nbsp;&nbsp;
+										<p class="text-left" id="t2"><%=cl.getCLASS_ADDRESS()%>&nbsp;&nbsp;<%=cl.getCLASS_DETAIL_ADDRESS()%></p>
+										<div id="map" style="width:675px;height:500px;"></div>
+
 									</dd>
 								</dl>
 							</div>
 						</div>
 					</div>
-						<!-- 댓글 테이블 시작 -->
-					<br />
-					<br />
-					<hr />
-					<h3 >Review</h3>
-					<br /><br />
-					<div class="reviews_table" style="color: #212529;" id="t4">			 
-						<div class="comment_add">
-							<div class="row">
-								<div class="col-1">
-									<img src="${pageContext.request.contextPath}/resources/images/Community/peko.png" alt="" class="img-circle" width="100%;">
-								</div>
-								<div class="col-11">
-									<div class="row">
-										<div class="col-10 name">김이름</div>
-										<div class="col-2 smallfont px-0">2020-01-08</div>
-									</div>
-									<div class="row">
-										<div class="col comm_content">예쁘게 만드셨네요!</div>
-									</div>
-									<div class="row">
-										<div class="col">
-											<a href="#" class="smallfont">답글달기</a> <a href="#"
-												class="smallfont">신고하기</a>
-										</div>
-									</div>
-								</div>
-							</div>
-						</div>
-						<br/>
-						<div class="comment-sum">
-							<div class="row justify-content-between">
-								<div class="col-1"></div>
-								<div class="col-9">
-									<textarea name="PICS_RE_CONTENT"
-										placeholder="칭찬과 격려의 댓글은 작성자에게 큰 힘이 됩니다:)" style="width: 100%"
-										rows="2"></textarea>
-								</div>
-								<div class="col-2 px-0">
-									<a class="btn_write"
-										onClick="location.href='./community_detail.cm'">&nbsp;등록</a>
-								</div>
-							</div>
-						</div>						
-					</div>
+					<!-- 댓글 테이블 시작 -->
+					
 					<!-- 댓글 테이블 끝 -->
 					<!-- Q&A 테이블 시작 -->
-					<h3>Q&A</h3>
-					<br />
-					<br />
-					<div id="t5" style="color: #212529;">
-						<div class="qna_sum justify-content-center"	style="width: 100%; margin: 0 auto;">
-							<div class="row">
-								<div class="col-1 justify-content-end">
-									<img src="${pageContext.request.contextPath}/resources/images/Community/peko.png" alt="" class="img-circle">
-								</div>
-								<div class="col-11">
-									<div class="row">
-										<div class="col-10 justify-content-end name">박이름</div>
-										<div class="col-2 justify-content-center smallfont">2020-01-08</div>
-									</div>
-									<div class="row ">
-										<div class="col rep_content">문의합니다 문의합니다 문의합니다</div>
-									</div>
-									<div class="row" style="height: 20px;">
-										<a href="#" class="smallfont">답글달기</a> &nbsp;&nbsp; 
-										<a href="#"	class="smallfont">신고하기</a>
-									</div>
-								</div>
-							</div>
-						</div>
-						<br />
-						<div class="qna_sum justify-content-center" style="width: 100%; margin: 0 auto;">
-							<div class="row">
-								<div class="col-1 justify-content-end">
-									<img src="${pageContext.request.contextPath}/resources/images/Community/peko.png" alt="" class="img-circle">
-								</div>
-								<div class="col-11">
-									<div class="row">
-										<div class="col-10 justify-content-end name">박이름</div>
-										<div class="col-2 justify-content-center smallfont">2020-01-08</div>
-									</div>
-									<div class="row ">
-										<div class="col justify-content:space-end rep_content">
-											안녕하세요	주말 1명 참여 가능한 가장 빠른 클래스가 언제인가요?</div>
-									</div>
-									<div class="row" style="height: 20px;">
-										<a href="#" class="smallfont">답글달기</a> &nbsp;&nbsp; 
-										<a href="#"	class="smallfont">신고하기</a>
-									</div>
-								</div>
-							</div>
-						</div>
-			
-						<br />
-						<div class="qna_reply_wrap"	style="width: 88%; margin: 0 auto; background-color: #FAFAFA;">
-							<div class="qna_reply " style="width: 95%; margin: 0 auto;">
-								<div class="row justify-content-start ml-0  name">
-									<i class="fab fa-replyd"></i>&nbsp;&nbsp;라라디저트
-								</div>
-								<div class="row justify-content-start ml-0 rep_content">안녕하세요 요번 주 토요일
-									12시요~</div>
-								<div class="row" style="height: 20px;">
-									<a href="#" class="smallfont ml-0">&nbsp;&nbsp;&nbsp;&nbsp;답글달기</a>
-									&nbsp;&nbsp; <a href="#" class="smallfont ml-0">신고하기</a>
-								</div>
-							</div>
-						</div>
-						<br />
-						<br />
-						<div class="qna_add justify-content-center" style="width: 100%; margin: 0 auto;">
-							<div class="row justify-content-center">
-								<div class="col-10">
-									<textarea name="PICS_RE_CONTENT" class="col-12" rows="2"></textarea>
-								</div>
-								<div class="col-1">
-									<div class=" row justify-content-center">
-										<a class="btn_write " onClick="location.href='#'" style="cursor: pointer;">&nbsp;등록</a>
-									</div>
-								</div>
-							</div>
-						</div>
-						<br />
-			
-					</div>
+					
 					<!-- Q&A 테이블 끝 -->
 				</div>
 				<div class="col-4">
@@ -620,7 +456,7 @@
   			<div class="modal-dialog modal-lg" role="document">
 				<div class="modal-content">
 					<div class="modal-header mheader">
-						<h5 class="modal-title" id="myExtraLargeModalLabel">우드슬랩 테이블&벤치 만들기</h5>
+						<h5 class="modal-title" id="myExtraLargeModalLabel"><%=cl.getCLASS_NAME()%></h5>
 						<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 							<span aria-hidden="true">&times;</span>
 						</button>
@@ -629,20 +465,20 @@
 						<p><%=cl.getCLASS_ABRIEF()%></p>
 						<div class="row">
 							<div class="col-12" id="detail">
-								<div id="progress_time">진행시간</div>
-								<div style="margin-top: 10px; margin-bottom: 10px; font-size: small;">3시간</div>
-								<div id="progress_time">
-									예약 날짜 / 시 
-									<span style="color: red">
-										<i class="far fa-calendar-alt blue" id="calendar"></i>
-									</span>
+								<div id="progress_time">사용 기간</div>
+								<div style="margin-top: 10px; margin-bottom: 10px; font-size: small;">
+									<p><%=cl.getCLASS_DATE_CONFIGURATION_1()%> ~ <%=cl.getCLASS_DATE_CONFIGURATION_2()%></p>
+									<p><font color="red">예약 후 공방 측과 예약일을 꼭 협의해주세요.</font></p>
 								</div>
-								<div style="margin-top: 10px; font-size: small;">2019.12.27.(금) 오전 09:00 ~ 오후 12:00</div>
+								<div id="progress_time">클래스 장소</div>
+								<div style="margin-top: 10px; font-size: small;"><%=cl.getCLASS_ADDRESS()%>&nbsp;&nbsp;<%=cl.getCLASS_DETAIL_ADDRESS()%></div>
+								<div id="progress_time">클래스 지역</div>
+								<div style="margin-top: 10px; font-size: small;"><%=cl.getCLASS_AREA()%></div>
 							</div>
 						</div>
 						<div class="row">
 							<div class="col-12">
-								<div class="row" id="progress_time" style="padding: 0 0 0 16px;">참여 인원</div>
+								<div class="row" id="progress_time" style="padding: 0 0 0 16px;">티켓 갯수</div>
 								<table class="table table-borderless table-condensed table-sm">
 									<tr>
 										<td scope="row"><span id="date_price">35,000원</span></td>
@@ -696,15 +532,11 @@
 									<table class="table table-borderless table-sm">
 										<tr>
 											<th scope="row">상호</th>
-											<td>비트캠프 공방</td>
+											<td><%=cl.getMEMBER_NICK() %></td>
 										</tr>
 										<tr>
 											<th scope="row">대표자 명</th>
 											<td>댕댕댕</td>
-										</tr>
-										<tr>
-											<th scope="row">소재지</th>
-											<td>경기도 여주시 흥천면 샘다리길 10-15 한짜임목공방</td>
 										</tr>
 										<tr>
 											<th scope="row">사업자 번호</th>
@@ -896,7 +728,45 @@
 			</div>
 		</div>
 		
-		
+		<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=7db210d40be6789b9de8f86dba8b0a28&libraries=services"></script>
+		<script>
+		var mapContainer = document.getElementById('map'), // 지도를 표시할 div 
+	    mapOption = {
+	        center: new kakao.maps.LatLng(33.450701, 126.570667), // 지도의 중심좌표
+	        level: 3 // 지도의 확대 레벨
+	    };  
+
+		// 지도를 생성합니다    
+		var map = new kakao.maps.Map(mapContainer, mapOption); 
+	
+		// 주소-좌표 변환 객체를 생성합니다
+		var geocoder = new kakao.maps.services.Geocoder();
+	
+		// 주소로 좌표를 검색합니다
+		geocoder.addressSearch("<%=cl.getCLASS_ADDRESS()%>", function(result, status) {
+	
+		    // 정상적으로 검색이 완료됐으면 
+		     if (status === kakao.maps.services.Status.OK) {
+	
+		        var coords = new kakao.maps.LatLng(result[0].y, result[0].x);
+	
+		        // 결과값으로 받은 위치를 마커로 표시합니다
+		        var marker = new kakao.maps.Marker({
+		            map: map,
+		            position: coords
+		        });
+	
+		        // 인포윈도우로 장소에 대한 설명을 표시합니다
+		        var infowindow = new kakao.maps.InfoWindow({
+		            content: '<div style="width:150px;text-align:center;padding:6px 0;"><%=cl.getCLASS_ADDRESS()%>'
+		        });
+		        infowindow.open(map, marker);
+	
+		        // 지도의 중심을 결과값으로 받은 위치로 이동시킵니다
+		        map.setCenter(coords);
+		    } 
+		});
+		</script>
 		<script src="https://use.fontawesome.com/releases/v5.2.0/js/all.js"></script>	
 		<script src="https://kit.fontawesome.com/b74b42490f.js" crossorigin="anonymous"></script>
 		<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>

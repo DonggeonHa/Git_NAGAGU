@@ -87,7 +87,6 @@ public class AcademyController {
 	@RequestMapping(value = "/classdetail.ac")
 	public ModelAndView ClassDetail(ClassVO academy, HttpSession session) throws Exception {
 		ClassVO vo = AcademyService.getDetail(academy);
-		MemberVO vo2 = AcademyService.selectMember(academy);
 		
 		if (vo == null) {
 			System.out.println("상세보기 실패");
@@ -97,7 +96,6 @@ public class AcademyController {
 		
 		ModelAndView mav = new ModelAndView();
 		mav.addObject("ClassVO", vo);
-		mav.addObject("MemberVO", vo2);
 		mav.setViewName("Academy/detail");
 		
 		return mav;

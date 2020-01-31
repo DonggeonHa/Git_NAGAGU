@@ -166,7 +166,7 @@
 			
 			<div class="tab-content" id="classTabContent">
 				<!-- 전체 메뉴 -->
-				<div class="tab-pane fade show active row" id="class-all" role="tabpanel" aria-labelledby="home-tab" name="all">
+				<div class="tab-pane fade show active row container" id="class-all" role="tabpanel" aria-labelledby="home-tab" name="all">
 					<%
 						if(listcount > 0) {	
 					%>
