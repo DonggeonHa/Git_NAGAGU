@@ -25,14 +25,26 @@ public class PicsCommentServiceImpl implements PicsCommentService{
 	public int insertComment(PicsCommentDB db) {
 		PicsCommentMapper commentmapper = sqlSession.getMapper(PicsCommentMapper.class);
 		int number=0;
+		//int re_ref = db.getPICS_RE_REF();	//원글 1;
+		int re_step = db.getPICS_RE_STEP();//원글 0
+		//int re_lev = db.getRE_LEV();//원글 0
 		if(commentmapper.getCount()!=0){
 			number = commentmapper.getMaxNum() + 1;
 		}
 		else
-		number = 1;		
+		number = 1;	
+		
+		
+		//re_step = re_step +1;
+		
+		if(db.getPICS_RE_REF()==0) {
+			db.setPICS_RE_REF(number);
+		}else {
+			commentmapper.updateStep(db);
+		}
+		
 		db.setPICS_RE_NUM(number);
-		db.setPICS_RE_REF(0);
-		db.setPICS_RE_STEP(0);		
+		db.setPICS_RE_STEP(re_step);		
 		int result = commentmapper.insertComment(db);
 		return result;
 	}

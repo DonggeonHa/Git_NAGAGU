@@ -115,4 +115,12 @@
 	<select id="getMemberDetailbyEmail" parameterType="com.spring.member.MemberVO" resultMap="memberResultMap">
 	SELECT * FROM nagagu_member WHERE MEMBER_EMAIL=#{MEMBER_EMAIL}
 	</select>
+	
+    <select id="getMemberLikePics" parameterType="java.util.HashMap" resultMap="memberResultMap">	
+ 		SELECT *
+	    FROM NAGAGU_MEMBER M, MEMBER_LIKE L
+	    WHERE M.MEMBER_NUM = L.LIKE_MEMBER
+        <!-- <![CDATA[ WHERE rnum >= #{startrow} AND rnum <= #{endrow} ]]> --> 
+	</select>
+	
 </mapper>

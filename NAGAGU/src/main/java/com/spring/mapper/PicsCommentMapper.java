@@ -6,6 +6,7 @@ public interface PicsCommentMapper {
 	ArrayList<PicsCommentDB> getCommentList(int num);
 	int insertComment(PicsCommentDB db);
 	int updateComment(PicsCommentDB db);
+	int updateStep(PicsCommentDB db);//댓글 스텝
 	int deleteComment(int num);	
 	int getMaxNum();
 	int getCount();

@@ -3,6 +3,8 @@ package com.spring.member;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import com.spring.community.PicsVO;
+
 public interface MemberService {
 	public int email_chk(MemberVO memberVO);
 	public int nickname_chk(MemberVO memberVO);
@@ -12,8 +14,8 @@ public interface MemberService {
 	public int user_chk(MemberVO memberVO);
 	public ArrayList<MemberVO> get_nick_list();
 	public MemberVO selectMember(MemberVO memberVO);
-	
 	ArrayList<MemberVO> getMemberList(HashMap<String, Object> map);
 	MemberVO getMemberDetail(MemberVO memberVO);
 	MemberVO getMemberDetailbyEmail(MemberVO memberVO);
+	ArrayList<PicsVO> getMemberLikePics(MemberVO memberVO);//좋아요 사진 리스트
 }

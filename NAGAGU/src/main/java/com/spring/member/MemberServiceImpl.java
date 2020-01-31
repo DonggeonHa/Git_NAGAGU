@@ -7,6 +7,7 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.spring.community.PicsVO;
 import com.spring.mapper.MemberLikeMapper;
 import com.spring.mapper.memberMapper;
 
@@ -216,6 +217,17 @@ public class MemberServiceImpl implements MemberService{
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+		return vo;
+	}
+	@Override 
+	public ArrayList<PicsVO> getMemberLikePics(MemberVO memberVO) {
+		ArrayList<PicsVO> vo = null;
+		try {
+			memberMapper memberMapper= sqlSession.getMapper(memberMapper.class);
+			vo = memberMapper.getMemberLikePics(memberVO);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}  
 		return vo;
 	}
 

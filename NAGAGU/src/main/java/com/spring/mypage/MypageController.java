@@ -1,10 +1,25 @@
 package com.spring.mypage;
 
+import java.util.ArrayList;
+
+import javax.servlet.http.HttpServletRequest;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+
+import com.spring.community.CommunityServiceImpl;
+import com.spring.community.PicsVO;
+import com.spring.member.MemberServiceImpl;
+import com.spring.member.MemberVO;
 
 @Controller
 public class MypageController {
+	@Autowired
+	private CommunityServiceImpl communityService;
+	@Autowired
+	private MemberServiceImpl memberService;
 	
 	@RequestMapping(value = "/mypage.my")
 	public String Mypage() {
@@ -68,8 +83,21 @@ public class MypageController {
 		return "Mypage/review_class";
 	}
 	@RequestMapping(value = "/other_mypage.my")
-	public String OtherMypage() {
+	public String OtherMypage(PicsVO picsVO, MemberVO memberVO,Model model, HttpServletRequest request) {
+		System.out.println("othermypage컨트롤러");
+		//마이페이지 멤버
+		MemberVO memberDetail = memberService.getMemberDetail(memberVO);
+		//멤버넘버 = 픽스멤버 셋팅 후 DB에서 picsList 정보 가져옴
+		picsVO.setPICS_MEMBER(memberVO.getMEMBER_NUM());
+		//멤버가 올린 사진리스트
+		ArrayList<PicsVO> memberPicsList = communityService.getPicsOfMemberUpload(picsVO);
+		//멤버가 좋아요 한 사진 리스트
+		ArrayList<PicsVO> memberLikePics = memberService.getMemberLikePics(memberVO);
 		
+		
+		model.addAttribute("memberDetail",memberDetail);
+		model.addAttribute("memberPicsList",memberPicsList);
+		model.addAttribute("memberLikePics",memberLikePics);
 		return "Mypage/other_mypage";
 	}
 	@RequestMapping(value = "/other_mypage_more.my")
