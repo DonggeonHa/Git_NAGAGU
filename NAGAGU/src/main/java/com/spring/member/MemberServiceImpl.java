@@ -137,7 +137,7 @@ public class MemberServiceImpl implements MemberService{
 				status_chk = memberMapper.member_status_chk(memberVO);	//이메일 인증 확인 여부
 				System.out.println("상태정보: " + status_chk);
 				
-				if(status_chk == 1) {	//이메일 인증(완료)
+				if(status_chk != 0) {	//이메일 인증(완료)
 					result = 1;
 				}else {	//이메일,비번은 맞지만 이메일 미인증일 때
 					result = 0;

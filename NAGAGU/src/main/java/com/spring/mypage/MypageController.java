@@ -1,7 +1,9 @@
 package com.spring.mypage;
 
+
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+
 
 @Controller
 public class MypageController {
@@ -53,6 +55,7 @@ public class MypageController {
 		
 		return "Mypage/edit";
 	}
+	
 	@RequestMapping(value = "/mypage_reply.my")
 	public String MypageReply() {
 		

@@ -13,6 +13,9 @@ public class MemberVO {
 	private String MEMBER_PICTURE;
 	private String MEMBER_LIKE_PRODUCT;
 	private int MEMBER_STATUS;
+	private int ADDRESS_ZIP;
+	private String ADDRESS_ADDRESS1;
+	private String ADDRESS_ADDRESS2;
 	
 	public int getMEMBER_NUM() {
 		return MEMBER_NUM;
@@ -75,7 +78,24 @@ public class MemberVO {
 		MEMBER_STATUS = mEMBER_STATUS;
 	}
 	
-	
+	public int getADDRESS_ZIP() {
+		return ADDRESS_ZIP;
+	}
+	public void setADDRESS_ZIP(int aDDRESS_ZIP) {
+		ADDRESS_ZIP = aDDRESS_ZIP;
+	}
+	public String getADDRESS_ADDRESS1() {
+		return ADDRESS_ADDRESS1;
+	}
+	public void setADDRESS_ADDRESS1(String aDDRESS_ADDRESS1) {
+		ADDRESS_ADDRESS1 = aDDRESS_ADDRESS1;
+	}
+	public String getADDRESS_ADDRESS2() {
+		return ADDRESS_ADDRESS2;
+	}
+	public void setADDRESS_ADDRESS2(String aDDRESS_ADDRESS2) {
+		ADDRESS_ADDRESS2 = aDDRESS_ADDRESS2;
+	}
 	
 	
 }

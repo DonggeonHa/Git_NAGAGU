@@ -48,9 +48,6 @@ insert into product values
 5000, 2500, '서울 서초구', '삼주일');
 commit;
 
-select * from product;
-
-select * from PRODUCT_REVIEW;
 DROP TABLE PRODUCT_REVIEW;
 
 create table PRODUCT_REVIEW(
