@@ -36,6 +36,7 @@ public class PicsCommentController {
 		@PostMapping(value="/insertComment.cm",produces="application/json;charset=UTF-8")
 		public Map<String, Object> insertComment(PicsCommentDB db){
 			System.out.println("insert컨트롤러");
+			System.out.println("ref값="+db.getPICS_RE_REF());
 			Map<String, Object> retVal = new HashMap<String, Object>();
 			try {
 				int res=picsCommentService.insertComment(db);

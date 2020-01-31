@@ -12,12 +12,17 @@
 	
 	//사진 디테일 받아오기 위해
 	PicsVO picsVO= (PicsVO)request.getAttribute("picsDetail");
-	//사진의 멤버 디테일 받아오기 위해
+	//사진 올린 멤버 디테일 받아오기 위해
 	MemberVO memberVO= (MemberVO)request.getAttribute("memberDetail");
-	//해당 멤버가 올린 사진리스트 받아오기 위해
+	//사진 올린 멤버가 올린 다른 사진리스트 받아오기 위해
 	ArrayList<PicsVO> memberPicsList = (ArrayList<PicsVO>) request.getAttribute("memberPicsList");
 	//ArrayList<PicsCommentDB> commentList=(ArrayList<PicsCommentDB>)request.getAttribute("commentList");
 	
+	//로그인하면 세션값 or 0
+	int MEMBER_NUM = 0;
+	if(session.getAttribute("MEMBER_NUM")!=null){
+		MEMBER_NUM = (int)session.getAttribute("MEMBER_NUM");
+	}
 %> 
 
 <!DOCTYPE html>
@@ -180,12 +185,14 @@
                   	<h6><a href="community.cm">COMMUNITY</a> > 상세보기 </h6>
                   </div>
                   <%if(picsVO.getPICS_MEMBER()== memberVO.getMEMBER_NUM()){
-                	  
                   %>
-                  <div class="btn_wrap offset-2">                  	
-                  	<button class="update-btn">수정</button>
-                  	<button class="delete-btn">삭제</button>
-                  </div>
+                  <c:set var="num" value="<%=MEMBER_NUM%>" />
+					<c:if test="${num != 0}">
+					    <div class="btn_wrap offset-2">                  	
+		                  	<button class="update-btn">수정</button>
+		                  	<button class="delete-btn">삭제</button>
+		                </div>
+					</c:if>
                   <%
                   }
                   %>
@@ -250,7 +257,7 @@
          <div class="sidebar" id="sidebar">
             <div class="row justify-content-around pb-2">
                <div class="profile-img">
-                  <img src=<%=memberVO.getMEMBER_PICTURE()%> width=1rem; alt="" class="src"  /><%=memberVO.getMEMBER_NICK() %>
+                  <img src=<%=memberVO.getMEMBER_PICTURE()%> width=1rem; alt="" class="src"/><%=memberVO.getMEMBER_NICK() %>
                </div>
                <div class="follow-btn-wrap">                  
                   <button class="follow-btn">follow</button>
@@ -328,20 +335,26 @@
 				
 			</div>
 		</div>
+<!-- 로그인 해야 댓글 창 보임 -->
+		<c:set var="num" value="<%=MEMBER_NUM%>" />
+		<c:if test="${num != 0}">
+			<form id="insert_form" class="row justify-content-between"
+				name="commentForm" action="/NAGAGU/insertComment.cm" method="post">
+				<%-- 			<input type="hidden" name="PICS_RE_REF" value="<c:out value=<%=picsVO.getp %>/>"> --%>
+				<div class="col-1"></div>
+				<div class="col-9">
+					<div class="btn_wrap offset-2">
+						<textarea name="PICS_RE_CONTENT" id="text"
+							placeholder="칭찬과 격려의 댓글은 작성자에게 큰 힘이 됩니다:)" style="width: 100%"
+							cols="80" rows="2"></textarea>
+					</div>
 
-		<form id="insert_form" class="row justify-content-between"
-			name="commentForm" action="/NAGAGU/insertComment.cm" method="post">
-			<%-- <input type="hidden" name="PICS_RE_REF" value="<c:out value="${commentList.PICS_RE_PICS}"/>"> --%>
-			<div class="col-1"></div>
-			<div class="col-9">
-				<textarea name="PICS_RE_CONTENT" id="text" 
-					placeholder="칭찬과 격려의 댓글은 작성자에게 큰 힘이 됩니다:)" style="width: 100%" cols="80"
-					rows="2"></textarea>
-			</div>
-			<div class="col-2 px-0">
-				<button type="button" value="등록" id="input_data">등록</button>
-			</div>
-		</form>
+				</div>
+				<div class="col-2 px-0">
+					<button type="button" value="등록" id="input_data">등록</button>
+				</div>
+			</form>
+		</c:if>
 		<!-- 댓글 테이블 끝 -->
    </div>
    <!-- container end -->
@@ -422,23 +435,35 @@
   
 					$.each(data, function(index,item){
 						var output='';
-						output += '<div class="row"><div class="col-1"><img src=';
-						output += '<%=memberVO.getMEMBER_PICTURE()%>';
-						output += 'class="img-circle" style="width: 50px; height: 50px; margin: 0 20% auto;"></div>'
-						output += '<div class="col-11"><div class="row reply'+item.pics_RE_NUM+'"><div class="col-10">별명:<%=memberVO.getMEMBER_NICK()%></div>'
-						output += '<div class="col-2 smallfont px-0">날짜:'+item.pics_RE_DATE+'</div>	<div class="row">';
-						output += '</div><div class="col-12" id="commentNum'+item.pics_RE_NUM+'">내용:'+item.pics_RE_CONTENT+'</div>'; 
-						output += '<div class="d-flex"><div class="col ">';
-						output += '<a href="#" class="smallfont re_reply" num='+item.pics_RE_NUM+'>답글달기</a> <a href="#" class="smallfont">신고하기</a></div></div></div></div></div>'
+						//원글이면 들여쓰기 없음
+						if(item.pics_RE_REF==item.pics_RE_NUM){
+							output += '<div class="row mb-3"><div class="col-1"><img src='
+							output += '<%=memberVO.getMEMBER_PICTURE()%> '; 
+							output += 'class="img-circle" style="width: 50px; height: 50px; margin: 0 20% auto;"></div>'
+							output += '<div class="col-11"><div class="row reply'+item.pics_RE_NUM+'"><div class="col-10">별명:<%=memberVO.getMEMBER_NICK()%></div>'
+							output += '<div class="col-2 smallfont px-0">날짜:'+item.pics_RE_DATE+'</div>	';
+							output += '<div class="col-12" id="commentNum'+item.pics_RE_NUM+'">내용:'+item.pics_RE_CONTENT+'</div>';
+							output += '<div class="col-12"><div class="row justify-content-between"><div>';
+							output += '<a href="#" class="smallfont re_reply ml-3" num='+item.pics_RE_NUM+'>답글달기  </a> <a href="#" class="smallfont">'
+							output += '신고하기</a></div>' 
+						}else{
+							output += '<div class="row mb-4 ml-3"><div class="col-1"><img src='
+							output += '<%=memberVO.getMEMBER_PICTURE()%> '; 
+							output += 'class="img-circle" style="width: 50px; height: 50px; margin: 0 20% auto;"></div>'
+							output += '<div class="col-11"><div class="row reply'+item.pics_RE_NUM+'"><div class="col-10">별명:<%=memberVO.getMEMBER_NICK()%></div>'
+							output += '<div class="col-2 smallfont px-0">날짜:'+item.pics_RE_DATE+'</div>	';
+							output += '<div class="col-12" id="commentNum'+item.pics_RE_NUM+'">내용:'+item.pics_RE_CONTENT+'</div>'; 
+							output += '<div class="col-12"><div class="row justify-content-end"><div>';
+						}
 						//output += '<div id="commentNum'+item.pics_RE_NUM+'"><tr>';
 						//output += '<td>num=' + item.pics_RE_NUM + '</td>'; 
-						output+='<td><input type="button" id="deleteForm" class="delete_form" value="삭제" num='+item.pics_RE_NUM+'';
-						output+='></td>'; 
-						output+='<td><input type="button" class="update_form" value="수정" num='+item.pics_RE_NUM+' text='+item.pics_RE_CONTENT+' ref='+item.pics_RE_REF+'></input></td>';
-						output +='</tr>'; 
-						output +='</div>';
+						if(item.pics_RE_MEMBER==<%=MEMBER_NUM%>){
+							output+='<div><input type="button" id="deleteForm" class="delete_form smallfont" value="삭제" num='+item.pics_RE_NUM+'/>';
+							output+='<input type="button" class="update_form smallfont" value="수정" num='+item.pics_RE_NUM+' text='+item.pics_RE_CONTENT+' ref='+item.pics_RE_REF+'></input>';
+							output +='</div>';
+						}
+						output += '</div></div></div></div></div>';
 						console.log("output:" + output); 
-						//console.log("pass:" + $("input#passck").val());
 						$('#output').append(output);	
 					});
 					//$("#commentList").html(output);
@@ -458,7 +483,8 @@
 			output += '<span style="font-size: 9pt">';
 			output += '<td><a href="#" class="#" id="input_data" num='+num+'>저장&nbsp';	//입력 받지 않는 값
 			output += '<input type="hidden" name="PICS_RE_NUM" value="'+num+'"></a>';
-			//output += '<input type="hidden" name="PICS_RE_REF" value="'+num+'"></a>';
+			output += '<input type="hidden" name="PICS_RE_REF" value="'+num+'"></a>';
+			//output += '<input type="hidden" name="PICS_RE_STEP" value="1"></a>';
 			//output += '<input type="hidden" name="id" value="'+id+'">';
 			output += '<td><a href="#" class="update_cancle">취소</a></td>';
 			output += '</span>';		
@@ -468,15 +494,13 @@
 			$('.reply'+num).after(output);
 		}) 
  
-		
+		//댓글 입력
 	$(document).on('click','#input_data',function(event){
 		alert('댓글 입력 ajax 시작')
-		
 		var params=$("#insert_form").serialize();
 		<%-- params += '&PICS_RE_REF='+<%=picsVO.getPICS_RE_NUM()%>; --%>
 		params += '&PICS_RE_PICS='+<%=picsVO.getPICS_NUM()%>;
-		//나중에 세션에서 값 가져오기(멤버)ㄴ
-		params += '&PICS_RE_MEMBER='+<%=memberVO.getMEMBER_NUM()%>;
+		params += '&PICS_RE_MEMBER='+<%=MEMBER_NUM%>
 		alert(params);
 		jQuery.ajax({
 			url: '/NAGAGU/insertComment.cm',
@@ -591,11 +615,6 @@
 	select();
 	
 });
-
-	
-	
-
-	
 	//유효성 검사
 	function insertCommentSubmit(){
 		var commentForm = document.commentForm;

@@ -6,12 +6,18 @@
 <%@ page import="com.spring.member.MemberVO"%>
 <%
 	System.out.println("pics_jsp start");
-
+	
 	ArrayList<PicsVO> picsList = (ArrayList<PicsVO>) request.getAttribute("picsList");
 	ArrayList<MemberVO> memberList = (ArrayList<MemberVO>) request.getAttribute("memberList"); 
 	
-	MemberVO memberVO = (MemberVO)request.getAttribute("memberDetailbyEmail");
-	 
+	//로그인 정보 확인(멤버)
+	int LOGIN_MEMBER_NUM = 0;
+	MemberVO loginmemberVO = null;
+	if(session.getAttribute("MEMBER_NUM")!=null){
+		loginmemberVO = (MemberVO)request.getAttribute("memberDetailbyEmail");	
+		LOGIN_MEMBER_NUM = (int)session.getAttribute("MEMBER_NUM");
+	}
+	
 	int listcount = ((Integer) request.getAttribute("listcount")).intValue(); // (전체/카테고리)글 개수
 	int nowpage = ((Integer) request.getAttribute("page")).intValue();
 	int maxpage = ((Integer) request.getAttribute("maxpage")).intValue();
@@ -183,8 +189,11 @@ img {
 				<!-- div.row -->
 			</div>
 			<div class="row justify-content-end mx-0">
-				<button class="btn btn-outline-dark btn-md my-2 my-sm-0"
-					type="submit" onclick="location.href='community_write.cm?MEMBER_NUM=<%=memberVO.getMEMBER_NUM()%>'">글쓰기</button>
+				<c:set var="name" value="<%=loginmemberVO%>" />
+				<c:if test="${name != null}">
+				    <button class="btn btn-outline-dark btn-md my-2 my-sm-0"
+					type="submit" onclick="location.href='community_write.cm?MEMBER_NUM=<%=loginmemberVO.getMEMBER_NUM()%>'">글쓰기</button>
+				</c:if>
 			</div>
 			<!-- images start -->
 			<div class="row pt-2 mt-4">
@@ -198,7 +207,7 @@ img {
 				<div class="col-md-4 img-wrap">
 					<div class="profile">
 						<div>
-							<a href="other_mypage.my"> 
+							<a href="other_mypage.my?MEMBER_NUM=<%=member_vo.getMEMBER_NUM()%>"> 
 								<img src=<%=member_vo.getMEMBER_PICTURE()%> alt="" class="src" 
 								style="width:50px; height:auto;"><%=member_vo.getMEMBER_NICK()%> 
 							</a>
@@ -308,9 +317,15 @@ img {
 	<script>
 	
 	//좋아요 기능
+	 
+	 <%--  console.log(if(<%=loginmemberVO.getMEMBER_NUM()%>!=null)) --%> 
 	  $(document).on("click","#far",function (){
+	    var	memberNum = '<%=LOGIN_MEMBER_NUM%>';
+		if(memberNum==0){
+			alert('로그인 하세요') 
+			return				
+		} 
 		var picsNum = $(this).parent().attr('id').substring(6)
-		var	memberNum = <%=memberVO.getMEMBER_NUM()%>
 			$.ajax({
 			url: "/NAGAGU/insertPicsLike.cm",
 	              type: "POST",
@@ -339,7 +354,8 @@ img {
 		})
 			event.preventDefault();
 	  });
-	  
+	
+	//정렬 옵션 선택
 	var sort='<%=sort%>';
 	var review='<%=PICS_REVIEW%>';
 	var category='<%=PICS_CATEGORY%>';

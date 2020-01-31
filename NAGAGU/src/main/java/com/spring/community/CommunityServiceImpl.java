@@ -61,7 +61,7 @@ public class CommunityServiceImpl implements CommunityService{
 		try { 
 			CommunityMapper communityMapper=sqlSession.getMapper(CommunityMapper.class);			
 			vo = communityMapper.getPicsOfMemberUpload(picsVO);
-			
+			System.out.println("getPicsOfMemberUpload 매퍼결과"+vo);
 		}
 		catch(Exception e) {
 			e.printStackTrace();

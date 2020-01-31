@@ -110,8 +110,8 @@ public class CommunityController {
 		//멤버디테일 구하기(이메일)
 		memberVO.setMEMBER_EMAIL((String)session.getAttribute("MEMBER_EMAIL"));
 		MemberVO memberDetailbyEmail = memberService.getMemberDetailbyEmail(memberVO);
+		System.out.println(memberVO.getMEMBER_PICTURE());
 		model.addAttribute("memberDetailbyEmail",memberDetailbyEmail);
-		
 		model.addAttribute("page", page);
 		model.addAttribute("maxpage", maxpage);
 		model.addAttribute("startpage", startpage);
@@ -128,14 +128,13 @@ public class CommunityController {
 	
 	@RequestMapping(value = "/community_detail.cm")
 	public String CommunityDetail(PicsVO picsVO, Model model,MemberVO memberVO, HttpServletRequest request) {
+		
 		PicsVO picsDetail = communityService.getPicsDetail(picsVO);	
 		ArrayList<PicsVO> memberPicsList = communityService.getPicsOfMemberUpload(picsVO);
 		MemberVO memberDetail = memberService.getMemberDetail(memberVO);
-		
+		System.out.println(memberVO.getMEMBER_PICTURE());
 		//댓글 리스트
 		//ArrayList<PicsCommentDB> commentList = picsCommentService.getCommentList(picsVO.getPICS_NUM());
-		
-		
 		
 		model.addAttribute("picsDetail",picsDetail);		
 		model.addAttribute("memberDetail",memberDetail);

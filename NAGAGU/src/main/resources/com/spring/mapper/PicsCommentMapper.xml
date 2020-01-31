@@ -46,7 +46,7 @@
 		SELECT MAX(PICS_RE_NUM) FROM PICS_COMMENT
 	</select>
 	 <select id="getCommentList" parameterType="com.spring.community.PicsCommentDB" resultMap="commentResultMap">
-		SELECT * FROM PICS_COMMENT WHERE PICS_RE_PICS=#{PICS_RE_PICS} ORDER BY PICS_RE_NUM 
+		SELECT * FROM PICS_COMMENT WHERE PICS_RE_PICS=#{PICS_RE_PICS} ORDER BY PICS_RE_REF DESC, PICS_RE_STEP DESC 
 	</select> 
 	
 	<insert id="insertComment" parameterType="com.spring.community.PicsCommentDB">
@@ -59,6 +59,10 @@
 	<update id="updateComment" parameterType="com.spring.community.PicsCommentDB">
 		UPDATE PICS_COMMENT SET PICS_RE_CONTENT=#{PICS_RE_CONTENT} WHERE PICS_RE_NUM=#{PICS_RE_NUM}
 	</update>
+	<update id="updateStep" parameterType="com.spring.community.PicsCommentDB">
+		UPDATE PICS_COMMENT SET PICS_RE_STEP=PICS_RE_STEP+1 WHERE PICS_RE_REF=#{PICS_RE_REF}
+	</update>
+	
 <!-- 	<select id="passwdcheck" parameterType="int" resultType="String">	
 		SELECT PASS FROM PICS_COMMENT WHERE PICS_RE_NUM = #{PICS_RE_NUM}
 	</select> -->
