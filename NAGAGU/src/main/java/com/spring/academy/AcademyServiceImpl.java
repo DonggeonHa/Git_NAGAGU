@@ -8,6 +8,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.spring.mapper.AcademyMapper;
+import com.spring.mapper.memberMapper;
+import com.spring.member.MemberVO;
 
 @Service
 public class AcademyServiceImpl implements AcademyService {
@@ -54,10 +56,24 @@ public class AcademyServiceImpl implements AcademyService {
 		
 		AcademyMapper classMapper = sqlSession.getMapper(AcademyMapper.class);
 		vo = classMapper.getDetail(academy);
-		System.out.println("CONFIGURATION_1 테스트 : " + vo.getCLASS_INTRODUCTION_1());
-		System.out.println("CONFIGURATION_2 테스트 : " + vo.getCLASS_INTRODUCTION_2());
-		System.out.println("CONFIGURATION_3 테스트 : " + vo.getCLASS_INTRODUCTION_3());
 		
 		return vo;
+	}
+	
+	@Override
+	public MemberVO selectMember(ClassVO academy) {
+		MemberVO member = null;
+		
+		try {
+			AcademyMapper memberMapper = sqlSession.getMapper(AcademyMapper.class);
+			member = memberMapper.selectMember(academy);
+			
+			System.out.println("멤버 리스트 가져오기 성공!");
+			return member;
+		} catch (Exception e) {
+			System.out.println("멤버 리스트 가져오기 실패!" + e.getMessage());
+		}
+		return null;
+		
 	}
 }

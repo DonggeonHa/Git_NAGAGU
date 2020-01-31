@@ -79,6 +79,7 @@ public class MemberAjaxController {
 				session.setAttribute("MEMBER_EMAIL", member.getMEMBER_EMAIL());
 				session.setAttribute("MEMBER_NUM", member.getMEMBER_NUM());
 				session.setAttribute("MEMBER_NICK", member.getMEMBER_NICK());
+				session.setAttribute("MEMBER_STATUS", member.getMEMBER_STATUS());
 //				session.setAttribute("member_pass", memberVO.getMember_pass());
 				retVal.put("res", "login_success");
 				

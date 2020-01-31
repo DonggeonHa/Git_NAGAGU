@@ -3,14 +3,16 @@
 <%@ page import="java.util.*"%>
 <%@ page import="org.springframework.util.StringUtils"%>
 <%@ page import = "com.spring.academy.*" %>
+
 <%@ taglib uri = "http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib prefix = "fmt" uri = "http://java.sun.com/jsp/jstl/fmt" %>
 
 <%
 	ClassVO cl = (ClassVO)request.getAttribute("ClassVO");
-	int bannerImgCount = 0; 
-	bannerImgCount = StringUtils.countOccurrencesOf(cl.getCLASS_BANNER(), ",");
-	System.out.println("test " + cl.getCLASS_INTRODUCTION_3());
+	
+	
+	int bannerImgCount = StringUtils.countOccurrencesOf(cl.getCLASS_BANNER(), ",");
+	
 %>
 <!DOCTYPE html>
 <html>
@@ -565,10 +567,10 @@
 					<div class="sticky2" style="border: 1px solid #EAEAEA; padding-top: 5%;">
 						<div class="row pt-4 pl-4">
 							<div class="col-3">
-								<img src="${pageContext.request.contextPath}/resources/images/Community/peko.png" style="width: 95%;">
+								<img src="<%=cl.getMEMBER_PICTURE()%>" style="width: 95%;">
 							</div><hr>
 							<div class="col-9">
-								<h3><p class="">비트캠프 공방</p></h3>
+								<h3><p><%=cl.getMEMBER_NICK()%></p></h3>
 								<p><font size="2"><%=cl.getCLASS_ABRIEF()%></font></p>
 							</div>
 						</div>
@@ -624,7 +626,7 @@
 						</button>
 					</div>
 					<div class="modal-body mbody">
-						<p>스툴로 제작되는 원목 소가구 이며 아래 선반이 들어가는 형태로 사이드 테이블이나 화분 받침대로도 사용가능한 심플한 디자인.</p>
+						<p><%=cl.getCLASS_ABRIEF()%></p>
 						<div class="row">
 							<div class="col-12" id="detail">
 								<div id="progress_time">진행시간</div>

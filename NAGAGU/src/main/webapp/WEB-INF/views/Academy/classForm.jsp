@@ -205,15 +205,15 @@
 							<div class="row">
 								<div>
 									<select name="CLASS_CATEGORY" class="form-control">
-										<option name="all" selected>전체</option>
-										<option name="table">책상</option>
-										<option name="chair">의자</option>
-										<option name="bookshelf">책장</option>
-										<option name="bed">침대</option>
-										<option name="drawer">서랍장</option>
-										<option name="sidetable">협탁</option>
-										<option name="dressing_table">화장대</option>
-										<option name="others">기타</option>
+										<option value="all" selected>전체</option>
+										<option value="table">책상</option>
+										<option value="chair">의자</option>
+										<option value="bookshelf">책장</option>
+										<option value="bed">침대</option>
+										<option value="drawer">서랍장</option>
+										<option value="sidetable">협탁</option>
+										<option value="dressing_table">화장대</option>
+										<option value="others">기타</option>
 									</select>
 								</div>
 							</div>

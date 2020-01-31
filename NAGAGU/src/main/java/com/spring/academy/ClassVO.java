@@ -4,6 +4,9 @@ import java.util.Date;
 
 public class ClassVO {
 	private int CLASS_NUMBER;
+	private int MEMBER_NUM;
+	private String MEMBER_NICK;
+	private String MEMBER_PICTURE;
 	private String CLASS_DIVISION;
 	private String CLASS_NAME;
 	private String CLASS_ABRIEF;
@@ -129,6 +132,24 @@ public class ClassVO {
 	}
 	public void setCLASS_DETAIL_ADDRESS(String cLASS_DETAIL_ADDRESS) {
 		CLASS_DETAIL_ADDRESS = cLASS_DETAIL_ADDRESS;
+	}
+	public int getMEMBER_NUM() {
+		return MEMBER_NUM;
+	}
+	public void setMEMBER_NUM(int mEMBER_NUM) {
+		MEMBER_NUM = mEMBER_NUM;
+	}
+	public String getMEMBER_NICK() {
+		return MEMBER_NICK;
+	}
+	public void setMEMBER_NICK(String mEMBER_NICK) {
+		MEMBER_NICK = mEMBER_NICK;
+	}
+	public String getMEMBER_PICTURE() {
+		return MEMBER_PICTURE;
+	}
+	public void setMEMBER_PICTURE(String mEMBER_PICTURE) {
+		MEMBER_PICTURE = mEMBER_PICTURE;
 	}
 	
 }

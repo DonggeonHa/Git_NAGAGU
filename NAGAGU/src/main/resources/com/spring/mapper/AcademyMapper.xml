@@ -35,6 +35,9 @@ create sequence REGISTRATION_SEQ
 <mapper namespace="com.spring.mapper.AcademyMapper">
 	<resultMap type="com.spring.academy.ClassVO" id="classResultMap">
 		<result property="CLASS_NUMBER" column="CLASS_NUMBER" />	
+		<result property="MEMBER_NUM" column="MEMBER_NUM" />
+		<result property="MEMBER_NICK" column="MEMBER_NICK" />
+		<result property="MEMBER_PICTURE" column="MEMBER_PICTURE" />
 		<result property="CLASS_DIVISION" column="CLASS_DIVISION" />	
 		<result property="CLASS_NAME" column="CLASS_NAME" />	
 		<result property="CLASS_ABRIEF" column="CLASS_ABRIEF" />	
@@ -56,6 +59,9 @@ create sequence REGISTRATION_SEQ
 	
 	<resultMap type="java.util.HashMap" id="hashmapVO">
 		<result property="CLASS_NUMBER" column="CLASS_NUMBER" />	
+		<result property="MEMBER_NUM" column="MEMBER_NUM" />
+		<result property="MEMBER_NICK" column="MEMBER_NICK" />
+		<result property="MEMBER_PICTURE" column="MEMBER_PICTURE" />
 		<result property="CLASS_DIVISION" column="CLASS_DIVISION" />	
 		<result property="CLASS_NAME" column="CLASS_NAME" />	
 		<result property="CLASS_ABRIEF" column="CLASS_ABRIEF" />	
@@ -74,28 +80,41 @@ create sequence REGISTRATION_SEQ
 		<result property="CLASS_ADDRESS" column="CLASS_ADDRESS" />
 		<result property="CLASS_DETAIL_ADDRESS" column="CLASS_DETAIL_ADDRESS" />
 	</resultMap>
+	
+	<resultMap type="com.spring.member.MemberVO" id="memberResultMap">
+		<result property="MEMBER_NUM" column="MEMBER_NUM" />
+		<result property="MEMBER_EMAIL" column="MEMBER_EMAIL" />
+		<result property="MEMBER_PASS" column="MEMBER_PASS" />
+		<result property="MEMBER_NAME" column="MEMBER_NAME" />
+		<result property="MEMBER_NICK" column="MEMBER_NICK" />
+		<result property="MEMBER_PHONE" column="MEMBER_PHONE" />
+		<result property="MEMBER_DATE" column="MEMBER_DATE" />
+		<result property="MEMBER_PICTURE" column="MEMBER_PICTURE" />
+		<result property="MEMBER_LIKE_PRODUCT" column="MEMBER_LIKE_PRODUCT" />
+		<result property="MEMBER_STATUS" column="MEMBER_STATUS" />
+	</resultMap>
 
 	 
 	<select id="getClassList" parameterType="java.util.HashMap" resultMap="classResultMap">
 		SELECT * 
-		FROM (SELECT ROWNUM RNUM, CLASS_NUMBER, CLASS_DIVISION, CLASS_NAME, CLASS_ABRIEF, CLASS_AMOUNT, CLASS_DATE, 
+		FROM (SELECT ROWNUM RNUM, MEMBER_NUM, MEMBER_NICK, MEMBER_PICTURE, CLASS_NUMBER, CLASS_DIVISION, CLASS_NAME, CLASS_ABRIEF, CLASS_AMOUNT, CLASS_DATE, 
 			  CLASS_DATE_CONFIGURATION_1, CLASS_DATE_CONFIGURATION_2, CLASS_AREA, CLASS_CATEGORY, 
 			  CLASS_INTRODUCTION_1, CLASS_INTRODUCTION_2, CLASS_INTRODUCTION_3, CLASS_ETC, CLASS_BANNER, CLASS_IMAGE, CLASS_ADDRESS, CLASS_DETAIL_ADDRESS
 			  FROM (SELECT * 
 			  		FROM registration
 					<if test="CLASS_CATEGORY != 'all'"> WHERE CLASS_CATEGORY = #{CLASS_CATEGORY}  </if>
 					ORDER BY <if test="sort == 'new'"> CLASS_DATE </if> DESC))
-					<!-- [CDATA[ WHERE rnum >= #{startrow} AND rnum <= #{endrow} ]]-->  
+					<!-- [CDATA[ WHERE RNUM >= #{startrow} AND RNUM <= #{endrow} ]]-->  
  	</select>
 
 	 
 	<insert id="insertClass" parameterType="com.spring.academy.ClassVO">
- 		INSERT INTO registration(CLASS_NUMBER, CLASS_DIVISION, CLASS_NAME, CLASS_ABRIEF, CLASS_AMOUNT, CLASS_DATE, 
-			  					 CLASS_DATE_CONFIGURATION_1, CLASS_DATE_CONFIGURATION_2, CLASS_AREA, CLASS_CATEGORY, 
+ 		INSERT INTO registration(CLASS_NUMBER, MEMBER_NUM, MEMBER_NICK, MEMBER_PICTURE, CLASS_DIVISION, CLASS_NAME, CLASS_ABRIEF, 
+ 								 CLASS_AMOUNT, CLASS_DATE, CLASS_DATE_CONFIGURATION_1, CLASS_DATE_CONFIGURATION_2, CLASS_AREA, CLASS_CATEGORY, 
 			  					 CLASS_INTRODUCTION_1, CLASS_INTRODUCTION_2, CLASS_INTRODUCTION_3, CLASS_ETC, CLASS_BANNER, 
 			  					 CLASS_IMAGE, CLASS_ADDRESS, CLASS_DETAIL_ADDRESS) 
-			 		VALUES(registration_seq.nextval, #{CLASS_DIVISION}, #{CLASS_NAME}, #{CLASS_ABRIEF}, #{CLASS_AMOUNT}, SYSDATE,
-			 			   #{CLASS_DATE_CONFIGURATION_1}, #{CLASS_DATE_CONFIGURATION_2}, #{CLASS_AREA}, #{CLASS_CATEGORY}, 
+			 		VALUES(registration_seq.nextval, #{MEMBER_NUM}, #{MEMBER_NICK}, #{MEMBER_PICTURE}, #{CLASS_DIVISION}, #{CLASS_NAME}, #{CLASS_ABRIEF}, 
+			 			   #{CLASS_AMOUNT}, SYSDATE, #{CLASS_DATE_CONFIGURATION_1}, #{CLASS_DATE_CONFIGURATION_2}, #{CLASS_AREA}, #{CLASS_CATEGORY}, 
 			 			   #{CLASS_INTRODUCTION_1}, #{CLASS_INTRODUCTION_2}, #{CLASS_INTRODUCTION_3}, #{CLASS_ETC}, #{CLASS_BANNER}, 
 			 			   #{CLASS_IMAGE}, #{CLASS_ADDRESS}, #{CLASS_DETAIL_ADDRESS})
  	</insert>
@@ -110,5 +129,9 @@ create sequence REGISTRATION_SEQ
  	<select id="getDetail" parameterType="com.spring.academy.ClassVO" resultMap="classResultMap"> 
  		SELECT * FROM registration WHERE CLASS_NUMBER = #{CLASS_NUMBER}
  	</select>
+ 	
+ 	<select id="selectMember" parameterType="com.spring.academy.ClassVO" resultMap="memberResultMap">
+		SELECT * FROM nagagu_member WHERE MEMBER_NUM = #{MEMBER_NUM}
+	</select>
 
 </mapper>

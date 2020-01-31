@@ -4,6 +4,7 @@
 <%@ page import = "java.util.*" %>
 <%@ page import = "java.text.SimpleDateFormat" %>
 <%@ page import = "com.spring.academy.*" %>
+
 <%
 	ArrayList<ClassVO> classList = (ArrayList<ClassVO>)request.getAttribute("classList");
 	int listcount = ((Integer)request.getAttribute("listcount")).intValue(); // 글개수
@@ -12,6 +13,14 @@
 	int startpage = ((Integer)request.getAttribute("startpage")).intValue();
 	int endpage = ((Integer)request.getAttribute("endpage")).intValue();
 	String category = (String)request.getAttribute("CLASS_CATEGORY");
+	
+	
+	int MEMBER_STATUS = 0;
+	if (session.getAttribute("MEMBER_STATUS") == null) {
+		MEMBER_STATUS = 0;
+	} else {
+		MEMBER_STATUS = (Integer)session.getAttribute("MEMBER_STATUS");
+	}
 %>
 
 <!DOCTYPE html>
@@ -137,9 +146,15 @@
 						</div>
 						<div class="bd-highlight">
 							<div class="input-group d-flex justify-content-end">
-								<span class="input-group-btn">
-									<a href="./classform.ac" class="btn btn-outline-dark" role="button" aria-pressed="true">등록하기</a>
-								</span> 
+								<% if(MEMBER_STATUS == 2){ %>
+									<span class="input-group-btn">
+										<a href="./classform.ac" class="btn btn-outline-dark" role="button" aria-pressed="true">등록하기</a>
+									</span>
+								<% }  else { %>
+									<span class="input-group-btn" style="display: none;">
+										<a href="./classform.ac" class="btn btn-outline-dark" role="button" aria-pressed="true">등록하기</a>
+									</span>
+								<% } %>
 							</div>
 							<!-- /input-group -->
 						</div>
@@ -168,7 +183,7 @@
 											<div class="default" style="margin: 0 5% 3% 5%;">
 												<p class="title text-center" style="font-size: 1.5rem;"><%=cl.getCLASS_NAME()%></p>
 												<div class="d-flex bd-highlight" style="font-size: 0.8rem; color: #888888;">
-													<span class="mr-auto bd-highlight">공방이름</span>
+													<span class="mr-auto bd-highlight"><%=cl.getMEMBER_NICK()%></span>
 													<span class="bd-highlight"><%=cl.getCLASS_AREA()%></span>
 												</div>
 											</div>

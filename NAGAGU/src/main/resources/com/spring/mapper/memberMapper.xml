@@ -51,8 +51,8 @@
            SELECT nagagu_member_seq.nextval FROM dual        
        </selectKey>
 	      insert into nagagu_member(member_num, member_email, member_pass, member_name,
-	       member_nick, member_date) 
-	      values (#{MEMBER_NUM}, #{MEMBER_EMAIL}, #{MEMBER_PASS}, #{MEMBER_NAME}, #{MEMBER_NICK}, sysdate)
+	       member_nick, member_date, member_picture) 
+	      values (#{MEMBER_NUM}, #{MEMBER_EMAIL}, #{MEMBER_PASS}, #{MEMBER_NAME}, #{MEMBER_NICK}, SYSDATE, #{MEMBER_PICTURE})
 	</insert>
 	
 	<insert id="insert_sns_member" parameterType="com.spring.member.MemberVO">

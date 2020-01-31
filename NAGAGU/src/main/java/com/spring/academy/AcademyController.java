@@ -1,7 +1,6 @@
 package com.spring.academy;
 
 import java.io.File;
-import java.net.URLEncoder;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -10,6 +9,7 @@ import java.util.UUID;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -18,15 +18,18 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.ModelAndView;
+
+import com.spring.member.MemberVO;
 @Controller
 public class AcademyController {
 	
 	@Autowired
-	private AcademyServiceImpl AcademyService;
+	private AcademyService AcademyService;
 	
 	@RequestMapping(value = "/classlist.ac")
 	public ModelAndView ClassList(ClassVO classVO, ModelAndView mav, HttpServletRequest request) throws Exception  {
 		ArrayList<ClassVO> classList = new ArrayList<ClassVO>();
+		
 		
 		int page = 1; // 초기값 1
 		int limit = 12; // 한 페이지당 출력할 글의 수
@@ -82,9 +85,9 @@ public class AcademyController {
 	}
 	
 	@RequestMapping(value = "/classdetail.ac")
-	public ModelAndView ClassDetail(ClassVO academy) throws Exception {
-		ClassVO vo = null;
-		vo = AcademyService.getDetail(academy);
+	public ModelAndView ClassDetail(ClassVO academy, HttpSession session) throws Exception {
+		ClassVO vo = AcademyService.getDetail(academy);
+		MemberVO vo2 = AcademyService.selectMember(academy);
 		
 		if (vo == null) {
 			System.out.println("상세보기 실패");
@@ -94,6 +97,7 @@ public class AcademyController {
 		
 		ModelAndView mav = new ModelAndView();
 		mav.addObject("ClassVO", vo);
+		mav.addObject("MemberVO", vo2);
 		mav.setViewName("Academy/detail");
 		
 		return mav;
@@ -112,11 +116,14 @@ public class AcademyController {
 	}
 	
 	@RequestMapping(value = "/addclass.ac", method = RequestMethod.POST)
-	public ModelAndView AddClass(MultipartHttpServletRequest request, HttpServletResponse response) throws Exception {
+	public ModelAndView AddClass(MultipartHttpServletRequest request, HttpServletResponse response, HttpSession session) throws Exception {
 		boolean result = false;
 		response.setCharacterEncoding("utf-8");
 		response.setContentType("text/html; charset=utf-8"); 
 		ClassVO vo = new ClassVO();
+		vo.setMEMBER_NUM(Integer.parseInt(session.getAttribute("MEMBER_NUM").toString()));
+		
+		MemberVO vo2 = AcademyService.selectMember(vo);
 		
 		MultipartFile mf2 = request.getFile("CLASS_IMAGE");
 
@@ -182,6 +189,10 @@ public class AcademyController {
 		}
 		
 		
+		
+
+		vo.setMEMBER_NICK(vo2.getMEMBER_NICK());
+		vo.setMEMBER_PICTURE(vo2.getMEMBER_PICTURE());
 		vo.setCLASS_DIVISION(request.getParameter("CLASS_DIVISION"));
 		vo.setCLASS_NAME(request.getParameter("CLASS_NAME"));
 		vo.setCLASS_ABRIEF(request.getParameter("CLASS_ABRIEF"));

@@ -91,8 +91,9 @@ public class MemberServiceImpl implements MemberService{
 		
 		try {
 			memberMapper memberMapper = sqlSession.getMapper(memberMapper.class);
-			
+			memberVO.setMEMBER_PICTURE("./resources/images/Mypage/Basic_Picture.png");
 			res = memberMapper.insert_member(memberVO);
+			System.out.println("PICTURE : " + memberVO.getMEMBER_PICTURE());
 		} catch (Exception e) {
 			System.out.println("회원 정보 입력 실패!" + e.getMessage());
 		}
@@ -137,7 +138,7 @@ public class MemberServiceImpl implements MemberService{
 				status_chk = memberMapper.member_status_chk(memberVO);	//이메일 인증 확인 여부
 				System.out.println("상태정보: " + status_chk);
 				
-				if(status_chk == 1) {	//이메일 인증(완료)
+				if(status_chk != 0) {	//이메일 인증(완료)
 					result = 1;
 				}else {	//이메일,비번은 맞지만 이메일 미인증일 때
 					result = 0;
@@ -159,6 +160,7 @@ public class MemberServiceImpl implements MemberService{
 			memberMapper memberMapper = sqlSession.getMapper(memberMapper.class);
 			member = memberMapper.selectMember(memberVO);
 			
+			System.out.println("멤버 리스트 가져오기 성공!");
 			return member;
 		} catch (Exception e) {
 			System.out.println("멤버 리스트 가져오기 실패!" + e.getMessage());
