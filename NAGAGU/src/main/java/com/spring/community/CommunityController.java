@@ -122,7 +122,7 @@ public class CommunityController {
 		model.addAttribute("pics_review", PICS_REVIEW);
 		model.addAttribute("sort", sort);
 		model.addAttribute("memberList", memberList);
-		
+
 		return "Community/communityList"; 
 	}
 	

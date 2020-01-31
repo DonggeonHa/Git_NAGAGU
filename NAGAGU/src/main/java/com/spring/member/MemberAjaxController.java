@@ -38,19 +38,25 @@ public class MemberAjaxController {
 	}
 	
 	@PostMapping(value = "/nicknameChk.su", produces = "application/json;charset=UTF-8")
-	public Map<String, Object> nicknameChk(MemberVO memberVO) {
+	public Map<String, Object> nicknameChk(MemberVO memberVO, HttpSession session) {
 		Map<String, Object> retVal = new HashMap<String, Object>(); // 리턴값 저장
-		System.out.println("컨트롤러 nickname=" + memberVO.getMEMBER_NICK());
+		String member_nick =  memberVO.getMEMBER_NICK();
+		String nick_session = (String)session.getAttribute("MEMBER_NICK");
+		System.out.println("컨트롤러 nickname=" + member_nick);
 		try {
+			
+			if(member_nick.equals(nick_session)) {
+				retVal.put("res", "OK");
+			} else {
+				int res = memberService.nickname_chk(memberVO);
 
-			int res = memberService.nickname_chk(memberVO);
-
-			if (res == 0) {
-				retVal.put("res", "OK"); // 맵객체 "res"는 키 , "OK" 값
-			} else if (res == 1) {
-				retVal.put("res", "FAIL"); // 맵객체 "res"는 키 , "OK" 값
+				if (res == 0) {
+					retVal.put("res", "OK"); // 맵객체 "res"는 키 , "OK" 값
+				} else if (res == 1) {
+					retVal.put("res", "FAIL"); // 맵객체 "res"는 키 , "OK" 값
+				}
 			}
-
+			
 		} catch (Exception e) {
 			retVal.put("res", "FAIL");
 			retVal.put("message", "Failure");
@@ -80,8 +86,7 @@ public class MemberAjaxController {
 				session.setAttribute("MEMBER_NUM", member.getMEMBER_NUM());
 				session.setAttribute("MEMBER_NICK", member.getMEMBER_NICK());
 				session.setAttribute("MEMBER_STATUS", member.getMEMBER_STATUS());
-
-//				session.setAttribute("member_pass", memberVO.getMember_pass());
+				session.setAttribute("MEMBER_NAME", member.getMEMBER_NAME());
 				retVal.put("res", "login_success");
 				
 			} else if(res == 0) { //아이디,비번은 맞지만 이메일 미인증일 때

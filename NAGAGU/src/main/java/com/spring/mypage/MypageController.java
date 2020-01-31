@@ -1,14 +1,11 @@
 package com.spring.mypage;
 
 import java.util.ArrayList;
-
 import javax.servlet.http.HttpServletRequest;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
-
 import com.spring.community.CommunityServiceImpl;
 import com.spring.community.PicsVO;
 import com.spring.member.MemberServiceImpl;
@@ -68,6 +65,7 @@ public class MypageController {
 		
 		return "Mypage/edit";
 	}
+	
 	@RequestMapping(value = "/mypage_reply.my")
 	public String MypageReply() {
 		

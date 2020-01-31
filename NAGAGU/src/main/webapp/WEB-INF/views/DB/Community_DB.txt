@@ -1,5 +1,5 @@
 
-* 사진 게시판 */
+/* 사진 게시판 */
 CREATE TABLE PICS (
 	PICS_NUM NUMBER NOT NULL, /* 사진 ID */
 	PICS_MEMBER NUMBER, /* 글쓴이 */
