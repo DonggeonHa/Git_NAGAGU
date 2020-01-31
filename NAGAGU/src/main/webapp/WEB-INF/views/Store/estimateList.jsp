@@ -153,7 +153,7 @@
 			<br /> <br /> <br />
 	
 			<div class="row justify-content-end">
-				<a class="btn btn-outline-dark mb-2" onClick="location.href='./store_estimateform.es'" style="cursor: pointer;">글쓰기</a>
+				<a class="btn btn-outline-dark mb-2" onClick="location.href='./estimate_form.es'" style="cursor: pointer;">글쓰기</a>
 			</div>
 	
 			<div class="row justify-content-center">
