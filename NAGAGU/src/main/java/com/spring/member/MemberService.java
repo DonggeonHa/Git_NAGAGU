@@ -3,6 +3,7 @@ package com.spring.member;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import com.spring.community.LikeVO;
 import com.spring.community.PicsVO;
 
 public interface MemberService {
@@ -17,5 +18,5 @@ public interface MemberService {
 	ArrayList<MemberVO> getMemberList(HashMap<String, Object> map);
 	MemberVO getMemberDetail(MemberVO memberVO);
 	MemberVO getMemberDetailbyEmail(MemberVO memberVO);
-	ArrayList<PicsVO> getMemberLikePics(MemberVO memberVO);//좋아요 사진 리스트
+	ArrayList<LikeVO> getMemberLikePics(MemberVO memberVO);//좋아요 사진 리스트
 }

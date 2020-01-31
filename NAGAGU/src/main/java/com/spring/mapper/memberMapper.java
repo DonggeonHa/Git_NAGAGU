@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 import com.spring.chat.WorkshopVO;
+import com.spring.community.LikeVO;
 import com.spring.community.PicsVO;
 import com.spring.member.MemberVO;
 
@@ -24,7 +25,7 @@ public interface memberMapper {
 	ArrayList<MemberVO> getMemberList(HashMap<String, Object> map);
 	MemberVO getMemberDetail(MemberVO memberVO);
 	MemberVO getMemberDetailbyEmail(MemberVO memberVO);
-	ArrayList<PicsVO> getMemberLikePics(MemberVO memberVO);
+	
 	
 	
 	

@@ -110,7 +110,6 @@ public class CommunityController {
 		//멤버디테일 구하기(이메일)
 		memberVO.setMEMBER_EMAIL((String)session.getAttribute("MEMBER_EMAIL"));
 		MemberVO memberDetailbyEmail = memberService.getMemberDetailbyEmail(memberVO);
-		System.out.println(memberVO.getMEMBER_PICTURE());
 		model.addAttribute("memberDetailbyEmail",memberDetailbyEmail);
 		model.addAttribute("page", page);
 		model.addAttribute("maxpage", maxpage);

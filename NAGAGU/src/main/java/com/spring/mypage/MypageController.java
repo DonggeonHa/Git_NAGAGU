@@ -1,6 +1,7 @@
 package com.spring.mypage;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -10,6 +11,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.spring.community.CommunityServiceImpl;
+import com.spring.community.LikeVO;
 import com.spring.community.PicsVO;
 import com.spring.member.MemberServiceImpl;
 import com.spring.member.MemberVO;
@@ -20,6 +22,7 @@ public class MypageController {
 	private CommunityServiceImpl communityService;
 	@Autowired
 	private MemberServiceImpl memberService;
+	
 	
 	@RequestMapping(value = "/mypage.my")
 	public String Mypage() {
@@ -92,8 +95,7 @@ public class MypageController {
 		//멤버가 올린 사진리스트
 		ArrayList<PicsVO> memberPicsList = communityService.getPicsOfMemberUpload(picsVO);
 		//멤버가 좋아요 한 사진 리스트
-		ArrayList<PicsVO> memberLikePics = memberService.getMemberLikePics(memberVO);
-		
+		ArrayList<LikeVO> memberLikePics = memberService.getMemberLikePics(memberVO);
 		
 		model.addAttribute("memberDetail",memberDetail);
 		model.addAttribute("memberPicsList",memberPicsList);
