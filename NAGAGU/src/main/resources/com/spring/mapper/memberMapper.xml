@@ -79,7 +79,8 @@
 	<select id="selectMember" parameterType="com.spring.member.MemberVO" resultMap="memberResultMap">
 		select * from nagagu_member where member_email = #{MEMBER_EMAIL}
 	</select>
-	<!-- 멤버 리스트(커뮤니티 사진의 멤버리스트) 경태형 -->
+	
+	<!-- 멤버 리스트(커뮤니티 사진의 멤버리스트) 경태형 --> 
 	<select id="getMemberList" parameterType="java.util.HashMap" resultMap="memberResultMap">	
  		SELECT *
 		FROM PICS P, nagagu_member M
@@ -91,6 +92,8 @@
 	<select id="getMemberDetail" parameterType="com.spring.member.MemberVO" resultMap="memberResultMap">
 		SELECT * FROM nagagu_member WHERE MEMBER_NUM =#{MEMBER_NUM}
 	</select>
+
+	
 	
 	<!-- 기재형 쪽 멤버 메퍼 -->
 	<select id="getMember" parameterType="String" resultMap="memberResultMap">

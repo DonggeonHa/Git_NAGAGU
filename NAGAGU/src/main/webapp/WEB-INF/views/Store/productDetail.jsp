@@ -11,9 +11,17 @@
 
 <%
 	System.out.println("=========================================");
-	System.out.println("ProductDetail.jsp 입니당");
-	SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-
+	System.out.println("ProductDetail.jsp");
+	
+	//로그인 상태 체크 위한
+	String MEMBER_NICK = (String)session.getAttribute("MEMBER_NICK");
+	
+	MemberVO LoginMemberVO = null;
+	String MEMBER_PICTURE = null;
+	if((MemberVO)request.getAttribute("LoginMemberVO") != null) {
+		LoginMemberVO = (MemberVO)request.getAttribute("LoginMemberVO");
+		MEMBER_PICTURE = LoginMemberVO.getMEMBER_PICTURE();
+	}
 	//상품상세 관련
 	ProductVO vo = (ProductVO)request.getAttribute("productVO");
 	String PRODUCT_CATEGORY = (String)request.getAttribute("PRODUCT_CATEGORY");
@@ -23,7 +31,9 @@
 	String PRODUCT_OPTION = vo.getPRODUCT_OPTION();
 	//리뷰 관련
 	ArrayList<Product_reviewVO> reviewList = (ArrayList<Product_reviewVO>) request.getAttribute("reviewList");
+	ArrayList<Product_reviewVO> review_RE_List = (ArrayList<Product_reviewVO>) request.getAttribute("review_RE_List");
 	int reviewCount = ((Integer) request.getAttribute("reviewCount")).intValue(); // (전체/카테고리)글 개수
+	int review_RE_Count = ((Integer) request.getAttribute("review_RE_Count")).intValue(); // (전체/카테고리)글 개수
 	int nowpage = ((Integer) request.getAttribute("reviewpage")).intValue();
 	int maxpage = ((Integer) request.getAttribute("maxpage")).intValue();
 	int startpage = ((Integer) request.getAttribute("startpage")).intValue();
@@ -40,6 +50,7 @@
 	}
 	//리뷰 멤버 관련
 	ArrayList<MemberVO> reviewMemberList = (ArrayList<MemberVO>) request.getAttribute("reviewMemberList");
+	ArrayList<MemberVO> review_RE_MemberList = (ArrayList<MemberVO>) request.getAttribute("review_RE_MemberList");
 	System.out.println("reviewMemberList.size() = " + reviewMemberList.size());
 	/*
 	for(int i = 0; i < reviewMemberList.size(); i++) {		
@@ -70,7 +81,9 @@
 	}
 	*/
 	System.out.println("qnaCount = " + qnaCount);
-	
+	//날짜 포맷 형식
+	SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+
 %>  
 <!DOCTYPE html>
 <html>
@@ -219,16 +232,27 @@
 			.review_sum {
 				width: 100%; 
 				margin: 0 auto;
+				background-color:#FAFAFA;
+				border-radius:10px;
+				/*border-top:1px solid RGBA(239, 144, 46, 0.3);*/
+				padding: 10px 0 3px 10px;
+				
 			}
 			.review_img {
 				width:100px;
 				height:100px;
 			}
 			.review_add_section {
+			/*
 				background-color: #FAFAFA;
+			*/
 			}
 			.review_hidden {
 				display:none;
+				border:1px solid RGBA(35, 39, 43, 0.3);
+				border-radius:10px;
+				padding:15px 0;
+				margin:0 20px;
 			}
 			.review_file_preview {
 				width:100px;
@@ -245,6 +269,14 @@
 			.reviewspace {
 				display:block;
 			}
+			.review_control {
+				text-align:right;
+			}
+			.review_control a {
+				color : #343A40;
+				font-weight:bold;
+				font-size:0.7rem;
+			}
 			/*review 답글*/
 			.review_re {
 				text-align:right;
@@ -254,10 +286,18 @@
 				font-weight:bold;
 				font-size:0.7rem;
 			}
-			.review_control {
+			.review_RE_control {
 				text-align:right;
 			}
-			.review_control a {
+			.review_RE_control a {
+				color : #343A40;
+				font-weight:bold;
+				font-size:0.7rem;
+			}
+			.review_RE_control_hidden {
+				display:none;
+			}
+			.review_RE_control_hidden a {
 				color : #343A40;
 				font-weight:bold;
 				font-size:0.7rem;
@@ -281,6 +321,10 @@
 			.review_re_sum {
 				width: 100%; 
 				margin: 0 auto;
+				padding: 3px 0;
+			}
+			.review_RE_modify_hidden {
+				display:none;
 			}
 			
 			
@@ -440,18 +484,18 @@
 				<br /><br />
 				<div class="reviews_table" >
 					<!-- 리뷰 작성시 Ajax로 이 자리에 insert -->
-					<div class="review_sum justify-content-center " >
+					<div class="review_sum justify-content-center" >
 						<div class="row justify-content-center reviewspace">
 							
 						</div>
 					</div>
 
-			<%
-				if (reviewCount > 0) {
-					for (int i = 0; i < reviewList.size(); i++) {
-						Product_reviewVO reviewVO = reviewList.get(i);
-						MemberVO memberVO = reviewMemberList.get(i);								
-			%>		
+				<%
+					if (reviewCount > 0) {
+						for (int i = 0; i < reviewList.size(); i++) {
+							MemberVO memberVO = reviewMemberList.get(i);
+							Product_reviewVO reviewVO = reviewList.get(i);						
+				%>		
 					
 					<div class="review_sum justify-content-center" id="review_<%=reviewVO.getREVIEW_NUM() %>">	
 						<div class="row justify-content-center"> 				
@@ -460,6 +504,13 @@
 							</div>
 							<div class="col-11">
 								<div class="row">
+								<%
+								System.out.println();
+								System.out.println("닉네임="+memberVO.getMEMBER_NICK());
+								System.out.println("member 번호="+memberVO.getMEMBER_NUM());
+								System.out.println("이메일="+memberVO.getMEMBER_EMAIL());
+								System.out.println();
+								%>
 									<div class="col-10 justify-content-end name"><%=memberVO.getMEMBER_NICK() %></div>
 									<div class="col-2 justify-content-center smallfont"><%=sdf.format(reviewVO.getREVIEW_DATE())%></div>
 								</div>
@@ -506,15 +557,22 @@
 											</a>
 									</div>
 								</div>
+								<!-- 답글 달기(review_re) -->
 								<div>
 									<div class="review_re_hidden pt-3" id="review_re_hidden_<%=reviewVO.getREVIEW_NUM() %>">
 										<div class="row">
 											<div class="col-1">
-												<img src="<%=memberVO.getMEMBER_PICTURE() %>" alt="" class="rounded-circle">
+											<%
+												if(MEMBER_NICK != null) {
+											%>	
+													<img src="<%=MEMBER_PICTURE%>" alt="" class="rounded-circle">	 
+											<%
+												}
+											%>	
+											
 											</div>
 											<div class="col-11">
 												<form name="review_re_form" id="review_re_form<%=reviewVO.getREVIEW_NUM() %>">
-													<!--검색  -->
 													<input type="hidden" name="REVIEW_PRODUCT" value="<%=reviewVO.getREVIEW_PRODUCT() %>">
 													<input type="hidden" name="REVIEW_NUM" value="<%=reviewVO.getREVIEW_NUM() %>">
 													<input type="hidden" name="REVIEW_RE" value="<%=reviewVO.getREVIEW_NUM() %>">
@@ -546,15 +604,6 @@
 											</a>
 									</div>							
 								</div>
-								<!-- re_space -->
-								<div class="review_re_table">
-									<div class="review_re_sum pt-3 ">
-										<div class="row review_re_space" id="review_re_space<%=reviewVO.getREVIEW_NUM() %>">
-											
-										</div>
-									</div>
-								</div>
-		
 							</div>
 						</div>									
 					</div>
@@ -564,22 +613,93 @@
 					</div>			
 					<!-- 수정폼 끝 -->
 					
-			<%	
-				} //for문 끝
-			%>
-						
-
+					<!-- 답글 관련 (review_re)-->
+					<div class="review_re_table" >
+						<div class="row">
+							<div class="col-1">
+							</div>
+							<div class="col-11">
+								<div class="review_re_sum justify-content-center pr-2" >	
+									<!-- review_re insert시 여기에 삽입 -->
+									<div class="row review_re_space justify-content-center" id="review_re_space<%=reviewVO.getREVIEW_NUM() %>"> 				
+									</div>
+								</div>
+							</div>
+						</div>	
+					</div>
+				<%
+							if(review_RE_Count > 0) {
+								for(int j=0; j<review_RE_List.size(); j++)  {
+									MemberVO member_re_VO = review_RE_MemberList.get(j);
+									Product_reviewVO review_re_VO = review_RE_List.get(j);
+									
+									if(reviewVO.getREVIEW_NUM() == review_RE_List.get(j).getREVIEW_RE()) { 
+									
+				%>						
+					<!-- 답글 리스트 출력(review_re) -->
+					<div class="review_re_table">
+						<div class="row pb-3">
+							<div class="col-1">
+							</div>
+							<div class="col-11">
+								<div class="review_re_sum justify-content-center pr-2">
+									<div class="row review_re_space justify-content-center" id="review_re_space<%=reviewVO.getREVIEW_NUM() %>"> 				
+										<div class="col-1 justify-content-end">
+											<img src="<%=member_re_VO.getMEMBER_PICTURE() %>" alt="" class="rounded-circle">
+										</div>
+										<div class="col-11">
+											<div class="row">
+												<div class="col-10 justify-content-end name"><%=member_re_VO.getMEMBER_NICK() %></div>
+												<div class="col-2 justify-content-center smallfont"><%=sdf.format(review_re_VO.getREVIEW_DATE())%></div>
+											</div>
+											<div class="row">
+												<div class="col rep_content" id="review_RE_modify_block<%=review_re_VO.getREVIEW_NUM() %>"><%=review_re_VO.getREVIEW_CONTENT() %></div>
+												<form name="review_RE_modifyform">
+													<div class="col">
+														<textarea rows="2" cols="80%" class="review_RE_modify_hidden" id="review_RE_modify_hidden<%=review_re_VO.getREVIEW_NUM() %>">
+															<%=review_re_VO.getREVIEW_CONTENT() %>
+														</textarea>
+													</div>
+												</form>
+											</div>
+											<div class="row review_RE_control" id="review_RE_control<%=reviewVO.getREVIEW_NUM() %>">											
+												<a class="review_RE_modify" style="cursor: pointer;">
+													<input type="hidden" name="REVIEW_NUM" value="<%=review_re_VO.getREVIEW_NUM() %>">
+													수정
+												</a> &nbsp;
+												<a class="review_RE_delete" style="cursor: pointer;">
+													<input type="hidden" name="REVIEW_NUM" value="<%=review_re_VO.getREVIEW_NUM() %>">
+													삭제
+												</a>												
+											</div>
+											<div class="row review_RE_control_hidden" id="review_RE_control<%=reviewVO.getREVIEW_NUM() %>">											
+												<a class="review_RE_modify_Process" style="cursor: pointer;">
+													<input type="hidden" name="REVIEW_NUM" value="<%=review_re_VO.getREVIEW_NUM() %>">
+													수정하기
+												</a>												
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>	
+						</div>		
+					</div>	
 					
-
 					
-			<%
-			} else {
-			%>
-				<input type="text" id = "comment_info" value="등록된 댓글이 없습니다" readonly style="border:none; text-align:center;">	
-			<%
-			}
-			%>
-						
+					
+				<%
+									}
+								}
+							}
+						} //for문 끝
+			
+					} else {
+					%>	
+						<input type="text" id = "comment_info" value="등록된 댓글이 없습니다" readonly style="border:none; text-align:center;">	
+					<%
+					}
+					%>
+								
 						
 					<!-- 리뷰 등록하기 -->		
 					<br/>
@@ -671,7 +791,6 @@
 					
 					<br />
 				</div><!-- <div class="reviews_table" > 끝 -->
-			<!--  -->	
 				<!-- 리뷰 테이블 끝 -->
 		
 				<span id="t3"></span>
@@ -941,6 +1060,8 @@
 
 	
 	<script type="text/javascript">
+	var loginmember_pic = '<%=MEMBER_PICTURE%>';
+	var loginmember_nick = '<%=MEMBER_NICK%>';
 		/*장바구니 수량 변경*/
 		function count_change(temp) {
 			var test = document.goodsform.amount.value;
@@ -1102,12 +1223,9 @@
  		/*수정하기 버튼 이벤트*/
  		//수정 process
 		$(document).on("click",".review_modify_process",function(e){ 
-			alert('왔니');
-			var REVIEW_NUM = $(this).children('input').val();
-			alert('REVIEW_NUM='+REVIEW_NUM);
-			
+
+			var REVIEW_NUM = $(this).children('input').val();			
 			if(mod_check(REVIEW_NUM)) {
-				alert('체크 완료');
 
 				var form = new FormData(document.getElementById('modifyform_'+REVIEW_NUM));
 				
@@ -1119,27 +1237,23 @@
 					contentType : false,
 					type : 'POST',
 					success:function(data) {
-						alert('성공!');
-						
+					
 						var output = '';
 						var REVIEW_NUM = data.review_NUM;
 						var review_DATE = new Date(data.review_DATE);
 						var date = date_format(review_DATE);
 						var rate = 20*data.review_GRADE;
 						var review_FILE = data.review_FILE;
-						alert('review_FILE = ' + review_FILE);
 						
 						$('#review_mod_'+REVIEW_NUM).css('display','none');
 						$('#review_'+REVIEW_NUM).empty();
 						
 						output += '<div class="row justify-content-center">';
 						output += '<div class="col-1 justify-content-end">';
-						output += '<img src="#" alt="" class="rounded-circle"></div>'; //프로필이미지 들어가야함
-						/*<img src="<memberVO.getMEMBER_PICTURE() %>"*/
+						output += '<img src="'+loginmember_pic+'" alt="" class="rounded-circle"></div>'; 
 						output += '<div class="col-11"><div class="row pb-1">';
 						output += '<div class="col-10 justify-content-end name">';
-						output += 'getMEMBER_NICK()들어옴';
-						//<memberVO.getMEMBER_NICK() %>
+						output += loginmember_nick;
 						output += '</div>';
 						output += '<div class="col-2 justify-content-center smallfont">' + date;
 						output += '</div></div><div class="row pb-1">';
@@ -1163,13 +1277,11 @@
 						output += '<div class="col-12 pr-5">';
 						output += data.review_CONTENT ;
 						output += '</div></div>';
-						
 						output += '<div class="pb-1 "><div class="review_re pr-4">';
 						output += '<form name="review_reform">';
 						output += '<a id="review_reply'+ data.review_NUM +'" class="review_reply" style="cursor: pointer;">';
 						output += '<input type="hidden" name="REVIEW_NUM" value="' + data.review_NUM + '">';
 						output += '답글</a></form></div></div>'
-						
 						output += '<div class="pb-3 "><div class="review_control pr-4">';
 						output += '<form name="review_numform">';
 						output += '<a class="review_modify" style="cursor: pointer;">';
@@ -1178,12 +1290,10 @@
 						output += '<a class="review_delete" style="cursor: pointer;">';
 						output += '<input type="hidden" name="REVIEW_NUM" value="' + data.review_NUM + '">';
 						output += '삭제</a></form></div></div></div></div>';
-
 						
 						console.log("output:" + output);
 						$('#review_'+REVIEW_NUM).append(output);
 						$('#review_'+REVIEW_NUM).css('display','block');
-				//		document.getElementById('#review_'+REVIEW_NUM).scrollIntoView();
                   },
                   error:function() {
                      alert("ajax통신 실패!!!");
@@ -1195,7 +1305,7 @@
 		 });		 
 		
 		
-		//댓글 수정시 이미지 추가 가능(삭제는 위 function deleteImageAction(index)로 가능)
+		//댓글 수정시 이미지 추가 가능(삭제는 deleteImageAction(index) 가능)
 		$(document).on("change","#modify_input_imgs",function(e){ 
 			sel_files = [];
 			$('.modify_imgs_wrap').empty();
@@ -1220,39 +1330,30 @@
 					index++;
 				}
 				reader.readAsDataURL(f);
-				
 			});
-
 		 });			
+		
 		
 		//댓글 수정시 기존 이미지 삭제할 때 ajax 이용하여 이미지 display 삭제, db의 REVIEW_FILE 수정한다
 		function imgPath_delete(getREVIEW_NUM, i, reviewImgArraylength){
 			var REVIEW_NUM = getREVIEW_NUM;
-			alert(REVIEW_NUM); 
 			var imgLength = reviewImgArraylength;
 			var index = i;
 			var delete_confirm = confirm("삭제하시겠습니까?");
 			if (delete_confirm) {
 				var img_id = "#img_" + index;
 				alert("img_id = " + img_id)
-			/* 	var img_src = jQuery('#img_'+ index).attr("src");
-				alert(img_src);	//productupload/image/1580137793180_img1.daumcdn.png
-				 */
+
 				$.ajax({
 					url: '/NAGAGU/review_img_delete.do' ,
 					type:'GET',
-					data : {'REVIEW_NUM':REVIEW_NUM, 'index':index},
-					
-					dataType : 'json', // 서버에서 보내줄 데이터 타입
+					data : {'REVIEW_NUM':REVIEW_NUM, 'index':index},		
+					dataType : 'json', 
 					async: false,
 					contentType : 'application/x-www-form-urlencoded; charset=UTF-8',
 					success: function (newReviewImg) {
-						alert("AAAAAAAAA");
-//						$(img_id).remove();
 						REVIEW_FILE = newReviewImg; //db삭제 후 , 업데이트한 경로
-
 						reLoadImg(img_id, imgLength, REVIEW_NUM, REVIEW_FILE);
-						alert('bbbbbbb');
 					},
 					error:function(request, error) {
 						alert("message:"+request.responseText);
@@ -1264,28 +1365,11 @@
 		
 		//리뷰 댓글 수정할 때, img_i 새로 부여하기 위해 col-12부분만 다시 reload
 		function reLoadImg(img_id, imgLength, REVIEW_NUM, REVIEW_FILE) {
-			
-//			$('#imgReload').empty();
-	//		alert('reLoadImg 왔음.\n' + 'img_id = ' + img_id + '\n' + 'imgLength = ' + imgLength + '\n' +'REVIEW_NUM = ' + REVIEW_NUM + '\n' );
-	//		alert('REVIEW_FILE = ' + REVIEW_FILE);
-			
-			//기존 이미지들 삭제하고 reload 
-/* 			for(i=0; i<imgLength; i++) {
-				var img_id = "#img_" + i;
-				alert('확인 : '+ img_id)
-				$(img_id).remove();
-			} */
-			
+
 			var a = $('#imgReload');
 			var b = a.find('.img');
 			b.remove('.img');
 			
-			
-			//reload
-			
-			 
-			
-//			$(img_id).empty();
 			var mod_form = '';
 		 	mod_form += '<span class="col-12" id="imgReload">';
 			if(REVIEW_FILE == '#') {
@@ -1297,78 +1381,57 @@
 					mod_form += '<span class="img" >';								
 					mod_form += '<span><img src="/productupload/image/' + reviewImgArray[i] + '" class="review_img_modify img" id="img_'+i+'" ></span>	';								
 					mod_form += '<span class="hover-image review_img_modify" id="test" >'; 
-					
 					mod_form += '<a href="javascript:imgPath_delete(\''+getREVIEW_NUM+'\',\''+i+'\',\''+reviewImgArray.length+'\');">'; 
 					mod_form += '<span class="button"><i class="fas fa-times"></i></span>'; 
 					mod_form += '</a>'; 
 					mod_form += '</span>'; 
 					mod_form += '</span>';
-					
 				}					
 			}
-			
-			mod_form += '<span class="modify_imgs_wrap"><img id="modify_inputimg" ></span>';
-			
-			mod_form += '</span>';			
+			mod_form += '<span class="modify_imgs_wrap"><img id="modify_inputimg" ></span></span>';
 			$('#imgReload').prepend(mod_form);
-			
 		}	
 
 		
-		
 		/*document.ready*/
 		$(document).ready(function(){
+			//리뷰 이미지를 클릭하면 원본 사이즈로 커짐(기본은 100)
 			$(".review_img").click(function(){
 				if($(this).css('width') != '100px' ) {
 					$(this).css({'width':'100','height':'100'});
 				} else {
 					$(this).css({'width':'100%','height':'100%'});
 				}
-				
 			})
 			
-
+			//확인!!!
+			//댓글 등록 위해 댓글달기 버튼 눌렀을 시 css
 			$(".review_add").click(function() {
 				if($(this).html() == '댓글 달기') { //댓글달기이면 hidden구역 보이고 버튼은 닫기로 바뀜
+					var nick = '<%=MEMBER_NICK%>';
+					if(nick == null) {
+						alert('로그인 해주세요!');
+						return false;
+					}					
 					$(".review_hidden").css('display','block');
 					$(this).html('닫기');	
-					//reviewspace 에 리뷰 공간 생성 ?
-					
-					
-					
 				} else { //버튼이 닫기이면 hidden 구역이 닫히고 버튼은 댓글 달기로 바뀜
 					$(this).html('댓글 달기');
 					$(".review_hidden").css('display','none');
 				}	
 			})
 			
-			
-			
-			//////////////////다중이미지 업로드
+			//-----------------------------------review insert
+			//다중이미지 업로드
 			$('#input_imgs').on("change", handleImgFileSelect);
-			
 
 			function infochange() {
 				if($('#comment_info').val() == '등록된 댓글이 없습니다') {
 					alert('a');
 					$('#comment_info').val('');
 				}
-				
 			}
 			
-			
-			//별점
-			$('.starRev span').click(function() {
-				$(this).parent().children('span').removeClass('on');
-				$(this).addClass('on').prevAll('span').addClass('on');
-				return false;
-			});
-			
-			
-
-			
-			
-
 			
 			/*댓글 등록시 insert ajax*/
 			$('#insert_review').click(function(event) {
@@ -1390,35 +1453,22 @@
 							var review_DATE = new Date(data.review_DATE);
 							var date = date_format(review_DATE);
 							var rate = 20*data.review_GRADE;
-								
 							var review_FILE = data.review_FILE;
-							alert('review_FILE = ' + review_FILE);
 							
-							/*
-							output += '<div class="review_sum justify-content-center" id="review_'+REVIEW_NUM+'">';
-							output += '<div class="row justify-content-center">';
-							*/
 							output += '<div class="col-1 justify-content-end">';
-							output += '<img src="#" alt="" class="rounded-circle"></div>'; //프로필이미지 들어가야함
-							/*<img src="<memberVO.getMEMBER_PICTURE() %>"*/
+							output += '<img src="'+loginmember_pic+'" alt="" class="rounded-circle"></div>'; 
 							output += '<div class="col-11"><div class="row">';
 							output += '<div class="col-10 justify-content-end name">';
-							output += 'getMEMBER_NICK()';
-							//<memberVO.getMEMBER_NICK() %>
-							output += '</div>';
+							output += loginmember_nick + '</div>';
 							output += '<div class="col-2 justify-content-center smallfont">' + date;
 							output += '</div></div><div class="row">';
-							
-							
 							output += '<div class="col-12 " style="font-size:0.7em; font-weight:bold;">';
 							output += data.review_GRADE + '&nbsp;<span class="star-rating">';
 							output += '<span style ="width:' + rate + '%"></span></span></div></div>';
-							
 							output += '<div class="row"><div class="col-12">';
 							if(review_FILE == '#') {
 								output += '<img src="#" class="review_img"  style="display:none;">	&nbsp;&nbsp;';				
 							} else {
-								//split함수 호출 //, 가 몇 개 있는지 구해서 //for문으로 그 개수만큼 돌림...review_file[i]
 								var reviewImgArray = splitImg(review_FILE);
 								for(i=0;i<reviewImgArray.length;i++) {
 									output += '<img src="/productupload/image/' + reviewImgArray[i] + '" class="review_img">	&nbsp;&nbsp;';								
@@ -1427,16 +1477,12 @@
 							output += '</div></div>';
 							output += '<div class="row">';
 							output += '<div class="col rep_content">';
-							output += data.review_CONTENT ;
-							output += '</div></div>';
-							
+							output += data.review_CONTENT + '</div></div>' ;
 							output += '<div class="pb-1 "><div class="review_re pr-4">';
 							output += '<form name="review_reform">';
 							output += '<a id="review_reply'+ data.review_NUM +'" class="review_reply" style="cursor: pointer;">';
 							output += '<input type="hidden" name="REVIEW_NUM" value="' + data.review_NUM + '">';
 							output += '답글</a></form></div></div>'
-							
-							
 							output += '<div class="pb-3 "><div class="review_control pr-4">';
 							output += '<form name="review_numform">';
 							output += '<a class="review_modify" style="cursor: pointer;">';
@@ -1445,13 +1491,9 @@
 							output += '<a class="review_delete" style="cursor: pointer;">';
 							output += '<input type="hidden" name="REVIEW_NUM" value="' + data.review_NUM + '">';
 							output += '삭제</a></form></div></div></div>';
-							/*
-							output += '</div></div>';
-							*/
 							output += '<div class="review_mod_sum justify-content-center" id="review_mod_'+ data.review_NUM +'">';
 							output += '<form name="modifyform" id="modifyform_'+data.review_NUM+'" enctype="multipart/form-data" method="post">';
 							output += '</form></div>';
-							
 							
 							console.log("output:" + output);
 							$('.reviewspace').append(output);
@@ -1462,8 +1504,7 @@
 							infochange();
 							$(".review_hidden").css('display','none');
 							$(".review_add").html('댓글 달기');
-							document.getElementById('review_scroll').scrollIntoView();
-							
+							document.getElementById('review_scroll').scrollIntoView();							
 	                  },
 	                  error:function() {
 	                     alert("ajax통신 실패!!!");
@@ -1473,11 +1514,25 @@
 				event.preventDefault();
 			});	
 			
-			
-			
+			//검색수정
+			$('.review_RE_modify').on('click', function() {
+				var REVIEW_RE_NUM = $(this).children('input').val();
+				$('#review_RE_modify_hidden'+REVIEW_RE_NUM).css('display','block');
+				$('#review_RE_modify_block'+REVIEW_RE_NUM).css('display','none');
+				$('#review_RE_control'+REVIEW_RE_NUM).css('display','none');
+				$('#review_RE_control_hidden'+REVIEW_RE_NUM).css('display','block');
+				
+
+			});
 			
 			//수정폼
 			$('.review_modify').on('click', function(event) {
+				var nick = '<%=MEMBER_NICK%>';
+				if(nick == null) {
+					alert('로그인 해주세요!');
+					return false;
+				}
+				
 				var modify_confirm = confirm("수정하시겠습니까?");
 				if(modify_confirm) {										
 					var REVIEW_NUM = $(this).children('input').val();
@@ -1515,11 +1570,11 @@
 					mod_form += '<form name="modifyform" id="modifyform_'+ REVIEW_NUM +'" enctype="multipart/form-data" method="post">';
 					mod_form += '<div class="row justify-content-center">';
 					mod_form += '<div class="col-1 justify-content-end">';
-					mod_form += '<img src="#" alt="" class="rounded-circle"></div>';
+					mod_form += '<img src="'+loginmember_pic+'" alt="" class="rounded-circle"></div>';
 //					mod_form += '<img src="=memberVO.getMEMBER_PICTURE() %>" alt="" class="rounded-circle">';
 					mod_form += '<div class="col-11"><div class="row">';
 					mod_form += '<div class="col-10 justify-content-end name">';
-					mod_form += '<=memberVO.getMEMBER_NICK() %></div>';
+					mod_form += loginmember_nick+'</div>';
 					mod_form += '<div class="col-2 justify-content-center smallfont">';
 					mod_form += date + '</div></div>';
 					mod_form += '<div class="row">';
@@ -1572,7 +1627,14 @@
 
 			
 			
+			
 			$('.review_delete').on('click', function() {
+				var nick = '<%=MEMBER_NICK%>';
+				if(nick == null) {
+					alert('로그인 해주세요!');
+					return false;
+				}
+				
 				var delete_confirm = confirm("삭제하시겠습니까?");
 				if(delete_confirm) {
 										
@@ -1606,10 +1668,14 @@
 			
 			
 			
-			// class="col-12" rows="2"
-			
 			//review 답글 달기
 			$('.review_reply').on('click', function(event) {
+				var nick = '<%=MEMBER_NICK%>';
+				if(nick == null) {
+					alert('로그인 해주세요!');
+					return false;
+				}
+				
 				var REVIEW_NUM = $(this).children('input').val();
 				
 				alert(REVIEW_NUM);
@@ -1623,8 +1689,9 @@
 			});
 			
 			
-			
+			//답글 insert
 			/*review의 답글 등록시 insert ajax*/
+			//ajax로 답글 db에 등록 후 review_re_space에 출력해줌
 			$('.insert_review_re').click(function(event) {
 				alert("왔다");
 				var REVIEW_NUM = $(this).children('input').val();
@@ -1643,55 +1710,39 @@
 						success:function(data) {
 							alert('성공!');
 							
-							
 							var re_form = '';
-						//	var aa = data.review_RE;
 							var review_DATE = new Date(data.review_DATE);
 							var date = date_format(review_DATE);
 							var rate = 20*data.review_GRADE;
-
-							
-						
+		
 							
 							re_form += '<div class="col-1 justify-content-end">';
 							re_form += '<img src="#" alt="" class="rounded-circle">';
-						//	re_form += '<img src="<=memberVO.getMEMBER_PICTURE() %>" alt="" class="rounded-circle">';
+							re_form += '<img src="'+loginmember_pic+'" alt="" class="rounded-circle">';
 							re_form += '</div>';
 							re_form += '<div class="col-11">';
 							re_form += '<div class="row">';
 							re_form += '<div class="col-10 justify-content-end name">';
-							re_form += '닉네임';
+							re_form += loginmember_nick;
 							re_form += '</div>';
 							re_form += '<div class="col-2 justify-content-center smallfont">' + date + '</div>';
-							re_form += '</div>';	//row
+							re_form += '</div>';	
 							re_form += '<div class="row">';
 							re_form += '<div class="col rep_content">';
 							re_form += data.review_CONTENT; 
 							re_form += '</div>';
-							re_form += '</div>';	//row
+							re_form += '</div>';	
 							
-							
-							
-							console.log("re_form:" + re_form);
 				
-							
+							//data.review_RE는 원글의 num과 같다(REVIEW_NUM)
 							$('#review_re_space'+data.review_RE).append(re_form);	
-							alert('답글달기aaa'+data.review_RE);
+							
 							$('#review_re_hidden_'+data.review_RE).css('display','none');
 							$('#review_re_insert'+data.review_RE).css('display','none');
 							$('#review_control'+data.review_RE).css('display','block');
 							$('#review_reply'+data.review_RE).css('display','block');
+					
 							
-							/* $('#REVIEW_CONTENT').val('');
-							$('#REVIEW_GRADE').val('');
-							$('#input_imgs').val('');
-							$('.imgs_wrap').empty();
-							infochange();
-							$(".review_hidden").css('display','none');
-							$(".review_add").html('댓글 달기');
-							document.getElementById('review_scroll').scrollIntoView();
-														 */
-							alert('anjdi');
 	                  },
 	                  error:function() {
 	                     alert("ajax통신 실패!!!");
@@ -1700,9 +1751,6 @@
 				}
 				
 			});	
-			
-			
-					
 			
 			
 		}); //document.ready 끝

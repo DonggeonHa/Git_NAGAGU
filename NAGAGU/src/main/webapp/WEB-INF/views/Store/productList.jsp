@@ -2,10 +2,24 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ page import="java.util.*"%>
+<%@ page import="com.spring.member.MemberVO" %>
 <%@ page import="com.spring.store.ProductVO"%>
 <%
+
+
 	System.out.println("==============================");
-	System.out.println("store_productlist jsp 왔습니당");
+	System.out.println("store_productlist jsp");
+	
+	//로그인 상태 체크 위한
+	String MEMBER_NICK = (String)session.getAttribute("MEMBER_NICK");
+
+	MemberVO LoginMemberVO = null;
+	int MEMBER_STATUS = 5;
+	if((MemberVO)request.getAttribute("LoginMemberVO") != null) {
+		LoginMemberVO = (MemberVO)request.getAttribute("LoginMemberVO");
+		MEMBER_STATUS = LoginMemberVO.getMEMBER_STATUS();
+	}
+	
 	ArrayList<ProductVO> productList = (ArrayList<ProductVO>) request.getAttribute("productList");
 	String PRODUCT_CATEGORY = (String)request.getAttribute("PRODUCT_CATEGORY");
 	int productcount = ((Integer) request.getAttribute("productcount")).intValue(); // (전체/카테고리)글 개수
@@ -242,7 +256,16 @@
 					</div>
 					<!-- div.row -->
 				</div>
-				
+			<%
+				if(MEMBER_STATUS == 2) {
+			%>
+				<div class="row justify-content-end mx-0">
+					<button class="btn btn-outline-dark btn-md my-2 my-sm-0"
+						type="submit" onclick="location.href='product_write.pro'">글쓰기</button>
+				</div>				
+			<%
+				}
+			%>	
 				<div class="row itemsection py-5">
 						<%
 								if (productcount > 0) {
