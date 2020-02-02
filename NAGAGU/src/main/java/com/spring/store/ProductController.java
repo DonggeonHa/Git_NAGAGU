@@ -9,6 +9,7 @@ import java.util.Map;
 import java.util.UUID;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,11 +20,14 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
+import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.view.json.MappingJackson2JsonView;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.spring.academy.AcademyService;
 import com.spring.member.MemberServiceImpl;
 import com.spring.member.MemberVO;
+import com.spring.workshop.WorkshopVO;
 
 @Controller
 public class ProductController {
@@ -87,7 +91,10 @@ public class ProductController {
 		map.put("PRODUCT_CATEGORY", PRODUCT_CATEGORY);
 		map.put("sort", sort);		
 		
-	
+		System.out.println(PRODUCT_CATEGORY);
+		System.out.println(sort);
+		System.out.println(startrow);
+		System.out.println(endrow);
 	
 		int productcount;		
 		ArrayList<ProductVO> productList = null;
@@ -581,20 +588,187 @@ public class ProductController {
 	
 	@RequestMapping(value = "/product_write.pro", method = RequestMethod.GET)
 	public String product_write(Model model, HttpServletRequest request, HttpSession session) {
-		int MEMBER_STATUS = (int)session.getAttribute("MEMBER_STATUS");
+	
+//		/*로그인 멤버*/
+//		if(session.getAttribute("MEMBER_NUM") != null) {
+//			memberVO.setMEMBER_NUM((int)session.getAttribute("MEMBER_NUM"));
+//			//int index = ((Integer)(session.getAttribute("index"))).intValue();
+//			MemberVO LoginMemberVO = reviewService.getLoginMemberbyNUM(memberVO);			
+//			int MEMBER_STATUS = (int)session.getAttribute("MEMBER_STATUS");
+//			/*로그인 멤버 관련*/
+//			model.addAttribute("LoginMemberVO",LoginMemberVO);
+//			model.addAttribute("MEMBER_STATUS", MEMBER_STATUS);
+//		
+//		}
+//		
+		
+		System.out.println("aaa");
+		
+		
 				
-		model.addAttribute("MEMBER_STATUS", MEMBER_STATUS);
+		
 		return "Store/productForm";
 	}
 	
 	
 	
 	
-	@RequestMapping(value = "/estimate.pro", method = RequestMethod.GET)
-	public String estimate(Model model) {
+	@RequestMapping(value = "/addproduct.pro", method = RequestMethod.POST)
+	public ModelAndView AddClass(MultipartHttpServletRequest request, HttpServletResponse response, HttpSession session) throws Exception {
+		boolean result = false;
+		response.setCharacterEncoding("utf-8");
+		response.setContentType("text/html; charset=utf-8"); 
+		ProductVO vo = new ProductVO();
+		//vo.setPRODUCT_WORKSHOP(Integer.parseInt(session.getAttribute("WORKSHOP_NUM").toString()));
+		vo.setPRODUCT_WORKSHOP(Integer.parseInt(session.getAttribute("MEMBER_NUM").toString()));	//공방번호
 		
 		
-		return "Store/estimateList";
+		WorkshopVO vo2 = productService.selectWorkshop(vo);
+		//MemberVO vo2 = AcademyService.selectMember(vo);
+		
+
+		//값이 여러개일 수 있는 size, color, option String으로 값 받기
+		String[] SizeStr = request.getParameterValues("PRODUCT_SIZE");
+		String[] ColorStr = request.getParameterValues("PRODUCT_COLOR");
+		String[] OptionStr = request.getParameterValues("PRODUCT_OPTION");
+		String PRODUCT_SIZE = "";
+		String PRODUCT_COLOR = "";
+		String PRODUCT_OPTION = "";
+		
+		//---------size
+		for(int i = 0; i < SizeStr.length; i++) {
+			PRODUCT_SIZE += SizeStr[i] + ",";
+		}
+		PRODUCT_SIZE = PRODUCT_SIZE.substring(0, PRODUCT_SIZE.length()-1);
+		
+		//---------color
+		for(int i = 0; i < ColorStr.length; i++) {
+			PRODUCT_COLOR += ColorStr[i] + ",";
+		}
+		PRODUCT_COLOR = PRODUCT_COLOR.substring(0, PRODUCT_COLOR.length()-1);
+		
+		//---------option
+		if(request.getParameter("PRODUCT_OPTION").equals("없음")) {
+			PRODUCT_OPTION = "없음";
+		} else {
+			for(int i = 0; i < OptionStr.length; i++) {
+				PRODUCT_OPTION += OptionStr[i] + ",";
+			}
+			PRODUCT_OPTION = PRODUCT_OPTION.substring(0, PRODUCT_OPTION.length()-1);
+		}	
+		
+
+		
+		
+		
+		
+		
+		MultipartFile mf2 = request.getFile("PRODUCT_IMAGE");
+
+		List<MultipartFile> fileList = new ArrayList<MultipartFile>(); 
+		
+		// input file 에 아무것도 없을 경우 (파일을 업로드 하지 않았을 때 처리) 
+		if(request.getFiles("PRODUCT_BANNER").get(0).getSize() != 0) { 
+			fileList = request.getFiles("PRODUCT_BANNER"); 
+		} 
+
+		System.out.println("파일 없을 때 2");
+		
+		String path = "C:\\Project138\\upload\\"; 
+		File fileDir = new File(path); 
+		if (!fileDir.exists()) { 
+			fileDir.mkdirs(); 
+		} 
+		
+		long time = System.currentTimeMillis(); 
+		String str = "";
+		for (MultipartFile mf : fileList) { 
+			String originFileName = mf.getOriginalFilename(); // 원본 파일 명 
+			String saveFileName = String.format("%d_%s", time, originFileName);
+
+			try { // 파일생성
+				mf.transferTo(new File(path, saveFileName)); 
+				str += saveFileName + ",";
+			} catch (Exception e) { 
+				e.printStackTrace(); 
+				} 
+		}
+		System.out.println("파일 없을 때 6");
+
+		System.out.println("str = " + str);
+		
+		if(str.length() != 0) {
+			str = str.substring(0, str.length()-1);
+		} else {
+			str = "#";
+		}
+		
+		
+		
+		if(!mf2.isEmpty()) {
+			String uploadPath = "C:\\Project138\\upload\\";
+			File fileDir2 = new File(uploadPath); 
+			if (!fileDir2.exists()) { 
+				fileDir2.mkdirs(); 
+			} 
+			String originalFileExtension = mf2.getOriginalFilename().substring(mf2.getOriginalFilename().lastIndexOf("."));
+			String storedFileName2 = UUID.randomUUID().toString().replaceAll("-", "") + originalFileExtension;
+			
+			if(mf2.getSize() != 0) {
+				mf2.transferTo(new File(uploadPath+storedFileName2));
+			}
+			vo.setPRODUCT_IMAGE(storedFileName2);
+			
+		} else {
+			System.out.println("썸네일 사진 넣지 않음.");
+			return null;
+		}
+		
+		
+		
+		
+		vo.setPRODUCT_WORKSHOP(vo2.getWORKSHOP_NUM());
+		vo.setPRODUCT_SHOPNAME(vo2.getWORKSHOP_NAME());
+		vo.setPRODUCT_DATE(new Timestamp(System.currentTimeMillis()));
+		vo.setPRODUCT_TITLE(request.getParameter("PRODUCT_TITLE"));
+		vo.setPRODUCT_BRIEF(request.getParameter("PRODUCT_BRIEF"));
+		vo.setPRODUCT_CATEGORY(request.getParameter("PRODUCT_CATEGORY"));
+		vo.setPRODUCT_PRICE(Integer.parseInt(request.getParameter("PRODUCT_PRICE")));
+		vo.setPRODUCT_GRADE(0);	//review 평점 업로드시 update 해주기.
+		vo.setPRODUCT_READ(0);	//detail 들어갈 시 update 해주기.
+		vo.setPRODUCT_SALES(0);	//결제시 update 해주기
+		vo.setPRODUCT_LIKE(0);	//실시간 update 해주기		
+		vo.setPRODUCT_SIZE(PRODUCT_SIZE);
+		vo.setPRODUCT_OPTION(PRODUCT_OPTION);
+		vo.setPRODUCT_COLOR(PRODUCT_COLOR);
+		vo.setPRODUCT_INFO(request.getParameter("PRODUCT_INFO"));
+		vo.setPRODUCT_SHIP_PRICE(Integer.parseInt(request.getParameter("PRODUCT_SHIP_PRICE")));
+		vo.setPRODUCT_SHIP_COMPANY(request.getParameter("PRODUCT_SHIP_COMPANY"));
+		vo.setPRODUCT_SHIP_RETURN_PRICE(Integer.parseInt(request.getParameter("PRODUCT_SHIP_RETURN_PRICE")));
+		vo.setPRODUCT_SHIP_CHANGE_PRICE(Integer.parseInt(request.getParameter("PRODUCT_SHIP_CHANGE_PRICE")));
+		vo.setPRODUCT_SHIP_RETURN_PLACE(request.getParameter("PRODUCT_SHIP_RETURN_PLACE"));
+		vo.setPRODUCT_SHIP_DAYS(request.getParameter("PRODUCT_SHIP_DAYS"));
+		vo.setPRODUCT_SHIP_INFO(request.getParameter("PRODUCT_SHIP_INFO"));
+		vo.setPRODUCT_AS_INFO(request.getParameter("PRODUCT_AS_INFO"));
+		vo.setPRODUCT_RETURN_INFO(request.getParameter("PRODUCT_RETURN_INFO"));
+		vo.setPRODUCT_STORE_INFO(request.getParameter("PRODUCT_STORE_INFO"));
+		vo.setPRODUCT_BANNER(str);
+		
+		
+		
+		ModelAndView mav = new ModelAndView();
+		mav.setViewName("redirect:productlist.pro");
+		mav.addObject("ProductVO", vo);
+		
+		result = productService.insertProduct(vo);
+		
+		if(result == false) {
+			System.out.println("상품 등록 실패!");
+			return null;
+		}
+		System.out.println("상품 등록 완료!");
+		
+		return mav;
 	}
 	
 	@RequestMapping(value = "/estimatedetail.pro", method = RequestMethod.GET)

@@ -10,6 +10,7 @@
 	System.out.println("==============================");
 	System.out.println("store_productlist jsp");
 	
+	/*
 	//로그인 상태 체크 위한
 	String MEMBER_NICK = (String)session.getAttribute("MEMBER_NICK");
 
@@ -19,6 +20,14 @@
 		LoginMemberVO = (MemberVO)request.getAttribute("LoginMemberVO");
 		MEMBER_STATUS = LoginMemberVO.getMEMBER_STATUS();
 	}
+	*/
+	int WORKSHOP_NUM = 0;
+	if (session.getAttribute("WORKSHOP_NUM") == null) {
+		WORKSHOP_NUM = 0;
+	} else {
+		WORKSHOP_NUM = (Integer)session.getAttribute("WORKSHOP_NUM");
+	}
+
 	
 	ArrayList<ProductVO> productList = (ArrayList<ProductVO>) request.getAttribute("productList");
 	String PRODUCT_CATEGORY = (String)request.getAttribute("PRODUCT_CATEGORY");
@@ -257,14 +266,14 @@
 					<!-- div.row -->
 				</div>
 			<%
-				if(MEMBER_STATUS == 2) {
+				//if(WORKSHOP_NUM == 2) {
 			%>
 				<div class="row justify-content-end mx-0">
 					<button class="btn btn-outline-dark btn-md my-2 my-sm-0"
 						type="submit" onclick="location.href='product_write.pro'">글쓰기</button>
 				</div>				
 			<%
-				}
+				//}
 			%>	
 				<div class="row itemsection py-5">
 						<%
@@ -278,7 +287,7 @@
 		                        <div class="store_item_image ">
 		                        	<a
 										href="./productdetail.pro?PRODUCT_NUM=<%=pro.getPRODUCT_NUM()%>&PRODUCT_CATEGORY=<%=pro.getPRODUCT_CATEGORY()%>&page=<%=nowpage%>">
-										<img src=<%=pro.getPRODUCT_PIC().split(",")[0]%> alt=""
+										<img src=<%=pro.getPRODUCT_IMAGE()%> alt=""
 										class="img-responsive image"  >
 									</a>
 		                        </div>

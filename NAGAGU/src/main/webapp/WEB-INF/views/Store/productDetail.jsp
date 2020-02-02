@@ -13,15 +13,21 @@
 	System.out.println("=========================================");
 	System.out.println("ProductDetail.jsp");
 	
+	
 	//로그인 상태 체크 위한
-	String MEMBER_NICK = (String)session.getAttribute("MEMBER_NICK");
+	String MEMBER_EMAIL = "@";
+	if((String)session.getAttribute("MEMBER_EMAIL") != null) {
+		MEMBER_EMAIL = (String)session.getAttribute("MEMBER_NICK");
+	}
 	
 	MemberVO LoginMemberVO = null;
-	String MEMBER_PICTURE = null;
+	String MEMBER_PICTURE = "#";
+	String MEMBER_NICK = "#";
 	if((MemberVO)request.getAttribute("LoginMemberVO") != null) {
 		LoginMemberVO = (MemberVO)request.getAttribute("LoginMemberVO");
 		MEMBER_PICTURE = LoginMemberVO.getMEMBER_PICTURE();
 	}
+	
 	//상품상세 관련
 	ProductVO vo = (ProductVO)request.getAttribute("productVO");
 	String PRODUCT_CATEGORY = (String)request.getAttribute("PRODUCT_CATEGORY");
@@ -29,6 +35,8 @@
 	String PRODUCT_COLOR = vo.getPRODUCT_COLOR();
 	String PRODUCT_SIZE = vo.getPRODUCT_SIZE();
 	String PRODUCT_OPTION = vo.getPRODUCT_OPTION();
+	int bannerImgCount = StringUtils.countOccurrencesOf(vo.getPRODUCT_BANNER(), ",");
+	
 	//리뷰 관련
 	ArrayList<Product_reviewVO> reviewList = (ArrayList<Product_reviewVO>) request.getAttribute("reviewList");
 	ArrayList<Product_reviewVO> review_RE_List = (ArrayList<Product_reviewVO>) request.getAttribute("review_RE_List");
@@ -387,18 +395,32 @@
 			<div class="col-12 text-center" style="padding-bottom: 5%;">
 				<div id="carouselExampleFade" class="carousel slide carousel-fade" data-ride="carousel">
  					<div class="carousel-inner text-center">
-    					<div class="carousel-item active">
-    						<img src=<%=vo.getPRODUCT_PIC().split(",")[0]%> alt="" class="img-responsive img-rounded w-100" width="100%" />
-    					</div>
-    					<div class="carousel-item">
-    						<img src=<%=vo.getPRODUCT_PIC().split(",")[1]%>	alt="" class="img-responsive img-rounded w-100" width="100%" />
-    					</div>
-    					<div class="carousel-item">
-      						<img src=<%=vo.getPRODUCT_PIC().split(",")[2]%>	alt="" class="img-responsive img-rounded w-100" />
-    					</div>
-    					<div class="carousel-item">
-      						<img src=<%=vo.getPRODUCT_PIC().split(",")[3]%>	alt="" class="img-responsive img-rounded w-100" />
-    					</div>
+    					<%
+    						for(int i = 0; i < (bannerImgCount)+1; i++) {
+    							if(vo.getPRODUCT_BANNER().equals("#")) {	
+    					%>
+    								<div class="carousel-item">
+      									<img src="#" class="d-block w-100" style="display: none;">
+    								</div>
+    					<%
+    							} 
+    							else {
+    								if(i == 0) {
+						%>    				
+										<div class="carousel-item active" style="width: 1300px; height: 530px;">
+	    	      							<img src="/productupload/image/<%=vo.getPRODUCT_BANNER().split(",")[i]%>" class="d-block w-100" style="max-width: 100%; height: 100%;">
+	    	    						</div>
+    	    			<%
+    	    							continue;
+    								}
+    	    			%>				
+    								<div class="carousel-item" style="width: 1300px; height: 530px;">
+    	      							<img src="/productupload/image/<%=vo.getPRODUCT_BANNER().split(",")[i]%>" class="d-block w-100" style="max-width: 100%; height: 100%;">
+    	    						</div>    								
+    	    			<%
+    							}
+    						}
+    	    			%>
  					</div>
   					<a class="carousel-control-prev" href="#carouselExampleFade" role="button" data-slide="prev">
     					<span class="carousel-control-prev-icon" aria-hidden="true"></span>
@@ -414,8 +436,8 @@
 				<div class="col-8">
 					<div style="line-height: 0.5em;" id="t1">
 						<dl>
-							<dt><h3>메이킹퍼니처 | 원목테이블</h3><br></dt>
-							<dl><h5>합판과 나사못을 전혀 사용하지 않는 가구</h5></dl>
+							<dt><h3><%=vo.getPRODUCT_TITLE() %></h3><br></dt>
+							<dl><h5><%=vo.getPRODUCT_BRIEF() %></h5></dl>
 						</dl>
 					</div>
 					<div class="row sticky">
@@ -439,34 +461,17 @@
 					
 					<div class="row justify-content-center">
 					<%
-						if (vo.getPRODUCT_PIC_COUNT() > 0) {
-							if (vo.getPRODUCT_PIC_COUNT() > 3) { //본문 이미지는 i=4부터 출력
-								//System.out.println("vo.getPRODUCT_PIC_COUNT()=" + vo.getPRODUCT_PIC_COUNT());
-								for (int i = 4; i < vo.getPRODUCT_PIC_COUNT(); i++) {
-									
-									
+						if (vo.getPRODUCT_INFO() != null) {
 					%>
-									<img src=<%=vo.getPRODUCT_PIC().split(",")[i]%> alt="" class="img-responsive img-rounded" />
-					<%
-								}
-							} else { //본문 사진이 없을 경우
-					%>
-								<table width="50%" border="0" cellpadding="0" cellspacing="0" align="center" valign="middle">
-									<tr align="center" valign="middle">
-										<td align="right"><font size=2>상세 정보 입력 전입니다.</font></td>
-									</tr>
-								</table>
-					<%
-							}
-					%>
+							<%=vo.getPRODUCT_INFO() %>
 					<br /><br />
 					<%
 						} else {
 					%>
-							<!-- vo.getPRODUCT_PIC_COUNT() = 0 인 경우-->
+							<!-- vo.getPRODUCT_INFO() = 없는 경우-->
 							<table width="50%" border="0" cellpadding="0" cellspacing="0" align="center" valign="middle">
 								<tr align="center" valign="middle">
-									<td align="right"><font size=2>등록된 상품 내용이 없습니다.</font></td>
+									<td align="right"><font size=2>상세 정보가 없습니다.</font></td>
 								</tr>
 							</table>
 					<%
@@ -931,6 +936,14 @@
 						모든 제품은 메이킹퍼니처 직원이 직접 배송하며 배송비는 고객 부담입니다. 지역, 제품 수량 또는 설치 여부에 따라 주문 시
 						배송비를 미리 안내해드립니다. 기본 배송비 외에 사다리차, 엘레베이터, 주차비 사용료 등 추가 비용이 발생 시 고객님
 						부담입니다.
+						<%=vo.getPRODUCT_SHIP_INFO() %>
+					</div>
+					<div class="row_ship_info">
+						<h5>배송정보</h5>
+						모든 제품은 메이킹퍼니처 직원이 직접 배송하며 배송비는 고객 부담입니다. 지역, 제품 수량 또는 설치 여부에 따라 주문 시
+						배송비를 미리 안내해드립니다. 기본 배송비 외에 사다리차, 엘레베이터, 주차비 사용료 등 추가 비용이 발생 시 고객님
+						부담입니다.
+						반품 배송지 : <%=vo.getPRODUCT_SHIP_RETURN_PLACE()%>
 					</div>
 					<br />
 		
@@ -941,6 +954,7 @@
 						뜯김)이 있을 수 있으며, 100% 원목으로 기후변화에 따른 수축, 팽창으로 인한 휘어짐(상판), 갈라짐(마구리면)이
 						발생할 수 있습니다. 이런 자연스러운 현상들은 교체 및 교환 대상이 아니며 무상 A/S 사유가 되지 않습니다. 구매 전 꼭
 						참고해주시기 바랍니다.
+						<%=vo.getPRODUCT_AS_INFO() %>
 					</div>
 					<br />
 		
@@ -953,6 +967,7 @@
 						바랍니다. -한 달에 1~2번 가구용 왁스로 닦아주세요. -원목가구는 수축기와 팽창기(계절의 변화)에 따라 갈라짐이나
 						미세한 크랙이 발생할 수 있으며, 시간이 경과하면 원상회복이 될 수 있습니다. 이는 원목가구만의 자연스러운 현상이며 제품의
 						하자가 아닙니다.
+						<%=vo.getPRODUCT_STORE_INFO() %>
 					</div>
 					<br />
 		
@@ -960,6 +975,7 @@
 						<h5>A/S규정[1년 무상]</h5>
 						무상 A/S -보증기간 이내의 제품으로 정상적인 상태에서 제조상의 결함 제품 -원/부나내의 결함이 발생된 경우
 						-메이킹퍼니처의 귀책 사유로 인한 결함 발생 제품
+						<%=vo.getPRODUCT_RETURN_INFO() %>
 					</div>
 					<div class="row_ship_info">유상 A/S -고객의 취급 부주의 및 고의적 훼손 경우 -고객 임의 개조에 의한
 						파손의 경우나 타 업체에서 수리해 변경된 경우 -유상 서비스 요금은 [수리비+부품비+출장비+기타실 비용] 등이 포함됩니다.
@@ -991,6 +1007,10 @@
 								    <tr>
 								    	<th scope="row">배송비</th>
 								    	<td><%=vo.getPRODUCT_SHIP_PRICE()%>원</td>
+								    </tr>
+								    <tr>
+								    	<th scope="row">배송 기간</th>
+								    	<td><%=vo.getPRODUCT_SHIP_DAYS()%>원</td>
 								    </tr>
 								    <tr>
 								    	<th scope="row">색상선택</th>
@@ -1408,8 +1428,8 @@
 			//댓글 등록 위해 댓글달기 버튼 눌렀을 시 css
 			$(".review_add").click(function() {
 				if($(this).html() == '댓글 달기') { //댓글달기이면 hidden구역 보이고 버튼은 닫기로 바뀜
-					var nick = '<%=MEMBER_NICK%>';
-					if(nick == null) {
+					var email = '<%=MEMBER_EMAIL%>';
+					if(email == '@') {
 						alert('로그인 해주세요!');
 						return false;
 					}					
@@ -1527,11 +1547,11 @@
 			
 			//수정폼
 			$('.review_modify').on('click', function(event) {
-				var nick = '<%=MEMBER_NICK%>';
-				if(nick == null) {
+				var email = '<%=MEMBER_EMAIL%>';
+				if(email == '@') {
 					alert('로그인 해주세요!');
 					return false;
-				}
+				}	
 				
 				var modify_confirm = confirm("수정하시겠습니까?");
 				if(modify_confirm) {										
@@ -1629,11 +1649,11 @@
 			
 			
 			$('.review_delete').on('click', function() {
-				var nick = '<%=MEMBER_NICK%>';
-				if(nick == null) {
+				var email = '<%=MEMBER_EMAIL%>';
+				if(email == '@') {
 					alert('로그인 해주세요!');
 					return false;
-				}
+				}	
 				
 				var delete_confirm = confirm("삭제하시겠습니까?");
 				if(delete_confirm) {
