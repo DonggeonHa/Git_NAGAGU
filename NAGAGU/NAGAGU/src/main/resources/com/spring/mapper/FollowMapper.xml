@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- 
+CREATE TABLE MEMBER_LIKE (
+	LIKE_NUM NUMBER NOT NULL, /* 좋아요 ID */
+	LIKE_MEMBER NUMBER, /* 회원 번호 */
+	LIKE_PICS NUMBER /* 사진 ID */
+);-->
+<!-- 이 xml문서와 맵핑할 인터페이스 경로, 이름 -->
+<mapper namespace="com.spring.mapper.FollowMapper">
+	<resultMap type="java.util.HashMap" id="hashmapVO">
+		<result property="FOLLOW_NUM" column="FOLLOW_NUM" />	
+		<result property="FOLLOW_FROM" column="FOLLOW_FROM" />	
+		<result property="FOLLOW_TO" column="FOLLOW_TO" />	
+	</resultMap>
+	
+	<resultMap type="com.spring.community.FollowVO" id="followResultMap">
+	<result property="FOLLOW_NUM" column="FOLLOW_NUM" />	
+		<result property="FOLLOW_FROM" column="FOLLOW_FROM" />	
+		<result property="FOLLOW_TO" column="FOLLOW_TO" />	
+	</resultMap>
+	
+	<resultMap type="com.spring.member.MemberVO" id="memberResultMap">
+		<result property="MEMBER_NUM" column="MEMBER_NUM" />
+		<result property="MEMBER_EMAIL" column="MEMBER_EMAIL" />
+		<result property="MEMBER_PASS" column="MEMBER_PASS" />
+		<result property="MEMBER_NAME" column="MEMBER_NAME" />
+		<result property="MEMBER_NICK" column="MEMBER_NICK" />
+		<result property="MEMBER_PHONE" column="MEMBER_PHONE" />
+		<result property="MEMBER_DATE" column="MEMBER_DATE" />
+		<result property="MEMBER_PICTURE" column="MEMBER_PICTURE" />
+		<result property="MEMBER_LIKE_PRODUCT" column="MEMBER_LIKE_PRODUCT" />
+		<result property="MEMBER_STATUS" column="MEMBER_STATUS" />
+	</resultMap>
+
+	<insert id="insertFollow" parameterType="com.spring.community.FollowVO">
+		INSERT INTO FOLLOW(FOLLOW_NUM, FOLLOW_FROM, FOLLOW_TO)
+		VALUES (SEQ_FOLLOW.NEXTVAL,#{fromNum},#{toNum})
+	</insert>
+	
+	<select id="selectFollow" parameterType="java.util.HashMap" resultType="int">
+		SELECT COUNT(*) FROM FOLLOW WHERE FOLLOW_FROM=#{fromNum} AND FOLLOW_TO=#{toNum}
+	</select>
+	
+	<delete id="deleteFollow">
+		DELETE FROM FOLLOW
+		WHERE FOLLOW_FROM = #{fromNum} AND FOLLOW_TO = #{toNum}
+	</delete>
+	<!-- 로그인 멤버가 팔로우 한 리스트 -->
+	<select id="getFollowMembers" parameterType="java.util.HashMap" resultMap="memberResultMap">
+		SELECT * FROM NAGAGU_MEMBER WHERE MEMBER_NUM IN (SELECT FOLLOW_TO FROM FOLLOW WHERE FOLLOW_FROM=#{fromNum})
+	</select>
+	<!-- 로그인 멤버가 팔로우 당한 리스트 -->
+	<select id="getFollowedMembers" parameterType="java.util.HashMap" resultMap="memberResultMap">
+	SELECT * FROM NAGAGU_MEMBER WHERE MEMBER_NUM IN (SELECT FOLLOW_FROM FROM FOLLOW WHERE FOLLOW_TO=#{toNum})
+	</select>
+</mapper>
