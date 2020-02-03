@@ -39,7 +39,12 @@
 	String sort = (String)request.getAttribute("sort");
 	String category= (String)request.getAttribute("PRODUCT_CATEGORY");
 	
-	
+	int WORKSHOP_STATUS = 0;
+	if (session.getAttribute("WORKSHOP_STATUS") == null) {
+		WORKSHOP_STATUS = 0;
+	} else {
+		WORKSHOP_STATUS = (Integer)session.getAttribute("WORKSHOP_STATUS");
+	}
 %>
 <!DOCTYPE html>
 <html>
@@ -252,11 +257,9 @@
 						</table>
 						<div class="col-lg-3 col-sm-4 ml-auto">
 							<div class="input-group">
-								<input type="text" class="form-control"
-										placeholder="Search for...">
+								<input type="text" class="form-control"	placeholder="Search for...">
 								<span class="input-group-btn">
-									<button class="btn btn-outline-secondary btn-md my-2 my-sm-0"
-										type="submit">Search</button>
+									<button class="btn btn-outline-secondary btn-md my-2 my-sm-0" type="submit">Search</button>
 								</span> 
 							</div>
 							<!-- /input-group -->
@@ -265,16 +268,20 @@
 					</div>
 					<!-- div.row -->
 				</div>
-			<%
-				//if(WORKSHOP_NUM == 2) {
-			%>
+			
 				<div class="row justify-content-end mx-0">
-					<button class="btn btn-outline-dark btn-md my-2 my-sm-0"
-						type="submit" onclick="location.href='product_write.pro'">글쓰기</button>
-				</div>				
-			<%
-				//}
-			%>	
+					<% if(WORKSHOP_STATUS == 2){ %>
+						<span class="input-group-btn">
+							<a href="./product_write.pro" class="btn btn-outline-dark" role="button" aria-pressed="true">글쓰기</a>
+						</span>
+					<% }  else { %>
+						<span class="input-group-btn" style="display: none;">
+							<a href="./product_write.pro" class="btn btn-outline-dark" role="button" aria-pressed="true">글쓰기</a>
+						</span>
+					<% } %>	
+				</div>		
+					
+				
 				<div class="row itemsection py-5">
 						<%
 						

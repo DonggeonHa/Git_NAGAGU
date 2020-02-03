@@ -125,6 +125,7 @@ public class MemberAjaxController {
 				if(result == 1) {
 					session.setAttribute("WORKSHOP_STATUS", workshopMember.getWORKSHOP_STATUS());
 					session.setAttribute("WORKSHOP_NAME", workshopMember.getWORKSHOP_NAME());
+					session.setAttribute("WORKSHOP_NUM", workshopMember.getWORKSHOP_NUM());
 					
 					retVal.put("res", "login_success");
 				} else if(result == 0) {

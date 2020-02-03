@@ -148,11 +148,11 @@
 							<div class="input-group d-flex justify-content-end">
 								<% if(WORKSHOP_STATUS == 2){ %>
 									<span class="input-group-btn">
-										<a href="./classform.ac" class="btn btn-outline-dark" role="button" aria-pressed="true">등록하기</a>
+										<a href="./classform.ac" class="btn btn-outline-dark" role="button" aria-pressed="true">글쓰기</a>
 									</span>
 								<% }  else { %>
 									<span class="input-group-btn" style="display: none;">
-										<a href="./classform.ac" class="btn btn-outline-dark" role="button" aria-pressed="true">등록하기</a>
+										<a href="./classform.ac" class="btn btn-outline-dark" role="button" aria-pressed="true">글쓰기</a>
 									</span>
 								<% } %>
 							</div>
