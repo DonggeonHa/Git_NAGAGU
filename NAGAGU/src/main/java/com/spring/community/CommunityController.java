@@ -122,7 +122,7 @@ public class CommunityController {
 		model.addAttribute("pics_review", PICS_REVIEW);
 		model.addAttribute("sort", sort);
 		model.addAttribute("memberList", memberList);
-
+		
 		return "Community/communityList"; 
 	}
 	
@@ -352,11 +352,9 @@ public class CommunityController {
 	}
 	//로그인 멤버의 좋아요 한 사진 확인
 	@RequestMapping(value = "/loginMemberLikePics.cm")
-	public @ResponseBody Map<String, Object> getLoginMemberLikePics(PicsVO picsVO,HttpServletRequest request) {
-		
+	public @ResponseBody Map<String, Object> getLoginMemberLikePics(PicsVO picsVO,HttpServletRequest request, HttpSession session) {
 		HashMap<String, Object> map = new HashMap<String, Object>();
-		int LIKE_MEMBER = Integer.valueOf(request.getParameter("loginNum"));//jsp에서 받아 온 값
-		
+		int LIKE_MEMBER = (int)session.getAttribute("MEMBER_NUM");
 		map.put("LIKE_MEMBER", LIKE_MEMBER);
 		Map<String, Object> retVal = new HashMap<String, Object>();
 		try {
@@ -371,6 +369,45 @@ public class CommunityController {
 		}
 		return retVal;
 	}
+	//로그인 멤버가 올린 사진 리스트
+	@RequestMapping(value = "/loginMemberUploadPics.cm")
+	public @ResponseBody Map<String, Object> getLoginMemberUploadPics(HttpSession session) {
+		
+		int LIKE_MEMBER = (int)session.getAttribute("MEMBER_NUM");
+		Map<String, Object> retVal = new HashMap<String, Object>();
+		try {
+			PicsVO picsVO = new PicsVO();
+			picsVO.setPICS_MEMBER(LIKE_MEMBER);
+			//멤버가 올린 사진리스트
+			ArrayList<PicsVO> memberPicsList = communityService.getPicsOfMemberUpload(picsVO);
+			retVal.put("PicsNum", memberPicsList);
+			retVal.put("res", "OK");
+		}catch(Exception e) {
+			retVal.put("res", "FAIL");
+			retVal.put("message", "Failure");
+		}
+		return retVal;
+	}
+	//로그인 멤버가 올린 댓글 리스트
+	@RequestMapping(value = "/loginMemberReply.cm")
+	public @ResponseBody Map<String, Object> getLoginMemberReply(HttpSession session) {
+		
+		int LIKE_MEMBER = (int)session.getAttribute("MEMBER_NUM");
+		Map<String, Object> retVal = new HashMap<String, Object>();
+		try {
+			PicsCommentDB db = new PicsCommentDB();
+			
+			//멤버가 올린 사진리스트
+			//ArrayList<PicsVO> memberPicsList = communityService.getPicsOfMemberUpload(picsVO);
+			//retVal.put("PicsNum", memberPicsList);
+			retVal.put("res", "OK");
+		}catch(Exception e) {
+			retVal.put("res", "FAIL");
+			retVal.put("message", "Failure");
+		}
+		return retVal;
+	}
+	
 	
 	
 	@RequestMapping(value = "/followAction.cm")
