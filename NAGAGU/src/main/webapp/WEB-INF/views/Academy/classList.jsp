@@ -15,11 +15,11 @@
 	String category = (String)request.getAttribute("CLASS_CATEGORY");
 	
 	
-	int MEMBER_STATUS = 0;
-	if (session.getAttribute("MEMBER_STATUS") == null) {
-		MEMBER_STATUS = 0;
+	int WORKSHOP_STATUS = 0;
+	if (session.getAttribute("WORKSHOP_STATUS") == null) {
+		WORKSHOP_STATUS = 0;
 	} else {
-		MEMBER_STATUS = (Integer)session.getAttribute("MEMBER_STATUS");
+		WORKSHOP_STATUS = (Integer)session.getAttribute("WORKSHOP_STATUS");
 	}
 %>
 
@@ -146,7 +146,7 @@
 						</div>
 						<div class="bd-highlight">
 							<div class="input-group d-flex justify-content-end">
-								<% if(MEMBER_STATUS == 2){ %>
+								<% if(WORKSHOP_STATUS == 2){ %>
 									<span class="input-group-btn">
 										<a href="./classform.ac" class="btn btn-outline-dark" role="button" aria-pressed="true">등록하기</a>
 									</span>
