@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- 
+create table PRODUCT_REVIEW(
+    REVIEW_NUM          NUMBER PRIMARY KEY,
+    REVIEW_MEMBER       NUMBER,
+    REVIEW_PRODUCT      NUMBER,
+    CONSTRAINT PRODUCT_REVIEW_NUM FOREIGN KEY (REVIEW_PRODUCT) 
+        REFERENCES PRODUCT(PRODUCT_NUM)ON DELETE CASCADE, 
+    REVIEW_DATE         DATE,
+    REVIEW_CATEGORY     VARCHAR2(30),
+    REVIEW_FILE         VARCHAR2(2000),
+    REVIEW_CONTENT      VARCHAR2(1000),
+    REVIEW_GRADE        NUMBER
+    REVIEW_RE_REF   NUMBER,
+    REVIEW_RE_LEVEL   NUMBER
+);
+
+
+create sequence store_review_seq
+    start with 1
+    increment by 1
+    maxvalue 10000;
+
+-->
+
+
+<!-- 이 xml문서와 맵핑할 인터페이스 경로, 이름 -->
+<mapper namespace="com.spring.mapper.ProductReviewMapper">
+	<resultMap type="java.util.HashMap" id="hashmapVO">
+		<result property="REVIEW_NUM" column="REVIEW_NUM" />	
+		<result property="REVIEW_MEMBER" column="REVIEW_MEMBER" />	
+		<result property="REVIEW_PRODUCT" column="REVIEW_PRODUCT" />	
+		<result property="REVIEW_DATE" column="REVIEW_DATE" />	
+		<result property="REVIEW_FILE" column="REVIEW_FILE" />	
+		<result property="REVIEW_CONTENT" column="REVIEW_CONTENT" />	
+		<result property="REVIEW_GRADE" column="REVIEW_GRADE" />	
+		<result property="REVIEW_RE" column="REVIEW_RE" />	
+	</resultMap>
+
+	<resultMap type="com.spring.store.Product_reviewVO" id="productReviewResultMap">
+		<result property="REVIEW_NUM" column="REVIEW_NUM" />	
+		<result property="REVIEW_MEMBER" column="REVIEW_MEMBER" />	
+		<result property="REVIEW_PRODUCT" column="REVIEW_PRODUCT" />	
+		<result property="REVIEW_DATE" column="REVIEW_DATE" />	
+		<result property="REVIEW_FILE" column="REVIEW_FILE" />	
+		<result property="REVIEW_CONTENT" column="REVIEW_CONTENT" />	
+		<result property="REVIEW_GRADE" column="REVIEW_GRADE" />	
+		<result property="REVIEW_RE" column="REVIEW_RE" />		
+	</resultMap>
+
+	<resultMap type="com.spring.member.MemberVO" id="memberReviewResultMap">
+		<result property="MEMBER_NUM" column="MEMBER_NUM" />	
+		<result property="MEMBER_EMAIL" column="MEMBER_EMAIL" />	
+		<result property="MEMBER_PASS" column="MEMBER_PASS" />	
+		<result property="MEMBER_NAME" column="MEMBER_NAME" />	
+		<result property="MEMBER_NICK" column="MEMBER_NICK" />	
+		<result property="MEMBER_PHONE" column="MEMBER_PHONE" />	
+		<result property="MEMBER_DATE" column="MEMBER_DATE" />	
+		<result property="MEMBER_PICTURE" column="MEMBER_PICTURE" />	
+		<result property="MEMBER_LIKE_PRODUCT" column="MEMBER_LIKE_PRODUCT" />	
+		<result property="MEMBER_STATUS" column="MEMBER_STATUS" />
+	</resultMap>
+	
+	<select id="getLoginMemberbyNUM" parameterType="com.spring.member.MemberVO" resultMap="memberReviewResultMap">
+		SELECT * FROM nagagu_member WHERE MEMBER_NUM=#{MEMBER_NUM}
+	</select> 
+
+	<select id="getReviewCount" parameterType="java.util.HashMap" resultType="int">
+		SELECT count(*) FROM PRODUCT_REVIEW WHERE REVIEW_PRODUCT=#{PRODUCT_NUM} AND REVIEW_RE = 0
+	</select>	
+
+	<select id="getReview_RE_Count" parameterType="java.util.HashMap" resultType="int">
+		SELECT count(*) FROM PRODUCT_REVIEW WHERE REVIEW_PRODUCT=#{PRODUCT_NUM} AND REVIEW_RE != 0
+	</select>
+	
+	<select id="getReviewList" parameterType="java.util.HashMap" resultMap="productReviewResultMap">
+		SELECT * FROM
+		(SELECT rownum rnum, REVIEW_NUM, REVIEW_MEMBER, REVIEW_PRODUCT, REVIEW_DATE, 
+				REVIEW_FILE, REVIEW_CONTENT, REVIEW_GRADE, REVIEW_RE
+		 FROM (SELECT * FROM PRODUCT_REVIEW WHERE REVIEW_PRODUCT=#{PRODUCT_NUM} AND REVIEW_RE=0 ORDER BY REVIEW_DATE DESC))
+		<![CDATA[ WHERE rnum >= #{startrow} AND rnum <= #{endrow} ]]>
+	</select>
+	
+	<select id="getReview_RE_List" parameterType="java.util.HashMap" resultMap="productReviewResultMap">
+		SELECT * FROM
+		(SELECT rownum rnum, REVIEW_NUM, REVIEW_MEMBER, REVIEW_PRODUCT, REVIEW_DATE, 
+				REVIEW_FILE, REVIEW_CONTENT, REVIEW_GRADE, REVIEW_RE
+		 FROM (SELECT * FROM PRODUCT_REVIEW WHERE REVIEW_PRODUCT=#{PRODUCT_NUM} AND REVIEW_RE!=0 ORDER BY REVIEW_DATE DESC))
+		<![CDATA[ WHERE rnum >= #{startrow} AND rnum <= #{endrow} ]]>
+	</select>
+	
+		
+	<select id="getreviewMemberList" parameterType="java.util.HashMap" resultMap="memberReviewResultMap">
+		SELECT MEMBER_NICK, MEMBER_PICTURE
+		FROM PRODUCT_REVIEW P, nagagu_member M
+		WHERE P.REVIEW_MEMBER = M.MEMBER_NUM
+		AND P.REVIEW_RE = 0
+        ORDER BY P.REVIEW_DATE DESC
+  	</select>
+	
+	<select id="getreview_RE_MemberList" parameterType="java.util.HashMap" resultMap="memberReviewResultMap">
+		SELECT MEMBER_NICK, MEMBER_PICTURE
+		FROM PRODUCT_REVIEW P, nagagu_member M
+		WHERE P.REVIEW_MEMBER = M.MEMBER_NUM
+		AND P.REVIEW_RE != 0
+        ORDER BY P.REVIEW_DATE DESC
+  	</select>
+
+ 
+ 
+ 
+	<insert id="insertReview" parameterType="com.spring.store.Product_reviewVO">
+	<selectKey keyProperty="REVIEW_NUM" resultType="int" order="BEFORE">
+			SELECT store_review_seq.nextval From DUAL
+	</selectKey>
+		INSERT INTO PRODUCT_REVIEW VALUES
+		(#{REVIEW_NUM}, #{REVIEW_MEMBER}, #{REVIEW_PRODUCT}, #{REVIEW_DATE}, #{REVIEW_FILE, jdbcType=VARCHAR}, 
+			#{REVIEW_CONTENT}, #{REVIEW_GRADE}, #{REVIEW_RE})
+	</insert>
+	
+
+	<select id="getReviewVO" parameterType="java.util.HashMap" resultMap="productReviewResultMap">
+		SELECT * FROM PRODUCT_REVIEW WHERE REVIEW_NUM=#{REVIEW_NUM}
+	</select>
+
+
+	<update id="modifyReview" parameterType="com.spring.store.Product_reviewVO">
+		UPDATE PRODUCT_REVIEW SET 
+			REVIEW_DATE=#{REVIEW_DATE}, REVIEW_FILE=#{REVIEW_FILE},
+			REVIEW_CONTENT=#{REVIEW_CONTENT}, REVIEW_GRADE=#{REVIEW_GRADE}
+		WHERE REVIEW_NUM =#{REVIEW_NUM} 
+	</update>
+
+
+	<update id="deleteReviewImg" parameterType="java.util.HashMap">
+		UPDATE PRODUCT_REVIEW SET 
+			REVIEW_FILE=#{mod_REVIEW_FILE}
+		WHERE REVIEW_NUM =#{REVIEW_NUM} 
+	</update>
+	
+	<select id="getREVIEW_FILE" parameterType="int" resultType="String">
+		SELECT REVIEW_FILE FROM PRODUCT_REVIEW WHERE REVIEW_NUM=#{REVIEW_NUM}
+	</select>
+		
+	<select id="newReviewImg" parameterType="java.util.HashMap" resultType="String">
+		SELECT REVIEW_FILE FROM PRODUCT_REVIEW WHERE REVIEW_NUM=#{REVIEW_NUM}
+	</select>
+	
+	<delete id="deleteReview" parameterType="java.util.HashMap">
+		DELETE FROM PRODUCT_REVIEW WHERE REVIEW_NUM=#{REVIEW_NUM}
+	</delete>		
+	
+</mapper>

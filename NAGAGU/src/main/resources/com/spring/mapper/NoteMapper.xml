@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.spring.mapper.NoteMapper">
+
+	<resultMap type="com.spring.note.NoteVO" id="noteMap">
+		<result property="NOTE_NUM" column="NOTE_NUM"/> 
+		<result property="NOTE_SENDER_MAIL" column="NOTE_SENDER_MAIL"/> 
+		<result property="NOTE_SENDER_NICK" column="NOTE_SENDER_NICK"/> 
+		<result property="NOTE_RECEIVER_MAIL" column="NOTE_RECEIVER_MAIL"/> 
+		<result property="NOTE_RECEIVER_NICK" column="NOTE_RECEIVER_NICK"/>
+		<result property="NOTE_TITLE" column="NOTE_TITLE"/>  
+		<result property="NOTE_CONTENT" column="NOTE_CONTENT"/> 
+		<result property="NOTE_BOXED" column="NOTE_BOXED"/> 
+		<result property="NOTE_READCOUNT" column="NOTE_READCOUNT"/> 
+		<result property="NOTE_DATE" column="NOTE_DATE"/> 
+	</resultMap>
+	
+	<select id="selectReceive" parameterType="java.util.HashMap" resultMap="noteMap">
+		<![CDATA[SELECT * FROM (SELECT * FROM note) WHERE ROWNUM]]> >=#{startRow} <![CDATA[AND ROWNUM <=]]>#{endRow} AND note_receiver_mail = #{NOTE_RECEIVER_MAIL}
+	</select>
+	
+	<select id="selectSend" parameterType="java.util.HashMap" resultMap="noteMap">
+		<![CDATA[SELECT * FROM (SELECT * FROM note) WHERE ROWNUM]]> >=#{startRow} <![CDATA[AND ROWNUM <=]]>#{endRow} AND note_sender_mail = #{NOTE_SENDER_MAIL}
+	</select>
+	
+	<select id="selectBoxed" parameterType="java.util.HashMap" resultMap="noteMap">
+		<![CDATA[SELECT * FROM (SELECT * FROM note) WHERE ROWNUM]]> >=#{startRow} <![CDATA[AND ROWNUM <=]]>#{endRow} AND note_receiver_mail = #{NOTE_RECEIVER_MAIL} AND note_boxed = 1
+	</select>
+	
+	<select id="countReceive" parameterType="String" resultType="int">
+		SELECT COUNT(*) FROM note WHERE note_receiver_mail = #{NOTE_RECEIVER_MAIL} 
+	</select>
+	
+	<select id="countReceiveNotRead" parameterType="String" resultType="int">
+		SELECT COUNT(*) FROM note WHERE note_receiver_mail = #{NOTE_RECEIVER_MAIL} and note_readcount = 0
+	</select>
+	
+	<select id="countSend" parameterType="String" resultType="int">
+		SELECT COUNT(*) FROM note WHERE note_sender_mail = #{NOTE_SEND_MAIL}
+	</select>
+	
+	<select id="countSendNotRead" parameterType="String" resultType="int">
+		SELECT COUNT(*) FROM note WHERE note_sender_mail = #{NOTE_SEND_MAIL} and note_readcount = 0
+	</select>
+	
+	<select id="countBoxed" parameterType="String" resultType="int">
+		SELECT COUNT(*) FROM note WHERE note_receiver_mail = #{NOTE_RECEIVER_MAIL} AND note_boxed = 1
+	</select>
+	
+	<select id="checkReceiver" parameterType="String" resultType="int">
+		SELECT COUNT(*) FROM member WHERE member_email = #{NOTE_RECEIVE_MAIL}
+	</select>
+	
+	<insert id="noteSend" parameterType="com.spring.note.NoteVO">
+		INSERT INTO note VALUES (note_num_seq.nextval, #{NOTE_SENDER_MAIL}, #{NOTE_SENDER_NICK}, #{NOTE_RECEIVER_MAIL}, #{NOTE_RECEIVER_NICK}, #{NOTE_TITLE}, #{NOTE_CONTENT}, 0, 0, sysdate)
+	</insert>
+	
+	<delete id="noteDelete" parameterType="int">
+		DELETE FROM note WHERE note_num = #{NOTE_NUM}
+	</delete>
+	
+	<update id="noteBoxing" parameterType="int">
+		UPDATE note SET note_boxed = 1 WHERE note_num = #{NOTE_NUM}
+	</update>
+	
+	<update id="noteUnboxing" parameterType="int">
+		UPDATE note SET note_boxed = 0 WHERE note_num = #{NOTE_NUM}
+	</update>
+	
+	<select id="noteView" parameterType="int" resultMap="noteMap">
+		SELECT * FROM note WHERE note_num = #{NOTE_NUM}
+	</select>
+	
+	<update id="noteReadcount" parameterType="int">
+		UPDATE note SET note_readcount = 1 WHERE note_num=#{NOTE_NUM}
+	</update>
+	
+</mapper>

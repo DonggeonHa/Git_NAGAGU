@@ -1,0 +1,51 @@
+@charset "UTF-8";
+
+img {
+	max-width: 100%;
+	height: auto;
+}
+
+table {
+	font-size: 0.98em;
+}
+
+.nav_tab {
+	background-color: #FEE100;
+}
+
+.navbar-nav>li {
+	padding-left: 30px;
+	padding-right: 30px;
+}
+
+/*안 먹힘*/
+@media screen and (max-width: 375px) { 
+	.nav-item {
+		font-size:0.5em !important;
+	}
+	
+}
+
+.name {
+	font-weight: bold;
+}
+
+
+.smallfont {
+	font-size: 0.7em;
+}
+
+a {
+	color: gray;
+	text-decoration: none;
+}
+
+.reviews_table {
+	color: #212529;
+}
+
+.row_ship_info {
+	padding:3px;
+}
+
+

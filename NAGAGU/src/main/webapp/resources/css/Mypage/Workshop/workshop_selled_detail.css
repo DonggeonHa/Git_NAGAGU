@@ -1,0 +1,151 @@
+.work_title {
+    padding:100px 0 0 15px;
+    margin-bottom:10px;
+}
+.btn_cancel {
+    width:50px;
+    border-radius: 4px;
+    border:1px solid orangered;
+    color:orangered;
+    font-size:14px;
+}
+
+.th1 {
+    width:2%;
+}
+
+.th2 {
+    width:38%;
+}
+.th3 {
+    width:8%;
+}
+.th4 {
+    width:6%;
+}
+.th5 {
+    width:8%;
+}
+.th6 {
+    width:8%;
+}
+.th7 {
+    width:4%;
+}
+.th8 {
+    width:8%;
+}
+.th9 {
+    width:6%;
+}
+.th10 {
+    width:6%;
+}
+.th11 {
+    width:4%;
+}
+
+.table_top {
+    margin-top:20px;
+    font-size:13px;
+}
+
+.table_top span {
+    padding-top:8px;
+}
+
+.detail_data {
+    color:red;
+}
+
+#deposit_check {
+    display:none;
+}
+
+#send_check {
+    display:none;
+}
+
+#sell_check {
+    display:none;
+}
+
+.post_title {
+    padding:20px 0 10px 15px;
+    font-size:16px;
+    color:#e2942d;
+}
+
+.post_detail {
+    border-top:2px solid black;
+    border-bottom:1px solid black;
+    overflow:hidden;
+}
+
+.post_detail table th {
+    background:#eeeeee;
+}
+.post_sender {
+    height:100%;
+}
+.post_sender dt {
+    font-size:16px;
+}
+
+.post_sender dd p {
+    margin-bottom:0;
+}
+
+#refund {
+    font-weight: 700;
+    color:red;
+}
+
+
+
+/*0115선주수정*/
+.header2_adj {
+    margin-bottom:20px; 
+    padding-left:0px;
+}
+.dropbtn {
+    width:68px;
+    border-radius: 4px;
+    border:1px solid orangered;
+    color:orangered;    
+}
+
+.dropbtn:hover {
+    color: #1b1b27;
+    background-color: #ef902e;
+    box-shadow: 200px 0 0 0 #ef902e inset,
+                -200px 0 0 0 #ef902e inset;
+}
+
+
+.btn_search {
+    width:55px;
+    border-radius: 4px;
+    border:1px solid orangered;
+    color:orangered; 
+}
+
+
+.btn_search:hover {
+    color: #1b1b27;
+    background-color: #ef902e;
+    box-shadow: 200px 0 0 0 #ef902e inset,
+                -200px 0 0 0 #ef902e inset;
+}
+
+.listnum_txt {
+    width:80px;
+    font-size:14px;
+    color: #1b1b27;
+}
+
+.listnum_num {
+    width:50px;
+    font-size:14px;
+    color: #ef902e;
+}

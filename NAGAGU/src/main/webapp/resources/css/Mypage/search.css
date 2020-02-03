@@ -1,0 +1,148 @@
+@charset "UTF-8";
+
+/*검색 키워드 타이틀 나오는 곳*/
+.search_title {
+	text-align: center;
+	font-weight: bold;
+}
+/*키워드 검색 후 결과값(숫자)*/
+.search_number {
+	color: #EF902E;
+}
+/*스토어, 커뮤니티, 아카데미 글자*/
+.mini_title {
+	font-weight: bolder;
+}
+/*검색 후 스토어엔 몇개의 결과가 있는 지(숫자)*/
+.store_num {
+	color: #EF902E;
+}
+
+/*스토어, 커뮤니티 이미지들 사이즈*/
+.image {
+	height: 100%;
+	width: 100%;
+	border-radius: 10px;
+}
+
+/*아카데미 이미지 사이즈*/
+.class_img {
+	height: 100%;
+	width: 100%;
+	border-radius: 10px;
+}
+
+/*스토어, 커뮤니티 이미지 들어있는 곳에 마진*/
+.store_item {
+	margin: 0 10px 10px 10px;
+}
+
+.store_item_header {
+	font-size: small;
+	text-align: center;
+}
+
+.store_item_content {
+	align-items: center;
+	margin: 0 auto;
+}
+
+/*아카데미 이미지 있는 곳에 마진*/
+.class_item_list {
+	margin: 0 15px 15px 15px;
+}
+
+.class_item_content {
+	margin: 0 auto;
+	align-items: center;
+}
+
+.class_item_header_title {
+	text-align: center;
+	font-weight: bolder;
+}
+/*평점 / 가격*/
+.price {
+	font-size: small;
+	float: right;
+}
+
+.grade {
+	font-size: small;
+	float: left;
+}
+
+.second {
+	display: block;
+}
+
+/*별 이미지 색상*/
+.fa-star {
+	color: rgb(58, 93, 250);
+}
+
+/*더보기*/
+.plus {
+	font-size: small;
+	text-align: end;
+}
+
+.second {
+	padding: 0 20px 0 20px;
+	height: 100px;
+}
+
+/*수평선*/
+.hr_tag {
+	margin-top: 50px;
+}
+
+/*hover zoom*/
+.store_item_image {
+	border-radius: 10px;
+	position: relative;
+	overflow: hidden; /*이미지가 튀어나오면 가림*/
+	transform: scale(1);
+	-webkit-transform: scale(1);
+	-moz-transform: scale(1);
+	-ms-transform: scale(1);
+	-o-transform: scale(1);
+	transition: all 0.3s ease-in-out;
+}
+
+.image:hover {
+	transform: scale(1.2);
+	-webkit-transform: scale(1.2);
+	-moz-transform: scale(1.2);
+	-ms-transform: scale(1.2);
+	-o-transform: scale(1.2);
+	/* padding: 10px; */
+	border-radius: 20px;
+}
+
+.image::after {
+	display: block;
+	padding-top: 100%;
+}
+
+div {
+	/* border: 1px solid black; */
+	
+}
+
+/*아카데미 링크*/
+.class_item_link {
+	margin: 0 auto;
+	position: absolute;
+	z-index: 1;
+	text-align: center;
+}
+
+.class_item_lesson_tutor {
+	display: block;
+	position: relative;
+	padding-top: 53%;
+	z-index: 2;
+	align-content: center;
+	margin: auto;
+}

@@ -1,0 +1,15 @@
+@charset "UTF-8";
+
+.basket-size {
+	width: 100px;
+	height: 100px;
+}
+
+.nav-link.active {
+	background-color: #EAEAEA !important;
+}
+
+.radius {
+	border-radius: 10px;
+}
+

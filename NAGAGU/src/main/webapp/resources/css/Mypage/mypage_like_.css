@@ -1,0 +1,36 @@
+.container-mypage{
+	margin-top: 100px ;
+	margin-bottom: 100px ;
+}
+img {
+	width: 100%;
+	height: auto;
+}
+a, .card a:link, .card a:visited {
+	color: white;
+	text-decoration: none;
+}
+.card {
+	background-color: #1b1b27 !important;
+	margin: 15px 15px 15px 15px;
+	width: 10rem;
+	color: white;
+}
+.my {
+	background-color: #ef900e !important;
+}
+
+.nav-item a {
+	color: black;
+}
+
+.tab-content .tab-pane.active {
+	display: flex;
+}
+
+li>.active {
+	background-color: rgba(0, 0, 0, 0.05) !important;
+}
+.tab-pane .col-4{
+	padding-bottom: 50px;
+}

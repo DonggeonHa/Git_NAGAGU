@@ -1,0 +1,84 @@
+
+/*0121*/
+drop table product;
+create table PRODUCT (
+    PRODUCT_NUM                 NUMBER PRIMARY KEY,
+    PRODUCT_WORKSHOP            NUMBER,
+    PRODUCT_SHOPNAME            VARCHAR2(50),
+    PRODUCT_DATE                DATE,
+    PRODUCT_TITLE               VARCHAR2(100),
+    PRODUCT_CATEGORY            VARCHAR2(30),
+    PRODUCT_PIC                 VARCHAR2(500),
+    PRODUCT_PIC_COUNT           NUMBER,
+    PRODUCT_PRICE               NUMBER,
+    PRODUCT_GRADE           NUMBER(2,1),
+    PRODUCT_COLOR               VARCHAR2(50),
+    PRODUCT_READ                NUMBER,
+    PRODUCT_SALES               NUMBER,
+    PRODUCT_LIKE                NUMBER,
+    PRODUCT_OPTION              VARCHAR2(100),
+    PRODUCT_SIZE                VARCHAR2(50),
+    PRODUCT_SHIP_PRICE          NUMBER,
+    PRODUCT_SHIP_COMPANY        VARCHAR2(20),
+    PRODUCT_SHIP_RETURN_PRICE   NUMBER,
+    PRODUCT_SHIP_CHANGE_PRICE   NUMBER,
+    PRODUCT_SHIP_RETURN_PLACE   VARCHAR2(20),
+    PRODUCT_SHIP_DAYS           VARCHAR2(20)  
+); 
+select * from product;
+
+insert into product values
+(1, 1, '메이킹퍼니처', sysdate, '원목 테이블', 'table', './resources/images/Store/tables/table01/table01.jpg,./resources/images/Store/tables/table01/table01_01.jpg,
+./resources/images/Store/tables/table01/table01_02.jpg,./resources/images/Store/tables/table01/table01_03.jpg,./resources/images/Store/tables/table01/table01_04.jpg,
+./resources/images/Store/tables/table01/table01_05.jpg,./resources/images/Store/tables/table01/table01_06.jpg', 7, 
+30000, 5.0, 'white,black,wood,cherry', 9, 100, 100, '없음', '10*10*10,10*20*34,40*40*30', 2500, 'cj대한통운',
+5000, 2500, '서울 서초구', '일주일');
+insert into product values
+(2, 2, '공방공방', sysdate, '의자2', 'chair', './resources/images/Store/chairs/chair01/chair01.jpg,"","",""', 1, 30000, 3.4, 'white,gray,black,wood,cherry', 13, 1, 751, '없음', '10*10*10,10*15*70', 2500, 'cj대한통운',
+5000, 2500, '서울 서초구', '일주일');
+insert into product values
+(3, 3, '가구가구', sysdate, '의자3', 'chair', './resources/images/Store/chairs/chair02/chair02.jpg,"","",""', 1, 30000, 4.1,'white,wood', 19, 1, 31, '없음', '10*10*10', 2500, 'cj대한통운',
+5000, 2500, '서울 서초구', '이주일');
+insert into product values
+(4, 4, '메이킹', sysdate, '의자4', 'chair', './resources/images/Store/chairs/chair03/chair03.jpg,"","",""', 1, 30000, 4.8,'white,natural wood', 11, 1, 771, '없음', '10*10*10', 2500, 'cj대한통운',
+5000, 2500, '서울 서초구', '삼주일');
+insert into product values
+(5, 5, '비트공방', sysdate, '우드 테이블', 'table', './resources/images/Store/tables/table02/table02.jpg,./resources/images/Store/tables/table02/table02_01.jpg,"",""', 2, 30000,  1.0,
+'white', 10, 1, 16, '없음', '10*10*10', 2500, 'cj대한통운',
+5000, 2500, '서울 서초구', '삼주일');
+commit;
+
+DROP TABLE PRODUCT_REVIEW;
+
+create table PRODUCT_REVIEW(
+    REVIEW_NUM          NUMBER PRIMARY KEY,
+    REVIEW_MEMBER       NUMBER,
+    REVIEW_PRODUCT      NUMBER,
+    CONSTRAINT PRODUCT_REVIEW_NUM FOREIGN KEY (REVIEW_PRODUCT) 
+        REFERENCES PRODUCT(PRODUCT_NUM)ON DELETE CASCADE, 
+    REVIEW_DATE         DATE,
+    REVIEW_FILE         VARCHAR2(2000),
+    REVIEW_CONTENT      VARCHAR2(1000),
+    REVIEW_GRADE        NUMBER,
+    REVIEW_RE			NUMBER
+);
+
+create sequence store_review_seq
+    start with 1
+    increment by 1
+    maxvalue 10000;
+    
+    
+create table PRODUCT_QNA(
+    QNA_NUM          NUMBER PRIMARY KEY,
+    QNA_MEMBER       NUMBER,
+    QNA_PRODUCT      NUMBER,
+    CONSTRAINT PRODUCT_QNA_NUM FOREIGN KEY (QNA_PRODUCT) 
+        REFERENCES PRODUCT(PRODUCT_NUM)ON DELETE CASCADE, 
+    QNA_DATE         DATE,
+    QNA_CONTENT      VARCHAR2(1000)
+);        
+create sequence store_qna_seq
+    start with 1
+    increment by 1
+    maxvalue 10000;
