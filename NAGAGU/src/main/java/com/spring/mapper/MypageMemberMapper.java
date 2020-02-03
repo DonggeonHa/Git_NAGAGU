@@ -1,5 +1,7 @@
 package com.spring.mapper;
 
-public interface MypageMemberMapper {
+import com.spring.member.MemberVO;
 
+public interface MypageMemberMapper {
+	int edit_member(MemberVO memberVO);
 }

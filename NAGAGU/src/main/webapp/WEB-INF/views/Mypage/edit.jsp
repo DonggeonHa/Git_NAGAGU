@@ -1,7 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ page import = "com.spring.member.MemberVO" %>
 <%
+	MemberVO memberVO = (MemberVO)request.getAttribute("member");
 	String MEMBER_EMAIL = (String)session.getAttribute("MEMBER_EMAIL");
 	String MEMBER_NICK  = (String)session.getAttribute("MEMBER_NICK");
 	String MEMBER_NAME = (String)session.getAttribute("MEMBER_NAME");
@@ -271,13 +273,10 @@
 				width: 192px;
 				height: 192px;
 				position: relative;
-				border: 6px solid #f8f8f8;
-				box-shadow: 0px 2px 4px 0px rgba(0, 0, 0, 0.1);
+				border: 6px solid white;
+				/* box-shadow: 0px 2px 4px 0px rgba(0, 0, 0, 0.1); */
 			}
 			
-			.image-upload .preview {
-				border-radius: 100%;
-			}
 			
 			.image-upload .preview>div, .image-upload .preview>div {
 				width: 100%;
@@ -288,7 +287,7 @@
 			}
 			
 			#imagePreview {
-				background-image: url('https://scontent-sjc3-1.cdninstagram.com/v/t51.2885-15/e35/c272.0.698.698a/s249x249/65862499_2469053246488963_3888124473490095417_n.jpg?_nc_ht=scontent-sjc3-1.cdninstagram.com&_nc_cat=107&_nc_ohc=jwdvsD8lWhQAX8ayLpe&oh=dc710905c03ef378cf99f1d55a225e93&oe=5ED122C9&ig_cache_key=MjA4NjA5OTk0NzAxMDE3ODE4OA%3D%3D.2');
+				background-image: url('./resources/images/Mypage/Basic_Picture.png');
 			}
 	
 			.image-upload .image-edit input+label:after, .image-upload .image-edit input+label:after {
@@ -451,29 +450,27 @@
 	
 	<body class="order-body">
 		<!-- top card start -->
-			<div class="row justify-content-center mb-5" style="margin-top: 100px;">
-				<div class="card-group text-center d-inline-flex">
-					<div class="card my">
-						<a href="mypage.my" class="href">
-							<div class="card-header">MY</div>
-							<div class="card-body">
-								<i class="far fa-user-circle fa-4x"></i>
-							</div>
-						</a>
-						<div class="card-footer">Follow</div>
-					</div>
+			<div class="container container-mypage text-center" role="main">
+			<div class="card-group text-center d-inline-flex">
+				<div class="card my">
+					<a href="mypage.my" class="href">
+						<div class="card-header">MY</div>
+						<div class="card-body">
+							<i class="far fa-user-circle fa-4x"></i>
+						</div>
+					</a>
+					<div class="card-footer bg-transparent ">Follow</div>
+				</div>
 	
-					<div class="card card-hover">
-						<a href="mypage_edit.my" class="href">
-							<div class="card-header">CLASS</div>
-							<div class="card-body">
-								<i class="fas fa-school fa-4x"></i>
-							</div>
-							<div class="card-footer bg-transparent ">강의</div>
-						</a>
-					</div>
+				<div class="card card-hover">					
+						<div class="card-header">EDIT</div>
+						<div class="card-body">
+							<i class="fas fa-user-edit fa-4x"></i>
+						</div>
+						<div class="card-footer bg-transparent ">정보 수정</div>					
 				</div>
 			</div>
+		</div>
 			
 		
 		<div class="edit_member_form_wrap">
@@ -487,7 +484,7 @@
 						<li><div class="edit_member_form_label">별명</div></li>
 						<!-- <li><div class="edit_member_form_label">비밀번호</div></li>
 						<li><div class="edit_member_form_label">비밀번호 확인</div></li> -->
-						<li><div class="edit_member_form_label">이름</div></li>
+						<li><div class="edit_member_form_label" id="li_name">이름</div></li>
 						<li><div class="edit_member_form_label">휴대전화</div></li>
 						<li><div class="edit_member_form_label" id="li_profile">프로필 사진</div></li>
 						<li><div class="edit_member_form_label" style="margin-top: 213px;">우편번호</div></li>
@@ -501,7 +498,13 @@
 						</div>
 						<div class="row edit_form">
 							<div class="col">
+								<%
+								if(MEMBER_NICK==null){
+								%>
+								<input type="text" id="MEMBER_NICK" name="MEMBER_NICK" placeholder="별명" value="">
+								<%} else { %>
 								<input type="text" id="MEMBER_NICK" name="MEMBER_NICK" placeholder="별명" value="<%=MEMBER_NICK %>">
+								<%} %>
 								<input type="hidden" id="nick_chk" name="member_chk" >
 							</div>
 							<div class="col">
@@ -510,22 +513,28 @@
 							<div class="col-12 error_next_box" id="nickMsg" style="display: hidden;" aria-live="assertive"></div>
 						</div>
 						
-						<!-- <div class="edit_form">
-							<input type="password" id="MEMBER_PASS" name="MEMBER_PASS">
-						</div>
 						<div class="edit_form">
-							<input type="password" id="MEMBER_PASS2" name="MEMBER_PASS2">
-						</div> -->
-						<div class="edit_form">
+							<%
+							if(MEMBER_NAME==null){
+							%>
+							<input type="text" id="MEMBER_NAME" name="MEMBER_NAME" value="" placeholder="이름">
+							<%} else { %>
 							<input type="text" id="MEMBER_NAME" name="MEMBER_NAME" value="<%=MEMBER_NAME %>" placeholder="이름">
+							<%} %>
 						</div>
 						<div class="edit_form">
+							<%
+							if(memberVO.getMEMBER_PHONE()==null) {
+							%>
 							<input type="text" id="MEMBER_PHONE" name="MEMBER_PHONE" placeholder="하이픈 제거 후 입력">
+							<%} else { %>
+							<input type="text" id="MEMBER_PHONE" name="MEMBER_PHONE" value="<%=memberVO.getMEMBER_PHONE() %>" placeholder="하이픈 제거 후 입력">
+							<%} %>
 							<div class="col-12 error_next_box" id="phoneMsg" style="display: hidden;" aria-live="assertive"></div>
 						</div>
 						<div class="image-upload">
 							<div class="image-edit">
-								<input type="file" name="img2" id="imageUpload"
+								<input type="file" name="img" id="imageUpload"
 									class="imageUpload" data-preview="imagePreview"
 									accept=".png, .jpg, .jpeg" /> <label for="imageUpload"></label>
 							</div>
@@ -534,22 +543,42 @@
 							</div>
 						</div>
 						<div class="edit_form" style="margin-top: 30px;">
+							<%
+							if(memberVO.getADDRESS_ZIP() == 0){
+							%>
 							<div class="row justify-content-around m-0 align-items-center">
-								<div class="address_zip_div" style="margin: 0 -329px;">
-									<input type="text"  id="ADDRESS_ZIP" name="ADDRESS_ZIP" readonly="readonly" class="zipcode">
+								<div class="address_zip_div" style="margin: 0 -250px;">
+									<input type="text"  id="ADDRESS_ZIP" name="ADDRESS_ZIP" readonly="readonly" value="" class="zipcode">
 								</div>
-								<div class="btn_address_zip" style="margin-left: -316px;">
+								<div class="btn_address_zip" style="margin-left: -220px;">
 									<button type="button" class="btn btn-outline-dark mx-2" 
 									class="zipcode_button" onclick="openZipSearch()">주소검색</button>
 								</div>
 							</div>
 							<div class="edit_member_form_input">
-								<input type="text" id="ADDRESS_ADDRESS1" name="ADDRESS_ADDRESS1" placeholder=" 기본주소" class="form_input" readonly>
+								<input type="text" id="ADDRESS_ADDRESS1" name="ADDRESS_ADDRESS1" value="" placeholder="기본주소" class="form_input" readonly>
 							</div>
 							<div class="edit_member_form_input">
-								<input type="text" id="ADDRESS_ADDRESS2" name="ADDRESS_ADDRESS2" placeholder=" 상세주소" class="form_input">
+								<input type="text" id="ADDRESS_ADDRESS2" name="ADDRESS_ADDRESS2" value="" placeholder="상세주소" class="form_input">
 							</div>
 							
+							<%} else { %>
+							<div class="row justify-content-around m-0 align-items-center">
+								<div class="address_zip_div" style="margin: 0 -250px;">
+									<input type="text"  id="ADDRESS_ZIP" name="ADDRESS_ZIP" readonly="readonly" value="<%=memberVO.getADDRESS_ZIP() %>" class="zipcode">
+								</div>
+								<div class="btn_address_zip" style="margin-left: -220px;">
+									<button type="button" class="btn btn-outline-dark mx-2" 
+									class="zipcode_button" onclick="openZipSearch()">주소검색</button>
+								</div>
+							</div>
+							<div class="edit_member_form_input">
+								<input type="text" id="ADDRESS_ADDRESS1" name="ADDRESS_ADDRESS1" value="<%=memberVO.getADDRESS_ADDRESS1()%>" placeholder=" 기본주소" class="form_input" readonly>
+							</div>
+							<div class="edit_member_form_input">
+								<input type="text" id="ADDRESS_ADDRESS2" name="ADDRESS_ADDRESS2" value="<%=memberVO.getADDRESS_ADDRESS2()%>" placeholder=" 상세주소" class="form_input">
+							</div>
+							<%} %>
 						</div>
 				</div>
 			</div>
@@ -586,6 +615,7 @@
             var checkLength = /^[가-힣A-Za-z0-9]{2,12}$/;
             
             if (nick=="") {
+            	$('#li_name').css('margin-top','58px');
                 showErrorMsg(oMsg, '필수 정보입니다.');
                 oInput.focus();
                 return false;
@@ -643,6 +673,9 @@
 			var nicknamecheckBtn = $("#nick_chk_btn").val();
 			var nick = $("#MEMBER_NICK").val();
 			var nick_chk = $("#nick_chk").val();
+			var zip_code = $('.zipcode').val();
+			var address1 = $('[name=ADDRESS_ADDRESS1]').val();
+			var address2 = $('[name=ADDRESS_ADDRESS2]').val();
 			
 			if(nicknamecheckBtn == "N" || nick_submit == false){
 				alert("입력한 정보를 다시 한번 확인해주세요.");
@@ -650,6 +683,8 @@
 				alert("중복체크 버튼을 다시 한번 눌러주세요.");
 			} else if(phone_chk == false){
 				alert("전화번호를 다시 확인하고 입력해주세요.");
+			} else if(zip_code==0){
+				alert("주소를 입력해주세요.");
 			} else {
 				document.edit_member_form.submit();
 			}

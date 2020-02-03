@@ -128,7 +128,6 @@ public class MemberServiceImpl implements MemberService{
 		try {
 			memberMapper memberMapper = sqlSession.getMapper(memberMapper.class);
 			member_chk = memberMapper.user_chk(memberVO);	//이메일 비번 체크
-			System.out.println("캐스트 오류:" + member_chk);
 			
 			get_mapper_member_email = member_chk.getMEMBER_EMAIL();
 			get_mapper_member_pass = member_chk.getMEMBER_PASS();
@@ -162,10 +161,10 @@ public class MemberServiceImpl implements MemberService{
 			memberMapper memberMapper = sqlSession.getMapper(memberMapper.class);
 			member = memberMapper.selectMember(memberVO);
 			
-			System.out.println("멤버 리스트 가져오기 성공!");
+			System.out.println("멤버 가져오기 성공!");
 			return member;
 		} catch (Exception e) {
-			System.out.println("멤버 리스트 가져오기 실패!" + e.getMessage());
+			System.out.println("멤버 가져오기 실패!" + e.getMessage());
 		}
 		return null;
 		

@@ -261,7 +261,7 @@ public class MainController {
      
       String setfrom = "jieunkim.itit@gmail.com";  //host 메일 주소
       String title = "NAGAGU 인증메일";	//메일 이름
-      String content= "http://localhost:8000/NAGAGU/mealLink.ma?MEMBER_EMAIL=" + email;	//내용
+      String content= "http://localhost:8000/NAGAGU/mailLink.ma?MEMBER_EMAIL=" + email;	//내용
      
       try {
         MimeMessage message = mailSender.createMimeMessage();
@@ -283,7 +283,7 @@ public class MainController {
       return "redirect:/index.ma";
     }
     
-    @RequestMapping(value = "/mealLink.ma", method = RequestMethod.GET)
+    @RequestMapping(value = "/mailLink.ma", method = RequestMethod.GET)
     public String mealLink(HttpServletRequest request, HttpServletResponse response, MemberVO memberVO) {
     	String member_email = request.getParameter("MEMBER_EMAIL");
     	memberVO.setMEMBER_EMAIL(member_email);
