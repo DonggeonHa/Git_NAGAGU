@@ -38,7 +38,7 @@
 		<url-pattern>*.do</url-pattern> <!-- Store AJAX -->
 		<url-pattern>*.ch</url-pattern> <!-- Chat -->
 		<url-pattern>*.nt</url-pattern> <!-- Note -->
-		<url-pattern>*.em</url-pattern>
+		<url-pattern>*.ws</url-pattern>	<!-- 사업자 -->
 	</servlet-mapping>
 	
 	<welcome-file-list>

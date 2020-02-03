@@ -3,6 +3,8 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%
 	String MEMBER_EMAIL = (String)session.getAttribute("MEMBER_EMAIL");
+	String WORKSHOP_NAME = (String)session.getAttribute("WORKSHOP_NAME");
+	System.out.println("WORKSHOP_NAME : " + WORKSHOP_NAME);
 %>
 <!DOCTYPE html>
 <html>
@@ -265,6 +267,9 @@
 						} else if(retVal.res == "login_IdPw_fail"){
 							$('.fail_message').text('아이디/비밀번호가 틀렸습니다.');
 							$('.fail_message').css('display', 'block');
+						} else if(retVal.res == "workshop_loginFail_unconfirm"){
+							$('.fail_message').text('가입 승인 처리 중입니다.');
+							$('.fail_message').css('display', 'block');
 						}
 					},
 					error : function() {
@@ -329,16 +334,18 @@
 										<i class="fas fa-search" style="width: 20px; height: 25px;"></i>
 									</a>
 								</li>
-								<li>
 									<%
-									if(MEMBER_EMAIL == null){
+									if(MEMBER_EMAIL == null && WORKSHOP_NAME == null){
 										
 									%>
+									<li>
 										<img src="${pageContext.request.contextPath}/resources/images/Main/top_icon_mypage.png" alt=""
 											data-toggle="modal" data-target="#exampleModalCenter" aria-haspopup="true" aria-expanded="false" />
+									</li>
 									<%
-									} else{
+									} else if(MEMBER_EMAIL != null){
 									%>
+									<li>
 									<div class="dropdown">
 										<img src="${pageContext.request.contextPath}/resources/images/Main/top_icon_mypage.png" alt=""
 											id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" />
@@ -352,24 +359,36 @@
 											<button class="dropdown-item" type="button" onclick="window.open('receiveList.nt', 'new', 'scrollbars=yes, resizable=yes, width=600, height=700, left=0, top=0');">쪽지</button>											<button class="dropdown-item" type="button"><a href="./workshop.no">공방관리</a></button>
 										</div>
 									</div>
+									</li>
 									<%} %>
-								</li>
+								<%if(MEMBER_EMAIL == null && WORKSHOP_NAME == null){ %>
 								<li>
-								<%if(MEMBER_EMAIL == null){ %>
 									<img src="${pageContext.request.contextPath}/resources/images/Main/top_icon_cart.png" 
 									alt="" data-toggle="modal" data-target="#exampleModalCenter"/>
-								<%}else{ %>
+								</li>
+								<%}else if(MEMBER_EMAIL != null){ %>
+								<li>
 									<a href="./mypage_basket.my">
 										<img src="${pageContext.request.contextPath}/resources/images/Main/top_icon_cart.png" alt="" />
 									</a>
-								<%} %>
-								</li>
-								<li>
-								<%if(MEMBER_EMAIL == null){ %>
-									<a data-toggle="modal" data-target="#exampleModalCenter" class="btn_mypage">MYPAGE</a>
+								<%} else {%>
+									<li>
+										<a href="./logout.ma">로그아웃</a>
+									</li>
+								<% } %>
+								
+								<%if(MEMBER_EMAIL == null && WORKSHOP_NAME == null){ %>
+									<li>
+										<a data-toggle="modal" data-target="#exampleModalCenter" class="btn_mypage">MYPAGE</a>
+									</li>
+								<%}else if(MEMBER_EMAIL != null){ %>
+									<li>
+										<a href="./mypage.my">MYPAGE</a>
+									</li>
 								<%}else{ %>
-									<a href="./mypage.my">MYPAGE</a>
-								</li>
+									<li>
+										<a href="./workshop.no">MYPAGE</a>
+									</li>
 								<%} %>
 							</ul>
 						</div>
@@ -396,6 +415,7 @@
                		<div class="row"><button type="button" id="btn_login" class="btn_login" onclick="onclick_btn_login()">로그인</button></div>
 		        </form>
 		       	<div class="row justify-content-center" style="margin-top: 20px; margin: 0 auto;">
+		       		<a href="./WorkshopSignup.ws" style="text-decoration: none; margin-right: 10px; color: black;" class="sign-in-form-action-entry">사업자가입</a>
 	             	<a href="./signup.ma" style="text-decoration: none; margin-right: 10px; color: black;" class="sign-in-form-action-entry">회원가입</a>
 	             	<a href="" style="text-decoration: none; color: black;" class="sign-in-form-action-entry">비밀번호 찾기</a>
 	            </div>

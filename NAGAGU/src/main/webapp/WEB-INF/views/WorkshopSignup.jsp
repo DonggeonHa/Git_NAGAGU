@@ -10,7 +10,9 @@
     <title>회원가입 폼</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
     <link rel="stylesheet" href="./resources/css/signup.css">
-     <script src="http://code.jquery.com/jquery-3.4.1.js" type="text/javascript"></script>
+    <script src="http://code.jquery.com/jquery-3.4.1.js" type="text/javascript"></script>
+    <!-- 우편번호 찾기 -->
+   	<script src="https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
 	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
     <style>
@@ -41,7 +43,7 @@
 			width: 235px;
 		}
 		
-		#email_chk_btn, #nick_chk_btn{
+		#email_chk_btn, #nick_chk_btn, .zipcode_button{
 			width: 34%;
 			margin-left: 5px;
     		border-radius: 4px;
@@ -51,7 +53,7 @@
 		    border: 0px;
 		}
 		
-		input#member_nick {
+		input#WORKSHOP_NAME {
 			width: 235px;
 		}
 		
@@ -64,20 +66,24 @@
 		#pass1, #pass2{
 			font-family: '유토이미지고딕R', 'BBTreeGR', BBTreeGR;
 		}
+		
+		.intro {
+		    resize:none;
+		}
     </style>
     
     <script type="text/javascript">
     	//이메일 중복체크
     	function email_chk(){
-    		var _str1 = $("#member_ema").val();
+    		var _str1 = $("#WORKSHOP_EMAIL").val();
     	      /* alert(_str1); */
     	      
     	      jQuery.ajax({
-    	         url : '/NAGAGU/emailChk.su',
+    	         url : '/NAGAGU/workshopEmailChk.ws',
     	         type : "post",
     	         dataType : "json",
     	         data : {
-    	        	 MEMBER_EMAIL : $("#member_ema").val()
+    	        	 WORKSHOP_EMAIL : $("#WORKSHOP_EMAIL").val()
     	         },
     	         contentType : 'application/x-www-form-urlencoded; charset=utf-8',
 
@@ -96,16 +102,16 @@
     	      });	
     	}
     	
-    	function nickname_chk(){
-    		var _str2 = $("#member_nick").val();
+    	function name_chk(){
+    		var _str2 = $("#WORKSHOP_NAME").val();
     	      /* alert(_str2); */
     	      
     	      jQuery.ajax({
-    	         url : '/NAGAGU/nicknameChk.su',
+    	         url : '/NAGAGU/workshopNicknameChk.ws',
     	         type : "post",
     	         dataType : "json",
     	         data : {
-    	        	 MEMBER_NICK : $("#member_nick").val()
+    	        	 WORKSHOP_NAME : $("#WORKSHOP_NAME").val()
     	         },
     	         contentType : 'application/x-www-form-urlencoded; charset=utf-8',
 
@@ -123,38 +129,33 @@
 
     	      });	
     	}
+    	
+    	// 우편번호 주소검색
+		function openZipSearch() {
+		   new daum.Postcode({
+		      oncomplete: function(data) {
+		         $('[name=WORKSHOP_ZIP]').val(data.zonecode); // 우편번호 (5자리)
+		         $('[name=WORKSHOP_ADDRESS1]').val(data.address);   // 기본주소
+		         $('[name=WORKSHOP_ADDRESS2]').val(data.buildingName);   // 상세주소
+		         $('[name=WORKSHOP_ADDRESS2]').focus();
+		         console.log(data);
+		      }
+		   }).open();
+		}
     </script>
 </head>
 
 <body class="order-body">
     <div class="cbody">
         <div class="signup_form">
-            <h1 class="signup_title">회원가입</h1>
-            <div class="singup_sns">
-                <p class="signup_sns_title">SNS계정으로 가입</p>
-                <ol class="signup_sns_list">
-                	<li class="signup_sns_list_item">
-                        <img src="${pageContext.request.contextPath}/resources/images/Main/Google_Plus.png" id="btn_google">
-                    </li>
-                    <li class="signup_sns_list_item">
-                    	<a href="${kakao_url}" style="text-decoration: none;">
-                        <img src="${pageContext.request.contextPath}/resources/images/Main/signup_kakaoIcon.png">
-                    	</a>
-                    </li>
-                    <li class="signup_sns_list_item">
-                    	<a href="${naver_url}" style="text-decoration: none;">
-                        <img src="https://testkj.s3.ap-northeast-2.amazonaws.com/images/login_btn_naver.PNG" style="border-radius: 10px;">
-                    	</a>
-                    </li>
-                </ol>
-            </div>
-            <form name="signup_form" action="memberInsert.ma" method="post">
+            <h1 class="signup_title text-center" style="margin-bottom:2.5rem;">공방회원 신청</h1>
+            <form name="workshop_signup_form" action="workshopMemberInsert.ws" method="post">
                 <div class="signup_form_email">
                     <div class="signup_form_label">이메일</div>
                     <div class="signup_form_input">
                         <div class="input_email form_group">
                             <div class="input_email_local">
-                                <input type="email" class="form_input" id="member_ema" name="MEMBER_EMAIL" placeholder="이메일" size="1" required>
+                                <input type="email" class="form_input" id="WORKSHOP_EMAIL" name="WORKSHOP_EMAIL" placeholder="이메일" size="1" required>
                             </div>
                             <div class="email_chk_btn ml-3">
                             	<button type="button" id="email_chk_btn" onclick="email_chk()" value="N" >중복체크</button>
@@ -166,32 +167,76 @@
                 <div class="signup_form_pass1 form_group">
                     <div class="signup_form_label">비밀번호</div>
                     <div class="signup_form_input">
-                        <input type="password" id="pass1" name="MEMBER_PASS" class="form_input" placeholder="8자 이상 영문, 숫자, 특수문자를 사용하세요." required>
+                        <input type="password" id="pass1" name="WORKSHOP_PASS" class="form_input" placeholder="8자 이상 영문, 숫자, 특수문자를 사용하세요." required>
                     </div>
                     <div class="error_next_box" id="pass1Msg" style="display: hidden;" aria-live="assertive"></div>
                 </div>
                 <div class="signup_form_pass2 form_group">
                     <div class="signup_form_label">비밀번호 확인</div>
                     <div class="signup_form_input">
-                        <input type="password" id="pass2" name="MEMBER_PASS_CHECK" class="form_input" required>
+                        <input type="password" id="pass2" name="WORKSHOP_PASS_CHECK" class="form_input" required>
                     </div>
                     <div class="error_next_box" id="pass2Msg" style="display: hidden;" aria-live="assertive"></div>
                 </div>
-                <div class="signup_form_name form group">
-                	<div class="signup_form_label">이름</div>
+                <div class="signup_form_nickname form_group mt-4">
+                    <div class="signup_form_label">공방 이름</div>
                     <div class="signup_form_input">
-                        <input type="text" id="member_name" name="MEMBER_NAME" class="form_input" required>
+                        <input type="text" id="WORKSHOP_NAME" name="WORKSHOP_NAME" class="form_input" required>
+                        <button type="button" id="nick_chk_btn" onclick="name_chk()" value="N">중복체크</button>
+                    </div>
+                    <div class="error_next_box" id="wnameMsg" style="display: hidden;" aria-live="assertive"></div>
+                </div>
+               
+                <div class="signup_form_name form_group">
+                	<div class="signup_form_label">대표자 명</div>
+                    <div class="signup_form_input">
+                        <input type="text" id="member_name" name="WORKSHOP_CEO_NAME" class="form_input" required>
                     </div>
                     <div class="error_next_box" id="nameMsg" style="display: hidden;" aria-live="assertive"></div>
                 </div>
-                <div class="signup_form_nickname form_group mt-4">
-                    <div class="signup_form_label">별명</div>
+                <div class="signup_form_name form_group">
+                	<div class="signup_form_label">연락처</div>
                     <div class="signup_form_input">
-                        <input type="text" id="member_nick" name="MEMBER_NICK" class="form_input" required>
-                        <button type="button" id="nick_chk_btn" onclick="nickname_chk()" value="N">중복체크</button>
+                        <input type="text" id="member_name" name="WORKSHOP_PHONE" class="form_input" required>
                     </div>
-                    <div class="error_next_box" id="nickMsg" style="display: hidden;" aria-live="assertive"></div>
+                    <div class="error_next_box" id="phoneMsg" style="display: hidden;" aria-live="assertive"></div>
+                </div>
+                <div class="signup_form_name form_group">
+                	<div class="signup_form_label">사업자 번호</div>
+                    <div class="signup_form_input">
+                        <input type="text" id="member_name" name="WORKSHOP_LICENSE" class="form_input" required>
+                    </div>
+                    <div class="error_next_box" id="licenseMsg" style="display: hidden;" aria-live="assertive"></div>
+                </div>
+                <div class="signup_form_name form_group">
+                	<div class="signup_form_label">공방 소개</div>
+                    <div style=" margin: 10px 0 0; display: flex; flex: 1 0 auto;">
+                    	 <textarea class="form_input intro" id="workshop_intro" name="WORKSHOP_INTRO" style="height: 300px;"></textarea>
+                    </div>
+                    <div class="error_next_box" id="introMsg" style="display: hidden;" aria-live="assertive"></div>
                 </div> 
+                <div class="signup_form_nickname form_group mt-4">
+                    <div class="signup_form_label">우편번호</div>
+                    <div class="signup_form_input">
+						<input type="text"  id="WORKSHOP_ZIP" name="WORKSHOP_ZIP" readonly="readonly" value="" class="form_input">
+						<button type="button" id="zipcode_btn" onclick="openZipSearch()" class="zipcode_button">주소찾기</button>
+                    </div>
+                    <div class="error_next_box" id="zipcodeMsg" style="display: hidden;" aria-live="assertive"></div>
+                </div>
+                <div class="signup_form_name form_group">
+                	<div class="signup_form_label">주소</div>
+                    <div class="signup_form_input">
+                        <input type="text" id="WORKSHOP_ADDRESS1" name="WORKSHOP_ADDRESS1" value="" placeholder="기본주소" class="form_input" readonly>
+                    </div>
+                    <div class="error_next_box" id="addressMsg" style="display: hidden;" aria-live="assertive"></div>
+                </div>
+                <div class="signup_form_name form_group">
+                	<div class="signup_form_label">상세주소</div>
+                    <div class="signup_form_input">
+                        <input type="text" id="WORKSHOP_ADDRESS2" name="WORKSHOP_ADDRESS2" value="" placeholder="상세주소" class="form_input">
+                    </div>
+                    <div class="error_next_box" id="addressdetailMsg" style="display: hidden;" aria-live="assertive"></div>
+                </div>
                 <div class="signup_form_term form_group">   
                     <div class="signup_form_label">약관 동의</div>
                     <div class="signup_form_term_body">
@@ -295,7 +340,7 @@
                 obj.focus();
             }
         }
-        $("#member_ema").blur(function(){
+        $("#WORKSHOP_EMAIL").blur(function(){
             emailFlag=false;
             checkEmail1("first");
         });
@@ -326,15 +371,15 @@
             checkShiftDown(event);
         }); 
         
-        $("#member_nick").blur(function(){
+        $("#WORKSHOP_NAME").blur(function(){
             nickFlag=false;
             checkNick();
         });
         
         function checkEmail1(event) {
-            var member_email = $("#member_ema").val();
+            var member_email = $("#WORKSHOP_EMAIL").val();
             var oMsg = $("#emailMsg");
-            var input1 = $("#member_ema");
+            var input1 = $("#WORKSHOP_EMAIL");
             if (member_email=="") {
                 showErrorMsg(oMsg, "필수 정보입니다.");
                 return false;
@@ -427,9 +472,9 @@
         }
         
         function checkNick(event) {
-            var nick = $("#member_nick").val();
+            var nick = $("#WORKSHOP_NAME").val();
             var oMsg = $("#nickMsg");
-            var oInput = $("#member_nick");
+            var oInput = $("#WORKSHOP_NAME");
             var checkLength = /^[가-힣A-Za-z0-9_]{2,12}$/;
             
             if (nick=="") {
@@ -528,7 +573,7 @@
            {
             alert('약관에 동의해주세요.');
            } else  {
-              document.signup_form.submit();
+              document.workshop_signup_form.submit();
            }
         }
      }
