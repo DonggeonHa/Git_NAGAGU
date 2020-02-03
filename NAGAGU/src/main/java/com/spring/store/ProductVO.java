@@ -8,23 +8,29 @@ public class ProductVO {
 	private String PRODUCT_SHOPNAME;
 	private Date PRODUCT_DATE;
 	private String PRODUCT_TITLE;
+	private String PRODUCT_BRIEF;
 	private String PRODUCT_CATEGORY;
-	private String PRODUCT_PIC;
-	private int PRODUCT_PIC_COUNT;
 	private int PRODUCT_PRICE;
-	private String PRODUCT_GRADE;	
-	private String PRODUCT_COLOR;	
+	private double PRODUCT_GRADE;	
 	private int PRODUCT_READ;	
 	private int PRODUCT_SALES;	
 	private int PRODUCT_LIKE;
+	private String PRODUCT_COLOR;
 	private String PRODUCT_OPTION;	
 	private String PRODUCT_SIZE;	
+	private String PRODUCT_INFO;	
 	private int PRODUCT_SHIP_PRICE;
 	private String PRODUCT_SHIP_COMPANY;	
 	private int PRODUCT_SHIP_RETURN_PRICE;
 	private int PRODUCT_SHIP_CHANGE_PRICE;
 	private String PRODUCT_SHIP_RETURN_PLACE;
 	private String PRODUCT_SHIP_DAYS;
+	private String PRODUCT_SHIP_INFO;	
+	private String PRODUCT_AS_INFO;	
+	private String PRODUCT_RETURN_INFO;	
+	private String PRODUCT_STORE_INFO;	
+	private String PRODUCT_BANNER;	
+	private String PRODUCT_IMAGE;
 	public int getPRODUCT_NUM() {
 		return PRODUCT_NUM;
 	}
@@ -55,23 +61,17 @@ public class ProductVO {
 	public void setPRODUCT_TITLE(String pRODUCT_TITLE) {
 		PRODUCT_TITLE = pRODUCT_TITLE;
 	}
+	public String getPRODUCT_BRIEF() {
+		return PRODUCT_BRIEF;
+	}
+	public void setPRODUCT_BRIEF(String pRODUCT_BRIEF) {
+		PRODUCT_BRIEF = pRODUCT_BRIEF;
+	}
 	public String getPRODUCT_CATEGORY() {
 		return PRODUCT_CATEGORY;
 	}
 	public void setPRODUCT_CATEGORY(String pRODUCT_CATEGORY) {
 		PRODUCT_CATEGORY = pRODUCT_CATEGORY;
-	}
-	public String getPRODUCT_PIC() {
-		return PRODUCT_PIC;
-	}
-	public void setPRODUCT_PIC(String pRODUCT_PIC) {
-		PRODUCT_PIC = pRODUCT_PIC;
-	}
-	public int getPRODUCT_PIC_COUNT() {
-		return PRODUCT_PIC_COUNT;
-	}
-	public void setPRODUCT_PIC_COUNT(int pRODUCT_PIC_COUNT) {
-		PRODUCT_PIC_COUNT = pRODUCT_PIC_COUNT;
 	}
 	public int getPRODUCT_PRICE() {
 		return PRODUCT_PRICE;
@@ -79,17 +79,11 @@ public class ProductVO {
 	public void setPRODUCT_PRICE(int pRODUCT_PRICE) {
 		PRODUCT_PRICE = pRODUCT_PRICE;
 	}
-	public String getPRODUCT_GRADE() {
+	public double getPRODUCT_GRADE() {
 		return PRODUCT_GRADE;
 	}
-	public void setPRODUCT_GRADE(String pRODUCT_GRADE) {
+	public void setPRODUCT_GRADE(double pRODUCT_GRADE) {
 		PRODUCT_GRADE = pRODUCT_GRADE;
-	}
-	public String getPRODUCT_COLOR() {
-		return PRODUCT_COLOR;
-	}
-	public void setPRODUCT_COLOR(String pRODUCT_COLOR) {
-		PRODUCT_COLOR = pRODUCT_COLOR;
 	}
 	public int getPRODUCT_READ() {
 		return PRODUCT_READ;
@@ -109,6 +103,12 @@ public class ProductVO {
 	public void setPRODUCT_LIKE(int pRODUCT_LIKE) {
 		PRODUCT_LIKE = pRODUCT_LIKE;
 	}
+	public String getPRODUCT_COLOR() {
+		return PRODUCT_COLOR;
+	}
+	public void setPRODUCT_COLOR(String pRODUCT_COLOR) {
+		PRODUCT_COLOR = pRODUCT_COLOR;
+	}
 	public String getPRODUCT_OPTION() {
 		return PRODUCT_OPTION;
 	}
@@ -120,6 +120,12 @@ public class ProductVO {
 	}
 	public void setPRODUCT_SIZE(String pRODUCT_SIZE) {
 		PRODUCT_SIZE = pRODUCT_SIZE;
+	}
+	public String getPRODUCT_INFO() {
+		return PRODUCT_INFO;
+	}
+	public void setPRODUCT_INFO(String pRODUCT_INFO) {
+		PRODUCT_INFO = pRODUCT_INFO;
 	}
 	public int getPRODUCT_SHIP_PRICE() {
 		return PRODUCT_SHIP_PRICE;
@@ -157,6 +163,47 @@ public class ProductVO {
 	public void setPRODUCT_SHIP_DAYS(String pRODUCT_SHIP_DAYS) {
 		PRODUCT_SHIP_DAYS = pRODUCT_SHIP_DAYS;
 	}
+	public String getPRODUCT_SHIP_INFO() {
+		return PRODUCT_SHIP_INFO;
+	}
+	public void setPRODUCT_SHIP_INFO(String pRODUCT_SHIP_INFO) {
+		PRODUCT_SHIP_INFO = pRODUCT_SHIP_INFO;
+	}
+	public String getPRODUCT_AS_INFO() {
+		return PRODUCT_AS_INFO;
+	}
+	public void setPRODUCT_AS_INFO(String pRODUCT_AS_INFO) {
+		PRODUCT_AS_INFO = pRODUCT_AS_INFO;
+	}
+	public String getPRODUCT_RETURN_INFO() {
+		return PRODUCT_RETURN_INFO;
+	}
+	public void setPRODUCT_RETURN_INFO(String pRODUCT_RETURN_INFO) {
+		PRODUCT_RETURN_INFO = pRODUCT_RETURN_INFO;
+	}
+	public String getPRODUCT_STORE_INFO() {
+		return PRODUCT_STORE_INFO;
+	}
+	public void setPRODUCT_STORE_INFO(String pRODUCT_STORE_INFO) {
+		PRODUCT_STORE_INFO = pRODUCT_STORE_INFO;
+	}
+	public String getPRODUCT_BANNER() {
+		return PRODUCT_BANNER;
+	}
+	public void setPRODUCT_BANNER(String pRODUCT_BANNER) {
+		PRODUCT_BANNER = pRODUCT_BANNER;
+	}
+	public String getPRODUCT_IMAGE() {
+		return PRODUCT_IMAGE;
+	}
+	public void setPRODUCT_IMAGE(String pRODUCT_IMAGE) {
+		PRODUCT_IMAGE = pRODUCT_IMAGE;
+	}
+	
+
+	
+	
+	
 	
 	
 	

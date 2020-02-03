@@ -19,14 +19,19 @@ public interface ProductReviewService {
 	
 	
 	int insertReview(Product_reviewVO reviewVO);
-	
+	int getGradePeopleCount(int REVIEW_PRODUCT);	//review insert 후 product 테이블의 grade update위해
 	Product_reviewVO getReviewVO(int REVIEW_NUM);
 	int modifyReview(Product_reviewVO reviewVO);
 	String getREVIEW_FILE(int REVIEW_NUM);
 	int deleteReviewImg(Map<String, Object> map);
 	String newReviewImg(int REVIEW_NUM);
 	
+	int findChildrenRE(int REVIEW_NUM);
 	int deleteReview(int REVIEW_NUM);
+	
+	int modifyReview_RE(Product_reviewVO reviewVO);	
+	
+	
 //	public ArrayList<CommentVO> getComment(int num);
 //	public int commentDelete(int comment_num);
 //	public String getPass(int comment_num);

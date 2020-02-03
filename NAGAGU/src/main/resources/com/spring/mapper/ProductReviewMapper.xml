@@ -120,6 +120,9 @@ create sequence store_review_seq
 			#{REVIEW_CONTENT}, #{REVIEW_GRADE}, #{REVIEW_RE})
 	</insert>
 	
+	<select id="getGradePeopleCount" parameterType="int" resultType="int">
+		SELECT count(*) FROM PRODUCT_REVIEW WHERE REVIEW_PRODUCT=#{REVIEW_PRODUCT} AND REVIEW_RE = 0
+	</select>	
 
 	<select id="getReviewVO" parameterType="java.util.HashMap" resultMap="productReviewResultMap">
 		SELECT * FROM PRODUCT_REVIEW WHERE REVIEW_NUM=#{REVIEW_NUM}
@@ -148,8 +151,20 @@ create sequence store_review_seq
 		SELECT REVIEW_FILE FROM PRODUCT_REVIEW WHERE REVIEW_NUM=#{REVIEW_NUM}
 	</select>
 	
+	<select id="findChildrenRE" parameterType="int" resultType="int">
+		SELECT count(*) FROM PRODUCT_REVIEW WHERE REVIEW_RE=#{REVIEW_NUM} 
+	</select>	
+	
 	<delete id="deleteReview" parameterType="java.util.HashMap">
 		DELETE FROM PRODUCT_REVIEW WHERE REVIEW_NUM=#{REVIEW_NUM}
-	</delete>		
+	</delete>	
 	
+	
+	<!-- 답글 수정, 삭제 -->	
+	<update id="modifyReview_RE" parameterType="com.spring.store.Product_reviewVO">
+		UPDATE PRODUCT_REVIEW SET 
+			REVIEW_DATE=#{REVIEW_DATE}, REVIEW_CONTENT=#{REVIEW_CONTENT}
+		WHERE REVIEW_NUM =#{REVIEW_NUM} 
+	</update>
+		
 </mapper>

@@ -3,31 +3,39 @@
 
 <!-- 
 create table PRODUCT (
-
-	PRODUCT_NUM                        NUMBER,        
-	PRODUCT_WORKSHOP                   NUMBER,
-	PRODUCT_SHOPNAME  					VARCHAR2(50),       
-	PRODUCT_DATE                       DATE,          
-	PRODUCT_TITLE                      VARCHAR2(100), 
-	PRODUCT_CATEGORY                   VARCHAR2(30),  
-	PRODUCT_PIC                        VARCHAR2(500),
-	PRODUCT_PIC_COUNT                  NUMBER,
-	PRODUCT_PRICE                      NUMBER,        
-	PRODUCT_COLOR                      VARCHAR2(20),  
-	PRODUCT_READ                       NUMBER,        
-	PRODUCT_SALES                      NUMBER,        
-	PRODUCT_LIKE                       NUMBER,        
-	PRODUCT_OPTION                     VARCHAR2(100), 
-	PRODUCT_SIZE                       VARCHAR2(50),  
-	PRODUCT_SHIP_PRICE                 NUMBER,        
-	PRODUCT_SHIP_COMPANY               VARCHAR2(20),  
-	PRODUCT_SHIP_RETURN_PRICE          NUMBER,        
-	PRODUCT_SHIP_CHANGE_PRICE          NUMBER,        
-	PRODUCT_SHIP_RETURN_PLACE          VARCHAR2(20),  
-	PRODUCT_SHIP_DAYS                  VARCHAR2(20)  
-
-
+    PRODUCT_NUM                 NUMBER PRIMARY KEY,
+    PRODUCT_WORKSHOP            NUMBER,
+    PRODUCT_SHOPNAME            VARCHAR2(50),
+    PRODUCT_DATE                DATE,
+    PRODUCT_TITLE               VARCHAR2(100),
+    PRODUCT_BRIEF               VARCHAR2(100),
+    PRODUCT_CATEGORY            VARCHAR2(30),
+    PRODUCT_PRICE               NUMBER,
+    PRODUCT_GRADE               NUMBER(2,1),
+    PRODUCT_READ                NUMBER,
+    PRODUCT_SALES               NUMBER,
+    PRODUCT_LIKE                NUMBER,
+    PRODUCT_COLOR               VARCHAR2(50),
+    PRODUCT_OPTION              VARCHAR2(100),
+    PRODUCT_SIZE                VARCHAR2(50),
+    PRODUCT_INFO                VARCHAR2(1000),
+    PRODUCT_SHIP_PRICE          NUMBER,
+    PRODUCT_SHIP_COMPANY        VARCHAR2(20),
+    PRODUCT_SHIP_RETURN_PRICE   NUMBER,
+    PRODUCT_SHIP_CHANGE_PRICE   NUMBER,
+    PRODUCT_SHIP_RETURN_PLACE   VARCHAR2(20),
+    PRODUCT_SHIP_DAYS           VARCHAR2(20),
+    PRODUCT_SHIP_INFO           VARCHAR2(1000),
+    PRODUCT_AS_INFO             VARCHAR2(2000),
+    PRODUCT_RETURN_INFO         VARCHAR2(2000),
+    PRODUCT_STORE_INFO          VARCHAR2(2000),
+    PRODUCT_BANNER              VARCHAR2(2000),
+    PRODUCT_IMAGE               VARCHAR2(2000)
 ); 
+create sequence product_seq
+    start with 1
+    increment by 1
+    maxvalue 10000;
 
 -->
 
@@ -40,23 +48,29 @@ create table PRODUCT (
 		<result property="PRODUCT_SHOPNAME" column="PRODUCT_SHOPNAME" />	
 		<result property="PRODUCT_DATE" column="PRODUCT_DATE" />	
 		<result property="PRODUCT_TITLE" column="PRODUCT_TITLE" />	
-		<result property="PRODUCT_CATEGORY" column="PRODUCT_CATEGORY" />	
-		<result property="PRODUCT_PIC" column="PRODUCT_PIC" />	
-		<result property="PRODUCT_PIC_COUNT" column="PRODUCT_PIC_COUNT" />	
+		<result property="PRODUCT_BRIEF" column="PRODUCT_BRIEF" />	
+		<result property="PRODUCT_CATEGORY" column="PRODUCT_CATEGORY" />
 		<result property="PRODUCT_PRICE" column="PRODUCT_PRICE" />		
 		<result property="PRODUCT_GRADE" column="PRODUCT_GRADE" />		
-		<result property="PRODUCT_COLOR" column="PRODUCT_COLOR" />		
-		<result property="PRODUCT_READ" column="PRODUCT_READ" />		
+		<result property="PRODUCT_READ" column="PRODUCT_READ" />
 		<result property="PRODUCT_SALES" column="PRODUCT_SALES" />		
-		<result property="PRODUCT_LIKE" column="PRODUCT_LIKE" />		
+		<result property="PRODUCT_LIKE" column="PRODUCT_LIKE" />	
+		<result property="PRODUCT_COLOR" column="PRODUCT_COLOR" />			
 		<result property="PRODUCT_OPTION" column="PRODUCT_OPTION" />		
 		<result property="PRODUCT_SIZE" column="PRODUCT_SIZE" />		
+		<result property="PRODUCT_INFO" column="PRODUCT_INFO" />		
 		<result property="PRODUCT_SHIP_PRICE" column="PRODUCT_SHIP_PRICE" />		
 		<result property="PRODUCT_SHIP_COMPANY" column="PRODUCT_SHIP_COMPANY" />		
 		<result property="PRODUCT_SHIP_RETURN_PRICE" column="PRODUCT_SHIP_RETURN_PRICE" />		
 		<result property="PRODUCT_SHIP_CHANGE_PRICE" column="PRODUCT_SHIP_CHANGE_PRICE" />		
 		<result property="PRODUCT_SHIP_RETURN_PLACE" column="PRODUCT_SHIP_RETURN_PLACE" />		
 		<result property="PRODUCT_SHIP_DAYS" column="PRODUCT_SHIP_DAYS" />		
+		<result property="PRODUCT_SHIP_INFO" column="PRODUCT_SHIP_INFO" />		
+		<result property="PRODUCT_AS_INFO" column="PRODUCT_AS_INFO" />		
+		<result property="PRODUCT_RETURN_INFO" column="PRODUCT_RETURN_INFO" />		
+		<result property="PRODUCT_STORE_INFO" column="PRODUCT_STORE_INFO" />		
+		<result property="PRODUCT_BANNER" column="PRODUCT_BANNER" />		
+		<result property="PRODUCT_IMAGE" column="PRODUCT_IMAGE" />		
 	</resultMap>
 
 	<resultMap type="com.spring.store.ProductVO" id="productResultMap">
@@ -65,26 +79,70 @@ create table PRODUCT (
 		<result property="PRODUCT_SHOPNAME" column="PRODUCT_SHOPNAME" />	
 		<result property="PRODUCT_DATE" column="PRODUCT_DATE" />	
 		<result property="PRODUCT_TITLE" column="PRODUCT_TITLE" />	
-		<result property="PRODUCT_CATEGORY" column="PRODUCT_CATEGORY" />	
-		<result property="PRODUCT_PIC" column="PRODUCT_PIC" />	
-		<result property="PRODUCT_PIC_COUNT" column="PRODUCT_PIC_COUNT" />	
+		<result property="PRODUCT_BRIEF" column="PRODUCT_BRIEF" />	
+		<result property="PRODUCT_CATEGORY" column="PRODUCT_CATEGORY" />
 		<result property="PRODUCT_PRICE" column="PRODUCT_PRICE" />		
-		<result property="PRODUCT_GRADE" column="PRODUCT_GRADE" />	
-		<result property="PRODUCT_COLOR" column="PRODUCT_COLOR" />		
-		<result property="PRODUCT_READ" column="PRODUCT_READ" />		
+		<result property="PRODUCT_GRADE" column="PRODUCT_GRADE" />		
+		<result property="PRODUCT_READ" column="PRODUCT_READ" />
 		<result property="PRODUCT_SALES" column="PRODUCT_SALES" />		
-		<result property="PRODUCT_LIKE" column="PRODUCT_LIKE" />		
+		<result property="PRODUCT_LIKE" column="PRODUCT_LIKE" />	
+		<result property="PRODUCT_COLOR" column="PRODUCT_COLOR" />			
 		<result property="PRODUCT_OPTION" column="PRODUCT_OPTION" />		
 		<result property="PRODUCT_SIZE" column="PRODUCT_SIZE" />		
+		<result property="PRODUCT_INFO" column="PRODUCT_INFO" />		
 		<result property="PRODUCT_SHIP_PRICE" column="PRODUCT_SHIP_PRICE" />		
 		<result property="PRODUCT_SHIP_COMPANY" column="PRODUCT_SHIP_COMPANY" />		
 		<result property="PRODUCT_SHIP_RETURN_PRICE" column="PRODUCT_SHIP_RETURN_PRICE" />		
 		<result property="PRODUCT_SHIP_CHANGE_PRICE" column="PRODUCT_SHIP_CHANGE_PRICE" />		
 		<result property="PRODUCT_SHIP_RETURN_PLACE" column="PRODUCT_SHIP_RETURN_PLACE" />		
-		<result property="PRODUCT_SHIP_DAYS" column="PRODUCT_SHIP_DAYS" />				
+		<result property="PRODUCT_SHIP_DAYS" column="PRODUCT_SHIP_DAYS" />		
+		<result property="PRODUCT_SHIP_INFO" column="PRODUCT_SHIP_INFO" />		
+		<result property="PRODUCT_AS_INFO" column="PRODUCT_AS_INFO" />		
+		<result property="PRODUCT_RETURN_INFO" column="PRODUCT_RETURN_INFO" />		
+		<result property="PRODUCT_STORE_INFO" column="PRODUCT_STORE_INFO" />		
+		<result property="PRODUCT_BANNER" column="PRODUCT_BANNER" />		
+		<result property="PRODUCT_IMAGE" column="PRODUCT_IMAGE" />	
 	</resultMap>
 
+	<resultMap type="com.spring.workshop.WorkshopVO" id="workshopResultMap">
+		<result property="WORKSHOP_NUM" column="WORKSHOP_NUM" />	
+		<result property="WORKSHOP_EMAIL" column="WORKSHOP_EMAIL" />	
+		<result property="WORKSHOP_PASS" column="WORKSHOP_PASS" />	
+		<result property="WORKSHOP_NAME" column="WORKSHOP_NAME" />	
+		<result property="WORKSHOP_PHONE" column="WORKSHOP_PHONE" />	
+		<result property="WORKSHOP_ADDRESS1" column="WORKSHOP_ADDRESS1" />	
+		<result property="WORKSHOP_ADDRESS2" column="WORKSHOP_ADDRESS2" />	
+		<result property="WORKSHOP_ZIP" column="WORKSHOP_ZIP" />	
+		<result property="WORKSHOP_LICENSE" column="WORKSHOP_LICENSE" />		
+		<result property="WORKSHOP_DATE" column="WORKSHOP_DATE" />	
+		<result property="WORKSHOP_INTRO" column="WORKSHOP_INTRO" />		
+		<result property="WORKSHOP_OWNER" column="WORKSHOP_OWNER" />		
+		<result property="WORKSHOP_BANK" column="WORKSHOP_BANK" />		
+		<result property="WORKSHOP_ACNUM" column="WORKSHOP_ACNUM" />		
+			
+	</resultMap>
 
+ 	<select id="selectWorkshop" parameterType="com.spring.workshop.WorkshopVO" resultMap="workshopResultMap">
+		SELECT * FROM WORKSHOP WHERE WORKSHOP_NUM = #{PRODUCT_WORKSHOP}
+	</select>
+	
+	<insert id="insertProduct" parameterType="com.spring.workshop.WorkshopVO">
+ 		INSERT INTO PRODUCT(PRODUCT_NUM, PRODUCT_WORKSHOP, PRODUCT_SHOPNAME, PRODUCT_DATE, PRODUCT_TITLE, PRODUCT_BRIEF, PRODUCT_CATEGORY, 
+ 								 PRODUCT_PRICE, PRODUCT_GRADE, PRODUCT_READ, PRODUCT_SALES, PRODUCT_LIKE, PRODUCT_COLOR, 
+			  					 PRODUCT_OPTION, PRODUCT_SIZE, PRODUCT_INFO, PRODUCT_SHIP_PRICE, PRODUCT_SHIP_COMPANY, 
+			  					 PRODUCT_SHIP_RETURN_PRICE, PRODUCT_SHIP_CHANGE_PRICE, PRODUCT_SHIP_RETURN_PLACE,
+			  					 PRODUCT_SHIP_DAYS, PRODUCT_SHIP_INFO, PRODUCT_AS_INFO, PRODUCT_RETURN_INFO, PRODUCT_STORE_INFO,
+			  					 PRODUCT_BANNER, PRODUCT_IMAGE
+			  					 ) 
+			 		VALUES(product_seq.nextval, #{PRODUCT_WORKSHOP}, #{PRODUCT_SHOPNAME}, #{PRODUCT_DATE}, #{PRODUCT_TITLE}, #{PRODUCT_BRIEF}, #{PRODUCT_CATEGORY}, 
+			 			   #{PRODUCT_PRICE}, #{PRODUCT_GRADE}, #{PRODUCT_READ}, #{PRODUCT_SALES}, #{PRODUCT_LIKE}, #{PRODUCT_COLOR}, 
+			 			   #{PRODUCT_OPTION}, #{PRODUCT_SIZE}, #{PRODUCT_INFO}, #{PRODUCT_SHIP_PRICE}, #{PRODUCT_SHIP_COMPANY}, 
+			 			   #{PRODUCT_SHIP_RETURN_PRICE}, #{PRODUCT_SHIP_CHANGE_PRICE}, #{PRODUCT_SHIP_RETURN_PLACE},
+			 			   #{PRODUCT_SHIP_DAYS}, #{PRODUCT_SHIP_INFO}, #{PRODUCT_AS_INFO}, #{PRODUCT_RETURN_INFO}, #{PRODUCT_STORE_INFO}, 
+			 			   #{PRODUCT_BANNER}, #{PRODUCT_IMAGE}
+			 			   )
+ 	</insert>	
+	
 	<select id="getproductcount" parameterType="java.util.HashMap" resultType="int">
 		SELECT count(*) FROM PRODUCT  
 		<if test="PRODUCT_CATEGORY != 'all'"> WHERE PRODUCT_CATEGORY=#{PRODUCT_CATEGORY}  </if>
@@ -93,10 +151,12 @@ create table PRODUCT (
 	
 	<select id="getproductlist" parameterType="java.util.HashMap" resultMap="productResultMap">
 		SELECT * FROM
-		(SELECT rownum rnum, PRODUCT_NUM, PRODUCT_WORKSHOP, PRODUCT_SHOPNAME, PRODUCT_DATE, PRODUCT_TITLE, PRODUCT_CATEGORY, PRODUCT_PIC, 
-		PRODUCT_PIC_COUNT, PRODUCT_PRICE, PRODUCT_GRADE,
-		PRODUCT_COLOR, PRODUCT_READ, PRODUCT_SALES, PRODUCT_LIKE, PRODUCT_OPTION, PRODUCT_SIZE, PRODUCT_SHIP_PRICE, 
-		PRODUCT_SHIP_COMPANY, PRODUCT_SHIP_RETURN_PRICE, PRODUCT_SHIP_CHANGE_PRICE, PRODUCT_SHIP_RETURN_PLACE, PRODUCT_SHIP_DAYS FROM
+		(SELECT rownum rnum, PRODUCT_NUM, PRODUCT_WORKSHOP, PRODUCT_SHOPNAME, PRODUCT_DATE, PRODUCT_TITLE, PRODUCT_BRIEF, PRODUCT_CATEGORY, 
+		PRODUCT_PRICE, PRODUCT_GRADE, PRODUCT_READ, PRODUCT_SALES, PRODUCT_LIKE, PRODUCT_COLOR,
+		PRODUCT_OPTION, PRODUCT_SIZE, PRODUCT_INFO, PRODUCT_SHIP_PRICE, PRODUCT_SHIP_COMPANY,  
+		PRODUCT_SHIP_RETURN_PRICE, PRODUCT_SHIP_CHANGE_PRICE, PRODUCT_SHIP_RETURN_PLACE,
+		PRODUCT_SHIP_DAYS, PRODUCT_SHIP_INFO, PRODUCT_AS_INFO, PRODUCT_RETURN_INFO, PRODUCT_STORE_INFO,
+		PRODUCT_BANNER, PRODUCT_IMAGE FROM
 			(SELECT * FROM PRODUCT
 			<if test="PRODUCT_CATEGORY != 'all'"> WHERE PRODUCT_CATEGORY=#{PRODUCT_CATEGORY}  </if>
 			ORDER BY 
@@ -116,5 +176,13 @@ create table PRODUCT (
 	<select id="getproductVO" parameterType="int" resultMap="productResultMap">
 		SELECT * FROM PRODUCT WHERE PRODUCT_NUM=#{PRODUCT_NUM}
 	</select>
+	
+	<update id="updateReadCount" parameterType="int">
+        UPDATE PRODUCT SET PRODUCT_READ = (PRODUCT_READ+1) WHERE PRODUCT_NUM=#{PRODUCT_NUM}
+	</update>	
+
+	<update id="updateGrade" parameterType="com.spring.store.ProductVO">
+        UPDATE PRODUCT SET PRODUCT_GRADE = #{PRODUCT_GRADE} WHERE PRODUCT_NUM=#{PRODUCT_NUM}
+	</update>	
 
 </mapper>

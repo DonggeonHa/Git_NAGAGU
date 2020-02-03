@@ -7,24 +7,36 @@ create table PRODUCT (
     PRODUCT_SHOPNAME            VARCHAR2(50),
     PRODUCT_DATE                DATE,
     PRODUCT_TITLE               VARCHAR2(100),
+    PRODUCT_BRIEF               VARCHAR2(100),
     PRODUCT_CATEGORY            VARCHAR2(30),
-    PRODUCT_PIC                 VARCHAR2(500),
-    PRODUCT_PIC_COUNT           NUMBER,
     PRODUCT_PRICE               NUMBER,
-    PRODUCT_GRADE           NUMBER(2,1),
-    PRODUCT_COLOR               VARCHAR2(50),
+    PRODUCT_GRADE               NUMBER(2,1),
     PRODUCT_READ                NUMBER,
     PRODUCT_SALES               NUMBER,
     PRODUCT_LIKE                NUMBER,
+    PRODUCT_COLOR               VARCHAR2(50),
     PRODUCT_OPTION              VARCHAR2(100),
     PRODUCT_SIZE                VARCHAR2(50),
+    PRODUCT_INFO                VARCHAR2(1000),
     PRODUCT_SHIP_PRICE          NUMBER,
     PRODUCT_SHIP_COMPANY        VARCHAR2(20),
     PRODUCT_SHIP_RETURN_PRICE   NUMBER,
     PRODUCT_SHIP_CHANGE_PRICE   NUMBER,
     PRODUCT_SHIP_RETURN_PLACE   VARCHAR2(20),
-    PRODUCT_SHIP_DAYS           VARCHAR2(20)  
+    PRODUCT_SHIP_DAYS           VARCHAR2(20),
+    PRODUCT_SHIP_INFO           VARCHAR2(1000),
+    PRODUCT_AS_INFO             VARCHAR2(2000),
+    PRODUCT_RETURN_INFO         VARCHAR2(2000),
+    PRODUCT_STORE_INFO          VARCHAR2(2000),
+    PRODUCT_BANNER              VARCHAR2(2000),
+    PRODUCT_IMAGE               VARCHAR2(2000)
 ); 
+create sequence product_seq
+    start with 1
+    increment by 1
+    maxvalue 10000;
+
+
 select * from product;
 
 insert into product values
@@ -82,3 +94,29 @@ create sequence store_qna_seq
     start with 1
     increment by 1
     maxvalue 10000;
+    
+    
+    
+    
+create table WORKSHOP(
+    WORKSHOP_NUM        NUMBER,
+    WORKSHOP_EMAIL      VARCHAR2(100),
+    WORKSHOP_PASS       VARCHAR2(50),
+    WORKSHOP_NAME       VARCHAR2(50),
+    WORKSHOP_PHONE      VARCHAR2(50),
+    WORKSHOP_ADDRESS1   VARCHAR2(50),
+    WORKSHOP_ADDRESS2   VARCHAR2(50),
+    WORKSHOP_ZIP        VARCHAR2(15),
+    WORKSHOP_LICENSE    VARCHAR2(50),
+    WORKSHOP_DATE       DATE,
+    WORKSHOP_INTRO      VARCHAR2(200),
+    WORKSHOP_OWNER      VARCHAR2(15),
+    WORKSHOP_BANK       VARCHAR2(20),
+    WORKSHOP_ACNUM      VARCHAR2(100)
+);           
+create sequence workshop_seq
+    start with 1
+    increment by 1
+    maxvalue 10000;
+    
+    
