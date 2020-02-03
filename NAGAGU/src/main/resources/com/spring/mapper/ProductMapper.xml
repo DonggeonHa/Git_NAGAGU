@@ -3,31 +3,39 @@
 
 <!-- 
 create table PRODUCT (
-
-	PRODUCT_NUM                        NUMBER,        
-	PRODUCT_WORKSHOP                   NUMBER,
-	PRODUCT_SHOPNAME  					VARCHAR2(50),       
-	PRODUCT_DATE                       DATE,          
-	PRODUCT_TITLE                      VARCHAR2(100), 
-	PRODUCT_CATEGORY                   VARCHAR2(30),  
-	PRODUCT_PIC                        VARCHAR2(500),
-	PRODUCT_PIC_COUNT                  NUMBER,
-	PRODUCT_PRICE                      NUMBER,        
-	PRODUCT_COLOR                      VARCHAR2(20),  
-	PRODUCT_READ                       NUMBER,        
-	PRODUCT_SALES                      NUMBER,        
-	PRODUCT_LIKE                       NUMBER,        
-	PRODUCT_OPTION                     VARCHAR2(100), 
-	PRODUCT_SIZE                       VARCHAR2(50),  
-	PRODUCT_SHIP_PRICE                 NUMBER,        
-	PRODUCT_SHIP_COMPANY               VARCHAR2(20),  
-	PRODUCT_SHIP_RETURN_PRICE          NUMBER,        
-	PRODUCT_SHIP_CHANGE_PRICE          NUMBER,        
-	PRODUCT_SHIP_RETURN_PLACE          VARCHAR2(20),  
-	PRODUCT_SHIP_DAYS                  VARCHAR2(20)  
-
-
+    PRODUCT_NUM                 NUMBER PRIMARY KEY,
+    PRODUCT_WORKSHOP            NUMBER,
+    PRODUCT_SHOPNAME            VARCHAR2(50),
+    PRODUCT_DATE                DATE,
+    PRODUCT_TITLE               VARCHAR2(100),
+    PRODUCT_BRIEF               VARCHAR2(100),
+    PRODUCT_CATEGORY            VARCHAR2(30),
+    PRODUCT_PRICE               NUMBER,
+    PRODUCT_GRADE               NUMBER(2,1),
+    PRODUCT_READ                NUMBER,
+    PRODUCT_SALES               NUMBER,
+    PRODUCT_LIKE                NUMBER,
+    PRODUCT_COLOR               VARCHAR2(50),
+    PRODUCT_OPTION              VARCHAR2(100),
+    PRODUCT_SIZE                VARCHAR2(50),
+    PRODUCT_INFO                VARCHAR2(1000),
+    PRODUCT_SHIP_PRICE          NUMBER,
+    PRODUCT_SHIP_COMPANY        VARCHAR2(20),
+    PRODUCT_SHIP_RETURN_PRICE   NUMBER,
+    PRODUCT_SHIP_CHANGE_PRICE   NUMBER,
+    PRODUCT_SHIP_RETURN_PLACE   VARCHAR2(20),
+    PRODUCT_SHIP_DAYS           VARCHAR2(20),
+    PRODUCT_SHIP_INFO           VARCHAR2(1000),
+    PRODUCT_AS_INFO             VARCHAR2(2000),
+    PRODUCT_RETURN_INFO         VARCHAR2(2000),
+    PRODUCT_STORE_INFO          VARCHAR2(2000),
+    PRODUCT_BANNER              VARCHAR2(2000),
+    PRODUCT_IMAGE               VARCHAR2(2000)
 ); 
+create sequence product_seq
+    start with 1
+    increment by 1
+    maxvalue 10000;
 
 -->
 
@@ -127,7 +135,7 @@ create table PRODUCT (
 			  					 PRODUCT_BANNER, PRODUCT_IMAGE
 			  					 ) 
 			 		VALUES(product_seq.nextval, #{PRODUCT_WORKSHOP}, #{PRODUCT_SHOPNAME}, #{PRODUCT_DATE}, #{PRODUCT_TITLE}, #{PRODUCT_BRIEF}, #{PRODUCT_CATEGORY}, 
-			 			   #{PRODUCT_PRICE}, PRODUCT_GRADE, #{PRODUCT_READ}, #{PRODUCT_SALES}, #{PRODUCT_LIKE}, #{PRODUCT_COLOR}, 
+			 			   #{PRODUCT_PRICE}, #{PRODUCT_GRADE}, #{PRODUCT_READ}, #{PRODUCT_SALES}, #{PRODUCT_LIKE}, #{PRODUCT_COLOR}, 
 			 			   #{PRODUCT_OPTION}, #{PRODUCT_SIZE}, #{PRODUCT_INFO}, #{PRODUCT_SHIP_PRICE}, #{PRODUCT_SHIP_COMPANY}, 
 			 			   #{PRODUCT_SHIP_RETURN_PRICE}, #{PRODUCT_SHIP_CHANGE_PRICE}, #{PRODUCT_SHIP_RETURN_PLACE},
 			 			   #{PRODUCT_SHIP_DAYS}, #{PRODUCT_SHIP_INFO}, #{PRODUCT_AS_INFO}, #{PRODUCT_RETURN_INFO}, #{PRODUCT_STORE_INFO}, 
@@ -168,5 +176,13 @@ create table PRODUCT (
 	<select id="getproductVO" parameterType="int" resultMap="productResultMap">
 		SELECT * FROM PRODUCT WHERE PRODUCT_NUM=#{PRODUCT_NUM}
 	</select>
+	
+	<update id="updateReadCount" parameterType="int">
+        UPDATE PRODUCT SET PRODUCT_READ = (PRODUCT_READ+1) WHERE PRODUCT_NUM=#{PRODUCT_NUM}
+	</update>	
+
+	<update id="updateGrade" parameterType="com.spring.store.ProductVO">
+        UPDATE PRODUCT SET PRODUCT_GRADE = #{PRODUCT_GRADE} WHERE PRODUCT_NUM=#{PRODUCT_NUM}
+	</update>	
 
 </mapper>

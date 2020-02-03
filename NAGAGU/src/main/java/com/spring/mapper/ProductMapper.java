@@ -12,4 +12,6 @@ public interface ProductMapper {
 	int getproductcount(HashMap<String, Object> map);
 	public ArrayList<ProductVO> getproductlist(HashMap<String, Object> map);
 	ProductVO getproductVO(int PRODUCT_NUM);
+	int updateReadCount(int PRODUCT_NUM);
+	int updateGrade(ProductVO vo);
 }

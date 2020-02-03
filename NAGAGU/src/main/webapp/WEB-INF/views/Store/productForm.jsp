@@ -64,15 +64,14 @@
 							<div class="row">
 								<div>
 									<select name="PRODUCT_CATEGORY" class="form-control">
-										<option name="all" selected>전체</option>
-										<option name="table">책상</option>
-										<option name="chair">의자</option>
-										<option name="bookshelf">책장</option>
-										<option name="bed">침대</option>
-										<option name="drawer">서랍장</option>
-										<option name="sidetable">협탁</option>
-										<option name="dressing_table">화장대</option>
-										<option name="others">기타</option>
+										<option value="table">책상</option>
+										<option value="chair">의자</option>
+										<option value="bookshelf">책장</option>
+										<option value="bed">침대</option>
+										<option value="drawer">서랍장</option>
+										<option value="sidetable">협탁</option>
+										<option value="dressing_table">화장대</option>
+										<option value="others">기타</option>
 									</select>
 								</div>
 							</div>
@@ -146,11 +145,11 @@
 						<td>
 							<div class="row">
 								<div class="option-control option-radio" style="margin-right: 2%">
-									<input type="radio" value="없음" class="option-control-input" id="optionControlValidation2" name="PRODUCT_OPTION" onchange="setDisplay()" required>
+									<input type="radio" value="없음" class="option-control-input" id="optionControlValidation2" name="PRODUCT_OPTION_TMP" onchange="setDisplay(this.value)" required>
 									<label class="option-control-label"	for="optionControlValidation2">없음</label>
 								</div>
 								<div class="option-control option-radio" style="margin-left: 2%">
-									<input type="radio" value="추가구매" class="option-control-input" id="optionControlValidation3" name="PRODUCT_OPTION_INVALIDATE" onchange="setDisplay()" required>
+									<input type="radio" value="추가구매" class="option-control-input" id="optionControlValidation3" name="PRODUCT_OPTION_TMP" onchange="setDisplay(this.value)" required>
 									<label class="option-control-label"	for="optionControlValidation3">추가구매</label>
 								</div>
 							</div>
@@ -331,18 +330,16 @@
 		<script src="https://cdn.jsdelivr.net/npm/summernote@0.8.15/dist/summernote.min.js"></script>
 
 		<script>
-			
+		
 			/* 라디오 부분 */
-			function setDisplay(){
-				if($('input:radio[id=optionControlValidation2]').is(':checked')) {
+			function setDisplay(val){
+				if(val == '없음') {
 					$('.addoption').hide();
-				}
-	
-				if($('input:radio[id=optionControlValidation3]').is(':checked')) {
+				} else {
 					$('.addoption').show();
 				}
 			}
-			
+		
 			/* 썸머노트 부분 */
 			 $(document).ready(function() {
 				$('#summernote1').summernote({
@@ -607,25 +604,18 @@
 			var arrSizeInputValue = new Array(0);
 			 
 			function addSizeInput() {
-				alert('a1');
 				arrSizeInput.push(arrSizeInput.length);
-				alert('a2');
 				arrSizeInputValue.push("");
-				alert('a3');
 				sizedisplay();
 			}
 			function sizedisplay() {
-				alert('a4');
 				document.getElementById('sizeparah').innerHTML="";
-				alert('a5');
 				for (intI=0;intI<arrSizeInput.length;intI++) {
 					document.getElementById('sizeparah').innerHTML+=createSizeInput();
 				}
-				alert('a6');
 			}
 			
 			function createSizeInput() {
-				alert('a7');
 				var txt = '';
 				txt += '<div class="input_box" style="margin-right: 10px;">';
 				txt += '<input class="form-control" type="text" name="PRODUCT_SIZE" placeholder="예시) 1000*50*70" value="" style="text-align: right;"></div>';

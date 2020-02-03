@@ -18,5 +18,6 @@ public interface ProductService {
 	
 	//ProductDetail
 	ProductVO getproductVO(int PRODUCT_NUM);
-	
+	int updateReadCount(int PRODUCT_NUM);
+	int updateGrade(ProductVO vo);	//리뷰 등록시 grade update
 }

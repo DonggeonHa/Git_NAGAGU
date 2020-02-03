@@ -87,6 +87,14 @@ public class ProductReviewServiceImpl implements ProductReviewService {
 	}
 
 	@Override
+	public int getGradePeopleCount(int REVIEW_PRODUCT) {
+		ProductReviewMapper reviewMapper = sqlSession.getMapper(ProductReviewMapper.class);
+		int gradepeoplecount;
+		gradepeoplecount = reviewMapper.getGradePeopleCount(REVIEW_PRODUCT);
+		return gradepeoplecount;
+	}
+
+	@Override
 	public Product_reviewVO getReviewVO(int REVIEW_NUM) {
 		ProductReviewMapper reviewMapper = sqlSession.getMapper(ProductReviewMapper.class);
 		Product_reviewVO reviewVO = null;
@@ -94,6 +102,14 @@ public class ProductReviewServiceImpl implements ProductReviewService {
 		return reviewVO;
 	}
 
+	@Override
+	public int findChildrenRE(int REVIEW_NUM) {
+		ProductReviewMapper reviewMapper = sqlSession.getMapper(ProductReviewMapper.class);
+		int count;
+		count = reviewMapper.findChildrenRE(REVIEW_NUM);
+		return count;
+	}
+	
 	@Override
 	public int deleteReview(int REVIEW_NUM) {
 		ProductReviewMapper reviewMapper = sqlSession.getMapper(ProductReviewMapper.class);
@@ -132,6 +148,16 @@ public class ProductReviewServiceImpl implements ProductReviewService {
 		newReviewImg = reviewMapper.newReviewImg(REVIEW_NUM);
 		return newReviewImg;
 	}
+
+	
+	@Override
+	public int modifyReview_RE(Product_reviewVO reviewVO) {
+		ProductReviewMapper reviewMapper = sqlSession.getMapper(ProductReviewMapper.class);
+		int res;
+		res = reviewMapper.modifyReview_RE(reviewVO);
+		return res;
+	}
+
 
 
 

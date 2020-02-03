@@ -77,6 +77,24 @@ public class ProductServiceImpl implements ProductService{
 	}
 
 
+	@Override
+	public int updateReadCount(int PRODUCT_NUM) {
+		int res;
+		ProductMapper productMapper = sqlSession.getMapper(ProductMapper.class);
+		res = productMapper.updateReadCount(PRODUCT_NUM);
+		return res;
+	}
+
+
+	@Override
+	public int updateGrade(ProductVO vo) {
+		int res;
+		ProductMapper productMapper = sqlSession.getMapper(ProductMapper.class);
+		res = productMapper.updateGrade(vo);
+		return res;
+	}
+
+
 
 
 	

@@ -277,19 +277,18 @@
 			%>	
 				<div class="row itemsection py-5">
 						<%
+						
 								if (productcount > 0) {
 									for (int i = 0; i < productList.size(); i++) {
 										ProductVO pro = productList.get(i);
 						%>			
 		            <div class="col-4 h-100 items">
-		                <div class="row">
+		                <a href="./productdetail.pro?PRODUCT_NUM=<%=pro.getPRODUCT_NUM()%>&PRODUCT_CATEGORY=<%=pro.getPRODUCT_CATEGORY()%>&page=<%=nowpage%>">
+						<div class="row">
 		                    <div class="store_item">
 		                        <div class="store_item_image ">
-		                        	<a
-										href="./productdetail.pro?PRODUCT_NUM=<%=pro.getPRODUCT_NUM()%>&PRODUCT_CATEGORY=<%=pro.getPRODUCT_CATEGORY()%>&page=<%=nowpage%>">
-										<img src=<%=pro.getPRODUCT_IMAGE()%> alt=""
-										class="img-responsive image"  >
-									</a>
+		                        		<img src="/productupload/image/<%=pro.getPRODUCT_IMAGE()%>" alt="" class="img-responsive image"  >
+									
 		                        </div>
 		                    </div>
 		                </div>
@@ -302,16 +301,17 @@
 		                        </div>
 		                        
 		                        <div class="align-self-end row mt-2 grade_price">
-		                            <div class="col-6 grade_div">
+		                            <div class="col-8 grade_div">		                            
 		                                <span class="grade"><i class="fas fa-star"></i><span><%=pro.getPRODUCT_GRADE()%></span></span>
 		                            </div>
-		                            <div class="col-6">
+		                            <div class="col-4">
 		                                <span class="price"><%=pro.getPRODUCT_PRICE()%>&nbsp;원</span>
 		                            </div>
 		                        </div>
 		                    </div>
 		                </div>
 		            </div>	
+		            </a>
 					<%
 									}
 					%>     

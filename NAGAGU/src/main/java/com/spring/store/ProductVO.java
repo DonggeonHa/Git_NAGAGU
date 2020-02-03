@@ -11,7 +11,7 @@ public class ProductVO {
 	private String PRODUCT_BRIEF;
 	private String PRODUCT_CATEGORY;
 	private int PRODUCT_PRICE;
-	private int PRODUCT_GRADE;	
+	private double PRODUCT_GRADE;	
 	private int PRODUCT_READ;	
 	private int PRODUCT_SALES;	
 	private int PRODUCT_LIKE;
@@ -31,8 +31,6 @@ public class ProductVO {
 	private String PRODUCT_STORE_INFO;	
 	private String PRODUCT_BANNER;	
 	private String PRODUCT_IMAGE;
-	
-	
 	public int getPRODUCT_NUM() {
 		return PRODUCT_NUM;
 	}
@@ -81,10 +79,10 @@ public class ProductVO {
 	public void setPRODUCT_PRICE(int pRODUCT_PRICE) {
 		PRODUCT_PRICE = pRODUCT_PRICE;
 	}
-	public int getPRODUCT_GRADE() {
+	public double getPRODUCT_GRADE() {
 		return PRODUCT_GRADE;
 	}
-	public void setPRODUCT_GRADE(int pRODUCT_GRADE) {
+	public void setPRODUCT_GRADE(double pRODUCT_GRADE) {
 		PRODUCT_GRADE = pRODUCT_GRADE;
 	}
 	public int getPRODUCT_READ() {
@@ -201,6 +199,8 @@ public class ProductVO {
 	public void setPRODUCT_IMAGE(String pRODUCT_IMAGE) {
 		PRODUCT_IMAGE = pRODUCT_IMAGE;
 	}
+	
+
 	
 	
 	
