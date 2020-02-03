@@ -6,6 +6,7 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.spring.mapper.MemberLikeMapper;
 import com.spring.mapper.PicsCommentMapper;
 
 
@@ -64,5 +65,6 @@ public class PicsCommentServiceImpl implements PicsCommentService{
 		int res = commentmapper.updateComment(db);
 		return res;
 	}
+
 	
 }

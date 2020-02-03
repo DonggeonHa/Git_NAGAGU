@@ -131,5 +131,18 @@ public class CommunityServiceImpl implements CommunityService{
 		}
 		return returnInfo;
 	}
+	@Override 
+	public ArrayList<PicsVO> getMemberLikePics(PicsVO picsVO) {
+		ArrayList<PicsVO> vo = null; 
+		try { 
+			CommunityMapper communityMapper= sqlSession.getMapper(CommunityMapper.class);
+			//memberMapper memberMapper= sqlSession.getMapper(memberMapper.class);
+			vo = communityMapper.getMemberLikePics(picsVO);
+			System.out.println("RESULT="+vo);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}  
+		return vo;
+	}
 
 }

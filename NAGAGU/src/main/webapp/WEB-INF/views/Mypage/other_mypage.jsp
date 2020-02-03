@@ -18,7 +18,7 @@
 	MemberVO memberVO= (MemberVO)request.getAttribute("memberDetail");
 	//사진 올린 멤버가 올린 다른 사진리스트 받아오기 위해
 	ArrayList<PicsVO> memberPicsList = (ArrayList<PicsVO>) request.getAttribute("memberPicsList");
-	
+	ArrayList<PicsVO> memberLikePics = (ArrayList<PicsVO>) request.getAttribute("memberLikePics");
 	System.out.println("니가누른 사진 멤버는="+memberVO.getMEMBER_NUM());
 	System.out.println("로그인 멤버는="+LOGIN_MEMBER_NUM);
 %>
@@ -210,37 +210,12 @@ a, .card a:link, .card a:visited {
 						</div>
 					</div>
 					<div class="row justify-content-between img-wrap ">
-						<div class="col-4 img-wrap">
-							<a href=""><img
-								src="https://images.unsplash.com/photo-1537182534312-f945134cce34?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1000&q=80"
-								alt=""></a>
-						</div>
-						<div class="col-4 img-wrap">
-							<a href=""><img
-								src="https://images.unsplash.com/photo-1537182534312-f945134cce34?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1000&q=80"
-								alt=""></a>
-						</div>
-						<div class="col-4 img-wrap">
-							<a href=""><img
-								src="https://images.unsplash.com/photo-1537182534312-f945134cce34?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1000&q=80"
-								alt=""></a>
-						</div>
-						<div class="col-4 img-wrap">
-							<a href=""><img
-								src="https://images.unsplash.com/photo-1537182534312-f945134cce34?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1000&q=80"
-								alt=""></a>
-						</div>
-						<div class="col-4 img-wrap">
-							<a href=""><img
-								src="https://images.unsplash.com/photo-1537182534312-f945134cce34?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1000&q=80"
-								alt=""></a>
-						</div>
-						<div class="col-4 img-wrap">
-							<a href=""><img
-								src="https://images.unsplash.com/photo-1537182534312-f945134cce34?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1000&q=80"
-								alt=""></a>
-						</div>
-						
+						<c:forEach var="pics" items="${memberLikePics}" varStatus="status">
+						    <div class="col-4 img-wrap">
+							    <a href="${pageContext.request.contextPath}/community_detail.cm?PICS_NUM=${pics.PICS_NUM}&MEMBER_NUM=${pics.PICS_MEMBER}">
+								<img src="/communityupload/image/${pics.PICS_FILE_1}"></a>
+							</div>   
+						</c:forEach> 
 					</div>
 	
 	

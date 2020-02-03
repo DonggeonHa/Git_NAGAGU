@@ -27,6 +27,8 @@ public interface CommunityMapper {
 	int deletePicsFile(PicsVO picsVO);
 	//좋아요 수 업데이트
 	int updatePicsLike(HashMap<String, Object> map);
+	//멤버가 좋아요 한 사진 리스트
+	ArrayList<PicsVO> getMemberLikePics(PicsVO picsVO);
 //	ArrayList<PicsVO> getPicsCategory(HashMap<String, Object> map);
 //	int getPicsCountAll();
 } 

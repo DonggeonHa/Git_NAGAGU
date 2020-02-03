@@ -90,12 +90,13 @@ public class MypageController {
 		System.out.println("othermypage컨트롤러");
 		//마이페이지 멤버
 		MemberVO memberDetail = memberService.getMemberDetail(memberVO);
-		//멤버넘버 = 픽스멤버 셋팅 후 DB에서 picsList 정보 가져옴
+		//멤버넘버 = 픽스멤버 셋팅 후 DB에서 picsList(올린사진),likeList(좋아요 한 사진) 정보 가져옴
 		picsVO.setPICS_MEMBER(memberVO.getMEMBER_NUM());
 		//멤버가 올린 사진리스트
 		ArrayList<PicsVO> memberPicsList = communityService.getPicsOfMemberUpload(picsVO);
 		//멤버가 좋아요 한 사진 리스트
-		ArrayList<LikeVO> memberLikePics = memberService.getMemberLikePics(memberVO);
+		System.out.println(picsVO.getPICS_MEMBER());
+		ArrayList<PicsVO> memberLikePics = communityService.getMemberLikePics(picsVO);
 		
 		model.addAttribute("memberDetail",memberDetail);
 		model.addAttribute("memberPicsList",memberPicsList);

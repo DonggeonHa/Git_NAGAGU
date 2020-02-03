@@ -220,18 +220,6 @@ public class MemberServiceImpl implements MemberService{
 		}
 		return vo;
 	}
-	@Override 
-	public ArrayList<LikeVO> getMemberLikePics(MemberVO memberVO) {
-		ArrayList<LikeVO> vo = null;
-		try {
-			MemberLikeMapper memberlikeMapper=sqlSession.getMapper(MemberLikeMapper.class);
-			//memberMapper memberMapper= sqlSession.getMapper(memberMapper.class);
-			vo = memberlikeMapper.getMemberLikePics(memberVO);
-			System.out.println("RESULT="+vo);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}  
-		return vo;
-	}
+
 
 }

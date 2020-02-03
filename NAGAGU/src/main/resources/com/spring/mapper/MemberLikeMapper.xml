@@ -34,15 +34,4 @@ CREATE TABLE MEMBER_LIKE (
 		WHERE LIKE_MEMBER = #{memberNum} AND LIKE_PICS = #{picsNum}
 	</delete>
 	
-    <select id="getMemberLikePics" parameterType="com.spring.member.MemberVO" resultMap="likeResultMap">	
- 		SELECT * FROM
- 		(SELECT *
-	    FROM NAGAGU_MEMBER M, MEMBER_LIKE L
-	    WHERE M.MEMBER_NUM = L.LIKE_MEMBER)
-	    WHERE MEMBER_NUM = #{MEMBER_NUM}
-        <!-- <![CDATA[ WHERE rnum >= #{startrow} AND rnum <= #{endrow} ]]> --> 
-	</select>
-
-
-
 </mapper>

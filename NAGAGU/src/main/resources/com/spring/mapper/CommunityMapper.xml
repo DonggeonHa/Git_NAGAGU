@@ -191,15 +191,13 @@ PICS_REF-->
 		</if>
 		WHERE PICS_NUM=#{picsNum}
 	</update>
-	
-	<!-- 	<select id="getPicsCategory" parameterType="java.util.HashMap" resultMap="picsResultMap">
-		SELECT * FROM
-		(SELECT rownum rnum, PICS_NUM, PICS_MEMBER, PICS_TITLE, PICS_DATE, PICS_CATEGORY, 
-        PICS_CONTENT, PICS_LIKE, PICS_WORKSHOP, PICS_ROUTE,	PICS_TAG 
-		FROM (SELECT * FROM PICS WHERE PICS_CATEGORY=#{PICS_CATEGORY} AND PICS_REVIEW = #{PICS_REVIEW} ORDER BY PICS_DATE DESC))
-		<![CDATA[ WHERE rnum >= #{startrow} AND rnum <= #{endrow} ]]> 
-	</select> -->
 
+    <select id="getMemberLikePics" parameterType="java.util.HashMap" resultMap="picsResultMap">	
+ 		SELECT DISTINCT PICS_FILE_1, PICS_NUM, PICS_MEMBER
+        FROM PICS, MEMBER_LIKE
+        WHERE PICS_MEMBER=LIKE_MEMBER AND PICS_MEMBER=#{PICS_MEMBER}
+        <!-- <![CDATA[ WHERE rnum >= #{startrow} AND rnum <= #{endrow} ]]> --> 
+	</select>
 
 
 

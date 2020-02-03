@@ -16,4 +16,5 @@ public interface CommunityService {
 	int updatePics(PicsVO picsVO);
 	int deletePicsFile(PicsVO picsVO);
 	HashMap<String, Object> insertMemberLike(HashMap<String, Object> map);
+	ArrayList<PicsVO> getMemberLikePics(PicsVO picsVO);//좋아요 사진 리스트
 }
