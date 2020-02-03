@@ -15,6 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.ModelAndView;
@@ -87,6 +88,7 @@ public class AcademyController {
 	@RequestMapping(value = "/classdetail.ac")
 	public ModelAndView ClassDetail(ClassVO academy, HttpSession session) throws Exception {
 		ClassVO vo = AcademyService.getDetail(academy);
+		MemberVO vo2 = AcademyService.selectMember(vo);
 		
 		if (vo == null) {
 			System.out.println("상세보기 실패");
@@ -96,6 +98,7 @@ public class AcademyController {
 		
 		ModelAndView mav = new ModelAndView();
 		mav.addObject("ClassVO", vo);
+		mav.addObject("MemberVO", vo2);
 		mav.setViewName("Academy/detail");
 		
 		return mav;
@@ -153,8 +156,6 @@ public class AcademyController {
 				e.printStackTrace(); 
 				} 
 			}
-		System.out.println("파일 없을 때 6");
-
 		System.out.println("str = " + str);
 		
 		if(str.length() != 0) {
@@ -218,6 +219,27 @@ public class AcademyController {
 			return null;
 		}
 		System.out.println("클래스 등록 완료!");
+		
+		return mav;
+	}
+	
+
+	@RequestMapping(value = "/success.ac")
+	public ModelAndView Success(ClassVO academy, @RequestParam(value="amount5", required=false) String amount4) throws Exception {
+		ClassVO vo = AcademyService.getDetail(academy);
+		System.out.println("NUMBER : " + academy.getCLASS_NUMBER());
+		System.out.println("amount5 : " + amount4);
+		
+		if (vo == null) {
+			System.out.println("상세보기 실패");
+			return null;
+		}
+		System.out.println("상세보기 성공");
+		
+		ModelAndView mav = new ModelAndView();
+		mav.addObject("ClassVO", vo);
+		mav.addObject("amount3", amount4);
+		mav.setViewName("Academy/success");
 		
 		return mav;
 	}

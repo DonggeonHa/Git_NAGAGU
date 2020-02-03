@@ -72,13 +72,7 @@ public class MemberAjaxController {
 			MemberVO member = null; 
 			member = memberService.selectMember(memberVO);
 			
-			if(member == null) {
-				System.out.println("selectMember 가져오기 실패");
-				return null;
-			}
-			System.out.println("selectMember 가져오기 성공");
-			
-			int res = memberService.user_chk(member);
+			int res = memberService.user_chk(memberVO);
 			System.out.println("res는" + res);
 			
 			if (res == 1) {	//로그인(아이디,비번 맞음)-이메일 인증 완료

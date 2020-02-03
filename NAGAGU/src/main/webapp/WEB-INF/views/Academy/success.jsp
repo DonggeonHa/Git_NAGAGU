@@ -3,14 +3,20 @@
 <%@ page import="java.util.*"%>
 <%@ page import="org.springframework.util.StringUtils"%>
 <%@ page import = "com.spring.academy.*"%>
+<%@ page import = "com.spring.member.*" %>
+<%@ page import = "java.util.Date" %>
+<%@ page import = "java.text.SimpleDateFormat" %>
 <%@ taglib uri = "http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib prefix = "fmt" uri = "http://java.sun.com/jsp/jstl/fmt" %>
 
 <%
 	ClassVO cl = (ClassVO)request.getAttribute("ClassVO");
+	String amount2 = (String)request.getAttribute("amount3");
+	System.out.println("amount 값 : " + amount2);
 	
-	int bannerImgCount = StringUtils.countOccurrencesOf(cl.getCLASS_BANNER(), ",");
-	
+	//날짜 포맷 형식
+	Date nowTime = new Date();
+	SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 %>
 <!DOCTYPE html>
 <html>
@@ -18,113 +24,7 @@
 		<meta charset="UTF-8">
 		<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
 		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.2/animate.css">
-		<script src="https://code.jquery.com/jquery-3.4.1.js" integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU=" crossorigin="anonymous"></script>
-  		<script type="text/javascript" src="https://cdn.iamport.kr/js/iamport.payment-1.1.5.js"></script>
-		<script type="text/javascript">      
-			$(document).ready(function() {
-			  var price = parseInt($("#date_price").text().slice(0, -1).replace(/,/g,""));
-			  var result = parseInt($("#result").text().slice(0, -1));
-			
-			  $('#plus').click(function() {
-			    var amount = parseInt($("#amount").val());
-			    var a = price * amount;
-			    result = a;
-			
-			    function comma(result) {
-			      str = String(result);
-			
-			      return str.replace(/(\d)(?=(?:\d{3})+(?!\d))/g, '$1,');
-			    }
-			    $("#result").text(a+"원");
-			  });
-			
-			  $('#minus').click(function() {
-			    var amount = parseInt($("#amount").val());
-			    if(amount <= 0){
-			      alert("1보다 작은 숫자는 선택할 수 없습니다.");
-			
-			      $("#amount").val(1);
-			      return;
-			    }
-			
-			    var a = result - price;
-			    result = a;
-			
-			    $("#result").text(a+"원");
-			  });
-			
-			  function comma(result) {
-			    str = String(result);
-			
-			    return str.replace(/(\d)(?=(?:\d{3})+(?!\d))/g, '$1,');
-			  }
-			});
-			
-			$("#Payment_Card").click(function() {
-				var IMP = window.IMP; // 생략가능
-				IMP.init('imp91912911');
-				// 'iamport' 대신 부여받은 "가맹점 식별코드"를 사용
-				// i'mport 관리자 페이지 -> 내정보 -> 가맹점식별코드
-				IMP.request_pay({
-					pg : 'danal', // version 1.1.0부터 지원.
-					/*
-						'kakao':카카오페이,
-						html5_inicis':이니시스(웹표준결제)
-						'nice':나이스페이
-						'jtnet':제이티넷
-						'uplus':LG유플러스
-						'danal':다날
-						'payco':페이코
-						'syrup':시럽페이
-						'paypal':페이팔
-					 */
-					pay_method : 'card',
-					/*
-						'samsung':삼성페이,
-						'card':신용카드,
-						'trans':실시간계좌이체,
-						'vbank':가상계좌,
-						'phone':휴대폰소액결제
-					 */
-					merchant_uid : 'merchant_' + new Date().getTime(),
-					/*
-						merchant_uid에 경우
-						https://docs.iamport.kr/implementation/payment
-						위에 url에 따라가시면 넣을 수 있는 방법이 있습니다.
-						참고하세요.
-						나중에 포스팅 해볼게요.
-					 */
-					name : '주문명:결제테스트',
-					//결제창에서 보여질 이름
-					amount : 1000,
-					//가격
-					buyer_email : 'iamport@siot.do',
-					buyer_name : '구매자이름',
-					buyer_tel : '010-1234-5678',
-					buyer_addr : '서울특별시 강남구 삼성동',
-					buyer_postcode : '123-456',
-					m_redirect_url : 'https://www.yourdomain.com/payments/complete'
-					/*
-						모바일 결제시,
-						결제가 끝나고 랜딩되는 URL을 지정
-						(카카오페이, 페이코, 다날의 경우는 필요없음. PC와 마찬가지로 callback함수로 결과가 떨어짐)
-					 */
-				}, function(rsp) {
-					console.log(rsp);
-					if (rsp.success) {
-						var msg = '결제가 완료되었습니다.';
-						msg += '고유ID : ' + rsp.imp_uid;
-						msg += '상점 거래ID : ' 	+ rsp.merchant_uid;
-						msg += '결제 금액 : ' + rsp.paid_amount;
-						msg += '카드 승인번호 : ' + rsp.apply_num;
-					} else {
-						var msg = '결제에 실패하였습니다.';
-						msg += '에러내용 : ' + rsp.error_msg;
-					}
-					alert(msg);
-				});
-			});
-		</script>
+		
 		<style>
 			@font-face {
 				font-family: 'KOMACON';
@@ -144,8 +44,7 @@
 			}
 			
 			.class-detail-container {
-				margin-top: 50px;
-				margin-bottom: 100px;
+				padding: 0 15% 0 15% !important;
 			}
 			
 			.hr-class {
@@ -260,515 +159,53 @@
 	</head>
 	<body class="order-body">
 		<div class="container class-detail-container">
-			<div class="col-12 text-center" style="padding-bottom: 5%;">
-				<div id="carouselExampleFade" class="carousel slide carousel-fade" data-ride="carousel">
- 					<div class="carousel-inner text-center">
-    					<%
-    						for(int i = 0; i < (bannerImgCount)+1; i++) {
-    							if(cl.getCLASS_BANNER().equals("#")) {	
-    					%>
-    								<div class="carousel-item">
-      									<img src="#" class="d-block w-100" style="display: none;">
-    								</div>
-    					<%
-    							} 
-    							else {
-    								if(i == 0) {
-						%>    				
-										<div class="carousel-item active" style="width: 1300px; height: 530px;">
-	    	      							<img src="/communityupload/image/<%=cl.getCLASS_BANNER().split(",")[i]%>" class="d-block w-100" style="max-width: 100%; height: 100%;">
-	    	    						</div>
-    	    			<%
-    	    							continue;
-    								}
-    	    			%>				
-    								<div class="carousel-item" style="width: 1300px; height: 530px;">
-    	      							<img src="/communityupload/image/<%=cl.getCLASS_BANNER().split(",")[i]%>" class="d-block w-100" style="max-width: 100%; height: 100%;">
-    	    						</div>    								
-    	    			<%
-    							}
-    						}
-    	    			%>
- 					</div>
-  					<a class="carousel-control-prev" href="#carouselExampleFade" role="button" data-slide="prev">
-    					<span class="carousel-control-prev-icon" aria-hidden="true"></span>
-    					<span class="sr-only">Previous</span>
-  					</a>
-  					<a class="carousel-control-next" href="#carouselExampleFade" role="button" data-slide="next">
-    					<span class="carousel-control-next-icon" aria-hidden="true"></span>
-    					<span class="sr-only">Next</span>
-  					</a>
-				</div>
+			<div class="text-center">
+				<font size="24;">공방 티켓 구매완료</font> <br>
+				<p>구매가 완료되었습니다. 클래스명과 시간, 장소를 확인해주세요.</p>
 			</div>
-			<div class="row">
-				<div class="col-8">
-					<!-- 제목 -->
-					<div style="line-height: 0.5em;">
-						<dl>
-							<dt><h3><%=cl.getCLASS_NAME()%></h3><br></dt>
-							<dl><h5><%=cl.getCLASS_ABRIEF()%></h5></dl>
-						</dl>
+			<div>
+				<table class="table">
+					<colgroup>
+						<col style="width:25%">
+						<col style="width:75%">
+					</colgroup>
+				    <tr>
+				      <th class="text-center">공방명</th>
+				      <td><%=cl.getMEMBER_NICK()%></td>
+				    </tr>
+				    <tr>
+				      <th scope="col">사용기간</th>
+				      <td><%=cl.getCLASS_DATE_CONFIGURATION_1()%> ~ <%=cl.getCLASS_DATE_CONFIGURATION_2()%></td>
+				    </tr>
+				    <tr>
+				      <th scope="col">공방 장소</th>
+				      <td><%=cl.getCLASS_ADDRESS()%>&nbsp;&nbsp;<%=cl.getCLASS_DETAIL_ADDRESS()%></td>
+				    </tr>
+				    <tr>
+				      <th scope="col">공방 지역</th>
+				      <td><%=cl.getCLASS_AREA()%></td>
+				    </tr>
+				    <tr>
+				      <th scope="col">구매일자</th>
+				      <td><%=sdf.format(nowTime)%></td>
+				    </tr>
+				    <tr>
+				      <th scope="col">결제금액</th>
+				      <td><%=amount2%></td>
+				    </tr>
+				</table>
+				<div class="col-12 row" style="padding-bottom:5%;">
+					<div class="col-6">
+						<a href="./index.ma" class="btn btn-outline-dark btn-lg w-100" role="button" aria-pressed="true">메인으로</a>
 					</div>
-					<div class="row sticky">
-						<div class="col-12">
-							<ul class="nav nav-tabs nav-fill">
-								<li class="nav-item">
-									<a class="nav-link" href="#t1"><h5>공방소개</h5></a>
-								</li>
-								<li class="nav-item">
-									<a class="nav-link" href="#t2"><h5>위치정보</h5></a>
-								</li>
-								<li class="nav-item">
-									<a class="nav-link" href="#t3"><h5>Review</h5></a>
-								</li>
-								<li class="nav-item">
-									<a class="nav-link" href="#t4"><h5>Q&A</h5></a>
-								</li>
-							</ul>
-						</div>
-					</div>
-					<div class="row">
-						<div class="col-12">
-						<!-- 주문 주의사항 -->
-							<div class="mainText" id="t1">
-								<br/><br/> <!-- 상세 설명 -->
-								<dt id="subject">
-									<strong>공방을 소개해요</strong>
-								</dt> <br/>
-								<dl>
-									<dd><%=cl.getCLASS_INTRODUCTION_1()%></dd>
-								</dl>
-								<dt id="subject">
-									<strong>이렇게 진행해요</strong>
-								</dt> <br/>
-								<dl>
-									<dd><%=cl.getCLASS_INTRODUCTION_2()%></dd>
-								</dl>
-								<dt id="subject">
-									<strong>함께하고 싶어요</strong>
-								</dt> <br/>
-								<dl>
-									<dd><%=cl.getCLASS_INTRODUCTION_3()%></dd>
-								</dl>
-								<dt id="subject">
-									<strong>환불규정</strong>
-								</dt> <br/>
-								<dl>
-									<dd>
-										<div style="width:690px; font-size:12pt;line-height:16pt;">
-				                			<p>NAGAGU의 결제 취소 및 환불 규정은 관련 법령인 &lt;학원의 설립ㆍ운영 및 과외교습에 관한 법률 시행령 [별표4] [시행 2017.3.21.]&gt;의 &lt;교습비 등 반환기준(제18조 제3항 관련)&gt;을 준수합니다.</p>
-				                			
-				                			<p><strong>1. 클래스 수업 기간이 1개월 이내인 경우 환불 기준</strong>&nbsp;</p>
-				                			<p>① 클래스 시작 전 - 이미 납부한 교습비 등의 전액&nbsp;</p>
-				                			<p>② 총 클래스 수업시간의 1/3 경과 전 - 이미 납부한 교습비 등의 2/3에 해당하는 금액&nbsp;</p>
-				                			<p>③ 총 클래스 수업시간의 1/2 경과 전 - 이미 납부한 교습비 등의 1/2에 해당하는 금액&nbsp;</p>
-				                			<p>④ 총 클래스 수업시간의 1/2 경과 후 - 반환하지 않음&nbsp;</p>
-				                			
-				                			<p><strong>2. 클래스 수업 기간이 1개월을 초과하는 경우</strong>&nbsp;</p>
-				                			<p>① 클래스 수업 시작 전 - 이미 납부한 교습비 등의 전액&nbsp;</p>
-				                			<p>② 클래스 수업 시작 후 - 환불사유가 발생한 해당 월의 환불 대상 교습비 등 (클래스 수업 기간이</p>
-				                			<p>1개월 이내인 경우의 기준에 따라 산출한 금액을 말한다)과 나머지 월의 교습비 등의 전액을 합산한 금액&nbsp;</p>
-				                			
-				                			<p>단 클래스의 특성상 사전 준비(수업재료 준비, 장소 및 식사 사전예약 등)과정에서 불가피하게 손해비용 및 위약금 발생이 예상되는 경우, 마스터는 법령에서 제시한 내용 외에 별도의 환불규정을 수강생에게 고지할 수 있고, 수강생은 마스터가 고지한 환불수수료를 제외한 금액을 환불받을 수 있습니다.</p>
-				                		</div>
-									</dd>
-								</dl>
-								<dt id="subject">
-									<strong>기타사항</strong>
-								</dt> <br/>
-								<dl>
-									<dd><%=cl.getCLASS_ETC()%></dd>
-								</dl>
-								<dt id="subject" >
-									<strong>공방 장소</strong>
-								</dt> <br/>
-								<dl>
-									<dd>
-										<p class="text-left" id="t2"><%=cl.getCLASS_ADDRESS()%>&nbsp;&nbsp;<%=cl.getCLASS_DETAIL_ADDRESS()%></p>
-										<div id="map" style="width:675px;height:500px;"></div>
-
-									</dd>
-								</dl>
-							</div>
-						</div>
-					</div>
-					<!-- 댓글 테이블 시작 -->
-					
-					<!-- 댓글 테이블 끝 -->
-					<!-- Q&A 테이블 시작 -->
-					
-					<!-- Q&A 테이블 끝 -->
-				</div>
-				<div class="col-4">
-					<div class="sticky2" style="border: 1px solid #EAEAEA; padding-top: 5%;">
-						<div class="row pt-4 pl-4">
-							<div class="col-3">
-								<img src="<%=cl.getMEMBER_PICTURE()%>" style="width: 95%;">
-							</div><hr>
-							<div class="col-9">
-								<h3><p><%=cl.getMEMBER_NICK()%></p></h3>
-								<p><font size="2"><%=cl.getCLASS_ABRIEF()%></font></p>
-							</div>
-						</div>
-						<div>
-							<table class="table table-borderless">
-								<colgroup>
-									<col style="width:30%">
-									<col style="width:70%">
-								</colgroup>
-							  <thead>
-							    <tr>
-							      <th scope="col">클래스 금액</th>
-							      <th scope="col"><fmt:formatNumber type="number" maxFractionDigits="3" value="<%=cl.getCLASS_AMOUNT()%>" />원 </th>
-							    </tr>
-							  </thead>
-							  <tbody>
-							    <tr>
-							      <th scope="row">카테고리</th>
-							      <td><%=cl.getCLASS_CATEGORY()%></td>
-							    </tr>
-							    <tr>
-							      <th scope="row">일시</th>
-							      <td><%=cl.getCLASS_DATE_CONFIGURATION_1()%> ~ <%=cl.getCLASS_DATE_CONFIGURATION_2()%></td>
-							    </tr>
-							    <tr>
-							      <th scope="row">지역</th>
-							      <td><%=cl.getCLASS_AREA()%></td>
-							    </tr>
-							  </tbody>
-							</table>
-						</div>
-						<div class="btnArea text-center">
-							<button type="button" class="btn btn-outline-dark btn-lg" data-toggle="modal" data-target="#Booking">예약 하기</button>
-							<a href="#" class="btn btn-outline-dark btn-lg" role="button" aria-pressed="true">
-								<i class="far fa-heart"></i>
-							</a>
-						</div>
-						<br>
+					<div class="col-6">
+						<a href="./order_vbank.my" class="btn btn-outline-warning btn-lg w-100" role="button" aria-pressed="true">구매현황으로</a>
 					</div>
 				</div>
-			</div>
-			<br>
-		</div>
+			</div>		
 		
-		<!-- Modal -->
-		<div class="modal fade bd-example-modal-lg" id="Booking" tabindex="-1" role="dialog" aria-labelledby="myExtraLargeModalLabel" aria-hidden="true">
-  			<div class="modal-dialog modal-lg" role="document">
-				<div class="modal-content">
-					<div class="modal-header mheader">
-						<h5 class="modal-title" id="myExtraLargeModalLabel"><%=cl.getCLASS_NAME()%></h5>
-						<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-							<span aria-hidden="true">&times;</span>
-						</button>
-					</div>
-					<div class="modal-body mbody">
-						<p><%=cl.getCLASS_ABRIEF()%></p>
-						<div class="row">
-							<div class="col-12" id="detail">
-								<div id="progress_time">사용 기간</div>
-								<div style="margin-top: 10px; margin-bottom: 10px; font-size: small;">
-									<p><%=cl.getCLASS_DATE_CONFIGURATION_1()%> ~ <%=cl.getCLASS_DATE_CONFIGURATION_2()%></p>
-									<p><font color="red">예약 후 공방 측과 예약일을 꼭 협의해주세요.</font></p>
-								</div>
-								<div id="progress_time">클래스 장소</div>
-								<div style="margin-top: 10px; font-size: small;"><%=cl.getCLASS_ADDRESS()%>&nbsp;&nbsp;<%=cl.getCLASS_DETAIL_ADDRESS()%></div>
-								<div id="progress_time">클래스 지역</div>
-								<div style="margin-top: 10px; font-size: small;"><%=cl.getCLASS_AREA()%></div>
-							</div>
-						</div>
-						<div class="row">
-							<div class="col-12">
-								<div class="row" id="progress_time" style="padding: 0 0 0 16px;">티켓 갯수</div>
-								<table class="table table-borderless table-condensed table-sm">
-									<tr>
-										<td scope="row"><span id="date_price">35,000원</span></td>
-										<td>
-											<div class="row d-flex justify-content-end">
-												<form>
-													<input type="button" id="minus" value="-" style="float: left;" onClick="javascript:this.form.amount.value--;"> 
-													<input type="text" name="amount" id="amount" value="1" style="float: left; width: 50px; text-align: right;">
-													<input type="button" id="plus" value="+" onClick="javascript:this.form.amount.value++;">
-												</form>
-											</div>
-										</td>
-									</tr>
-									<tr>
-										<th scope="row">&nbsp;</th>
-										<td>
-											<div class="row d-flex justify-content-end">
-												<span id="result" style="text-align: end; font-size: small;">35,000원&nbsp;&nbsp;</span>
-											</div>
-										</td>
-									</tr>
-								</table>
-							</div>
-						</div>
-	
-						<div class="row">
-							<div class="col-12">
-								<div style="font-size: large; font-weight: bolder; padding-bottom: 3%;">예약자 정보</div>
-								<div>
-									<table class="table table-borderless table-sm">
-										<tr>
-											<th scope="row">예약자</th>
-											<td><input type="text" placeholder="성함"></td>
-										</tr>
-										<tr>
-											<th scope="row">연락처</th>
-											<td><input type="text" placeholder="연락처"></td>
-										</tr>
-										<tr>
-											<th scope="row">이메일</th>
-											<td><input type="text" placeholder="이메일"></td>
-										</tr>
-									</table>
-								</div>
-							</div>
-						</div>
-						<div class="row">
-							<div class="col-12">
-								<div style="font-size: large; font-weight: bolder; padding-bottom: 3%;">판매자 정보</div>
-								<div>
-									<table class="table table-borderless table-sm">
-										<tr>
-											<th scope="row">상호</th>
-											<td><%=cl.getMEMBER_NICK() %></td>
-										</tr>
-										<tr>
-											<th scope="row">대표자 명</th>
-											<td>댕댕댕</td>
-										</tr>
-										<tr>
-											<th scope="row">사업자 번호</th>
-											<td>089-53-85692</td>
-										</tr>
-										<tr>
-											<th scope="row">연락처</th>
-											<td>010-5468-8466</td>
-										</tr>
-									</table>
-								</div>
-							</div>
-						</div>
-						<div>
-							<ul class="nav nav-pills mb-3 table table-bordered" id="pills-tab" role="tablist">
-								<li class="nav-item">
-									<a class="nav-link active" id="pills-card-tab"	data-toggle="pill" href="#pills-card" role="tab" aria-controls="pills-home" aria-selected="true"> 
-										<label>
-											<img width="64" src="https://bucketplace-v2-development.s3.amazonaws.com/pg/card.png" alt="Card">
-											<div class="text-center">
-												<font color="black">카드</font>
-											</div>
-										</label>
-									</a>
-								</li>
-								<li class="nav-item">
-									<a class="nav-link"	id="pills-vbank-tab" data-toggle="pill" href="#pills-vbank"	role="tab" aria-controls="pills-home" aria-selected="true">
-										<label> 
-											<img width="64"	src="https://bucketplace-v2-development.s3.amazonaws.com/pg/vbank.png" alt="Vbank">
-											<div class="text-center">
-												<font color="black">무통장입금</font>
-											</div>
-										</label>
-									</a>
-								</li>
-								<li class="nav-item">
-									<a class="nav-link"	id="pills-phone-tab" data-toggle="pill" href="#pills-phone"	role="tab" aria-controls="pills-home" aria-selected="true">
-										<label> 
-											<img width="64"	src="https://bucketplace-v2-development.s3.amazonaws.com/pg/phone.png" alt="Phone">
-											<div class="text-center">
-												<font color="black">핸드폰</font>
-											</div>
-										</label>
-									</a>
-								</li>
-								<li class="nav-item">
-									<a class="nav-link" id="pills-toss-tab" data-toggle="pill" href="#pills-toss" role="tab" aria-controls="pills-home" aria-selected="true">
-										<label> 
-											<img width="64"	src="https://bucketplace-v2-development.s3.amazonaws.com/pg/toss.png" alt="Toss">
-											<div class="text-center">
-												<font color="black">토스</font>
-											</div>
-										</label>
-									</a>
-								</li>
-								<li class="nav-item">
-									<a class="nav-link"	id="pills-naver-tab" data-toggle="pill" href="#pills-naver"	role="tab" aria-controls="pills-home" aria-selected="true">
-										<label> 
-											<img width="64"	src="https://bucketplace-v2-development.s3.amazonaws.com/pg/naver.png" alt="Naver">
-											<div class="text-center">
-												<font color="black">네이버페이</font>
-											</div>
-										</label>
-									</a>
-								</li>
-								<li class="nav-item">
-									<a class="nav-link"	id="pills-kakao-tab" data-toggle="pill" href="#pills-kakao"	role="tab" aria-controls="pills-home" aria-selected="true">
-										<label> 
-											<img width="64"	src="https://scontent-icn1-1.xx.fbcdn.net/v/t1.0-9/p960x960/52775098_2282365115374551_3623666965651914752_o.png?_nc_cat=109&_nc_ohc=l2DGRIBJakYAX-7EhT8&_nc_ht=scontent-icn1-1.xx&oh=a98e852e8cfa475f79014246688b9965&oe=5E97B88B" alt="Kakao">
-											<div class="text-center">
-												<font color="black">카카오페이</font>
-											</div>
-										</label>
-									</a>
-								</li>
-							</ul>
-							<div class="tab-content" id="pills-tabContent">
-								<div class="tab-pane fade active show" id="pills-card" role="tabpanel" aria-labelledby="pills-card-tab" style="padding-left: 3%;">
-									<dl>
-										<dt>
-											<input type="checkbox" class="custom-control-input"	id="cardControlInline"> 
-											<label class="custom-control-label" for="cardControlInline">
-												<font size="3">결제 진행 필수사항 동의</font>
-											</label>
-										</dt>
-										<dd>개인정보 제 3자 제공 및 결제대행 서비스 표준 이용약관</dd>
-									</dl>
-									
-									<div class="center" style="padding-bottom: 2rem;">
-										<button type="button" id="Payment_Card" class="btn btn-outline-dark mr-4">예약 신청하기1</button>
-										<button type="button" id="btn" class="btn btn-outline-dark">뒤로</button>
-									</div>
-								</div>
-								<div class="tab-pane fade" id="pills-vbank" role="tabpanel"	aria-labelledby="pills-vbank-tab" style="padding-left: 3%;">
-									<dl>
-										<dt>
-											<input type="checkbox" class="custom-control-input"	id="vbankControlInline"> 
-											<label class="custom-control-label" for="vbankControlInline">
-												<font size="3">결제 진행 필수사항 동의</font>
-											</label>
-										</dt>
-										<dd>개인정보 제 3자 제공 및 결제대행 서비스 표준 이용약관</dd>
-									</dl>
-									
-									<div class="center" style="padding-bottom: 2rem;">
-										<button type="button" id="btn" class="btn btn-outline-dark mr-4">예약 신청하기2</button>
-										<button type="button" id="btn" class="btn btn-outline-dark">뒤로</button>
-									</div>
-								</div>
-								<div class="tab-pane fade" id="pills-phone" role="tabpanel" aria-labelledby="pills-phone-tab" style="padding-left: 3%;">
-									<dl>
-										<dt>
-											<input type="checkbox" class="custom-control-input"	id="phoneControlInline"> 
-											<label class="custom-control-label" for="phoneControlInline">
-												<font size="3">결제 진행 필수사항 동의</font>
-											</label>
-										</dt>
-										<dd>개인정보 제 3자 제공 및 결제대행 서비스 표준 이용약관</dd>
-									</dl>
-									
-									<div class="center" style="padding-bottom: 2rem;">
-										<button type="button" id="btn" class="btn btn-outline-dark mr-4">예약 신청하기3</button>
-										<button type="button" id="btn" class="btn btn-outline-dark">뒤로</button>
-									</div>
-								</div>
-								<div class="tab-pane fade" id="pills-toss" role="tabpanel" aria-labelledby="pills-toss-tab">
-									<div style="background-color: #EAEAEA; padding: 1%;" class="radius mb-5">
-										<dl>
-											<dt>
-												<font size="3">토스 결제 혜택</font>
-											</dt>
-											<dd>- 수/목요일에 10만원 이상 결제 시 7천원 즉시 할인</dd>
-											<dd>- 1월 중 1인 1회 한정</dd>
-										</dl>
-									</div>
-									<div style="padding-left: 3%;">
-										<dl>
-											<dt>
-												<input type="checkbox" class="custom-control-input"	id="tossControlInline"> 
-												<label class="custom-control-label" for="tossControlInline">
-													<font size="3">결제 진행 필수사항 동의</font>
-												</label>
-											</dt>
-											<dd>개인정보 제 3자 제공 및 결제대행 서비스 표준 이용약관</dd>
-										</dl>
-										
-										<div class="center" style="padding-bottom: 2rem;">
-											<button type="button" id="btn" class="btn btn-outline-dark mr-4">예약 신청하기4</button>
-											<button type="button" id="btn" class="btn btn-outline-dark">뒤로</button>
-										</div>
-									</div>
-								</div>
-								<div class="tab-pane fade" id="pills-naver" role="tabpanel" aria-labelledby="pills-naver-tab" style="padding-left: 3%;">
-									<dl>
-										<dt>
-											<input type="checkbox" class="custom-control-input"	id="naverControlInline"> 
-											<label class="custom-control-label" for="naverControlInline">
-												<font size="3">결제 진행 필수사항 동의</font>
-											</label>
-										</dt>
-										<dd>개인정보 제 3자 제공 및 결제대행 서비스 표준 이용약관</dd>
-									</dl>
-									
-									<div class="center" style="padding-bottom: 2rem;">
-										<button type="button" id="btn" class="btn btn-outline-dark mr-4">예약 신청하기5</button>
-										<button type="button" id="btn" class="btn btn-outline-dark">뒤로</button>
-									</div>
-								</div>
-								<div class="tab-pane fade" id="pills-kakao" role="tabpanel" aria-labelledby="pills-kakao-tab" style="padding-left: 3%;">
-									<dl>
-										<dt>
-											<input type="checkbox" class="custom-control-input"	id="kakaoControlInline"> 
-											<label class="custom-control-label" for="kakaoControlInline">
-												<font size="3">결제 진행 필수사항 동의</font>
-											</label>
-										</dt>
-										<dd>개인정보 제 3자 제공 및 결제대행 서비스 표준 이용약관</dd>
-									</dl>
-									
-									<div class="center" style="padding-bottom: 2rem;">
-										<button type="button" id="btn" class="btn btn-outline-dark mr-4">예약 신청하기6</button>
-										<button type="button" id="btn" class="btn btn-outline-dark">뒤로</button>
-									</div>
-								</div>
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
 		</div>
-		
-		<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=7db210d40be6789b9de8f86dba8b0a28&libraries=services"></script>
-		<script>
-		var mapContainer = document.getElementById('map'), // 지도를 표시할 div 
-	    mapOption = {
-	        center: new kakao.maps.LatLng(33.450701, 126.570667), // 지도의 중심좌표
-	        level: 3 // 지도의 확대 레벨
-	    };  
-
-		// 지도를 생성합니다    
-		var map = new kakao.maps.Map(mapContainer, mapOption); 
-	
-		// 주소-좌표 변환 객체를 생성합니다
-		var geocoder = new kakao.maps.services.Geocoder();
-	
-		// 주소로 좌표를 검색합니다
-		geocoder.addressSearch("<%=cl.getCLASS_ADDRESS()%>", function(result, status) {
-	
-		    // 정상적으로 검색이 완료됐으면 
-		     if (status === kakao.maps.services.Status.OK) {
-	
-		        var coords = new kakao.maps.LatLng(result[0].y, result[0].x);
-	
-		        // 결과값으로 받은 위치를 마커로 표시합니다
-		        var marker = new kakao.maps.Marker({
-		            map: map,
-		            position: coords
-		        });
-	
-		        // 인포윈도우로 장소에 대한 설명을 표시합니다
-		        var infowindow = new kakao.maps.InfoWindow({
-		            content: '<div style="width:150px;text-align:center;padding:6px 0;"><%=cl.getCLASS_ADDRESS()%>'
-		        });
-		        infowindow.open(map, marker);
-	
-		        // 지도의 중심을 결과값으로 받은 위치로 이동시킵니다
-		        map.setCenter(coords);
-		    } 
-		});
-		</script>
-		<script src="https://use.fontawesome.com/releases/v5.2.0/js/all.js"></script>	
-		<script src="https://kit.fontawesome.com/b74b42490f.js" crossorigin="anonymous"></script>
+		<script src="https://code.jquery.com/jquery-3.4.1.js" integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU=" crossorigin="anonymous"></script>
 		<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
 		<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
 	</body>

@@ -341,7 +341,7 @@
 		<script src="https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 		
 		<script>
-			/* 달력 부분 */
+			/* 달력 부분 ========== 현재 적용되지 않음 */
 			$(document).ready(function() {
 		        $('#datetimepicker1').datetimepicker({ format: 'L'});
 		        $('#datetimepicker2').datetimepicker({
@@ -501,7 +501,7 @@
 				  }
 			});
 			
-			/* File 부분(미리보기) */
+			/* File 부분(미리보기) ====================== 현재 적용되지 않음 */
 			$(document).ready(function (e){
 			    $("input[type='file']").change(function(e){
 			
