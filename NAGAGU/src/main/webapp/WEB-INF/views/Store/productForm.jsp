@@ -19,7 +19,7 @@
 	}
 	//여기까지는 확인해봐야함
 	*/	
-
+	//공방 회원의 product 리스트 가져와서 select에 뿌려주기!!!!!
 %>       
 <!DOCTYPE html>
 <html>
@@ -42,7 +42,7 @@
 				font-size: 14px;
 			}
 			
-			.addoption {
+			.addoption_section {
 				display:none;
 			}
 		</style>
@@ -113,11 +113,11 @@
 					</tr>
 					<tr>
 						<th>사이즈
-                    		<input class="btn btn-outline-dark btn-sm ml-3" type="reset" value="추가" onclick="addSizeInput();">
-                    		<input class="btn btn-outline-dark btn-sm ml-3" type="reset" value="삭제" onclick="deleteSizeInput();">
+                    		<input class="btn btn-outline-dark btn-sm ml-3" type="button" value="추가" onclick="addSize();">
+                    		<input class="btn btn-outline-dark btn-sm ml-3" type="button" value="삭제" onclick="deleteSize();">
 						</th>
 						<td>
-						 	<div class="row pb-2" id="sizeparah">
+						 	<div class="row pb-2" id="sizeappend">
 						 		<div class="input_box" style="margin-right: 10px;" >
 						 			<input class="form-control" type="text" name="PRODUCT_SIZE" placeholder="예시) 1000*50*70" value="" style="text-align: right;">		
 						 		</div>
@@ -129,11 +129,11 @@
 					</tr>
 	                <tr>
 	                	<th>색상
-	                		<input class="btn btn-outline-dark btn-sm ml-3" type="reset" value="추가" onclick="addColorInput();">
-                    		<input class="btn btn-outline-dark btn-sm ml-3" type="reset" value="삭제" onclick="deleteColorInput();">
+	                		<input class="btn btn-outline-dark btn-sm ml-3" type="button" value="추가" onclick="addColor();">
+                    		<input class="btn btn-outline-dark btn-sm ml-3" type="button" value="삭제" onclick="deleteColor();">
 	                	</th>
 						<td>
-							<div class="row pb-2" id="colorparah" >
+							<div class="row pb-2" id="colorappend" >
 						 		<div class="input_box" style="margin-right: 10px;">
 						 			<input class="form-control" type="text" name="PRODUCT_COLOR" value="" style="text-align: right;">		
 						 		</div>
@@ -155,17 +155,16 @@
 							</div>
 						</td>
 					</tr>
-					<tr class="addoption">
+					<tr class="addoption_section">
 						<th>추가구매
-							<input class="btn btn-outline-dark btn-sm ml-3" type="reset" value="추가" onclick="addOptionInput();">
-                    		<input class="btn btn-outline-dark btn-sm ml-3" type="reset" value="삭제" onclick="deleteOptionInput();">
+							<input class="btn btn-outline-dark btn-sm ml-3" type="button" value="추가" onclick="addOption();">
+                    		<input class="btn btn-outline-dark btn-sm ml-3" type="button" value="삭제" onclick="deleteOption();">
 						</th>
 						<td>
-							<div class="row mr-1"  id="optionparah" >
-								<div>
+							<div class="row mr-3"  id="optionappend" >
+								<div class="addoption mr-3">
 									<select name="PRODUCT_OPTION" class=" form-control" id="" style="margin-left: 2%">
-										<option value="선택" selected>선택</option>
-										<option value="원목테이블">원목테이블</option>
+										<option value="원목테이블" selected>원목테이블</option>
 										<option value="중구">중구</option>
 										<option value="용산구">용산구</option>
 										<option value="성동구">성동구</option>
@@ -334,9 +333,9 @@
 			/* 라디오 부분 */
 			function setDisplay(val){
 				if(val == '없음') {
-					$('.addoption').hide();
+					$('.addoption_section').hide();
 				} else {
-					$('.addoption').show();
+					$('.addoption_section').show();
 				}
 			}
 		
@@ -598,100 +597,51 @@
 			});
 			
 			
-			/*size, color 추가*/
-			//size
-			var arrSizeInput = new Array(0);
-			var arrSizeInputValue = new Array(0);
-			 
-			function addSizeInput() {
-				arrSizeInput.push(arrSizeInput.length);
-				arrSizeInputValue.push("");
-				sizedisplay();
+			
+			/*size, color, option 추가*/
+			function addSize() {
+				var txt = '<div class="input_box addsize1" style="margin-right: 10px;" >';
+				txt += '<input class="form-control" type="text" name="PRODUCT_SIZE" placeholder="예시) 1000*50*70" value="" style="text-align: right;">';
+				txt += '</div><div class="d-flex align-items-center addsize2" style="margin-right: 10px;">&nbsp;cm&nbsp;</div>';
+				
+				$('#sizeappend').append(txt);
+				
 			}
-			function sizedisplay() {
-				document.getElementById('sizeparah').innerHTML="";
-				for (intI=0;intI<arrSizeInput.length;intI++) {
-					document.getElementById('sizeparah').innerHTML+=createSizeInput();
-				}
+			function deleteSize() {
+				$('.addsize1:last').attr( 'id', 'lastaddsize1' );
+				$('.addsize2:last').attr( 'id', 'lastaddsize2' );
+				$('#lastaddsize1').remove();
+				$('#lastaddsize2').remove();            
 			}
 			
-			function createSizeInput() {
-				var txt = '';
-				txt += '<div class="input_box" style="margin-right: 10px;">';
-				txt += '<input class="form-control" type="text" name="PRODUCT_SIZE" placeholder="예시) 1000*50*70" value="" style="text-align: right;"></div>';
-				txt += '<div class="d-flex align-items-center" style="text-align: right;">&nbsp;cm&nbsp;&nbsp;&nbsp;</div>';
-				return txt;
-			}	
-			function deleteSizeInput() {
-				if (arrSizeInput.length > 0) {
-					arrSizeInput.pop();
-					arrSizeInputValue.pop();
-				}
-				sizedisplay(); 
-			}			
-			
-			//color
-			var arrColorInput = new Array(0);
-			var arrColorInputValue = new Array(0);
-			 
-			function addColorInput() {
-				arrColorInput.push(arrColorInput.length);
-				arrColorInputValue.push("");
-				colordisplay();
-			}
-			function colordisplay() {
-				document.getElementById('colorparah').innerHTML="";
-				for (intI=0;intI<arrColorInput.length;intI++) {
-					document.getElementById('colorparah').innerHTML+=createColorInput();
-				}
-			}
-			function createColorInput() {
-				var txt = '';
-				txt += '<div class="input_box" style="margin-right: 10px;">';
+			function addColor() {
+				var txt = '<div class="input_box addcolor" style="margin-right: 10px;">';
 				txt += '<input class="form-control" type="text" name="PRODUCT_COLOR" value="" style="text-align: right;"></div>';
-				txt += '<div class="d-flex align-items-center" style="text-align: right;"></div>';
-				return txt;
+				
+				$('#colorappend').append(txt);
 			}
-			function deleteColorInput() {
-				if (arrColorInput.length > 0) {
-					arrColorInput.pop();
-					arrColorInputValue.pop();
-				}
-				colordisplay(); 
-			}					
-
-			//option
-			var arrOptionInput = new Array(0);
-			var arrOptionInputValue = new Array(0);
-			 
-			function addOptionInput() {
-				arrOptionInput.push(arrOptionInput.length);
-				arrOptionInputValue.push("");
-				optiondisplay();
+			function deleteColor() {
+				$('.addcolor:last').attr( 'id', 'lastaddcolor' );
+				$('#lastaddcolor').remove();       
 			}
-			function optiondisplay() {
-				document.getElementById('optionparah').innerHTML="";
-				for (intI=0;intI<arrOptionInput.length;intI++) {
-					document.getElementById('optionparah').innerHTML+=createOptionInput();
-				}
-			}
-			function createOptionInput() {
-				var txt = '';
-				txt += '<div><select name="PRODUCT_OPTION" class=" form-control" id="" style="margin-left: 2%">';
-				txt += '<option value="선택" selected>선택</option>';
-				txt += '<option value="원목테이블">원목테이블</option></select></div>';
-				return txt;
-			}
-			function deleteOptionInput() {
-				if (arrOptionInput.length > 0) {
-					arrOptionInput.pop();
-					arrOptionInputValue.pop();
-				}
-				optiondisplay(); 
-			}		
 			
-		
-		
+			function addOption() {
+				var txt = '<div class="addoption mr-3"><select name="PRODUCT_OPTION" class=" form-control" style="margin-left: 2%">';
+				txt += '<option value="원목테이블" selected>원목테이블</option>';
+				txt += '<option value="중구">중구</option>';
+				txt += '<option value="용산구">용산구</option>';
+				txt += '<option value="성동구">성동구</option>';
+				txt += '</select></div>';
+				
+				$('#optionappend').append(txt);
+			}
+
+			function deleteOption() {
+				$('.addoption:last').attr( 'id', 'lastaddoption' );
+				$('#lastaddoption').remove();       
+			}
+						
+			
 			
 		</script>
 	</body>
