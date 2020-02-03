@@ -17,6 +17,5 @@ public interface MemberService {
 	public MemberVO selectMember(MemberVO memberVO);
 	ArrayList<MemberVO> getMemberList(HashMap<String, Object> map);
 	MemberVO getMemberDetail(MemberVO memberVO);
-	//MemberVO getMemberDetailbyEmail(MemberVO memberVO);
-	
+	public int checkMember(String mem_mail) throws Exception;
 }

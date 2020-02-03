@@ -221,4 +221,21 @@ public class MemberServiceImpl implements MemberService{
 //	}
 
 
+	@Override
+	public int checkMember(String mem_mail) throws Exception {
+		memberMapper mapper = sqlSession.getMapper(memberMapper.class);
+		
+		if (mapper.countMember(mem_mail) == 1) {	//일반회원
+			return 1;
+		}
+		
+		else {
+			if (mapper.countWorkshop(mem_mail) == 1) {	//공방회원
+				return 2;
+			}
+			
+			else
+				return 0;	//해당사항 없음
+		}
+	}
 }

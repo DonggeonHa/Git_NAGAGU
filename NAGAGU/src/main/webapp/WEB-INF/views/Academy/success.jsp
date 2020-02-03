@@ -174,23 +174,23 @@
 				      <td><%=cl.getMEMBER_NICK()%></td>
 				    </tr>
 				    <tr>
-				      <th scope="col">사용기간</th>
+				      <th class="text-center"">사용기간</th>
 				      <td><%=cl.getCLASS_DATE_CONFIGURATION_1()%> ~ <%=cl.getCLASS_DATE_CONFIGURATION_2()%></td>
 				    </tr>
 				    <tr>
-				      <th scope="col">공방 장소</th>
+				      <th class="text-center">공방 장소</th>
 				      <td><%=cl.getCLASS_ADDRESS()%>&nbsp;&nbsp;<%=cl.getCLASS_DETAIL_ADDRESS()%></td>
 				    </tr>
 				    <tr>
-				      <th scope="col">공방 지역</th>
+				      <th class="text-center">공방 지역</th>
 				      <td><%=cl.getCLASS_AREA()%></td>
 				    </tr>
 				    <tr>
-				      <th scope="col">구매일자</th>
+				      <th class="text-center">구매일자</th>
 				      <td><%=sdf.format(nowTime)%></td>
 				    </tr>
 				    <tr>
-				      <th scope="col">결제금액</th>
+				      <th class="text-center">결제금액</th>
 				      <td><%=amount2%></td>
 				    </tr>
 				</table>

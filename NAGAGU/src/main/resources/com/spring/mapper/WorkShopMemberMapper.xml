@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.spring.mapper.WorkShopMemberMapper">
+	<resultMap type="com.spring.workshop.WorkShopMemberVO" id="workshopMemberResultMap">
+		<result property="WORKSHOP_NUM" column="WORKSHOP_NUM" />
+		<result property="WORKSHOP_EMAIL" column="WORKSHOP_EMAIL" />
+		<result property="WORKSHOP_PASS" column="WORKSHOP_PASS" />
+		<result property="WORKSHOP_NAME" column="WORKSHOP_NAME" />
+		<result property="WORKSHOP_CEO_NAME" column="WORKSHOP_CEO_NAME" />
+		<result property="WORKSHOP_PHONE" column="WORKSHOP_PHONE" />
+		<result property="WORKSHOP_ZIP" column="WORKSHOP_ZIP" />
+		<result property="WORKSHOP_ADDRESS1" column="WORKSHOP_ADDRESS1" />
+		<result property="WORKSHOP_ADDRESS2" column="WORKSHOP_ADDRESS2" />
+		<result property="WORKSHOP_LICENSE" column="WORKSHOP_LICENSE" />
+		<result property="WORKSHOP_DATE" column="WORKSHOP_DATE" />		
+		<result property="WORKSHOP_INTRO" column="WORKSHOP_INTRO" />		
+		<result property="WORKSHOP_OWNER" column="WORKSHOP_OWNER" />		
+		<result property="WORKSHOP_BANK" column="WORKSHOP_BANK" />
+		<result property="WORKSHOP_ACNUM" column="WORKSHOP_ACNUM" />
+		<result property="WORKSHOP_STATUS" column="WORKSHOP_STATUS" />
+	</resultMap>
+	
+	<resultMap type="java.util.HashMap" id="hashmapVO">
+		<result property="WORKSHOP_NUM" column="WORKSHOP_NUM" />
+		<result property="WORKSHOP_EMAIL" column="WORKSHOP_EMAIL" />
+		<result property="WORKSHOP_PASS" column="WORKSHOP_PASS" />
+		<result property="WORKSHOP_NAME" column="WORKSHOP_NAME" />
+		<result property="WORKSHOP_CEO_NAME" column="WORKSHOP_CEO_NAME" />
+		<result property="WORKSHOP_PHONE" column="WORKSHOP_PHONE" />
+		<result property="WORKSHOP_ZIP" column="WORKSHOP_ZIP" />
+		<result property="WORKSHOP_ADDRESS1" column="WORKSHOP_ADDRESS1" />
+		<result property="WORKSHOP_ADDRESS2" column="WORKSHOP_ADDRESS2" />
+		<result property="WORKSHOP_LICENSE" column="WORKSHOP_LICENSE" />
+		<result property="WORKSHOP_DATE" column="WORKSHOP_DATE" />		
+		<result property="WORKSHOP_INTRO" column="WORKSHOP_INTRO" />		
+		<result property="WORKSHOP_OWNER" column="WORKSHOP_OWNER" />		
+		<result property="WORKSHOP_BANK" column="WORKSHOP_BANK" />
+		<result property="WORKSHOP_ACNUM" column="WORKSHOP_ACNUM" />
+		<result property="WORKSHOP_STATUS" column="WORKSHOP_STATUS" />
+	</resultMap>
+	
+	<insert id="insert_workshop_member" parameterType="com.spring.member.MemberVO">
+		<selectKey resultType="int" keyProperty="WORKSHOP_NUM" order="BEFORE">
+           SELECT nagagu_workshop_member_seq.nextval FROM dual        
+       </selectKey>
+	      insert into nagagu_workshop_member(WORKSHOP_NUM, WORKSHOP_EMAIL, WORKSHOP_PASS, WORKSHOP_NAME,
+	       WORKSHOP_CEO_NAME, WORKSHOP_PHONE, WORKSHOP_LICENSE, WORKSHOP_INTRO, WORKSHOP_ZIP, 
+	       WORKSHOP_ADDRESS1, WORKSHOP_ADDRESS2, WORKSHOP_DATE) 
+	      values (#{WORKSHOP_NUM}, #{WORKSHOP_EMAIL}, #{WORKSHOP_PASS}, #{WORKSHOP_NAME}, 
+	      #{WORKSHOP_CEO_NAME}, #{WORKSHOP_PHONE}, #{WORKSHOP_LICENSE}, #{WORKSHOP_INTRO}, #{WORKSHOP_ZIP},  
+	      #{WORKSHOP_ADDRESS1}, #{WORKSHOP_ADDRESS2}, sysdate)
+	</insert>
+	
+	<select id="workshop_user_chk" resultMap="workshopMemberResultMap">
+		select * from nagagu_workshop_member where WORKSHOP_EMAIL = #{WORKSHOP_EMAIL} and WORKSHOP_PASS = #{WORKSHOP_PASS}
+	</select>
+	
+	<select id="workshop_status_chk" resultType="int">
+		select WORKSHOP_STATUS from nagagu_workshop_member where WORKSHOP_EMAIL = #{WORKSHOP_EMAIL}
+	</select>
+	
+	<select id="workshop_name_chk" resultMap="workshopMemberResultMap">
+		select * from nagagu_workshop_member where WORKSHOP_NAME = #{WORKSHOP_NAME}
+	</select>
+	
+	<select id="workshop_email_chk" resultMap="workshopMemberResultMap">
+		select * from nagagu_workshop_member where WORKSHOP_EMAIL = #{WORKSHOP_EMAIL}
+	</select>
+	
+	<select id="select_workshop_member" parameterType="com.spring.workshop.WorkShopMemberVO" resultMap="workshopMemberResultMap">
+		select * from nagagu_workshop_member where WORKSHOP_EMAIL = #{WORKSHOP_EMAIL}
+	</select>
+</mapper>
