@@ -78,7 +78,7 @@ public class MemberAjaxController {
 				return null;
 			}
 			System.out.println("selectMember 가져오기 성공");
-			
+
 			int res = memberService.user_chk(memberVO);
 			System.out.println("res는" + res);
 			
