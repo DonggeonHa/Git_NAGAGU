@@ -11,7 +11,11 @@
 		<result property="MEMBER_DATE" column="MEMBER_DATE" />
 		<result property="MEMBER_PICTURE" column="MEMBER_PICTURE" />
 		<result property="MEMBER_LIKE_PRODUCT" column="MEMBER_LIKE_PRODUCT" />
-		<result property="MEMBER_STATUS" column="MEMBER_STATUS" />
+		<result property="MEMBER_STATUS" column="MEMBER_STATUS" />		
+		<result property="ADDRESS_ZIP" column="ADDRESS_ZIP" />		
+		<result property="ADDRESS_ADDRESS1" column="ADDRESS_ADDRESS1" />		
+		<result property="ADDRESS_ADDRESS2" column="ADDRESS_ADDRESS2" />		
+		
 	</resultMap>
 	
 	<resultMap type="java.util.HashMap" id="hashmapVO">
@@ -25,6 +29,9 @@
 		<result property="MEMBER_PICTURE" column="MEMBER_PICTURE" />	
 		<result property="MEMBER_LIKE_PRODUCT" column="MEMBER_LIKE_PRODUCT" />		
 		<result property="MEMBER_STATUS" column="MEMBER_STATUS" />
+		<result property="ADDRESS_ZIP" column="ADDRESS_ZIP" />		
+		<result property="ADDRESS_ADDRESS1" column="ADDRESS_ADDRESS1" />		
+		<result property="ADDRESS_ADDRESS2" column="ADDRESS_ADDRESS2" />
 	</resultMap>
 	
 	<resultMap type="com.spring.chat.WorkshopVO" id="workMap">

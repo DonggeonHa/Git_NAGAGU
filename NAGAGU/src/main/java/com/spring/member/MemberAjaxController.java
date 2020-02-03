@@ -43,6 +43,7 @@ public class MemberAjaxController {
 		String member_nick =  memberVO.getMEMBER_NICK();
 		String nick_session = (String)session.getAttribute("MEMBER_NICK");
 		System.out.println("컨트롤러 nickname=" + member_nick);
+		
 		try {
 			
 			if(member_nick.equals(nick_session)) {
@@ -78,7 +79,7 @@ public class MemberAjaxController {
 			}
 			System.out.println("selectMember 가져오기 성공");
 			
-			int res = memberService.user_chk(member);
+			int res = memberService.user_chk(memberVO);
 			System.out.println("res는" + res);
 			
 			if (res == 1) {	//로그인(아이디,비번 맞음)-이메일 인증 완료
@@ -87,6 +88,7 @@ public class MemberAjaxController {
 				session.setAttribute("MEMBER_NICK", member.getMEMBER_NICK());
 				session.setAttribute("MEMBER_STATUS", member.getMEMBER_STATUS());
 				session.setAttribute("MEMBER_NAME", member.getMEMBER_NAME());
+//				session.setAttribute("MEMBER_PICTURE", member.getMEMBER_PICTURE());
 				retVal.put("res", "login_success");
 				
 			} else if(res == 0) { //아이디,비번은 맞지만 이메일 미인증일 때
