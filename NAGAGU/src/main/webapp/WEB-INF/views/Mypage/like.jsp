@@ -1,24 +1,15 @@
-<%@page import="com.spring.member.MemberVO"%>
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-<%
-/* MemberVO memberVO= (MemberVO)session.getAttribute("loginMemberDetail"); */
-%>
-
-
 
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<!-- Required meta tags -->
+	<!-- Required meta tags -->
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <!-- Bootstrap CSS -->
-<link rel="stylesheet"	href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"	integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh"	crossorigin="anonymous">
-<!-- fontawesome kit -->
-<script src="https://kit.fontawesome.com/97dbc99ea1.js"	crossorigin="anonymous"></script>
-<style>
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+<style type="text/css">
 @font-face {
 	font-family: 'KOMACON';
 	src:
@@ -26,191 +17,189 @@
 		format('woff');
 	font-weight: normal;
 	font-style: normal;
-}
-
+}			
 .order-body {
 	font-family: '만화진흥원체', 'KOMACON', KOMACON;
-	font-size: 15px;
+	
 }
-.container-mypage {
-	margin-top: 50px;
-	margin-bottom: 100px;
-	min-height: 750px;
-}
-
-img {
-	width: 100%;
-	height: auto;
-}
-
-a, .card a:link, .card a:visited {
-	color: white;
+.container-mypage{
+	margin-top: 50px ;
+	margin-bottom: 50px ;				 
+}			
+.container-mypage a,.container-mypage  a:link,.container-mypage  a:hover {
 	text-decoration: none;
+	color: white !important;
+} 
+
+.card-hover:hover {
+	transition: 1s;
+	transform: scale(1.2);
+	z-index: 1;
+	box-shadow: 10px 15px 7px 0px #333333;
+}
+
+.card {
+	background-color: #1b1b27 !important;
+	margin: 15px 15px 15px 15px;
+	color: white;
 }
 .my {
 	background-color: #ef900e !important;
 }
-
-.nav-item a {
-	color: black;
-}
-
-.tab-content .tab-pane.active {
-	display: flex;
-}
-
-li>.active {
-	background-color: #1b1b27 !important;
-	color: white !important;
-}
-
-.tab-pane .col-4 {
-	padding-bottom: 50px;
-}
 .card-wrap{
+	justify-content: center;
+	padding-left:50px; 
 }
-.card-hover{
-	background-color: black !important;
-}
-
-/* card size */
-@media ( max-width : 576px) {
-	.card-group {
-		width: 200px !important;
-		font-size: 0.8rem;
-	}
-	.card{ 
-		width: 50%
-	}
-	.nickNameTap{
-		display: none !important;  
+@media screen and (max-width: 600px) {
+	.card {
+		width: 2.5rem;
+		font-size: 0.1rem;
+		margin: 2px 2px 2px 2px;
 	}
 	.card-header, .card-body, .card-footer {
-		padding: 3px !important; 
+		padding: 1px !important; 
 	}
-	.card-group img{
-		width: 50%;
-		height: auto; 
-		border-radius:100%;		 
+	.card-wrap{
+		justify-content: start;
+		padding-left: 20px; 
 	} 
-	.main{
-		margin-top: 150px;
-		width: 100% !important;
-	}
-	.card-body{
-		font-size: 1rem !important;
-	}
 }
-@media ( min-width : 576px) {
-
-	.nickNameTap{
-		display: none !important;  
+@media screen and (min-width: 600px) {
+	.card {
+		width: 4rem;
+		font-size: 0.3rem;
+		margin: 2px 2px 2px 2px;
 	}
-	.card-group {
-		width: 300px !important;
-		font-size: 1rem; 
-	} 
 	.card-header, .card-body, .card-footer {
-		padding: 3px !important; 
-	}
-	.card-group img{
-		width: 50%;
-		height: auto; 
-		border-radius:100%;		 
-	} 
-	.main{
-		margin-top: 150px;
-		width: 100% !important;
-	}
-	.card-body{
-		font-size: 2rem !important;
+		padding: 4px !important; 
 	}
 }
-
-@media ( min-width : 768px) {
-
-	.card-group {
-		width: 300px !important;
-		font-size: 1rem;  
-	} 
-	.card-header, .card-body, .card-footer {
-		padding: 3px !important;
-	}
-	.card-group img{
-		width: 50%;
-		height: auto; 
-		border-radius:100%;		 
-	}
-	.card-body{
-		font-size: 2.5rem !important;
-	}
-}
-
-@media ( min-width : 992px) {
-	.card-group {
-		width: 360px !important;
-		font-size: 1.2rem;
+@media screen and (min-width: 992px) {
+	.card {
+		width: 6rem;
+		font-size: 0.6rem;
+		margin: 2px 2px 2px 2px;
 	}
 	.card-header, .card-body, .card-footer {
 		padding: 10px !important; 
 	}
-	.card-group img{
-		width: 60%;
-		height: auto; 
-		border-radius:100%;		 
-	}
-	.card-body{
-		font-size: 3rem !important;
-	}
 }
-
 @media ( min-width : 1200px) {
-	.card-group{
-		width: 400px !important;  
-		font-size: 1.5rem;
+	.card {
+		width: 8rem !important;  
+		font-size: 0.7rem;
 	}
-	.card-group img{
-		width: 70%;
-		height: auto; 
-		border-radius:100%;		 
+	.card-header, .card-body, .card-footer {
+		padding: 18px !important;  
 	}
-	.card-body{
-	font-size: 4rem !important;
-	}
+} 
+/* --------------------------------------------- */
+.tab-pane .col-4 {
+	padding-bottom: 50px;
 }
-/* card-size end */
+li>.active {
+	background-color: #1b1b27 !important;
+	color: white !important;
+}
+.tab-content .tab-pane.active {
+	display: flex;
+}
+.nav-item a {
+	color: black;
+}
+img {
+width: 100%;
+height: auto;
+}
+.picOutput{
+	padding-left: 0px !important;
+}
 </style>
 </head>
+	<body class="order-body">	 
+		<div class="container-mypage " role="main">
+			<div class="row card-wrap  text-center">
+				<div class="card card-hover">
+					<a href="mypage_like.my" class="href">
+						<div class="card-header">Like</div>
+						<div class="card-body">
+							<i class="fab fa-gratipay fa-4x"></i>
+						</div>
+					</a>
+				</div>
 
-<body class="order-body">
-		<div class="container container-mypage" role="main">
-	
-			<div class="row justify-content-center card-wrap">
-				<div class="card-group text-center d-inline-flex">
-					<div class="card my">
-						<a href="mypage.my" class="href">
-							<div class="card-header">MY</div>
-							<div class="card-body"><img src="${loginMemberDetail.MEMBER_PICTURE}"></div> 
-						</a>
-						<div class="card-footer bg-transparent ">Follow</div>
+				<div class="card card-hover">
+					<a href="mypage_pic.my" class="href">
+						<div class="card-header">COMMUNITY</div>
+						<div class="card-body">
+							<i class="fas fa-images fa-4x"></i>
+						</div>
+					</a>
+				</div>
+
+				<div class=" card card-hover">
+					<a href="mypage_edit.my" class="href">
+						<div class="card-header">EDIT</div>
+						<div class="card-body">
+							<i class="fas fa-user-edit fa-4x"></i>
+						</div>
+					</a>
+				</div>
+				<div class="card card-hover">
+					<a href="mypage_class.my" class="href">
+						<div class="card-header">CLASS</div>
+						<div class="card-body">
+							<i class="fas fa-school fa-4x"></i>
+						</div>
+					</a>
+				</div>
+
+				<div class="card my">
+					<div class="card-header">MY</div>
+					<div class="card-body">
+						<i class="far fa-user-circle fa-4x"></i>
 					</div>
-					<div class="card card-hover">
-						<a href="#" class="href">
-							<div class="card-header">Like</div>
-							<div class="card-body">
-								<i class="fab fa-gratipay"></i>
-							</div>
-							<div class="card-footer bg-transparent ">좋아요 글</div>
-						</a>
-					</div>
-					
+				</div>
+				<div class="card card-hover">
+					<a href="order_list.my" class="href">
+						<div class="card-header">ORDER</div>
+						<div class="card-body">
+							<i class="fas fa-truck-pickup fa-4x"></i>
+						</div>
+					</a>
+				</div>
+				<div class="card card-hover ">
+					<a href="mypage_reply.my" class="href">
+						<div class="card-header">REPLY</div>
+						<div class="card-body">
+							<i class="fab fa-replyd fa-4x"></i>
+						</div>
+					</a>
+				</div>
+				<div class="card card-hover ">
+					<a href="mypage_review_product.my" class="href">
+						<div class="card-header">상품 REVIEW</div>
+						<div class="card-body">
+							<i class="fas fa-keyboard fa-4x"></i>
+						</div>
+					</a>
+				</div>
+				<div class="card card-hover ">
+					<a href="mypage_review_class.my" class="href">
+						<div class="card-header">클래스 REVIEW</div>
+						<div class="card-body">
+							<i class="fas fa-keyboard fa-4x"></i>
+						</div>
+					</a>
 				</div>
 			</div>
 	
-	
+		</div>
+		
+		<div class="container">
 			<div class="row">
 				<ul class="nav nav-tabs" id="myTab" role="tablist">
-					<li class="nav-item"><a class="nav-link active" id="home-tab"
+					<li class="nav-item"><a class="nav-link active" id="picTab"
 						data-toggle="tab" href="#home" role="tab" aria-controls="home"
 						aria-selected="true">PIC</a></li>
 					<li class="nav-item"><a class="nav-link" id="profile-tab"
@@ -220,91 +209,68 @@ li>.active {
 						data-toggle="tab" href="#contact" role="tab"
 						aria-controls="contact" aria-selected="false">CLASS</a></li>
 				</ul>
-	
+			</div>
 				<div class="tab-content" id="myTabContent">
-					<div class="tab-pane fade show active row" id="home"
-						role="tabpanel" aria-labelledby="home-tab">
-						<div class="col-4">
-							<img
-								src="https://images.unsplash.com/photo-1552584010-ca8bbbd5bd18?ixlib=rb-1.2.1&q=80&fm=jpg&crop=entropy&cs=tinysrgb&w=400&fit=max&ixid=eyJhcHBfaWQiOjYxOTE2fQ"
-								alt="">
-						</div>
-						<div class="col-4">
-							<img
-								src="https://images.unsplash.com/photo-1552584010-ca8bbbd5bd18?ixlib=rb-1.2.1&q=80&fm=jpg&crop=entropy&cs=tinysrgb&w=400&fit=max&ixid=eyJhcHBfaWQiOjYxOTE2fQ"
-								alt="">
-						</div>
-						<div class="col-4">
-							<img
-								src="https://images.unsplash.com/photo-1552584010-ca8bbbd5bd18?ixlib=rb-1.2.1&q=80&fm=jpg&crop=entropy&cs=tinysrgb&w=400&fit=max&ixid=eyJhcHBfaWQiOjYxOTE2fQ"
-								alt="">
-						</div>
-						<div class="col-4">
-							<img
-								src="https://images.unsplash.com/photo-1552584010-ca8bbbd5bd18?ixlib=rb-1.2.1&q=80&fm=jpg&crop=entropy&cs=tinysrgb&w=400&fit=max&ixid=eyJhcHBfaWQiOjYxOTE2fQ"
-								alt="">
-						</div>
-						<div class="col-4">
-							<img
-								src="https://images.unsplash.com/photo-1552584010-ca8bbbd5bd18?ixlib=rb-1.2.1&q=80&fm=jpg&crop=entropy&cs=tinysrgb&w=400&fit=max&ixid=eyJhcHBfaWQiOjYxOTE2fQ"
-								alt="">
-						</div>
-	
-					</div>
-					<div class="tab-pane fade row" id="profile" role="tabpanel"
-						aria-labelledby="profile-tab">
-						<div class="col-4">
-							<img
-								src="https://images.unsplash.com/photo-1552584010-ca8bbbd5bd18?ixlib=rb-1.2.1&q=80&fm=jpg&crop=entropy&cs=tinysrgb&w=400&fit=max&ixid=eyJhcHBfaWQiOjYxOTE2fQ"
-								alt="">
-						</div>
-						<div class="col-4">
-							<img
-								src="https://images.unsplash.com/photo-1552584010-ca8bbbd5bd18?ixlib=rb-1.2.1&q=80&fm=jpg&crop=entropy&cs=tinysrgb&w=400&fit=max&ixid=eyJhcHBfaWQiOjYxOTE2fQ"
-								alt="">
-						</div>
-						<div class="col-4">
-							<img
-								src="https://images.unsplash.com/photo-1552584010-ca8bbbd5bd18?ixlib=rb-1.2.1&q=80&fm=jpg&crop=entropy&cs=tinysrgb&w=400&fit=max&ixid=eyJhcHBfaWQiOjYxOTE2fQ"
-								alt="">
-						</div>
-						
-					</div>
-					<div class="tab-pane fade row" id="contact" role="tabpanel"
-						aria-labelledby="contact-tab">
-						<div class="col-4">
-							<img
-								src="https://images.unsplash.com/photo-1552584010-ca8bbbd5bd18?ixlib=rb-1.2.1&q=80&fm=jpg&crop=entropy&cs=tinysrgb&w=400&fit=max&ixid=eyJhcHBfaWQiOjYxOTE2fQ"
-								alt="">
-						</div>
-						<div class="col-4">
-							<img
-								src="https://images.unsplash.com/photo-1552584010-ca8bbbd5bd18?ixlib=rb-1.2.1&q=80&fm=jpg&crop=entropy&cs=tinysrgb&w=400&fit=max&ixid=eyJhcHBfaWQiOjYxOTE2fQ"
-								alt="">
-						</div>
-						<div class="col-4">
-							<img
-								src="https://images.unsplash.com/photo-1552584010-ca8bbbd5bd18?ixlib=rb-1.2.1&q=80&fm=jpg&crop=entropy&cs=tinysrgb&w=400&fit=max&ixid=eyJhcHBfaWQiOjYxOTE2fQ"
-								alt="">
-						</div>
+					<div class="tab-pane fade show active row" id="picOutput"
+						role="tabpanel" aria-labelledby="picTab">
+						<!-- 사진 뿌려지는 장소 -->
+						<!-- <div class="col-4 picOutput">
+			    		<img src="/communityupload/image/''">
+			    		</div> -->
 					</div>
 				</div>
-			</div>
-	
 		</div>
 	
-		<!-- Optional JavaScript -->
-		<!-- jQuery first, then Popper.js, then Bootstrap JS -->
-		<script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
-			integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n"
-			crossorigin="anonymous"></script>
-		<script
-			src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
-			integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
-			crossorigin="anonymous"></script>
-		<script
-			src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
-			integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
-			crossorigin="anonymous"></script>
-	</body>
+	
+<!-- Optional JavaScript -->
+<!-- jQuery first, then Popper.js, then Bootstrap JS -->
+<script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n"	crossorigin="anonymous"></script>
+<script	src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"	integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"	crossorigin="anonymous"></script>
+<script	src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"	crossorigin="anonymous"></script>
+<!-- fontawesome kit -->
+<script src="https://kit.fontawesome.com/97dbc99ea1.js" crossorigin="anonymous"></script>
+<script>
+	$(document).ready(function(){
+		//사진 가져오기 함수 정의
+		function getPics(event){
+			var loginNum = '<%=session.getAttribute("MEMBER_NUM")%>'; 
+			alert('로그인넘버='+loginNum)
+			if(loginNum == 0){
+				return
+			}
+			$.ajax({
+				  url: "/NAGAGU/loginMemberLikePics.cm",
+	              type: "POST",
+	              data: { 'loginNum' : loginNum},
+	              contentType:
+	  				'application/x-www-form-urlencoded; charset=utf-8',
+	              success: function (retVal) {
+	        		if(retVal.res=="OK"){
+	        			var output="";
+			        	for(var j=0; j<retVal.PicsNum.length; j++){
+			        		var imgsrc = retVal.PicsNum[j].pics_FILE_1
+			        		console.log(imgsrc)
+				    		output += '<div class="col-4 picOutput">'
+				    		output += '<img src="/communityupload/image/'+imgsrc+'"></div>'
+			        	}
+			        	$('#picOutput').html(output)
+					}else{
+						alert("update fail");
+					}  
+				 },
+				error:function(){
+					alert("ajax통신 실패!!");
+				}
+			})
+		} 
+		//누르면 사진 가져오기
+		$(document).on('click','#picTab',function(){
+			getPics()
+		}) 
+		//처음 로드하고 사진 가져오기 호출
+		getPics();
+	})
+
+</script>
+</body>
 </html>

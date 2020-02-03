@@ -28,10 +28,6 @@ public class MypageController {
 	
 	@RequestMapping(value = "/mypage.my")
 	public String Mypage(MemberVO memberVO, HttpServletRequest request, HttpSession session) {
-		MemberVO memberDetail = memberService.getMemberDetail(memberVO);
-		//셋어트리뷰트 테스트용
-		session.setAttribute("loginMemberDetail", memberDetail);
-		//request.setAttribute("memberDetail", memberDetail);
 		return "Mypage/mypage";
 	}
 	
@@ -43,7 +39,6 @@ public class MypageController {
 	
 	@RequestMapping(value = "/mypage_like.my")
 	public String MypageLike() {
-		
 		return "Mypage/like";
 	}
 	
