@@ -22,6 +22,7 @@
 	
 	//로그인시 로그인한 회원정보의 별명, 프로필사진 이용 위한
 	MemberVO LoginMemberVO = null;
+	int MEMBER_NUM = 0;
 	String MEMBER_PICTURE = "#";
 	String MEMBER_NICK = "#";
 	if((MemberVO)request.getAttribute("LoginMemberVO") != null) {
@@ -1074,8 +1075,9 @@
 							</table>
 						</div>
 						<div class="btnArea text-center">
-							<a href="classreservation.ac" class="btn btn-outline-dark btn-lg" role="button" aria-pressed="true">장바구니</a>
-							<a href="#" class="btn btn-outline-dark btn-lg" role="button" aria-pressed="true">바로구매</a>
+							<a href="classreservation.ac" class="btn btn-outline-dark btn-md" role="button" aria-pressed="true">♥</a>
+							<a href="classreservation.ac" class="btn btn-outline-dark btn-md" role="button" aria-pressed="true">장바구니</a>
+							<a href="#" class="btn btn-outline-dark btn-md" role="button" aria-pressed="true">바로구매</a>
 						</div>
 						<br/>
 					</form>
@@ -1890,12 +1892,83 @@
 				}
 			});
 			
-
-			
-
-			
 			
 		}); //document.ready 끝
+		
+		
+		
+		//좋아요 기능
+		$(document).ready(function(){
+			//처음 로드되고 로그인 사용자가 누른글 하트는 검게 바꿔줌
+			function heart_check(){
+				var	loginNum = <%=MEMBER_NUM%>;
+				if(loginNum == 0){
+					return
+				}
+				$.ajax({
+					url: "/NAGAGU/loginMemberLikeProduct.pro",
+			              type: "POST",
+			              data: { 'loginNum' : loginNum},
+			              datatype: 'json',
+			              contentType:
+			  				'application/x-www-form-urlencoded; charset=utf-8',
+			              success: function (retVal) {
+					        if(retVal.res=="OK"){
+					        	for(var j=0; j<retVal.PicsNum.length; j++){
+					        		var num = retVal.PicsNum[j].pics_NUM
+			        				var target =$('#heart_output'+num) 
+			        				$(target).children().removeClass('far').addClass('fas')
+			        			}
+							}else{
+								alert("update fail");
+							} 
+						},
+				error:function(){
+					alert("ajax통신 실패!!");
+				}
+				})
+			}
+			heart_check()
+		  //좋아요 누르는 기능
+		  $(document).on("click","#far",function getLike(){
+		    var	loginNum = <%=MEMBER_NUM%>;
+			if(loginNum==0){
+				alert('로그인 하세요') 
+				return				
+			} 
+			var picsNum = $(this).parent().attr('id').substring(12)
+				$.ajax({
+				url: "/NAGAGU/insertPicsLike.cm",
+		              type: "POST",
+		              data: { 'memberNum' : loginNum , 'picsNum' : picsNum},
+		              contentType:
+		  				'application/x-www-form-urlencoded; charset=utf-8',
+		              success: function (retVal) {
+				        if(retVal.res=="OK"){
+				        	var output="";
+								output += '<span class="button likeBtn" id="heart_output'+picsNum+'">'
+							if(retVal.cnt=='1'){
+								output += '<i class="far fa-heart fa-2x" id="far"></i>'	
+							}else{
+								output += '<i class="fas fa-heart fa-2x" id="far"></i>'
+							}
+								output += '</span>'+retVal.picsLikeCount+''
+				        	$('#heart_output'+picsNum).parent().html(output);
+						}else{
+							alert("update fail");
+						} 
+					},
+			error:function(){
+				alert("ajax통신 실패!!");
+			}
+			})
+				event.preventDefault();
+		  });
+			
+		});		
+		
+		
+		
 	</script>
 	
 

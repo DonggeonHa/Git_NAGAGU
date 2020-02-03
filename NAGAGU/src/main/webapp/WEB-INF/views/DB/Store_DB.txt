@@ -1,6 +1,5 @@
 
-/*0121*/
-drop table product;
+/*상품테이블*/
 create table PRODUCT (
     PRODUCT_NUM                 NUMBER PRIMARY KEY,
     PRODUCT_WORKSHOP            NUMBER,
@@ -30,38 +29,15 @@ create table PRODUCT (
     PRODUCT_STORE_INFO          VARCHAR2(2000),
     PRODUCT_BANNER              VARCHAR2(2000),
     PRODUCT_IMAGE               VARCHAR2(2000)
-); 
+);
+
+/*상품시퀀스*/ 
 create sequence product_seq
     start with 1
     increment by 1
     maxvalue 10000;
 
-
-select * from product;
-
-insert into product values
-(1, 1, '메이킹퍼니처', sysdate, '원목 테이블', 'table', './resources/images/Store/tables/table01/table01.jpg,./resources/images/Store/tables/table01/table01_01.jpg,
-./resources/images/Store/tables/table01/table01_02.jpg,./resources/images/Store/tables/table01/table01_03.jpg,./resources/images/Store/tables/table01/table01_04.jpg,
-./resources/images/Store/tables/table01/table01_05.jpg,./resources/images/Store/tables/table01/table01_06.jpg', 7, 
-30000, 5.0, 'white,black,wood,cherry', 9, 100, 100, '없음', '10*10*10,10*20*34,40*40*30', 2500, 'cj대한통운',
-5000, 2500, '서울 서초구', '일주일');
-insert into product values
-(2, 2, '공방공방', sysdate, '의자2', 'chair', './resources/images/Store/chairs/chair01/chair01.jpg,"","",""', 1, 30000, 3.4, 'white,gray,black,wood,cherry', 13, 1, 751, '없음', '10*10*10,10*15*70', 2500, 'cj대한통운',
-5000, 2500, '서울 서초구', '일주일');
-insert into product values
-(3, 3, '가구가구', sysdate, '의자3', 'chair', './resources/images/Store/chairs/chair02/chair02.jpg,"","",""', 1, 30000, 4.1,'white,wood', 19, 1, 31, '없음', '10*10*10', 2500, 'cj대한통운',
-5000, 2500, '서울 서초구', '이주일');
-insert into product values
-(4, 4, '메이킹', sysdate, '의자4', 'chair', './resources/images/Store/chairs/chair03/chair03.jpg,"","",""', 1, 30000, 4.8,'white,natural wood', 11, 1, 771, '없음', '10*10*10', 2500, 'cj대한통운',
-5000, 2500, '서울 서초구', '삼주일');
-insert into product values
-(5, 5, '비트공방', sysdate, '우드 테이블', 'table', './resources/images/Store/tables/table02/table02.jpg,./resources/images/Store/tables/table02/table02_01.jpg,"",""', 2, 30000,  1.0,
-'white', 10, 1, 16, '없음', '10*10*10', 2500, 'cj대한통운',
-5000, 2500, '서울 서초구', '삼주일');
-commit;
-
-DROP TABLE PRODUCT_REVIEW;
-
+/*상품 리뷰*/ 
 create table PRODUCT_REVIEW(
     REVIEW_NUM          NUMBER PRIMARY KEY,
     REVIEW_MEMBER       NUMBER,
@@ -75,12 +51,14 @@ create table PRODUCT_REVIEW(
     REVIEW_RE			NUMBER
 );
 
+/*상품 리뷰 시퀀스*/ 
 create sequence store_review_seq
     start with 1
     increment by 1
     maxvalue 10000;
     
     
+/*상품 qna*/     
 create table PRODUCT_QNA(
     QNA_NUM          NUMBER PRIMARY KEY,
     QNA_MEMBER       NUMBER,
@@ -89,7 +67,9 @@ create table PRODUCT_QNA(
         REFERENCES PRODUCT(PRODUCT_NUM)ON DELETE CASCADE, 
     QNA_DATE         DATE,
     QNA_CONTENT      VARCHAR2(1000)
-);        
+);   
+
+/*상품qna 시퀀스*/      
 create sequence store_qna_seq
     start with 1
     increment by 1
@@ -97,7 +77,7 @@ create sequence store_qna_seq
     
     
     
-    
+/*공방*/    
 create table WORKSHOP(
     WORKSHOP_NUM        NUMBER,
     WORKSHOP_EMAIL      VARCHAR2(100),
@@ -113,10 +93,28 @@ create table WORKSHOP(
     WORKSHOP_OWNER      VARCHAR2(15),
     WORKSHOP_BANK       VARCHAR2(20),
     WORKSHOP_ACNUM      VARCHAR2(100)
-);           
+);   
+/*공방 시퀀스*/              
 create sequence workshop_seq
     start with 1
     increment by 1
     maxvalue 10000;
     
-    
+
+/* 좋아요 */
+CREATE TABLE PRODUCT_LIKE (
+	PRODUCT_LIKE_NUM NUMBER NOT NULL, /* 좋아요 ID */
+	PRODUCT_LIKE_MEMBER NUMBER, /* 회원 번호 */
+	PRODUCT_LIKE_PRODUCT NUMBER /* 상품번호 */
+);
+
+ALTER TABLE PRODUCT_LIKE
+	ADD
+		CONSTRAINT PK_MEMBER_LIKE
+		PRIMARY KEY (
+			PRODUCT_LIKE_NUM
+		);
+/*좋아요 시퀀스*/
+CREATE SEQUENCE SEQ_PRODUCT_LIKE
+    START WITH 1
+    INCREMENT BY 1;    

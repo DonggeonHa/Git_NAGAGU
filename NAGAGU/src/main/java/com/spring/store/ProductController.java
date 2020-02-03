@@ -718,12 +718,6 @@ public class ProductController {
 			System.out.println("PRODUCT_OPTION2="+PRODUCT_OPTION);
 		}
 		
-		
-		
-		
-		
-		System.out.println("파일 시작");
-		
 
 		List<MultipartFile> fileList = new ArrayList<MultipartFile>(); 	//배너 이미지는 4개
 		
