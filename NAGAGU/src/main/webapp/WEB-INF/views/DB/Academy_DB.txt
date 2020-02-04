@@ -21,7 +21,7 @@ CREATE TABLE REGISTRATION (
 	CLASS_ADDRESS varchar2(200),
     CLASS_DETAIL_ADDRESS varchar2(200)
 );
-
+2
 create sequence REGISTRATION_SEQ
   start with 1
   increment by 1;
