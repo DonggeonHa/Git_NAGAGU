@@ -20,21 +20,13 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.spring.member.MemberService;
-import com.spring.member.MemberVO;
-import com.spring.workshop.WorkShopMemberService;
 import com.spring.workshop.WorkShopMemberVO;
+
 @Controller
 public class AcademyController {
 	
 	@Autowired
 	private AcademyService AcademyService;
-	
-	@Autowired(required = false)
-	private WorkShopMemberService workShopMemberService;
-	
-	@Autowired(required = false)
-	private MemberService memberService;
 	
 	@RequestMapping(value = "/classlist.ac")
 	public ModelAndView ClassList(ClassVO classVO, ModelAndView mav, HttpServletRequest request) throws Exception  {
@@ -99,15 +91,16 @@ public class AcademyController {
 		ClassVO vo = AcademyService.getDetail(academy);
 		WorkShopMemberVO vo2 = AcademyService.selectWMember(vo);
 		
-		ModelAndView mav = new ModelAndView();
-		
 		if (vo == null) {
 			System.out.println("상세보기 실패");
+			return null;
+		} else if (vo2 == null) {
+			System.out.println("WorkShop 가져오기 실패");
 			return null;
 		}
 		System.out.println("상세보기 성공");
 		
-		
+		ModelAndView mav = new ModelAndView();
 		mav.addObject("ClassVO", vo);
 		mav.addObject("WorkShopVO", vo2);
 		mav.setViewName("Academy/detail");

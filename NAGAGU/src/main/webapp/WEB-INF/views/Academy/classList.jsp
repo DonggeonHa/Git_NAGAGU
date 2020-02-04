@@ -182,15 +182,15 @@
 										<div style="border: 1px solid #EAEAEA;">
 											<div class="default" style="margin: 0 5% 3% 5%;">
 												<p class="title text-center" style="font-size: 1.5rem;"><%=cl.getCLASS_NAME()%></p>
-												<div class="d-flex bd-highlight" style="font-size: 0.8rem; color: #888888;">
+												<div class="d-flex bd-highlight" style="font-size: 0.9rem; color: #888888;">
 													<span class="mr-auto bd-highlight"><%=cl.getWORKSHOP_NAME()%></span>
 													<span class="bd-highlight"><%=cl.getCLASS_AREA()%></span>
 												</div>
 											</div>
 											<hr style="margin-top: 0; margin-bottom: 0;">
 											<div class="" style="font-szie: 0.8rem; color: #888888; margin: 3% 5% 3% 5%;">
-												<span style="color: black; font-size: 0.8rem;">클래스 기간</span><br>
-												<span><%=cl.getCLASS_DATE_CONFIGURATION_1()%> ~ <%=cl.getCLASS_DATE_CONFIGURATION_2()%></span>
+												<span style="color: black; font-size: 0.9rem;">클래스 기간</span><br>
+												<span style="font-size: 0.8rem;"><%=cl.getCLASS_DATE_CONFIGURATION_1()%> ~ <%=cl.getCLASS_DATE_CONFIGURATION_2()%></span>
 											</div>
 											<hr style="margin-top: 0; margin-bottom: 0;">
 											<div style="background-color: #F8F8F8 !important;">

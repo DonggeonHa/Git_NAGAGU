@@ -16,7 +16,7 @@
 	String MEMBER_EMAIL = null;
 	String MEMBER_NAME = null;
 	String MEMBER_PHONE = null;
-	String WORKSHOP_NUM = (String)session.getAttribute("WORKSHOP_NUM");
+	String WORKSHOP_CEO_NAME = (String)session.getAttribute("WORKSHOP_CEO_NAME");
 	String MEMBER_NICK = (String)session.getAttribute("MEMBER_NICK");
 	
 	if (session.getAttribute("MEMBER_EMAIL") == null) {
@@ -360,7 +360,7 @@
 							</table>
 						</div>
 						<div class="btnArea text-center">
-						<% if(MEMBER_NICK == null && WORKSHOP_NUM == null) { %>
+						<% if(MEMBER_NICK == null && WORKSHOP_CEO_NAME == null) { %>
 							<button type="button" class="btn btn-outline-dark btn-lg" data-toggle="modal" data-target="#exampleModalCenter">예약 하기</button>
 							<a href="#" class="btn btn-outline-dark btn-lg" role="button" aria-pressed="true">
 								<i class="far fa-heart"></i>
@@ -474,15 +474,15 @@
 										</tr>
 										<tr>
 											<th scope="row">대표자 명</th>
-											<td>댕댕댕</td>
+											<td><%=ws.getWORKSHOP_CEO_NAME()%></td>
 										</tr>
 										<tr>
 											<th scope="row">사업자 번호</th>
-											<td>089-53-85692</td>
+											<td><%=ws.getWORKSHOP_LICENSE()%></td>
 										</tr>
 										<tr>
 											<th scope="row">연락처</th>
-											<td>010-5468-8466</td>
+											<td><%=ws.getWORKSHOP_PHONE()%></td>
 										</tr>
 									</table>
 								</div>

@@ -48,7 +48,7 @@
 			}
 			
 			.header_util>ul>li>a {
-				color: #ffffff;
+				color: #ffffff !important;
 				text-decoration: none;
 			}
 			

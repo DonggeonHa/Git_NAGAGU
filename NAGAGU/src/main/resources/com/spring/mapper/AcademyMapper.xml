@@ -35,7 +35,7 @@ create sequence REGISTRATION_SEQ
 <mapper namespace="com.spring.mapper.AcademyMapper">
 	<resultMap type="com.spring.academy.ClassVO" id="classResultMap">
 		<result property="CLASS_NUMBER" column="CLASS_NUMBER" />	
-		<result property="WORKSHOP_NUM" column="MEMBER_NUM" />
+		<result property="WORKSHOP_NUM" column="WORKSHOP_NUM" />
 		<result property="WORKSHOP_NAME" column="WORKSHOP_NAME" />
 		<result property="WORKSHOP_PICTURE" column="WORKSHOP_PICTURE" />
 		<result property="CLASS_DIVISION" column="CLASS_DIVISION" />	
