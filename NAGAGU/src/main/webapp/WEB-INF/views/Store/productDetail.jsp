@@ -27,6 +27,7 @@
 	String MEMBER_NICK = "#";
 	if((MemberVO)request.getAttribute("LoginMemberVO") != null) {
 		LoginMemberVO = (MemberVO)request.getAttribute("LoginMemberVO");
+		MEMBER_NUM = LoginMemberVO.getMEMBER_NUM();
 		MEMBER_PICTURE = LoginMemberVO.getMEMBER_PICTURE();
 		MEMBER_NICK = LoginMemberVO.getMEMBER_NICK();
 	}
@@ -390,6 +391,11 @@
 			.img:hover #test {
 			   opacity: 1;
 			}				
+			
+			.addlike {
+				background-color:#23272B !important;
+				color:white !important; 
+			}
 		</style>
 
 	</head>
@@ -1043,8 +1049,6 @@
 												<c:forTokens var="size" items="<%=PRODUCT_SIZE %>" delims=",">
 													<option value="${fn:trim(size)}">${fn:trim(size)}</option>
 												</c:forTokens>
-																					
-												
 											</select>
 								    	</td>
 								    </tr>
@@ -1052,7 +1056,13 @@
 								    	<th scope="row">옵션선택</th>
 								    	<td>
 									      	<select name="option" size="1">
+									      	<%
+									      		if(!PRODUCT_OPTION.equals("없음")) {
+									      	%>
 												<option value="">선택</option>
+											<%
+									      		}
+											%>	
 												<c:forTokens var="option" items="<%=PRODUCT_OPTION %>" delims=",">
 													<option value="${fn:trim(option)}">${fn:trim(option)}</option>
 												</c:forTokens>
@@ -1075,7 +1085,10 @@
 							</table>
 						</div>
 						<div class="btnArea text-center">
-							<a href="classreservation.ac" class="btn btn-outline-dark btn-md" role="button" aria-pressed="true">♥</a>
+							<a href="#" class="btn btn-outline-dark btn-md " role="button" aria-pressed="true" id="LikeAjax">
+								<input type="hidden" name = "PRODUCT_NUM" value="<%=PRODUCT_NUM %>">
+								♥
+							</a>
 							<a href="classreservation.ac" class="btn btn-outline-dark btn-md" role="button" aria-pressed="true">장바구니</a>
 							<a href="#" class="btn btn-outline-dark btn-md" role="button" aria-pressed="true">바로구매</a>
 						</div>
@@ -1724,7 +1737,6 @@
 			/*review의 답글 등록시 insert ajax*/
 			//ajax로 답글 db에 등록 후 review_re_space에 출력해줌
 			$('.review_insert_re').click(function(event) {
-				alert("왔다");
 				var REVIEW_NUM = $(this).children('input').val();
 				alert(REVIEW_NUM);
 				if(re_check(REVIEW_NUM)) {
@@ -1811,7 +1823,6 @@
 
 			//-------------------------------------------리뷰re2-2.-답글수정process(review_re)
 			$(document).on("click",".review_RE_modify_Process",function(e){ 
-				alert('aa');
 				var REVIEW_NUM = $(this).children('input').val();	
 				
 				if(re_mod_check(REVIEW_NUM)) {
@@ -1899,29 +1910,30 @@
 		
 		//좋아요 기능
 		$(document).ready(function(){
+			
+			 
 			//처음 로드되고 로그인 사용자가 누른글 하트는 검게 바꿔줌
 			function heart_check(){
-				var	loginNum = <%=MEMBER_NUM%>;
-				if(loginNum == 0){
+				var PRODUCT_NUM = <%=PRODUCT_NUM%>;
+				var MEMBER_NUM = <%=MEMBER_NUM%>;
+				alert(MEMBER_NUM);
+				if(MEMBER_NUM==0){
+					alert('로그인 하세요');
 					return
 				}
 				$.ajax({
-					url: "/NAGAGU/loginMemberLikeProduct.pro",
-			              type: "POST",
-			              data: { 'loginNum' : loginNum},
-			              datatype: 'json',
-			              contentType:
-			  				'application/x-www-form-urlencoded; charset=utf-8',
-			              success: function (retVal) {
-					        if(retVal.res=="OK"){
-					        	for(var j=0; j<retVal.PicsNum.length; j++){
-					        		var num = retVal.PicsNum[j].pics_NUM
-			        				var target =$('#heart_output'+num) 
-			        				$(target).children().removeClass('far').addClass('fas')
-			        			}
-							}else{
-								alert("update fail");
-							} 
+					url: "/NAGAGU/getProductLike.pro",
+					type: "POST",
+					data: { 'PRODUCT_NUM' : PRODUCT_NUM},
+					datatype: 'json',
+					contentType: 'application/x-www-form-urlencoded; charset=utf-8',
+					success: function (retVal) {
+						alert(retVal.status);
+						if(retVal.status==0){
+							$('#LikeAjax').removeClass('addlike');
+						}else {
+							$('#LikeAjax').addClass('addlike');
+						}
 						},
 				error:function(){
 					alert("ajax통신 실패!!");
@@ -1929,42 +1941,41 @@
 				})
 			}
 			heart_check()
-		  //좋아요 누르는 기능
-		  $(document).on("click","#far",function getLike(){
-		    var	loginNum = <%=MEMBER_NUM%>;
-			if(loginNum==0){
-				alert('로그인 하세요') 
-				return				
-			} 
-			var picsNum = $(this).parent().attr('id').substring(12)
-				$.ajax({
-				url: "/NAGAGU/insertPicsLike.cm",
-		              type: "POST",
-		              data: { 'memberNum' : loginNum , 'picsNum' : picsNum},
-		              contentType:
-		  				'application/x-www-form-urlencoded; charset=utf-8',
-		              success: function (retVal) {
-				        if(retVal.res=="OK"){
-				        	var output="";
-								output += '<span class="button likeBtn" id="heart_output'+picsNum+'">'
-							if(retVal.cnt=='1'){
-								output += '<i class="far fa-heart fa-2x" id="far"></i>'	
-							}else{
-								output += '<i class="fas fa-heart fa-2x" id="far"></i>'
-							}
-								output += '</span>'+retVal.picsLikeCount+''
-				        	$('#heart_output'+picsNum).parent().html(output);
-						}else{
-							alert("update fail");
-						} 
-					},
-			error:function(){
-				alert("ajax통신 실패!!");
-			}
-			})
-				event.preventDefault();
-		  });
 			
+			
+			//좋아요 누르는 기능
+			$(document).on("click","#LikeAjax",function getLike(){
+				var MEMBER_NUM = <%=MEMBER_NUM%>;
+				alert(MEMBER_NUM);
+				if(MEMBER_NUM==0){
+					alert('로그인 하세요');
+					return
+				}
+				
+				var PRODUCT_NUM = $(this).children('input').val();
+				alert(PRODUCT_NUM);
+				$.ajax({
+					url: "/NAGAGU/insertProLike.pro",
+					type: "POST",
+					data: { 'MEMBER_NUM' : MEMBER_NUM , 'PRODUCT_NUM' : PRODUCT_NUM},
+					contentType: 'application/x-www-form-urlencoded; charset=utf-8',
+					success: function (retVal) {
+						alert(retVal.cnt);
+						if(retVal.cnt=='0') {
+							
+					        $('#LikeAjax').addClass('addlike');							
+						} else {
+					        $('#LikeAjax').removeClass('addlike');
+							
+						}
+				        
+					},
+					error:function(){
+						alert("ajax통신 실패!!");	
+					}
+				})
+				event.preventDefault();
+			});
 		});		
 		
 		

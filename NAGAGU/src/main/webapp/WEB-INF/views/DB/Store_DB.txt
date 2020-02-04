@@ -76,45 +76,18 @@ create sequence store_qna_seq
     maxvalue 10000;
     
     
-    
-/*공방*/    
-create table WORKSHOP(
-    WORKSHOP_NUM        NUMBER,
-    WORKSHOP_EMAIL      VARCHAR2(100),
-    WORKSHOP_PASS       VARCHAR2(50),
-    WORKSHOP_NAME       VARCHAR2(50),
-    WORKSHOP_PHONE      VARCHAR2(50),
-    WORKSHOP_ADDRESS1   VARCHAR2(50),
-    WORKSHOP_ADDRESS2   VARCHAR2(50),
-    WORKSHOP_ZIP        VARCHAR2(15),
-    WORKSHOP_LICENSE    VARCHAR2(50),
-    WORKSHOP_DATE       DATE,
-    WORKSHOP_INTRO      VARCHAR2(200),
-    WORKSHOP_OWNER      VARCHAR2(15),
-    WORKSHOP_BANK       VARCHAR2(20),
-    WORKSHOP_ACNUM      VARCHAR2(100)
-);   
-/*공방 시퀀스*/              
-create sequence workshop_seq
-    start with 1
-    increment by 1
-    maxvalue 10000;
-    
+      
 
+/*커뮤니티, 상품, 아카데미 공통*/
 /* 좋아요 */
-CREATE TABLE PRODUCT_LIKE (
-	PRODUCT_LIKE_NUM NUMBER NOT NULL, /* 좋아요 ID */
-	PRODUCT_LIKE_MEMBER NUMBER, /* 회원 번호 */
-	PRODUCT_LIKE_PRODUCT NUMBER /* 상품번호 */
+CREATE TABLE MEMBER_LIKE (
+	LIKE_NUM NUMBER NOT NULL, /* 좋아요 ID */
+	LIKE_MEMBER NUMBER, /* 회원 번호 */
+	LIKE_PICS NUMBER, /* 사진 ID */
+    LIKE_PRODUCT NUMBER /* 사진 ID */
 );
 
-ALTER TABLE PRODUCT_LIKE
-	ADD
-		CONSTRAINT PK_MEMBER_LIKE
-		PRIMARY KEY (
-			PRODUCT_LIKE_NUM
-		);
 /*좋아요 시퀀스*/
-CREATE SEQUENCE SEQ_PRODUCT_LIKE
+CREATE SEQUENCE SEQ_MEMBER_LIKE
     START WITH 1
-    INCREMENT BY 1;    
+    INCREMENT BY 1;

@@ -7,9 +7,10 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.spring.mapper.AcademyMapper;
+
+import com.spring.mapper.MemberLikeMapper;
 import com.spring.mapper.ProductMapper;
-import com.spring.member.MemberVO;
+
 import com.spring.workshop.WorkshopVO;
 
 @Service
@@ -21,7 +22,6 @@ public class ProductServiceImpl implements ProductService{
 	@Override
 	public WorkshopVO selectWorkshop(ProductVO vo) {
 		WorkshopVO workshop = null;
-		
 		try {
 			ProductMapper productMapper = sqlSession.getMapper(ProductMapper.class);
 			workshop = productMapper.selectWorkshop(vo);
@@ -35,7 +35,22 @@ public class ProductServiceImpl implements ProductService{
 		
 	}
 	
-
+	@Override
+	public ArrayList<ProductVO> getAllWorkshopProduct(WorkshopVO vo) {
+		ArrayList<ProductVO> WorkshopProoductList = null;
+		try {
+			ProductMapper productMapper = sqlSession.getMapper(ProductMapper.class);
+			WorkshopProoductList = productMapper.getAllWorkshopProduct(vo);
+			
+			System.out.println("공방의 productList 가져오기 성공!");
+			return WorkshopProoductList;
+		} catch (Exception e) {
+			System.out.println("공방의 productList 가져오기 실패!" + e.getMessage());
+		}
+		return null;
+	}
+	
+	
 	@Override
 	public boolean insertProduct(ProductVO vo) {
 		int result = 0;
@@ -94,10 +109,57 @@ public class ProductServiceImpl implements ProductService{
 		return res;
 	}
 
+	@Override
+	public HashMap<String, Object> insertProductLike(HashMap<String, Object> map){
+		HashMap<String, Object> returnInfo = new HashMap<String, Object>();
+		int productLikeCount = 0;
+		int cnt = 0;
+		try {
+			ProductMapper productMapper = sqlSession.getMapper(ProductMapper.class);
+			MemberLikeMapper memberlikeMapper=sqlSession.getMapper(MemberLikeMapper.class);
+			
+			System.out.println("???");
+			cnt = memberlikeMapper.selectMemberLike(map);
+			System.out.println("cnt="+cnt);
+			if(cnt==0) {	
+				memberlikeMapper.insertMemberLike(map);
+				map.put("count","plus");
+				System.out.println("사진 좋아요 1증가=");
+			}else {
+				memberlikeMapper.deleteMemberLike(map);
+				map.put("count", "minus");
+				System.out.println("사진 좋아요 1감소=");
+			}
+			ProductVO productVO = new ProductVO();
+			productVO.setPRODUCT_NUM(Integer.valueOf((String)map.get("PRODUCT_NUM")));
+			int res = productMapper.updateProductLike(map);//count가 plus면 1증가  minus면 1 감소
+			
+//			productLikeCount = productVO.getPRODUCT_LIKE();
+//			returnInfo.put("productLikeCount", productLikeCount);
+			returnInfo.put("cnt", cnt);	//0이면 insert했다
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return returnInfo;
+	}
+
+
+	@Override
+	public int getProductLike(HashMap<String, Object> map) {
+		int status=-1; 
+		try { 
+			ProductMapper productMapper = sqlSession.getMapper(ProductMapper.class);
+			//memberMapper memberMapper= sqlSession.getMapper(memberMapper.class);
+			status = productMapper.getProductLike(map);
+			System.out.println("RESULT="+status);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}  
+		return status;
+	}
 
 
 
-	
 
 
 
