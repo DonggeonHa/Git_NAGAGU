@@ -318,7 +318,7 @@
 											data-toggle="dropdown" aria-haspopup="true"	aria-expanded="false"> STORE </a>
 											<div class="dropdown-menu" aria-labelledby="navbarDropdown">
 												<a class="dropdown-item" href="./productcategory.pro">수제가구</a> 
-												<a class="dropdown-item" href="./estimate.pro">견적문의</a>
+												<a class="dropdown-item" href="./estimate.es">견적문의</a>
 												<!-- <div class="dropdown-divider"></div> -->
 											</div>
 										</li>
