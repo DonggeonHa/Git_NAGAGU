@@ -1,5 +1,38 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"	pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ page import="java.util.*" %>
+<%@ page import="com.spring.estimate.EstimateVO" %>
+<%
+
+	String member_mail = "";
+	String workshop_name = "";
+	
+
+	EstimateVO vo = (EstimateVO)request.getAttribute("estimatevo");
+	
+	if (session.getAttribute("MEMBER_EMAIL") != "") {
+		member_mail = (String)session.getAttribute("MEMBER_EMAIL");
+	}
+	else {
+		if (session.getAttribute("WORKSHOP_NAME") != "") {
+			workshop_name = (String)session.getAttribute("WORKSHOP_NAME");
+		}
+	}
+	
+	int ESTIMATE_NUM = (int)request.getAttribute("ESTIMATE_NUM");
+	String mailChk = vo.getESTIMATE_MEMBER();
+	
+	int nowpage = 1;
+	if (request.getAttribute("page")!=null) {
+		nowpage = (int)request.getAttribute("page");
+	}
+	
+	
+	if ((String)session.getAttribute("WORKSHOP_NAME")!="") {
+		workshop_name = (String)session.getAttribute("WORKSHOP_NAME");
+	}
+%>
 
     
 <!DOCTYPE html>
@@ -55,6 +88,47 @@
 
 		}
 		
+		#offerTable {
+            margin-left:50px;
+            width:800px;
+        }
+        
+        #offerList {
+            width:100%;
+        }
+        
+        #offerList thead {
+            background:#575b69;
+            color:#ffffff;
+            font-weight:700;
+            line-height:32px;
+            text-align:center;
+        }
+        
+        .list_caution {
+            background:#fafafa;    
+        }
+        
+        .item_head {
+            border:1px solid #d3d3d3;
+            transition:border 0.2s;
+            text-align:center;
+        }
+        
+        .item_head:hover {
+            cursor:pointer;
+            border:1px solid #ef900e;
+        }
+        
+        .item_content {
+            display:none;
+            text-align:left;
+        }
+        
+        .item_content .item_content_body {
+            padding:10px;
+        }
+		
 		.pagination {
 		  display: inline-block;
 		  margin-bottom:30px;
@@ -82,6 +156,15 @@
 			transform: scale(1.2);
 			text-decoration: none;
 		}
+		
+		.modal-dialog {
+			width:480px;
+			height:640px;
+		}
+		
+		.modalLabel {
+			width:80px;
+		}
 
 	</style>
 
@@ -105,163 +188,80 @@
 					alt="" class="img-responsive img-rounded" width="400" height="300">
 			</div>
 			<br/><br/>
-			<form name="es_requestform" class="es_requestform">
-				<div class="row text-center">
-					<div class="col-md-4 d-flex justify-content-end title">첨부파일 다운</div>
-					<div class="col-md-8 d-flex justify-content-start">스케치1.jpg</div>
-				</div>
-				<div class="row">
-					<div class="col-md-4  justify-content-end"></div>
-					<div class="col-md-8 justify-content-start">
-						<div class="selectedimgs" style="width: 70%;">
-							<div class="row p-0 m-0">
-								<div class="col-3 p-0 m-0">
-									<img
-										src="${pageContext.request.contextPath}/resources/images/Store/table.jpg"
-										width="100" height="100">
-								</div>
-								<div class="col-3 p-0 m-0">
-									<img
-										src="${pageContext.request.contextPath}/resources/images/Store/table.jpg"
-										width="100" height="100">
-								</div>
-								<div class="col-3 p-0 m-0">
-									<img
-										src="${pageContext.request.contextPath}/resources/images/Store/table.jpg"
-										width="100" height="100">
-								</div>
-								<div class="col-3 p-0 m-0">
-									<img
-										src="${pageContext.request.contextPath}/resources/images/Store/table.jpg"
-										width="100" height="100">
-								</div>
-							</div>
-						</div>
-					</div>
-				</div>
 				<div class="row text-center pt-1 pb-1 ">
 					<div class="col-md-4 d-flex justify-content-end title">제품 종류</div>
 					<div class="col-md-8 d-flex justify-content-start">
-						<input type="text" name="ESTIMATE_CATEGORY" size="65"
-							value="테이블" readonly>
+						<%=vo.getESTIMATE_CATEGORY() %>
 					</div>
 				</div>
 				<div class="row text-center">
-					<div class="col-md-4 d-flex justify-content-end title">소재1</div>
+					<div class="col-md-4 d-flex justify-content-end title">소재</div>
 					<div class="col-md-8 d-flex justify-content-start">
-						<input type="text" name="ESTIMATE_SOURCE" size="65"
-							value="편백나무 원목(상판)" readonly>
-					</div>
-				</div>
-				<div class="row text-center pt-1 pb-1">
-					<div class="col-md-4 d-flex justify-content-end title">소재2</div>
-					<div class="col-md-8 d-flex justify-content-start">
-						<input type="text" name="ESTIMATE_SOURCE" size="65"
-							value="소나무 원목(하부)" readonly>
+						<%=vo.getESTIMATE_SOURCE() %>
 					</div>
 				</div>
 				<div class="row text-center">
 					<div class="col-md-4 d-flex justify-content-end title">색상(염색)</div>
 					<div class="col-md-8 d-flex justify-content-start">
-						<input type="text" name="ESTIMATE_COLOR" size="65"
-							value="투명, 블루.." readonly>
+						<%=vo.getESTIMATE_COLOR() %>
 					</div>
 				</div>
 				<div class="row text-center pt-1 pb-1">
 					<div class="col-md-4 d-flex justify-content-end title">코팅</div>
 					<div class="col-md-8 d-flex justify-content-start">
-						<input type="text" size="65" value="원하지 않음" readonly>
+						<%=vo.getESTIMATE_COAT() %>
 					</div>
 				</div>
 				<div class="row text-center">
 					<div class="col-md-4 d-flex justify-content-end title">규격</div>
 					<div class="col-md-8 d-flex justify-content-start">
-						<input type="text" name="ESTIMATE_SIZE" size="65"
-							value="가로100*세로150*높이200 " readonly>
+						<%=vo.getESTIMATE_SIZE() %>
 					</div>
 				</div>
 				<div class="row text-center pt-1 pb-1">
 					<div class="col-md-4 d-flex justify-content-end title">기타</div>
 					<div class="col-md-8 d-flex justify-content-start">
-						<textarea name="ESTIMATE_CONTENT" placeholder="상판은 편백나무 원목으로, 하부는 소나무 원목으로 테이블 만들어주세요" cols="69" rows="15" readonly ></textarea>
+						<%=vo.getESTIMATE_CONTENT() %>
 					</div>
 				</div>
 	
 				<div class="row justify-content-center pt-5 pl-5 ml-5">
-					<button class="btn btn-dark btn-md">입찰하기</button>&nbsp;&nbsp;&nbsp;
-					<button class="btn btn-dark btn-md">목록보기</button>
+				<% if (workshop_name!="") { %>
+					<button class="btn btn-dark btn-md" alt="" data-toggle="modal" data-target="#offerFormModal" aria-haspopup="true" aria-expanded="false">
+					입찰하기</button>&nbsp;&nbsp;&nbsp;
+				<% } %>
+					<button class="btn btn-dark btn-md" onclick="location.href='estimate.es?page=<%=nowpage%>'">목록보기</button>
 				</div>
-				
-			</form>
 			<br/><br/>
 		
-			<div class="row justify-content-center">
-				<div class="row justify-content-center offer_textarea">
-					
-					<div class="col-10 justify-content-end">
-						<textarea name="" placeholder="전반적인 일정, 재료, 제안 가격 등 상세하게 적어주시면 의뢰인에게 도움이 됩니다 :) " cols="78" rows="2"></textarea>&nbsp;&nbsp;
-					</div>
-					<div class="col-2 justify-content-start">
-						&nbsp;&nbsp;<button class="btn btn-outline-dark btn-sm " onClick="location.href='#'" style="cursor: pointer;">등록</button>
-					</div>
-				</div>
-			</div>
-		
-	
 		<br/><br/>
-		<!-- 테이블 -->
-		<div class="table-responsive">
-			<table class="table " style="width:80%; margin:0 auto;">
-				<tr align="center">
-					<th width="10%">번호</th>
-					<th width="10%">공방</th>
-					<th width="30%">내용</th>
-					<th width="15%">제시 가격</th>
-					<th width="10%">채팅</th>				
-					<th width="15%">낙찰하기</th>
-				</tr>
-				<tr align="center" onClick="location.href='./estimatedetail.es'" style="cursor:pointer;">
-					<td>3</td>
-					<td>하루</td>
-					<td class="">견적 신청합니다</td>
-					<td>400,000</td>
-					<td><button class="btn btn-outline-dark btn-sm">연결</button></td>
-					<td><button class="btn btn-outline-dark btn-sm">낙찰하기</button></td>				
-				</tr>
-				<tr align="center" onClick="location.href='./estimatedetail.es'" style="cursor:pointer;">
-					<td>2</td>
-					<td>공방</td>
-					<td class="">견적 신청합니다</td>
-					<td>400,000</td>
-					<td><button class="btn btn-outline-dark btn-sm">연결</button></td>
-					<td><button class="btn btn-outline-dark btn-sm">낙찰하기</button></td>
-				</tr>						
-				<tr align="center">
-					<td>1</td>
-					<td>제조</td>
-					<td class="">견적좀요!</td>
-					<td>400,000</td>
-					<td><button class="btn btn-outline-dark btn-sm">연결</button></td>
-					<td><button class="btn btn-outline-dark btn-sm">낙찰하기</button></td>
-					
-				</tr>
-			</table>
-		
+		<form id="offer_data">
+			<input type="hidden" name="ESTIMATE_NUM" value=<%=ESTIMATE_NUM%>>
+			<input type="hidden" id="OFFER_PAGE" name="OFFER_PAGE" value=1>
+		</form>
+		<div id="offerWrap" class ="offer_wrap row justify-content-center">
+			<div id="offerTable">
+				<table id="offerList">
+					<thead>
+						<tr>
+							<th width="10%">번호</th>
+							<th width="20%">공방 이름</th>
+							<th width="15%">제시 가격</th>
+							<th width="15%">문의</th>				
+							<th width="15%">낙찰</th>
+						<tr>
+					</thead>
+					<tbody>
+					</tbody>
+				</table>
+			</div>
 		</div>
 	
 		<br/><br/><br/>
 	
 		<!-- 댓글 페이지네이션 -->
 		<div class="row justify-content-center">
-			<div class="pagination">
-			  <a href="#">&laquo;</a>
-			  <a href="#">1</a>
-			  <a href="#">2</a>
-			  <a href="#">3</a>
-			  <a href="#">4</a>
-			  <a href="#">5</a>
-			  <a href="#">6</a>
-			  <a href="#">&raquo;</a>
+			<div id="pagination" class="pagination">
 			</div>
 		</div>
 
@@ -270,8 +270,110 @@
 	
 	
 	<!-- content 끝 -->			
-<br/><br/><br/><br/>
-
+	<br/><br/><br/><br/>
+	
+	<script>
+		$(document).ready(function (){
+			function getOfferList () {
+				if ('<%=member_mail%>' != '<%=mailChk%>') {
+					var output='';
+					output += '<tr><td class="list_caution">제안글은 <font color="#f2400">작성자만 열람 가능합니다</font><td><tr>';
+					
+					$('#offerList > tbody').html(output);
+					
+					return false;
+				}
+				var OFFER_DATA = $('#offer_data').serialize();
+				$.ajax({
+					url:'/NAGAGU/offer_list.es', 
+					type:'POST', 
+					data: OFFER_DATA,
+					dataType:"json", //서버에서 보내줄 데이터 타입
+					contentType:'application/x-www-form-urlencoded; charset=utf-8',
+					success:function(data) {
+						var output = '';
+						var pagination = '';
+						
+						var offer_page = data.offer_page;
+						var max_page = data.offer_maxpage;
+						var ol = data.offerList;
+						var rnum = data.offer_rnum;
+						console.log(ol);
+						console.log(data.offerCount);
+						console.log(offer_page);
+						console.log(max_page);
+						
+						if (data.offerCount == 0) {
+							output += '<tr><td colspan="5">등록된 제안이 없습니다</td><tr>';
+						}
+						
+						else {
+							/* 댓글 리스트 작성*/
+							$.each(ol, function(index, item) {
+								output += '<tr value="' + index + '" class="item_head">';
+								output += '<td>' + rnum + '</td>';
+								output += '<td><b>' + item.offer_WORKSHOP + '</b></td>';
+								output += '<td>' + item.offer_PRICE + '</td>';
+								output += '<td><button class="btn btn-outline-dark btn-sm">쪽지보내기</button></td>';
+								output += '<td><button class="btn btn-outline-dark btn-sm">낙찰하기</button></td>';
+								output += '</tr>';
+								output += '<tr id="item_content_'+ index + '" class="item_content">';
+								output += '<td colspan="5">';
+								output += '<div class="item_content_body">' + item.offer_CONTENT+ '</div>';
+								output += '</td></tr>';
+							});
+							
+							/* 댓글 페이지네이션 */
+							
+							if (offer_page > 3) {
+								pagination += '<div id="pagelink" value="' + offer_page-3 + '">&laqua;</div>';
+							}
+							if (offer_page > 2) {
+								pagination += '<div id="pagelink" value="' + offer_page-2 + '"><a href="#">' + offer_page-2 + '</a></div>';
+							}
+							if (offer_page > 1) {
+								pagination += '<div id="pagelink" value="' + offer_page-1 + '"><a href="#">' + offer_page-1 + '</a></div>';
+							}
+								pagination += '<div class="currentpage">' + offer_page + '</div>';
+							if (max_page < offer_page+1) {
+								pagination += '<div id="pagelink" value="' + offer_page+1 + '"><a href="#">' + offer_page+1 + '</a></div>';
+							}
+							if (max_page < offer_page+2) {
+								pagination += '<div id="pagelink" value="' + offer_page+2 + '"><a href="#">' + offer_page+2 + '</a></div>';
+							}
+							if (max_page > offer_page+3) {
+								pagination += '<div id="pagelink" value="' + offer_page+3 + '">&raqua;</div>';
+							}
+						}
+						
+						$('#offerList > tbody').html(output);
+						$('#pagination').html(pagination);
+					},
+					error:function(request, status, error){
+					    alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+					}
+				});
+			}
+			getOfferList();
+		});
+		
+		$(document).delegate('.item_head', 'click', function() {
+			var item_num = $(this).attr("value");
+			
+			if ($('#item_content_' + item_num).css('display') != 'none') {
+				$('#item_content_' + item_num).hide(200);
+			} else {
+				$('.item_content').hide();
+				$('#item_content_' + item_num).show(200);
+			}
+	
+		});
+		
+		$('#pagelink').click(function() {
+			$('#OFFER_PAGE') = $(this).attr("value");
+			getOfferList();
+		});
+	</script>
 		
 <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>

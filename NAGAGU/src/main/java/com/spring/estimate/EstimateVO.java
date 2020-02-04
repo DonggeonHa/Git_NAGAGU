@@ -3,19 +3,22 @@ package com.spring.estimate;
 import java.util.Date;
 
 public class EstimateVO {
-	int ESTIMATE_NUM;
-	String ESTIMATE_MEMBER;
-	String ESTIMATE_NICK;
-	Date ESTIMATE_DATE;
-	String ESTIMATE_CATEGORY;
-	String ESTIMATE_SOURCE;
-	String ESTIMATE_COLOR;
-	String ESTIMATE_COAT;
-	String ESTIMATE_SIZE;
-	String ESTIMATE_FILE;
-	String ESTIMATE_CONTENT;
-	String ESTIMATE_PAY;
-	int ESTIMATE_STATE;
+	private int ESTIMATE_NUM;
+	private String ESTIMATE_MEMBER;
+	private String ESTIMATE_NICK;
+	private String ESTIMATE_TITLE;
+	private Date ESTIMATE_DATE;
+	private String ESTIMATE_CATEGORY;
+	private String ESTIMATE_SOURCE;
+	private String ESTIMATE_COLOR;
+	private String ESTIMATE_COAT;
+	private String ESTIMATE_SIZE;
+	private String ESTIMATE_FILE;
+	private String ESTIMATE_CONTENT;
+	private String ESTIMATE_PAY;
+	private int ESTIMATE_STATE;
+	private int ESTIMATE_MINPRICE;
+	private int ESTIMATE_OFFERCOUNT;
 
 	public int getESTIMATE_NUM() {
 		return ESTIMATE_NUM;
@@ -25,6 +28,12 @@ public class EstimateVO {
 	}
 	public String getESTIMATE_MEMBER() {
 		return ESTIMATE_MEMBER;
+	}
+	public String getESTIMATE_TITLE() {
+		return ESTIMATE_TITLE;
+	}
+	public void setESTIMATE_TITLE(String eSTIMATE_TITLE) {
+		ESTIMATE_TITLE = eSTIMATE_TITLE;
 	}
 	public void setESTIMATE_MEMBER(String eSTIMATE_MEMBER) {
 		ESTIMATE_MEMBER = eSTIMATE_MEMBER;
@@ -94,6 +103,18 @@ public class EstimateVO {
 	}
 	public void setESTIMATE_STATE(int eSTIMATE_STATE) {
 		ESTIMATE_STATE = eSTIMATE_STATE;
+	}
+	public int getESTIMATE_MINPRICE() {
+		return ESTIMATE_MINPRICE;
+	}
+	public void setESTIMATE_MINPRICE(int eSTIMATE_MINPRICE) {
+		ESTIMATE_MINPRICE = eSTIMATE_MINPRICE;
+	}
+	public int getESTIMATE_OFFERCOUNT() {
+		return ESTIMATE_OFFERCOUNT;
+	}
+	public void setESTIMATE_OFFERCOUNT(int eSTIMATE_OFFERCOUNT) {
+		ESTIMATE_OFFERCOUNT = eSTIMATE_OFFERCOUNT;
 	}
 
 }
