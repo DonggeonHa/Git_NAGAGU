@@ -35,9 +35,9 @@ create sequence REGISTRATION_SEQ
 <mapper namespace="com.spring.mapper.AcademyMapper">
 	<resultMap type="com.spring.academy.ClassVO" id="classResultMap">
 		<result property="CLASS_NUMBER" column="CLASS_NUMBER" />	
-		<result property="MEMBER_NUM" column="MEMBER_NUM" />
-		<result property="MEMBER_NICK" column="MEMBER_NICK" />
-		<result property="MEMBER_PICTURE" column="MEMBER_PICTURE" />
+		<result property="WORKSHOP_NUM" column="WORKSHOP_NUM" />
+		<result property="WORKSHOP_NAME" column="WORKSHOP_NAME" />
+		<result property="WORKSHOP_PICTURE" column="WORKSHOP_PICTURE" />
 		<result property="CLASS_DIVISION" column="CLASS_DIVISION" />	
 		<result property="CLASS_NAME" column="CLASS_NAME" />	
 		<result property="CLASS_ABRIEF" column="CLASS_ABRIEF" />	
@@ -59,9 +59,9 @@ create sequence REGISTRATION_SEQ
 	
 	<resultMap type="java.util.HashMap" id="hashmapVO">
 		<result property="CLASS_NUMBER" column="CLASS_NUMBER" />	
-		<result property="MEMBER_NUM" column="MEMBER_NUM" />
-		<result property="MEMBER_NICK" column="MEMBER_NICK" />
-		<result property="MEMBER_PICTURE" column="MEMBER_PICTURE" />
+		<result property="WORKSHOP_NUM" column="WORKSHOP_NUM" />
+		<result property="WORKSHOP_NAME" column="WORKSHOP_NAME" />
+		<result property="WORKSHOP_PICTURE" column="WORKSHOP_PICTURE" />
 		<result property="CLASS_DIVISION" column="CLASS_DIVISION" />	
 		<result property="CLASS_NAME" column="CLASS_NAME" />	
 		<result property="CLASS_ABRIEF" column="CLASS_ABRIEF" />	
@@ -81,23 +81,30 @@ create sequence REGISTRATION_SEQ
 		<result property="CLASS_DETAIL_ADDRESS" column="CLASS_DETAIL_ADDRESS" />
 	</resultMap>
 	
-	<resultMap type="com.spring.member.MemberVO" id="memberResultMap">
-		<result property="MEMBER_NUM" column="MEMBER_NUM" />
-		<result property="MEMBER_EMAIL" column="MEMBER_EMAIL" />
-		<result property="MEMBER_PASS" column="MEMBER_PASS" />
-		<result property="MEMBER_NAME" column="MEMBER_NAME" />
-		<result property="MEMBER_NICK" column="MEMBER_NICK" />
-		<result property="MEMBER_PHONE" column="MEMBER_PHONE" />
-		<result property="MEMBER_DATE" column="MEMBER_DATE" />
-		<result property="MEMBER_PICTURE" column="MEMBER_PICTURE" />
-		<result property="MEMBER_LIKE_PRODUCT" column="MEMBER_LIKE_PRODUCT" />
-		<result property="MEMBER_STATUS" column="MEMBER_STATUS" />
+	<resultMap type="com.spring.workshop.WorkShopMemberVO" id="workshopMemberResultMap">
+		<result property="WORKSHOP_NUM" column="WORKSHOP_NUM" />
+		<result property="WORKSHOP_EMAIL" column="WORKSHOP_EMAIL" />
+		<result property="WORKSHOP_PASS" column="WORKSHOP_PASS" />
+		<result property="WORKSHOP_NAME" column="WORKSHOP_NAME" />
+		<result property="WORKSHOP_CEO_NAME" column="WORKSHOP_CEO_NAME" />
+		<result property="WORKSHOP_PHONE" column="WORKSHOP_PHONE" />
+		<result property="WORKSHOP_ZIP" column="WORKSHOP_ZIP" />
+		<result property="WORKSHOP_ADDRESS1" column="WORKSHOP_ADDRESS1" />
+		<result property="WORKSHOP_ADDRESS2" column="WORKSHOP_ADDRESS2" />
+		<result property="WORKSHOP_LICENSE" column="WORKSHOP_LICENSE" />
+		<result property="WORKSHOP_DATE" column="WORKSHOP_DATE" />		
+		<result property="WORKSHOP_INTRO" column="WORKSHOP_INTRO" />		
+		<result property="WORKSHOP_OWNER" column="WORKSHOP_OWNER" />		
+		<result property="WORKSHOP_BANK" column="WORKSHOP_BANK" />
+		<result property="WORKSHOP_ACNUM" column="WORKSHOP_ACNUM" />
+		<result property="WORKSHOP_STATUS" column="WORKSHOP_STATUS" />
+		<result property="WORKSHOP_PICTURE" column="WORKSHOP_PICTURE" />
 	</resultMap>
 
 	 
 	<select id="getClassList" parameterType="java.util.HashMap" resultMap="classResultMap">
 		SELECT * 
-		FROM (SELECT ROWNUM RNUM, MEMBER_NUM, MEMBER_NICK, MEMBER_PICTURE, CLASS_NUMBER, CLASS_DIVISION, CLASS_NAME, CLASS_ABRIEF, CLASS_AMOUNT, CLASS_DATE, 
+		FROM (SELECT ROWNUM RNUM, WORKSHOP_NUM, WORKSHOP_NAME, WORKSHOP_PICTURE, CLASS_NUMBER, CLASS_DIVISION, CLASS_NAME, CLASS_ABRIEF, CLASS_AMOUNT, CLASS_DATE, 
 			  CLASS_DATE_CONFIGURATION_1, CLASS_DATE_CONFIGURATION_2, CLASS_AREA, CLASS_CATEGORY, 
 			  CLASS_INTRODUCTION_1, CLASS_INTRODUCTION_2, CLASS_INTRODUCTION_3, CLASS_ETC, CLASS_BANNER, CLASS_IMAGE, CLASS_ADDRESS, CLASS_DETAIL_ADDRESS
 			  FROM (SELECT * 
@@ -109,11 +116,11 @@ create sequence REGISTRATION_SEQ
 
 	 
 	<insert id="insertClass" parameterType="com.spring.academy.ClassVO">
- 		INSERT INTO registration(CLASS_NUMBER, MEMBER_NUM, MEMBER_NICK, MEMBER_PICTURE, CLASS_DIVISION, CLASS_NAME, CLASS_ABRIEF, 
+ 		INSERT INTO registration(CLASS_NUMBER, WORKSHOP_NUM, WORKSHOP_NAME, WORKSHOP_PICTURE, CLASS_DIVISION, CLASS_NAME, CLASS_ABRIEF, 
  								 CLASS_AMOUNT, CLASS_DATE, CLASS_DATE_CONFIGURATION_1, CLASS_DATE_CONFIGURATION_2, CLASS_AREA, CLASS_CATEGORY, 
 			  					 CLASS_INTRODUCTION_1, CLASS_INTRODUCTION_2, CLASS_INTRODUCTION_3, CLASS_ETC, CLASS_BANNER, 
 			  					 CLASS_IMAGE, CLASS_ADDRESS, CLASS_DETAIL_ADDRESS) 
-			 		VALUES(registration_seq.nextval, #{MEMBER_NUM}, #{MEMBER_NICK}, #{MEMBER_PICTURE}, #{CLASS_DIVISION}, #{CLASS_NAME}, #{CLASS_ABRIEF}, 
+			 		VALUES(registration_seq.nextval, #{WORKSHOP_NUM}, #{WORKSHOP_NAME}, #{WORKSHOP_PICTURE}, #{CLASS_DIVISION}, #{CLASS_NAME}, #{CLASS_ABRIEF}, 
 			 			   #{CLASS_AMOUNT}, SYSDATE, #{CLASS_DATE_CONFIGURATION_1}, #{CLASS_DATE_CONFIGURATION_2}, #{CLASS_AREA}, #{CLASS_CATEGORY}, 
 			 			   #{CLASS_INTRODUCTION_1}, #{CLASS_INTRODUCTION_2}, #{CLASS_INTRODUCTION_3}, #{CLASS_ETC}, #{CLASS_BANNER}, 
 			 			   #{CLASS_IMAGE}, #{CLASS_ADDRESS}, #{CLASS_DETAIL_ADDRESS})
@@ -130,8 +137,8 @@ create sequence REGISTRATION_SEQ
  		SELECT * FROM registration WHERE CLASS_NUMBER = #{CLASS_NUMBER}
  	</select>
  	
- 	<select id="selectMember" parameterType="com.spring.academy.ClassVO" resultMap="memberResultMap">
-		SELECT * FROM nagagu_member WHERE MEMBER_NUM = #{MEMBER_NUM}
+ 	<select id="selectWMember" parameterType="com.spring.academy.ClassVO" resultMap="workshopMemberResultMap">
+		SELECT * FROM nagagu_workshop_member WHERE WORKSHOP_NUM = #{WORKSHOP_NUM}
 	</select>
 
 </mapper>

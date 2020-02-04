@@ -1,8 +1,8 @@
 CREATE TABLE REGISTRATION (
     CLASS_NUMBER number primary key,
-    MEMBER_NUM number,
-    MEMBER_NICK varchar2(200),
-    MEMBER_PICTURE varchar2(2000),
+    WORKSHOP_NUM number,
+    WORKSHOP_NAME varchar2(200),
+    WORKSHOP_PICTURE varchar2(2000),
     CLASS_DIVISION varchar2(200),
     CLASS_NAME varchar2(200),
     CLASS_ABRIEF varchar2(200),

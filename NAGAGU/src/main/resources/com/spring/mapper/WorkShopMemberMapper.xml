@@ -18,6 +18,7 @@
 		<result property="WORKSHOP_BANK" column="WORKSHOP_BANK" />
 		<result property="WORKSHOP_ACNUM" column="WORKSHOP_ACNUM" />
 		<result property="WORKSHOP_STATUS" column="WORKSHOP_STATUS" />
+		<result property="WORKSHOP_PICTURE" column="WORKSHOP_PICTURE" />
 	</resultMap>
 	
 	<resultMap type="java.util.HashMap" id="hashmapVO">
@@ -37,6 +38,7 @@
 		<result property="WORKSHOP_BANK" column="WORKSHOP_BANK" />
 		<result property="WORKSHOP_ACNUM" column="WORKSHOP_ACNUM" />
 		<result property="WORKSHOP_STATUS" column="WORKSHOP_STATUS" />
+		<result property="WORKSHOP_PICTURE" column="WORKSHOP_PICTURE" />
 	</resultMap>
 	
 	<insert id="insert_workshop_member" parameterType="com.spring.member.MemberVO">
@@ -45,10 +47,10 @@
        </selectKey>
 	      insert into nagagu_workshop_member(WORKSHOP_NUM, WORKSHOP_EMAIL, WORKSHOP_PASS, WORKSHOP_NAME,
 	       WORKSHOP_CEO_NAME, WORKSHOP_PHONE, WORKSHOP_LICENSE, WORKSHOP_INTRO, WORKSHOP_ZIP, 
-	       WORKSHOP_ADDRESS1, WORKSHOP_ADDRESS2, WORKSHOP_DATE) 
+	       WORKSHOP_ADDRESS1, WORKSHOP_ADDRESS2, WORKSHOP_DATE, WORKSHOP_PICTURE) 
 	      values (#{WORKSHOP_NUM}, #{WORKSHOP_EMAIL}, #{WORKSHOP_PASS}, #{WORKSHOP_NAME}, 
 	      #{WORKSHOP_CEO_NAME}, #{WORKSHOP_PHONE}, #{WORKSHOP_LICENSE}, #{WORKSHOP_INTRO}, #{WORKSHOP_ZIP},  
-	      #{WORKSHOP_ADDRESS1}, #{WORKSHOP_ADDRESS2}, sysdate)
+	      #{WORKSHOP_ADDRESS1}, #{WORKSHOP_ADDRESS2}, sysdate, #{WORKSHOP_PICTURE})
 	</insert>
 	
 	<select id="workshop_user_chk" resultMap="workshopMemberResultMap">
@@ -69,5 +71,9 @@
 	
 	<select id="select_workshop_member" parameterType="com.spring.workshop.WorkShopMemberVO" resultMap="workshopMemberResultMap">
 		select * from nagagu_workshop_member where WORKSHOP_EMAIL = #{WORKSHOP_EMAIL}
+	</select>
+	
+	<select id="selectwmember" parameterType="com.spring.workshop.WorkShopMemberVO" resultMap="workshopMemberResultMap">
+		select * from nagagu_workshop_member where WORKSHOP_NUM = #{WORKSHOP_NUM}
 	</select>
 </mapper>

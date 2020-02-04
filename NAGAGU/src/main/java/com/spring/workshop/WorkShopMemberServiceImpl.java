@@ -18,7 +18,7 @@ public class WorkShopMemberServiceImpl implements WorkShopMemberService {
 		
 		try {
 			WorkShopMemberMapper workshopMapper = sqlSession.getMapper(WorkShopMemberMapper.class);
-			
+			workshopVO.setWORKSHOP_PICTURE("./resources/images/Mypage/Basic_Picture.png");
 			res = workshopMapper.insert_workshop_member(workshopVO);
 			
 		} catch (Exception e) {
@@ -124,4 +124,20 @@ public class WorkShopMemberServiceImpl implements WorkShopMemberService {
 		return null;
 	}
 
+	@Override
+	public WorkShopMemberVO selectwmember(WorkShopMemberVO workshopVO) {
+		WorkShopMemberVO workshopMember = null;
+		
+		try {
+			WorkShopMemberMapper workshopMapper = sqlSession.getMapper(WorkShopMemberMapper.class);
+			
+			workshopMember = workshopMapper.selectwmember(workshopVO);
+			
+			return workshopMember;
+		} catch (Exception e) {
+			System.out.println("공방회원 가져오기 실패! num" + e.getMessage());
+		}
+		
+		return null;
+	}
 }

@@ -1,17 +1,33 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"	pageEncoding="UTF-8"%>
-<%@ page session="false" %>
 <%@ page import="java.util.*"%>
 <%@ page import="org.springframework.util.StringUtils"%>
 <%@ page import = "com.spring.academy.*"%>
+<%@ page import = "com.spring.workshop.*" %>
 <%@ page import = "com.spring.member.*" %>
 <%@ taglib uri = "http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib prefix = "fmt" uri = "http://java.sun.com/jsp/jstl/fmt" %>
 
 <%
 	ClassVO cl = (ClassVO)request.getAttribute("ClassVO");
-	MemberVO me = (MemberVO)request.getAttribute("MemberVO");
+	WorkShopMemberVO ws = (WorkShopMemberVO)request.getAttribute("WorkShopVO");
 	
 	int bannerImgCount = StringUtils.countOccurrencesOf(cl.getCLASS_BANNER(), ",");
+	
+	String MEMBER_EMAIL = null;
+	String MEMBER_NAME = null;
+	String MEMBER_PHONE = null;
+	String WORKSHOP_CEO_NAME = (String)session.getAttribute("WORKSHOP_CEO_NAME");
+	String MEMBER_NICK = (String)session.getAttribute("MEMBER_NICK");
+	
+	if (session.getAttribute("MEMBER_EMAIL") == null) {
+		MEMBER_EMAIL = "로그인 해주세요";
+		MEMBER_NAME = "로그인 해주세요";
+		MEMBER_PHONE = "로그인 해주세요";
+	} else {
+		MEMBER_EMAIL = (String)session.getAttribute("MEMBER_EMAIL");
+		MEMBER_NAME = (String)session.getAttribute("MEMBER_NAME");
+		MEMBER_PHONE = (String)session.getAttribute("MEMBER_PHONE");
+	}
 	
 %>
 <!DOCTYPE html>
@@ -30,7 +46,6 @@
 					$('#Amount').html(amount.toLocaleString()+"원");
 				});
 			});
-			
 		</script>
 		<style>
 			@font-face {
@@ -293,7 +308,6 @@
 									<dd>
 										<p class="text-left" id="t2"><%=cl.getCLASS_ADDRESS()%>&nbsp;&nbsp;<%=cl.getCLASS_DETAIL_ADDRESS()%></p>
 										<div id="map" style="width:675px;height:500px;"></div>
-
 									</dd>
 								</dl>
 							</div>
@@ -310,10 +324,10 @@
 					<div class="sticky2" style="border: 1px solid #EAEAEA; padding-top: 5%;">
 						<div class="row pt-4 pl-4">
 							<div class="col-3">
-								<img src="<%=cl.getMEMBER_PICTURE()%>" style="width: 95%;">
+								<img src="<%=cl.getWORKSHOP_PICTURE()%>" style="width: 95%;">
 							</div><hr>
 							<div class="col-9">
-								<h3><p><%=cl.getMEMBER_NICK()%></p></h3>
+								<h3><p><%=cl.getWORKSHOP_NAME()%></p></h3>
 								<p><font size="2"><%=cl.getCLASS_ABRIEF()%></font></p>
 							</div>
 						</div>
@@ -346,10 +360,18 @@
 							</table>
 						</div>
 						<div class="btnArea text-center">
+						<% if(MEMBER_NICK == null && WORKSHOP_CEO_NAME == null) { %>
+							<button type="button" class="btn btn-outline-dark btn-lg" data-toggle="modal" data-target="#exampleModalCenter">예약 하기</button>
+							<a href="#" class="btn btn-outline-dark btn-lg" role="button" aria-pressed="true">
+								<i class="far fa-heart"></i>
+							</a>
+						<% } else { %>
 							<button type="button" class="btn btn-outline-dark btn-lg" data-toggle="modal" data-target="#Booking">예약 하기</button>
 							<a href="#" class="btn btn-outline-dark btn-lg" role="button" aria-pressed="true">
 								<i class="far fa-heart"></i>
 							</a>
+						<% } %>
+						
 						</div>
 						<br>
 					</div>
@@ -423,15 +445,15 @@
 										</colgroup>
 										<tr>
 											<th scope="row">예약자</th>
-											<td><%=me.getMEMBER_NAME()%></td>
+											<td><%=MEMBER_NAME%></td>
 										</tr>
 										<tr>
 											<th scope="row">연락처</th>
-											<td><%=me.getMEMBER_PHONE()%></td>
+											<td><%=MEMBER_PHONE%></td>
 										</tr>
 										<tr>
 											<th scope="row">이메일</th>
-											<td><%=me.getMEMBER_EMAIL()%></td>
+											<td><%=MEMBER_EMAIL%></td>
 										</tr>
 									</table>
 								</div>
@@ -448,19 +470,19 @@
 										</colgroup>
 										<tr>
 											<th scope="row">공방 이름</th>
-											<td><%=cl.getMEMBER_NICK()%></td>
+											<td><%=cl.getWORKSHOP_NAME()%></td>
 										</tr>
 										<tr>
 											<th scope="row">대표자 명</th>
-											<td>댕댕댕</td>
+											<td><%=ws.getWORKSHOP_CEO_NAME()%></td>
 										</tr>
 										<tr>
 											<th scope="row">사업자 번호</th>
-											<td>089-53-85692</td>
+											<td><%=ws.getWORKSHOP_LICENSE()%></td>
 										</tr>
 										<tr>
 											<th scope="row">연락처</th>
-											<td>010-5468-8466</td>
+											<td><%=ws.getWORKSHOP_PHONE()%></td>
 										</tr>
 									</table>
 								</div>
@@ -715,10 +737,10 @@
 				//결제창에서 보여질 이름
 				amount : Amount,
 				//가격
-				buyer_email : '<%=me.getMEMBER_EMAIL()%>',
-	            buyer_name : '<%=cl.getCLASS_NAME()%>',
-	            buyer_tel : '<%=me.getMEMBER_PHONE()%>',
-	            buyer_addr : '<%=cl.getCLASS_ADDRESS()%>',
+				buyer_email : '<%=MEMBER_EMAIL%>',
+	            buyer_name : '<%=MEMBER_NAME%>',
+	            buyer_tel : '<%=MEMBER_PHONE%>',
+	            buyer_addr : '서울 백악관',
 	            buyer_postcode : '123-456'
 				
 			}, function(rsp) {

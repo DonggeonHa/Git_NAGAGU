@@ -4,7 +4,6 @@
 <%
 	String MEMBER_EMAIL = (String)session.getAttribute("MEMBER_EMAIL");
 	String WORKSHOP_NAME = (String)session.getAttribute("WORKSHOP_NAME");
-	System.out.println("WORKSHOP_NAME : " + WORKSHOP_NAME);
 %>
 <!DOCTYPE html>
 <html>
@@ -49,7 +48,7 @@
 			}
 			
 			.header_util>ul>li>a {
-				color: #ffffff;
+				color: #ffffff !important;
 				text-decoration: none;
 			}
 			
@@ -259,7 +258,7 @@
 					
 					success: function(retVal) {
 						if(retVal.res == "login_success"){
-							location.href = './index.ma';
+							location.reload();
 							
 						} else if(retVal.res == "loginFail_unconfirm"){
 							$('.fail_message').text('이메일 인증을 해주세요.');
@@ -319,7 +318,7 @@
 											data-toggle="dropdown" aria-haspopup="true"	aria-expanded="false"> STORE </a>
 											<div class="dropdown-menu" aria-labelledby="navbarDropdown">
 												<a class="dropdown-item" href="./productcategory.pro">수제가구</a> 
-												<a class="dropdown-item" href="./estimate.pro">견적문의</a>
+												<a class="dropdown-item" href="./estimate.es">견적문의</a>
 												<!-- <div class="dropdown-divider"></div> -->
 											</div>
 										</li>
