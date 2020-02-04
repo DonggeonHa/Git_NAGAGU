@@ -31,6 +31,9 @@ public interface ProductReviewMapper {
 	int deleteReview(int REVIEW_NUM);
 	
 	
-	int modifyReview_RE(Product_reviewVO reviewVO);	
+	int modifyReview_RE(Product_reviewVO reviewVO);
+	//경태 리뷰 댓글가져오기
+	public ArrayList<Map<String, Object>> getLoginMemberReply(HashMap<String, Object> map);
+	public ArrayList<Map<String, Object>> getLoginMemberReview(HashMap<String, Object> map);
 	
 }

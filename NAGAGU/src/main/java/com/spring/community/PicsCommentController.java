@@ -29,7 +29,7 @@ public class PicsCommentController {
 		
 		@PostMapping(value="/getCommentList.cm", produces="application/json;charset=UTF-8")
 		public ArrayList<PicsCommentDB> getCommentList(PicsCommentDB db){
-			System.out.println(db.getPICS_RE_PICS());
+			System.out.println("사진번호="+db.getPICS_RE_PICS());
 			ArrayList<PicsCommentDB> list = picsCommentService.getCommentList(db.getPICS_RE_PICS());
 			return list;
 		}

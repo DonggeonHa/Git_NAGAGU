@@ -18,4 +18,5 @@ public interface ProductMapper {
 	HashMap<String, Object> insertProductLike(HashMap<String, Object> map);
 	int updateProductLike(HashMap<String, Object> map);
 	int getProductLike(HashMap<String, Object> map);	//ProductDetail-좋아요 list뿌리기
+	ArrayList<ProductVO> getMemberLikeProduct(HashMap<String, Object> map);
 }

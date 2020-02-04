@@ -29,10 +29,4 @@ public class LikeVO {
 	public void setLIKE_PRODUCT(int lIKE_PRODUCT) {
 		LIKE_PRODUCT = lIKE_PRODUCT;
 	} 
-	
-	
-	
-	
-	
-	
 }

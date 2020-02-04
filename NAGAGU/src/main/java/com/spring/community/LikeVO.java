@@ -2,8 +2,9 @@ package com.spring.community;
 
 public class LikeVO {
 	private int LIKE_NUM;
-	private int LIKE_MEMBER;  /* 회원 번호 */
-	private int LIKE_PICS; /* 사진 ID */
+	private int LIKE_MEMBER;  
+	private int LIKE_PICS; 
+	private int LIKE_PRODUCT;
 	public int getLIKE_NUM() {
 		return LIKE_NUM;
 	}
@@ -22,6 +23,10 @@ public class LikeVO {
 	public void setLIKE_PICS(int lIKE_PICS) {
 		LIKE_PICS = lIKE_PICS;
 	}
-	
-	
+	public int getLIKE_PRODUCT() {
+		return LIKE_PRODUCT;
+	}
+	public void setLIKE_PRODUCT(int lIKE_PRODUCT) {
+		LIKE_PRODUCT = lIKE_PRODUCT;
+	} 
 }

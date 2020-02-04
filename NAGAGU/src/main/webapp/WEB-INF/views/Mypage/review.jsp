@@ -78,7 +78,7 @@
 	.card {
 		width: 6rem;
 		font-size: 0.6rem;
-		margin: 2px 10px 2px 10px;
+		margin: 2px 2px 2px 2px;
 	}
 	.card-header, .card-body, .card-footer {
 		padding: 10px !important; 
@@ -87,7 +87,7 @@
 @media ( min-width : 1200px) {
 	.card {
 		width: 8rem !important;  
-		font-size: 0.7rem; 
+		font-size: 0.7rem;
 	}
 	.card-header, .card-body, .card-footer {
 		padding: 18px !important;  
@@ -111,14 +111,18 @@ img {
 width: 100%;
 height: auto;
 }
-.picOutput{
-	padding-left: 0px !important;
+/* --------------------------------- */
+.tab-content img {
+	height: auto;
+}
+.reply-content {
+	width: 100%;
 }
 .tab-content{
 	min-height:38vh;
 }
 .tab-content img{
-	max-height:200px;
+	max-height:250px;
 }
 </style>
 </head>
@@ -188,7 +192,7 @@ height: auto;
 						<div class="card-body">
 							<i class="fas fa-keyboard fa-4x"></i>
 						</div>
-					</a>  
+					</a>
 				</div>
 				<div class="card card-hover ">
 					<a href="mypage_estimate.my" class="href">
@@ -201,31 +205,30 @@ height: auto;
 			</div>
 	
 		</div>
-		
-		<div class="container">
-			<div class="row">
-				<ul class="nav nav-tabs" id="myTab" role="tablist">
-					<li class="nav-item"><a class="nav-link active" id="picTab"
-						data-toggle="tab" href="#home" role="tab" aria-controls="home"
-						aria-selected="true">PIC</a></li>
-					<li class="nav-item"><a class="nav-link" id="storeTab"
-						data-toggle="tab" href="#profile" role="tab"
-						aria-controls="profile" aria-selected="false">STORE</a></li>
-				</ul>
-			</div>
-				<div class="tab-content" id="myTabContent">
-					<div class="tab-pane fade show active row text-center" id="picOutput"
-						role="tabpanel" aria-labelledby="picTab">
-						<!-- 사진 뿌려지는 장소 -->
-						<!-- <div class="col-4 picOutput">
-			    		<img src="/communityupload/image/''">
-			    		</div> -->
-					</div>
-				</div>
+
+	<div class="container">
+		<div class="row" style="margin-left: 0px;">
+			<ul class="nav nav-tabs" id="myTab" role="tablist">
+				<li class="nav-item"><a class="nav-link active" id="picTab"
+					data-toggle="tab" href="#home" role="tab" aria-controls="home"
+					aria-selected="true">상품 후기</a></li>
+				<li class="nav-item"><a class="nav-link" id="profile-tab"
+					data-toggle="tab" href="#profile" role="tab"
+					aria-controls="profile" aria-selected="false">강의 후기</a></li>
+			</ul>
 		</div>
-	
-	
-<!-- Optional JavaScript -->
+		<div class="tab-content" id="myTabContent">
+			<div class="tab-pane fade show active row" id=""
+				role="tabpanel" aria-labelledby="picTab">
+				<!-- 댓글 뿌려지는 장소 -->
+				<div class="row mx-0 my-2 reply-content replyOutput">
+				</div>
+			</div>
+		</div>
+	</div>
+
+
+	<!-- Optional JavaScript -->
 <!-- jQuery first, then Popper.js, then Bootstrap JS -->
 <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n"	crossorigin="anonymous"></script>
 <script	src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"	integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"	crossorigin="anonymous"></script>
@@ -234,15 +237,16 @@ height: auto;
 <script src="https://kit.fontawesome.com/97dbc99ea1.js" crossorigin="anonymous"></script>
 <script>
 	$(document).ready(function(){
-		//사진 가져오기 함수 정의
+		//상품 후기  가져오기 함수 정의
 		function getPics(event){
 			var loginNum = '<%=session.getAttribute("MEMBER_NUM")%>'; 
-			var category = 'like_pic'
+			alert('로그인넘버='+loginNum)
+			var category = 'review_store'
 			if(loginNum == 0){
 				return
 			}
 			$.ajax({
-				  url: "/NAGAGU/loginMemberLikePics.cm",
+				  url: "/NAGAGU/loginMemberReply.cm",
 	              type: "POST",
 	              data: { 'category' : category},
 	              contentType:
@@ -250,13 +254,19 @@ height: auto;
 	              success: function (retVal) {
 	        		if(retVal.res=="OK"){
 	        			var output="";
+	        			console.log(retVal.PicsNum)
 			        	for(var j=0; j<retVal.PicsNum.length; j++){
-			        		var imgsrc = retVal.PicsNum[j].pics_FILE_1
+			        		var imgsrc = retVal.PicsNum[j].REVIEW_FILE
+			        		var date = retVal.PicsNum[j].REVIEW_DATE
+			        		var content = retVal.PicsNum[j].REVIEW_CONTENT
+			        		var title = retVal.PicsNum[j].PRODUCT_TITLE
 			        		console.log(imgsrc)
-				    		output += '<div class="col-4 picOutput">'
-				    		output += '<img src="/communityupload/image/'+imgsrc+'"></div>'
+				    		output += '<div class="col-4"><img src="/productupload/image/'+imgsrc+'"></div>'
+				    		output += '<div class="col-8"><div class="row justify-content-between"><div class="name">['+title+']</div>'
+				    		output += '<div class="smallfont">'+date+'</div></div><div class="row">'
+				    		output += '<div class="comm_content">'+content+'</div></div></div>'
 			        	}
-			        	$('#picOutput').html(output)
+			        	$('.replyOutput').html(output)
 					}else{
 						alert("update fail");
 					}  
@@ -266,21 +276,21 @@ height: auto;
 				}
 			})
 		} 
-		//누르면 사진 가져오기
+		//누르면 사진댓글 가져오기
 		$(document).on('click','#picTab',function(){
 			getPics()
 		}) 
-		/* ------------------------------------------------- */
-		//누르면 STORE 사진 가져오기
+		
+		//누르면 상품댓글 가져오기
 		$(document).on('click','#storeTab',function(){
 			alert('hid')
 			var loginNum = '<%=session.getAttribute("MEMBER_NUM")%>'; 
-			var category = 'like_product'
+			var category = 'review_store'
 			if(loginNum == 0){
 				return
 			}
 			$.ajax({
-				  url: "/NAGAGU/loginMemberLikePics.cm",
+				  url: "/NAGAGU/loginMemberReply.cm",
 	              type: "POST",
 	              data: { 'category' : category},
 	              contentType:
@@ -288,17 +298,19 @@ height: auto;
 	              success: function (retVal) {
 	        		if(retVal.res=="OK"){
 	        			var output="";
-	        			if(retVal.length!=0){
-				        	for(var j=0; j<retVal.PicsNum.length; j++){
-				        		var imgsrc = retVal.PicsNum[j].product_IMAGE
-				        		output += '<div class="col-4 picOutput">'
-					    		output += '<img src="/productupload/image/'+imgsrc+'"></div>'
-				        	}
-	        			}else{
-	        				output += '<div class="col-12 comm_content">좋아하는 상품이 아직 없습니다</div>'	        				
-	        			}
-	        			console.log(output)
-			        	$('#picOutput').html(output)
+	        			console.log(retVal.PicsNum)
+			        	for(var j=0; j<retVal.PicsNum.length; j++){
+			        		var imgsrc = retVal.PicsNum[j].PRODUCT_IMAGE
+			        		var date = retVal.PicsNum[j].REVIEW_DATE
+			        		var content = retVal.PicsNum[j].REVIEW_CONTENT
+			        		var title = retVal.PicsNum[j].PRODUCT_TITLE
+			        		console.log(imgsrc)
+				    		output += '<div class="col-1"><img src="/productupload/image/'+imgsrc+'"></div>'
+				    		output += '<div class="col-11"><div class="row justify-content-between"><div class="name">'+title+'</div>'
+				    		output += '<div class="smallfont">'+date+'</div></div><div class="row">'
+				    		output += '<div class="comm_content">→'+content+'</div></div></div>'
+			        	}
+			        	$('.replyOutput').html(output)
 					}else{
 						alert("update fail");
 					}  
@@ -311,7 +323,5 @@ height: auto;
 		//처음 로드하고 사진 가져오기 호출
 		getPics();
 	})
-
-</script>
-</body>
+</script></body>
 </html>

@@ -20,6 +20,9 @@ import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import com.spring.member.MemberServiceImpl;
 import com.spring.member.MemberVO;
+import com.spring.store.ProductReviewServiceImpl;
+import com.spring.store.ProductServiceImpl;
+import com.spring.store.ProductVO;
 @Controller
 public class CommunityController {
 	
@@ -27,6 +30,12 @@ public class CommunityController {
 	private CommunityServiceImpl communityService;
 	@Autowired
 	private MemberServiceImpl memberService;
+	@Autowired
+	private PicsCommentServiceImpl picsCommentService;
+	@Autowired
+	private ProductReviewServiceImpl productReviewService;
+	@Autowired
+	private ProductServiceImpl productService;
 	@RequestMapping(value = "/community.cm")
 	public String CommunityList(PicsVO picsVO, Model model,MemberVO memberVO, HttpServletRequest request, HttpSession session) {
 		
@@ -132,7 +141,6 @@ public class CommunityController {
 		PicsVO picsDetail = communityService.getPicsDetail(picsVO);	
 		ArrayList<PicsVO> memberPicsList = communityService.getPicsOfMemberUpload(picsVO);
 		MemberVO memberDetail = memberService.getMemberDetail(memberVO);
-		System.out.println(memberVO.getMEMBER_PICTURE());
 		//댓글 리스트
 		//ArrayList<PicsCommentDB> commentList = picsCommentService.getCommentList(picsVO.getPICS_NUM());
 		
@@ -301,6 +309,7 @@ public class CommunityController {
 		}
 		return retVal;
 	} 
+	//사진 좋아요 누르기
 	@RequestMapping(value = "/insertPicsLike.cm")
 	public @ResponseBody Map<String, Object> getLikeUpdate(PicsVO picsVO,HttpServletRequest request) {
 		System.out.println("insert컨트롤러 시작");
@@ -310,7 +319,6 @@ public class CommunityController {
 		HashMap<String, Object> map = new HashMap<String, Object>();
 		map.put("MEMBER_NUM", MEMBER_NUM);
 		map.put("PICS_NUM", PICS_NUM);
-		
 		//picsVO.setPICS_NUM(Integer.parseInt(request.getParameter("picNum")));
 		Map<String, Object> retVal = new HashMap<String, Object>();
 		try {
@@ -325,11 +333,30 @@ public class CommunityController {
 		}
 		return retVal;
 	} 
+	
+	//로그인 멤버가 올린 사진 리스트
+	@RequestMapping(value = "/loginMemberUploadPics.cm")
+	public @ResponseBody Map<String, Object> getLoginMemberUploadPics(HttpSession session) {
+		
+		int LIKE_MEMBER = (int)session.getAttribute("MEMBER_NUM");
+		Map<String, Object> retVal = new HashMap<String, Object>();
+		try {
+			PicsVO picsVO = new PicsVO();
+			picsVO.setPICS_MEMBER(LIKE_MEMBER);
+			//멤버가 올린 사진리스트
+			ArrayList<PicsVO> memberPicsList = communityService.getPicsOfMemberUpload(picsVO);
+			retVal.put("PicsNum", memberPicsList);
+			retVal.put("res", "OK");
+		}catch(Exception e) {
+			retVal.put("res", "FAIL");
+			retVal.put("message", "Failure");
+		}
+		return retVal;
+	}
 	//other마이페이지 갔을 때 사진 받아오기
 	@RequestMapping(value = "/memberLikePics.cm")
 	public String OtherMypage(PicsVO picsVO, MemberVO memberVO,Model model, HttpServletRequest request) {
 		System.out.println("컨트롤러");
-		
 		//마이페이지 멤버
 		MemberVO memberDetail = memberService.getMemberDetail(memberVO);
 		//멤버넘버 = 픽스멤버 셋팅 후 DB에서 picsList(올린사진),likeList(좋아요 한 사진) 정보 가져옴
@@ -359,9 +386,17 @@ public class CommunityController {
 		Map<String, Object> retVal = new HashMap<String, Object>();
 		try {
 			//로그인 멤버가 좋아요 한 사진 쿼리문
-			ArrayList<PicsVO> memberLikePics = communityService.getMemberLikePics(map);
-			//사진번호들 jsp로 return
-			retVal.put("PicsNum", memberLikePics);
+			ArrayList<PicsVO> picList = null;
+			ArrayList<ProductVO> productList = null;
+			String category = request.getParameter("category");
+			if(category.equals("like_pic")) {
+				picList = communityService.getMemberLikePics(map);
+				retVal.put("PicsNum", picList);
+			}
+			if(category.equals("like_product")) {
+				productList = productService.getMemberLikeProduct(map);
+				retVal.put("PicsNum", productList);
+			}
 			retVal.put("res", "OK");
 		}catch(Exception e) {
 			retVal.put("res", "FAIL");
@@ -369,37 +404,33 @@ public class CommunityController {
 		}
 		return retVal;
 	}
-	//로그인 멤버가 올린 사진 리스트
-	@RequestMapping(value = "/loginMemberUploadPics.cm")
-	public @ResponseBody Map<String, Object> getLoginMemberUploadPics(HttpSession session) {
-		
-		int LIKE_MEMBER = (int)session.getAttribute("MEMBER_NUM");
-		Map<String, Object> retVal = new HashMap<String, Object>();
-		try {
-			PicsVO picsVO = new PicsVO();
-			picsVO.setPICS_MEMBER(LIKE_MEMBER);
-			//멤버가 올린 사진리스트
-			ArrayList<PicsVO> memberPicsList = communityService.getPicsOfMemberUpload(picsVO);
-			retVal.put("PicsNum", memberPicsList);
-			retVal.put("res", "OK");
-		}catch(Exception e) {
-			retVal.put("res", "FAIL");
-			retVal.put("message", "Failure");
-		}
-		return retVal;
-	}
+	
 	//로그인 멤버가 올린 댓글 리스트
 	@RequestMapping(value = "/loginMemberReply.cm")
-	public @ResponseBody Map<String, Object> getLoginMemberReply(HttpSession session) {
+	public @ResponseBody Map<String, Object> getLoginMemberReply(HttpSession session, HttpServletRequest request){
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		int MEMBER_NUM = (int)session.getAttribute("MEMBER_NUM");
+		map.put("MEMBER_NUM", MEMBER_NUM);
 		
-		int LIKE_MEMBER = (int)session.getAttribute("MEMBER_NUM");
 		Map<String, Object> retVal = new HashMap<String, Object>();
 		try {
-			PicsCommentDB db = new PicsCommentDB();
+			String category = request.getParameter("category");
+			ArrayList<Map<String, Object>> replyList = null;
+			if(category.equals("reply_pic")) {
+				replyList = picsCommentService.getLoginMemberReply(map);
+			}
+			if(category.equals("reply_store")) {
+				replyList = productReviewService.getLoginMemberReply(map);
+			}
+			if(category.equals("review_store")) {
+				System.out.println("reivew_store");
+				replyList = productReviewService.getLoginMemberReview(map);
+			}
+			
 			
 			//멤버가 올린 사진리스트
 			//ArrayList<PicsVO> memberPicsList = communityService.getPicsOfMemberUpload(picsVO);
-			//retVal.put("PicsNum", memberPicsList);
+			retVal.put("PicsNum", replyList);
 			retVal.put("res", "OK");
 		}catch(Exception e) {
 			retVal.put("res", "FAIL");

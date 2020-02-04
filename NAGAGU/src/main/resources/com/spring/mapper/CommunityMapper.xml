@@ -189,13 +189,13 @@ PICS_REF-->
 		<if test="count == 'minus'">
 			PICS_LIKE = PICS_LIKE -1
 		</if>
-		WHERE PICS_NUM=#{picsNum}
+		WHERE PICS_NUM=#{PICS_NUM}
 	</update>
 	<!-- 좋아요 한 사진 리스트(좋아요사진=사진넘버 중에서 파라미터 멤버가 좋아한 사진들) -->
     <select id="getMemberLikePics" parameterType="java.util.HashMap" resultMap="picsResultMap">	
  		SELECT *
         FROM PICS, MEMBER_LIKE
-        WHERE LIKE_MEMBER=#{LIKE_MEMBER	} AND PICS_NUM=LIKE_PICS
+        WHERE LIKE_MEMBER=#{LIKE_MEMBER} AND PICS_NUM=LIKE_PICS
         <!-- <![CDATA[ WHERE rnum >= #{startrow} AND rnum <= #{endrow} ]]> --> 
 	</select>
 

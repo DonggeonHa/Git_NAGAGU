@@ -14,32 +14,14 @@ CREATE TABLE MEMBER_LIKE (
 		<result property="LIKE_PICS" column="LIKE_PICS" />	
 		<result property="LIKE_PRODUCT" column="LIKE_PRODUCT" />
 	</resultMap>
-	
+
 	<resultMap type="com.spring.member.LikeVO" id="likeResultMap">
 		<result property="LIKE_NUM" column="LIKE_NUM" />	
 		<result property="LIKE_MEMBER" column="LIKE_MEMBER" />	
 		<result property="LIKE_PICS" column="LIKE_PICS" />	
 		<result property="LIKE_PRODUCT" column="LIKE_PRODUCT" />	
 	</resultMap>
-	<!--
-	<insert id="insertMemberLike" parameterType="com.spring.community.LikeVO">
-		INSERT INTO MEMBER_LIKE(LIKE_NUM, LIKE_MEMBER, LIKE_PICS)
-		VALUES(SEQ_MEMBER_LIKE.NEXTVAL, #{memberNum}, #{picsNum})
-	</insert>
-	-->
-	<!--  
-	<select id="selectMemberLike" parameterType="java.util.HashMap" resultType="int">
-		SELECT COUNT(*) FROM MEMBER_LIKE WHERE LIKE_MEMBER=#{memberNum} AND LIKE_PICS=#{picsNum}
-	</select>
-	-->
-	<!--  
-	<delete id="deleteMemberLike">
-		DELETE FROM MEMBER_LIKE
-		WHERE LIKE_MEMBER = #{memberNum} AND LIKE_PICS = #{picsNum}
-	</delete>
-	-->
-	
-	<!-- 선주 -->
+
 	<select id="selectMemberLike" parameterType="java.util.HashMap" resultType="int">
 		SELECT COUNT(*) FROM MEMBER_LIKE WHERE LIKE_MEMBER=#{MEMBER_NUM} 
 			<if test="PICS_NUM !=null"> AND LIKE_PICS=#{PICS_NUM} </if>

@@ -7,10 +7,8 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-
 import com.spring.mapper.MemberLikeMapper;
 import com.spring.mapper.ProductMapper;
-
 import com.spring.workshop.WorkshopVO;
 
 @Service
@@ -85,7 +83,7 @@ public class ProductServiceImpl implements ProductService{
 	
 	@Override
 	public ProductVO getproductVO(int PRODUCT_NUM) {
-		ProductVO productVO;
+		ProductVO productVO = null;
 		ProductMapper productMapper = sqlSession.getMapper(ProductMapper.class);
 		productVO = productMapper.getproductVO(PRODUCT_NUM);
 		return productVO;
@@ -157,6 +155,21 @@ public class ProductServiceImpl implements ProductService{
 		}  
 		return status;
 	}
+
+	@Override
+	public ArrayList<ProductVO> getMemberLikeProduct(HashMap<String, Object> map) {
+		ArrayList<ProductVO> vo = null; 
+		try { 
+			ProductMapper productMapper = sqlSession.getMapper(ProductMapper.class);
+			//memberMapper memberMapper= sqlSession.getMapper(memberMapper.class);
+			vo = productMapper.getMemberLikeProduct(map);
+			System.out.println("RESULT="+vo);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}  
+		return vo;
+	}
+
 
 
 

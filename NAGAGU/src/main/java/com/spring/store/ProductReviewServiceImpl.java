@@ -8,6 +8,7 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.spring.mapper.PicsCommentMapper;
 import com.spring.mapper.ProductReviewMapper;
 import com.spring.member.MemberVO;
 
@@ -156,6 +157,25 @@ public class ProductReviewServiceImpl implements ProductReviewService {
 		int res;
 		res = reviewMapper.modifyReview_RE(reviewVO);
 		return res;
+	}
+	
+	//경태<리뷰 댓글 가져오기>
+	@Override
+	public ArrayList<Map<String, Object>> getLoginMemberReply(HashMap<String, Object> map) {
+		ArrayList<Map<String, Object>> commentList =null;
+		ProductReviewMapper reviewMapper = sqlSession.getMapper(ProductReviewMapper.class);
+		commentList= reviewMapper.getLoginMemberReply(map);
+		System.out.println("getLoginMemberReply Impl결과="+commentList);
+		return commentList;
+	}
+	//경태<리뷰 댓글 가져오기>
+	@Override
+	public ArrayList<Map<String, Object>> getLoginMemberReview(HashMap<String, Object> map) {
+		ArrayList<Map<String, Object>> reviewList =null;
+		ProductReviewMapper reviewMapper = sqlSession.getMapper(ProductReviewMapper.class);
+		reviewList= reviewMapper.getLoginMemberReview(map);
+		System.out.println("getLoginMemberReview Impl결과="+reviewList);
+		return reviewList;
 	}
 
 
