@@ -24,8 +24,7 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.view.json.MappingJackson2JsonView;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.spring.academy.AcademyService;
-import com.spring.member.MemberServiceImpl;
+import com.spring.community.PicsVO;
 import com.spring.member.MemberVO;
 import com.spring.workshop.WorkshopVO;
 
@@ -38,10 +37,7 @@ public class ProductController {
 	private ProductReviewService reviewService;
 	@Autowired
 	private ProductQnaService qnaService;
-	@Autowired
-	private MemberServiceImpl memberService;
-	
-	
+
 	@Autowired
 	MappingJackson2JsonView jsonView;	
 	
@@ -129,10 +125,12 @@ public class ProductController {
 
 		/*로그인 멤버*/
 		if(session.getAttribute("MEMBER_NUM") != null) {
+			System.out.println("멤버넘");
+			System.out.println("멤버넘"+session.getAttribute("MEMBER_NUM"));
 			memberVO.setMEMBER_NUM((int)session.getAttribute("MEMBER_NUM"));
 			//int index = ((Integer)(session.getAttribute("index"))).intValue();
 			MemberVO LoginMemberVO = reviewService.getLoginMemberbyNUM(memberVO);			
-
+			System.out.println("1"+memberVO.getMEMBER_NUM());
 			/*로그인 멤버 관련*/
 			model.addAttribute("LoginMemberVO",LoginMemberVO);
 		
@@ -634,53 +632,102 @@ public class ProductController {
 		System.out.println("ccc");
 		return vo;
 	}		
+
+	
+	//-------------------------------------------좋아요 누르는 기능
+	@RequestMapping(value = "/insertProLike.pro", method = RequestMethod.POST)
+	@ResponseBody
+	public Map<String, Object> insertProLike(ProductVO productVO, HttpServletRequest request) {
+		System.out.println("좋아요 insert컨트롤러 시작");
+		String MEMBER_NUM = request.getParameter("MEMBER_NUM");
+		String PRODUCT_NUM = request.getParameter("PRODUCT_NUM");
+		
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		map.put("MEMBER_NUM", MEMBER_NUM);
+		map.put("PRODUCT_NUM", PRODUCT_NUM);
+		
+		//picsVO.setPICS_NUM(Integer.parseInt(request.getParameter("picNum")));
+		Map<String, Object> retVal = new HashMap<String, Object>();
+		try {
+			HashMap<String, Object> returnInfo = productService.insertProductLike(map);
+//			System.out.println("picscount="+returnInfo.get("picsLikeCount"));
+//			retVal.put("picsLikeCount", returnInfo.get("picsLikeCount"));
+			retVal.put("cnt", returnInfo.get("cnt"));
+			retVal.put("res", "OK");
+		}catch(Exception e) {
+			retVal.put("res", "FAIL");
+			retVal.put("message", "Failure");
+		}
+		return retVal;
+	}
+	
+	//-------------------------------------------좋아요 리스트 가져오기
+	@RequestMapping(value = "/getProductLike.pro", method = RequestMethod.POST)
+	@ResponseBody
+	public Map<String, Object> getProductLike(ProductVO productVO, HttpServletRequest request, HttpSession session) {
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		int LIKE_MEMBER = (int)session.getAttribute("MEMBER_NUM");
+		map.put("LIKE_MEMBER", LIKE_MEMBER);
+		map.put("PRODUCT_NUM", Integer.parseInt(request.getParameter("PRODUCT_NUM")));
+		Map<String, Object> retVal = new HashMap<String, Object>();
+		try {
+			int status = productService.getProductLike(map);
+			
+			retVal.put("status", status);
+			retVal.put("res", "OK");
+		}catch(Exception e) {
+			retVal.put("res", "FAIL");
+			retVal.put("message", "Failure");
+		}
+		return retVal;
+	}
+		
 	
 	
 	
-	
+	//-------------------------------------------상품 글쓰기 폼	
 	@RequestMapping(value = "/product_write.pro", method = RequestMethod.GET)
-	public String product_write(Model model, HttpServletRequest request, HttpSession session) {
-	
-//		/*로그인 멤버*/
-//		if(session.getAttribute("MEMBER_NUM") != null) {
-//			memberVO.setMEMBER_NUM((int)session.getAttribute("MEMBER_NUM"));
-//			//int index = ((Integer)(session.getAttribute("index"))).intValue();
-//			MemberVO LoginMemberVO = reviewService.getLoginMemberbyNUM(memberVO);			
-//			int MEMBER_STATUS = (int)session.getAttribute("MEMBER_STATUS");
-//			/*로그인 멤버 관련*/
-//			model.addAttribute("LoginMemberVO",LoginMemberVO);
-//			model.addAttribute("MEMBER_STATUS", MEMBER_STATUS);
-//		
-//		}
-//		
-		
-		System.out.println("aaa");
-		
-		
-				
-		
+	public String product_write(Model model, HttpServletRequest request, HttpSession session) {		
 		return "Store/productForm";
 	}
 	
 	
-	
-	
+	//-------------------------------------------상품 글쓰기 업로드(공방 업자)
 	@RequestMapping(value = "/addproduct.pro", method = RequestMethod.POST)
-	public ModelAndView addproduct(MultipartHttpServletRequest request, HttpServletResponse response, HttpSession session) throws Exception {
-		System.out.println("???????");
+	public ModelAndView addproduct(WorkshopVO workshopVO, MultipartHttpServletRequest request, HttpServletResponse response, HttpSession session) throws Exception {
+		
+		
+//		/*로그인 멤버*/
+//		/*PRODUCTFORM에서 추가 옵션 구매에 대한 정보 넘겨줌*/
+//		if(session.getAttribute("WORKSHOP_NUM") != null) {
+//			workshopVO.setWORKSHOP_NUM(wORKSHOP_NUM);
+//			setMEMBER_NUM((int)session.getAttribute("MEMBER_NUM"));
+//			//int index = ((Integer)(session.getAttribute("index"))).intValue();
+//			MemberVO LoginMemberVO = reviewService.getLoginMemberbyNUM(memberVO);			
+//			System.out.println("1"+memberVO.getMEMBER_NUM());
+//			/*로그인 멤버 관련*/
+//			model.addAttribute("LoginMemberVO",LoginMemberVO);
+//		
+//		}
+//		
+		
 		boolean result = false;
 		response.setCharacterEncoding("utf-8");
 		response.setContentType("text/html; charset=utf-8"); 
+		
+		//세션에 로그인 된 workshop_num를 vo에 넣어줌
+		int WORKSHOP_NUM = (int)session.getAttribute("WORKSHOP_NUM");	
+		
 		ProductVO vo = new ProductVO();
-		//vo.setPRODUCT_WORKSHOP(Integer.parseInt(session.getAttribute("WORKSHOP_NUM").toString()));
-		//vo.setPRODUCT_WORKSHOP(Integer.parseInt(session.getAttribute("MEMBER_NUM").toString()));	//공방번호
-		vo.setPRODUCT_WORKSHOP(50);	//공방번호
+		vo.setPRODUCT_WORKSHOP(WORKSHOP_NUM);	//공방번호를 ProductVO vo에 set해줌
+	
+		//--------1. setPRODUCT_SHOPNAME
+		WorkshopVO vo2 = productService.selectWorkshop(vo);	 //vo로 Workshop정보 (product_shopname) 받아온다
+		vo.setPRODUCT_SHOPNAME(vo2.getWORKSHOP_NAME());
+		//--------2. setPRODUCT_SHOPNAME
+		ArrayList<ProductVO> WorkshopProoductList = productService.getAllWorkshopProduct(vo2);	//WorkshopVO vo2로 공방의 productList 받아온다
 		
 		
-		WorkshopVO vo2 = productService.selectWorkshop(vo);
-		//MemberVO vo2 = AcademyService.selectMember(vo);
-		
-
 		//값이 여러개일 수 있는 size, color, option String으로 값 받기
 		String PRODUCT_SIZE = "";
 		String PRODUCT_COLOR = "";
@@ -709,23 +756,24 @@ public class ProductController {
 			PRODUCT_OPTION = "없음";
 			System.out.println("PRODUCT_OPTION="+PRODUCT_OPTION);
 		} else {
+			//추가구매로 들어왔고 상품이 있을 때
 			String[] OptionStr = request.getParameterValues("PRODUCT_OPTION");			
 			for(int i = 0; i < OptionStr.length; i++) {
 				PRODUCT_OPTION += OptionStr[i] + ",";
 				System.out.println("PRODUCT_OPTION="+PRODUCT_OPTION);
 			}
 			PRODUCT_OPTION = PRODUCT_OPTION.substring(0, PRODUCT_OPTION.length()-1);
-			System.out.println("PRODUCT_OPTION2="+PRODUCT_OPTION);
+			System.out.println("PRODUCT_OPTION2="+PRODUCT_OPTION);		
 		}
 		
 
-		List<MultipartFile> fileList = new ArrayList<MultipartFile>(); 	//배너 이미지는 4개
+		//---------배너 이미지 네 장
+		List<MultipartFile> fileList = new ArrayList<MultipartFile>(); 	
 		
 		// input file 에 아무것도 없을 경우 (파일을 업로드 하지 않았을 때 처리) 
 		if(request.getFiles("PRODUCT_BANNER").get(0).getSize() != 0) { 
 			fileList = request.getFiles("PRODUCT_BANNER"); 
 		} 
-
 		
 		String path = "C:\\Project138\\upload\\"; 
 		File fileDir = new File(path); 
@@ -756,8 +804,8 @@ public class ProductController {
 			str = "#";
 		}
 		
-		
-		MultipartFile mf2 = request.getFile("PRODUCT_IMAGE");	//썸네일 이미지는 하나
+		//---------썸네일 이미지는 하나
+		MultipartFile mf2 = request.getFile("PRODUCT_IMAGE");	
 		if(!mf2.isEmpty()) {
 			String uploadPath = "C:\\Project138\\upload\\";
 			File fileDir2 = new File(uploadPath); 
@@ -778,8 +826,7 @@ public class ProductController {
 			return null;
 		}
 			 
-		vo.setPRODUCT_WORKSHOP(vo2.getWORKSHOP_NUM());
-		vo.setPRODUCT_SHOPNAME(vo2.getWORKSHOP_NAME());
+		
 		vo.setPRODUCT_DATE(new Timestamp(System.currentTimeMillis()));
 		vo.setPRODUCT_TITLE(request.getParameter("PRODUCT_TITLE"));
 		vo.setPRODUCT_BRIEF(request.getParameter("PRODUCT_BRIEF"));
@@ -788,7 +835,7 @@ public class ProductController {
 		vo.setPRODUCT_GRADE(0);	//review 평점 업로드시 update 해주기. (ok)
 		vo.setPRODUCT_READ(0);	//detail 들어갈 시 update 해주기. (ok)
 		vo.setPRODUCT_SALES(0);	//결제시 update 해주기
-		vo.setPRODUCT_LIKE(0);	//실시간 update 해주기		
+		vo.setPRODUCT_LIKE(0);	//실시간 update 해주기		(ok)
 		vo.setPRODUCT_SIZE(PRODUCT_SIZE);
 		vo.setPRODUCT_OPTION(PRODUCT_OPTION);
 		vo.setPRODUCT_COLOR(PRODUCT_COLOR);
@@ -809,9 +856,8 @@ public class ProductController {
 		
 		ModelAndView mav = new ModelAndView();
 		mav.setViewName("redirect:productlist.pro?PRODUCT_CATEGORY="+request.getParameter("PRODUCT_CATEGORY"));
-		//리스트로 갈 때 카테고리 필요함??
-		//request.setAttribute("PRODUCT_CATEGORY", request.getParameter("PRODUCT_CATEGORY"));
 		mav.addObject("ProductVO", vo);
+		mav.addObject("WorkshopProoductList", WorkshopProoductList);
 		
 		result = productService.insertProduct(vo);
 		
@@ -821,23 +867,21 @@ public class ProductController {
 		}
 		System.out.println("상품 등록 완료!");
 		
+		
+		
+		if(WorkshopProoductList== null) {
+			System.out.println("WorkshopProoductList-null");
+		} else {
+			System.out.println("WorkshopProoductList-not null");
+		}
+		
+		
+		
 		return mav;
 	}
 	
-	@RequestMapping(value = "/estimatedetail.pro", method = RequestMethod.GET)
-	public String estimatedetail(Model model) {
-		
-		
-		return "Store/estimateDetail";
-	}
 	
-	@RequestMapping(value = "/store_estimateform.pro", method = RequestMethod.GET)
-	public String store_estimateform(Model model) {
-		
-		
-		return "Store/estimateForm";
-	}
-	
+
 	@RequestMapping(value = "/store_estimateform_input.pro", method = RequestMethod.POST)
 	public String es_requestform_input(Model model) {
 	

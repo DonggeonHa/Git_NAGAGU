@@ -2,6 +2,7 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ page import="java.util.*"%>
+<%@ page import="com.spring.store.ProductVO" %>
 <%
 	/*
 	//productForm은 공방 회원만 들어올 수 있다(MEMBER_STATUS = 2)
@@ -20,6 +21,28 @@
 	//여기까지는 확인해봐야함
 	*/	
 	//공방 회원의 product 리스트 가져와서 select에 뿌려주기!!!!!
+	
+	
+	int WORKSHOP_NUM = 0;
+	if (session.getAttribute("WORKSHOP_NUM") != null) {
+		WORKSHOP_NUM = (int)session.getAttribute("WORKSHOP_NUM");
+	} else {
+		out.println("<script>");
+		out.println("alert('로그인 해주세요!');");
+		out.println("location.href='./productlist.pro?PRODUCT_CATEGORY=all'");
+		out.println("</script>");	
+//		WORKSHOP_NUM = (Integer)session.getAttribute("WORKSHOP_NUM");
+	}
+	
+	ArrayList<ProductVO> productList = null;
+	productList = (ArrayList<ProductVO>) request.getAttribute("WorkshopProoductList");
+	
+	if(productList == null) {
+		System.out.println("null이다");
+	} else {
+		System.out.println("null 아니다");
+	}
+	
 %>       
 <!DOCTYPE html>
 <html>
@@ -44,6 +67,10 @@
 			
 			.addoption_section {
 				display:none;
+			}
+			#noOptionInfo {
+				color:red;
+				font-size=0.9rem;
 			}
 		</style>
 	</head>
@@ -152,6 +179,7 @@
 									<input type="radio" value="추가구매" class="option-control-input" id="optionControlValidation3" name="PRODUCT_OPTION_TMP" onchange="setDisplay(this.value)" required>
 									<label class="option-control-label"	for="optionControlValidation3">추가구매</label>
 								</div>
+								<div class="pl-2" id="noOptionInfo"></div>
 							</div>
 						</td>
 					</tr>
@@ -163,12 +191,23 @@
 						<td>
 							<div class="row mr-3"  id="optionappend" >
 								<div class="addoption mr-3">
-									<select name="PRODUCT_OPTION" class=" form-control" id="" style="margin-left: 2%">
-										<option value="원목테이블" selected>원목테이블</option>
-										<option value="중구">중구</option>
-										<option value="용산구">용산구</option>
-										<option value="성동구">성동구</option>
-									</select>
+								<%
+									if(productList != null) {
+								%>
+										<select name="PRODUCT_OPTION" class=" form-control" id="" style="margin-left: 2%">
+									<%
+											for(int i=0; i<productList.size(); i++) {
+									%>
+											<option value="<%=productList.get(i).getPRODUCT_NUM() %>" selected><%=productList.get(i).getPRODUCT_TITLE() %></option>
+									<%
+											}
+									%>
+										</select>
+									<%
+										} 
+									%>		
+										
+									
 								</div>
 							</div>
 						</td>
@@ -335,9 +374,17 @@
 				if(val == '없음') {
 					$('.addoption_section').hide();
 				} else {
-					$('.addoption_section').show();
+					if(<%=productList%> == null) {
+						$('.addoption_section').hide();
+						$('#noOptionInfo').html('선택할 수 있는 상품이 없습니다.');
+						$('#optionControlValidation2').prop('checked', true); 
+					} else {
+						$('.addoption_section').show();
+					}
+					
 				}
 			}
+			
 		
 			/* 썸머노트 부분 */
 			 $(document).ready(function() {
@@ -640,9 +687,19 @@
 				$('.addoption:last').attr( 'id', 'lastaddoption' );
 				$('#lastaddoption').remove();       
 			}
-						
-			
-			
+				
+		<%-- 	
+			$(document).ready(function (e){
+				$('#optionControlValidation3').on('click', function(event) {
+					if(<%=productList%> == null) {
+						$('.addoption_section').hide();
+					}
+					
+					$('#noOptionInfo').html('선택할 수 있는 상품이 없습니다.');
+					
+				})				
+			});
+			 --%>
 		</script>
 	</body>
 </html>

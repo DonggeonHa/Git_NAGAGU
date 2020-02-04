@@ -386,7 +386,7 @@ img {
 			$.ajax({
 			url: "/NAGAGU/insertPicsLike.cm",
 	              type: "POST",
-	              data: { 'memberNum' : loginNum , 'picsNum' : picsNum},
+	              data: { 'MEMBER_NUM' : MEMBER_NUM , 'PICS_NUM' : PICS_NUM},
 	              contentType:
 	  				'application/x-www-form-urlencoded; charset=utf-8',
 	              success: function (retVal) {

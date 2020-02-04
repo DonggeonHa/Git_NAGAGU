@@ -304,12 +304,12 @@ public class CommunityController {
 	@RequestMapping(value = "/insertPicsLike.cm")
 	public @ResponseBody Map<String, Object> getLikeUpdate(PicsVO picsVO,HttpServletRequest request) {
 		System.out.println("insert컨트롤러 시작");
-		String memberNum = request.getParameter("memberNum");
-		String picsNum = request.getParameter("picsNum");
+		String MEMBER_NUM = request.getParameter("MEMBER_NUM");
+		String PICS_NUM = request.getParameter("PICS_NUM");
 		
 		HashMap<String, Object> map = new HashMap<String, Object>();
-		map.put("memberNum", memberNum);
-		map.put("picsNum", picsNum);
+		map.put("MEMBER_NUM", MEMBER_NUM);
+		map.put("PICS_NUM", PICS_NUM);
 		
 		//picsVO.setPICS_NUM(Integer.parseInt(request.getParameter("picNum")));
 		Map<String, Object> retVal = new HashMap<String, Object>();

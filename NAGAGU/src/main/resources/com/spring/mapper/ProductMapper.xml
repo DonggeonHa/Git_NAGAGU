@@ -122,8 +122,13 @@ create sequence product_seq
 			
 	</resultMap>
 
- 	<select id="selectWorkshop" parameterType="com.spring.workshop.WorkshopVO" resultMap="workshopResultMap">
-		SELECT * FROM WORKSHOP WHERE WORKSHOP_NUM = #{PRODUCT_WORKSHOP}
+	<!-- 공방 글쓰기 업로드 -->
+ 	<select id="selectWorkshop" parameterType="com.spring.store.ProductVO" resultMap="workshopResultMap">
+		SELECT * FROM nagagu_workshop_member WHERE WORKSHOP_NUM = #{PRODUCT_WORKSHOP}
+	</select>
+
+ 	<select id="getAllWorkshopProduct" parameterType="com.spring.store.ProductVO" resultMap="productResultMap">
+		SELECT * FROM PRODUCT WHERE PRODUCT_WORKSHOP=#{WORKSHOP_NUM}
 	</select>
 	
 	<insert id="insertProduct" parameterType="com.spring.workshop.WorkshopVO">
@@ -184,5 +189,19 @@ create sequence product_seq
 	<update id="updateGrade" parameterType="com.spring.store.ProductVO">
         UPDATE PRODUCT SET PRODUCT_GRADE = #{PRODUCT_GRADE} WHERE PRODUCT_NUM=#{PRODUCT_NUM}
 	</update>	
+	
+	<update id="updateProductLike" parameterType="java.util.HashMap">
+		UPDATE PRODUCT SET
+			<if test="count == 'plus'">PRODUCT_LIKE = PRODUCT_LIKE +1 </if>
+			<if test="count == 'minus'">PRODUCT_LIKE = PRODUCT_LIKE -1 </if>
+		WHERE PRODUCT_NUM=#{PRODUCT_NUM}
+	</update>
+	
+	<!-- 좋아요 한 사진 리스트(좋아요사진=사진넘버 중에서 파라미터 멤버가 좋아한 사진들) -->
+	<select id="getProductLike" parameterType="java.util.HashMap" resultType="int">
+		SELECT count(*)FROM MEMBER_LIKE WHERE LIKE_MEMBER=#{LIKE_MEMBER} AND LIKE_PRODUCT=#{PRODUCT_NUM}
+	</select>	
+	
+	
 
 </mapper>
