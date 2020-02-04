@@ -8,8 +8,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.spring.mapper.AcademyMapper;
-import com.spring.mapper.memberMapper;
 import com.spring.member.MemberVO;
+import com.spring.workshop.WorkShopMemberVO;
 
 @Service
 public class AcademyServiceImpl implements AcademyService {
@@ -61,12 +61,12 @@ public class AcademyServiceImpl implements AcademyService {
 	}
 	
 	@Override
-	public MemberVO selectMember(ClassVO academy) {
-		MemberVO member = null;
+	public WorkShopMemberVO selectWMember(ClassVO academy) {
+		WorkShopMemberVO member = null;
 		
 		try {
-			AcademyMapper memberMapper = sqlSession.getMapper(AcademyMapper.class);
-			member = memberMapper.selectMember(academy);
+			AcademyMapper classMapper = sqlSession.getMapper(AcademyMapper.class);
+			member = classMapper.selectWMember(academy);
 			
 			System.out.println("멤버 리스트 가져오기 성공!");
 			return member;

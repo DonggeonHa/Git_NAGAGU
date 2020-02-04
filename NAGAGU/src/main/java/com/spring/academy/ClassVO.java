@@ -4,9 +4,9 @@ import java.util.Date;
 
 public class ClassVO {
 	private int CLASS_NUMBER;
-	private int MEMBER_NUM;
-	private String MEMBER_NICK;
-	private String MEMBER_PICTURE;
+	private int WORKSHOP_NUM;
+	private String WORKSHOP_NAME;
+	private String WORKSHOP_PICTURE;
 	private String CLASS_DIVISION;
 	private String CLASS_NAME;
 	private String CLASS_ABRIEF;
@@ -133,23 +133,22 @@ public class ClassVO {
 	public void setCLASS_DETAIL_ADDRESS(String cLASS_DETAIL_ADDRESS) {
 		CLASS_DETAIL_ADDRESS = cLASS_DETAIL_ADDRESS;
 	}
-	public int getMEMBER_NUM() {
-		return MEMBER_NUM;
+	public int getWORKSHOP_NUM() {
+		return WORKSHOP_NUM;
 	}
-	public void setMEMBER_NUM(int mEMBER_NUM) {
-		MEMBER_NUM = mEMBER_NUM;
+	public void setWORKSHOP_NUM(int wORKSHOP_NUM) {
+		WORKSHOP_NUM = wORKSHOP_NUM;
 	}
-	public String getMEMBER_NICK() {
-		return MEMBER_NICK;
+	public String getWORKSHOP_NAME() {
+		return WORKSHOP_NAME;
 	}
-	public void setMEMBER_NICK(String mEMBER_NICK) {
-		MEMBER_NICK = mEMBER_NICK;
+	public void setWORKSHOP_NAME(String wORKSHOP_NAME) {
+		WORKSHOP_NAME = wORKSHOP_NAME;
 	}
-	public String getMEMBER_PICTURE() {
-		return MEMBER_PICTURE;
+	public String getWORKSHOP_PICTURE() {
+		return WORKSHOP_PICTURE;
 	}
-	public void setMEMBER_PICTURE(String mEMBER_PICTURE) {
-		MEMBER_PICTURE = mEMBER_PICTURE;
+	public void setWORKSHOP_PICTURE(String wORKSHOP_PICTURE) {
+		WORKSHOP_PICTURE = wORKSHOP_PICTURE;
 	}
-	
 }

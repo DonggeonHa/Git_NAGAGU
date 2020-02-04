@@ -19,6 +19,7 @@ public class WorkShopMemberVO {
 	private String WORKSHOP_BANK;
 	private String WORKSHOP_ACNUM;
 	private int WORKSHOP_STATUS;
+	private String WORKSHOP_PICTURE;
 	
 	public int getWORKSHOP_NUM() {
 		return WORKSHOP_NUM;
@@ -115,5 +116,11 @@ public class WorkShopMemberVO {
 	}
 	public void setWORKSHOP_STATUS(int wORKSHOP_STATUS) {
 		WORKSHOP_STATUS = wORKSHOP_STATUS;
+	}
+	public String getWORKSHOP_PICTURE() {
+		return WORKSHOP_PICTURE;
+	}
+	public void setWORKSHOP_PICTURE(String wORKSHOP_PICTURE) {
+		WORKSHOP_PICTURE = wORKSHOP_PICTURE;
 	}
 }

@@ -171,7 +171,7 @@
 					</colgroup>
 				    <tr>
 				      <th class="text-center">공방명</th>
-				      <td><%=cl.getMEMBER_NICK()%></td>
+				      <td><%=cl.getWORKSHOP_NAME()%></td>
 				    </tr>
 				    <tr>
 				      <th class="text-center"">사용기간</th>

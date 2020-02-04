@@ -4,7 +4,6 @@
 <%
 	String MEMBER_EMAIL = (String)session.getAttribute("MEMBER_EMAIL");
 	String WORKSHOP_NAME = (String)session.getAttribute("WORKSHOP_NAME");
-	System.out.println("WORKSHOP_NAME : " + WORKSHOP_NAME);
 %>
 <!DOCTYPE html>
 <html>
@@ -259,7 +258,7 @@
 					
 					success: function(retVal) {
 						if(retVal.res == "login_success"){
-							location.href = './index.ma';
+							location.reload();
 							
 						} else if(retVal.res == "loginFail_unconfirm"){
 							$('.fail_message').text('이메일 인증을 해주세요.');

@@ -20,12 +20,21 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.spring.member.MemberService;
 import com.spring.member.MemberVO;
+import com.spring.workshop.WorkShopMemberService;
+import com.spring.workshop.WorkShopMemberVO;
 @Controller
 public class AcademyController {
 	
 	@Autowired
 	private AcademyService AcademyService;
+	
+	@Autowired(required = false)
+	private WorkShopMemberService workShopMemberService;
+	
+	@Autowired(required = false)
+	private MemberService memberService;
 	
 	@RequestMapping(value = "/classlist.ac")
 	public ModelAndView ClassList(ClassVO classVO, ModelAndView mav, HttpServletRequest request) throws Exception  {
@@ -88,7 +97,9 @@ public class AcademyController {
 	@RequestMapping(value = "/classdetail.ac")
 	public ModelAndView ClassDetail(ClassVO academy, HttpSession session) throws Exception {
 		ClassVO vo = AcademyService.getDetail(academy);
-		MemberVO vo2 = AcademyService.selectMember(vo);
+		WorkShopMemberVO vo2 = AcademyService.selectWMember(vo);
+		
+		ModelAndView mav = new ModelAndView();
 		
 		if (vo == null) {
 			System.out.println("상세보기 실패");
@@ -96,9 +107,9 @@ public class AcademyController {
 		}
 		System.out.println("상세보기 성공");
 		
-		ModelAndView mav = new ModelAndView();
+		
 		mav.addObject("ClassVO", vo);
-		mav.addObject("MemberVO", vo2);
+		mav.addObject("WorkShopVO", vo2);
 		mav.setViewName("Academy/detail");
 		
 		return mav;
@@ -122,9 +133,9 @@ public class AcademyController {
 		response.setCharacterEncoding("utf-8");
 		response.setContentType("text/html; charset=utf-8"); 
 		ClassVO vo = new ClassVO();
-		vo.setMEMBER_NUM(Integer.parseInt(session.getAttribute("MEMBER_NUM").toString()));
+		vo.setWORKSHOP_NUM(Integer.parseInt(session.getAttribute("WORKSHOP_NUM").toString()));
 		
-		MemberVO vo2 = AcademyService.selectMember(vo);
+		WorkShopMemberVO vo2 = AcademyService.selectWMember(vo);
 		
 		MultipartFile mf2 = request.getFile("CLASS_IMAGE");
 
@@ -190,15 +201,15 @@ public class AcademyController {
 		
 		
 
-		vo.setMEMBER_NICK(vo2.getMEMBER_NICK());
-		vo.setMEMBER_PICTURE(vo2.getMEMBER_PICTURE());
+		vo.setWORKSHOP_NAME(vo2.getWORKSHOP_NAME());
+		vo.setWORKSHOP_PICTURE(vo2.getWORKSHOP_PICTURE());
 		vo.setCLASS_DIVISION(request.getParameter("CLASS_DIVISION"));
 		vo.setCLASS_NAME(request.getParameter("CLASS_NAME"));
 		vo.setCLASS_ABRIEF(request.getParameter("CLASS_ABRIEF"));
 		vo.setCLASS_AMOUNT(Integer.parseInt(request.getParameter("CLASS_AMOUNT")));
 		vo.setCLASS_DATE(new Timestamp(System.currentTimeMillis()));
-		vo.setCLASS_DATE_CONFIGURATION_1(request.getParameter("CLASS_DATE_CONFIGURATION_1"));
-		vo.setCLASS_DATE_CONFIGURATION_2(request.getParameter("CLASS_DATE_CONFIGURATION_2"));
+		vo.setCLASS_DATE_CONFIGURATION_1(request.getParameter("CLASS_DATE_CONFIGURATION_1").substring(0,11));
+		vo.setCLASS_DATE_CONFIGURATION_2(request.getParameter("CLASS_DATE_CONFIGURATION_2").substring(0,11));
 		vo.setCLASS_AREA(request.getParameter("CLASS_AREA"));
 		vo.setCLASS_CATEGORY(request.getParameter("CLASS_CATEGORY"));
 		vo.setCLASS_INTRODUCTION_1(request.getParameter("CLASS_INTRODUCTION_1"));

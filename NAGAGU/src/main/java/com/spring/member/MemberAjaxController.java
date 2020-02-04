@@ -96,6 +96,7 @@ public class MemberAjaxController {
 					session.setAttribute("MEMBER_NICK", member.getMEMBER_NICK());
 					session.setAttribute("MEMBER_STATUS", member.getMEMBER_STATUS());
 					session.setAttribute("MEMBER_NAME", member.getMEMBER_NAME());
+					session.setAttribute("MEMBER_PHONE", member.getMEMBER_PHONE());
 //					session.setAttribute("MEMBER_PICTURE", member.getMEMBER_PICTURE());
 					retVal.put("res", "login_success");
 					

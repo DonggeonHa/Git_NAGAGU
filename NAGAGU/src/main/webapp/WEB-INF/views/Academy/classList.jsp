@@ -183,7 +183,7 @@
 											<div class="default" style="margin: 0 5% 3% 5%;">
 												<p class="title text-center" style="font-size: 1.5rem;"><%=cl.getCLASS_NAME()%></p>
 												<div class="d-flex bd-highlight" style="font-size: 0.8rem; color: #888888;">
-													<span class="mr-auto bd-highlight"><%=cl.getMEMBER_NICK()%></span>
+													<span class="mr-auto bd-highlight"><%=cl.getWORKSHOP_NAME()%></span>
 													<span class="bd-highlight"><%=cl.getCLASS_AREA()%></span>
 												</div>
 											</div>
