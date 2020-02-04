@@ -356,7 +356,7 @@
 											<button class="dropdown-item" type="button"><a href="./mypage_edit.my">내정보수정</a></button>
 											<button class="dropdown-item" type="button"><a href="./mypage_like.my">좋아요</a></button>
 											<button class="dropdown-item" type="button"><a href="./chatRoom.ch?ES_ORDER_NUM=1">채팅</a></button>
-											<button class="dropdown-item" type="button" onclick="window.open('receiveList.nt', 'new', 'scrollbars=yes, resizable=yes, width=600, height=700, left=0, top=0');">쪽지</button>											<button class="dropdown-item" type="button"><a href="./workshop.no">공방관리</a></button>
+											<button class="dropdown-item" type="button" onclick="window.open('receiveList.nt', 'new', 'scrollbars=yes, resizable=yes, width=600, height=700, left=0, top=0');">쪽지</button>
 										</div>
 									</div>
 									</li>

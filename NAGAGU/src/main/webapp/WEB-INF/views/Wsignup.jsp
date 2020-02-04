@@ -51,7 +51,7 @@
 		    border: 0px;
 		}
 		
-		input#member_nick {
+		input#WORKSHOP_NAME {
 			width: 235px;
 		}
 		
@@ -73,7 +73,7 @@
     <script type="text/javascript">
     	//이메일 중복체크
     	function email_chk(){
-    		var _str1 = $("#member_ema").val();
+    		var _str1 = $("#WORKSHOP_EMAIL").val();
     	      /* alert(_str1); */
     	      
     	      jQuery.ajax({
@@ -81,7 +81,7 @@
     	         type : "post",
     	         dataType : "json",
     	         data : {
-    	        	 MEMBER_EMAIL : $("#member_ema").val()
+    	        	 WORKSHOP_EMAILIL : $("#WORKSHOP_EMAIL").val()
     	         },
     	         contentType : 'application/x-www-form-urlencoded; charset=utf-8',
 
@@ -101,7 +101,7 @@
     	}
     	
     	function nickname_chk(){
-    		var _str2 = $("#member_nick").val();
+    		var _str2 = $("#WORKSHOP_NAME").val();
     	      /* alert(_str2); */
     	      
     	      jQuery.ajax({
@@ -109,7 +109,7 @@
     	         type : "post",
     	         dataType : "json",
     	         data : {
-    	        	 MEMBER_NICK : $("#member_nick").val()
+    	        	 WORKSHOP_NAME : $("#WORKSHOP_NAME").val()
     	         },
     	         contentType : 'application/x-www-form-urlencoded; charset=utf-8',
 
@@ -140,7 +140,7 @@
                     <div class="signup_form_input">
                         <div class="input_email form_group">
                             <div class="input_email_local">
-                                <input type="email" class="form_input" id="member_ema" name="WORKSHOP_EMAIL" placeholder="이메일" size="1" required>
+                                <input type="text" class="form_input" id="workshop_email" name="WORKSHOP_EMAIL" placeholder="이메일" required>
                             </div>
                             <div class="email_chk_btn ml-3">
                             	<button type="button" id="email_chk_btn" onclick="email_chk()" value="N" >중복체크</button>
@@ -166,7 +166,7 @@
                 <div class="signup_form_nickname form_group mt-4">
                     <div class="signup_form_label">공방 이름</div>
                     <div class="signup_form_input">
-                        <input type="text" id="member_nick" name="WORKSHOP_WNAME" class="form_input" required>
+                        <input type="text" id="WORKSHOP_NAME" name="WORKSHOP_NAME" class="form_input" required>
                         <button type="button" id="nick_chk_btn" onclick="blnum_chk()" value="N">중복체크</button>
                     </div>
                     <div class="error_next_box" id="wnameMsg" style="display: hidden;" aria-live="assertive"></div>
@@ -175,28 +175,28 @@
                 <div class="signup_form_name form group">
                 	<div class="signup_form_label">대표자 명</div>
                     <div class="signup_form_input">
-                        <input type="text" id="member_name" name="WORKSHOP_NAME" class="form_input" required>
+                        <input type="text" id="WORKSHOP_CEO" name="WORKSHOP_CEO" class="form_input" required>
                     </div>
                     <div class="error_next_box" id="nameMsg" style="display: hidden;" aria-live="assertive"></div>
                 </div>
                 <div class="signup_form_name form group">
                 	<div class="signup_form_label">연락처</div>
                     <div class="signup_form_input">
-                        <input type="text" id="member_name" name="WORKSHOP_PHONE" class="form_input" required>
+                        <input type="text" id="WORKSHOP_PHONE" name="WORKSHOP_PHONE" class="form_input" required>
                     </div>
                     <div class="error_next_box" id="phoneMsg" style="display: hidden;" aria-live="assertive"></div>
                 </div>
                 <div class="signup_form_name form group">
                 	<div class="signup_form_label">사업자 번호</div>
                     <div class="signup_form_input">
-                        <input type="text" id="member_name" name="WORKSHOP_LICENSE" class="form_input" required>
+                        <input type="text" id="WORKSHOP_LICENSE" name="WORKSHOP_LICENSE" class="form_input" required>
                     </div>
                     <div class="error_next_box" id="licenseMsg" style="display: hidden;" aria-live="assertive"></div>
                 </div>
                 <div class="signup_form_name form group">
                 	<div class="signup_form_label">공방 소개</div>
                     <div style=" margin: 10px 0 0; display: flex; flex: 1 0 auto;">
-                    	 <textarea class="form_input intro" id="workshop_intro" name="WORKSHOP_INTRO" style="height: 300px;"></textarea>
+                    	 <textarea class="form_input intro" id="WORKSHOP_INTRO" name="WORKSHOP_INTRO" style="height: 300px;"></textarea>
                     </div>
                     <div class="error_next_box" id="introMsg" style="display: hidden;" aria-live="assertive"></div>
                 </div> 
@@ -277,18 +277,133 @@
 
    
     <script>
-        var emailFlag = false;
+    
+	// 비밀번호 정규식
+	var pwJ = /^.*(?=^.{8,15}$)(?=.*\d)(?=.*[a-zA-Z])(?=.*[!@#$%^&+=]).*$/;
+	// 이름 정규식
+	var nameJ = /^[가-힣]{2,6}$/;
+	// 이메일 검사 정규식
+	var mailJ = /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i;
+	// 휴대폰 번호 정규식
+	var phoneJ = /^01([0|1|6|7|8|9]?)?([0-9]{3,4})?([0-9]{4})$/;
+	
+	function showErrorMsg(obj, msg) {
+        obj.attr("class", "error_next_box");
+        obj.html(msg);
+        obj.show();
+    }
+    
+    $('#workshop_email').blur(function() {
+    	var email = $("#workshop_email").val();
+    	var oMsg = $("#emailMsg");
+    	
+    	if(email == "") {
+    		showErrorMsg(oMsg, "필수 정보입니다.123123");
+            
+    		return false;
+            
+    	} else if(!mailJ.test(email)) {
+			showErrorMsg(oMsg, "이메일 형식을 확인하고 다시 입력해주세요.");
+			
+			return false;
+    		
+		} else {
+			oMsg.hide();
+    		
+            return true;
+		}
+    });
+    
+    $('#pass1').blur(function() {
+    	var password1 = $('#pass1').val();
+    	var oMsg = $('#pass1Msg');
+    	
+    	if(password1 == "") {
+			showErrorMsg(oMsg, "필수 정보입니다.");
+            
+    		return false;
+    	} /* else if(pwJ.test(password1)) */
+    })
+    
+   
+    
+	function checkPass1(event) {
+        var email = $("#WORKSHOP_EMAILil").val();
+        var pass1 = $("#pass1").val();
+        var oMsg = $("#pass1Msg");
+        var oInput = $("#pass1");
+        
+        if (pass1=="") {
+            showErrorMsg(oMsg, "필수 정보입니다.");
+            setFocusToInputObject(oInput);
+            return false;
+        } else {
+            oMsg.hide();
+            return true;
+        }
+        passFlag = false;
+        return true;
+    }
+    function checkPass2(event) {
+        var email = $("#WORKSHOP_EMAIL").val();
+        var pass1 = $("#pass1").val();
+        var pass2 = $("#pass2").val();
+        var oMsg = $("#pass2Msg");
+        var oInput = $("#pass2");
+        
+        if (pass2=="") {
+            showErrorMsg(oMsg, "필수 정보입니다.");
+            setFocusToInputObject(oInput);
+            return false;
+        } else {
+        oMsg.hide();
+        }
+        
+        if (pass1 != pass2) {
+            showErrorMsg(oMsg,"비밀번호가 일치하지 않습니다.");
+            setFocusToInputObject(oInput);
+            return false;
+        } else {
+            oMsg.hide();
+            passFlag = true;
+            return true;
+        }
+            passFlag = false;
+        return true;
+    }
+    
+    
+    
+    
+    
+    $('#user_phone').blur(function(){
+		if(phoneJ.test($(this).val())){
+			console.log(nameJ.test($(this).val()));
+			$("#phone_check").text('');
+		} else {
+			$('#phone_check').text('휴대폰번호를 확인해주세요 :)');
+			$('#phone_check').css('color', 'red');
+		}
+	});
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+        /* var emailFlag = false;
         var passFlag = false;
         var nickFlag = false;
         var submitFlag = false;
         var termFlag = false;
         var nameFlag = false;
         
-        function showErrorMsg(obj, msg) {
-        obj.attr("class", "error_next_box");
-        obj.html(msg);
-        obj.show();
-        }
+        
         var isShift = false;
         function checkShiftUp(e) {
             if (e.which && e.which == 16) {
@@ -325,10 +440,6 @@
                 obj.focus();
             }
         }
-        $("#member_ema").blur(function(){
-            emailFlag=false;
-            checkEmail1("first");
-        });
         $("#member_name").blur(function(){
             nameFlag=false;
             checkName();
@@ -356,88 +467,12 @@
             checkShiftDown(event);
         }); 
         
-        $("#member_nick").blur(function(){
+        $("#WORKSHOP_NAME").blur(function(){
             nickFlag=false;
             checkNick();
         });
         
-        function checkEmail1(event) {
-            var member_email = $("#member_ema").val();
-            var oMsg = $("#emailMsg");
-            var input1 = $("#member_ema");
-            if (member_email=="") {
-                showErrorMsg(oMsg, "필수 정보입니다.");
-                return false;
-            } else {
-            oMsg.hide();
-            return true;
-            }
-            emailFlag = false;
-            return false;
-        }
-        function checkEmail2(event) {
-            var email2 = $("#email2").val();
-            var oMsg = $("#emailMsg");
-            var input2 = $("#email2");
-            
-            if (email2=="") {
-                showErrorMsg(oMsg, "필수 정보입니다.");
-                return false;
-            } else {
-            oMsg.hide();
-            if (member_email!="") {
-                emailFlag=true;
-                return true;
-            }
-            return true;
-            }
-            emailFlag = false;
-            return false;
-        }
-        function checkPass1(event) {
-            var email = $("#member_email").val();
-            var pass1 = $("#pass1").val();
-            var oMsg = $("#pass1Msg");
-            var oInput = $("#pass1");
-            
-            if (pass1=="") {
-                showErrorMsg(oMsg, "필수 정보입니다.");
-                setFocusToInputObject(oInput);
-                return false;
-            } else {
-	            oMsg.hide();
-	            return true;
-            }
-            passFlag = false;
-            return true;
-        }
-        function checkPass2(event) {
-            var email = $("#member_email").val();
-            var pass1 = $("#pass1").val();
-            var pass2 = $("#pass2").val();
-            var oMsg = $("#pass2Msg");
-            var oInput = $("#pass2");
-            
-            if (pass2=="") {
-                showErrorMsg(oMsg, "필수 정보입니다.");
-                setFocusToInputObject(oInput);
-                return false;
-            } else {
-            oMsg.hide();
-            }
-            
-            if (pass1 != pass2) {
-                showErrorMsg(oMsg,"비밀번호가 일치하지 않습니다.");
-                setFocusToInputObject(oInput);
-                return false;
-            } else {
-                oMsg.hide();
-                passFlag = true;
-                return true;
-            }
-                passFlag = false;
-            return true;
-        }
+        
         
         function checkName(event) {
         	var name = $("#member_name").val();
@@ -457,9 +492,9 @@
         }
         
         function checkNick(event) {
-            var nick = $("#member_nick").val();
+            var nick = $("#WORKSHOP_NAME").val();
             var oMsg = $("#nickMsg");
-            var oInput = $("#member_nick");
+            var oInput = $("#WORKSHOP_NAME");
             var checkLength = /^[가-힣A-Za-z0-9_]{2,12}$/;
             
             if (nick=="") {
@@ -562,7 +597,7 @@
            }
         }
      }
-    });
+    }); */
     </script>
 </body>
 

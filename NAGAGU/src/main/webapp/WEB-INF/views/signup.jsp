@@ -72,6 +72,12 @@
     		var _str1 = $("#member_ema").val();
     	      /* alert(_str1); */
     	      
+    		if(_str1==""){
+    			alert("이메일을 입력하세요.");
+    			
+    			return false;
+    		}
+    	      
     	      jQuery.ajax({
     	         url : '/NAGAGU/emailChk.su',
     	         type : "post",

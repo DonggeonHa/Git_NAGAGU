@@ -70,13 +70,32 @@
 		.intro {
 		    resize:none;
 		}
+		
+		.workshop_signup_form_submit {
+			background:orange;
+	        color:#ffffff;
+	        width:100%;
+	        padding:26px 0;
+	        font-size:18px;
+	        text-align: center;
+	        border:none;
+	        border-radius:4px;
+	        font-weight: 700;
+	        transition:background 0.2s;
+	        margin-bottom: 50px;
+		}
     </style>
     
     <script type="text/javascript">
     	//이메일 중복체크
     	function email_chk(){
     		var _str1 = $("#WORKSHOP_EMAIL").val();
-    	      /* alert(_str1); */
+    		
+    		if(_str1==""){
+    			alert("이메일을 입력하세요.");
+    			
+    			return false;
+    		}
     	      
     	      jQuery.ajax({
     	         url : '/NAGAGU/workshopEmailChk.ws',
@@ -167,7 +186,7 @@
                 <div class="signup_form_pass1 form_group">
                     <div class="signup_form_label">비밀번호</div>
                     <div class="signup_form_input">
-                        <input type="password" id="pass1" name="WORKSHOP_PASS" class="form_input" placeholder="8자 이상 영문, 숫자, 특수문자를 사용하세요." required>
+                        <input type="password" id="pass1" name="WORKSHOP_PASS" class="form_input" placeholder="영문,숫자,특수문자를 사용하세요(8~15자리 이내)" required>
                     </div>
                     <div class="error_next_box" id="pass1Msg" style="display: hidden;" aria-live="assertive"></div>
                 </div>
@@ -181,37 +200,37 @@
                 <div class="signup_form_nickname form_group mt-4">
                     <div class="signup_form_label">공방 이름</div>
                     <div class="signup_form_input">
-                        <input type="text" id="WORKSHOP_NAME" name="WORKSHOP_NAME" class="form_input" required>
+                        <input type="text" id="WORKSHOP_NAME" name="WORKSHOP_NAME" class="form_input" placeholder = "2~15자리 이내(특수문자 불가)">
                         <button type="button" id="nick_chk_btn" onclick="name_chk()" value="N">중복체크</button>
                     </div>
-                    <div class="error_next_box" id="wnameMsg" style="display: hidden;" aria-live="assertive"></div>
+                    <div class="error_next_box" id="nameMsg" style="display: hidden;" aria-live="assertive"></div>
                 </div>
                
                 <div class="signup_form_name form_group">
                 	<div class="signup_form_label">대표자 명</div>
                     <div class="signup_form_input">
-                        <input type="text" id="member_name" name="WORKSHOP_CEO_NAME" class="form_input" required>
+                        <input type="text" id="WORKSHOP_CEO_NAME" name="WORKSHOP_CEO_NAME" class="form_input" required>
                     </div>
-                    <div class="error_next_box" id="nameMsg" style="display: hidden;" aria-live="assertive"></div>
+                    <div class="error_next_box" id="ceoNameMsg" style="display: hidden;" aria-live="assertive"></div>
                 </div>
                 <div class="signup_form_name form_group">
                 	<div class="signup_form_label">연락처</div>
                     <div class="signup_form_input">
-                        <input type="text" id="member_name" name="WORKSHOP_PHONE" class="form_input" required>
+                        <input type="text" id="WORKSHOP_PHONE" name="WORKSHOP_PHONE" class="form_input" placeholder="하이픈(-) 제외, 숫자만">
                     </div>
                     <div class="error_next_box" id="phoneMsg" style="display: hidden;" aria-live="assertive"></div>
                 </div>
                 <div class="signup_form_name form_group">
                 	<div class="signup_form_label">사업자 번호</div>
                     <div class="signup_form_input">
-                        <input type="text" id="member_name" name="WORKSHOP_LICENSE" class="form_input" required>
+                        <input type="text" id="WORKSHOP_LICENSE" name="WORKSHOP_LICENSE" class="form_input" required>
                     </div>
                     <div class="error_next_box" id="licenseMsg" style="display: hidden;" aria-live="assertive"></div>
                 </div>
                 <div class="signup_form_name form_group">
                 	<div class="signup_form_label">공방 소개</div>
                     <div style=" margin: 10px 0 0; display: flex; flex: 1 0 auto;">
-                    	 <textarea class="form_input intro" id="workshop_intro" name="WORKSHOP_INTRO" style="height: 300px;"></textarea>
+                    	 <textarea class="form_input intro" id="WORKSHOP_INTRO" name="WORKSHOP_INTRO" style="height: 300px;"></textarea>
                     </div>
                     <div class="error_next_box" id="introMsg" style="display: hidden;" aria-live="assertive"></div>
                 </div> 
@@ -283,7 +302,7 @@
                     </div>
                 </div>
                 <div class="error_next_box" id="termMsg" style="display: hidden;" aria-live="assertive"></div>
-                <button id="btn_submit" class="signup_form_submit" type="button">회원가입</button>
+                <button id="btn_submit" class="workshop_signup_form_submit" type="button">회원가입</button>
             </form>
         </div>
     </div>
@@ -292,271 +311,278 @@
 
    
     <script>
-        var emailFlag = false;
-        var passFlag = false;
-        var nickFlag = false;
-        var submitFlag = false;
-        var termFlag = false;
-        var nameFlag = false;
-        
-        function showErrorMsg(obj, msg) {
+ 	// 비밀번호 정규식(특수문자 / 문자 / 숫자 포함 형태의 8~15자리 이내의 암호 정규식)
+	var pwJ = /^.*(?=^.{8,15}$)(?=.*\d)(?=.*[a-zA-Z])(?=.*[!@#$%^&+=]).*$/;
+	// 이름 정규식
+	var nameJ = /^[가-힣]{2,6}$/;
+	// 이메일 검사 정규식
+	var mailJ = /^[a-z0-9_+.-]+@([a-z0-9-]+\.)+[a-z0-9]{2,4}$/;
+	// 휴대폰 번호 정규식
+	var phoneJ = /^\d{3}\d{3,4}\d{4}$/;
+	// 별명 정규식
+	var nickJ = /^[ㄱ-ㅎ|가-힣|a-z|A-Z|0-9|\*]{2,15}$/;
+	// 숫자 정규식
+	var num = /^[0-9]{5}$/;
+	
+	//submit확인
+	var sub_email = false;
+	var sub_pw1 = false;
+	var sub_pw2 = false;
+	var sub_name = false;
+	var sub_ceo_name = false;
+	var sub_phone = false;
+	var sub_license = false;
+	var sub_intro = false;
+	var sub_add2 = false;
+	
+	function showErrorMsg(obj, msg) {
         obj.attr("class", "error_next_box");
         obj.html(msg);
         obj.show();
-        }
-        var isShift = false;
-        function checkShiftUp(e) {
-            if (e.which && e.which == 16) {
-                isShift = false;
-            }
-        }
-        function checkShiftDown(e) {
-            if (e.which && e.which == 16) {
-                  isShift = true;
-            }
-         }
-        function checkCapslock(e) {
-            var myKeyCode = 0;
-            var myShiftKey = false;
-            if (window.event) { // IE
-                myKeyCode = e.keyCode;
-                myShiftKey = e.shiftKey;
-            } else if (e.which) { // netscape ff opera
-                myKeyCode = e.which;
-                myShiftKey = isShift;
-            }
-            var oMsg = $("#pswd1Msg");
-            if ((myKeyCode >= 65 && myKeyCode <= 90) && !myShiftKey) {
-                showErrorMsg(oMsg,"Caps Lock이 켜져 있습니다.");
-            } else if ((myKeyCode >= 97 && myKeyCode <= 122) && myShiftKey) {
-                showErrorMsg(oMsg,"Caps Lock이 켜져 있습니다.");
-            } else {
-                oMsg.hide();
-            }
-        }
-        function setFocusToInputObject(obj) {
-            if(submitFlag) {
-                submitFlag = false;
-                obj.focus();
-            }
-        }
-        $("#WORKSHOP_EMAIL").blur(function(){
-            emailFlag=false;
-            checkEmail1("first");
-        });
-        $("#member_name").blur(function(){
-            nameFlag=false;
-            checkName();
-        });
-        
-        $("#pass1").blur(function(){
-            passFlag=false;
-            checkPass1();
-        }).keyup(function(event){
-            checkShiftUp(event);
-        }).keypress(function(event){
-            checkCapslock(event);
-        }).keydown(function(event){
-            checkShiftDown(event);
-        });
-        
-        $("#pass2").blur(function(){
-            passFlag=false;
-            checkPass2();
-        }).keyup(function(event){
-            checkShiftUp(event);
-        }).keypress(function(event){
-            checkCapslock(event);
-        }).keydown(function(event){
-            checkShiftDown(event);
-        }); 
-        
-        $("#WORKSHOP_NAME").blur(function(){
-            nickFlag=false;
-            checkNick();
-        });
-        
-        function checkEmail1(event) {
-            var member_email = $("#WORKSHOP_EMAIL").val();
-            var oMsg = $("#emailMsg");
-            var input1 = $("#WORKSHOP_EMAIL");
-            if (member_email=="") {
-                showErrorMsg(oMsg, "필수 정보입니다.");
-                return false;
-            } else {
-            oMsg.hide();
-            return true;
-            }
-            emailFlag = false;
-            return false;
-        }
-        function checkEmail2(event) {
-            var email2 = $("#email2").val();
-            var oMsg = $("#emailMsg");
-            var input2 = $("#email2");
+    }
+    
+    $('#WORKSHOP_EMAIL').blur(function() {
+    	var email = $("#WORKSHOP_EMAIL").val();
+    	var oMsg = $("#emailMsg");
+    	var emailfocus = $("#WORKSHOP_EMAIL");
+    	
+    	if(email == "") {
+    		showErrorMsg(oMsg, "필수 정보입니다.");
+    		
+    		return false;
             
-            if (email2=="") {
-                showErrorMsg(oMsg, "필수 정보입니다.");
-                return false;
-            } else {
-            oMsg.hide();
-            if (member_email!="") {
-                emailFlag=true;
-                return true;
-            }
+    	} else if(!mailJ.test(email)) {
+			showErrorMsg(oMsg, "이메일 형식을 확인하고 다시 입력해주세요.");
+			emailfocus.focus();
+			
+			return false;
+    		
+		} else {
+			oMsg.hide();
+			sub_email = true;
+			
             return true;
-            }
-            emailFlag = false;
-            return false;
-        }
-        function checkPass1(event) {
-            var email = $("#member_email").val();
-            var pass1 = $("#pass1").val();
-            var oMsg = $("#pass1Msg");
-            var oInput = $("#pass1");
-            
-            if (pass1=="") {
-                showErrorMsg(oMsg, "필수 정보입니다.");
-                setFocusToInputObject(oInput);
-                return false;
-            } else {
-	            oMsg.hide();
-	            return true;
-            }
-            passFlag = false;
-            return true;
-        }
-        function checkPass2(event) {
-            var email = $("#member_email").val();
-            var pass1 = $("#pass1").val();
-            var pass2 = $("#pass2").val();
-            var oMsg = $("#pass2Msg");
-            var oInput = $("#pass2");
-            
-            if (pass2=="") {
-                showErrorMsg(oMsg, "필수 정보입니다.");
-                setFocusToInputObject(oInput);
-                return false;
-            } else {
-            oMsg.hide();
-            }
-            
-            if (pass1 != pass2) {
-                showErrorMsg(oMsg,"비밀번호가 일치하지 않습니다.");
-                setFocusToInputObject(oInput);
-                return false;
-            } else {
-                oMsg.hide();
-                passFlag = true;
-                return true;
-            }
-                passFlag = false;
-            return true;
-        }
-        
-        function checkName(event) {
-        	var name = $("#member_name").val();
-        	var oMsg = $("#nameMsg");
-        	var oInput = $("#member_name");
-        	
-        	if(name == "") {
-        		showErrorMsg(oMsg, "필수 정보입니다.");
-        		return false;
-        	} else {
-        		oMsg.hide();
-        		nameFlag = true;
-        	}
-        	
-        	nameFlag = false;
-            return true;
-        }
-        
-        function checkNick(event) {
-            var nick = $("#WORKSHOP_NAME").val();
-            var oMsg = $("#nickMsg");
-            var oInput = $("#WORKSHOP_NAME");
-            var checkLength = /^[가-힣A-Za-z0-9_]{2,12}$/;
-            
-            if (nick=="") {
-                showErrorMsg(oMsg, "필수 정보입니다.");
-                return false;
-            } else {
-                oMsg.hide();
-                nickFlag=true;
-            }
-            if (!checkLength.test(nick)) {
-                showErrorMsg(oMsg, "별명은 최소 2자, 최대 12자 까지 입력가능 합니다.[특수문자 불가]");
-                setFocusToInputObject(oInput);
-                return false;
-            } else {
-            oMsg.hide();
-            return true;
-            }
-            nickFlag = false;
-            return false;
-        }
-        function checkterm() {
-            var res = true;
-            var oMsg = $("#termMsg");
-        if ($("#check_service").is(":checked") == false || $("#check_privacy").is(":checked") == false) {
-            showErrorMsg(oMsg, "이용약관과 개인정보 수집 및 이용에 대한 안내 모두 동의해주세요.");
-            res = false;
-        } else {
-            oMsg.hide();
-        }
-        return res;
-        }
-        function mainSubmit() {
-            if(emailFlag && passFlag && nickFlag) {
-                $("#join_form").submit();
-            } else {
-                submitOpen();
-                return false;
-            }
-        }
-        /* function submitOpen() {
-            $("#btn_submit").attr("disabled",false);
-        } */
-        /*-- 약관 확인 --*/
-        //약관 전체 승인
-        function setTerms() {
-            if ($("#check_all").is(":checked")) {
-                $("#check_service").prop("checked",true);
-                $("#check_privacy").prop("checked",true);
-                $("#check_mailing").prop("checked",true);
-            } else {
-                $("#check_service").prop("checked",false);
-                $("#check_privacy").prop("checked",false);
-                $("#check_mailing").prop("checked",false);
-            }
-        }
-        function viewterm_() {
-        if( !$("#check_service").is(":checked") || !$("#check_privacy").is(":checked") || !$("#check_mailing").is(":checked")) {
-            $("#check_all").prop("checked",false);
-        }
-        if( $("#check_service").is(":checked") && $("#check_privacy").is(":checked") && $("#check_mailing").is(":checked")) {
-            $("#check_all").prop("checked",true);
-        }
-        return true;
-        }
-        
-    $(document).ready(function(){
-        $("#check_all").prop("checked",false);
-        setTerms();
-        $("#check_all").click(function() {
-            setTerms();
-        })
-        $("#check_service").click(function() {
-            viewterm_();
-        })
-        $("#check_privacy").click(function() {
-            viewterm_();
-        })
-        $("#check_mailing").click(function() {
-             viewterm_();
-        })
+		}
     });
     
+    $('#pass1').blur(function() {
+    	var password1 = $('#pass1').val();
+    	var oMsg = $('#pass1Msg');
+    	var pw1 = $('#pass1');
+    	
+    	if(password1 == "") {
+			showErrorMsg(oMsg, "필수 정보입니다.");
+            
+    		return false;
+    	} else if(!pwJ.test(password1)) {
+			showErrorMsg(oMsg, "8자 이상 영문+숫자+하나 이상의 특수문자를 사용하세요.");
+			pw1.focus();
+			
+			return false;
+    	} else {
+			oMsg.hide();
+			sub_pw1 = true;
+			
+            return true;
+    	}
+    });
+    
+    $('#pass2').blur(function() {
+        var email = $("#WORKSHOP_EMAIL").val();
+        var pass1 = $("#pass1").val();
+        var pass2 = $("#pass2").val();
+        var oMsg = $("#pass2Msg");
+        var oInput = $("#pass2");
+        
+        if (pass2=="") {
+            showErrorMsg(oMsg, "필수 정보입니다.");
+            
+            return false;
+        } else {
+        	oMsg.hide();
+        }
+        
+        if (pass1 != pass2) {
+            showErrorMsg(oMsg,"비밀번호가 일치하지 않습니다.");
+            
+            return false;
+        } else {
+            oMsg.hide();
+            sub_pw2 = true;
+            
+            return true;
+        }
+        
+        return true;
+    });
+    
+    $('#pass1').keyup(function (){
+    	var pass1 = $("#pass1").val();
+        var pass2 = $("#pass2").val();
+        var oMsg = $("#pass2Msg");
+        
+    	if(pass1 != pass2){
+    		 showErrorMsg(oMsg,"비밀번호가 일치하지 않습니다.");
+    		 sub_pw1 = false;
+    		 
+             return false;
+    	}
+    });
+    
+    
+    $('#WORKSHOP_NAME').blur(function() {
+    	var nick = $("#WORKSHOP_NAME").val();
+    	var oMsg = $("#nameMsg");
+    	var nickfocus = $("#WORKSHOP_NAME");
+    	
+    	if(nick == "") {
+    		showErrorMsg(oMsg, "필수 정보입니다.");
+    		
+    		return false;
+            
+    	} else if(!nickJ.test(nick)) {
+			showErrorMsg(oMsg, "한,영,숫자만 가능");
+			nickfocus.focus();
+			
+			return false;
+    		
+		} else {
+			oMsg.hide();
+			sub_name = true;
+			
+            return true;
+		}
+    });
+    
+    $('#WORKSHOP_CEO_NAME').blur(function() {
+    	var name = $("#WORKSHOP_CEO_NAME").val();
+    	var oMsg = $("#ceoNameMsg");
+    	var namefocus = $("#WORKSHOP_CEO_NAME");
+    	
+    	if(name == "") {
+    		showErrorMsg(oMsg, "필수 정보입니다.");
+    		
+    		return false;
+            
+    	} else if(!nameJ.test(name)) {
+			showErrorMsg(oMsg, "올바른 이름을 입력하세요.");
+			namefocus.focus();
+			
+			return false;
+    		
+		} else {
+			oMsg.hide();
+			sub_ceo_name = true;
+			
+            return true;
+		}
+    });
+    
+    $('#WORKSHOP_PHONE').blur(function() {
+    	var phone = $("#WORKSHOP_PHONE").val();
+    	var oMsg = $("#phoneMsg");
+    	var phonefocus = $("#WORKSHOP_PHONE");
+    	
+    	if(phone == "") {
+    		showErrorMsg(oMsg, "필수 정보입니다.");
+    		
+    		return false;
+            
+    	} else if(!phoneJ.test(phone)) {
+			showErrorMsg(oMsg, "올바른 번호를 입력하세요.");
+			phonefocus.focus();
+			return false;
+    		
+		} else {
+			oMsg.hide();
+			sub_phone = true;
+			
+            return true;
+		}
+    });
+    
+    $('#WORKSHOP_LICENSE').blur(function() {
+    	var license = $("#WORKSHOP_LICENSE").val();
+    	var oMsg = $("#licenseMsg");
+    	var licensefocus = $("#WORKSHOP_LICENSE");
+    	
+    	if(license == "") {
+    		showErrorMsg(oMsg, "필수 정보입니다.");
+    		
+    		return false;
+            
+    	} else {
+    		// license는 숫자만 10자리로 해서 문자열로 넘긴다. 
+    	    var checkID = new Array(1, 3, 7, 1, 3, 7, 1, 3, 5, 1); 
+    	    var tmplicense, i, chkSum=0, c2, remander; 
+    	    license = license.replace(/-/gi,''); 
+
+    	    for (i=0; i<=7; i++) chkSum += checkID[i] * license.charAt(i); 
+    	    c2 = "0" + (checkID[8] * license.charAt(8)); 
+    	    c2 = c2.substring(c2.length - 2, c2.length); 
+    	    chkSum += Math.floor(c2.charAt(0)) + Math.floor(c2.charAt(1)); 
+    	    remander = (10 - (chkSum % 10)) % 10 ; 
+
+    	    if (Math.floor(license.charAt(9)) == remander) {
+    	    	oMsg.hide();
+    			sub_license = true;
+    	    	
+    	    	return true ; // OK! 
+    	    }
+    	    
+			showErrorMsg(oMsg, "올바른 사업자 번호를 입력하세요.");
+			licensefocus.focus();
+			
+    	    return false; 
+    		
+		}
+    });
+    
+    $('#WORKSHOP_INTRO').blur(function() {
+    	var intro = $("#WORKSHOP_INTRO").val();
+    	var oMsg = $("#introMsg");
+    	
+    	if(intro == "") {
+    		showErrorMsg(oMsg, "필수 정보입니다.");
+    		
+    		return false;
+            
+    	} else {
+			oMsg.hide();
+			sub_intro = true;
+			
+            return true;
+		}
+    });
+    
+    $('#WORKSHOP_ADDRESS2').blur(function() {
+    	var address2 = $("#WORKSHOP_ADDRESS2").val();
+    	var oMsg = $("#addressdetailMsg");
+    	var address2focus = $("#WORKSHOP_ADDRESS2");
+    	
+    	if(zip == "") {
+    		showErrorMsg(oMsg, "필수 정보입니다.");
+    		address2focus.focus();
+    		
+    		return false;
+            
+    	} else {
+			oMsg.hide();
+			sub_add2 = true;
+			
+            return true;
+		}
+    });
+    
+    var sub_email = false;
+	var sub_pw1 = false;
+	var sub_pw2 = false;
+	var sub_name = false;
+	var sub_ceo_name = false;
+	var sub_phone = false;
+	var sub_license = false;
+	var sub_intro = false;
+	var sub_add2 = false;
     
     /*중복확인 버튼, 약관동의*/
     $('#btn_submit').click(function(){
@@ -565,13 +591,19 @@
      var emailcheckBtn = $("#email_chk_btn").val();
      if(emailcheckBtn == "N") {
         alert("이메일 중복확인 버튼을 눌러주세요.");
+        
+        return false;
      }else if(nicknamecheckBtn == "Y") {
         if(nicknamecheckBtn == "N"){
            alert("닉네임 중복확인 버튼을 눌러주세요.");
-        }else if(emailcheckBtn == "Y"){
+           
+           return false;
+        }else if(emailcheckBtn == "Y"){asd
            if(($('#check_privacy').prop("checked")&&$('#check_service').prop("checked"))== false) 
            {
             alert('약관에 동의해주세요.');
+           } else if(sub_email==false || sub_pw1==false || sub_pw2==false || sub_ceo_name==false || sub_phone==false || sub_lincense==false || sub_intro==false || sub_add2==false) {
+              alert('하나도 빠짐없이 입력해주세요.');
            } else  {
               document.workshop_signup_form.submit();
            }
