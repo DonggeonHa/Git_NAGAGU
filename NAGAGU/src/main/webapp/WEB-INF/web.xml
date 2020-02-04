@@ -24,7 +24,7 @@
 		</init-param>
 		<load-on-startup>1</load-on-startup>
 	</servlet>
-		
+
 	<servlet-mapping>
 		<servlet-name>appServlet</servlet-name>
 		<url-pattern>*.cm</url-pattern>
@@ -39,6 +39,7 @@
 		<url-pattern>*.ch</url-pattern> <!-- Chat -->
 		<url-pattern>*.nt</url-pattern> <!-- Note -->
 		<url-pattern>*.ws</url-pattern>	<!-- 사업자 -->
+		<url-pattern>*.ad</url-pattern>	<!-- 사업자 -->
 	</servlet-mapping>
 	
 	<welcome-file-list>

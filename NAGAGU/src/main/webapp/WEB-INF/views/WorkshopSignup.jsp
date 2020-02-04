@@ -560,7 +560,7 @@
     	var oMsg = $("#addressdetailMsg");
     	var address2focus = $("#WORKSHOP_ADDRESS2");
     	
-    	if(zip == "") {
+    	if(address2 == "") {
     		showErrorMsg(oMsg, "필수 정보입니다.");
     		address2focus.focus();
     		
@@ -574,39 +574,75 @@
 		}
     });
     
-    var sub_email = false;
-	var sub_pw1 = false;
-	var sub_pw2 = false;
-	var sub_name = false;
-	var sub_ceo_name = false;
-	var sub_phone = false;
-	var sub_license = false;
-	var sub_intro = false;
-	var sub_add2 = false;
+  //약관 전체 승인
+    function setTerms() {
+        if ($("#check_all").is(":checked")) {
+            $("#check_service").prop("checked",true);
+            $("#check_privacy").prop("checked",true);
+            $("#check_mailing").prop("checked",true);
+        } else {
+            $("#check_service").prop("checked",false);
+            $("#check_privacy").prop("checked",false);
+            $("#check_mailing").prop("checked",false);
+        }
+    }
+    function viewterm_() {
+    if( !$("#check_service").is(":checked") || !$("#check_privacy").is(":checked") || !$("#check_mailing").is(":checked")) {
+        $("#check_all").prop("checked",false);
+    }
+    if( $("#check_service").is(":checked") && $("#check_privacy").is(":checked") && $("#check_mailing").is(":checked")) {
+        $("#check_all").prop("checked",true);
+    }
+    return true;
+    }
+    
+	$(document).ready(function(){
+	    $("#check_all").prop("checked",false);
+	    setTerms();
+	    $("#check_all").click(function() {
+	        setTerms();
+	    })
+	    $("#check_service").click(function() {
+	        viewterm_();
+	    })
+	    $("#check_privacy").click(function() {
+	        viewterm_();
+	    })
+	    $("#check_mailing").click(function() {
+	         viewterm_();
+	    })
+	});
     
     /*중복확인 버튼, 약관동의*/
     $('#btn_submit').click(function(){
       
      var nicknamecheckBtn = $("#nick_chk_btn").val();
      var emailcheckBtn = $("#email_chk_btn").val();
+     var zipcode = $('#WORKSHOP_ZIP').val();
+     var address1 = $('#WORKSHOP_ADDRESS1').val();
+     var address2 = $('#WORKSHOP_ADDRESS2').val();
+     
      if(emailcheckBtn == "N") {
         alert("이메일 중복확인 버튼을 눌러주세요.");
+        $(".WORKSHOP_EMAIL").focus();
         
         return false;
-     }else if(nicknamecheckBtn == "Y") {
+     } else if(emailcheckBtn == "Y") {
         if(nicknamecheckBtn == "N"){
            alert("닉네임 중복확인 버튼을 눌러주세요.");
+           $(".WORKSHOP_NAME").focus();
            
            return false;
-        }else if(emailcheckBtn == "Y"){asd
-           if(($('#check_privacy').prop("checked")&&$('#check_service').prop("checked"))== false) 
-           {
-            alert('약관에 동의해주세요.');
-           } else if(sub_email==false || sub_pw1==false || sub_pw2==false || sub_ceo_name==false || sub_phone==false || sub_lincense==false || sub_intro==false || sub_add2==false) {
-              alert('하나도 빠짐없이 입력해주세요.');
-           } else  {
-              document.workshop_signup_form.submit();
-           }
+     } else if(emailcheckBtn == "Y") {
+	        if(sub_email==false || sub_pw1==false || sub_pw2==false || sub_ceo_name==false || sub_phone==false || sub_license==false || sub_intro==false) {
+	        	alert('하나도 빠짐없이 입력해주세요.2');
+	        } else if(zipcode == "" || address1 == "" || address2 == "") {
+	        	alert('주소를 입력하세요.');
+	        } else if(($('#check_privacy').prop("checked")&&$('#check_service').prop("checked"))== false) {
+	        	alert('약관에 동의해주세요.');
+	        } else {
+	          	document.workshop_signup_form.submit();
+           	}
         }
      }
     });

@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.spring.mapper.AdminMapper">
+	<resultMap type="com.spring.admin.AdminMemberVO" id="adminResultMap">
+		<result property="ADMIN_NUM" column="ADMIN_NUM" />
+		<result property="ADMIN_ID" column="ADMIN_ID" />
+		<result property="ADMIN_PASS" column="ADMIN_PASS" />
+		<result property="ADMIN_NAME" column="ADMIN_NAME" />
+		<result property="ADMIN_PHONE" column="ADMIN_PHONE" />
+		<result property="ADMIN_DATE" column="ADMIN_DATE" />
+	</resultMap>
+	
+	
+	<insert id="insert_member" parameterType="com.spring.admin.AdminMemberVO">
+		<selectKey resultType="int" keyProperty="ADMIN_NUM" order="BEFORE">
+           SELECT admin_member_seq.nextval FROM dual        
+       </selectKey>
+	      insert into admin_member(ADMIN_NUM, ADMIN_ID, ADMIN_PASS, ADMIN_NAME, ADMIN_PHONE, ADMIN_DATE) 
+	      values (#{ADMIN_NUM}, #{ADMIN_ID}, #{ADMIN_PASS}, #{ADMIN_NAME}, #{ADMIN_PHONE}, SYSDATE)
+	</insert>
+	
+	<select id="user_chk" resultMap="adminResultMap">
+		SELECT * from admin_member WHERE admin_id = #{ADMIN_ID} and admin_pass = #{ADMIN_PASS}
+	</select>
+</mapper>
