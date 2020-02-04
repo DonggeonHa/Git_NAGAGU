@@ -598,7 +598,7 @@
            alert("닉네임 중복확인 버튼을 눌러주세요.");
            
            return false;
-        }else if(emailcheckBtn == "Y"){asd
+        }else if(emailcheckBtn == "Y"){
            if(($('#check_privacy').prop("checked")&&$('#check_service').prop("checked"))== false) 
            {
             alert('약관에 동의해주세요.');

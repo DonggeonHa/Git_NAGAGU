@@ -75,6 +75,12 @@ create sequence store_qna_seq
 	
 	
 	
+	<insert id="insertQna" parameterType="com.spring.store.Product_qnaVO">
+		INSERT INTO PRODUCT_QNA VALUES
+		(store_qna_seq.nextval, #{QNA_MEMBER}, #{QNA_PRODUCT}, #{QNA_DATE}, #{QNA_CONTENT})
+	</insert>	
+	
+	
 	
 
 </mapper>

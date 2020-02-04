@@ -12,7 +12,7 @@ import com.spring.member.MemberVO;
 
 @Service
 public class ProductQnaServiceImpl implements ProductQnaService{
-
+	
 	@Autowired
 	private SqlSession sqlSession;
 
@@ -47,5 +47,14 @@ public class ProductQnaServiceImpl implements ProductQnaService{
 		return qnaMemberList;
 	}
 
-
+	@Override
+	public int insertQna(Product_qnaVO qnaVO) {
+		ProductQnaMapper qnaMapper = sqlSession.getMapper(ProductQnaMapper.class);
+		int res = 0;
+		res = qnaMapper.insertQna(qnaVO);
+		
+		return res;
 	}
+
+
+}

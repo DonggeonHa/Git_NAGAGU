@@ -9,7 +9,7 @@ public interface ProductService {
 
 	//productform
 	WorkshopVO selectWorkshop(ProductVO vo);
-	ArrayList<ProductVO> getAllWorkshopProduct(WorkshopVO vo);
+	ArrayList<ProductVO> getAllWorkshopProduct(int WORKSHOP_NUM);
 	boolean insertProduct(ProductVO vo); 
 	//ProductList
 	int getproductcount(HashMap<String, Object> map);

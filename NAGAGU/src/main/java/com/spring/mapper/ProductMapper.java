@@ -8,7 +8,7 @@ import com.spring.workshop.WorkshopVO;
 
 public interface ProductMapper {
 	WorkshopVO selectWorkshop(ProductVO vo);
-	ArrayList<ProductVO> getAllWorkshopProduct(WorkshopVO vo);
+	ArrayList<ProductVO> getAllWorkshopProduct(int WORKSHOP_NUM);
 	int insertProduct(ProductVO vo); 
 	int getproductcount(HashMap<String, Object> map);
 	public ArrayList<ProductVO> getproductlist(HashMap<String, Object> map);

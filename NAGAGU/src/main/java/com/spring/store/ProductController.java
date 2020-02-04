@@ -681,52 +681,47 @@ public class ProductController {
 		}
 		return retVal;
 	}
-		
 	
 	
-	
-	//-------------------------------------------상품 글쓰기 폼	
+	//-------------------------------------------상품 글쓰기 폼   
 	@RequestMapping(value = "/product_write.pro", method = RequestMethod.GET)
-	public String product_write(Model model, HttpServletRequest request, HttpSession session) {		
-		return "Store/productForm";
+	public ModelAndView product_write(Model model, HttpServletRequest request, HttpSession session) {
+		int WORKSHOP_NUM = (int)session.getAttribute("WORKSHOP_NUM");
+		
+		ArrayList<ProductVO> WorkshopProoductList = null;
+		WorkshopProoductList = productService.getAllWorkshopProduct(WORKSHOP_NUM);   //WorkshopVO vo2로 공방의 productList 받아온다
+		
+		ModelAndView mav = new ModelAndView();
+		mav.setViewName("Store/productForm");
+		mav.addObject("WorkshopProoductList", WorkshopProoductList);
+		
+		if(WorkshopProoductList== null) {
+			System.out.println("WorkshopProoductList-null");
+		} else {
+			System.out.println("WorkshopProoductList-not null");
+		}
+		
+		return mav;
+	      
 	}
-	
 	
 	//-------------------------------------------상품 글쓰기 업로드(공방 업자)
 	@RequestMapping(value = "/addproduct.pro", method = RequestMethod.POST)
 	public ModelAndView addproduct(WorkshopVO workshopVO, MultipartHttpServletRequest request, HttpServletResponse response, HttpSession session) throws Exception {
-		
-		
-//		/*로그인 멤버*/
-//		/*PRODUCTFORM에서 추가 옵션 구매에 대한 정보 넘겨줌*/
-//		if(session.getAttribute("WORKSHOP_NUM") != null) {
-//			workshopVO.setWORKSHOP_NUM(wORKSHOP_NUM);
-//			setMEMBER_NUM((int)session.getAttribute("MEMBER_NUM"));
-//			//int index = ((Integer)(session.getAttribute("index"))).intValue();
-//			MemberVO LoginMemberVO = reviewService.getLoginMemberbyNUM(memberVO);			
-//			System.out.println("1"+memberVO.getMEMBER_NUM());
-//			/*로그인 멤버 관련*/
-//			model.addAttribute("LoginMemberVO",LoginMemberVO);
-//		
-//		}
-//		
-		
 		boolean result = false;
 		response.setCharacterEncoding("utf-8");
 		response.setContentType("text/html; charset=utf-8"); 
 		
+		
 		//세션에 로그인 된 workshop_num를 vo에 넣어줌
-		int WORKSHOP_NUM = (int)session.getAttribute("WORKSHOP_NUM");	
+		int WORKSHOP_NUM = (int)session.getAttribute("WORKSHOP_NUM");
 		
 		ProductVO vo = new ProductVO();
-		vo.setPRODUCT_WORKSHOP(WORKSHOP_NUM);	//공방번호를 ProductVO vo에 set해줌
-	
-		//--------1. setPRODUCT_SHOPNAME
-		WorkshopVO vo2 = productService.selectWorkshop(vo);	 //vo로 Workshop정보 (product_shopname) 받아온다
-		vo.setPRODUCT_SHOPNAME(vo2.getWORKSHOP_NAME());
-		//--------2. setPRODUCT_SHOPNAME
-		ArrayList<ProductVO> WorkshopProoductList = productService.getAllWorkshopProduct(vo2);	//WorkshopVO vo2로 공방의 productList 받아온다
+		vo.setPRODUCT_WORKSHOP(WORKSHOP_NUM);   //공방번호를 ProductVO vo에 set해줌
 		
+		//--------1. setPRODUCT_SHOPNAME
+		WorkshopVO vo2 = productService.selectWorkshop(vo);    //vo로 Workshop정보 (product_shopname) 받아온다
+		vo.setPRODUCT_SHOPNAME(vo2.getWORKSHOP_NAME());
 		
 		//값이 여러개일 수 있는 size, color, option String으로 값 받기
 		String PRODUCT_SIZE = "";
@@ -734,7 +729,7 @@ public class ProductController {
 		String PRODUCT_OPTION = "";
 		String[] SizeStr = request.getParameterValues("PRODUCT_SIZE");
 		String[] ColorStr = request.getParameterValues("PRODUCT_COLOR");
-
+		
 		//---------size
 		for(int i = 0; i < SizeStr.length; i++) {
 			PRODUCT_SIZE += SizeStr[i] + ",";
@@ -756,136 +751,169 @@ public class ProductController {
 			PRODUCT_OPTION = "없음";
 			System.out.println("PRODUCT_OPTION="+PRODUCT_OPTION);
 		} else {
-			//추가구매로 들어왔고 상품이 있을 때
-			String[] OptionStr = request.getParameterValues("PRODUCT_OPTION");			
+			String[] OptionStr = request.getParameterValues("PRODUCT_OPTION");
 			for(int i = 0; i < OptionStr.length; i++) {
 				PRODUCT_OPTION += OptionStr[i] + ",";
 				System.out.println("PRODUCT_OPTION="+PRODUCT_OPTION);
 			}
 			PRODUCT_OPTION = PRODUCT_OPTION.substring(0, PRODUCT_OPTION.length()-1);
-			System.out.println("PRODUCT_OPTION2="+PRODUCT_OPTION);		
+			System.out.println("PRODUCT_OPTION2="+PRODUCT_OPTION);      
 		}
-		
+	  
+	  
+	  //-------------------중복 제거
+	  /*
+	  resultList = new ArrayList<String>();
+	  for (int i = 0; i < dataList.size(); i++) {
+	      if (!resultList.contains(dataList.get(i))) {
+	          resultList.add(dataList.get(i));
+	      }
+	  }
+	  */
+	  
+	
+	  //---------배너 이미지 네 장
+	  List<MultipartFile> fileList = new ArrayList<MultipartFile>();    
+	  
+	  // input file 에 아무것도 없을 경우 (파일을 업로드 하지 않았을 때 처리) 
+	  if(request.getFiles("PRODUCT_BANNER").get(0).getSize() != 0) { 
+	 fileList = request.getFiles("PRODUCT_BANNER"); 
+	  } 
+	  
+	  String path = "C:\\Project138\\upload\\"; 
+	  File fileDir = new File(path); 
+	  if (!fileDir.exists()) { 
+	     fileDir.mkdirs(); 
+	  } 
+	  
+	  long time = System.currentTimeMillis(); 
+	  String str = "";
+	  for (MultipartFile mf : fileList) { 
+	     String originFileName = mf.getOriginalFilename(); // 원본 파일 명 
+	 String saveFileName = String.format("%d_%s", time, originFileName);
+	
+	 try { // 파일생성
+	    mf.transferTo(new File(path, saveFileName)); 
+	    str += saveFileName + ",";
+	    System.out.println("str="+str);
+	     } catch (Exception e) { 
+	        e.printStackTrace(); 
+	        } 
+	  }
+	
+	  System.out.println("str = " + str);
+	  
+	  if(str.length() != 0) {
+	     str = str.substring(0, str.length()-1);
+	  } else {
+	     str = "#";
+	  }
+	  
+	  //---------썸네일 이미지는 하나
+	  MultipartFile mf2 = request.getFile("PRODUCT_IMAGE");   
+	  if(!mf2.isEmpty()) {
+	     String uploadPath = "C:\\Project138\\upload\\";
+	 File fileDir2 = new File(uploadPath); 
+	 if (!fileDir2.exists()) { 
+	    fileDir2.mkdirs(); 
+	 } 
+	 String originalFileExtension = mf2.getOriginalFilename().substring(mf2.getOriginalFilename().lastIndexOf("."));
+	 String storedFileName2 = UUID.randomUUID().toString().replaceAll("-", "") + originalFileExtension;
+	 
+	 if(mf2.getSize() != 0) {
+	    mf2.transferTo(new File(uploadPath+storedFileName2));
+	 }
+	 System.out.println("storedFileName2= "+storedFileName2);
+	     vo.setPRODUCT_IMAGE(storedFileName2);
+	     
+	  } else {
+	     System.out.println("썸네일 사진 넣지 않음.");
+	     return null;
+	  }
+	      
+	  vo.setPRODUCT_DATE(new Timestamp(System.currentTimeMillis()));
+	  vo.setPRODUCT_TITLE(request.getParameter("PRODUCT_TITLE"));
+	  vo.setPRODUCT_BRIEF(request.getParameter("PRODUCT_BRIEF"));
+	  vo.setPRODUCT_CATEGORY(request.getParameter("PRODUCT_CATEGORY"));
+	  vo.setPRODUCT_PRICE(Integer.parseInt(request.getParameter("PRODUCT_PRICE")));
+	  vo.setPRODUCT_GRADE(0);   //review 평점 업로드시 update 해주기. (오케이)
+	  vo.setPRODUCT_READ(0);   //detail 들어갈 시 update 해주기. (오케이)
+	  vo.setPRODUCT_SALES(0);   //결제시 update 해주기
+	  vo.setPRODUCT_LIKE(0);   //실시간 update 해주기      (오케이)
+	  vo.setPRODUCT_SIZE(PRODUCT_SIZE);
+	  vo.setPRODUCT_OPTION(PRODUCT_OPTION);
+	  vo.setPRODUCT_COLOR(PRODUCT_COLOR);
+	  vo.setPRODUCT_INFO(request.getParameter("PRODUCT_INFO"));
+	  vo.setPRODUCT_SHIP_PRICE(Integer.parseInt(request.getParameter("PRODUCT_SHIP_PRICE")));
+	  vo.setPRODUCT_SHIP_COMPANY(request.getParameter("PRODUCT_SHIP_COMPANY"));
+	  vo.setPRODUCT_SHIP_RETURN_PRICE(Integer.parseInt(request.getParameter("PRODUCT_SHIP_RETURN_PRICE")));
+	  vo.setPRODUCT_SHIP_CHANGE_PRICE(Integer.parseInt(request.getParameter("PRODUCT_SHIP_CHANGE_PRICE")));
+	  vo.setPRODUCT_SHIP_RETURN_PLACE(request.getParameter("PRODUCT_SHIP_RETURN_PLACE"));
+	  vo.setPRODUCT_SHIP_DAYS(request.getParameter("PRODUCT_SHIP_DAYS"));
+	  vo.setPRODUCT_SHIP_INFO(request.getParameter("PRODUCT_SHIP_INFO"));
+	  vo.setPRODUCT_AS_INFO(request.getParameter("PRODUCT_AS_INFO"));
+	  vo.setPRODUCT_RETURN_INFO(request.getParameter("PRODUCT_RETURN_INFO"));
+	  vo.setPRODUCT_STORE_INFO(request.getParameter("PRODUCT_STORE_INFO"));
+	  vo.setPRODUCT_BANNER(str);
+	  
+	  System.out.println("aaa"+request.getParameter("PRODUCT_CATEGORY"));
+	  
+	  ModelAndView mav = new ModelAndView();
+	  mav.setViewName("redirect:productlist.pro?PRODUCT_CATEGORY="+request.getParameter("PRODUCT_CATEGORY"));
+	  mav.addObject("ProductVO", vo);
+	   
+	      
+	      result = productService.insertProduct(vo);
+	      
+	      if(result == false) {
+	         System.out.println("상품 등록 실패!");
+	     return null;
+	  }
+	  System.out.println("상품 등록 완료!");
+	      
+	      
+	      return mav;
+	   }
+	   
+	
+	//=====================================================
+	//===============================================QNA
+	@RequestMapping(value="/qna_insert.do",  produces="application/json;charset=UTF-8")
+	@ResponseBody
+	public String insert_qna(HttpServletRequest request, HttpSession session) throws Exception {
+		System.out.println("qna_insert 컨트롤러 왔다");
 
-		//---------배너 이미지 네 장
-		List<MultipartFile> fileList = new ArrayList<MultipartFile>(); 	
+		int MEMBER_NUM = (int)session.getAttribute("MEMBER_NUM");
 		
-		// input file 에 아무것도 없을 경우 (파일을 업로드 하지 않았을 때 처리) 
-		if(request.getFiles("PRODUCT_BANNER").get(0).getSize() != 0) { 
-			fileList = request.getFiles("PRODUCT_BANNER"); 
-		} 
+		Product_qnaVO qnaVO = new Product_qnaVO();
 		
-		String path = "C:\\Project138\\upload\\"; 
-		File fileDir = new File(path); 
-		if (!fileDir.exists()) { 
-			fileDir.mkdirs(); 
-		} 
-		
-		long time = System.currentTimeMillis(); 
-		String str = "";
-		for (MultipartFile mf : fileList) { 
-			String originFileName = mf.getOriginalFilename(); // 원본 파일 명 
-			String saveFileName = String.format("%d_%s", time, originFileName);
+		System.out.println("QNA_CONTENT=" + request.getParameter("QNA_CONTENT"));
 
-			try { // 파일생성
-				mf.transferTo(new File(path, saveFileName)); 
-				str += saveFileName + ",";
-				System.out.println("str="+str);
-			} catch (Exception e) { 
-				e.printStackTrace(); 
-				} 
-		}
-
-		System.out.println("str = " + str);
+//		qnaVO.setQNA_NUM(qNA_NUM);	//시퀀스 이용
+	    qnaVO.setQNA_CONTENT(request.getParameter("QNA_CONTENT"));
+	    qnaVO.setQNA_DATE(new Timestamp(System.currentTimeMillis()));
+	    qnaVO.setQNA_MEMBER(MEMBER_NUM);
 		
-		if(str.length() != 0) {
-			str = str.substring(0, str.length()-1);
-		} else {
-			str = "#";
-		}
-		
-		//---------썸네일 이미지는 하나
-		MultipartFile mf2 = request.getFile("PRODUCT_IMAGE");	
-		if(!mf2.isEmpty()) {
-			String uploadPath = "C:\\Project138\\upload\\";
-			File fileDir2 = new File(uploadPath); 
-			if (!fileDir2.exists()) { 
-				fileDir2.mkdirs(); 
-			} 
-			String originalFileExtension = mf2.getOriginalFilename().substring(mf2.getOriginalFilename().lastIndexOf("."));
-			String storedFileName2 = UUID.randomUUID().toString().replaceAll("-", "") + originalFileExtension;
-			
-			if(mf2.getSize() != 0) {
-				mf2.transferTo(new File(uploadPath+storedFileName2));
-			}
-			System.out.println("storedFileName2= "+storedFileName2);
-			vo.setPRODUCT_IMAGE(storedFileName2);
-			
-		} else {
-			System.out.println("썸네일 사진 넣지 않음.");
-			return null;
-		}
-			 
-		
-		vo.setPRODUCT_DATE(new Timestamp(System.currentTimeMillis()));
-		vo.setPRODUCT_TITLE(request.getParameter("PRODUCT_TITLE"));
-		vo.setPRODUCT_BRIEF(request.getParameter("PRODUCT_BRIEF"));
-		vo.setPRODUCT_CATEGORY(request.getParameter("PRODUCT_CATEGORY"));
-		vo.setPRODUCT_PRICE(Integer.parseInt(request.getParameter("PRODUCT_PRICE")));
-		vo.setPRODUCT_GRADE(0);	//review 평점 업로드시 update 해주기. (ok)
-		vo.setPRODUCT_READ(0);	//detail 들어갈 시 update 해주기. (ok)
-		vo.setPRODUCT_SALES(0);	//결제시 update 해주기
-		vo.setPRODUCT_LIKE(0);	//실시간 update 해주기		(ok)
-		vo.setPRODUCT_SIZE(PRODUCT_SIZE);
-		vo.setPRODUCT_OPTION(PRODUCT_OPTION);
-		vo.setPRODUCT_COLOR(PRODUCT_COLOR);
-		vo.setPRODUCT_INFO(request.getParameter("PRODUCT_INFO"));
-		vo.setPRODUCT_SHIP_PRICE(Integer.parseInt(request.getParameter("PRODUCT_SHIP_PRICE")));
-		vo.setPRODUCT_SHIP_COMPANY(request.getParameter("PRODUCT_SHIP_COMPANY"));
-		vo.setPRODUCT_SHIP_RETURN_PRICE(Integer.parseInt(request.getParameter("PRODUCT_SHIP_RETURN_PRICE")));
-		vo.setPRODUCT_SHIP_CHANGE_PRICE(Integer.parseInt(request.getParameter("PRODUCT_SHIP_CHANGE_PRICE")));
-		vo.setPRODUCT_SHIP_RETURN_PLACE(request.getParameter("PRODUCT_SHIP_RETURN_PLACE"));
-		vo.setPRODUCT_SHIP_DAYS(request.getParameter("PRODUCT_SHIP_DAYS"));
-		vo.setPRODUCT_SHIP_INFO(request.getParameter("PRODUCT_SHIP_INFO"));
-		vo.setPRODUCT_AS_INFO(request.getParameter("PRODUCT_AS_INFO"));
-		vo.setPRODUCT_RETURN_INFO(request.getParameter("PRODUCT_RETURN_INFO"));
-		vo.setPRODUCT_STORE_INFO(request.getParameter("PRODUCT_STORE_INFO"));
-		vo.setPRODUCT_BANNER(str);
-		
-		System.out.println("aaa"+request.getParameter("PRODUCT_CATEGORY"));
-		
-		ModelAndView mav = new ModelAndView();
-		mav.setViewName("redirect:productlist.pro?PRODUCT_CATEGORY="+request.getParameter("PRODUCT_CATEGORY"));
-		mav.addObject("ProductVO", vo);
-		mav.addObject("WorkshopProoductList", WorkshopProoductList);
-		
-		result = productService.insertProduct(vo);
-		
-		if(result == false) {
-			System.out.println("상품 등록 실패!");
-			return null;
-		}
-		System.out.println("상품 등록 완료!");
+		qnaVO.setQNA_PRODUCT(Integer.parseInt(request.getParameter("QNA_PRODUCT")));
+	
 		
 		
-		
-		if(WorkshopProoductList== null) {
-			System.out.println("WorkshopProoductList-null");
-		} else {
-			System.out.println("WorkshopProoductList-not null");
+		int res = qnaService.insertQna(qnaVO);
+		System.out.println("res="+res);		
+	
+		String str="";
+		ObjectMapper mapper = new ObjectMapper();
+		try {
+			str = mapper.writeValueAsString(qnaVO);
+			System.out.println(str);
+		}catch(Exception e) {
+			System.out.println("first() mapper : " + e.getMessage());
 		}
 		
+		return str;
 		
-		
-		return mav;
-	}
+	}		
 	
 	
-
-	@RequestMapping(value = "/store_estimateform_input.pro", method = RequestMethod.POST)
-	public String es_requestform_input(Model model) {
 	
-		return "Store/estimateList";
-	}
-		
 }
