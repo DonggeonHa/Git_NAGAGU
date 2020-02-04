@@ -14,4 +14,5 @@ public interface ProductMapper {
 	ProductVO getproductVO(int PRODUCT_NUM);
 	int updateReadCount(int PRODUCT_NUM);
 	int updateGrade(ProductVO vo);
+	ArrayList<ProductVO> getMemberLikeProduct(HashMap<String, Object> map);
 }

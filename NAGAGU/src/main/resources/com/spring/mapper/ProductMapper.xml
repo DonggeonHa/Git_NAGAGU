@@ -170,9 +170,6 @@ create sequence product_seq
 		<![CDATA[ WHERE rnum >= #{startrow} AND rnum <= #{endrow} ]]>
 	</select>
 
-
-
-
 	<select id="getproductVO" parameterType="int" resultMap="productResultMap">
 		SELECT * FROM PRODUCT WHERE PRODUCT_NUM=#{PRODUCT_NUM}
 	</select>
@@ -185,4 +182,7 @@ create sequence product_seq
         UPDATE PRODUCT SET PRODUCT_GRADE = #{PRODUCT_GRADE} WHERE PRODUCT_NUM=#{PRODUCT_NUM}
 	</update>	
 
+	<select id="getMemberLikeProduct" parameterType="java.util.HashMap" resultMap="productResultMap">
+      SELECT * FROM MEMBER_LIKE,PRODUCT WHERE LIKE_MEMBER=#{LIKE_MEMBER} AND LIKE_PRODUCT=PRODUCT_NUM 
+   </select>
 </mapper>

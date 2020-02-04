@@ -184,7 +184,7 @@
                   <div>
                   	<h6><a href="community.cm">COMMUNITY</a> > 상세보기 </h6>
                   </div>
-                  <%if(picsVO.getPICS_MEMBER()== MEMBER_NUM){
+                  <%if(picsVO.getPICS_MEMBER()== memberVO.getMEMBER_NUM()){
                   %>
                   <c:set var="num" value="<%=MEMBER_NUM%>" />
 					<c:if test="${num != 0}">
@@ -340,6 +340,7 @@
 		<c:if test="${num != 0}">
 			<form id="insert_form" class="row justify-content-between"
 				name="commentForm" action="/NAGAGU/insertComment.cm" method="post">
+				<%-- 			<input type="hidden" name="PICS_RE_REF" value="<c:out value=<%=picsVO.getp %>/>"> --%>
 				<div class="col-1"></div>
 				<div class="col-9">
 					<div class="btn_wrap offset-2">
@@ -422,6 +423,7 @@
 		function select(){
 			var params = 'PICS_RE_PICS='+<%=picsVO.getPICS_NUM()%>;
 			$('#output').empty();
+			alert('리스트 ajax시작');
 			$.ajax({
 				url: '/NAGAGU/getCommentList.cm',
 				type:'POST',
@@ -472,7 +474,10 @@
 			});
 		}
 		$(document).on('click','.re_reply',function(event){
+			alert('hi')			
 			var num= $(this).attr("num");
+			//var id= $(this).attr("id");
+			alert(num)
 			var output="";
 			output += '<form class="insert_form" id="insert_form">';
 			output += '<span style="font-size: 9pt">';
@@ -503,9 +508,7 @@
 			datatype: 'json', 
 			success: function(retVal){
 				if(retVal.res=="OK"){
-					//$('#id').val(''); 
 					$('#text').val('');
-					//$('#pass').val('');
 				}else{
 					alert("insert fail");
 				}
@@ -525,6 +528,7 @@
 			return;
 		} 
 		var delNum = $(event.target).attr('num')
+		alert(delNum);
 		jQuery.ajax({
 			url: '/NAGAGU/deleteComment.cm',
 			type: 'POST',
@@ -532,6 +536,7 @@
 			contentType: 'application/x-www-form-urlencoded; charset=utf-8',
 			dataType: 'json',
 			success: function(retVal){
+				alert("AAAAA");
 				if(retVal.res == "OK"){
 					select();
 				}
@@ -573,6 +578,7 @@
 	$(document).on('click','.update_apply',function(event){
 		var num= $(this).attr("num"); 
 		var params=$("#update_form"+num).serialize();
+		alert(params);
 		jQuery.ajax({
 			url: '/NAGAGU/updateComment.cm',
 			type: 'POST',
@@ -598,11 +604,16 @@
 	$(document).on('click', 'a[href="#"]', function(e){
 		e.preventDefault();
 	});
+	
+	
+	
 	select();
+	
 });
 	//유효성 검사
 	function insertCommentSubmit(){
 		var commentForm = document.commentForm;
+		
 /* 		if (commentForm.id.value=="") {
 			alert("작성자를 입력해주세요.");
 			form1.id.focus();
@@ -612,8 +623,16 @@
 			alert("글 내용을 입력해주세요.");
 			commentForm.text.focus();
 			return;
+		}
+/* 		if (commentForm.pass.value=="") {
+			alert("비밀번호를 입력해주세요.");
+			form1.text.focus();
+			return;
+		} */
 		commentForm.submit();	
 	}
+	
+	
 	</script>
 
 

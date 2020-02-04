@@ -1,4 +1,4 @@
-package com.spring.community;
+package com.spring.member;
 
 public class LikeVO {
 	private int LIKE_NUM;

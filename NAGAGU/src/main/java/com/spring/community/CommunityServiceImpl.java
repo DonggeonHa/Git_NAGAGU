@@ -2,6 +2,7 @@ package com.spring.community;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Map;
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -109,6 +110,7 @@ public class CommunityServiceImpl implements CommunityService{
 			
 			
 			cnt = memberlikeMapper.selectMemberLike(map);
+			System.out.println("cnt="+cnt);
 			if(cnt==0) {
 				memberlikeMapper.insertMemberLike(map);
 				map.put("count","plus");
@@ -119,8 +121,10 @@ public class CommunityServiceImpl implements CommunityService{
 				System.out.println("사진 좋아요 1감소=");
 			}
 			PicsVO picsVO = new PicsVO();
-			picsVO.setPICS_NUM(Integer.valueOf((String)map.get("picsNum")));
+			picsVO.setPICS_NUM(Integer.valueOf((String)map.get("PICS_NUM")));
 			int re = communityMapper.updatePicsLike(map);//count가 plus면 1증가  minus면 1 감소
+			System.out.println("re="+re);
+			
 			picsVO = communityMapper.getPicsDetail(picsVO);
 			picsLikeCount = picsVO.getPICS_LIKE();
 			returnInfo.put("picsLikeCount", picsLikeCount);
@@ -169,7 +173,7 @@ public class CommunityServiceImpl implements CommunityService{
 	public ArrayList<MemberVO> getFollowMembers(HashMap<String, Object> map){
 		ArrayList<MemberVO> vo = null; 
 		try {
-			System.out.println(map.get("fromNum"));
+			System.out.println(map.get("fromNum")+"가 팔로우한 멤버리스트");
 			FollowMapper followMapper = sqlSession.getMapper(FollowMapper.class);
 			vo = followMapper.getFollowMembers(map);
 			System.out.println("RESULT="+vo);
@@ -191,4 +195,5 @@ public class CommunityServiceImpl implements CommunityService{
 		}  
 		return vo;
 	}
+
 }

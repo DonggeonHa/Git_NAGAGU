@@ -377,29 +377,30 @@ img {
 		heart_check()
 	  //좋아요 누르는 기능
 	  $(document).on("click","#far",function getLike(){
-	    var	loginNum = '<%=LOGIN_MEMBER_NUM%>';
-		if(loginNum==0){
+	    var	MEMBER_NUM = '<%=LOGIN_MEMBER_NUM%>';
+		if(MEMBER_NUM==0){
 			alert('로그인 하세요') 
 			return				
 		} 
-		var picsNum = $(this).parent().attr('id').substring(12)
+		var PICS_NUM = $(this).parent().attr('id').substring(12)
 			$.ajax({
 			url: "/NAGAGU/insertPicsLike.cm",
 	              type: "POST",
-	              data: { 'memberNum' : loginNum , 'picsNum' : picsNum},
+	              data: { 'MEMBER_NUM' : MEMBER_NUM , 'PICS_NUM' : PICS_NUM},
 	              contentType:
 	  				'application/x-www-form-urlencoded; charset=utf-8',
 	              success: function (retVal) {
 			        if(retVal.res=="OK"){
+			        	console.log(retVal.cnt)
 			        	var output="";
-							output += '<span class="button likeBtn" id="heart_output'+picsNum+'">'
+							output += '<span class="button likeBtn" id="heart_output'+PICS_NUM+'">'
 						if(retVal.cnt=='1'){
 							output += '<i class="far fa-heart fa-2x" id="far"></i>'	
 						}else{
 							output += '<i class="fas fa-heart fa-2x" id="far"></i>'
 						}
 							output += '</span>'+retVal.picsLikeCount+''
-			        	$('#heart_output'+picsNum).parent().html(output);
+			        	$('#heart_output'+PICS_NUM).parent().html(output);
 					}else{
 						alert("update fail");
 					} 

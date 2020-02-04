@@ -31,6 +31,9 @@ public interface ProductReviewService {
 	
 	int modifyReview_RE(Product_reviewVO reviewVO);	
 	
+	//경태 리뷰 댓글 가져오기
+	ArrayList<Map<String, Object>> getLoginMemberReply(HashMap<String, Object> map);
+	ArrayList<Map<String, Object>> getLoginMemberReview(HashMap<String, Object> map);
 	
 //	public ArrayList<CommentVO> getComment(int num);
 //	public int commentDelete(int comment_num);

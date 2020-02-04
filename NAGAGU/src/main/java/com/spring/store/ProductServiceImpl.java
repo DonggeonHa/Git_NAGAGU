@@ -7,7 +7,9 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.spring.community.PicsVO;
 import com.spring.mapper.AcademyMapper;
+import com.spring.mapper.CommunityMapper;
 import com.spring.mapper.ProductMapper;
 import com.spring.member.MemberVO;
 import com.spring.workshop.WorkshopVO;
@@ -92,6 +94,21 @@ public class ProductServiceImpl implements ProductService{
 		ProductMapper productMapper = sqlSession.getMapper(ProductMapper.class);
 		res = productMapper.updateGrade(vo);
 		return res;
+	}
+
+
+	@Override
+	public ArrayList<ProductVO> getMemberLikeProduct(HashMap<String, Object> map) {
+		ArrayList<ProductVO> vo = null; 
+		try { 
+			ProductMapper productMapper = sqlSession.getMapper(ProductMapper.class);
+			//memberMapper memberMapper= sqlSession.getMapper(memberMapper.class);
+			vo = productMapper.getMemberLikeProduct(map);
+			System.out.println("RESULT="+vo);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}  
+		return vo;
 	}
 
 

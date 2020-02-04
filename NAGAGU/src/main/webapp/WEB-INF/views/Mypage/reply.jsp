@@ -111,9 +111,6 @@ img {
 width: 100%;
 height: auto;
 }
-.picOutput{
-	padding-left: 0px !important;
-}
 /* --------------------------------- */
 .tab-content img {
 	height: auto;
@@ -184,16 +181,16 @@ height: auto;
 					</a>
 				</div>
 				<div class="card card-hover ">
-					<a href="mypage_review_product.my" class="href">
-						<div class="card-header">상품 REVIEW</div>
+					<a href="mypage_review.my" class="href">
+						<div class="card-header">REVIEW</div>
 						<div class="card-body">
 							<i class="fas fa-keyboard fa-4x"></i>
 						</div>
 					</a>
 				</div>
 				<div class="card card-hover ">
-					<a href="mypage_review_class.my" class="href">
-						<div class="card-header">클래스 REVIEW</div>
+					<a href="mypage_estimate.my" class="href">
+						<div class="card-header">견적</div>
 						<div class="card-body">
 							<i class="fas fa-keyboard fa-4x"></i>
 						</div>
@@ -204,52 +201,21 @@ height: auto;
 		</div>
 
 	<div class="container">
-		<div class="row">
+		<div class="row" style="margin-left: 0px;">
 			<ul class="nav nav-tabs" id="myTab" role="tablist">
 				<li class="nav-item"><a class="nav-link active" id="picTab"
 					data-toggle="tab" href="#home" role="tab" aria-controls="home"
 					aria-selected="true">PIC</a></li>
-				<li class="nav-item"><a class="nav-link" id="profile-tab"
+				<li class="nav-item"><a class="nav-link" id="storeTab"
 					data-toggle="tab" href="#profile" role="tab"
 					aria-controls="profile" aria-selected="false">STORE</a></li>
-				<li class="nav-item"><a class="nav-link" id="contact-tab"
-					data-toggle="tab" href="#contact" role="tab"
-					aria-controls="contact" aria-selected="false">CLASS</a></li>
 			</ul>
 		</div>
 		<div class="tab-content" id="myTabContent">
-			<div class="tab-pane fade show active row" id="picOutput"
+			<div class="tab-pane fade show active row" id=""
 				role="tabpanel" aria-labelledby="picTab">
-				<!-- 사진 뿌려지는 장소 -->
-				<div class="row mx-0 my-2 reply-content ">
-					<div class="col-1">
-						<img
-							src="https://images.unsplash.com/photo-1552584010-ca8bbbd5bd18?ixlib=rb-1.2.1&q=80&fm=jpg&crop=entropy&cs=tinysrgb&w=400&fit=max&ixid=eyJhcHBfaWQiOjYxOTE2fQ">
-					</div>
-					<div class="col-11">
-						<div class="row justify-content-between px-1">
-							<div class="name">해당 글 제목</div>
-							<div class="smallfont">2020-01-08</div>
-						</div>
-						<div class="row ">
-							<div class="comm_content">예쁘게 만드셨네요!</div>
-						</div>
-					</div>
-				</div>
-				<div class="row mx-0 my-2 reply-content ">
-					<div class="col-1">
-						<img
-							src="https://images.unsplash.com/photo-1552584010-ca8bbbd5bd18?ixlib=rb-1.2.1&q=80&fm=jpg&crop=entropy&cs=tinysrgb&w=400&fit=max&ixid=eyJhcHBfaWQiOjYxOTE2fQ">
-					</div>
-					<div class="col-11">
-						<div class="row justify-content-between px-1">
-							<div class="name">해당 글 제목</div>
-							<div class="smallfont">2020-01-08</div>
-						</div>
-						<div class="row ">
-							<div class="comm_content">예쁘게 만드셨네요!</div>
-						</div>
-					</div>
+				<!-- 댓글 뿌려지는 장소 -->
+				<div class="row mx-0 my-2 reply-content replyOutput">
 				</div>
 			</div>
 		</div>
@@ -265,29 +231,36 @@ height: auto;
 <script src="https://kit.fontawesome.com/97dbc99ea1.js" crossorigin="anonymous"></script>
 <script>
 	$(document).ready(function(){
-		//사진 가져오기 함수 정의
+		//사진 댓글  가져오기 함수 정의
 		function getPics(event){
 			var loginNum = '<%=session.getAttribute("MEMBER_NUM")%>'; 
 			alert('로그인넘버='+loginNum)
+			var category = 'reply_pic'
 			if(loginNum == 0){
 				return
 			}
 			$.ajax({
 				  url: "/NAGAGU/loginMemberReply.cm",
 	              type: "POST",
-	              data: { 'loginNum' : loginNum},
+	              data: { 'category' : category},
 	              contentType:
 	  				'application/x-www-form-urlencoded; charset=utf-8',
 	              success: function (retVal) {
 	        		if(retVal.res=="OK"){
 	        			var output="";
+	        			console.log(retVal.PicsNum)
 			        	for(var j=0; j<retVal.PicsNum.length; j++){
-			        		var imgsrc = retVal.PicsNum[j].pics_FILE_1
+			        		var imgsrc = retVal.PicsNum[j].MEMBER_PICTURE
+			        		var date = retVal.PicsNum[j].PICS_RE_DATE
+			        		var content = retVal.PicsNum[j].PICS_RE_CONTENT
+			        		var nickname = retVal.PicsNum[j].PICS_NICK
 			        		console.log(imgsrc)
-				    		output += '<div class="col-4 picOutput">'
-				    		output += '<img src="/communityupload/image/'+imgsrc+'"></div>'
+				    		output += '<div class="col-1"><img src="${pageContext.request.contextPath}/'+imgsrc+'"></div>'
+				    		output += '<div class="col-11"><div class="row justify-content-between"><div class="name">'+nickname+'에게 단 댓글</div>'
+				    		output += '<div class="smallfont">'+date+'</div></div><div class="row">'
+				    		output += '<div class="comm_content">'+content+'</div></div></div>'
 			        	}
-			        	$('#picOutput').html(output)
+			        	$('.replyOutput').html(output)
 					}else{
 						alert("update fail");
 					}  
@@ -297,14 +270,53 @@ height: auto;
 				}
 			})
 		} 
-		//누르면 사진 가져오기
+		//누르면 사진댓글 가져오기
 		$(document).on('click','#picTab',function(){
 			getPics()
 		}) 
+		
+		//누르면 상품댓글 가져오기
+		$(document).on('click','#storeTab',function(){
+			alert('hid')
+			var loginNum = '<%=session.getAttribute("MEMBER_NUM")%>'; 
+			var category = 'reply_store'
+			if(loginNum == 0){
+				return
+			}
+			$.ajax({
+				  url: "/NAGAGU/loginMemberReply.cm",
+	              type: "POST",
+	              data: { 'category' : category},
+	              contentType:
+	  				'application/x-www-form-urlencoded; charset=utf-8',
+	              success: function (retVal) {
+	        		if(retVal.res=="OK"){
+	        			var output="";
+	        			console.log(retVal.PicsNum)
+			        	for(var j=0; j<retVal.PicsNum.length; j++){
+			        		var imgsrc = retVal.PicsNum[j].PRODUCT_IMAGE
+			        		var date = retVal.PicsNum[j].REVIEW_DATE
+			        		var content = retVal.PicsNum[j].REVIEW_CONTENT
+			        		var title = retVal.PicsNum[j].PRODUCT_TITLE
+			        		console.log(imgsrc)
+				    		output += '<div class="col-1"><img src="/productupload/image/'+imgsrc+'"></div>'
+				    		output += '<div class="col-11"><div class="row justify-content-between"><div class="name">'+title+'</div>'
+				    		output += '<div class="smallfont">'+date+'</div></div><div class="row">'
+				    		output += '<div class="comm_content">→'+content+'</div></div></div>'
+			        	}
+			        	$('.replyOutput').html(output)
+					}else{
+						alert("update fail");
+					}  
+				 },
+				error:function(){
+					alert("ajax통신 실패!!");
+				}
+			})
+		}) 
 		//처음 로드하고 사진 가져오기 호출
-		//getPics();
+		getPics();
 	})
-
 </script>
 </body>
 </html>

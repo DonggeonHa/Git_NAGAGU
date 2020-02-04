@@ -88,11 +88,11 @@ public class MypageController {
 		
 		return "Mypage/reply";
 	}
-	@RequestMapping(value = "/mypage_review_product.my")
+	@RequestMapping(value = "/mypage_review.my")
 	public String MypageReviewProduct() {		
-		return "Mypage/review_product";
+		return "Mypage/review";
 	}
-	@RequestMapping(value = "/mypage_review_class.my")
+	@RequestMapping(value = "/mypage_estimate.my")
 	public String MypageReviewClass() {
 		
 		return "Mypage/review_class";

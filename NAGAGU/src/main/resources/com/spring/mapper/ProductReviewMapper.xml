@@ -63,6 +63,25 @@ create sequence store_review_seq
 		<result property="MEMBER_STATUS" column="MEMBER_STATUS" />
 	</resultMap>
 	
+	<resultMap type="java.util.HashMap" id="replyHashmapVO">
+		<result property="REVIEW_MEMBER" column="REVIEW_MEMBER" />	
+		<result property="REVIEW_DATE" column="REVIEW_DATE" />	
+		<result property="REVIEW_CONTENT" column="REVIEW_CONTENT" />	
+		<result property="REVIEW_FILE" column="REVIEW_FILE" />	
+		<result property="REVIEW_GRADE" column="REVIEW_GRADE" />	
+		
+		<result property="PRODUCT_IMAGE" column="PRODUCT_IMAGE" />
+		<result property="PRODUCT_TITLE" column="PRODUCT_TITLE" />
+	</resultMap>
+			
+	<!-- 경태 리뷰 댓글 가져오기 getLoginMemberReply -->
+	<select id="getLoginMemberReply" parameterType="int" resultMap="replyHashmapVO">
+		SELECT * FROM PRODUCT_REVIEW, PRODUCT  WHERE REVIEW_MEMBER=#{MEMBER_NUM} AND PRODUCT_NUM=REVIEW_PRODUCT AND REVIEW_RE!=0
+	</select>	
+	<select id="getLoginMemberReview" parameterType="int" resultMap="replyHashmapVO">
+		SELECT * FROM PRODUCT_REVIEW, PRODUCT  WHERE REVIEW_MEMBER=#{MEMBER_NUM} AND PRODUCT_NUM=REVIEW_PRODUCT AND REVIEW_RE=0
+	</select>	
+	
 	<select id="getLoginMemberbyNUM" parameterType="com.spring.member.MemberVO" resultMap="memberReviewResultMap">
 		SELECT * FROM nagagu_member WHERE MEMBER_NUM=#{MEMBER_NUM}
 	</select> 
@@ -158,13 +177,12 @@ create sequence store_review_seq
 	<delete id="deleteReview" parameterType="java.util.HashMap">
 		DELETE FROM PRODUCT_REVIEW WHERE REVIEW_NUM=#{REVIEW_NUM}
 	</delete>	
-	
-	
 	<!-- 답글 수정, 삭제 -->	
 	<update id="modifyReview_RE" parameterType="com.spring.store.Product_reviewVO">
 		UPDATE PRODUCT_REVIEW SET 
 			REVIEW_DATE=#{REVIEW_DATE}, REVIEW_CONTENT=#{REVIEW_CONTENT}
 		WHERE REVIEW_NUM =#{REVIEW_NUM} 
 	</update>
-		
+
+	
 </mapper>

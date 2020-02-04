@@ -1,6 +1,8 @@
 package com.spring.community;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -64,6 +66,15 @@ public class PicsCommentServiceImpl implements PicsCommentService{
 		db.setPICS_RE_STEP(0);
 		int res = commentmapper.updateComment(db);
 		return res;
+	}
+	@Override
+	public ArrayList<Map<String, Object>> getLoginMemberReply(HashMap<String, Object> map) {
+		System.out.println("start");
+		ArrayList<Map<String, Object>> commentList =null;
+		PicsCommentMapper commentmapper = sqlSession.getMapper(PicsCommentMapper.class);
+		commentList= commentmapper.getLoginMemberReply(map);
+		System.out.println("getLoginMemberReply Impl결과="+commentList);
+		return commentList;
 	}
 
 	

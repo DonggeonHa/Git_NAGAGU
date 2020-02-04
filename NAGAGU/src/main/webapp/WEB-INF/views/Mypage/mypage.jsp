@@ -145,7 +145,7 @@
 					</a>
 				</div>
 				<div class="card card-hover ">
-					<a href="mypage_review_product.my" class="href">
+					<a href="mypage_review.my" class="href">
 						<div class="card-header">상품 REVIEW</div>
 						<div class="card-body">
 							<i class="fas fa-keyboard fa-4x"></i>
@@ -153,7 +153,7 @@
 					</a>
 				</div>
 				<div class="card card-hover ">
-					<a href="mypage_review_class.my" class="href">
+					<a href="mypage_estimate.my" class="href">
 						<div class="card-header">클래스 REVIEW</div>
 						<div class="card-body">
 							<i class="fas fa-keyboard fa-4x"></i>
