@@ -28,7 +28,6 @@
 		WORKSHOP_NUM = (Integer)session.getAttribute("WORKSHOP_NUM");
 	}
 
-	
 	ArrayList<ProductVO> productList = (ArrayList<ProductVO>) request.getAttribute("productList");
 	String PRODUCT_CATEGORY = (String)request.getAttribute("PRODUCT_CATEGORY");
 	int productcount = ((Integer) request.getAttribute("productcount")).intValue(); // (전체/카테고리)글 개수

@@ -9,113 +9,121 @@
 <%@ page import = "java.text.SimpleDateFormat" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
-
 <%
-   System.out.println("=========================================");
-   System.out.println("ProductDetail.jsp");
+	System.out.println("=========================================");
+	System.out.println("ProductDetail.jsp");
+	
+	//댓글 작성할 때 로그인한 회원정보의 별명, 프로필사진 이용 위해 vo 받아옴
+	MemberVO LoginMemberVO = null;
+	int MEMBER_NUM = 0;
+	String MEMBER_PICTURE = "#";
+	String MEMBER_NICK = "#";
+	if((MemberVO)request.getAttribute("LoginMemberVO") != null) {
+		LoginMemberVO = (MemberVO)request.getAttribute("LoginMemberVO");
+		MEMBER_NUM = LoginMemberVO.getMEMBER_NUM();
+		MEMBER_PICTURE = LoginMemberVO.getMEMBER_PICTURE();
+		MEMBER_NICK = LoginMemberVO.getMEMBER_NICK();
+	}
+	System.out.println("확인1");
+	//로그인 상태 체크 위한
+	String WORKSHOP_CEO_NAME = (String)session.getAttribute("WORKSHOP_CEO_NAME");
+	System.out.println("WORKSHOP_CEO_NAME="+WORKSHOP_CEO_NAME);
+	String MEMBER_EMAIL = (String)session.getAttribute("MEMBER_EMAIL");
    
-   
-   //로그인 상태 체크 위한
-   String MEMBER_EMAIL = "@";
-   if((String)session.getAttribute("MEMBER_EMAIL") != null) {
-      MEMBER_EMAIL = (String)session.getAttribute("MEMBER_NICK");
-   }
-   
-   //로그인시 로그인한 회원정보의 별명, 프로필사진 이용 위한
-   MemberVO LoginMemberVO = null;
-   int MEMBER_NUM = 0;
-   String MEMBER_PICTURE = "#";
-   String MEMBER_NICK = "#";
-   if((MemberVO)request.getAttribute("LoginMemberVO") != null) {
-      LoginMemberVO = (MemberVO)request.getAttribute("LoginMemberVO");
-      MEMBER_NUM = LoginMemberVO.getMEMBER_NUM();
-      MEMBER_PICTURE = LoginMemberVO.getMEMBER_PICTURE();
-      MEMBER_NICK = LoginMemberVO.getMEMBER_NICK();
-   }
-   
-   //상품상세 관련
-   ProductVO vo = (ProductVO)request.getAttribute("productVO");
-   String PRODUCT_CATEGORY = (String)request.getAttribute("PRODUCT_CATEGORY");
-   int PRODUCT_NUM = ((Integer)request.getAttribute("PRODUCT_NUM")).intValue();
-   String PRODUCT_COLOR = vo.getPRODUCT_COLOR();
-   String PRODUCT_SIZE = vo.getPRODUCT_SIZE();
-   String PRODUCT_OPTION = vo.getPRODUCT_OPTION();
-   int bannerImgCount = StringUtils.countOccurrencesOf(vo.getPRODUCT_BANNER(), ",");
-   
-   //리뷰 관련
-   ArrayList<Product_reviewVO> reviewList = (ArrayList<Product_reviewVO>) request.getAttribute("reviewList");
-   ArrayList<Product_reviewVO> review_RE_List = (ArrayList<Product_reviewVO>) request.getAttribute("review_RE_List");
-   int reviewCount = ((Integer) request.getAttribute("reviewCount")).intValue(); // (전체/카테고리)글 개수
-   int review_RE_Count = ((Integer) request.getAttribute("review_RE_Count")).intValue(); // (전체/카테고리)글 개수
-   int nowpage = ((Integer) request.getAttribute("reviewpage")).intValue();
-   int maxpage = ((Integer) request.getAttribute("maxpage")).intValue();
-   int startpage = ((Integer) request.getAttribute("startpage")).intValue();
-   int endpage = ((Integer) request.getAttribute("endpage")).intValue();
-   //리뷰 이미지 수 구하기
-   int[] reviewImgCount = new int[reviewList.size()];
-   for(int i=0; i<reviewImgCount.length; i++) {
-      reviewImgCount[i] = StringUtils.countOccurrencesOf(reviewList.get(i).getREVIEW_FILE(), ",");
-      /*
-      System.out.println("--------------------------");
-      System.out.println( i + "번째 reviewImgCount = " +  reviewImgCount[i]);
-      System.out.println( "reviewImgCount["+i+"]="+reviewImgCount[i]);
-      */
-   }
-   //리뷰 멤버 관련
-   ArrayList<MemberVO> reviewMemberList = (ArrayList<MemberVO>) request.getAttribute("reviewMemberList");
-   ArrayList<MemberVO> review_RE_MemberList = (ArrayList<MemberVO>) request.getAttribute("review_RE_MemberList");
-   System.out.println("reviewMemberList.size() = " + reviewMemberList.size());
-   /*
-   for(int i = 0; i < reviewMemberList.size(); i++) {      
-      System.out.println(
-            "reviewMemberList.get(0).getMEMBER_NICK()" +
-            reviewMemberList.get(0).getMEMBER_NICK()
-            );
-   }
-   */
-   //qna 관련
-   ArrayList<Product_qnaVO> qnaList = (ArrayList<Product_qnaVO>) request.getAttribute("qnaList");
-   System.out.println("qnaList.size = " + qnaList.size());
-   
-   int qnaCount = ((Integer) request.getAttribute("qnaCount")).intValue(); // (전체/카테고리)글 개수
-   int qnanowpage = ((Integer) request.getAttribute("qnapage")).intValue();
-   int qnamaxpage = ((Integer) request.getAttribute("qnamaxpage")).intValue();
-   int qnastartpage = ((Integer) request.getAttribute("qnastartpage")).intValue();
-   int qnaendpage = ((Integer) request.getAttribute("qnaendpage")).intValue();   
-   //qna 멤버 관련
-   ArrayList<MemberVO> qnaMemberList = (ArrayList<MemberVO>) request.getAttribute("qnaMemberList");
-   System.out.println("qnaMemberList.size() = " + qnaMemberList.size());
-   /*
-   for(int i = 0; i < qnaMemberList.size(); i++) {
-      System.out.println(
-            "reviewMemberList.get(0).getMEMBER_NICK()" +
-            reviewMemberList.get(0).getMEMBER_NICK()
-            );
-   }
-   */
-   System.out.println("qnaCount = " + qnaCount);
-   //날짜 포맷 형식
-   SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-   
-   BasketVO basketVO = new BasketVO();
+	//WORKSHOP의 NUM 필요하다(답글 버튼 보임)
+	int WotkshopMatchingNumber = (int)request.getAttribute("WotkshopMatchingNumber");
+	System.out.println("WotkshopMatchingNumber="+WotkshopMatchingNumber);
+	int WORKSHOP_NUM = 0;
+	if(WORKSHOP_CEO_NAME != null) {
+		WORKSHOP_NUM = (int)session.getAttribute("WORKSHOP_NUM");	//현재 로그인한 워크샵 넘버
+		
+	}
+	//int WORKSHOP_NUM = (int)session.getAttribute("WORKSHOP_NUM");	//현재 로그인한 워크샵 넘버
+	//int WORKSHOP_NUM = ((Integer)(session.getAttribute("WORKSHOP_NUM"))).intValue();	//현재 로그인한 워크샵 넘버
+	System.out.println("확인3");
+	
+	//상품상세 관련
+	ProductVO vo = (ProductVO)request.getAttribute("productVO");
+	String PRODUCT_CATEGORY = (String)request.getAttribute("PRODUCT_CATEGORY");
+	int PRODUCT_NUM = ((Integer)request.getAttribute("PRODUCT_NUM")).intValue();
+	String PRODUCT_COLOR = vo.getPRODUCT_COLOR();
+	String PRODUCT_SIZE = vo.getPRODUCT_SIZE();
+	String PRODUCT_OPTION = vo.getPRODUCT_OPTION();
+	int bannerImgCount = StringUtils.countOccurrencesOf(vo.getPRODUCT_BANNER(), ",");
+	
+	//리뷰 관련
+	ArrayList<Product_reviewVO> reviewList = (ArrayList<Product_reviewVO>) request.getAttribute("reviewList");
+	ArrayList<Product_reviewVO> review_RE_List = (ArrayList<Product_reviewVO>) request.getAttribute("review_RE_List");
+	int reviewCount = ((Integer) request.getAttribute("reviewCount")).intValue(); // (전체/카테고리)글 개수
+	int review_RE_Count = ((Integer) request.getAttribute("review_RE_Count")).intValue(); // (전체/카테고리)글 개수
+	int nowpage = ((Integer) request.getAttribute("reviewpage")).intValue();
+	int maxpage = ((Integer) request.getAttribute("maxpage")).intValue();
+	int startpage = ((Integer) request.getAttribute("startpage")).intValue();
+	int endpage = ((Integer) request.getAttribute("endpage")).intValue();
+	//리뷰 이미지 수 구하기
+	int[] reviewImgCount = new int[reviewList.size()];	
+	for(int i=0; i<reviewImgCount.length; i++) {
+		reviewImgCount[i] = StringUtils.countOccurrencesOf(reviewList.get(i).getREVIEW_FILE(), ",");
+		/*
+		System.out.println("--------------------------");
+		System.out.println( i + "번째 reviewImgCount = " +  reviewImgCount[i]);
+		System.out.println( "reviewImgCount["+i+"]="+reviewImgCount[i]);
+		*/
+	}
+	//리뷰 멤버 관련
+	ArrayList<MemberVO> reviewMemberList = (ArrayList<MemberVO>) request.getAttribute("reviewMemberList");
+	ArrayList<MemberVO> review_RE_MemberList = (ArrayList<MemberVO>) request.getAttribute("review_RE_MemberList");
+	System.out.println("reviewMemberList.size() = " + reviewMemberList.size());
+	/*
+	for(int i = 0; i < reviewMemberList.size(); i++) {      
+	   System.out.println(
+	         "reviewMemberList.get(0).getMEMBER_NICK()" +
+	         reviewMemberList.get(0).getMEMBER_NICK()
+	         );
+	}
+	*/
+	//qna 관련
+	ArrayList<Product_qnaVO> qnaList = (ArrayList<Product_qnaVO>) request.getAttribute("qnaList");
+	System.out.println("qnaList.size = " + qnaList.size());
+	
+	int qnaCount = ((Integer) request.getAttribute("qnaCount")).intValue(); // (전체/카테고리)글 개수
+	int qnanowpage = ((Integer) request.getAttribute("qnapage")).intValue();
+	int qnamaxpage = ((Integer) request.getAttribute("qnamaxpage")).intValue();
+	int qnastartpage = ((Integer) request.getAttribute("qnastartpage")).intValue();
+	int qnaendpage = ((Integer) request.getAttribute("qnaendpage")).intValue();   
+	//qna 멤버 관련
+	ArrayList<MemberVO> qnaMemberList = (ArrayList<MemberVO>) request.getAttribute("qnaMemberList");
+	System.out.println("qnaMemberList.size() = " + qnaMemberList.size());
+	/*
+	for(int i = 0; i < qnaMemberList.size(); i++) {
+	   System.out.println(
+	         "reviewMemberList.get(0).getMEMBER_NICK()" +
+	         reviewMemberList.get(0).getMEMBER_NICK()
+	         );
+	}
+	*/
+	System.out.println("qnaCount = " + qnaCount);
+	
+	//날짜 포맷 형식
+	SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+	
+	BasketVO basketVO = new BasketVO();
 
 %>  
+
 <!DOCTYPE html>
 <html>
-   <head>
-      <meta charset="utf-8">
-      <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-      <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
-      <!-- <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script> -->
-      <script src="<c:url value="/js/jquery.form.min.js"/>"></script>   
-      <script src="<c:url value="/js/jquery-3.1.0.min.js"/>"></script>            
-      <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
-      <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
-      <link href="https://use.fontawesome.com/releases/v5.0.6/css/all.css" rel="stylesheet">
-
-
-
-      <style>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+		<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+		<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+		<script src="<c:url value="/js/jquery.form.min.js"/>"></script>   
+		<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+		<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+		<link href="https://use.fontawesome.com/releases/v5.0.6/css/all.css" rel="stylesheet">
+		
+	<style>
          @charset "UTF-8";
          
          img {
@@ -129,11 +137,6 @@
          
          .nav_tab {
             background-color: #FEE100;
-         }
-         
-         .navbar-nav>li {
-            padding-left: 30px;
-            padding-right: 30px;
          }
          
          /*안 먹힘*/
@@ -345,6 +348,7 @@
          
          
          /*qna*/
+         
          .qnas_table {
             color: #212529;
          }         
@@ -355,10 +359,32 @@
          }
 
          .qna_add_section {
+	         display:none;
             background-color: #FAFAFA;
          }         
          
+         .qna_mod_section {
+         	display:none;
+         }
          
+         .qna_control {
+            text-align:right;
+         }
+         .qna_control a {
+            color : #343A40;
+            font-weight:bold;
+            font-size:0.7rem;
+         }
+         
+         .qna_control_hidden {
+         	text-align:right;
+         }
+         
+         .qna_control_hidden a {
+         	color : #343A40;
+            font-weight:bold;
+            font-size:0.7rem;
+         }
          /*별점주기*/
          .star-rating { 
             width:52px; 
@@ -522,13 +548,6 @@
                      </div>
                      <div class="col-11">
                         <div class="row">
-                        <%
-                        System.out.println();
-                        System.out.println("닉네임="+memberVO.getMEMBER_NICK());
-                        System.out.println("member 번호="+memberVO.getMEMBER_NUM());
-                        System.out.println("이메일="+memberVO.getMEMBER_EMAIL());
-                        System.out.println();
-                        %>
                            <div class="col-10 justify-content-end name"><%=memberVO.getMEMBER_NICK() %></div>
                            <div class="col-2 justify-content-center smallfont"><%=sdf.format(reviewVO.getREVIEW_DATE())%></div>
                         </div>
@@ -572,7 +591,7 @@
                            <div class="review_re pr-4">
                               <a id="review_re_insert_form<%=reviewVO.getREVIEW_NUM() %>" class="review_re_insert_form" style="cursor: pointer;">
                                  <input type="hidden" name="REVIEW_NUM" value="<%=reviewVO.getREVIEW_NUM() %>">
-                                 답글
+                                 	답글
                               </a>
                            </div>
                         </div>
@@ -582,11 +601,11 @@
                               <form name="review_numform">
                                  <a class="review_modify" style="cursor: pointer;">
                                     <input type="hidden" name="REVIEW_NUM" value="<%=reviewVO.getREVIEW_NUM() %>">
-                                    수정
+                                   	 수정
                                  </a> &nbsp;
                                  <a class="review_delete" style="cursor: pointer;">
                                     <input type="hidden" name="REVIEW_NUM" value="<%=reviewVO.getREVIEW_NUM() %>">
-                                    삭제
+                                	    삭제
                                  </a>
                               </form>
                            </div>                     
@@ -681,8 +700,7 @@
                                     <div class="col">
                                        <form name="review_RE_modifyform" id="review_RE_modifyform<%=review_re_VO.getREVIEW_NUM() %>">
                                           <input type="hidden" name="REVIEW_NUM" value="<%=review_re_VO.getREVIEW_NUM() %>">
-                                          <textarea rows="2" name="REVIEW_CONTENT" cols="80%" class="review_RE_modify_hidden" id="review_RE_modify_hidden<%=review_re_VO.getREVIEW_NUM() %>">
-                                             <%=review_re_VO.getREVIEW_CONTENT() %>
+                                          <textarea rows="2" name="REVIEW_CONTENT" cols="80%" class="review_RE_modify_hidden" id="review_RE_modify_hidden<%=review_re_VO.getREVIEW_NUM() %>"><%=review_re_VO.getREVIEW_CONTENT() %>
                                           </textarea>
                                        </form>
                                     </div>
@@ -700,7 +718,11 @@
                                  <div class="review_RE_control_hidden pr-3" id="review_RE_control_hidden<%=review_re_VO.getREVIEW_NUM() %>" >                                 
                                     <a class="review_RE_modify_Process" style="cursor: pointer;">
                                        <input type="hidden" name="REVIEW_NUM" value="<%=review_re_VO.getREVIEW_NUM() %>">
-                                       수정하기
+                                  	     수정하기
+                                    </a>  &nbsp;                                  
+                                    <a class="review_RE_modify_reset" style="cursor: pointer;">
+                                       <input type="hidden" name="REVIEW_NUM" value="<%=review_re_VO.getREVIEW_NUM() %>">
+                                  	     취소
                                     </a>                                    
                                  </div>
                               </div>
@@ -824,7 +846,7 @@
             <hr />
             
             <!-- Q&A 테이블 시작 -->
-            <h3 >Q&A</h3>
+            <h3 id="qna_scroll">Q&A</h3>
             <br />
             <br />
             <div class="qnas_table">
@@ -842,6 +864,7 @@
                      MemberVO memberVO = qnaMemberList.get(i);
             %>
                <div class="qna_sum justify-content-center" id="qna_<%=qnaVO.getQNA_NUM() %>">
+        	       <input type="hidden" name="QNA_MEMBER" value="<%=qnaVO.getQNA_MEMBER() %>">
                   <div class="row">
                      <div class="col-1 justify-content-end">
                         <img src="<%=memberVO.getMEMBER_PICTURE() %>" alt="" class="rounded-circle">
@@ -852,15 +875,59 @@
                            <div class="col-2 justify-content-center smallfont"><%=sdf.format(qnaVO.getQNA_DATE())%></div>
                         </div>
                         <div class="row ">
-                           <div class="col rep_content"><%=qnaVO.getQNA_CONTENT()%></div>
+                           <div class="col rep_content" id="qna_modify_block<%=qnaVO.getQNA_NUM() %>"><%=qnaVO.getQNA_CONTENT()%></div>
                         </div>                        
-                        <div class="row" style="height: 20px;">
-                           <a href="#" class="smallfont">답글달기</a> &nbsp;&nbsp; 
-                           <a href="#"   class="smallfont">신고하기</a>
+                        <div class="row " >
+                        	<div class="col qna_control pr-5">
+	                           <input type="hidden" name="QNA_NUM" value="<%=qnaVO.getQNA_NUM() %>">
+	                           <!-- 수정삭제는 membernum이 일치하는 멤버만 볼 수 있다. -->
+	                           <% if(MEMBER_NUM == qnaVO.getQNA_MEMBER()) { %>
+		                           <a class="smallfont qna_modify" id="qna_modify<%=qnaVO.getQNA_NUM()%>" style="cursor: pointer;">수정</a> &nbsp; <!-- 수정폼 -->
+		                           <a class="smallfont qna_delete" id="qna_delete<%=qnaVO.getQNA_NUM()%>" style="cursor: pointer;">삭제</a> <!-- 수정폼 -->
+	                           <% } %>
+	                           <!-- 답글은 workshopnum이 일치하는 공방업자만 볼 수 있다. -->
+	                           <% if(WORKSHOP_NUM == WotkshopMatchingNumber) { %>
+		                           <a class="smallfont qna_re" id="qna_re<%=qnaVO.getQNA_NUM()%>" style="cursor: pointer;">답글</a>
+								<% } %>
+                      	  	</div>
+                        </div>
+                     </div>
+                  </div>
+               </div>
+               
+                <!-- qna 수정폼 -->
+               <div class="qna_mod_section justify-content-center " id="qna_mod_section<%=qnaVO.getQNA_NUM() %>" style="width: 100%; margin: 0 auto;">
+                  <div class="row">
+                     <div class="col-1 justify-content-end">
+                        <img src="<%=memberVO.getMEMBER_PICTURE() %>" alt="" class="rounded-circle">
+                     </div>
+                     <div class="col-11">
+                        <div class="row">
+                           <div class="col-10 justify-content-end name"><%=memberVO.getMEMBER_NICK() %></div>
+                           <div class="col-2 justify-content-center smallfont"><%=sdf.format(qnaVO.getQNA_DATE())%></div>
+                        </div>
+                        <form class="qnamodifyform" id="qnamodifyform<%=qnaVO.getQNA_NUM() %>">
+                        <div class="row ">
+                        		<input type="hidden" name="QNA_NUM" value="<%=qnaVO.getQNA_NUM() %>">
+		                        <textarea rows="2" name="QNA_CONTENT" class="col rep_content ml-3 pl-0 mr-5"  
+	                        	id="qna_content<%=qnaVO.getQNA_NUM() %>"><%=qnaVO.getQNA_CONTENT()%></textarea>
+                        </div>                        
+                            </form>
+                        <div class="row "  style="cursor: pointer;">
+                        	<div class="col qna_control_hidden pr-5">
+              		          	<input type="hidden" name="QNA_NUM" value="<%=qnaVO.getQNA_NUM() %>">
+	                        	<a class="smallfont qna_modify_process" id="qna_modify_process<%=qnaVO.getQNA_NUM()%>" style="cursor: pointer;">수정하기</a>&nbsp;
+	                        	<a class="smallfont qna_modify_reset" id="qna_modify_reset<%=qnaVO.getQNA_NUM()%>" style="cursor: pointer;">취소</a>
+	                           
+	                        </div>
                         </div>
                      </div>
                   </div>
                </div>      
+      
+               
+               <!-- qna 수정폼 끝 -->
+                     
                <br />                  
             <%
                   } //for문 끝
@@ -873,67 +940,28 @@
             <%
                }
             %>
-                  
-                     
-                        
-
-<%--                
-               <div class="qna_sum justify-content-center" >
-                  <div class="row">
-                     <div class="col-1 justify-content-end">
-                        <img src="${pageContext.request.contextPath}/resources/images/Community/peko.png" alt="" class="img-circle">
-                     </div>
-                     <div class="col-11">
-                        <div class="row">
-                           <div class="col-10 justify-content-end name">박이름</div>
-                           <div class="col-2 justify-content-center smallfont">2020-01-08</div>
-                        </div>
-                        <div class="row ">
-                           <div class="col justify-content:space-end rep_content">
-                              안녕하세요   주말 1명 참여 가능한 가장 빠른 클래스가 언제인가요?</div>
-                        </div>
-                        <div class="row" style="height: 20px;">
-                           <a href="#" class="smallfont">답글달기</a> &nbsp;&nbsp; 
-                           <a href="#"   class="smallfont">신고하기</a>
-                        </div>
-                     </div>
-                  </div>
-               </div>
-      
-               <br />
-               <div class="qna_reply_wrap"   style="width: 88%; margin: 0 auto; background-color: #FAFAFA;">
-                  <div class="qna_reply " style="width: 95%; margin: 0 auto;">
-                     <div class="row justify-content-start ml-0  name">
-                        <i class="fab fa-replyd"></i>&nbsp;&nbsp;메이킹퍼니처
-                     </div>
-                     <div class="row justify-content-start ml-0 rep_content">안녕하세요 요번 주 토요일
-                        12시요~</div>
-                     <div class="row" style="height: 20px;">
-                        <a href="#" class="smallfont ml-0">&nbsp;&nbsp;&nbsp;&nbsp;답글달기</a>
-                        &nbsp;&nbsp; <a href="#" class="smallfont ml-0">신고하기</a>
-                     </div>
-                  </div>
-               </div>
-               <br />
-               
- --%>
-
-               
                 <!-- qna 등록하기 -->      
                <br />
-               <div class="qna_add_section justify-content-center" style="width: 100%; margin: 0 auto;">
+               <div class="row justify-content-center pt-3 pb-3">
+                     <button class="btn btn-dark btn-sm qna_add_btn">문의하기</button>
+               </div>
+               <div class="qna_add_section justify-content-center " style="width: 100%; margin: 0 auto;">
                   <div class="row justify-content-center">
                      <div class="col-10">
-                        <textarea name="PICS_RE_CONTENT" class="col-12" rows="2"></textarea>
+                        <form id="qnaform" >
+	                     	<input type="hidden" name="QNA_PRODUCT" value="<%=PRODUCT_NUM %>">
+	                        <textarea name="QNA_CONTENT" id = "QNA_CONTENT" placeholder="문의를 남겨주세요!" cols="85%" rows="2"></textarea>
+                     	</form>
                      </div>
                      <div class="col-1">
                         <div class=" row justify-content-center">
-                           <a class="btn btn-outline-dark btn-sm " onClick="location.href='#'" style="cursor: pointer;">등록</a>
+                           <button class="btn btn-dark btn-sm" id="qna_insert" style="cursor: pointer;">등록</button>
                         </div>
                      </div>
                   </div>
                </div>
                <!-- qna 등록 끝 -->
+              
                
                
                <br />
@@ -1089,16 +1117,27 @@
                      </table>
                   </div>
                   <div class="btnArea text-center">
-                     <a href="#" class="btn btn-outline-dark btn-md " role="button" aria-pressed="true" id="LikeAjax">
-                        <input type="hidden" name = "PRODUCT_NUM" value="<%=PRODUCT_NUM %>">
-                        ♥
-                     </a>
-                     <a href="#" class="btn btn-outline-dark btn-md basket_btn" role="button" aria-pressed="true">장바구니</a>
-                     <a href="#" class="btn btn-outline-dark btn-md order_btn" role="button" aria-pressed="true">바로구매</a>
+					<% if(WORKSHOP_CEO_NAME == null && MEMBER_EMAIL == null) { %> <%-- 비로그인일 때 --%>
+						<button type="button" class="btn btn-outline-dark btn-md" data-toggle="modal" data-target="#exampleModalCenter">
+							<input type="hidden" name = "PRODUCT_NUM" value="<%=PRODUCT_NUM %>">
+	                        ♥
+						</button>	
+	                     <button type="button" class="btn btn-outline-dark btn-md" data-toggle="modal" data-target="#exampleModalCenter">장바구니</button>
+	                     <button type="button" class="btn btn-outline-dark btn-md" data-toggle="modal" data-target="#exampleModalCenter">바로구매</button>
+                     <% } else if(WORKSHOP_CEO_NAME != null){ %>	<%-- 공방 로그인일 때(하트 안 보임) --%>
+                     	 <a href="classreservation.ac" class="btn btn-outline-dark btn-md disabled" role="button" aria-pressed="true">장바구니</a>
+                     	 <a href="#" class="btn btn-outline-dark btn-md disabled" role="button" aria-pressed="true" >바로구매</a>
+                     <% } else { %> <%-- 일반회원일때 --%>
+                     	 <a href="#" class="btn btn-outline-dark btn-md " role="button" aria-pressed="true" id="LikeAjax">
+	                        <input type="hidden" name = "PRODUCT_NUM" value="<%=PRODUCT_NUM %>">
+	                        ♥
+	                     </a>
+	                     <a href="mypage_basket.my" class="btn btn-outline-dark btn-md" role="button" aria-pressed="true">장바구니</a>
+	                     <a href="#" class="btn btn-outline-dark btn-md" role="button" aria-pressed="true">바로구매</a>
+                     <% } %>
                   </div>
                   <br/>
                </form>
-               
             </div>
          </div>
       </div>
@@ -1247,7 +1286,33 @@
          return true;
       }   
       
+      
+      /*qna 입력시 빈 칸 체크*/
+      function qna_check() {
+    	  alert('qna_check');
+          var content = qnaform.QNA_CONTENT.value;
+          alert(content)
+          if(content=="") {
+             alert('문의 내용을 입력해주세요!');
+             qnaform.QNA_CONTENT.focus();
+             return;
+          } 
+          return true;
+       }  
+      
+      /*qna 수정시 빈 칸 체크*/
+      function qna_mod_check(QNA_NUM) {
+    	  
+          var modifyform_textarea = 'qna_content' +QNA_NUM;
+          var txt = document.getElementById(modifyform_textarea).value;
 
+          if(txt=="") {
+             alert('내용을 입력해주세요!');
+             document.getElementById(modifyform_textarea).focus();
+             return false;
+          } 
+          return true;    	  
+       }  
       
       /*댓글 등록할 때 사진 여러개일 때 쪼개주는 함수*/
       // , 가 몇 개 있는지만 구하면 된다
@@ -1409,15 +1474,17 @@
             }
          })
          
+         //-----------------------------------댓글달기 button
          //확인!!!
          //댓글 등록 위해 댓글달기 버튼 눌렀을 시 css
          $(".review_add").click(function() {
             if($(this).html() == '댓글 달기') { //댓글달기이면 hidden구역 보이고 버튼은 닫기로 바뀜
-               var email = '<%=MEMBER_EMAIL%>';
-               if(email == '@') {
-                  alert('로그인 해주세요!');
-                  return false;
-               }               
+                var MEMBER_NUM = <%=MEMBER_NUM%>;
+                alert(MEMBER_NUM);
+                if(MEMBER_NUM==0){
+                   alert('로그인 해주세요!');
+                   return
+                }           
                $(".review_hidden").css('display','block');
                $(this).html('닫기');   
             } else { //버튼이 닫기이면 hidden 구역이 닫히고 버튼은 댓글 달기로 바뀜
@@ -1432,15 +1499,16 @@
 
          function infochange() {
             if($('#comment_info').val() == '등록된 댓글이 없습니다') {
-               alert('a');
                $('#comment_info').val('');
+            } else if($('#qna_info').val() == '등록된 댓글이 없습니다') {
+            	$('#qna_info').val('');
             }
          }
          
-         
+          
          //-------------------------------------------리뷰1-댓글등록
          /*댓글 등록시 insert ajax*/
-         $('#review_insert').click(function(event) {
+         $(document).on("click","#review_insert",function(event){
             if(check()) {
                var form = new FormData(document.getElementById('reviewform'));
                
@@ -1522,12 +1590,13 @@
          
          
          //-------------------------------------------리뷰2-1.-댓글수정폼   
-         $('.review_modify').on('click', function(event) {
-            var email = '<%=MEMBER_EMAIL%>';
-            if(email == '@') {
-               alert('로그인 해주세요!');
-               return false;
-            }   
+         $(document).on("click",".review_modify",function(event){
+             var MEMBER_NUM = <%=MEMBER_NUM%>;
+             alert(MEMBER_NUM);
+             if(MEMBER_NUM==0){
+                alert('로그인 해주세요!');
+                return
+             }
             
             var modify_confirm = confirm("수정하시겠습니까?");
             if(modify_confirm) {                              
@@ -1593,7 +1662,7 @@
                   }               
                }
                mod_form += '<span class="modify_imgs_wrap"><img id="modify_inputimg" ></span>';
-               mod_form += '</div><div class="col-12 pb-2"><span class="input_wrap">';         /////////////////      
+               mod_form += '</div><div class="col-12 pb-2"><span class="input_wrap">';            
                mod_form += '파일추가&nbsp; : &nbsp;<input multiple="multiple" type="file" name="REVIEW_FILE" id="modify_input_imgs">';               
                mod_form += '</span>';         
                mod_form += '</div></div>';
@@ -1604,7 +1673,8 @@
                mod_form += '<a href="javascript:void(0);" class="review_modify_process" value="'+REVIEW_NUM+'" style="cursor: pointer;">';                              
                mod_form += '<input type="hidden" name="REVIEW_NUM" value="'+getREVIEW_NUM+'">';                              
                mod_form += '수정하기</a>';         
-               mod_form += '<a class="review_modify_cancel" style="cursor: pointer;">';                                       
+               mod_form += '<a class="review_modify_reset" style="cursor: pointer;">';  
+               mod_form += '<input type="hidden" name="REVIEW_NUM" value="'+getREVIEW_NUM+'">';   
                mod_form += ' &nbsp;취소</a></div></div></div></div></form>';         
                
                $('#review_mod_'+REVIEW_NUM).append(mod_form);
@@ -1614,7 +1684,7 @@
          
          
          //-------------------------------------------리뷰2-2.-댓글수정process
-         $(document).on("click",".review_modify_process",function(e){ 
+         $(document).on("click",".review_modify_process",function(event){ 
 
             var REVIEW_NUM = $(this).children('input').val();         
             if(mod_check(REVIEW_NUM)) {
@@ -1695,15 +1765,31 @@
             event.preventDefault();
 
           });   
-          
-          
+         
+	      //-------------------------------------------리뷰2-3.-댓글수정시 취소버튼(review) 
+	      $(document).on("click",".review_modify_reset",function(event){ 
+        	 alert('aaa');
+        	 var REVIEW_NUM = $(this).children('input').val();
+        	 alert(REVIEW_NUM);
+        	 
+        	 $('#review_'+REVIEW_NUM).css('display','block');
+             $('#review_mod_'+REVIEW_NUM).css('display','none');      //수정폼 사라짐               
+/*                 
+                $('#review_RE_modify_block'+REVIEW_RE_NUM).css('display','block');      //content 내용 보여짐
+                console.log('REVIEW_RE_NUM : ', REVIEW_RE_NUM);
+                $('#review_RE_control'+REVIEW_RE_NUM).css('display','block');         //수정, 삭제버튼은 보여짐
+                $('#review_RE_control_hidden'+REVIEW_RE_NUM).css('display','none');   //수정하기(process로 넘어감),취소버튼은 사라짐            
+ */                
+         });
+	          
          //-------------------------------------------리뷰3-댓글삭제
-         $('.review_delete').on('click', function() {
-            var email = '<%=MEMBER_EMAIL%>';
-            if(email == '@') {
-               alert('로그인 해주세요!');
-               return false;
-            }   
+         $(document).on("click",".review_delete",function(event){
+             var MEMBER_NUM = <%=MEMBER_NUM%>;
+             alert(MEMBER_NUM);
+             if(MEMBER_NUM==0){
+                alert('로그인 해주세요!');
+                return
+             }
             
             var delete_confirm = confirm("삭제하시겠습니까?");
             if(delete_confirm) {
@@ -1735,18 +1821,20 @@
                   }
                });
             }
+            event.preventDefault();
          });      
             
          
          
          //-------------------------------------------리뷰re1-1.-답글등록폼(review_re)
          //review 답글 달기
-         $('.review_re_insert_form').on('click', function(event) {
-            var email = '<%=MEMBER_EMAIL%>';
-            if(email == '@') {
-               alert('로그인 해주세요!');
-               return false;
-            }   
+         $(document).on("click",".review_re_insert_form",function(event){
+             var MEMBER_NUM = <%=MEMBER_NUM%>;
+             alert(MEMBER_NUM);
+             if(MEMBER_NUM==0){
+                alert('로그인 해주세요!');
+                return
+             } 
             
             var REVIEW_NUM = $(this).children('input').val();
             
@@ -1758,12 +1846,12 @@
             $('#review_re_insert'+REVIEW_NUM).css('display','block');      //리뷰의 답글달기 버튼은block
          });
          
-
+         
          //-------------------------------------------리뷰re1-2.-답글등록process(review_re)
          //답글 insert
          /*review의 답글 등록시 insert ajax*/
          //ajax로 답글 db에 등록 후 review_re_space에 출력해줌
-         $('.review_insert_re').click(function(event) {
+         $(document).on("click",".review_insert_re",function(event){
             var REVIEW_NUM = $(this).children('input').val();
             alert(REVIEW_NUM);
             if(re_check(REVIEW_NUM)) {
@@ -1784,7 +1872,7 @@
                      var review_DATE = new Date(data.review_DATE);
                      var date = date_format(review_DATE);
                      var rate = 20*data.review_GRADE;
-                     
+                     alert('data.reviewnum='+data.review_NUM);
                      re_form += '<div class="col-1 justify-content-end">';
                      re_form += '<img src="#" alt="" class="rounded-circle">';
                      re_form += '<img src="'+loginmember_pic+'" alt="" class="rounded-circle">';
@@ -1830,11 +1918,12 @@
                      }
                });
             }
+            event.preventDefault();
          });   
          
          
          //-------------------------------------------리뷰re2-1.-답글수정폼(review_re)
-         $('.review_RE_modify').on('click', function() {
+         $(document).on("click",".review_RE_modify",function(event){
             var modify_confirm = confirm("수정하시겠습니까?");
             if(modify_confirm) {
                var REVIEW_RE_NUM = $(this).children('input').val();
@@ -1848,12 +1937,11 @@
          });
          
 
-         //-------------------------------------------리뷰re2-2.-답글수정process(review_re)
-         $(document).on("click",".review_RE_modify_Process",function(e){ 
-            var REVIEW_NUM = $(this).children('input').val();   
+		//-------------------------------------------리뷰re2-2.-답글수정process(review_re)
+		$(document).on("click",".review_RE_modify_Process",function(event){
+			var REVIEW_NUM = $(this).children('input').val();   
             
             if(re_mod_check(REVIEW_NUM)) {
-               alert('cc'+REVIEW_NUM);
                var params = $('#review_RE_modifyform'+REVIEW_NUM).serialize();
                alert(params);
                
@@ -1870,7 +1958,7 @@
                      var review_DATE = new Date(data.review_DATE);
                      var date = date_format(review_DATE);
                      
-                     alert('ajac 후 data.review_CONTENT' + data.review_CONTENT);
+                     alert('ajax 후 data.review_CONTENT' + data.review_CONTENT);
                      $('#review_RE_modify_block'+REVIEW_RE_NUM).html(data.review_CONTENT);   //content값 수정된 내용으로 변경
 
                      $('#review_RE_modify_hidden'+REVIEW_RE_NUM).css('display','none');      //수정폼 숨김
@@ -1888,13 +1976,25 @@
 
           });   
 
-         
+		
+	      //-------------------------------------------리뷰re2-3.-답글수정시 취소버튼(review_re) 
+        $(document).on("click",".review_RE_modify_reset",function(event){
+        	var REVIEW_RE_NUM = $(this).children('input').val();  
+               $('#review_RE_modify_hidden'+REVIEW_RE_NUM).css('display','none');      //수정폼 사라짐
+               $('#review_RE_modify_block'+REVIEW_RE_NUM).css('display','block');      //content 내용 보여짐
+               console.log('REVIEW_RE_NUM : ', REVIEW_RE_NUM);
+               $('#review_RE_control'+REVIEW_RE_NUM).css('display','block');         //수정, 삭제버튼은 보여짐
+               $('#review_RE_control_hidden'+REVIEW_RE_NUM).css('display','none');   //수정하기(process로 넘어감),취소버튼은 사라짐            
+         });
+	      
+	      
+        
          //-------------------------------------------리뷰re3-답글삭제(review_re)      
-         $('.review_RE_delete').on('click', function() {
+         $(document).on("click",".review_RE_delete",function(event){
             var delete_confirm = confirm("삭제하시겠습니까?");
             if(delete_confirm) {
                var REVIEW_RE_NUM = $(this).children('input').val();
-               
+               alert(REVIEW_RE_NUM);
                
                $.ajax({
                   url: '/NAGAGU/delete_review.do' ,
@@ -1908,6 +2008,8 @@
                         alert('댓글이 삭제되었습니다.');
                         $('#review_re'+REVIEW_RE_NUM).css('display','none');
                         
+                        $('#review_re_space'+REVIEW_RE_NUM).css('display','none');
+                        
                         document.getElementById('review_scroll').scrollIntoView();
                      }
                      else {
@@ -1920,7 +2022,6 @@
                });            
                
                
-               
                $('#review_RE_modify_hidden'+REVIEW_RE_NUM).css('display','block');      //수정폼 보여짐
                $('#review_RE_modify_block'+REVIEW_RE_NUM).css('display','none');      //content 내용은 숨겨짐
                console.log('REVIEW_RE_NUM : ', REVIEW_RE_NUM);
@@ -1928,6 +2029,7 @@
                $('#review_RE_control_hidden'+REVIEW_RE_NUM).css('display','block');   //수정하기(process로 넘어감)은 보여짐            
                
             }
+            event.preventDefault();
          });
          
          
@@ -1937,15 +2039,13 @@
       
       //좋아요 기능
       $(document).ready(function(){
-         
           
          //처음 로드되고 로그인 사용자가 누른글 하트는 검게 바꿔줌
          function heart_check(){
             var PRODUCT_NUM = <%=PRODUCT_NUM%>;
             var MEMBER_NUM = <%=MEMBER_NUM%>;
-            alert(MEMBER_NUM);
             if(MEMBER_NUM==0){
-               alert('로그인 하세요');
+               alert('로그인 해주세요');
                return
             }
             $.ajax({
@@ -1955,7 +2055,6 @@
                datatype: 'json',
                contentType: 'application/x-www-form-urlencoded; charset=utf-8',
                success: function (retVal) {
-                  alert(retVal.status);
                   if(retVal.status==0){
                      $('#LikeAjax').removeClass('addlike');
                   }else {
@@ -1975,7 +2074,7 @@
             var MEMBER_NUM = <%=MEMBER_NUM%>;
             alert(MEMBER_NUM);
             if(MEMBER_NUM==0){
-               alert('로그인 하세요');
+               alert('로그인 해주세요!');
                return
             }
             
@@ -2005,10 +2104,184 @@
          });
       });      
       
+      //---------------------------------------------------------------------
+      //q&a
+      //-------------------------------------------qna1-qna달기 폼(qna)  
+      //-----------------------------------댓글달기 button
+         //확인!!!
+         //댓글 등록 위해 댓글달기 버튼 눌렀을 시 css
+         $(document).on("click",".qna_add_btn",function(event){
+            if($(this).html() == '문의하기') { //댓글달기이면 hidden구역 보이고 버튼은 닫기로 바뀜
+                var MEMBER_NUM = <%=MEMBER_NUM%>;
+                if(MEMBER_NUM==0){
+                   alert('로그인 해주세요!');
+                   return
+                }           
+               $(".qna_add_section").css('display','block');
+               $(this).html('닫기');   
+            } else { //버튼이 닫기이면 hidden 구역이 닫히고 버튼은 댓글 달기로 바뀜
+               $(this).html('댓글 달기');
+               $(".qna_add_section").css('display','none');
+            } 
+            event.preventDefault();
+         })
+         
+	//-------------------------------------------qna1-qna달기 insert(qna) 
+         $(document).on("click","#qna_insert",function(event){
+            if(qna_check()) {
+            	alert('qna_check 성공');
+            	var params = $('#qnaform').serialize();
+            	alert(params);
+               $.ajax({
+                  url : "/NAGAGU/qna_insert.do", 
+                  data : params,
+                  dataType: 'json',
+                  contentType: 'application/x-www-form-urlencoded; charset=utf-8',
+                  type : 'POST',
+                  success:function(data) {
+                     alert('성공!');
+                     
+                     var qnaoutput = '';
+                     var QNA_NUM = data.qna_NUM;
+                     var qna_DATE = new Date(data.qna_DATE);
+                     var date = date_format(qna_DATE);
+                     
+                     qnaoutput += '<div class="col-1 justify-content-end">';
+                     qnaoutput += '<input type="hidden" name="QNA_MEMBER" value="'+data.qna_MEMBER+'">';
+                     qnaoutput += '<img src="'+loginmember_pic+'" alt="" class="rounded-circle"></div>'; 
+                     qnaoutput += '<div class="col-11"><div class="row">';
+                     qnaoutput += '<div class="col-10 justify-content-end name">';
+                     qnaoutput += loginmember_nick + '</div>';
+                     qnaoutput += '<div class="col-2 justify-content-center smallfont">' + date;
+                     qnaoutput += '</div></div><div class="row">';
+                     qnaoutput += '<div class="col rep_content" id="qna_modify_block'+ data.qna_NUM +'">';
+                     qnaoutput += data.qna_CONTENT + '</div></div>';
+                     qnaoutput += '<div class="row " >';
+                     qnaoutput += '<div class="col qna_control pr-5">';
+                     qnaoutput += '<input type="hidden" name="QNA_NUM" value="'+data.qna_NUM+'">';
+                     qnaoutput += '<a class="smallfont qna_modify" id="qna_modify'+ data.qna_NUM +'" style="cursor: pointer;" >수정</a> &nbsp; ';
+                     qnaoutput += '<a class="smallfont qna_delete" id="qna_delete'+ data.qna_NUM +'" style="cursor: pointer;">삭제</a></div></div></div>';
+                    
+                    // console.log("qnaoutput:" + qnaoutput);
+                     $('.qnaspace').append(qnaoutput);
+                     $('#QNA_CONTENT').val('');
+                     infochange();
+                     $(".qna_add_section").css('display','none');
+                     $(".qna_add_section").html('댓글 달기');
+                     document.getElementById('qna_scroll').scrollIntoView();                     
+                     },
+                     error:function() {
+                        alert("ajax통신 실패!!!");
+                     }
+               });
+            }
+            event.preventDefault();
+         });   
       
+         
+       //-------------------------------------------qna2-qna수정(qna) 
+         $(document).on("click",".qna_modify",function(event){
+             var modify_confirm = confirm("수정하시겠습니까?");
+             if(modify_confirm) {
+            	 var QNA_NUM = $(this).prev().val();
+                alert(QNA_NUM);
+                $('#qna_mod_section'+QNA_NUM).css('display','block');      //수정폼 보여짐
+                $('#qna_'+QNA_NUM).css('display','none');      //원래 수정 댓글 사라짐
+                $('#qna_control'+QNA_NUM).css('display','none');      //원래 수정 댓글 사라짐
+                $('#qna_control_hidden'+QNA_NUM).css('display','none');	//수정, 삭제버튼 사라짐
+       //         $('#qna_'+QNA_NUM).css();	//수정하기 버튼 보여짐
+                
+             }
+          });
+       
+       
+       //-------------------------------------------qna2-2.-qna수정 process(qna)
+ 		$(document).on("click",".qna_modify_process",function(event){
+// 			var QNA_NUM = $(this).children('input').val();   
+ 			var QNA_NUM = $(this).prev().val();   
+ 			alert(QNA_NUM);
+             
+             if(qna_mod_check(QNA_NUM)) {
+            	var params = $('#qnamodifyform'+QNA_NUM).serialize();
+            	alert(params);
+            	
+                $.ajax({
+                   url : "/NAGAGU/qna_modify.do", 
+                   data : params,
+                   dataType: 'json',
+                   contentType : 'application/x-www-form-urlencoded; charset=UTF-8',
+                   type : 'POST',
+                   success:function(data) {
+                   
+                      var output = '';
+                      var qna_DATE = new Date(data.qna_DATE);
+                      var date = date_format(qna_DATE);
+                      
+                      alert('ajax 후 data.review_CONTENT' + data.qna_CONTENT);
+                      
+                      $('#qna_modify_block'+QNA_NUM).html(data.qna_CONTENT);   //content값 수정된 내용으로 변경
+                      $('#qna_mod_section'+QNA_NUM).css('display','none');      //수정폼 숨김
+                      $('#qna_'+QNA_NUM).css('display','block');      //원래 수정 댓글 보여짐
+                      $('#qna_control'+QNA_NUM).css('display','block');      //수정, 삭제버튼 보여짐
+                      $('#qna_control_hidden'+QNA_NUM).css('display','block');	//수정하기 버튼 보여짐
+       
+                   },
+                      error:function() {
+                         alert("ajax통신 실패!!!");
+                      }
+                });
+             }      
+             event.preventDefault();
+
+           });         
+   
+       
+ 		
+ 	      //-------------------------------------------qna2-3.-qna수정시 취소버튼(qna) 
+        $(document).on("click",".qna_modify_reset",function(event){
+           	 var QNA_NUM = $(this).prev().prev().val();
+               alert(QNA_NUM);
+               $('#qna_mod_section'+QNA_NUM).css('display','none');      //수정폼 사라짐
+               $('#qna_'+QNA_NUM).css('display','block');      //원래 수정 댓글 보여짐
+               $('#qna_control'+QNA_NUM).css('display','block');      // 수정,삭제버튼 보여짐
+               $('#qna_control_hidden'+QNA_NUM).css('display','none');	//수정하기, 취소버튼 사라짐
+      //         $('#qna_'+QNA_NUM).css();	//수정하기 버튼 보여짐
+               
+         });
       
+ 		
+        
+ 		//-------------------------------------------qna3-qna삭제(qna)
+        $(document).on("click",".qna_delete",function(event){
+             var delete_confirm = confirm("삭제하시겠습니까?");
+             if(delete_confirm) {
+             	var QNA_NUM = $(this).prev().prev().val();
+ //            	var QNA_NUM = $(this).children('input').val();
+             	alert(QNA_NUM)
+                $.ajax({
+                   url: '/NAGAGU/delete_qna.do' ,
+                   type:'GET',
+                   data : {'QNA_NUM':QNA_NUM},
+                   dataType : 'json', // 서버에서 보내줄 데이터 타입
+                   contentType : 'application/x-www-form-urlencoded; charset=UTF-8',
+                   success:function(retVal) {
+                      if(retVal.res == "OK") {
+                         alert('댓글이 삭제되었습니다.');
+                         $('#qna_'+QNA_NUM).css('display','none');	//원래 qns댓글 영역 숨겨짐(리스트 띄울 땐 사라짐)
+                         document.getElementById('qna_scroll').scrollIntoView();                         
+                      }
+                      else {
+                         alert("삭제 ajax 실패!");
+                      }
+                   },
+                   error:function(request, error) {
+                      alert("message:"+request.responseText);
+                   }
+                });            
+             }
+             event.preventDefault();
+          });       
    </script>
    
-
    </body>
 </html>

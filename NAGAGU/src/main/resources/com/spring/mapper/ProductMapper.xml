@@ -127,7 +127,7 @@ create sequence product_seq
 		SELECT * FROM nagagu_workshop_member WHERE WORKSHOP_NUM = #{PRODUCT_WORKSHOP}
 	</select>
 
- 	<select id="getAllWorkshopProduct" parameterType="com.spring.store.ProductVO" resultMap="productResultMap">
+ 	<select id="getAllWorkshopProduct" parameterType="int" resultMap="productResultMap">
 		SELECT * FROM PRODUCT WHERE PRODUCT_WORKSHOP=#{WORKSHOP_NUM}
 	</select>
 	

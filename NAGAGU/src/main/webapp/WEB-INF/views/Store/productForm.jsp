@@ -374,7 +374,7 @@
 				if(val == '없음') {
 					$('.addoption_section').hide();
 				} else {
-					if(<%=productList%> == null) {
+					if(<%=productList.get(0).getPRODUCT_NUM()%> == null) {
 						$('.addoption_section').hide();
 						$('#noOptionInfo').html('선택할 수 있는 상품이 없습니다.');
 						$('#optionControlValidation2').prop('checked', true); 
@@ -673,12 +673,10 @@
 			}
 			
 			function addOption() {
-				var txt = '<div class="addoption mr-3"><select name="PRODUCT_OPTION" class=" form-control" style="margin-left: 2%">';
-				txt += '<option value="원목테이블" selected>원목테이블</option>';
-				txt += '<option value="중구">중구</option>';
-				txt += '<option value="용산구">용산구</option>';
-				txt += '<option value="성동구">성동구</option>';
-				txt += '</select></div>';
+				var optiontxt = $(".addoption").html();
+				var txt = '<div class="addoption mr-3">';
+				txt += optiontxt;
+				txt += '</div>';
 				
 				$('#optionappend').append(txt);
 			}

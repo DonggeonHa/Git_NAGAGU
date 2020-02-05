@@ -34,11 +34,11 @@ public class ProductServiceImpl implements ProductService{
 	}
 	
 	@Override
-	public ArrayList<ProductVO> getAllWorkshopProduct(WorkshopVO vo) {
+	public ArrayList<ProductVO> getAllWorkshopProduct(int WORKSHOP_NUM) {
 		ArrayList<ProductVO> WorkshopProoductList = null;
 		try {
 			ProductMapper productMapper = sqlSession.getMapper(ProductMapper.class);
-			WorkshopProoductList = productMapper.getAllWorkshopProduct(vo);
+			WorkshopProoductList = productMapper.getAllWorkshopProduct(WORKSHOP_NUM);
 			
 			System.out.println("공방의 productList 가져오기 성공!");
 			return WorkshopProoductList;
