@@ -7,10 +7,11 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.spring.chat.WorkshopVO;
 import com.spring.mapper.NoteMapper;
+import com.spring.mapper.WorkShopMemberMapper;
 import com.spring.mapper.memberMapper;
 import com.spring.member.MemberVO;
+import com.spring.workshop.WorkShopMemberVO;
 
 @Service
 public class NoteServiceImpl implements NoteService {
@@ -122,15 +123,15 @@ public class NoteServiceImpl implements NoteService {
 	}
 	
 
-	public int checkMember(String mem_mail) throws Exception {
+	public int checkMember(String MEM_MAIL) throws Exception {
 		memberMapper mapper = sqlSession.getMapper(memberMapper.class);
 		
-		if (mapper.countMember(mem_mail) == 1) {
+		if (mapper.countMember(MEM_MAIL) == 1) {
 			return 1;
 		}
 		
 		else {
-			if (mapper.countWorkshop(mem_mail) == 1) {
+			if (mapper.countWorkshop(MEM_MAIL) == 1) {
 				return 2;
 			}
 			
@@ -145,13 +146,22 @@ public class NoteServiceImpl implements NoteService {
 		
 		return vo;
 	}
-	public WorkshopVO getWorkshop(String mem_mail) throws Exception {
-		memberMapper mapper = sqlSession.getMapper(memberMapper.class);
-		WorkshopVO vo = mapper.getWorkshop(mem_mail);
-		System.out.println("getWorkshop : " + vo.getWORK_MAIL());
+	public WorkShopMemberVO getWorkshop(String mem_mail) throws Exception {
+		WorkShopMemberMapper mapper = sqlSession.getMapper(WorkShopMemberMapper.class);
+		WorkShopMemberVO vo = new WorkShopMemberVO();
+		vo.setWORKSHOP_EMAIL(mem_mail);
+		WorkShopMemberVO workvo = mapper.select_workshop_member(vo);
 		
-		return vo;
+		return workvo;
 		
+	}
+	
+	public String getWorkshopMail(WorkShopMemberVO workshopVO) {
+		WorkShopMemberMapper mapper = sqlSession.getMapper(WorkShopMemberMapper.class);
+		WorkShopMemberVO vo = mapper.workshop_name_chk(workshopVO);
+		String WORKSHOP_MAIL = vo.getWORKSHOP_EMAIL();
+		
+		return WORKSHOP_MAIL;
 	}
 	
 	public int noteSend (NoteVO vo) throws Exception {

@@ -1,6 +1,22 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ page import ="java.util.*" %>
+<%@ page import ="com.spring.estimate.EstimateVO" %>
+<%@ page import ="java.text.SimpleDateFormat" %>
+<%
+	System.out.println("---------------------------------------");
+	ArrayList<EstimateVO> eList = (ArrayList<EstimateVO>)request.getAttribute("eList");
+	int nowpage = ((Integer) request.getAttribute("page")).intValue();
+	int maxpage = ((Integer) request.getAttribute("maxpage")).intValue();
+	int startpage = ((Integer) request.getAttribute("startpage")).intValue();
+	int endpage = ((Integer) request.getAttribute("endpage")).intValue();
+	int rnum = ((Integer) request.getAttribute("rnum")).intValue();
+	int estimateCount = ((Integer) request.getAttribute("estimateCount")).intValue();
+	int nowpage2 = (int)request.getAttribute("page");
+	
+	SimpleDateFormat df = new SimpleDateFormat("yyyy.MM.dd hh:mm");
+%>
 
 <!DOCTYPE html>
 <html>
@@ -19,6 +35,25 @@
 					format('woff');
 				font-weight: normal;
 				font-style: normal;
+			}
+			
+			.table .es_state_bid {
+				margin:0;
+			}
+			
+			.table .es_state_successful {
+				color:blue;
+				margin:0;
+			}
+			
+			.table .es_state_failure {
+				color:grey;
+				margin:0;
+			}
+			
+			.table .es_state_cancel {
+				color:red;
+				margin:0;
 			}
 			
 			.order-body {
@@ -166,195 +201,60 @@
 							<th width="60" style="text-align: center;">신청인</th>
 							<th width="370" style="text-align: center;">제목</th>
 							<th width="80" style="text-align: center;">카테고리</th>
-							<th width="60" style="text-align: center;">평균가</th>
+							<th width="60" style="text-align: center;">최저가</th>
 							<th width="55" style="text-align: center;">업체수</th>
 							<th width="60" style="text-align: center;">신청 시간</th>
 							<th width="60" style="text-align: center;">진행상황</th>
 						</tr>
-	
-						<tr onClick="location.href='./estimatedetail.es'"
+				<%
+					if (estimateCount > 0 ) {
+						System.out.println(eList.size());
+						for (int i=0; i<eList.size(); i++) {
+							EstimateVO el = eList.get(i);
+							System.out.println(el.getESTIMATE_TITLE());
+				%>
+						<tr onClick="location.href='./estimate_detail.es?ESTIMATE_NUM=<%=el.getESTIMATE_NUM()%>&page=<%=nowpage %>'"
 							style="cursor: pointer;">
-							<td>15</td>
-	
-							<td>오늘은***</td>
-							<td class="es_title">견적 신청합니다</td>
-							<td>테이블</td>
-							<td>320,000</td>
-							<td>4</td>
-							<td>2019.12.30 15:30</td>
-							<td>입찰진행</td>
+							<td><%=rnum %></td>
+							<td><%=el.getESTIMATE_NICK() %></td>
+							<td class="es_title"><%=el.getESTIMATE_TITLE() %></td>
+							<td><%=el.getESTIMATE_CATEGORY() %>
+							<td></td>
+							<td></td>
+							<td><%=df.format(el.getESTIMATE_DATE()) %></td>
+							<td>
+				<%
+							if (el.getESTIMATE_STATE() == 0) {
+				%>
+								<p class="es_state_bid">진행중</p>
+				<%
+							} else if (el.getESTIMATE_STATE() == 1) {
+				%>
+								<p class="es_state_successful">낙찰</p>
+				<%
+							} else if (el.getESTIMATE_STATE() == 2) {
+				%>
+								<p class="es_state_failure">유찰</p>
+				<%
+							} else {
+				%>
+								<p class="es_state_cancel">취소</p>
+				<%
+							}
+				%>
+							</td>
 						</tr>
-						<tr onClick="location.href='./estimatedetail.es'"
-							style="cursor: pointer;">
-							<td>14</td>
-	
-							<td>오늘은***</td>
-							<td class="es_title">견적 신청합니다</td>
-							<td>테이블</td>
-							<td>320,000</td>
-							<td>4</td>
-							<td>2019.12.30 15:30</td>
-							<td>입찰진행</td>
-						</tr>
-						<tr onClick="location.href='./estimatedetail.es'"
-							style="cursor: pointer;">
-							<td>13</td>
-	
-							<td>오늘은***</td>
-							<td class="es_title">견적 신청합니다</td>
-							<td>테이블</td>
-							<td>320,000</td>
-							<td>4</td>
-							<td>2019.12.30 15:30</td>
-							<td>입찰진행</td>
-						</tr>
-						<tr onClick="location.href='./estimatedetail.es'"
-							style="cursor: pointer;">
-							<td>12</td>
-	
-							<td>오늘은***</td>
-							<td class="es_title">견적 신청합니다</td>
-							<td>테이블</td>
-							<td>320,000</td>
-							<td>4</td>
-							<td>2019.12.30 15:30</td>
-							<td>입찰진행</td>
-						</tr>
-						<tr onClick="location.href='./estimatedetail.es'"
-							style="cursor: pointer;">
-							<td>11</td>
-	
-							<td>오늘은***</td>
-							<td class="es_title">견적 신청합니다</td>
-							<td>테이블</td>
-							<td>320,000</td>
-							<td>4</td>
-							<td>2019.12.30 15:30</td>
-							<td>입찰진행</td>
-						</tr>
-						<tr onClick="location.href='./estimatedetail.es'"
-							style="cursor: pointer;">
-							<td>10</td>
-	
-							<td>오늘은***</td>
-							<td class="es_title">견적 신청합니다</td>
-							<td>테이블</td>
-							<td>320,000</td>
-							<td>4</td>
-							<td>2019.12.30 15:30</td>
-							<td>입찰진행</td>
-						</tr>
-						<tr>
-							<td>9</td>
-	
-							<td>모레는***</td>
-							<td class="es_title">견적좀요!</td>
-							<td>스툴</td>
-							<td>128,000</td>
-							<td>7</td>
-							<td>2019.12.29 20:30</td>
-							<td>거래성사</td>
-						</tr>
-						<tr>
-							<td>8</td>
-	
-							<td>모레는***</td>
-							<td class="es_title">견적좀요!</td>
-							<td>스툴</td>
-							<td>128,000</td>
-							<td>7</td>
-							<td>2019.12.29 20:30</td>
-							<td>거래성사</td>
-						</tr>
-						<tr>
-							<td>8</td>
-	
-							<td>오늘은***</td>
-							<td class="es_title">견적 신청합니다</td>
-							<td>테이블</td>
-							<td>320,000</td>
-							<td>4</td>
-							<td>2019.12.30 15:30</td>
-							<td>입찰진행</td>
-						</tr>
-						<tr>
-							<td>7</td>
-	
-							<td>모레는***</td>
-							<td class="es_title">견적좀요!</td>
-							<td>스툴</td>
-							<td>128,000</td>
-							<td>7</td>
-							<td>2019.12.29 20:30</td>
-							<td>거래성사</td>
-						</tr>
-						<tr>
-							<td>6</td>
-	
-							<td>모레는***</td>
-							<td class="es_title">견적좀요!</td>
-							<td>스툴</td>
-							<td>128,000</td>
-							<td>7</td>
-							<td>2019.12.29 20:30</td>
-							<td>거래성사</td>
-						</tr>
-						<tr>
-							<td>5</td>
-	
-							<td>모레는***</td>
-							<td class="es_title">견적좀요!</td>
-							<td>스툴</td>
-							<td>128,000</td>
-							<td>7</td>
-							<td>2019.12.29 20:30</td>
-							<td>거래성사</td>
-						</tr>
-						<tr>
-							<td>4</td>
-	
-							<td>모레는***</td>
-							<td class="es_title">견적좀요!</td>
-							<td>스툴</td>
-							<td>128,000</td>
-							<td>7</td>
-							<td>2019.12.29 20:30</td>
-							<td>거래성사</td>
-						</tr>
-						<tr>
-							<td>3</td>
-	
-							<td>모레는***</td>
-							<td class="es_title">견적좀요!</td>
-							<td>스툴</td>
-							<td>128,000</td>
-							<td>7</td>
-							<td>2019.12.29 20:30</td>
-							<td>거래성사</td>
-						</tr>
-						<tr>
-							<td>2</td>
-	
-							<td>모레는***</td>
-							<td class="es_title">견적좀요!</td>
-							<td>스툴</td>
-							<td>128,000</td>
-							<td>7</td>
-							<td>2019.12.29 20:30</td>
-							<td>거래성사</td>
-						</tr>
-						<tr>
-							<td>1</td>
-	
-							<td>모레는***</td>
-							<td class="es_title">견적좀요!</td>
-							<td>스툴</td>
-							<td>128,000</td>
-							<td>7</td>
-							<td>2019.12.29 20:30</td>
-							<td>거래성사</td>
-						</tr>
-	
+				<%
+							rnum--;
+						}
+					} else {
+				%>
+					<tr>
+						<td colspan="8">등록된 견적글이 없습니다.</td>
+					</tr>
+				<%
+					}
+				%>
 					</table>
 				</div>
 				<br /> <br />

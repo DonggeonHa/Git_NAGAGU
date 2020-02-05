@@ -112,11 +112,11 @@
 	</select>
 	
 	<select id="countMember" parameterType="String" resultType="int">
-		SELECT COUNT(*) FROM nagagu_member WHERE member_email=#{MEMBER_EMAIL}
+		SELECT COUNT(*) FROM nagagu_member WHERE member_email=#{MEM_MAIL}
 	</select>
 	
 	<select id="countWorkshop" parameterType="String" resultType="int">
-		SELECT COUNT(*) FROM nagagu_workshop_member WHERE workshop_email=#{MEMBER_EMAIL}
+		SELECT COUNT(*) FROM nagagu_workshop_member WHERE workshop_name=#{MEM_MAIL}
 	</select>
 
 	<select id="getMemberDetailbyEmail" parameterType="com.spring.member.MemberVO" resultMap="memberResultMap">

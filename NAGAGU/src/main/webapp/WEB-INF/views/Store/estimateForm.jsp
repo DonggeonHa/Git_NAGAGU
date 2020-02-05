@@ -1,8 +1,10 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-
-
+<%
+	String ESTIMATE_MEMBER = (String)session.getAttribute("MEMBER_EMAIL");
+	String ESTIMATE_NICK = (String)session.getAttribute("MEMBER_NICK");
+%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -40,12 +42,7 @@
 			font-size: 1.1em;
 			margin: 0 auto;
 		}
-		
-		input[id="checkbox"] {
-			position: relative;
-			top: 1.5px;
-		}
-		
+	
 		img {
 			max-width: 100%;
 		}
@@ -109,6 +106,39 @@
 			position:absolute;
 			z-index:2;
 		}
+		
+		.coat_radio {
+			display:none;
+		}
+		
+		.coat_label {
+			border-radius:4px;
+			padding:4px;
+		}
+		
+		.coat_uncheck {
+			color:#d3d3d3;
+			transition:border 0.2s, color 0.2s, background 0.2s;
+		}
+		
+		.coat_uncheck:hover {
+			border:1px solid #000000;
+			color:#000000;
+			background:#d3d3d3;
+		}
+		
+		.coat_checked {
+			border:1px solid #000000;
+			color:#ffffff;
+			background:#d3d3d3;
+			transition:border 0.2s, color 0.2s, background 0.2s;
+		}
+		
+		.coat_checked:hover {
+			border:1px solid #d3d3d3;
+			color:#d3d3d3;
+			background:#000000;
+		}
 
 
 	</style>
@@ -120,6 +150,8 @@
 		<form id="estimate" name="store_estimateform" class="store_estimateform"
 			action="./estimate_input.es" method="post"
 			enctype="multipart/form-data">
+		<input type="hidden" name="ESTIMATE_MEMBER" value=<%=ESTIMATE_MEMBER%>>
+		<input type="hidden" name="ESTIMATE_NICK" value=<%=ESTIMATE_NICK%>>
 		<input type="hidden" id="ESTIMATE_FILE" NAME="ESTIMATE_FILE">
 		<br />
 		<br />
@@ -131,83 +163,58 @@
 		<br/><br/>
 		<div id="fileList" class="row">
 		</div>
-			<div class="row">
-				<div class="col-md-4  justify-content-end"></div>
-				<div class="col-md-8 justify-content-start">
-					<div class="selectedimgs" style="width: 70%;">
-						<div class="row p-0 m-0">
-							<div class="col-3 p-0 m-0">
-								<img
-									src="${pageContext.request.contextPath}/resources/images/Store/table.jpg"
-									width="100" height="100">
-							</div>
-							<div class="col-3 p-0 m-0">
-								<img
-									src="${pageContext.request.contextPath}/resources/images/Store/table.jpg"
-									width="100" height="100">
-							</div>
-							<div class="col-3 p-0 m-0">
-								<img
-									src="${pageContext.request.contextPath}/resources/images/Store/table.jpg"
-									width="100" height="100">
-							</div>
-							<div class="col-3 p-0 m-0">
-								<img
-									src="${pageContext.request.contextPath}/resources/images/Store/table.jpg"
-									width="100" height="100">
-							</div>
-						</div>
-					</div>
+			<div class="row text-center pt-1 pb-1 ">
+				<div class="col-md-4 d-flex justify-content-end title">제목</div>
+				<div class="col-md-8 d-flex justify-content-start">
+					<input type="text" name="ESTIMATE_TITLE" size="50" maxlength="30"
+						placeholder="제목을 입력하세요 ">
 				</div>
 			</div>
 			<div class="row text-center pt-1 pb-1 ">
 				<div class="col-md-4 d-flex justify-content-end title">제품 종류</div>
 				<div class="col-md-8 d-flex justify-content-start">
-					<input type="text" name="ESTIMATE_CATEGORY" size="65"
+					<input type="text" name="ESTIMATE_CATEGORY" size="50" maxlength="15"
 						placeholder="ex)침대, 서랍장, 의자.. ">
 				</div>
 			</div>
 			<div class="row text-center">
-				<div class="col-md-4 d-flex justify-content-end title">소재1</div>
+				<div class="col-md-4 d-flex justify-content-end title">소재</div>
 				<div class="col-md-8 d-flex justify-content-start">
-					<input type="text" name="ESTIMATE_SOURCE1" size="65"
-						placeholder="ex)편백나무 원목(상판)">
-				</div>
-			</div>
-			<div class="row text-center pt-1 pb-1">
-				<div class="col-md-4 d-flex justify-content-end title">소재2</div>
-				<div class="col-md-8 d-flex justify-content-start">
-					<input type="text" name="ESTIMATE_SOURCE2" size="65"
-						placeholder="ex)소나무 원목(하부)">
+					<input type="text" name="ESTIMATE_SOURCE" size="50" maxlength="20"
+						placeholder="ex)편백나무 원목(상판), 소나무 (하부)">
 				</div>
 			</div>
 			<div class="row text-center">
 				<div class="col-md-4 d-flex justify-content-end title">색상(염색)</div>
 				<div class="col-md-8 d-flex justify-content-start">
-					<input type="text" name="ESTIMATE_COLOR" size="65"
+					<input type="text" name="ESTIMATE_COLOR" size="50" maxlength="20"
 						placeholder="ex)투명, 블루..">
 				</div>
 			</div>
 			<div class="row text-center pt-1 pb-1">
 				<div class="col-md-4 d-flex justify-content-end title">코팅</div>
 				<div class="col-md-8 d-flex justify-content-start">
-					<input type="checkbox" id="checkbox" name="ESTIMATE_COAT"
-						onclick="oneCheckbox(this)" value="코팅"> 원함 &nbsp;&nbsp; <input
-						type="checkbox" id="checkbox" name="ESTIMATE_COAT"
-						onclick="oneCheckbox(this)" value="코팅 안함"> 원하지 않음
+					<label id="coat_yes" class="coat_label coat_uncheck" for="check_yes"><input type="radio" id="check_yes" class="coat_radio" name="ESTIMATE_COAT" value="코팅"> 원함</label> &nbsp;&nbsp; 
+					<label id="coat_no" class="coat_label coat_uncheck" for="check_no"><input type="radio" id="check_no" class="coat_radio" name="ESTIMATE_COAT" value="코팅 안함"> 원하지 않음</label>
 				</div>
 			</div>
 			<div class="row text-center">
 				<div class="col-md-4 d-flex justify-content-end title">규격</div>
 				<div class="col-md-8 d-flex justify-content-start">
-					<input type="text" name="ESTIMATE_SIZE" size="65"
+					<input type="text" name="ESTIMATE_SIZE" size="50" maxlength="50"
 						placeholder="ex)가로100*세로150*높이200 ">
+				</div>
+			</div>
+			<div class="row text-center">
+				<div class="col-md-4 d-flex justify-content-end title">결제 방법</div>
+				<div class="col-md-8 d-flex justify-content-start">
+					<input type="checkbox" name="ESTIMATE_PAY" value="신용카드">신용카드
 				</div>
 			</div>
 			<div class="row text-center pt-1 pb-1">
 				<div class="col-md-4 d-flex justify-content-end title">기타</div>
 				<div class="col-md-8 d-flex justify-content-start">
-					<textarea name="ESTIMATE_CONTENT" placeholder="기타 설명" cols="69"
+					<textarea name="ESTIMATE_CONTENT" placeholder="기타 설명 (500자 까지)" cols="54" maxlength="500"
 						rows="15"></textarea>
 				</div>
 			</div>
@@ -275,7 +282,6 @@
             var files = e.originalEvent.dataTransfer.files;
             if (files != null) {
                 if (files.length < 1) {
-                    /* alert("폴더 업로드 불가"); */
                     console.log("폴더 업로드 불가");
                     return;
                 } else {
@@ -326,8 +332,29 @@
 		$target.parent().remove(); //프리뷰 삭제
 	});
     
+    /* ---------------------------- 체크박스 스타일 ------------------------------*/
+    
+    $("#coat_yes").click(function() {
+    	$(this).attr('class', 'coat_label coat_checked');
+    	$("#coat_no").attr('class', 'coat_label coat_uncheck');
+    	$("#check_no").checked = false;
+    });
+    
+    $("#coat_no").click(function() {
+    	$(this).attr('class', 'coat_label coat_checked');
+    	$("#coat_yes").attr('class', 'coat_label coat_uncheck');
+    	$("#check_yes").checked = false;
+    });
+    
+    
+    /* --------------------------- submit 실행부  ----------------------------*/
+    function checkList() {
+    	
+    }
+    
     $('#btn_estimate').click(function(e) {
-    	var ESTIMATE_FILE = $('#ESTIMATE_FILE');
+    	
+    	checkList();
 	
 		if (fileList != null) {
 			for (var i = 0; i < fileList.length; i++) {
@@ -341,91 +368,32 @@
                         data : formData,
                         type : 'POST',
                         enctype : 'multipart/form-data',
+                        async: false,
                         processData : false,
                         contentType : false,
                         cache : false,
                         success : function(result) {
                             if (result.length > 0) {
-                                alert("성공");
-                                if (i==fileList.length) {
+                                if (i==fileList.length-1) {
                                     fileUrlList += result;
                                 }
                                 else {
                                     fileUrlList += result + ', ';
                                 }
-                                
-                                
                             } else {
                                 alert("실패");
                             }
                         }
                });
            }
-
-           ESTIMATE_FILE.val(fileUrlList);
+			$('#ESTIMATE_FILE').val(fileUrlList);
 		}
         else {
             alert("ERROR");
         }
 		
-		
-		
-		
-		
-		
-		
 		$('#estimate').submit();
     });
-/*
-    // 파일 등록
-    function uploadFile() {
-        // 등록할 파일 리스트
-        var uploadFileList = Object.keys(fileList);
-
-        // 파일이 있는지 체크
-        if (uploadFileList.length == 0) {
-            // 파일등록 경고창
-            alert("파일이 없습니다.");
-            return;
-        }
-
-        // 용량을 500MB를 넘을 경우 업로드 불가
-        if (totalFileSize > maxUploadSize) {
-            // 파일 사이즈 초과 경고창
-            alert("총 용량 초과\n총 업로드 가능 용량 : " + maxUploadSize + " MB");
-            return;
-        }
-
-        if (confirm("등록 하시겠습니까?")) {
-            // 등록할 파일 리스트를 formData로 데이터 입력
-            var form = $('#uploadForm');
-            var formData = new FormData(form);
-            for (var i = 0; i < uploadFileList.length; i++) {
-                formData.append('ESTIMATE_FILE', fileList[uploadFileList[i]]);
-            }
-
-            $.ajax({
-                url : "업로드 경로",
-                data : formData,
-                type : 'POST',
-                enctype : 'multipart/form-data',
-                processData : false,
-                contentType : false,
-                dataType : 'json',
-                cache : false,
-                success : function(result) {
-                    if (result.data.length > 0) {
-                        alert("성공");
-                        location.reload();
-                    } else {
-                        alert("실패");
-                        location.reload();
-                    }
-                }
-            });
-        }
-    }
-*/
 	</script>
 	
 	<!-- content 끝 -->
