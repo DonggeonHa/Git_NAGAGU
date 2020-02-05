@@ -21,8 +21,18 @@ public class NoteController {
 	
 	@RequestMapping(value="receiveList.nt")
 	public String noteReceive(HttpServletRequest request, Model model, HttpSession session) throws Exception {
-		session.setAttribute("mem_mail", "cndanrh26@naver.com");
-		String receiver = (String)session.getAttribute("mem_mail");
+		
+		String member_mail = request.getParameter("MEMBER_EMAIL");
+		String workshop_name = request.getParameter("WORKSHOP_NAME");
+		String receiver = "";
+		
+		if (member_mail == null && workshop_name != null) {
+			
+			WorkShopMemberVO workshopvo = new WorkShopMemberVO();
+			workshopvo.setWORKSHOP_NAME(workshop_name);
+			receiver = noteService.getWorkshopMail(workshopvo);
+		}
+		
 		
 		int page = 1;
 		int limit = 10;
@@ -269,33 +279,30 @@ public class NoteController {
 		
 		String receive_mail = request.getParameter("receive_mail");
 		String workshop_name = request.getParameter("workshop_name");
-		System.out.println("receive_mail : " + receive_mail);
-		System.out.println("workshop_name : " + workshop_name);
 		
 		if (receive_mail == null && workshop_name != null) {
-			System.out.println("first");
 			
 			WorkShopMemberVO workshopvo = new WorkShopMemberVO();
 			workshopvo.setWORKSHOP_NAME(workshop_name);
 			receive_mail = noteService.getWorkshopMail(workshopvo);
 		}
 		
-		if (noteService.checkMember(receive_mail) == 1) {
+		int memberChk = noteService.checkMember(receive_mail);
+		
+		if (memberChk == 1) {
 			receive_nick = noteService.getMember(receive_mail).getMEMBER_NICK();
 			receive_pic = noteService.getMember(receive_mail).getMEMBER_PICTURE();
-			System.out.println("result : " + receive_nick);
 			
 			model.addAttribute("receive_mail", receive_mail);
 			model.addAttribute("receive_nick", receive_nick);
 			model.addAttribute("receive_pic", receive_pic);
 		}
 		
-		else if (noteService.checkMember(receive_mail) == 2) {
+		else if (memberChk == 2) {
 			WorkShopMemberVO vo = noteService.getWorkshop(receive_mail);
 			
 			receive_nick = vo.getWORKSHOP_NAME();
 			receive_pic = vo.getWORKSHOP_PICTURE();
-			System.out.println("result : " + receive_nick);
 			
 			model.addAttribute("receive_mail", receive_mail);
 			model.addAttribute("receive_nick", receive_nick);
@@ -304,7 +311,6 @@ public class NoteController {
 		
 		String redirection = request.getParameter("redirection");
 		model.addAttribute("redirection", redirection);
-		System.out.println(redirection);	
 		
 		return "Mypage/Note/noteWrite";
 	}

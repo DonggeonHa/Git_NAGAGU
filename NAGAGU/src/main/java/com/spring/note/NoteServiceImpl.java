@@ -158,7 +158,9 @@ public class NoteServiceImpl implements NoteService {
 	
 	public String getWorkshopMail(WorkShopMemberVO workshopVO) {
 		WorkShopMemberMapper mapper = sqlSession.getMapper(WorkShopMemberMapper.class);
+		System.out.println("first : " + workshopVO.getWORKSHOP_NAME());
 		WorkShopMemberVO vo = mapper.workshop_name_chk(workshopVO);
+		System.out.println("second : " + vo.getWORKSHOP_EMAIL());
 		String WORKSHOP_MAIL = vo.getWORKSHOP_EMAIL();
 		
 		return WORKSHOP_MAIL;

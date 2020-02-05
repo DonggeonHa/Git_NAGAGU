@@ -12,7 +12,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>쪽지 보내기</title>
 <style>
     body {
         min-width:420px;
@@ -109,8 +109,8 @@
 
     .pop_footer #btn_submit {
         float:left;
-        width:55px;
-        height:28px;
+        width:36px;
+        height:20px;
         color:white;
 	    background: #ef900e;
         border:1px solid #ef900e;
@@ -126,8 +126,8 @@
 
     .pop_footer #btn_return {
         float:left;
-        width:45px;
-        height:28px;
+        width:26px;
+        height:20px;
         color:white;
 	    background: #ef900e;
         border:1px solid #ef900e;
@@ -139,7 +139,7 @@
         transition:background 0.2s;
     }
 
-    .pop_footer #btn_return:return  {background: #f3cb9e;}
+    .pop_footer #btn_return:hover  {background: #f3cb9e;}
 
     .pop_footer #btn_close {
         float:right;
@@ -153,6 +153,7 @@
 
     .pop_footer #btn_close:hover {
         color:grey;
+        cursor:pointer;
     }
     
     .pop_footer #alert_msg {
@@ -165,6 +166,7 @@
     
 </style>
 <script src="https://kit.fontawesome.com/b74b42490f.js" crossorigin="anonymous"></script>
+<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
 
 </head>
 <body>
@@ -199,7 +201,7 @@
         <div class="pop_footer">
             <div id="btn_submit" class="btn_submit">보내기</div>
             <%
-            	if (redirection != "") { 
+            	if (redirection != null) { 
             %>
             <div id="btn_return" class="btn_return" onclick="history.go(-1)">취소</div>
             <%
@@ -254,15 +256,6 @@
             obj.html(msg);
             obj.show();
         }
-        
-        $(document).ready(function() {
-                //jquery
-                 var oScript = document.createElement("script");
-                 oScript.type = "text/javascript";
-                 oScript.charset = "utf-8";
-                 oScript.src = "https://code.jquery.com/jquery-3.4.1.min.js";
-                 document.getElementsByTagName("head")[0].appendChild(oScript);
-        });
         
     </script>
 </body>
