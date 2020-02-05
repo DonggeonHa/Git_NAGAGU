@@ -1,3 +1,4 @@
+<%@page import="com.spring.mypage.BasketVO"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"   pageEncoding="UTF-8"%>
 <%@ page import="com.spring.store.ProductVO" %>
 <%@ page import="com.spring.store.Product_reviewVO" %>
@@ -95,6 +96,8 @@
    System.out.println("qnaCount = " + qnaCount);
    //날짜 포맷 형식
    SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+   
+   BasketVO basketVO = new BasketVO();
 
 %>  
 <!DOCTYPE html>
@@ -1002,14 +1005,15 @@
          </div>
          <div class="col-4">
             <div class="sticky2" style="border: 1px solid #EAEAEA;">
-               <form name="goodsform" action="#" method="post">
+               <form name="goodsform" action="#" method="post" id="goodsform" commandName="BasketVO">
                   <div class="row pt-4 pl-4">
                      <div class="col-3" >
                         <img src="${pageContext.request.contextPath}/resources/images/Community/peko.png" width="95%" >
                      </div><hr>
                      <div class="col-9">
-                        <h3><%=vo.getPRODUCT_SHOPNAME()%></h3>
-                        <p><font size="2"><%=vo.getPRODUCT_TITLE()%></font></p>
+                     	<input type="hidden" name="PRODUCT_NUM" value="<%=vo.getPRODUCT_NUM()%>">
+                        <h3 name="PRODUCT_SHOPNAME"><%=vo.getPRODUCT_SHOPNAME()%></h3>
+                        <p name="PRODUCT_TITLE"><font size="2"><%=vo.getPRODUCT_TITLE()%></font></p>
                      </div>
                   </div>
                   <div>
@@ -1017,23 +1021,23 @@
                         <thead>
                             <tr>
                                <th scope="col">가격</th>
-                               <th scope="col"><%=vo.getPRODUCT_PRICE()%>원</th>
+                               <th scope="col" name="PRODUCT_PRICE"><%=vo.getPRODUCT_PRICE()%>원</th>
                             </tr>
                         </thead>
                         <tbody>
                             <tr>
                                <th scope="row">배송비</th>
-                               <td><%=vo.getPRODUCT_SHIP_PRICE()%>원</td>
+                               <td><input type="hidden" value="<%=vo.getPRODUCT_SHIP_PRICE()%>" name="PRODUCT_SHIP_PRICE"><%=vo.getPRODUCT_SHIP_PRICE()%></td>
                             </tr>
                             <tr>
                                <th scope="row">배송 기간</th>
-                               <td><%=vo.getPRODUCT_SHIP_DAYS()%>원</td>
+                               <td name="PRODUCT_SHIP_DAYS"><%=vo.getPRODUCT_SHIP_DAYS()%>일</td>
                             </tr>
                             <tr>
                                <th scope="row">색상선택</th>
                                <td>
-                                    <select name="color" size="1">
-                                    <option value="">선택</option>
+                                    <select name="BASKET_COLOR" size="1">
+                                    <option value="" >선택</option>
                                     <c:forTokens var="color" items="<%=PRODUCT_COLOR %>"
                                        delims=",">
                                        <option value="${fn:trim(color)}">${fn:trim(color)}</option>
@@ -1044,7 +1048,7 @@
                             <tr>
                                <th scope="row">사이즈선택</th>
                                <td>
-                                    <select name="size" size="1">
+                                    <select name="BASKET_SIZE" size="1">
                                     <option value="">선택</option>
                                     <c:forTokens var="size" items="<%=PRODUCT_SIZE %>" delims=",">
                                        <option value="${fn:trim(size)}">${fn:trim(size)}</option>
@@ -1055,7 +1059,7 @@
                             <tr>
                                <th scope="row">옵션선택</th>
                                <td>
-                                    <select name="option" size="1">
+                                    <select name="BASKET_OPTION" size="1">
                                     <%
                                        if(!PRODUCT_OPTION.equals("없음")) {
                                     %>
@@ -1072,7 +1076,7 @@
                             <tr>
                                <th scope="row">수량</th>
                                <td>
-                                    <input name="amount" type="text" style="text-align: right" value="1" size="4" /> 
+                                    <input name="BASKET_AMOUNT" type="text" style="text-align: right" value="1" size="4" /> 
                                  <a href="JavaScript:count_change(0)">▲</a> 
                                  <a href="JavaScript:count_change(1)">▼</a> 개
                                </td>
@@ -1089,8 +1093,8 @@
                         <input type="hidden" name = "PRODUCT_NUM" value="<%=PRODUCT_NUM %>">
                         ♥
                      </a>
-                     <a href="classreservation.ac" class="btn btn-outline-dark btn-md" role="button" aria-pressed="true">장바구니</a>
-                     <a href="#" class="btn btn-outline-dark btn-md" role="button" aria-pressed="true">바로구매</a>
+                     <a href="#" class="btn btn-outline-dark btn-md basket_btn" role="button" aria-pressed="true">장바구니</a>
+                     <a href="#" class="btn btn-outline-dark btn-md order_btn" role="button" aria-pressed="true">바로구매</a>
                   </div>
                   <br/>
                </form>
@@ -1101,22 +1105,45 @@
       <br>
    </div>
    <!-- content end -->
-         
-
-   
+   <script>
+   	$('.basket_btn').on('click',function(){
+		if(confirm('이동?')){
+			var url = '${pageContext.request.contextPath}/mypage_basket.my'
+				+ '?PRODUCT_NUM='+<%=vo.getPRODUCT_NUM()%>
+			
+			var frm=document.getElementById("goodsform");
+			frm.action=url;
+			frm.submit();
+			//location.href=url;			
+		}	
+   	})
+   	
+   	$('.order_btn').on('click',function(){
+		if(confirm('이동?')){
+			var url = '${pageContext.request.contextPath}/mypage_order.my'
+				+ '?PRODUCT_NUM='+<%=vo.getPRODUCT_NUM()%>
+			
+			var frm=document.getElementById("goodsform");
+			frm.action=url;
+			frm.submit();
+			//location.href=url;			
+		}	
+   	})
+   </script>
    <script type="text/javascript">
    var loginmember_pic = '<%=MEMBER_PICTURE%>';
    var loginmember_nick = '<%=MEMBER_NICK%>';
       /*장바구니 수량 변경*/
       function count_change(temp) {
-         var test = document.goodsform.amount.value;
+    	 alert('hi')
+         var test = document.goodsform.BASKET_AMOUNT.value;
          if (temp == 0) {
             test++;
          } else if (temp == 1) {
             if (test > 1)
                test--;
          }
-         document.goodsform.amount.value = test;
+         document.goodsform.BASKET_AMOUNT.value = test;
       }
       
       /*날짜 형식 변경*/

@@ -311,13 +311,13 @@ public class CommunityController {
 	} 
 	//사진 좋아요 누르기
 	@RequestMapping(value = "/insertPicsLike.cm")
-	public @ResponseBody Map<String, Object> getLikeUpdate(PicsVO picsVO,HttpServletRequest request) {
+	public @ResponseBody Map<String, Object> getLikeUpdate(PicsVO picsVO,HttpServletRequest request,HttpSession session) {
 		System.out.println("insert컨트롤러 시작");
-		String MEMBER_NUM = request.getParameter("MEMBER_NUM");
+		int LIKE_MEMBER = (int)session.getAttribute("MEMBER_NUM");
 		String PICS_NUM = request.getParameter("PICS_NUM");
 		
 		HashMap<String, Object> map = new HashMap<String, Object>();
-		map.put("MEMBER_NUM", MEMBER_NUM);
+		map.put("MEMBER_NUM", LIKE_MEMBER);
 		map.put("PICS_NUM", PICS_NUM);
 		//picsVO.setPICS_NUM(Integer.parseInt(request.getParameter("picNum")));
 		Map<String, Object> retVal = new HashMap<String, Object>();
@@ -382,7 +382,7 @@ public class CommunityController {
 	public @ResponseBody Map<String, Object> getLoginMemberLikePics(PicsVO picsVO,HttpServletRequest request, HttpSession session) {
 		HashMap<String, Object> map = new HashMap<String, Object>();
 		int LIKE_MEMBER = (int)session.getAttribute("MEMBER_NUM");
-		map.put("LIKE_MEMBER", LIKE_MEMBER);
+		map.put("MEMBER_NUM", LIKE_MEMBER);
 		Map<String, Object> retVal = new HashMap<String, Object>();
 		try {
 			//로그인 멤버가 좋아요 한 사진 쿼리문
@@ -426,10 +426,6 @@ public class CommunityController {
 				System.out.println("reivew_store");
 				replyList = productReviewService.getLoginMemberReview(map);
 			}
-			
-			
-			//멤버가 올린 사진리스트
-			//ArrayList<PicsVO> memberPicsList = communityService.getPicsOfMemberUpload(picsVO);
 			retVal.put("PicsNum", replyList);
 			retVal.put("res", "OK");
 		}catch(Exception e) {
@@ -438,8 +434,6 @@ public class CommunityController {
 		}
 		return retVal;
 	}
-	
-	
 	
 	@RequestMapping(value = "/followAction.cm")
 	public @ResponseBody Map<String, Object> followAction(PicsVO picsVO,HttpServletRequest request) {

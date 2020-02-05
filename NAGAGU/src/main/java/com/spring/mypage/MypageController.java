@@ -1,6 +1,5 @@
 package com.spring.mypage;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 
 import javax.servlet.http.HttpServletRequest;
@@ -8,20 +7,18 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.spring.community.CommunityServiceImpl;
-import com.spring.community.LikeVO;
-import com.spring.community.PicsVO;
 import com.spring.member.MemberServiceImpl;
 import com.spring.member.MemberVO;
+import com.spring.store.ProductOrderServiceImpl;
+import com.spring.store.ProductVO;
 
 @Controller
 public class MypageController {
 	@Autowired
-	private CommunityServiceImpl communityService;
+	private ProductOrderServiceImpl productOrderService;
 	@Autowired
 	private MemberServiceImpl memberService;
 	
@@ -43,7 +40,37 @@ public class MypageController {
 	}
 	
 	@RequestMapping(value = "/mypage_basket.my")
-	public String MypageBasket() {
+	public String MypageBasket(BasketVO basketVO, HttpSession session, ProductVO productVO, HttpServletRequest request) {
+		//바스켓에 업데이트 하고
+		//product 값
+		/*
+		 * System.out.println("공방="+request.getParameter("PRODUCT_SHOPNAME"));
+		 * System.out.println("제목="+request.getParameter("PRODUCT_TITLE"));
+		 * System.out.println("가격="+request.getParameter("PRODUCT_PRICE"));
+		 * System.out.println("배송가격="+request.getParameter("PRODUCT_SHIP_PRICE"));
+		 * System.out.println("배송기간="+request.getParameter("PRODUCT_SHIP_DAYS"));
+		 */
+	
+		//입력받는 값
+		System.out.println("상품번호="+request.getParameter("PRODUCT_NUM"));
+		System.out.println("컬러="+request.getParameter("PRODUCT_SHIP_PRICE"));
+		System.out.println("사이즈는="+request.getParameter("BASKET_SIZE"));
+		System.out.println("옵션은="+request.getParameter("BASKET_OPTION"));
+		System.out.println("수량은="+request.getParameter("BASKET_AMOUNT"));
+		
+		
+		int MEMBER_NUM = (int)session.getAttribute("MEMBER_NUM");
+		basketVO.setBASKET_MEMBER(MEMBER_NUM);
+		basketVO.setBASKET_PRODUCT(request.getParameter("PRODUCT_NUM"));
+		
+		System.out.println(basketVO.getBASKET_MEMBER());
+		System.out.println(basketVO.getBASKET_PRODUCT());
+		System.out.println(basketVO.getBASKET_COLOR());
+		System.out.println(basketVO.getBASKET_SIZE());
+		System.out.println(basketVO.getBASKET_OPTION());
+		System.out.println(basketVO.getBASKET_AMOUNT());
+		
+		productOrderService.insertCart(basketVO);
 		
 		return "Mypage/basket";
 	}

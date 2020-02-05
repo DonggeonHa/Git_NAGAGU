@@ -194,14 +194,13 @@ create sequence product_seq
 		WHERE PRODUCT_NUM=#{PRODUCT_NUM}
 	</update>
 	
-	<!-- 좋아요 한 사진 리스트(좋아요사진=사진넘버 중에서 파라미터 멤버가 좋아한 사진들) -->
+	
 	<select id="getProductLike" parameterType="java.util.HashMap" resultType="int">
 		SELECT count(*)FROM MEMBER_LIKE WHERE LIKE_MEMBER=#{LIKE_MEMBER} AND LIKE_PRODUCT=#{PRODUCT_NUM}
 	</select>	
 	
-	
-
+	<!-- 좋아요 한 사진 리스트(좋아요사진=사진넘버 중에서 파라미터 멤버가 좋아한 사진들) -->
 	<select id="getMemberLikeProduct" parameterType="java.util.HashMap" resultMap="productResultMap">
-      SELECT * FROM MEMBER_LIKE,PRODUCT WHERE LIKE_MEMBER=#{LIKE_MEMBER} AND LIKE_PRODUCT=PRODUCT_NUM 
+      SELECT * FROM MEMBER_LIKE,PRODUCT WHERE LIKE_MEMBER=#{MEMBER_NUM} AND LIKE_PRODUCT=PRODUCT_NUM 
    </select>
 </mapper>

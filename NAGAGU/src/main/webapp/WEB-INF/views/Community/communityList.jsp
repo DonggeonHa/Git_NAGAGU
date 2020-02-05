@@ -351,10 +351,11 @@ img {
 			if(loginNum == 0){
 				return
 			}
+			var category = 'like_pic'
 			$.ajax({
 				url: "/NAGAGU/loginMemberLikePics.cm",
 		              type: "POST",
-		              data: { 'loginNum' : loginNum},
+		              data: { 'category' : category},
 		              datatype: 'json',
 		              contentType:
 		  				'application/x-www-form-urlencoded; charset=utf-8',
@@ -382,11 +383,12 @@ img {
 			alert('로그인 하세요') 
 			return				
 		} 
+		var category = 'like_pic'
 		var PICS_NUM = $(this).parent().attr('id').substring(12)
 			$.ajax({
 			url: "/NAGAGU/insertPicsLike.cm",
 	              type: "POST",
-	              data: { 'MEMBER_NUM' : MEMBER_NUM , 'PICS_NUM' : PICS_NUM},
+	              data: { 'category' : category , 'PICS_NUM' : PICS_NUM},
 	              contentType:
 	  				'application/x-www-form-urlencoded; charset=utf-8',
 	              success: function (retVal) {

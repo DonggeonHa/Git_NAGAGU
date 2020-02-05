@@ -21,7 +21,6 @@ public interface ProductService {
 	int updateGrade(ProductVO vo);	//리뷰 등록시 grade update
 	HashMap<String, Object> insertProductLike(HashMap<String, Object> map);	//ProductDetail-좋아요
 	int getProductLike(HashMap<String, Object> map);	//ProductDetail-좋아요 list뿌리기
-	
-	//경태
 	ArrayList<ProductVO> getMemberLikeProduct(HashMap<String, Object> map);//좋아요 사진 리스트
+
 }

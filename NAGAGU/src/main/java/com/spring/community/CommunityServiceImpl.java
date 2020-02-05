@@ -107,7 +107,8 @@ public class CommunityServiceImpl implements CommunityService{
 		try {
 			CommunityMapper communityMapper= sqlSession.getMapper(CommunityMapper.class);
 			MemberLikeMapper memberlikeMapper=sqlSession.getMapper(MemberLikeMapper.class);
-			
+			System.out.println(map.get("MEMBER_NUM"));
+			System.out.println(map.get("PICS_NUM"));
 			
 			cnt = memberlikeMapper.selectMemberLike(map);
 			System.out.println("cnt="+cnt);
@@ -123,7 +124,6 @@ public class CommunityServiceImpl implements CommunityService{
 			PicsVO picsVO = new PicsVO();
 			picsVO.setPICS_NUM(Integer.valueOf((String)map.get("PICS_NUM")));
 			int re = communityMapper.updatePicsLike(map);//count가 plus면 1증가  minus면 1 감소
-			System.out.println("re="+re);
 			
 			picsVO = communityMapper.getPicsDetail(picsVO);
 			picsLikeCount = picsVO.getPICS_LIKE();
@@ -141,7 +141,7 @@ public class CommunityServiceImpl implements CommunityService{
 			CommunityMapper communityMapper= sqlSession.getMapper(CommunityMapper.class);
 			//memberMapper memberMapper= sqlSession.getMapper(memberMapper.class);
 			vo = communityMapper.getMemberLikePics(map);
-			System.out.println("RESULT="+vo);
+			System.out.println("getMemberLikePics RESULT="+vo);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}  
@@ -176,7 +176,7 @@ public class CommunityServiceImpl implements CommunityService{
 			System.out.println(map.get("fromNum")+"가 팔로우한 멤버리스트");
 			FollowMapper followMapper = sqlSession.getMapper(FollowMapper.class);
 			vo = followMapper.getFollowMembers(map);
-			System.out.println("RESULT="+vo);
+			System.out.println("getFollowMembers RESULT="+vo);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}  
@@ -189,7 +189,7 @@ public class CommunityServiceImpl implements CommunityService{
 			FollowMapper followMapper = sqlSession.getMapper(FollowMapper.class);
 			//memberMapper memberMapper= sqlSession.getMapper(memberMapper.class);
 			vo = followMapper.getFollowedMembers(map);
-			System.out.println("RESULT="+vo);
+			System.out.println("getFollowedMembers RESULT="+vo);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}  

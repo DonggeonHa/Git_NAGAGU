@@ -161,9 +161,8 @@ public class ProductServiceImpl implements ProductService{
 		ArrayList<ProductVO> vo = null; 
 		try { 
 			ProductMapper productMapper = sqlSession.getMapper(ProductMapper.class);
-			//memberMapper memberMapper= sqlSession.getMapper(memberMapper.class);
 			vo = productMapper.getMemberLikeProduct(map);
-			System.out.println("RESULT="+vo);
+			System.out.println("getMemberLikeProduct RESULT="+vo);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}  

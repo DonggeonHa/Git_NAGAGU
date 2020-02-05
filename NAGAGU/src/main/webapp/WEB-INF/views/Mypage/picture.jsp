@@ -127,7 +127,7 @@ height: auto;
 	min-height: 400px;
 	grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
 	grid-auto-rows: 20px;
-	grid-gap: 5px;
+	grid-gap: 5px; 
 }
 .item {
 	overflow: hidden;
@@ -251,10 +251,11 @@ $(document).ready(function(){
 		if(loginNum == 0){
 			return
 		}
+		var category = ''
 		$.ajax({
-			  url: "/NAGAGU/loginMemberLikePics.cm",
+			  url: "/NAGAGU/loginMemberUploadPics.cm",
               type: "POST",
-              data: { 'loginNum' : loginNum},
+              data: { 'category' : category},
               contentType:
   				'application/x-www-form-urlencoded; charset=utf-8',
               success: function (retVal) {
@@ -305,8 +306,8 @@ function SetGridItemHeight() {
 	}
 }
 
-window.addEventListener("load", SetGridItemHeight);
-window.addEventListener("resize", SetGridItemHeight);
+window.addEventListener("load", SetGridItemHeight); 
+window.addEventListener("resize", SetGridItemHeight); 
 
 </script>
 </body>

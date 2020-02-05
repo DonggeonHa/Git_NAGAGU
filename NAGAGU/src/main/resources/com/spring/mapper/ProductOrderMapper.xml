@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+
+<!-- 이 xml문서와 맵핑할 인터페이스 경로, 이름 -->
+<mapper namespace="com.spring.mapper.ProductOrderMapper">
+	<resultMap type="java.util.HashMap" id="hashmapVO">
+		<result property="BASKET_NUM" column="BASKET_NUM" />	
+		<result property="BASKET_MEMBER" column="BASKET_MEMBER" />	
+		<result property="BASKET_PRODUCT" column="BASKET_PRODUCT" />
+		<result property="BASKET_COLOR" column="BASKET_COLOR" />	
+		<result property="BASKET_SIZE" column="BASKET_SIZE" />	
+		<result property="BASKET_OPTION" column="BASKET_OPTION" />		
+		<result property="BASKET_AMOUNT" column="BASKET_AMOUNT" />	
+	</resultMap>
+	<resultMap type="com.spring.mypage.BasketVO" id="basketVO">
+		<result property="BASKET_NUM" column="BASKET_NUM" />	
+		<result property="BASKET_MEMBER" column="BASKET_MEMBER" />	
+		<result property="BASKET_PRODUCT" column="BASKET_PRODUCT" />
+		<result property="BASKET_COLOR" column="BASKET_COLOR" />	
+		<result property="BASKET_SIZE" column="BASKET_SIZE" />	
+		<result property="BASKET_OPTION" column="BASKET_OPTION" />		
+		<result property="BASKET_AMOUNT" column="BASKET_AMOUNT" />	
+	</resultMap>
+<!-- 	<select id="getProductLike" parameterType="java.util.HashMap" resultType="int">
+		SELECT count(*)FROM MEMBER_LIKE WHERE LIKE_MEMBER=#{LIKE_MEMBER} AND LIKE_PRODUCT=#{PRODUCT_NUM}
+	</select>	 -->
+	
+	<!-- 좋아요 한 사진 리스트(좋아요사진=사진넘버 중에서 파라미터 멤버가 좋아한 사진들) -->
+	<!-- <select id="selectCart" parameterType="java.util.HashMap" resultMap="hashmapVO">
+      SELECT * FROM MEMBER_LIKE,PRODUCT WHERE LIKE_MEMBER=#{MEMBER_NUM} AND LIKE_PRODUCT=PRODUCT_NUM 
+    </select> -->
+    <insert id="insertCart" parameterType="java.util.HashMap">
+		insert into BASKET values
+		(SEQ_BASKET.nextval,#{BASKET_MEMBER},#{BASKET_PRODUCT},#{BASKET_COLOR},#{BASKET_SIZE},#{BASKET_OPTION},#{BASKET_AMOUNT})	
+	</insert>
+	
+</mapper>
