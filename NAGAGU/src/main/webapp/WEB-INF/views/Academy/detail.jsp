@@ -16,14 +16,18 @@
 	String MEMBER_EMAIL = null;
 	String MEMBER_NAME = null;
 	String MEMBER_PHONE = null;
+	int MEMBER_NUM = 0;
+	
 	String WORKSHOP_CEO_NAME = (String)session.getAttribute("WORKSHOP_CEO_NAME");
 	String MEMBER_NICK = (String)session.getAttribute("MEMBER_NICK");
 	
 	if (session.getAttribute("MEMBER_EMAIL") == null) {
+		MEMBER_NUM = 0;
 		MEMBER_EMAIL = "로그인 해주세요";
 		MEMBER_NAME = "로그인 해주세요";
 		MEMBER_PHONE = "로그인 해주세요";
 	} else {
+		MEMBER_NUM = (int)session.getAttribute("MEMBER_NUM");
 		MEMBER_EMAIL = (String)session.getAttribute("MEMBER_EMAIL");
 		MEMBER_NAME = (String)session.getAttribute("MEMBER_NAME");
 		MEMBER_PHONE = (String)session.getAttribute("MEMBER_PHONE");
@@ -360,17 +364,33 @@
 							</table>
 						</div>
 						<div class="btnArea text-center">
-						<% if(MEMBER_NICK == null && WORKSHOP_CEO_NAME == null) { %>
-							<button type="button" class="btn btn-outline-dark btn-lg" data-toggle="modal" data-target="#exampleModalCenter">예약 하기</button>
-							<a href="#" class="btn btn-outline-dark btn-lg" role="button" aria-pressed="true">
-								<i class="far fa-heart"></i>
-							</a>
-						<% } else { %>
-							<button type="button" class="btn btn-outline-dark btn-lg" data-toggle="modal" data-target="#Booking">예약 하기</button>
-							<a href="#" class="btn btn-outline-dark btn-lg" role="button" aria-pressed="true">
-								<i class="far fa-heart"></i>
-							</a>
-						<% } %>
+						<% 
+							if(MEMBER_NICK == null && WORKSHOP_CEO_NAME == null) { 
+						%>
+								<!-- 비회원일때-->
+								<button type="button" class="btn btn-outline-dark btn-lg" data-toggle="modal" data-target="#exampleModalCenter">예약 하기</button>
+								<a href="#" class="btn btn-outline-dark btn-lg" role="button" aria-pressed="true">
+									<i class="far fa-heart"></i>
+								</a>
+						<% 
+							} else if(WORKSHOP_CEO_NAME != null){ 
+						%>
+								<!-- 공방회원일때 -->
+								<a href="#" class="btn btn-outline-dark btn-lg disabled" tabindex="-1" role="button" aria-disabled="true">예약 하기	</a>
+								<a href="#" class="btn btn-outline-dark btn-lg disabled" role="button" aria-pressed="true">
+									<i class="far fa-heart"></i>
+								</a>
+						<% 
+							} else { 
+						%>
+								<!-- 일반회원일떄 -->
+								<button type="button" class="btn btn-outline-dark btn-lg" data-toggle="modal" data-target="#Booking">예약 하기</button>
+								<a href="#" class="btn btn-outline-dark btn-lg" role="button" aria-pressed="true">
+									<i class="far fa-heart"></i>
+								</a>
+						<%
+							}
+						%>
 						
 						</div>
 						<br>
@@ -747,12 +767,12 @@
 	            if ( rsp.success ) {
 	                //[1] 서버단에서 결제정보 조회를 위해 jQuery ajax로 imp_uid 전달하기
 	                jQuery.ajax({
-	                    url: "./success.ac", //cross-domain error가 발생하지 않도록 주의해주세요
+	                    url: "./ClassInfo.ac", //cross-domain error가 발생하지 않도록 주의해주세요
 	                    type: 'POST',
 	                    dataType: 'json',
 	                    data: {
-	                        'amount5' : Amount,
-	                        'CLASS_NUMBER' : <%=cl.getCLASS_NUMBER()%>
+	                        'CLASS_NUMBER' : <%=cl.getCLASS_NUMBER()%>,
+	                		'MEMBER_NUM' : <%=MEMBER_NUM%>
 	                        //기타 필요한 데이터가 있으면 추가 전달
 	                    }
 	                }).done(function(data) {

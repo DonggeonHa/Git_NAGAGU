@@ -10,5 +10,8 @@ public interface AcademyService {
 	public int getCount(HashMap<String, Object> map) throws Exception;
 	ArrayList<ClassVO> getClassList(HashMap<String, Object> map) throws Exception;
 	public ClassVO getDetail(ClassVO academy) throws Exception;
-	public WorkShopMemberVO selectWMember(ClassVO academy);
+	public WorkShopMemberVO selectWMember(ClassVO academy) throws Exception;
+	public int countUp(ClassVO academy) throws Exception;
+	
+	public boolean insertClassInfo(MyClassVO vo) throws Exception;
 }

@@ -24,6 +24,7 @@ public class ClassVO {
 	private String CLASS_IMAGE;
 	private String CLASS_ADDRESS;
 	private String CLASS_DETAIL_ADDRESS;
+	private int CLASS_COUNT_MEMBER;
 	
 	public int getCLASS_NUMBER() {
 		return CLASS_NUMBER;
@@ -150,5 +151,11 @@ public class ClassVO {
 	}
 	public void setWORKSHOP_PICTURE(String wORKSHOP_PICTURE) {
 		WORKSHOP_PICTURE = wORKSHOP_PICTURE;
+	}
+	public int getCLASS_COUNT_MEMBER() {
+		return CLASS_COUNT_MEMBER;
+	}
+	public void setCLASS_COUNT_MEMBER(int cLASS_COUNT_MEMBER) {
+		CLASS_COUNT_MEMBER = cLASS_COUNT_MEMBER;
 	}
 }

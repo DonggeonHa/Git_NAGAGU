@@ -175,7 +175,6 @@
 							for(int i = 0; i < classList.size(); i++) {
 								ClassVO cl = (ClassVO)classList.get(i); // 캐스트 연산 필수
 					%>
-					
 								<div class="col mb-3" style="height: 400px;">
 									<a href="./classdetail.ac?CLASS_NUMBER=<%=cl.getCLASS_NUMBER()%>">
 										<div class="h-50 pic" style="background:url('/communityupload/image/<%=cl.getCLASS_IMAGE()%>') no-repeat center; background-size:cover;"></div>

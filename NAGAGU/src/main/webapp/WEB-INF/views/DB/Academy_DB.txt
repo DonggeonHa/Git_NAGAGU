@@ -1,4 +1,4 @@
-CREATE TABLE REGISTRATION (
+CREATE TABLE ACADEMY (
     CLASS_NUMBER number primary key,
     WORKSHOP_NUM number,
     WORKSHOP_NAME varchar2(200),
@@ -19,10 +19,21 @@ CREATE TABLE REGISTRATION (
 	CLASS_BANNER varchar2(2000),
 	CLASS_IMAGE varchar2(2000),
 	CLASS_ADDRESS varchar2(200),
-    CLASS_DETAIL_ADDRESS varchar2(200)
+    CLASS_DETAIL_ADDRESS varchar2(200),
+    CLASS_COUNT_MEMBER number default 0
 );
 
-create sequence REGISTRATION_SEQ
+CREATE SEQUENCE ACADEMY_SEQ
   start with 1
   increment by 1;
- 
+
+CREATE TABLE MY_CLASS (
+    MY_CLASS_NUM number primary key,
+    MY_CLASS_MEMBERNUM number,
+    MY_CLASS_CLASSNUM number,
+    MY_CLASS_STATUS number default 0
+);
+
+CREATE SEQUENCE MY_CLASS_SEQ
+    start with 1
+    increment by 1;
