@@ -299,7 +299,7 @@
 								<i class="fas fa-times"></i>
 							</a>
 							<form action="./search.my" method="post">
-								<input type="text" class="form-control" placeholder="Search keyword and hit enter..." height="600px">
+								<input type="text" class="form-control" placeholder="통합검색" height="630px">
 							</form>
 						</div>
 						<div class="collapse navbar-collapse" id="navbarSupportedContent">
@@ -307,19 +307,17 @@
 								<div class="test">
 									<ul class="navbar-nav mr-auto">
 										<li class="nav-item">
-											<a class="nav-link" href="./community.cm">COMMUNITY
-											<span class="sr-only">(current)</span>
-										</a></li>
+											<a class="nav-link" href="./community.cm">COMMUNITY</a>
+										</li>
 										<li class="nav-item">
 											<a class="nav-link" href="./classlist.ac">ACADEMY</a>
 										</li>
 										<li class="nav-item dropdown">
 											<a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" 
-											data-toggle="dropdown" aria-haspopup="true"	aria-expanded="false"> STORE </a>
+											data-toggle="dropdown" aria-haspopup="true"	aria-expanded="false">STORE</a>
 											<div class="dropdown-menu" aria-labelledby="navbarDropdown">
 												<a class="dropdown-item" href="./productcategory.pro">수제가구</a> 
 												<a class="dropdown-item" href="./estimate.es">견적문의</a>
-												<!-- <div class="dropdown-divider"></div> -->
 											</div>
 										</li>
 									</ul>
@@ -334,61 +332,79 @@
 									</a>
 								</li>
 									<%
-									if(MEMBER_EMAIL == null && WORKSHOP_NAME == null){
-										
+										if(MEMBER_EMAIL == null && WORKSHOP_NAME == null){
 									%>
-									<li>
-										<img src="${pageContext.request.contextPath}/resources/images/Main/top_icon_mypage.png" alt=""
-											data-toggle="modal" data-target="#exampleModalCenter" aria-haspopup="true" aria-expanded="false" />
-									</li>
+											<li>
+												<img src="${pageContext.request.contextPath}/resources/images/Main/top_icon_mypage.png" alt=""
+													data-toggle="modal" data-target="#exampleModalCenter" aria-haspopup="true" aria-expanded="false" />
+											</li>
 									<%
-									} else if(MEMBER_EMAIL != null){
+										} else if(MEMBER_EMAIL != null){
 									%>
-									<li>
-									<div class="dropdown">
-										<img src="${pageContext.request.contextPath}/resources/images/Main/top_icon_mypage.png" alt=""
-											id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" />
-										<div class="dropdown-menu" aria-labelledby="dropdownMenu2">
-											<a href="./logout.ma" id="logout"><button class="dropdown-item btn btn-primary" type="button">로그아웃</button></a>
-											<!-- <button class="dropdown-item" type="button"><a href="./signup.ma">회원가입</a></button> -->
-											<button class="dropdown-item" type="button"><a href="./order_detail.my">주문조회</a></button>
-											<button class="dropdown-item" type="button"><a href="./mypage_edit.my">내정보수정</a></button>
-											<button class="dropdown-item" type="button"><a href="./mypage_like.my">좋아요</a></button>
-											<button class="dropdown-item" type="button"><a href="./chatRoom.ch?ES_ORDER_NUM=1">채팅</a></button>
-											<button class="dropdown-item" type="button" onclick="window.open('receiveList.nt', 'new', 'scrollbars=yes, resizable=yes, width=600, height=700, left=0, top=0');">쪽지</button>
-										</div>
-									</div>
-									</li>
-									<%} %>
-								<%if(MEMBER_EMAIL == null && WORKSHOP_NAME == null){ %>
-								<li>
-									<img src="${pageContext.request.contextPath}/resources/images/Main/top_icon_cart.png" 
-									alt="" data-toggle="modal" data-target="#exampleModalCenter"/>
-								</li>
-								<%}else if(MEMBER_EMAIL != null){ %>
-								<li>
-									<a href="./mypage_basket.my">
-										<img src="${pageContext.request.contextPath}/resources/images/Main/top_icon_cart.png" alt="" />
-									</a>
-								<%} else {%>
-									<li>
-										<a href="./logout.ma">로그아웃</a>
-									</li>
-								<% } %>
+											<li>
+												<div class="dropdown">
+													<img src="${pageContext.request.contextPath}/resources/images/Main/top_icon_mypage.png" alt=""
+														id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" />
+													<div class="dropdown-menu" aria-labelledby="dropdownMenu2">
+														<a href="./logout.ma" id="logout"><button class="dropdown-item btn btn-primary" type="button">로그아웃</button></a>
+														<button class="dropdown-item" type="button"><a href="./order_detail.my">주문조회</a></button>
+														<button class="dropdown-item" type="button"><a href="./mypage_edit.my">내정보수정</a></button>
+														<button class="dropdown-item" type="button"><a href="./mypage_like.my">좋아요</a></button>
+														<button class="dropdown-item" type="button"><a href="./chatRoom.ch?ES_ORDER_NUM=1">채팅</a></button>
+														<button class="dropdown-item" type="button" onclick="window.open
+														('receiveList.nt', 'new', 'scrollbars=yes, resizable=yes, width=600, height=700, left=0, top=0');">쪽지</button>
+													</div>
+												</div>
+											</li>
+									<%
+										} 
+									%>
+									<%	
+										if(MEMBER_EMAIL == null && WORKSHOP_NAME == null) { 
+									%>
+											<li>
+												<img src="${pageContext.request.contextPath}/resources/images/Main/top_icon_cart.png" 
+												alt="" data-toggle="modal" data-target="#exampleModalCenter"/>
+											</li>
+									<%
+										} else if(MEMBER_EMAIL != null){ 
+									%>
+											<li>
+												<a href="./mypage_basket.my">
+													<img src="${pageContext.request.contextPath}/resources/images/Main/top_icon_cart.png" alt="" />
+												</a>
+											</li>
+									<%	
+										} else {
+									%>
+											<li>
+												<a href="./logout.ma">로그아웃</a>
+											</li>
+									<%	
+										} 
+									%>
 								
-								<%if(MEMBER_EMAIL == null && WORKSHOP_NAME == null){ %>
-									<li>
-										<a data-toggle="modal" data-target="#exampleModalCenter" class="btn_mypage">MYPAGE</a>
-									</li>
-								<%}else if(MEMBER_EMAIL != null){ %>
-									<li>
-										<a href="./mypage.my">MYPAGE</a>
-									</li>
-								<%}else{ %>
-									<li>
-										<a href="./workshop.no">MYPAGE</a>
-									</li>
-								<%} %>
+									<%
+										if(MEMBER_EMAIL == null && WORKSHOP_NAME == null) { 
+									%>
+											<li>
+												<a data-toggle="modal" data-target="#exampleModalCenter" class="btn_mypage">MYPAGE</a>
+											</li>
+									<%
+										} else if(MEMBER_EMAIL != null) { 
+									%>
+											<li>
+												<a href="./mypage.my">MYPAGE</a>
+											</li>
+									<%
+										} else { 
+									%>
+											<li>
+												<a href="./workshop.no">MYPAGE</a>
+											</li>
+									<%
+										} 
+									%>
 							</ul>
 						</div>
 					</nav>
@@ -398,43 +414,43 @@
 		
 		<!-- 로그인 모달 -->
 		<div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-		  <div class="modal-dialog modal-dialog-centered" role="document">
-		    <div class="modal-content mcontent">
-		      <div class="modal-header">
-		        <h5 class="modal-title mtitle" id="exampleModalCenterTitle">로그인을 해주세요.</h5>
-		        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-		          <span aria-hidden="true">&times;</span>
-		        </button>
-		      </div>
-		      <div class="modal-body" style="margin: 0 auto; margin-top: 5px;">
-		        <form method="post" action="/login.su" class="login_form">
-		        	<div class="row"><input type="text" name="MEMBER_EMAIL" id="MEMBER_EMAIL" class="input_css" placeholder="이메일" required="required"></div>
-		        	<div class="row"><input type="password" name="MEMBER_PASS" id="MEMBER_PASS" class="input_css" placeholder="비밀번호" required="required"></div>
-               		<div class="row"><p class="fail_message"></p></div>
-               		<div class="row"><button type="button" id="btn_login" class="btn_login" onclick="onclick_btn_login()">로그인</button></div>
-		        </form>
-		       	<div class="row justify-content-center" style="margin-top: 20px; margin: 0 auto;">
-		       		<a href="./WorkshopSignup.ws" style="text-decoration: none; margin-right: 10px; color: black;" class="sign-in-form-action-entry">사업자가입</a>
-	             	<a href="./signup.ma" style="text-decoration: none; margin-right: 10px; color: black;" class="sign-in-form-action-entry">회원가입</a>
-	             	<a href="" style="text-decoration: none; color: black;" class="sign-in-form-action-entry">비밀번호 찾기</a>
-	            </div>
-	            <div class="row justify-content-center" style="margin-top:30px; font-size: 11.5px; color: #757575;">
-	             	SNS계정으로 간편 로그인
-	            </div>
-	            <div class="row justify-content-center" style="margin-top: 10px; margin-bottom: 19px;">
-	             	<a href="" style="text-decoration: none;">
-	             		<img src="${pageContext.request.contextPath}/resources/images/Main/Google_Plus.png" class="sign-in-icon" style="margin-right: 15px;">
-	             	</a>
-	             	<a href="${kakao_url}" style="text-decoration: none;">	
-	             		<img src="${pageContext.request.contextPath}/resources/images/Main/signup_kakaoIcon.png" class="sign-in-kakao-icon">
-	             	</a>
-	             	<a href="${naver_url}" style="text-decoration: none;">
-	             		<img src="${pageContext.request.contextPath}/resources/images/Main/Naver.png" class="sign-in-icon">
-	             	</a>
-             	</div>
-		      </div>
-		    </div>
-		  </div>
+			<div class="modal-dialog modal-dialog-centered" role="document">
+				<div class="modal-content mcontent">
+					<div class="modal-header">
+						<h5 class="modal-title mtitle" id="exampleModalCenterTitle">로그인을 해주세요.</h5>
+						<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+							<span aria-hidden="true">&times;</span>
+						</button>
+					</div>
+					<div class="modal-body" style="margin: 0 auto; margin-top: 5px;">
+						<form method="post" action="/login.su" class="login_form">
+							<div class="row"><input type="text" name="MEMBER_EMAIL" id="MEMBER_EMAIL" class="input_css" placeholder="이메일" required="required"></div>
+							<div class="row"><input type="password" name="MEMBER_PASS" id="MEMBER_PASS" class="input_css" placeholder="비밀번호" required="required"></div>
+							<div class="row"><p class="fail_message"></p></div>
+							<div class="row"><button type="button" id="btn_login" class="btn_login" onclick="onclick_btn_login()">로그인</button></div>
+						</form>
+						<div class="row justify-content-center" style="margin-top: 20px; margin: 0 auto;">
+							<a href="./WorkshopSignup.ws" style="text-decoration: none; margin-right: 10px; color: black;" class="sign-in-form-action-entry">사업자가입</a>
+							<a href="./signup.ma" style="text-decoration: none; margin-right: 10px; color: black;" class="sign-in-form-action-entry">회원가입</a>
+							<a href="" style="text-decoration: none; color: black;" class="sign-in-form-action-entry">비밀번호 찾기</a>
+						</div>
+						<div class="row justify-content-center" style="margin-top:30px; font-size: 11.5px; color: #757575;">
+						 	SNS계정으로 간편 로그인
+						</div>
+						<div class="row justify-content-center" style="margin-top: 10px; margin-bottom: 19px;">
+							<a href="" style="text-decoration: none;">
+								<img src="${pageContext.request.contextPath}/resources/images/Main/Google_Plus.png" class="sign-in-icon" style="margin-right: 15px;">
+							</a>
+							<a href="${kakao_url}" style="text-decoration: none;">	
+								<img src="${pageContext.request.contextPath}/resources/images/Main/signup_kakaoIcon.png" class="sign-in-kakao-icon">
+							</a>
+							<a href="${naver_url}" style="text-decoration: none;">
+								<img src="${pageContext.request.contextPath}/resources/images/Main/Naver.png" class="sign-in-icon">
+							</a>
+						</div>
+					</div>
+				</div>
+			</div>
 		</div>
 		
 		<script src="https://kit.fontawesome.com/b74b42490f.js" crossorigin="anonymous"></script>

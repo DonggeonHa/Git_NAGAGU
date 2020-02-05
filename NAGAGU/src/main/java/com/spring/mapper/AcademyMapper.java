@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 import com.spring.academy.ClassVO;
-import com.spring.member.MemberVO;
+import com.spring.academy.MyClassVO;
 import com.spring.workshop.WorkShopMemberVO;
 
 public interface AcademyMapper {
@@ -13,4 +13,7 @@ public interface AcademyMapper {
 	int getCount(HashMap<String, Object> map);
 	ClassVO getDetail(ClassVO academy);
 	WorkShopMemberVO selectWMember(ClassVO academy);
+	int countUp(ClassVO academy);
+	
+	int insertClassInfo(MyClassVO vo); // 회원관리
 }

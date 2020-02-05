@@ -25,8 +25,8 @@ import com.spring.workshop.WorkShopMemberVO;
 @Controller
 public class AcademyController {
 	
-	@Autowired
-	private AcademyService AcademyService;
+	@Autowired(required = false)
+	private AcademyService academyService;
 	
 	@RequestMapping(value = "/classlist.ac")
 	public ModelAndView ClassList(ClassVO classVO, ModelAndView mav, HttpServletRequest request) throws Exception  {
@@ -61,8 +61,8 @@ public class AcademyController {
 		map.put("sort", sort);
 		
 		// addObject view에 넘어가는 데이터
-		classList = AcademyService.getClassList(map);
-		int listcount = AcademyService.getCount(map);
+		classList = academyService.getClassList(map);
+		int listcount = academyService.getCount(map);
 				
 		
 		// 총 페이지 수
@@ -88,8 +88,8 @@ public class AcademyController {
 	
 	@RequestMapping(value = "/classdetail.ac")
 	public ModelAndView ClassDetail(ClassVO academy, HttpSession session) throws Exception {
-		ClassVO vo = AcademyService.getDetail(academy);
-		WorkShopMemberVO vo2 = AcademyService.selectWMember(vo);
+		ClassVO vo = academyService.getDetail(academy);
+		WorkShopMemberVO vo2 = academyService.selectWMember(vo);
 		
 		if (vo == null) {
 			System.out.println("상세보기 실패");
@@ -128,7 +128,7 @@ public class AcademyController {
 		ClassVO vo = new ClassVO();
 		vo.setWORKSHOP_NUM(Integer.parseInt(session.getAttribute("WORKSHOP_NUM").toString()));
 		
-		WorkShopMemberVO vo2 = AcademyService.selectWMember(vo);
+		WorkShopMemberVO vo2 = academyService.selectWMember(vo);
 		
 		MultipartFile mf2 = request.getFile("CLASS_IMAGE");
 
@@ -216,7 +216,7 @@ public class AcademyController {
 		mav.setViewName("redirect:classlist.ac");
 		mav.addObject("ClassVO", vo);
 		
-		result = AcademyService.insertClass(vo);
+		result = academyService.insertClass(vo);
 		
 		if(result == false) {
 			System.out.println("클래스 등록 실패!");
@@ -230,9 +230,7 @@ public class AcademyController {
 
 	@RequestMapping(value = "/success.ac")
 	public ModelAndView Success(ClassVO academy, @RequestParam(value="amount5", required=false) String amount4) throws Exception {
-		ClassVO vo = AcademyService.getDetail(academy);
-		System.out.println("NUMBER : " + academy.getCLASS_NUMBER());
-		System.out.println("amount5 : " + amount4);
+		ClassVO vo = academyService.getDetail(academy);
 		
 		if (vo == null) {
 			System.out.println("상세보기 실패");
@@ -240,11 +238,38 @@ public class AcademyController {
 		}
 		System.out.println("상세보기 성공");
 		
+		int res = 0;
+		res = academyService.countUp(academy);
+		
+		if ( res == 1) {
+			System.out.println("등록된 강의에 회원수 증가 완료");
+		} else {
+			System.out.println("등록된 강의에 회원수 증가 실패!");
+			return null;
+		}
+		
+		
 		ModelAndView mav = new ModelAndView();
 		mav.addObject("ClassVO", vo);
 		mav.addObject("amount3", amount4);
 		mav.setViewName("Academy/success");
 		
 		return mav;
+	}
+	
+	@RequestMapping(value = "/ClassInfo.ac")
+	public void ClassInfo(@RequestParam(value="CLASS_NUMBER", required=false) int CLASS_NUMBER, @RequestParam(value="MEMBER_NUM", required=false) int MEMBER_NUM) throws Exception {
+		MyClassVO vo = new MyClassVO();
+		vo.setMY_CLASS_MEMBERNUM(MEMBER_NUM);
+		vo.setMY_CLASS_CLASSNUM(CLASS_NUMBER);
+		
+		boolean result = false;
+		
+		result = academyService.insertClassInfo(vo);
+		
+		if(result == false) {
+			System.out.println("정보등록 실패");
+		}
+		System.out.println("정보등록 성공");
 	}
 }

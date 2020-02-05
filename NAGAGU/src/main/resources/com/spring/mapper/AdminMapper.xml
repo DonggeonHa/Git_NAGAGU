@@ -20,6 +20,6 @@
 	</insert>
 	
 	<select id="user_chk" resultMap="adminResultMap">
-		SELECT * from admin_member WHERE admin_id = #{ADMIN_ID} and admin_pass = #{ADMIN_PASS}
+		SELECT * from ADMIN_MEMBER WHERE ADMIN_ID = #{ADMIN_ID} and ADMIN_PASS = #{ADMIN_PASS}
 	</select>
 </mapper>

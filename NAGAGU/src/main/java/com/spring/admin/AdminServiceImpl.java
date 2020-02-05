@@ -2,11 +2,11 @@ package com.spring.admin;
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import com.spring.mapper.AdminMapper;
-import com.spring.mapper.memberMapper;
-import com.spring.member.MemberVO;
 
+@Service
 public class AdminServiceImpl implements AdminService {
 
 	@Autowired
@@ -42,8 +42,12 @@ public class AdminServiceImpl implements AdminService {
 			id = adminVO.getADMIN_ID();
 			pass = adminVO.getADMIN_PASS();
 			
+			System.out.println("admin id : " + get_mapper_admin_id);
+			System.out.println("admin pass : " + get_mapper_admin_pass);
+			System.out.println("id : " + id);
+			System.out.println("pass : " + pass);
 			
-			//이메일, 비밀번호 같을 경우
+			//아이디, 비밀번호 같을 경우
 			if(get_mapper_admin_id.equals(id) && get_mapper_admin_pass.equals(pass)) {
 				result = 1;
 			}

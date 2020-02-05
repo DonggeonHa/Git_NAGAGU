@@ -61,7 +61,7 @@ public class AcademyServiceImpl implements AcademyService {
 	}
 	
 	@Override
-	public WorkShopMemberVO selectWMember(ClassVO academy) {
+	public WorkShopMemberVO selectWMember(ClassVO academy) throws Exception {
 		WorkShopMemberVO member = null;
 		
 		try {
@@ -74,6 +74,29 @@ public class AcademyServiceImpl implements AcademyService {
 			System.out.println("멤버 리스트 가져오기 실패!" + e.getMessage());
 		}
 		return null;
+	}
+	
+	@Override
+	public int countUp(ClassVO academy) {
+		int count;
 		
+		AcademyMapper classMapper = sqlSession.getMapper(AcademyMapper.class);
+		count = classMapper.countUp(academy);
+		
+		return count;
+	}
+	
+	@Override
+	public boolean insertClassInfo(MyClassVO vo) {
+		int result = 0;
+		
+		AcademyMapper classMapper = sqlSession.getMapper(AcademyMapper.class);
+		result = classMapper.insertClassInfo(vo); // 삽입후 삽입한 결과 상태 반환하기 위해 반환값을 int로 정해줌
+		System.out.println("result = " + result);
+		
+		if(result == 0)
+			return false;
+		
+		return true;
 	}
 }
