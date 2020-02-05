@@ -14,6 +14,7 @@
 	int rnum = ((Integer) request.getAttribute("rnum")).intValue();
 	int estimateCount = ((Integer) request.getAttribute("estimateCount")).intValue();
 	int nowpage2 = (int)request.getAttribute("page");
+	String MEMBER_EMAIL = (String)request.getAttribute("MEMBER_EMAIL");
 	
 	SimpleDateFormat df = new SimpleDateFormat("yyyy.MM.dd hh:mm");
 %>
@@ -186,11 +187,17 @@
 		</div>
 		<div class="container">
 			<br /> <br /> <br />
-	
+			<%
+				if (MEMBER_EMAIL != null) {
+			%>
+			
 			<div class="row justify-content-end">
 				<a class="btn btn-outline-dark mb-2" onClick="location.href='./estimate_form.es'" style="cursor: pointer;">글쓰기</a>
 			</div>
-	
+			
+			<%
+				}
+			%>
 			<div class="row justify-content-center">
 	
 				<div class="table-responsive ">
@@ -261,19 +268,20 @@
 			</div>
 			<!-- 글찾기 -->
 	
-	
+			<form id="search_form" action="estimate_search.es" method="post">
 			<div class="search" align="center">
-				<select name="color" size="1">
+				<select id="category" name="color" size="1">
 					<option value="">선택</option>
 					<option value="">-----------------</option>
 					<option value="">제목</option>
 					<option value="">본문</option>
 					<option value="">별명</option>
 					<option value="">제목+본문</option>
-				</select> <input type="text" size="12" name="search"> <input
-					type="button" name="search" value="검색" onClick="location.href='#'"
+				</select> <input type="text" size="12" id="search_text" name="search"> <input
+					type="button" name="search" value="검색" onClick="location.href='#'" id="btn_search"
 					style="cursor: pointer;">
 			</div>
+			</form>
 			<br />
 			<!-- 버튼 -->
 	
@@ -295,6 +303,27 @@
 		<br />
 		<br />
 		<!-- Optional JavaScript -->
+		<script>
+			$.('#btn_search').click(function() {
+				var category = $('#category').value();
+				if (category == "선택" || category == "-----------------") {
+					alert('카테고리를 선택해주십시오.');
+					
+					return false;
+				}
+				var search_text = $('#search_text').value();
+				if (search_text == "") {
+					alert('검색어를 입력해주십시오.');
+					$('#search_text').focus();
+					
+					return false;
+				}
+				
+				$('#search_form').submit();
+			});
+		
+		
+		</script>
 		<!-- jQuery first, then Popper.js, then Bootstrap JS -->
 		<script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
 		<script	src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>

@@ -2,6 +2,7 @@
             
 body {
     font-family: '만화진흥원체', 'KOMACON', KOMACON;
+    overflow-y:auto;
 }
 
 .work_side {
@@ -12,7 +13,6 @@ body {
     width:215px;
     height:100%;
     z-index:2;
-    overflow-y:auto;
 }
 
 .sidebar_head {
