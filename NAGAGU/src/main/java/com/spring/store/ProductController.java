@@ -884,26 +884,39 @@ public class ProductController {
 	   
 	
 	//=====================================================
-	//===============================================QNA
+	//===============================================QNA insert
+	//-------------------------------------------QNA_RE_insert
 	@RequestMapping(value="/qna_insert.do",  produces="application/json;charset=UTF-8")
 	@ResponseBody
 	public String insert_qna(HttpServletRequest request, HttpSession session) throws Exception {
 		System.out.println("qna_insert 컨트롤러 왔다");
 
-		int MEMBER_NUM = (int)session.getAttribute("MEMBER_NUM");
-		
+		int MEMBER_NUM = 0;
+		int WORKSHOP_NUM = 0;
 		Product_qnaVO qnaVO = new Product_qnaVO();
+		
+		
+		if(session.getAttribute("MEMBER_NUM") != null) {	//멤버로그인(원글)
+			System.out.println("원글");
+			MEMBER_NUM = (int)session.getAttribute("MEMBER_NUM");
+	    	qnaVO.setQNA_RE(0);
+	    	qnaVO.setQNA_MEMBER(MEMBER_NUM);
+		}else {	//공방로그인(답글)
+			System.out.println("답글");
+			WORKSHOP_NUM = (int)session.getAttribute("WORKSHOP_NUM");
+			qnaVO.setQNA_RE(Integer.parseInt(request.getParameter("QNA_RE")));
+	    	qnaVO.setQNA_MEMBER(WORKSHOP_NUM);
+		}
+		
+		
 		
 		System.out.println("QNA_CONTENT=" + request.getParameter("QNA_CONTENT"));
 
 //		qnaVO.setQNA_NUM(qNA_NUM);	//시퀀스 이용
 	    qnaVO.setQNA_CONTENT(request.getParameter("QNA_CONTENT"));
 	    qnaVO.setQNA_DATE(new Timestamp(System.currentTimeMillis()));
-	    qnaVO.setQNA_MEMBER(MEMBER_NUM);
-		
-		qnaVO.setQNA_PRODUCT(Integer.parseInt(request.getParameter("QNA_PRODUCT")));
+	    qnaVO.setQNA_PRODUCT(Integer.parseInt(request.getParameter("QNA_PRODUCT")));
 	
-		
 		
 		int res = qnaService.insertQna(qnaVO);
 		System.out.println("res="+res);		
@@ -978,6 +991,14 @@ public class ProductController {
 		return retVal;
 		
 	}			
+	
+	
+
+	
+	
+	
+	
+	
 	
 	
 }

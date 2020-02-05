@@ -9,7 +9,8 @@ create table PRODUCT_QNA(
     CONSTRAINT PRODUCT_REVIEW_NUM FOREIGN KEY (REVIEW_PRODUCT) 
         REFERENCES PRODUCT(PRODUCT_NUM)ON DELETE CASCADE, 
     QNA_DATE         DATE,
-    QNA_CONTENT      VARCHAR2(1000)
+    QNA_CONTENT      VARCHAR2(1000),
+    QNA_RE			NUMBER
 );
 
 
@@ -28,6 +29,7 @@ create sequence store_qna_seq
 		<result property="QNA_PRODUCT" column="QNA_PRODUCT" />	
 		<result property="QNA_DATE" column="QNA_DATE" />		
 		<result property="QNA_CONTENT" column="QNA_CONTENT" />
+		<result property="QNA_RE" column="QNA_RE" />
 	</resultMap>
 
 	<resultMap type="com.spring.store.Product_qnaVO" id="productQnaResultMap">
@@ -36,6 +38,7 @@ create sequence store_qna_seq
 		<result property="QNA_PRODUCT" column="QNA_PRODUCT" />	
 		<result property="QNA_DATE" column="QNA_DATE" />		
 		<result property="QNA_CONTENT" column="QNA_CONTENT" />	
+		<result property="QNA_RE" column="QNA_RE" />
 	</resultMap>
 
 	<resultMap type="com.spring.member.MemberVO" id="memberqnaResultMap">
@@ -59,7 +62,7 @@ create sequence store_qna_seq
 
 	<select id="getQnaList" parameterType="java.util.HashMap" resultMap="productQnaResultMap">
 		SELECT * FROM
-		(SELECT rownum rnum, QNA_NUM, QNA_MEMBER, QNA_PRODUCT, QNA_DATE, QNA_CONTENT
+		(SELECT rownum rnum, QNA_NUM, QNA_MEMBER, QNA_PRODUCT, QNA_DATE, QNA_CONTENT, QNA_RE
 		 FROM (SELECT * FROM PRODUCT_QNA WHERE QNA_PRODUCT=#{PRODUCT_NUM} ORDER BY QNA_DATE DESC))
 		<![CDATA[ WHERE rnum >= #{qnastartrow} AND rnum <= #{qnaendrow} ]]>
 	</select>
@@ -77,7 +80,7 @@ create sequence store_qna_seq
 	
 	<insert id="insertQna" parameterType="com.spring.store.Product_qnaVO">
 		INSERT INTO PRODUCT_QNA VALUES
-		(store_qna_seq.nextval, #{QNA_MEMBER}, #{QNA_PRODUCT}, #{QNA_DATE}, #{QNA_CONTENT})
+		(store_qna_seq.nextval, #{QNA_MEMBER}, #{QNA_PRODUCT}, #{QNA_DATE}, #{QNA_CONTENT}, #{QNA_RE})
 	</insert>	
 	
 	

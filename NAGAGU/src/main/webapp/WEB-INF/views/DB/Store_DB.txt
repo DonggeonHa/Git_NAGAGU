@@ -60,13 +60,14 @@ create sequence store_review_seq
     
 /*상품 qna*/     
 create table PRODUCT_QNA(
-    QNA_NUM          NUMBER PRIMARY KEY,
-    QNA_MEMBER       NUMBER,
-    QNA_PRODUCT      NUMBER,
+    QNA_NUM			NUMBER PRIMARY KEY,
+    QNA_MEMBER      NUMBER,
+    QNA_PRODUCT     NUMBER,
     CONSTRAINT PRODUCT_QNA_NUM FOREIGN KEY (QNA_PRODUCT) 
         REFERENCES PRODUCT(PRODUCT_NUM)ON DELETE CASCADE, 
-    QNA_DATE         DATE,
-    QNA_CONTENT      VARCHAR2(1000)
+    QNA_DATE        DATE,
+    QNA_CONTENT     VARCHAR2(1000),
+    QNA_RE			NUMBER
 );   
 
 /*상품qna 시퀀스*/      
