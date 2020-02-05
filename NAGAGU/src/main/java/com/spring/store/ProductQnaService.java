@@ -10,4 +10,6 @@ public interface ProductQnaService {
 	ArrayList<Product_qnaVO> getQnaList(HashMap<String, Object> map);
 	ArrayList<MemberVO> getqnaMemberList(HashMap<String, Object> map);
 	int insertQna(Product_qnaVO qnaVO);
+	int modifyQna(Product_qnaVO qnaVO);
+	int deleteQna(int QNA_NUM);
 }

@@ -135,6 +135,7 @@ public class ProductController {
 			model.addAttribute("LoginMemberVO",LoginMemberVO);
 		
 		}
+	
 		
 		
 		/*상품 vo 가져오기*/
@@ -143,6 +144,12 @@ public class ProductController {
 				
 		ProductVO vo = null;
 		vo = productService.getproductVO(PRODUCT_NUM);
+		
+		/*이 product의 워크샵 넘버 필요함*/	
+		WorkshopVO workshopVO = productService.selectWorkshop(vo);
+		int WotkshopMatchingNumber = workshopVO.getWORKSHOP_NUM();
+		model.addAttribute("WotkshopMatchingNumber",WotkshopMatchingNumber);
+		
 		
 		/*리뷰 리스트*/
 		int reviewpage = 1; //초기값 1
@@ -914,6 +921,63 @@ public class ProductController {
 		
 	}		
 	
+	//===============================================QNA modify
+	@RequestMapping(value="/qna_modify.do",  produces="application/json;charset=UTF-8")
+	@ResponseBody
+	public Product_qnaVO qna_modify(Product_qnaVO vo, HttpServletRequest request) throws Exception {
+		System.out.println("qna_modify 컨트롤러 왔다");
+
+		vo.setQNA_DATE(new Timestamp(System.currentTimeMillis()));
+
+		int res = qnaService.modifyQna(vo);
+		System.out.println("ccc");
+		return vo;
+	}		
+	
+	
+	//-------------------------------------------QNA delete
+	@RequestMapping(value="/delete_qna.do",  produces="application/json;charset=UTF-8")
+	@ResponseBody
+	public Map<String, Object> delete_qna(HttpServletRequest request) throws Exception {
+		System.out.println("delete_qna 컨트롤러 왔다");
+		int QNA_NUM = Integer.parseInt(request.getParameter("QNA_NUM"));
+		Map<String, Object> retVal = new HashMap<String, Object>(); //리턴값 저장
+		try {
+			
+			System.out.println("QNA_NUM = " + QNA_NUM);
+			
+			
+			int res = 0;
+			res = qnaService.deleteQna(QNA_NUM);
+			System.out.println(res);
+			/*
+			//답글을 가지고 있는 댓글을 삭제하면, 해당 답글까지 다 삭제돼야 한다.
+			//답글을 가지고 있는 댓글은 삭제할 수 없다.
+			//본인의 review_num을 review_re로 하는 데이터가 있을 경우, 삭제 불가
+			int count = reviewService.findChildrenRE(REVIEW_NUM);
+			//있으면 답글이 있는 것
+			if(count == 0) {
+				//없으면 삭제 가능
+				res = reviewService.deleteReview(REVIEW_NUM);
+			} else {
+				
+			}
+			*/
+			if(res != 0) {
+				retVal.put("res", "OK");
+			} else {
+				retVal.put("res", "FAIL");
+			}
+			
+			
+		}catch(Exception e) {
+			retVal.put("res", "FAIL");
+			retVal.put("message", "Failure");
+		}		
+		System.out.println(retVal);
+		return retVal;
+		
+	}			
 	
 	
 }
