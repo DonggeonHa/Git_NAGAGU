@@ -40,4 +40,10 @@ public class AdminController {
 		
 		return mav;
 	}
+	
+	@RequestMapping(value = "/menu.ad")
+	public String Menu() {
+		
+		return "Admin/Notiles/menu";
+	}
 }
