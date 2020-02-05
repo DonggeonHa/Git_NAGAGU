@@ -34,7 +34,7 @@
 	<insert id="estimateInsert" parameterType="com.spring.estimate.EstimateVO">
 		insert into ESTIMATE values (estimate_seq.nextval, #{ESTIMATE_MEMBER}, #{ESTIMATE_NICK},#{ESTIMATE_TITLE},
 		 sysdate, #{ESTIMATE_CATEGORY}, #{ESTIMATE_SOURCE}, #{ESTIMATE_COLOR}, #{ESTIMATE_COAT}, #{ESTIMATE_SIZE}, 
-		#{ESTIMATE_FILE}, #{ESTIMATE_CONTENT}, #{ESTIMATE_PAY}, 0)
+		#{ESTIMATE_FILE}, #{ESTIMATE_CONTENT}, #{ESTIMATE_PAY}, 0, 0, 0)
 	</insert>
 	
 	<select id="estimateList" parameterType="java.util.HashMap" resultMap="estimateMap">

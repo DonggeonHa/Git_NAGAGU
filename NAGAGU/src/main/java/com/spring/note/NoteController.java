@@ -11,6 +11,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import com.spring.workshop.WorkShopMemberVO;
+
 @Controller
 public class NoteController {
 	
@@ -34,10 +36,10 @@ public class NoteController {
 		
 		int maxpage = (int)((double)countReceive/limit+0.95);
 		int startpage = (((int) ((double)page/10 + 0.9)) - 1) * 10 + 1;
-		int endpage = startpage+10-1;
-		
-		if (endpage > maxpage)
-			endpage = maxpage;
+		int endpage = startpage+limit-1;
+
+		if (page == maxpage)
+			endpage = countReceive;
 		
 		ArrayList<NoteVO> receiveList = noteService.receiveList(receiver, startpage, endpage);
 		
@@ -266,6 +268,17 @@ public class NoteController {
 		String receive_pic = null;
 		
 		String receive_mail = request.getParameter("receive_mail");
+		String workshop_name = request.getParameter("workshop_name");
+		System.out.println("receive_mail : " + receive_mail);
+		System.out.println("workshop_name : " + workshop_name);
+		
+		if (receive_mail == null && workshop_name != null) {
+			System.out.println("first");
+			
+			WorkShopMemberVO workshopvo = new WorkShopMemberVO();
+			workshopvo.setWORKSHOP_NAME(workshop_name);
+			receive_mail = noteService.getWorkshopMail(workshopvo);
+		}
 		
 		if (noteService.checkMember(receive_mail) == 1) {
 			receive_nick = noteService.getMember(receive_mail).getMEMBER_NICK();
@@ -278,8 +291,10 @@ public class NoteController {
 		}
 		
 		else if (noteService.checkMember(receive_mail) == 2) {
-			receive_nick = noteService.getWorkshop(receive_mail).getWORK_NAME();
-			receive_pic = noteService.getWorkshop(receive_mail).getWORK_PIC();
+			WorkShopMemberVO vo = noteService.getWorkshop(receive_mail);
+			
+			receive_nick = vo.getWORKSHOP_NAME();
+			receive_pic = vo.getWORKSHOP_PICTURE();
 			System.out.println("result : " + receive_nick);
 			
 			model.addAttribute("receive_mail", receive_mail);

@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import com.spring.chat.WorkshopVO;
 import com.spring.member.MemberVO;
+import com.spring.workshop.WorkShopMemberVO;
 
 public interface NoteService {
 	public ArrayList<NoteVO> receiveList(String receiver, int startRow, int endRow) throws Exception;
@@ -20,7 +21,8 @@ public interface NoteService {
 	public NoteVO noteView (int note_num) throws Exception;
 	public int checkMember(String mem_mail) throws Exception;
 	public MemberVO getMember(String mem_mail) throws Exception;
-	public WorkshopVO getWorkshop(String mem_mail) throws Exception;
+	public WorkShopMemberVO getWorkshop(String mem_mail) throws Exception;
+	public String getWorkshopMail(WorkShopMemberVO workshopVO);
 	public int noteSend (NoteVO vo) throws Exception;
 	public int increaseReadcount (int note_num) throws Exception;
 }

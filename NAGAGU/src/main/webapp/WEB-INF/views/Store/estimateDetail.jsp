@@ -4,19 +4,22 @@
 <%@ page import="java.util.*" %>
 <%@ page import="com.spring.estimate.EstimateVO" %>
 <%
-
 	String member_mail = "";
 	String workshop_name = "";
+	int login_state = 0;
 	
 
 	EstimateVO vo = (EstimateVO)request.getAttribute("estimatevo");
 	
-	if (session.getAttribute("MEMBER_EMAIL") != "") {
+	if (session.getAttribute("MEMBER_EMAIL") != null) {
 		member_mail = (String)session.getAttribute("MEMBER_EMAIL");
+		System.out.println(member_mail);
+		login_state = 1;
 	}
 	else {
-		if (session.getAttribute("WORKSHOP_NAME") != "") {
+		if (session.getAttribute("WORKSHOP_NAME") != null) {
 			workshop_name = (String)session.getAttribute("WORKSHOP_NAME");
+			login_state = 2;
 		}
 	}
 	
@@ -25,7 +28,7 @@
 	
 	int nowpage = 1;
 	if (request.getAttribute("page")!=null) {
-		nowpage = (int)request.getAttribute("page");
+		nowpage = Integer.parseInt((String)request.getAttribute("page"));
 	}
 	
 	
@@ -83,13 +86,20 @@
 			}
 		}
 		
+		.es_content {
+			width:65%;
+			margin:0 auto;
+			background:#d3d3d3;
+			border-radius:8px;
+			padding:10px;
+		}
+		
 		.offer_textarea {
 			width:60%;
 
 		}
 		
 		#offerTable {
-            margin-left:50px;
             width:800px;
         }
         
@@ -107,10 +117,11 @@
         
         .list_caution {
             background:#fafafa;    
+            text-align:center;
+            height:32px;
         }
         
         .item_head {
-            border:1px solid #d3d3d3;
             transition:border 0.2s;
             text-align:center;
         }
@@ -118,6 +129,7 @@
         .item_head:hover {
             cursor:pointer;
             border:1px solid #ef900e;
+            z-index:1;
         }
         
         .item_content {
@@ -165,6 +177,12 @@
 		.modalLabel {
 			width:80px;
 		}
+		
+		.bt-xs {
+			width:20px;
+			height:14px;
+			font-size:12px;
+		}
 
 	</style>
 
@@ -189,44 +207,43 @@
 			</div>
 			<br/><br/>
 				<div class="row text-center pt-1 pb-1 ">
-					<div class="col-md-4 d-flex justify-content-end title">제품 종류</div>
-					<div class="col-md-8 d-flex justify-content-start">
+					<div class="col-md-3 d-flex justify-content-end title">제품 종류</div>
+					<div class="col-md-9 d-flex justify-content-start">
 						<%=vo.getESTIMATE_CATEGORY() %>
 					</div>
 				</div>
 				<div class="row text-center">
-					<div class="col-md-4 d-flex justify-content-end title">소재</div>
-					<div class="col-md-8 d-flex justify-content-start">
+					<div class="col-md-3 d-flex justify-content-end title">소재</div>
+					<div class="col-md-9 d-flex justify-content-start">
 						<%=vo.getESTIMATE_SOURCE() %>
 					</div>
 				</div>
 				<div class="row text-center">
-					<div class="col-md-4 d-flex justify-content-end title">색상(염색)</div>
-					<div class="col-md-8 d-flex justify-content-start">
+					<div class="col-md-3 d-flex justify-content-end title">색상(염색)</div>
+					<div class="col-md-9 d-flex justify-content-start">
 						<%=vo.getESTIMATE_COLOR() %>
 					</div>
 				</div>
 				<div class="row text-center pt-1 pb-1">
-					<div class="col-md-4 d-flex justify-content-end title">코팅</div>
-					<div class="col-md-8 d-flex justify-content-start">
+					<div class="col-md-3 d-flex justify-content-end title">코팅</div>
+					<div class="col-md-9 d-flex justify-content-start">
 						<%=vo.getESTIMATE_COAT() %>
 					</div>
 				</div>
 				<div class="row text-center">
-					<div class="col-md-4 d-flex justify-content-end title">규격</div>
-					<div class="col-md-8 d-flex justify-content-start">
+					<div class="col-md-3 d-flex justify-content-end title">규격</div>
+					<div class="col-md-9 d-flex justify-content-start">
 						<%=vo.getESTIMATE_SIZE() %>
 					</div>
 				</div>
 				<div class="row text-center pt-1 pb-1">
-					<div class="col-md-4 d-flex justify-content-end title">기타</div>
-					<div class="col-md-8 d-flex justify-content-start">
+					<div class="es_content justify-content-center">
 						<%=vo.getESTIMATE_CONTENT() %>
 					</div>
 				</div>
 	
-				<div class="row justify-content-center pt-5 pl-5 ml-5">
-				<% if (workshop_name!="") { %>
+				<div class="row justify-content-center pt-5 pl-1 ml-1">
+				<% if (login_state==2) { %>
 					<button class="btn btn-dark btn-md" alt="" data-toggle="modal" data-target="#offerFormModal" aria-haspopup="true" aria-expanded="false">
 					입찰하기</button>&nbsp;&nbsp;&nbsp;
 				<% } %>
@@ -273,11 +290,15 @@
 	<br/><br/><br/><br/>
 	
 	<script>
+	var login_state = <%=login_state%>
+	
 		$(document).ready(function (){
+			console.log(login_state);
+			console.log('<%=workshop_name%>');
 			function getOfferList () {
 				if ('<%=member_mail%>' != '<%=mailChk%>') {
 					var output='';
-					output += '<tr><td class="list_caution">제안글은 <font color="#f2400">작성자만 열람 가능합니다</font><td><tr>';
+					output += '<tr><td class="list_caution" colspan="5">제안글은 <b><font color="#f2400">작성자</font></b>만 열람 가능합니다</td></tr>';
 					
 					$('#offerList > tbody').html(output);
 					
@@ -299,12 +320,12 @@
 						var ol = data.offerList;
 						var rnum = data.offer_rnum;
 						console.log(ol);
-						console.log(data.offerCount);
-						console.log(offer_page);
-						console.log(max_page);
+						console.log('총 제안 수 : ' + data.offerCount);
+						console.log('현재 페이지 : ' + offer_page);
+						console.log('마지막 페이지 : ' + max_page);
 						
 						if (data.offerCount == 0) {
-							output += '<tr><td colspan="5">등록된 제안이 없습니다</td><tr>';
+							output += '<tr><td colspan="5" class="list_caution">등록된 제안이 없습니다</td><tr>';
 						}
 						
 						else {
@@ -314,8 +335,8 @@
 								output += '<td>' + rnum + '</td>';
 								output += '<td><b>' + item.offer_WORKSHOP + '</b></td>';
 								output += '<td>' + item.offer_PRICE + '</td>';
-								output += '<td><button class="btn btn-outline-dark btn-sm">쪽지보내기</button></td>';
-								output += '<td><button class="btn btn-outline-dark btn-sm">낙찰하기</button></td>';
+								output += '<td><button value="' + item.offer_WORKSHOP + '" class="btn_note btn btn-outline-dark btn-sm">쪽지보내기</button></td>';
+								output += '<td><button value="' + item.offer_NUM + '" class="btn_bid btn btn-outline-dark btn-xs">낙찰하기</button></td>';
 								output += '</tr>';
 								output += '<tr id="item_content_'+ index + '" class="item_content">';
 								output += '<td colspan="5">';
@@ -325,24 +346,49 @@
 							
 							/* 댓글 페이지네이션 */
 							
-							if (offer_page > 3) {
-								pagination += '<div id="pagelink" value="' + offer_page-3 + '">&laqua;</div>';
+							if (offer_page == max_page) {
+								pagination += '<div id="pagelink" value="' + Number(offer_page)-5 + '">&laqua;</div>';
+								pagination += '<div id="pagelink" value="' + Number(offer_page)-4 + '"><a href="#">' + Number(offer_page)-4 + '</a></div>';
+								pagination += '<div id="pagelink" value="' + Number(offer_page)-3 + '"><a href="#">' + Number(offer_page)-3 + '</a></div>';
 							}
+							else if (offer_page == max_page-1) {
+								pagination += '<div id="pagelink" value="' + Number(offer_page)-4 + '">&laqua;</div>';
+								pagination += '<div id="pagelink" value="' + Number(offer_page)-3 + '"><a href="#">' + Number(offer_page)-3 + '</a></div>';
+							}
+							else {
+								if (offer_page > 3) {
+									pagination += '<div id="pagelink" value="' + Number(offer_page)-3 + '">&laqua;</div>';
+								}
+							} 
+							
 							if (offer_page > 2) {
-								pagination += '<div id="pagelink" value="' + offer_page-2 + '"><a href="#">' + offer_page-2 + '</a></div>';
+								pagination += '<div id="pagelink" value="' + Number(offer_page)-2 + '"><a href="#">' + Number(offer_page)-2 + '</a></div>';
 							}
 							if (offer_page > 1) {
-								pagination += '<div id="pagelink" value="' + offer_page-1 + '"><a href="#">' + offer_page-1 + '</a></div>';
+								pagination += '<div id="pagelink" value="' + Number(offer_page)-1 + '"><a href="#">' + Number(offer_page)-1 + '</a></div>';
 							}
 								pagination += '<div class="currentpage">' + offer_page + '</div>';
-							if (max_page < offer_page+1) {
-								pagination += '<div id="pagelink" value="' + offer_page+1 + '"><a href="#">' + offer_page+1 + '</a></div>';
+							if (max_page > offer_page) {
+								pagination += '<div id="pagelink" value="' + Number(offer_page)+Number(1) + '"><a href="#">' + Number(offer_page)+Number(1) + '</a></div>';
 							}
-							if (max_page < offer_page+2) {
-								pagination += '<div id="pagelink" value="' + offer_page+2 + '"><a href="#">' + offer_page+2 + '</a></div>';
+							console.log(Number(offer_page)+Number(1));
+							if (max_page > offer_page+1) {
+								pagination += '<div id="pagelink" value="' + Number(offer_page)+2 + '"><a href="#">' + Number(offer_page)+2 + '</a></div>';
 							}
-							if (max_page > offer_page+3) {
-								pagination += '<div id="pagelink" value="' + offer_page+3 + '">&raqua;</div>';
+							
+							if (offer_page == 1) {
+								pagination += '<div id="pagelink" value="' + Number(offer_page)+3 + '"><a href="#">' + Number(offer_page)+3 + '</a></div>';
+								pagination += '<div id="pagelink" value="' + Number(offer_page)+4 + '"><a href="#">' + Number(offer_page)+4 + '</a></div>';
+								pagination += '<div id="pagelink" value="' + Number(offer_page)+5 + '">&raqua;</div>';
+							}
+							else if (offer_page == 2) {
+								pagination += '<div id="pagelink" value="' + Number(offer_page)+3 + '"><a href="#">' + Number(offer_page)+3 + '</a></div>';
+								pagination += '<div id="pagelink" value="' + Number(offer_page)+4 + '">&raqua;</div>';
+							}
+							else {
+								if (max_page > offer_page+2) {
+									pagination += '<div id="pagelink" value="' + Number(offer_page)+3 + '">&raqua;</div>';
+								}
 							}
 						}
 						
@@ -359,14 +405,18 @@
 		
 		$(document).delegate('.item_head', 'click', function() {
 			var item_num = $(this).attr("value");
-			
+
 			if ($('#item_content_' + item_num).css('display') != 'none') {
 				$('#item_content_' + item_num).hide(200);
 			} else {
 				$('.item_content').hide();
 				$('#item_content_' + item_num).show(200);
 			}
-	
+		});
+		$(document).delegate('.btn_note', 'click', function() {
+			var send_workshop = $(this).attr("value");
+			console.log(send_workshop);
+			window.open('/NAGAGU/noteForm.nt?workshop_name=' + send_workshop, "쪽지 보내기", "width=600 height=800");
 		});
 		
 		$('#pagelink').click(function() {

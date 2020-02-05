@@ -23,9 +23,6 @@ public class EstimateController {
 	
 	@RequestMapping(value = "/estimate.es", method = RequestMethod.GET)
 	public String estimate(HttpServletRequest request, Model model, HttpSession session) {
-		session.setAttribute("MEMBER_EMAIL", "lagls@naver.com");
-		session.setAttribute("MEMBER_NICK", "욥욥이");
-        session.setAttribute("WORKSHOP_NAME", "동동공방");
 		
 		int page = 1;
 		int limit = 20;
@@ -37,15 +34,19 @@ public class EstimateController {
 		
 		int maxpage = (int)((double)estimateCount/limit+0.95);
 		int startpage = (((int) ((double)page/10 + 0.9)) - 1) * 10 + 1;
-		int endpage = startpage+20-1;
+		int endpage = startpage+limit-1;
 		
-		if (endpage > maxpage)
-			endpage = maxpage;
+		if (page == maxpage)
+			endpage = estimateCount;
 		
 		int rnum = estimateCount - (page-1)*limit;
 
 		ArrayList<EstimateVO> eList = estimateService.estimateList(startpage, endpage);
-
+		System.out.println(estimateCount);
+		System.out.println(startpage);
+		System.out.println(endpage);
+		System.out.println(eList.size());
+		
 		model.addAttribute("page", page);
 		model.addAttribute("maxpage", maxpage);
 		model.addAttribute("startpage", startpage);
@@ -144,9 +145,9 @@ public class EstimateController {
 		int offer_maxpage = (int)((double)offerCount/offer_limit+0.95);
 		int offer_startpage = (((int) ((double)offer_page/10 + 0.9)) - 1) * 10 + 1;        
 		int offer_endpage = offer_startpage+offer_limit-1;
-		
-		if (offer_endpage > offer_maxpage)
-			offer_endpage = offer_maxpage;
+
+		if (offer_page == offer_maxpage)
+			offer_endpage = offerCount;
 		
 		int offer_rnum = offerCount - (offer_page-1)*offer_limit;
 		

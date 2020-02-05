@@ -13,11 +13,9 @@
 	int endpage = ((Integer) request.getAttribute("endpage")).intValue();
 	int rnum = ((Integer) request.getAttribute("rnum")).intValue();
 	int estimateCount = ((Integer) request.getAttribute("estimateCount")).intValue();
+	int nowpage2 = (int)request.getAttribute("page");
 	
 	SimpleDateFormat df = new SimpleDateFormat("yyyy.MM.dd hh:mm");
-
-	System.out.println(estimateCount);
-	System.out.println(eList.size());
 %>
 
 <!DOCTYPE html>
@@ -210,13 +208,10 @@
 						</tr>
 				<%
 					if (estimateCount > 0 ) {
+						System.out.println(eList.size());
 						for (int i=0; i<eList.size(); i++) {
 							EstimateVO el = eList.get(i);
-							System.out.println(el.getESTIMATE_NICK());
 							System.out.println(el.getESTIMATE_TITLE());
-							System.out.println(el.getESTIMATE_CATEGORY());
-							System.out.println(el.getESTIMATE_DATE());
-							System.out.println(el.getESTIMATE_STATE());
 				%>
 						<tr onClick="location.href='./estimate_detail.es?ESTIMATE_NUM=<%=el.getESTIMATE_NUM()%>&page=<%=nowpage %>'"
 							style="cursor: pointer;">
