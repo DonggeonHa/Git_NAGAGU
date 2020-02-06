@@ -1,4 +1,4 @@
-package com.spring.mypage;
+package com.spring.order;
 
 public class BasketVO {
 	private int BASKET_NUM ; /* 장바구니 ID */

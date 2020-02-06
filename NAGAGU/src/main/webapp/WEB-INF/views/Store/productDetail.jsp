@@ -1,4 +1,4 @@
-<%@page import="com.spring.mypage.BasketVO"%>
+<%@page import="com.spring.order.BasketVO"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"   pageEncoding="UTF-8"%>
 <%@ page import="com.spring.store.ProductVO" %>
 <%@ page import="com.spring.store.Product_reviewVO" %>
@@ -1033,13 +1033,13 @@
          </div>
          <div class="col-4">
             <div class="sticky2" style="border: 1px solid #EAEAEA;">
-               <form name="goodsform" action="#" method="post" id="goodsform" commandName="BasketVO">
+               <form name="goodsform" action="#" method="post" id="goodsform">
                   <div class="row pt-4 pl-4">
                      <div class="col-3" >
                         <img src="${pageContext.request.contextPath}/resources/images/Community/peko.png" width="95%" >
                      </div><hr>
                      <div class="col-9">
-                     	<input type="hidden" name="PRODUCT_NUM" value="<%=vo.getPRODUCT_NUM()%>">
+                     	<%-- <input type="hidden" name="PRODUCT_NUM" value="<%=vo.getPRODUCT_NUM()%>"> --%>
                         <h3 name="PRODUCT_SHOPNAME"><%=vo.getPRODUCT_SHOPNAME()%></h3>
                         <p name="PRODUCT_TITLE"><font size="2"><%=vo.getPRODUCT_TITLE()%></font></p>
                      </div>
@@ -1055,7 +1055,7 @@
                         <tbody>
                             <tr>
                                <th scope="row">배송비</th>
-                               <td><input type="hidden" value="<%=vo.getPRODUCT_SHIP_PRICE()%>" name="PRODUCT_SHIP_PRICE"><%=vo.getPRODUCT_SHIP_PRICE()%></td>
+                               <td name="PRODUCT_SHIP_PRICE"><%=vo.getPRODUCT_SHIP_PRICE()%></td>
                             </tr>
                             <tr>
                                <th scope="row">배송 기간</th>
@@ -1122,8 +1122,8 @@
 							<input type="hidden" name = "PRODUCT_NUM" value="<%=PRODUCT_NUM %>">
 	                        ♥
 						</button>	
-	                     <button type="button" class="btn btn-outline-dark btn-md" data-toggle="modal" data-target="#exampleModalCenter">장바구니</button>
-	                     <button type="button" class="btn btn-outline-dark btn-md" data-toggle="modal" data-target="#exampleModalCenter">바로구매</button>
+	                     <button type="button" class="btn btn-outline-dark btn-md" data-toggle="modal" data-target="#exampleModalCenter" >장바구니</button>
+	                     <button type="button" class="btn btn-outline-dark btn-md" data-toggle="modal" data-target="#exampleModalCenter" >바로구매</button>
                      <% } else if(WORKSHOP_CEO_NAME != null){ %>	<%-- 공방 로그인일 때(하트 안 보임) --%>
                      	 <a href="classreservation.ac" class="btn btn-outline-dark btn-md disabled" role="button" aria-pressed="true">장바구니</a>
                      	 <a href="#" class="btn btn-outline-dark btn-md disabled" role="button" aria-pressed="true" >바로구매</a>
@@ -1132,8 +1132,8 @@
 	                        <input type="hidden" name = "PRODUCT_NUM" value="<%=PRODUCT_NUM %>">
 	                        ♥
 	                     </a>
-	                     <a href="mypage_basket.my" class="btn btn-outline-dark btn-md" role="button" aria-pressed="true">장바구니</a>
-	                     <a href="#" class="btn btn-outline-dark btn-md" role="button" aria-pressed="true">바로구매</a>
+	                     <a href="#" class="btn btn-outline-dark btn-md" role="button" aria-pressed="true" id="basket_btn">장바구니</a>
+	                     <a href="#" class="btn btn-outline-dark btn-md" role="button" aria-pressed="true" id="order_btn">바로구매</a>
                      <% } %>
                   </div>
                   <br/>
@@ -1145,26 +1145,37 @@
    </div>
    <!-- content end -->
    <script>
-   	$('.basket_btn').on('click',function(){
-		if(confirm('이동?')){
-			var url = '${pageContext.request.contextPath}/mypage_basket.my'
-				+ '?PRODUCT_NUM='+<%=vo.getPRODUCT_NUM()%>
-			
-			var frm=document.getElementById("goodsform");
-			frm.action=url;
-			frm.submit();
-			//location.href=url;			
-		}	
-   	})
-   	
-   	$('.order_btn').on('click',function(){
+   	$('#basket_btn').on('click',function(){
+		var params=$("#goodsform").serialize();
+		$.ajax({
+			  url: "/NAGAGU/insertBasket.my",
+              type: "POST",
+              data: params,
+              contentType:
+  				'application/x-www-form-urlencoded; charset=utf-8',
+              success: function (retVal) {
+        		if(retVal.res=="OK"){
+        			if(confirm('장바구니로 이동하시겠습니까?')){
+        				location.href= '${pageContext.request.contextPath}/mypage_basket.my'
+        			}else{
+        				alert("장바구니에 담겼습니다")
+        			}
+				}else{
+					alert("update fail");
+				}  
+			 },
+			error:function(){
+				alert("ajax통신 실패!!");
+			}
+		})
+   	});
+   	$('#order_btn').on('click',function(){
 		if(confirm('이동?')){
 			var url = '${pageContext.request.contextPath}/mypage_order.my'
 				+ '?PRODUCT_NUM='+<%=vo.getPRODUCT_NUM()%>
-			
 			var frm=document.getElementById("goodsform");
-			frm.action=url;
-			frm.submit();
+			//frm.action=url;
+			//frm.submit();
 			//location.href=url;			
 		}	
    	})
@@ -1174,7 +1185,6 @@
    var loginmember_nick = '<%=MEMBER_NICK%>';
       /*장바구니 수량 변경*/
       function count_change(temp) {
-    	 alert('hi')
          var test = document.goodsform.BASKET_AMOUNT.value;
          if (temp == 0) {
             test++;
