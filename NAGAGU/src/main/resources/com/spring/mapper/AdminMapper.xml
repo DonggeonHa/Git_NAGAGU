@@ -10,6 +10,26 @@
 		<result property="ADMIN_DATE" column="ADMIN_DATE" />
 	</resultMap>
 	
+	<!-- 공방 회원가입 신청용 -->
+	<resultMap type="com.spring.workshop.WorkShopMemberVO" id="workshopMemberResultMap">
+		<result property="WORKSHOP_NUM" column="WORKSHOP_NUM" />
+		<result property="WORKSHOP_EMAIL" column="WORKSHOP_EMAIL" />
+		<result property="WORKSHOP_PASS" column="WORKSHOP_PASS" />
+		<result property="WORKSHOP_NAME" column="WORKSHOP_NAME" />
+		<result property="WORKSHOP_CEO_NAME" column="WORKSHOP_CEO_NAME" />
+		<result property="WORKSHOP_PHONE" column="WORKSHOP_PHONE" />
+		<result property="WORKSHOP_ZIP" column="WORKSHOP_ZIP" />
+		<result property="WORKSHOP_ADDRESS1" column="WORKSHOP_ADDRESS1" />
+		<result property="WORKSHOP_ADDRESS2" column="WORKSHOP_ADDRESS2" />
+		<result property="WORKSHOP_LICENSE" column="WORKSHOP_LICENSE" />
+		<result property="WORKSHOP_DATE" column="WORKSHOP_DATE" />		
+		<result property="WORKSHOP_INTRO" column="WORKSHOP_INTRO" />		
+		<result property="WORKSHOP_OWNER" column="WORKSHOP_OWNER" />		
+		<result property="WORKSHOP_BANK" column="WORKSHOP_BANK" />
+		<result property="WORKSHOP_ACNUM" column="WORKSHOP_ACNUM" />
+		<result property="WORKSHOP_STATUS" column="WORKSHOP_STATUS" />
+		<result property="WORKSHOP_PICTURE" column="WORKSHOP_PICTURE" />
+	</resultMap>
 	
 	<insert id="insert_member" parameterType="com.spring.admin.AdminMemberVO">
 		<selectKey resultType="int" keyProperty="ADMIN_NUM" order="BEFORE">
@@ -22,4 +42,31 @@
 	<select id="user_chk" resultMap="adminResultMap">
 		SELECT * from ADMIN_MEMBER WHERE ADMIN_ID = #{ADMIN_ID} and ADMIN_PASS = #{ADMIN_PASS}
 	</select>
+	
+	<!-- 공방회원가입 신청용  -->
+	<select id="getListCount" resultType="int"> 
+ 		SELECT COUNT(*) FROM NAGAGU_WORKSHOP_MEMBER
+ 	</select>
+ 	
+	<select id="getWMembers" parameterType="int" resultMap="workshopMemberResultMap"> <!-- 이거 처리한 결과물을 list 타입으로 만들어주면 된다. select id은 내용을 호출 함. -->
+		select *
+		from (select rownum rnum, WORKSHOP_NUM, WORKSHOP_EMAIL, WORKSHOP_NAME, WORKSHOP_CEO_NAME, WORKSHOP_PHONE, 
+					 WORKSHOP_LICENSE, WORKSHOP_ADDRESS1, WORKSHOP_ADDRESS2, WORKSHOP_STATUS
+			  from(select * 
+			  	   from NAGAGU_WORKSHOP_MEMBER 
+			  	   order by WORKSHOP_STATUS ASC))
+		<![CDATA[ WHERE rnum >= #{startrow} AND rnum <= #{endrow} ]]>
+ 	</select>
+ 	
+	<select id="getWMember" resultMap="workshopMemberResultMap"> <!-- resultMap은 매칭시킬려고씀 -->
+ 		SELECT * FROM NAGAGU_WORKSHOP_MEMBER WHERE WORKSHOP_NUM = #{WORKSHOP_NUM}
+ 	</select>
+ 	
+ 	<delete id="deleteWMember" parameterType="com.spring.workshop.WorkShopMemberVO">
+ 		DELETE FROM NAGAGU_WORKSHOP_MEMBER WHERE WORKSHOP_NUM = #{WORKSHOP_NUM}
+ 	</delete>
+ 	
+ 	<update id="updateStatus" parameterType="com.spring.workshop.WorkShopMemberVO"> <!-- MemberVO 타입에 있는게 아니라면 해쉬맵으로 써야 한다. -->
+ 		UPDATE NAGAGU_WORKSHOP_MEMBER SET WORKSHOP_STATUS = 2 WHERE WORKSHOP_NUM = #{WORKSHOP_NUM}
+ 	</update>
 </mapper>

@@ -57,7 +57,7 @@
 			        <li><a href="#"><img src="${pageContext.request.contextPath}/resources/images/sns4.png"></a></li>
 		        </ul>
 		        <ul>
-			        <li>상호명 : DIYDIY</li>
+			        <li>상호명 : NAGAGU</li>
 			        <li class="line">/</li>
 			        <li>대표 : 비트캠프</li>
 			        <li class="line">/</li>
