@@ -45,6 +45,9 @@ public class Product_qnaVO {
 	public void setQNA_RE(int qNA_RE) {
 		QNA_RE = qNA_RE;
 	}
+
+	
+	
 	
 	
 }

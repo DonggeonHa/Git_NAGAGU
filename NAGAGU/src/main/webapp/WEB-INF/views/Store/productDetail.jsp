@@ -31,8 +31,8 @@
 	String MEMBER_EMAIL = (String)session.getAttribute("MEMBER_EMAIL");
    
 	//WORKSHOP의 NUM 필요하다(답글 버튼 보임)
-	int WotkshopMatchingNumber = (int)request.getAttribute("WotkshopMatchingNumber");
-	System.out.println("WotkshopMatchingNumber="+WotkshopMatchingNumber);
+	int WorkshopMatchingNumber = (int)request.getAttribute("WorkshopMatchingNumber");
+	System.out.println("WotkshopMatchingNumber="+WorkshopMatchingNumber);
 	int WORKSHOP_NUM = 0;
 	System.out.println("확인4");
 	if(WORKSHOP_CEO_NAME != null) {
@@ -90,9 +90,9 @@
 	*/
 	//qna 관련
 	ArrayList<Product_qnaVO> qnaList = (ArrayList<Product_qnaVO>) request.getAttribute("qnaList");
-	System.out.println("qnaList.size = " + qnaList.size());
-	
-	int qnaCount = ((Integer) request.getAttribute("qnaCount")).intValue(); // (전체/카테고리)글 개수
+	ArrayList<Product_qnaVO> qna_RE_List = (ArrayList<Product_qnaVO>) request.getAttribute("qna_RE_List");	
+	int qnaCount = ((Integer) request.getAttribute("qnaCount")).intValue(); 
+	int qna_RE_Count = ((Integer) request.getAttribute("qna_RE_Count")).intValue(); 
 	int qnanowpage = ((Integer) request.getAttribute("qnapage")).intValue();
 	int qnamaxpage = ((Integer) request.getAttribute("qnamaxpage")).intValue();
 	int qnastartpage = ((Integer) request.getAttribute("qnastartpage")).intValue();
@@ -109,6 +109,11 @@
 	}
 	*/
 	System.out.println("qnaCount = " + qnaCount);
+	//qna 답글 공방 멤버 관련
+	int WorkshopNum = ((Integer) request.getAttribute("WorkshopNum")).intValue();
+	String WorkshopName = (String)request.getParameter("WorkshopName");
+	String WorkshopPicture = (String)request.getParameter("WorkshopPicture");
+	
 	
 	//날짜 포맷 형식
 	SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
@@ -400,8 +405,27 @@
          .qna_re_form {
          	display:none;
          }
+
+         .qna_re_control {
+			text-align:right;         
+         }
+         .qna_re_control a {
+			color : #343A40;
+            font-weight:bold;
+            font-size:0.7rem;         
+         }
          
+         .qna_re_control_hidden {
+			text-align:right;
+			display:none;         
+         }
          
+         .qna_re_control_hidden a{
+			color : #343A40;
+            font-weight:bold;
+            font-size:0.7rem;  
+         }
+                  
          
          /*별점주기*/
          .star-rating { 
@@ -446,234 +470,218 @@
       </style>
 
    </head>
-   <body class="order-body">
-      <!-- content start -->
-      <div class="container class-detail-container">
-         <div class="col-12 text-center" style="padding-bottom: 5%;">
-            <div id="carouselExampleFade" class="carousel slide carousel-fade" data-ride="carousel">
-                <div class="carousel-inner text-center">
-                   <%
-                      for(int i = 0; i < (bannerImgCount)+1; i++) {
-                         if(vo.getPRODUCT_BANNER().equals("#")) {   
-                   %>
-                            <div class="carousel-item">
-                                 <img src="#" class="d-block w-100" style="display: none;">
-                            </div>
-                   <%
-                         } 
-                         else {
-                            if(i == 0) {
-                  %>                
-                              <div class="carousel-item active" style="width: 1300px; height: 530px;">
-                                     <img src="/productupload/image/<%=vo.getPRODUCT_BANNER().split(",")[i]%>" class="d-block w-100" style="max-width: 100%; height: 100%;">
-                                </div>
-                    <%
-                                continue;
-                            }
-                    %>            
-                            <div class="carousel-item" style="width: 1300px; height: 530px;">
-                                  <img src="/productupload/image/<%=vo.getPRODUCT_BANNER().split(",")[i]%>" class="d-block w-100" style="max-width: 100%; height: 100%;">
-                             </div>                            
-                    <%
-                         }
-                      }
-                    %>
-                </div>
-                 <a class="carousel-control-prev" href="#carouselExampleFade" role="button" data-slide="prev">
-                   <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                   <span class="sr-only">Previous</span>
-                 </a>
-                 <a class="carousel-control-next" href="#carouselExampleFade" role="button" data-slide="next">
-                   <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                   <span class="sr-only">Next</span>
-                 </a>
-            </div>
-         </div>
-         <div class="row">
-            <div class="col-8">
-               <div style="line-height: 0.5em;" id="t1">
-                  <dl>
-                     <dt><h3><%=vo.getPRODUCT_TITLE() %></h3><br></dt>
-                     <dl><h5><%=vo.getPRODUCT_BRIEF() %></h5></dl>
-                  </dl>
-               </div>
-               <div class="row sticky">
-                  <div class="col-12">
-                     <ul class="nav nav-tabs nav-fill h-30">
-                        <li class="nav-item">
-                           <a class="nav-link" href="#t1"><h5>상품정보</h5></a>
-                        </li>
-                        <li class="nav-item">
-                           <a class="nav-link" href="#t2"><h5>리뷰</h5></a>
-                        </li>
-                        <li class="nav-item">
-                           <a class="nav-link" href="#t3"><h5>Q&A</h5></a>
-                        </li>
-                        <li class="nav-item">
-                           <a class="nav-link" href="#t4"><h5>배송/환불</h5></a>
-                        </li>
-                     </ul>
-                  </div>
-               </div>
-               
-               <div class="row justify-content-center">
-               <%
-                  if (vo.getPRODUCT_INFO() != null) {
-               %>
-                     <%=vo.getPRODUCT_INFO() %>
-               <br /><br />
-               <%
-                  } else {
-               %>
-                     <!-- vo.getPRODUCT_INFO() = 없는 경우-->
-                     <table width="50%" border="0" cellpadding="0" cellspacing="0" align="center" valign="middle">
-                        <tr align="center" valign="middle">
-                           <td align="right"><font size=2>상세 정보가 없습니다.</font></td>
-                        </tr>
-                     </table>
-               <%
-                  }
-               %>
-            </div>
-            <!-- 상세 사진정보 끝 -->
+	<body class="order-body">
+		<!-- content start -->
+		<div class="container class-detail-container">
+			<div class="col-12 text-center" style="padding-bottom: 5%;">
+				<div id="carouselExampleFade" class="carousel slide carousel-fade" data-ride="carousel">
+					<div class="carousel-inner text-center">
+					<% for(int i = 0; i < (bannerImgCount)+1; i++) {
+						if(vo.getPRODUCT_BANNER().equals("#")) { %>
+						<div class="carousel-item">
+						     <img src="#" class="d-block w-100" style="display: none;">
+						</div>
+					<% } else {
+							if(i == 0) { %>
+								<div class="carousel-item active" style="width: 1300px; height: 530px;">
+									<img src="/productupload/image/<%=vo.getPRODUCT_BANNER().split(",")[i]%>" class="d-block w-100" style="max-width: 100%; height: 100%;">
+								</div>
+					<% 			continue;
+							} 
+					%>            
+						<div class="carousel-item" style="width: 1300px; height: 530px;">
+							<img src="/productupload/image/<%=vo.getPRODUCT_BANNER().split(",")[i]%>" class="d-block w-100" style="max-width: 100%; height: 100%;">
+						</div>                            
+					<%
+					   }
+					} %>
+					</div>
+					<a class="carousel-control-prev" href="#carouselExampleFade" role="button" data-slide="prev">
+						<span class="carousel-control-prev-icon" aria-hidden="true"></span>
+						<span class="sr-only">Previous</span>
+					</a>
+					<a class="carousel-control-next" href="#carouselExampleFade" role="button" data-slide="next">
+						<span class="carousel-control-next-icon" aria-hidden="true"></span>
+						<span class="sr-only">Next</span>
+					</a>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-8">
+					<div style="line-height: 0.5em;" id="t1">
+					<dl>
+						<dt><h3><%=vo.getPRODUCT_TITLE() %></h3><br></dt>
+						<dl><h5><%=vo.getPRODUCT_BRIEF() %></h5></dl>
+					</dl>
+				</div>
+				<div class="row sticky">
+					<div class="col-12">
+						<ul class="nav nav-tabs nav-fill h-30">
+						   <li class="nav-item">
+						      <a class="nav-link" href="#t1"><h5>상품정보</h5></a>
+						   </li>
+						   <li class="nav-item">
+						      <a class="nav-link" href="#t2"><h5>리뷰</h5></a>
+						   </li>
+						   <li class="nav-item">
+						      <a class="nav-link" href="#t3"><h5>Q&A</h5></a>
+						   </li>
+						   <li class="nav-item">
+						      <a class="nav-link" href="#t4"><h5>배송/환불</h5></a>
+						   </li>
+						</ul>
+					</div>
+				</div>
+				<div class="row justify-content-center">
+				<% if (vo.getPRODUCT_INFO() != null) { %>
+					<%=vo.getPRODUCT_INFO() %>
+					<br /><br />
+				<% } else { %>
+					<!-- vo.getPRODUCT_INFO() = 없는 경우-->
+					<table width="50%" border="0" cellpadding="0" cellspacing="0" align="center" valign="middle">
+						<tr align="center" valign="middle">
+							<td align="right"><font size=2>상세 정보가 없습니다.</font></td>
+						</tr>
+					</table>
+				<% } %>
+				</div>
+				<!-- 상세 사진정보 끝 -->
+				
+				<span id="t2"></span>
+				<br /><br /><hr />
             
-            
-            <span id="t2"></span>
-            <br /><br /><hr />
-            
-            <!-- 리뷰 테이블 시작 -->
-            <h3 id="review_scroll" >Review</h3>
-            <br /><br />
-            <div class="reviews_table" >
-               <!-- 리뷰 작성시 Ajax로 이 자리에 insert -->
-               <div class="review_sum justify-content-center" >
-                  <div class="row justify-content-center reviewspace">
-                     
-                  </div>
-               </div>
-               <!-- 댓글 출력 -->
-            <%
-               if (reviewCount > 0) {
-                  for (int i = 0; i < reviewList.size(); i++) {
-                     MemberVO memberVO = reviewMemberList.get(i);
-                     Product_reviewVO reviewVO = reviewList.get(i);                  
-            %>      
-               
-               <div class="review_sum justify-content-center" id="review_<%=reviewVO.getREVIEW_NUM() %>">   
-                  <div class="row justify-content-center">             
-                     <div class="col-1 justify-content-end">
-                        <img src="<%=memberVO.getMEMBER_PICTURE() %>" alt="" class="rounded-circle">
-                     </div>
-                     <div class="col-11">
-                        <div class="row">
-                           <div class="col-10 justify-content-end name"><%=memberVO.getMEMBER_NICK() %></div>
-                           <div class="col-2 justify-content-center smallfont"><%=sdf.format(reviewVO.getREVIEW_DATE())%></div>
-                        </div>
-                        <div class="row">
-                           <!-- 새로 -->
-                           <div class="col-12 " style="font-size:0.7em; font-weight:bold;">
-                              <%
-                              Double rate = 20 * reviewVO.getREVIEW_GRADE();
-                              %>
-                              <%=reviewVO.getREVIEW_GRADE() %> &nbsp;
-                              <span class='star-rating'>
-                              <span style ="width:<%=rate %>%"></span>
-                              </span>
-                           </div>
-                        </div>
-                        <div class="row"> <!-- 사진 -->
-                           <div class="col-12">
-                           <%
-                              for(int k = 0; k < (reviewImgCount[i])+1; k++) {
-                                 if(reviewVO.getREVIEW_FILE().equals("#")) {
-                           %>         
-                                    <img src="#" class="review_img" style="display:none;">   &nbsp;&nbsp; 
-                           <%         
-                                 } else {
-                           %>
-                                    <img src="/productupload/image/<%=reviewVO.getREVIEW_FILE().split(",")[k]%>" class="review_img">   &nbsp;&nbsp; 
-                              
-                           <%      
-                                 }
-                              }
-                           %>
-                           </div>
-                        </div>      
-                        <div class="row ">
-                           <div class="col rep_content">
-                              <%=reviewVO.getREVIEW_CONTENT()%>
-                           </div>
-                        </div>
-                        <div class="pb-1 ">
-                        <!-- 리뷰 답글 버튼(review) -->
-                        <!-- 누구나 볼 수 있음(회원, 비회원, 공방) -->
-                           <div class="review_re pr-4">
-                              	<a id="review_re_insert_form<%=reviewVO.getREVIEW_NUM() %>" class="review_re_insert_form" style="cursor: pointer;">
-	                                 <input type="hidden" name="REVIEW_NUM" value="<%=reviewVO.getREVIEW_NUM() %>">
-										답글
-                              	</a>
-                           </div>
-                        </div>
-                        <!-- 리뷰 수정, 삭제 (review)-->
-                        <!-- 작성한 회원만 볼 수 있음 -->         
-                        <div class="review_control_hidden pb-3 " id="review_control<%=reviewVO.getREVIEW_NUM() %>">
-                           <div class="review_control pr-4">
-                              <% if(MEMBER_NUM == reviewVO.getREVIEW_MEMBER()) { %>
-                              <form name="review_numform">
-                                 <a class="review_modify" style="cursor: pointer;">
-                                    <input type="hidden" name="REVIEW_NUM" value="<%=reviewVO.getREVIEW_NUM() %>">
-                                   	 수정
-                                 </a> &nbsp;
-                                 <a class="review_delete" style="cursor: pointer;">
-                                    <input type="hidden" name="REVIEW_NUM" value="<%=reviewVO.getREVIEW_NUM() %>">
-                                	    삭제
-                                 </a>
-                              </form>
-                             <% } %> 
-                           </div>                     
-                        </div>
-                        <!-- review_re_insert_form 클릭 시 나타나는 답글 달기(review_re) 입력 폼- 숨겨져있다. -->
-                        <div>
-                           <div class="review_re_hidden pt-3" id="review_re_hidden_<%=reviewVO.getREVIEW_NUM() %>">
-                              <div class="row">
-                                 <div class="col-1">
-                                 <%
-                                    if(MEMBER_NICK != null) {
-                                 %>   
-                                       <img src="<%=MEMBER_PICTURE%>" alt="" class="rounded-circle">    
-                                 <%
-                                    }
-                                 %>   
-                                 
-                                 </div>
-                                 <div class="col-11">
-                                    <form name="review_re_form" id="review_re_form<%=reviewVO.getREVIEW_NUM() %>">
-                                       <input type="hidden" name="REVIEW_PRODUCT" value="<%=reviewVO.getREVIEW_PRODUCT() %>">
-                                       <input type="hidden" name="REVIEW_NUM" value="<%=reviewVO.getREVIEW_NUM() %>">
-                                       <input type="hidden" name="REVIEW_RE" value="<%=reviewVO.getREVIEW_NUM() %>">
-                                       <textarea name="REVIEW_CONTENT" placeholder="답글을 작성해주세요!" cols="80%" rows="5"></textarea>
-                                    </form>
-                                 </div>
-                              </div>
-                           </div>
-                        </div>
-                        <!--  답글 달기(review_re) 입력 폼 입력 완료 버튼 (insert process 실행) -->   
-                        <div class="review_re_insert_hidden pb-3 " id="review_re_insert<%=reviewVO.getREVIEW_NUM() %>">
-                           <div class="review_re_insert pr-4" >
-                                 <a class="review_insert_re"style="cursor: pointer;">
-                                    <input type="hidden" name="REVIEW_NUM" value="<%=reviewVO.getREVIEW_NUM() %>">
-                                    답글 작성
-                                 </a>
-                           </div>                     
-                        </div>
-                     </div>
-                  </div>                           
-               </div>
-               <!-- 리뷰 수정폼 추가 (ajax로 추가됨) -->
-               <div class="review_mod_sum justify-content-center" id="review_mod_<%=reviewVO.getREVIEW_NUM() %>">
-   
-               </div>         
-               <!-- 리뷰 수정폼 끝 -->
+				<!-- 리뷰 테이블 시작 -->
+				<h3 id="review_scroll" >Review</h3>
+				<br /><br />
+				<div class="reviews_table" >
+					<!-- 리뷰 작성시 Ajax로 이 자리에 insert -->
+				<div class="review_sum justify-content-center" >
+					<div class="row justify-content-center reviewspace">
+					</div>
+				</div>
+				<!-- 댓글 출력 -->
+				<%
+				if (reviewCount > 0) {
+				   for (int i = 0; i < reviewList.size(); i++) {
+				      MemberVO memberVO = reviewMemberList.get(i);
+				      Product_reviewVO reviewVO = reviewList.get(i);                  
+				%>      
+				
+				<div class="review_sum justify-content-center" id="review_<%=reviewVO.getREVIEW_NUM() %>">   
+					<div class="row justify-content-center">             
+						<div class="col-1 justify-content-end">
+							<img src="<%=memberVO.getMEMBER_PICTURE() %>" alt="" class="rounded-circle">
+						</div>
+						<div class="col-11">
+							<div class="row">
+								<div class="col-10 justify-content-end name"><%=memberVO.getMEMBER_NICK() %></div>
+								<div class="col-2 justify-content-center smallfont"><%=sdf.format(reviewVO.getREVIEW_DATE())%></div>
+							</div>
+							<div class="row">
+								<!-- 새로 -->
+						<div class="col-12 " style="font-size:0.7em; font-weight:bold;">
+						  <%
+						  Double rate = 20 * reviewVO.getREVIEW_GRADE();
+						  %>
+						  <%=reviewVO.getREVIEW_GRADE() %> &nbsp;
+						  <span class='star-rating'>
+						  <span style ="width:<%=rate %>%"></span>
+						   </span>
+						</div>
+							</div>
+						 <div class="row"> <!-- 사진 -->
+						    <div class="col-12">
+						    <%
+						       for(int k = 0; k < (reviewImgCount[i])+1; k++) {
+						          if(reviewVO.getREVIEW_FILE().equals("#")) {
+						    %>         
+						             <img src="#" class="review_img" style="display:none;">   &nbsp;&nbsp; 
+						    <%         
+						          } else {
+						    %>
+						             <img src="/productupload/image/<%=reviewVO.getREVIEW_FILE().split(",")[k]%>" class="review_img">   &nbsp;&nbsp; 
+						       
+						    <%      
+						          }
+						       }
+						    %>
+						    </div>
+						 </div>      
+						 <div class="row ">
+						    <div class="col rep_content">
+						       <%=reviewVO.getREVIEW_CONTENT()%>
+						    </div>
+						 </div>
+						 <div class="pb-1 ">
+						 <!-- 리뷰 답글 버튼(review) -->
+						 <!-- 누구나 볼 수 있음(회원, 비회원, 공방) -->
+						    <div class="review_re pr-4">
+						       	<a id="review_re_insert_form<%=reviewVO.getREVIEW_NUM() %>" class="review_re_insert_form" style="cursor: pointer;">
+						           <input type="hidden" name="REVIEW_NUM" value="<%=reviewVO.getREVIEW_NUM() %>">
+						답글
+						                    	</a>
+						                 </div>
+						              </div>
+						              <!-- 리뷰 수정, 삭제 (review)-->
+						 <!-- 작성한 회원만 볼 수 있음 -->         
+						 <div class="review_control_hidden pb-3 " id="review_control<%=reviewVO.getREVIEW_NUM() %>">
+						    <div class="review_control pr-4">
+						       <% if(MEMBER_NUM == reviewVO.getREVIEW_MEMBER()) { %>
+						       <form name="review_numform">
+						          <a class="review_modify" style="cursor: pointer;">
+						             <input type="hidden" name="REVIEW_NUM" value="<%=reviewVO.getREVIEW_NUM() %>">
+						            	 수정
+						          </a> &nbsp;
+						          <a class="review_delete" style="cursor: pointer;">
+						             <input type="hidden" name="REVIEW_NUM" value="<%=reviewVO.getREVIEW_NUM() %>">
+						         	    삭제
+						          </a>
+						       </form>
+						      <% } %> 
+						    </div>                     
+						 </div>
+						 <!-- review_re_insert_form 클릭 시 나타나는 답글 달기(review_re) 입력 폼- 숨겨져있다. -->
+						 <div>
+						    <div class="review_re_hidden pt-3" id="review_re_hidden_<%=reviewVO.getREVIEW_NUM() %>">
+						       <div class="row">
+						          <div class="col-1">
+						          <%
+						             if(MEMBER_NICK != null) {
+						          %>   
+						                <img src="<%=MEMBER_PICTURE%>" alt="" class="rounded-circle">    
+						          <%
+						             }
+						          %>   
+						          
+						          </div>
+						          <div class="col-11">
+						             <form name="review_re_form" id="review_re_form<%=reviewVO.getREVIEW_NUM() %>">
+						                <input type="hidden" name="REVIEW_PRODUCT" value="<%=reviewVO.getREVIEW_PRODUCT() %>">
+						                <input type="hidden" name="REVIEW_NUM" value="<%=reviewVO.getREVIEW_NUM() %>">
+						                <input type="hidden" name="REVIEW_RE" value="<%=reviewVO.getREVIEW_NUM() %>">
+						                <textarea name="REVIEW_CONTENT" placeholder="답글을 작성해주세요!" cols="80%" rows="5"></textarea>
+						             </form>
+						          </div>
+						       </div>
+						    </div>
+						 </div>
+						 <!--  답글 달기(review_re) 입력 폼 입력 완료 버튼 (insert process 실행) -->   
+						 <div class="review_re_insert_hidden pb-3 " id="review_re_insert<%=reviewVO.getREVIEW_NUM() %>">
+						    <div class="review_re_insert pr-4" >
+						          <a class="review_insert_re"style="cursor: pointer;">
+						             <input type="hidden" name="REVIEW_NUM" value="<%=reviewVO.getREVIEW_NUM() %>">
+						               답글 작성
+						            </a>
+						      </div>                     
+						   </div>
+						</div>
+					</div>                           
+				</div>
+				<!-- 리뷰 수정폼 추가 (ajax로 추가됨) -->
+				<div class="review_mod_sum justify-content-center" id="review_mod_<%=reviewVO.getREVIEW_NUM() %>">
+				
+				</div>         
+				<!-- 리뷰 수정폼 끝 -->
                
                
                <!-- 답글 관련 (review_re)-->
@@ -882,12 +890,15 @@
 					</div>
 				</div>
 				<%
-				System.out.println(qnaList.size());
+				System.out.println("qnaList.size="+qnaList.size());	
 					if(qnaCount > 0) {
 						for(int i = 0; i < qnaList.size(); i++) {
-							Product_qnaVO qnaVO = qnaList.get(i);
+							Product_qnaVO qnaVO = qnaList.get(i);	
 							MemberVO memberVO = qnaMemberList.get(i);
+					
 				%>
+				<!-- qna 댓글 출력(답글 포함) -->
+				<!-- qna원글은 작성자와 해당 공방회원만 볼 수 있다. -->
 				<div class="qna_sum justify-content-center" id="qna_<%=qnaVO.getQNA_NUM() %>">
 					<input type="hidden" name="QNA_MEMBER" value="<%=qnaVO.getQNA_MEMBER() %>">
 					<div class="row">
@@ -906,27 +917,20 @@
 								<div class="col qna_control pr-5">
 									<input type="hidden" name="QNA_NUM" value="<%=qnaVO.getQNA_NUM() %>">
 									<!-- 수정삭제는 작성한 멤버만 볼 수 있다. -->
-									<%
-									System.out.println("=============");
-									System.out.println("MEMBER_NUM="+MEMBER_NUM);
-									System.out.println("qnaVO.getQNA_MEMBER()="+qnaVO.getQNA_MEMBER());
-									System.out.println("=============");
-									%>
 									<% if(MEMBER_NUM == qnaVO.getQNA_MEMBER()) { %>
 										<a class="smallfont qna_modify" id="qna_modify<%=qnaVO.getQNA_NUM()%>" style="cursor: pointer;">수정</a> &nbsp; <!-- 수정폼 -->
 										<a class="smallfont qna_delete" id="qna_delete<%=qnaVO.getQNA_NUM()%>" style="cursor: pointer;">삭제</a> <!-- 수정폼 -->
 									<% } %>
 									<!-- 답글은 workshopnum이 일치하는 공방업자만 볼 수 있다. -->
-									<% if(WORKSHOP_NUM == WotkshopMatchingNumber) { %>
+									<% if(WORKSHOP_NUM == WorkshopMatchingNumber) { %>
 										<a class="smallfont qna_re" id="qna_re<%=qnaVO.getQNA_NUM()%>" style="cursor: pointer;">
-									
 											답글
 									</a>
 									<% } %>
 								</div>
 							</div>
 							<!-- 답글 폼 (공방회원이 쓸 수 있다)-->
-							<div class="qna_re_form">
+							<div class="qna_re_form" id="qna_re_form<%=qnaVO.getQNA_NUM()%>">
 								<div class="row ">
 									<div class="col-1 justify-content-end" >
 										<img src="<%=WORKSHOP_PICTURE%>" alt="" class="rounded-circle">
@@ -942,7 +946,7 @@
 										<div class="row ">
 											<input type="hidden" name="QNA_NUM" value="<%=qnaVO.getQNA_NUM() %>">
 											<textarea rows="2" name="QNA_CONTENT" class="col rep_content ml-3 pl-0 mr-5"  
-												id="qna_content<%=qnaVO.getQNA_NUM() %>"></textarea>
+												id="qna_re_content<%=qnaVO.getQNA_NUM() %>"></textarea>
 										</div>
 										</form> 
 										<div class="row "  style="cursor: pointer;">
@@ -957,9 +961,74 @@
 							</div>
 							<!-- 답글 폼 끝 -->
 							<!-- qna 답글 리스트 -->
+								<!-- 공방이 qna 답글 insert시 추가됨-->
 							<div class="qna_re_space" id="qna_re_space<%=qnaVO.getQNA_NUM()%>">
 							
 							</div>
+	             
+	             <!-- 답글은 해당 공방 주인과 원글 작성자만 볼 수 있다. -->
+	              <% if(MEMBER_NUM == qnaVO.getQNA_MEMBER() || WORKSHOP_NUM == WorkshopNum ) { %>
+	             <%
+	                     if(qna_RE_Count > 0) {
+	                        for(int j=0; j<qna_RE_List.size(); j++)  {
+	                        	
+	                           Product_qnaVO qna_re_VO = qna_RE_List.get(j);
+	                           if(qnaVO.getQNA_NUM() == qna_RE_List.get(j).getQNA_RE()) { 
+	                           
+	            %>   							
+								<!-- 공방의 답글 리스트 -->
+							<div class="qna_re_table" id="qna_re_table<%=qna_re_VO.getQNA_NUM()%>">
+								<div class="row ">
+									<div class="col-1 justify-content-end" >
+										<img src="<%=WORKSHOP_PICTURE%>" alt="" class="rounded-circle">
+									</div>
+									<div class="col-11">
+										<div class="row">
+											<div class="col-10 justify-content-end name pr-0"><%=WORKSHOP_NAME %></div>
+											<div class="col-2 justify-content-center smallfont pl-0 pr-3"><%=sdf.format(qna_re_VO.getQNA_DATE())%></div>
+										</div>
+										<form class="qnareviewform" id="qnareviewform<%=qna_re_VO.getQNA_NUM() %>">
+										<input type="hidden" name="QNA_RE" value="<%=qna_re_VO.getQNA_NUM()%>">
+										<input type="hidden" name="QNA_PRODUCT" value="<%=qna_re_VO.getQNA_PRODUCT()%>">
+										<div class="qna_re_modifycontent" id="qna_re_modifycontent<%=qna_re_VO.getQNA_NUM()%>">
+											<div class="row pl-3  " >
+												<input type="hidden" name="QNA_NUM" value="<%=qna_re_VO.getQNA_NUM() %>">
+												<%=qna_re_VO.getQNA_CONTENT() %>
+											</div>
+										</div>
+										<!-- 추가 -->
+										<div class="row qna_re_modifyform" id="qna_re_modifyform<%=qna_re_VO.getQNA_NUM() %>"style="display:none">
+											<input type="hidden" name="QNA_NUM" value="<%=qna_re_VO.getQNA_NUM() %>">
+											
+											<textarea rows="2" name="QNA_CONTENT" class="col-11 rep_content ml-3 pl-0 mr-5"  
+												id="qna_re_mod_content<%=qna_re_VO.getQNA_NUM() %>"><%=qna_re_VO.getQNA_CONTENT() %></textarea>
+										
+										</div>
+										</form> 
+										<div class="row" style="cursor: pointer;">
+											<div class="col qna_re_control pr-5" id="qna_re_control<%=qna_re_VO.getQNA_NUM() %>">
+												<input type="hidden" name="QNA_NUM" value="<%=qna_re_VO.getQNA_NUM() %>">
+												<a class="smallfont qna_re_modify" id="qna_re_modify<%=qna_re_VO.getQNA_NUM()%>" style="cursor: pointer;">수정</a>&nbsp;
+												<a class="smallfont qna_re_delete" id="qna_re_delete<%=qna_re_VO.getQNA_NUM()%>" style="cursor: pointer;">삭제</a>
+											</div>
+											<div class="col qna_re_control_hidden pr-5" id="qna_re_control_hidden<%=qna_re_VO.getQNA_NUM() %>">
+												<input type="hidden" name="QNA_NUM" value="<%=qna_re_VO.getQNA_NUM() %>">
+												<a class="smallfont qna_re_modify_process" id="qna_re_modify_process<%=qna_re_VO.getQNA_NUM()%>" style="cursor: pointer;">수정하기</a>&nbsp;
+												<a class="smallfont qna_re_modify_reset" id="qna_re_modify_reset<%=qna_re_VO.getQNA_NUM()%>" style="cursor: pointer;">취소</a>
+											</div>
+										</div>
+									</div>                        	
+								</div>							
+							</div>	
+
+				<%
+                           }
+                        }
+                     }
+	              }	//워크샵넘버 일치할 때 볼 수 있다
+                     
+				%>
+								<!-- 공방의 답글 리스트 끝-->
 							<!-- qna 답글 리스트 끝-->
 							
 						</div>
@@ -981,7 +1050,7 @@
 			             <div class="row ">
 			             		<input type="hidden" name="QNA_NUM" value="<%=qnaVO.getQNA_NUM() %>">
 			               <textarea rows="2" name="QNA_CONTENT" class="col rep_content ml-3 pl-0 mr-5"  
-			              	id="qna_content<%=qnaVO.getQNA_NUM() %>"><%=qnaVO.getQNA_CONTENT()%></textarea>
+			              	id="qna_mod_content<%=qnaVO.getQNA_NUM() %>"><%=qnaVO.getQNA_CONTENT()%></textarea>
 			             </div>                        
 			            </form>
 			            <div class="row "  style="cursor: pointer;">
@@ -1379,7 +1448,7 @@
       /*qna 수정시 빈 칸 체크*/
       function qna_mod_check(QNA_NUM) {
     	  
-          var modifyform_textarea = 'qna_content' +QNA_NUM;
+          var modifyform_textarea = 'qna_mod_content' +QNA_NUM;
           var txt = document.getElementById(modifyform_textarea).value;
 
           if(txt=="") {
@@ -1394,12 +1463,12 @@
        function qna_re_check(QNA_NUM) {
     	  alert('qna_re_check');
     	  alert(QNA_NUM);
-    	  var insertForm = 'qna_content' + QNA_NUM;
+    	  var insertForm = 'qna_re_content' + QNA_NUM;
           var txt = document.getElementById(insertForm).value;
           alert(txt);
           if(txt=="") {
              alert('내용을 입력해주세요!');
-             document.getElementById(qna_content).focus();
+             document.getElementById(insertForm).focus();
              return false;
           } 
           return true;    	  
@@ -2215,15 +2284,21 @@
          $(document).on("click",".qna_add_btn",function(event){
             if($(this).html() == '문의하기') { //댓글달기이면 hidden구역 보이고 버튼은 닫기로 바뀜
                 var MEMBER_NUM = <%=MEMBER_NUM%>;
+                var WORKSHOP_CEO_NAME = '<%=WORKSHOP_CEO_NAME%>';
                 alert('MEMBER_NUM='+MEMBER_NUM);
                 if(MEMBER_NUM==0){
-                   alert('로그인 해주세요!');
+                	if (WORKSHOP_CEO_NAME != null) {
+                		alert('회원만 문의할 수 있습니다.');
+                	} else {
+                        alert('로그인 해주세요!');
+                		
+                	}
                    return
                 }           
                $(".qna_add_section").css('display','block');
                $(this).html('닫기');   
             } else { //버튼이 닫기이면 hidden 구역이 닫히고 버튼은 댓글 달기로 바뀜
-               $(this).html('댓글 달기');
+               $(this).html('문의하기');
                $(".qna_add_section").css('display','none');
             } 
             event.preventDefault();
@@ -2394,89 +2469,187 @@
       	   var QNA_NUM = $(this).prev().val();
       	   alert(QNA_NUM);
       	   
-      	   $('.qna_re_form').css('display', 'block');
+      	   $('#qna_re_form'+QNA_NUM).css('display', 'block');
       	 
       	   
          });		
          
  		
-		//-------------------------------------------qna_re1-2.-qna 댓글 달기 process(qna_re)(workshop)
-		$(document).on("click",".qna_re_insert_process",function(event){
+  		//-------------------------------------------qna_re1-2.-qna 댓글 달기 process(qna_re)(workshop)
+  		$(document).on("click",".qna_re_insert_process",function(event){
+  			
+  			var QNA_NUM = $(this).prev().val();
+  			alert(QNA_NUM);
+  			if(qna_re_check(QNA_NUM)) {
+  				var params = $('#qnareviewform'+QNA_NUM).serialize();
+  				alert(params);
+  		    	
+  		        $.ajax({
+  		           url : "/NAGAGU/qna_insert.do", 
+  		           data : params,
+  		           dataType: 'json',
+  		           contentType : 'application/x-www-form-urlencoded; charset=UTF-8',
+  		           type : 'POST',
+  		           success:function(data) {
+  		           
+  		              var re_form = '';
+  		              var qna_DATE = new Date(data.qna_DATE);
+  		              var date = date_format(qna_DATE);
+  		              
+  		              alert('ajax 후 data.qna_CONTENT' + data.qna_CONTENT);
+  		              
+  						re_form += '<div class="row "><div class="col-1 justify-content-end" >';
+  						re_form += '<img src="<%=WORKSHOP_PICTURE%>" alt="" class="rounded-circle"></div>';
+  						re_form += '<div class="col-11"><div class="row">';
+  						re_form += '<div class="col-10 justify-content-end name pr-0"><%=WORKSHOP_NAME %></div>';
+  						re_form += '<div class="col-2 justify-content-center smallfont pl-0 pr-3">'+date+'</div></div>';
+  						re_form += '<form class="qnareviewform" id="qnareviewform'+data.qna_RE+'">';
+  						re_form += '<input type="hidden" name="QNA_RE" value="'+data.qna_RE+'">';
+  						re_form += '<input type="hidden" name="QNA_PRODUCT" value="'+data.qna_RE+'">';
+  						re_form += '<div class="qna_re_modifycontent" id="qna_re_modifycontent'+data.qna_RE+'">';
+  						re_form += '<div class="row pl-3"><input type="hidden" name="QNA_NUM" value="'+data.qna_RE+'">';
+  						re_form += data.qna_CONTENT;
+  						re_form += '</div></div>';
+  						re_form += '<div class="row qna_re_modifyform" id="qna_re_modifyform'+data.qna_RE+'"style="display:none">';
+  						re_form += '<input type="hidden" name="QNA_NUM" value="'+data.qna_RE+'">';
+  						re_form += '<textarea rows="2" name="QNA_CONTENT" class="col-11 rep_content ml-3 pl-0 mr-5" ';
+  						re_form += 'id="qna_re_mod_content'+data.qna_RE+'">'+data.qna_CONTENT+'</textarea>';
+  						
+  						re_form += '</div></form>';
+  						re_form += '<div class="row "  style="cursor: pointer;">';
+  						re_form += '<div class="col qna_re_control pr-5" id="qna_re_control'+data.qna_RE+'">';
+  						re_form += '<input type="hidden" name="QNA_NUM" value="'+data.qna_RE+'">';
+  						re_form += '<a class="smallfont qna_re_modify" id="qna_re_modify'+data.qna_RE+'" style="cursor: pointer;">수정</a>&nbsp;';
+  						re_form += '<a class="smallfont qna_re_delete" id="qna_re_delete'+data.qna_RE+'" style="cursor: pointer;">삭제</a>';
+  						re_form += '</div></div></div></div>';
+  									
+  		              
+  		            //data.qna_RE는 원글의 num과 같다(QNA_NUM)
+  		              $('#qna_re_space'+data.qna_RE).append(re_form);
+  		            $('#qna_re_form'+QNA_NUM).css('display', 'none');
+  						
+  		           },
+  		              error:function() {
+  		                 alert("ajax통신 실패!!!");
+  		              }
+  		        });
+  		     }      
+  		     event.preventDefault();
+  		});
+          
+        //-------------------------------------------qna_re1-3.-qna 댓글 달기 취소(qna_re)(workshop)
+        $(document).on("click",".qna_re_insert_reset",function(event){
+     	   alert('click');
+     	   
+     	   var QNA_NUM = $(this).prev().prev().val();
+     	   alert(QNA_NUM);
+     	   
+     	   $('#qna_re_form'+QNA_NUM).css('display', 'none');
+     	 
+     	   
+        });       
+      
+        
+        //-------------------------------------------qna_re2-1.-qna 댓글 수정(qna_re)(workshop)
+        $(document).on("click",".qna_re_modify",function(event){
+     	   alert('click');
+     	  
+     	   var QNA_RE_NUM = $(this).prev().val();
+     	   alert(QNA_RE_NUM);
+     	   
+     	   $('#qna_re_modifycontent'+QNA_RE_NUM).css('display', 'none ');	//원래 댓글
+     	   $('#qna_re_modifyform'+QNA_RE_NUM).css('display', 'block');		//수정폼 보임
+     	   $('#qna_re_control'+QNA_RE_NUM).css('display', 'none');		//수정,삭제버튼 지움
+     	   $('#qna_re_control_hidden'+QNA_RE_NUM).css('display', 'block');		//수정하기, 취소 버튼 보임
+     	  
+     	 
+     	     
+     	   
 			
-			var QNA_NUM = $(this).prev().val();
-			alert(QNA_NUM);
-			if(qna_re_check(QNA_NUM)) {
-				var params = $('#qnareviewform'+QNA_NUM).serialize();
-				alert(params);
-		    	
-		        $.ajax({
-		           url : "/NAGAGU/qna_insert.do", 
-		           data : params,
-		           dataType: 'json',
-		           contentType : 'application/x-www-form-urlencoded; charset=UTF-8',
-		           type : 'POST',
-		           success:function(data) {
-		           
-		              var re_form = '';
-		              var qna_DATE = new Date(data.qna_DATE);
-		              var date = date_format(qna_DATE);
-		              
-		              alert('ajax 후 data.qna_CONTENT' + data.qna_CONTENT);
-		              
-						re_form += '<div class="row "><div class="col-1 justify-content-end" >';
-						re_form += '<img src="'+<%=WORKSHOP_PICTURE%>+'" alt="" class="rounded-circle"></div>';
-						re_form += '<div class="col-11"><div class="row">';
-						re_form += '<div class="col-10 justify-content-end name pr-0">'+<%=WORKSHOP_NAME %>+'</div>';
-						re_form += '<div class="col-2 justify-content-center smallfont pl-0 pr-3">'+date+'</div></div>';
-						re_form += '<form class="qnareviewform" id="qnareviewform'+data.qna_RE+'">';
-						re_form += '<input type="hidden" name="QNA_RE" value="'+data.qna_RE+'">';
-						re_form += '<input type="hidden" name="QNA_PRODUCT" value="'+data.qna_RE+'">';
-						re_form += '<div class="row "><input type="hidden" name="QNA_NUM" value="'+data.qna_RE+'">';
-						re_form += '<textarea rows="2" name="QNA_CONTENT" class="col rep_content ml-3 pl-0 mr-5" ';
-						re_form += 'id="qna_content'+data.qna_RE+'"></textarea></div></form>';
-						re_form += '<div class="row "  style="cursor: pointer;">';
-						re_form += '<div class="col qna_control_hidden pr-5">';
-						re_form += '<input type="hidden" name="QNA_NUM" value="'+data.qna_RE+'">';
-						re_form += '<a class="smallfont qna_re_insert_process" id="qna_re_insert_process'+data.qna_RE+'" style="cursor: pointer;">작성하기</a>&nbsp;';
-						re_form += '<a class="smallfont qna_re_insert_process" id="qna_re_insert_process'+data.qna_RE+'" style="cursor: pointer;">작성하기</a>&nbsp;';
-						re_form += '<a class="smallfont qna_re_insert_reset" id="qna_re_insert_reset'+data.qna_RE+'" style="cursor: pointer;">취소</a>';
-						re_form += '</div></div></div></div>';
-									
-		              
-		            //data.qna_RE는 원글의 num과 같다(QNA_NUM)
-		              $('#qna_re_space'+data.qna_RE).append(re_form);
-		              
-		         /*      
-		              $('#qna_modify_block'+QNA_NUM).html(data.qna_CONTENT);   //content값 수정된 내용으로 변경
-		              $('#qna_mod_section'+QNA_NUM).css('display','none');      //수정폼 숨김
-		              $('#qna_'+QNA_NUM).css('display','block');      //원래 수정 댓글 보여짐
-		              $('#qna_control'+QNA_NUM).css('display','block');      //수정, 삭제버튼 보여짐
-		              $('#qna_control_hidden'+QNA_NUM).css('display','block');	//수정하기 버튼 보여짐
-		 */
-		           },
-		              error:function() {
-		                 alert("ajax통신 실패!!!");
-		              }
-		        });
-		     }      
-		     event.preventDefault();
-		});
-         
-       //-------------------------------------------qna_re1-3.-qna 댓글 달기 취소(qna_re)(workshop)
-         $(document).on("click",".qna_re_insert_reset",function(event){
-      	   alert('click');
-      	   
-      	   var QNA_NUM = $(this).prev().prev().val();
-      	   alert(QNA_NUM);
-      	   
-      	   $('.qna_re_form').css('display', 'none');
-      	 
-      	   
-         });       
-       
-       
-       //-------------------------------------------qna_re2-1.-qna 댓글 수정(qna_re)(workshop)
- 		
+			
+        });      
+        
+      //-------------------------------------------qna_re2-2.-qna 댓글 수정process(qna_re)(workshop) 
+        $(document).on("click",".qna_re_modify_process",function(event){
+     	   alert('click');
+     	  
+     	   var QNA_RE_NUM = $(this).prev().val();
+     	   alert(QNA_RE_NUM);
+     	   
+     	  var QNA_CONTENT = $('#qna_re_mod_content'+QNA_RE_NUM).val();
+			alert(QNA_CONTENT)  ;   	
+     	 
+			
+            $.ajax({
+                url : "/NAGAGU/qna_modify.do", 
+                data : {"QNA_NUM": QNA_RE_NUM, "QNA_CONTENT": QNA_CONTENT},
+                dataType: 'json',
+                contentType : 'application/x-www-form-urlencoded; charset=UTF-8',
+                type : 'POST',
+                success:function(data) {
+                
+                   var output = '';
+                   var qna_DATE = new Date(data.qna_DATE);
+                   var date = date_format(qna_DATE);
+                   
+                   alert('ajax 후 qna.review_CONTENT' + data.qna_CONTENT);
+                   
+                   
+                   $('#qna_re_modifycontent'+data.qna_NUM).css('display', 'block ');	//원래 댓글 보여줌
+             	   $('#qna_re_modifyform'+data.qna_NUM).css('display', 'none');	//수정폼 숨김
+             	   $('#qna_re_control'+QNA_RE_NUM).css('display', 'block');		//수정,삭제버튼 보임
+            	   $('#qna_re_control_hidden'+QNA_RE_NUM).css('display', 'none');		//수정하기, 취소 버튼 숨김                
+                   
+                   
+                   $('#qna_re_modifycontent'+data.qna_NUM).html(data.qna_CONTENT);   //content값 수정된 내용으로 변경
+
+                },
+                   error:function() {
+                      alert("ajax통신 실패!!!");
+                   }
+             });
+			
+        });              
+        
+      //-------------------------------------------qna_re3.-qna 댓글 삭제(qna_re)(workshop)
+			$(document).on("click",".qna_re_delete",function(event){
+				alert('click');
+				
+				var delete_confirm = confirm("삭제하시겠습니까?");
+				if(delete_confirm) {
+					var QNA_RE_NUM = $(this).prev().prev().val();
+					alert(QNA_RE_NUM);   
+ 
+				   $.ajax({
+				      url: '/NAGAGU/delete_qna.do' ,
+				      type:'GET',
+				      data : {'QNA_NUM':QNA_RE_NUM},
+				      dataType : 'json', // 서버에서 보내줄 데이터 타입
+				      contentType : 'application/x-www-form-urlencoded; charset=UTF-8',
+				      success:function(retVal) {
+				         if(retVal.res == "OK") {
+				            alert('댓글이 삭제되었습니다.');
+				            $('#qna_re_table'+QNA_RE_NUM).css('display','none');	//원래 qns댓글 영역 숨겨짐(리스트 띄울 땐 사라짐)
+				            document.getElementById('qna_scroll').scrollIntoView();                         
+				         }
+				         else {
+				            alert("삭제 ajax 실패!");
+				         }
+				      },
+				      error:function(request, error) {
+				         alert("message:"+request.responseText);
+				      }
+				   });            
+				}
+				event.preventDefault();     	   
+     	   
+     	   
+     	   
+     	   
+     	   
+     	   
+     	   
+        });         
    </script>
    
    </body>
