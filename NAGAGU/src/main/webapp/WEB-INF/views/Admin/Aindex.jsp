@@ -142,9 +142,9 @@
 			/* 사이드 바 스크립트 */
 			$(function(){
 	            $("nav").children("ul").mouseenter(function(){ // 마우스 들어갈때
-	                $(".main").find("li").slideDown(300,function(){ // li가 나타남
+	                $(".main").find("li").slideDown(200,function(){ // li가 나타남
 	                    $(this).mouseover(function(){
-	                        $(this).css("font-weight","900");
+	                        $(this).css("font-weight","800");
 	                    });
 	                    $(this).mouseleave(function(){
 	                        $(this).css("font-weight","500");

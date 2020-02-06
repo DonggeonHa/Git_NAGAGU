@@ -1,10 +1,13 @@
 package com.spring.admin;
 
+import java.util.ArrayList;
+
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.spring.mapper.AdminMapper;
+import com.spring.workshop.WorkShopMemberVO;
 
 @Service
 public class AdminServiceImpl implements AdminService {
@@ -58,5 +61,53 @@ public class AdminServiceImpl implements AdminService {
 		}
 		
 		return result;	//결과값이 1,0,-1
+	}
+
+	/* 공방회원승인 */
+	@Override
+	public ArrayList<WorkShopMemberVO> getWMembers(int startrow, int endrow) {
+		ArrayList<WorkShopMemberVO> wmemberList = new ArrayList<WorkShopMemberVO>();
+		AdminMapper adminMapper = sqlSession.getMapper(AdminMapper.class);
+		
+		wmemberList = adminMapper.getWMembers(startrow, endrow);
+		
+		return wmemberList;
+	}
+
+	@Override
+	public WorkShopMemberVO getWMember(WorkShopMemberVO vo) {
+		WorkShopMemberVO member = new WorkShopMemberVO();
+		AdminMapper adminMapper = sqlSession.getMapper(AdminMapper.class);
+		
+		member = adminMapper.getWMember(vo);
+		System.out.println("getWMember 넘어감");
+		
+		return member;
+	}
+
+	@Override
+	public void deleteWMember(WorkShopMemberVO vo) {
+		AdminMapper adminMapper = sqlSession.getMapper(AdminMapper.class);
+		adminMapper.deleteWMember(vo);
+	}
+
+	@Override
+	public void updateStatus(WorkShopMemberVO vo) {
+		AdminMapper adminMapper = sqlSession.getMapper(AdminMapper.class);
+		adminMapper.updateStatus(vo);
+	}
+
+	@Override
+	public int getListCount() {
+		int x = 0;
+		int result = 0;
+		
+		AdminMapper adminMapper = sqlSession.getMapper(AdminMapper.class);
+		result = adminMapper.getListCount();
+		
+		if (result != 0)
+			x = result;
+		
+		return x;
 	}
 }

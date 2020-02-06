@@ -33,8 +33,8 @@
 		<put-attribute name="content" value="/WEB-INF/views/Mypage/Note/{1}/{2}/{3}.jsp" /> 
 	</definition>
 	
-	<definition name="Admin/Notiles/*" extends="baseEmpty"> 
-		<put-attribute name="content" value="/WEB-INF/views/Admin/Notiles/{1}.jsp" /> 
+	<definition name="Admin/*" extends="baseEmpty"> 
+		<put-attribute name="content" value="/WEB-INF/views/Admin/{1}.jsp" /> 
 	</definition>
 
 
