@@ -13,7 +13,7 @@
 	
 	if (session.getAttribute("MEMBER_EMAIL") != null) {
 		member_mail = (String)session.getAttribute("MEMBER_EMAIL");
-		System.out.println(member_mail);
+		System.out.println("estimateDetail 로그인 회원 : " + member_mail);
 		login_state = 1;
 	}
 	else {
@@ -35,6 +35,10 @@
 	if ((String)session.getAttribute("WORKSHOP_NAME")!="") {
 		workshop_name = (String)session.getAttribute("WORKSHOP_NAME");
 	}
+	
+	String images = vo.getESTIMATE_FILE();
+	System.out.println(images);
+	String[] imgArr = images.split(",");
 %>
 
     
@@ -44,9 +48,10 @@
 	<title>견적문의 상세</title>
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-	
+	<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/css/Store/slick/slick.css"/>
+	<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/css/Store/slick/slick-theme.css"/>
 	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
-
+	
 	
 	<style type="text/css">
 		@font-face {
@@ -146,18 +151,30 @@
 		  margin-bottom:30px;
 		}
 		
-		.pagination a {
+		.pagination .pageNum {
 		  color: black;
 		  float: left;
-		  padding: 8px 16px;
+   		text-align: center;
+   		line-height:44px;	
+		  width:44px;
+		  height:44px;
+		}
+		
+		.pagination .pagelink {
+			color:#6d6d6d;
 		  text-decoration: none;
 		}
 		
-		.pagination a:hover {
+		.pagination .pagelink:hover {
 		  background-color: #ef902e;
 		  color:black;
+		  cursor:pointer;
+		}	
 		
-		}			
+		.pagination .currentpage {
+			font-weight:700;
+			font-size:18px;
+		}		
 
 		.page-tap a {
 		   text-decoration: none;
@@ -185,7 +202,6 @@
 		}
 
 	</style>
-
 	</head>
 	
 	
@@ -197,13 +213,20 @@
 			<br />
 			<div class="row justify-content-between title">
 				<div class="col-10 page-tap">
-					<h6><a href="./">STORE 견적 문의</a> > 상세보기 </h6>
+					<h6><a href="estmate.es">STORE 견적 문의</a> > 상세보기 </h6>
 				</div>
 			</div>			
 			<div class="row justify-content-center pb-3">
-				<img
-					src="${pageContext.request.contextPath}/resources/images/Store/es_request.jpg"
-					alt="" class="img-responsive img-rounded" width="400" height="300">
+				<div class="slider-for"></div>
+				<div class="slider-nav">
+				<%
+					for (int i=0; i<imgArr.length; i++) {
+				%>
+					<div><img src=<%=imgArr[i] %>></div>
+				<% 
+					} 
+				%>
+				</div>
 			</div>
 			<br/><br/>
 				<div class="row text-center pt-1 pb-1 ">
@@ -278,7 +301,7 @@
 	
 		<!-- 댓글 페이지네이션 -->
 		<div class="row justify-content-center">
-			<div id="pagination" class="pagination">
+			<div id="pagination" class="pagination justify-content-center">
 			</div>
 		</div>
 
@@ -293,8 +316,7 @@
 	var login_state = <%=login_state%>
 	
 		$(document).ready(function (){
-			console.log(login_state);
-			console.log('<%=workshop_name%>');
+			
 			function getOfferList () {
 				if ('<%=member_mail%>' != '<%=mailChk%>') {
 					var output='';
@@ -310,6 +332,7 @@
 					type:'POST', 
 					data: OFFER_DATA,
 					dataType:"json", //서버에서 보내줄 데이터 타입
+					async:false,
 					contentType:'application/x-www-form-urlencoded; charset=utf-8',
 					success:function(data) {
 						var output = '';
@@ -319,10 +342,6 @@
 						var max_page = data.offer_maxpage;
 						var ol = data.offerList;
 						var rnum = data.offer_rnum;
-						console.log(ol);
-						console.log('총 제안 수 : ' + data.offerCount);
-						console.log('현재 페이지 : ' + offer_page);
-						console.log('마지막 페이지 : ' + max_page);
 						
 						if (data.offerCount == 0) {
 							output += '<tr><td colspan="5" class="list_caution">등록된 제안이 없습니다</td><tr>';
@@ -331,10 +350,12 @@
 						else {
 							/* 댓글 리스트 작성*/
 							$.each(ol, function(index, item) {
+								var offerPrice = addComma(item.offer_PRICE);
+								
 								output += '<tr value="' + index + '" class="item_head">';
 								output += '<td>' + rnum + '</td>';
 								output += '<td><b>' + item.offer_WORKSHOP + '</b></td>';
-								output += '<td>' + item.offer_PRICE + '</td>';
+								output += '<td>' + offerPrice + '</td>';
 								output += '<td><button value="' + item.offer_WORKSHOP + '" class="btn_note btn btn-outline-dark btn-sm">쪽지보내기</button></td>';
 								output += '<td><button value="' + item.offer_NUM + '" class="btn_bid btn btn-outline-dark btn-xs">낙찰하기</button></td>';
 								output += '</tr>';
@@ -342,52 +363,52 @@
 								output += '<td colspan="5">';
 								output += '<div class="item_content_body">' + item.offer_CONTENT+ '</div>';
 								output += '</td></tr>';
+								rnum--;
 							});
 							
 							/* 댓글 페이지네이션 */
 							
-							if (offer_page == max_page) {
-								pagination += '<div id="pagelink" value="' + Number(offer_page)-5 + '">&laqua;</div>';
-								pagination += '<div id="pagelink" value="' + Number(offer_page)-4 + '"><a href="#">' + Number(offer_page)-4 + '</a></div>';
-								pagination += '<div id="pagelink" value="' + Number(offer_page)-3 + '"><a href="#">' + Number(offer_page)-3 + '</a></div>';
+							if (offer_page == max_page && offer_page > 5) {
+								pagination += '<div class="pageNum pageNum pagelink" value="' + Number(offer_page-5) + '">&laqua;</div>';
+								pagination += '<div class="pageNum pageNum pagelink" value="' + Number(offer_page-4) + '">' + Number(offer_page-4) + '</a></div>';
+								pagination += '<div class="pageNum pageNum pagelink" value="' + Number(offer_page-3) + '">' + Number(offer_page-3) + '</a></div>';
 							}
-							else if (offer_page == max_page-1) {
-								pagination += '<div id="pagelink" value="' + Number(offer_page)-4 + '">&laqua;</div>';
-								pagination += '<div id="pagelink" value="' + Number(offer_page)-3 + '"><a href="#">' + Number(offer_page)-3 + '</a></div>';
+							else if (offer_page == max_page-1 && offer_page > 4) {
+								pagination += '<div class="pageNum pageNum pagelink" value="' + Number(offer_page-4) + '">&laqua;</div>';
+								pagination += '<div class="pageNum pageNum pagelink" value="' + Number(offer_page-3) + '">' + Number(offer_page-3) + '</a></div>';
 							}
 							else {
 								if (offer_page > 3) {
-									pagination += '<div id="pagelink" value="' + Number(offer_page)-3 + '">&laqua;</div>';
+									pagination += '<div class="pageNum pagelink" value="' + Number(offer_page-3) + '">&laqua;</div>';
 								}
 							} 
 							
 							if (offer_page > 2) {
-								pagination += '<div id="pagelink" value="' + Number(offer_page)-2 + '"><a href="#">' + Number(offer_page)-2 + '</a></div>';
+								pagination += '<div class="pageNum pagelink" value="' + Number(offer_page-2) + '">' + Number(offer_page-2) + '</a></div>';
 							}
 							if (offer_page > 1) {
-								pagination += '<div id="pagelink" value="' + Number(offer_page)-1 + '"><a href="#">' + Number(offer_page)-1 + '</a></div>';
+								pagination += '<div class="pageNum pagelink" value="' + Number(offer_page-1) + '">' + Number(offer_page-1) + '</a></div>';
 							}
-								pagination += '<div class="currentpage">' + offer_page + '</div>';
+								pagination += '<div class="pageNum currentpage">' + offer_page + '</div>';
 							if (max_page > offer_page) {
-								pagination += '<div id="pagelink" value="' + Number(offer_page)+Number(1) + '"><a href="#">' + Number(offer_page)+Number(1) + '</a></div>';
+								pagination += '<div class="pageNum pagelink" value="' + Number(offer_page+1) + '">' + Number(offer_page+1) + '</a></div>';
 							}
-							console.log(Number(offer_page)+Number(1));
 							if (max_page > offer_page+1) {
-								pagination += '<div id="pagelink" value="' + Number(offer_page)+2 + '"><a href="#">' + Number(offer_page)+2 + '</a></div>';
+								pagination += '<div class="pageNum pagelink" value="' + Number(offer_page+2) + '">' + Number(offer_page+2) + '</a></div>';
 							}
 							
-							if (offer_page == 1) {
-								pagination += '<div id="pagelink" value="' + Number(offer_page)+3 + '"><a href="#">' + Number(offer_page)+3 + '</a></div>';
-								pagination += '<div id="pagelink" value="' + Number(offer_page)+4 + '"><a href="#">' + Number(offer_page)+4 + '</a></div>';
-								pagination += '<div id="pagelink" value="' + Number(offer_page)+5 + '">&raqua;</div>';
+							if (offer_page == 1 && max_page > 5) {
+								pagination += '<div class="pageNum pagelink" value="' + Number(offer_page+3) + '">' + Number(offer_page+3) + '</a></div>';
+								pagination += '<div class="pageNum pagelink" value="' + Number(offer_page+4) + '">' + Number(offer_page+4) + '</a></div>';
+								pagination += '<div class="pageNum pagelink" value="' + Number(offer_page+5) + '">&raqua;</div>';
 							}
-							else if (offer_page == 2) {
-								pagination += '<div id="pagelink" value="' + Number(offer_page)+3 + '"><a href="#">' + Number(offer_page)+3 + '</a></div>';
-								pagination += '<div id="pagelink" value="' + Number(offer_page)+4 + '">&raqua;</div>';
+							else if (offer_page == 2 && max_page > 6) {
+								pagination += '<div class="pageNum pagelink" value="' + Number(offer_page+3) + '">' + Number(offer_page+3) + '</a></div>';
+								pagination += '<div class="pageNum pagelink" value="' + Number(offer_page+4) + '">&raqua;</div>';
 							}
 							else {
 								if (max_page > offer_page+2) {
-									pagination += '<div id="pagelink" value="' + Number(offer_page)+3 + '">&raqua;</div>';
+									pagination += '<div class="pageNum pagelink" value="' + Number(offer_page+3) + '">&raqua;</div>';
 								}
 							}
 						}
@@ -400,35 +421,44 @@
 					}
 				});
 			}
-			getOfferList();
-		});
-		
-		$(document).delegate('.item_head', 'click', function() {
-			var item_num = $(this).attr("value");
+			
+			/* 제안글 내용 보이기, 숨기기 */
+			$(document).delegate('.item_head', 'click', function() {
+				var item_num = $(this).attr("value");
 
-			if ($('#item_content_' + item_num).css('display') != 'none') {
-				$('#item_content_' + item_num).hide(200);
-			} else {
-				$('.item_content').hide();
-				$('#item_content_' + item_num).show(200);
-			}
-		});
-		$(document).delegate('.btn_note', 'click', function() {
-			var send_workshop = $(this).attr("value");
-			console.log(send_workshop);
-			window.open('/NAGAGU/noteForm.nt?workshop_name=' + send_workshop, "쪽지 보내기", "width=600 height=800");
-		});
-		
-		$('#pagelink').click(function() {
-			$('#OFFER_PAGE') = $(this).attr("value");
+				if ($('#item_content_' + item_num).css('display') != 'none') {
+					$('#item_content_' + item_num).hide(200);
+				} else {
+					$('.item_content').hide();
+					$('#item_content_' + item_num).show(200);
+				}
+			});
+			
+			/* 쪽지 보내기 */
+			$(document).delegate('.btn_note', 'click', function() {
+				var send_workshop = $(this).attr("value");
+				console.log(send_workshop);
+				window.open('/NAGAGU/noteForm.nt?workshop_name=' + send_workshop, "쪽지 보내기", "width=600 height=800");
+				return false;
+			});
+			
+			/* 페이지 이동 */
+			$(document).delegate('.pagelink', 'click', function(){
+				$('#OFFER_PAGE').val($(this).attr("value"));
+				console.log($('#OFFER_PAGE').val());
+				getOfferList();
+			});
+			
 			getOfferList();
 		});
+		
+		function addComma(inputNumber) {
+			   return inputNumber.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+		}
 	</script>
-		
-<script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
-<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+		<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+		<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+		<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
 
-	
 	</body>
 </html>

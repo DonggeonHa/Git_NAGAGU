@@ -38,14 +38,24 @@
 	</insert>
 	
 	<select id="estimateList" parameterType="java.util.HashMap" resultMap="estimateMap">
-		<![CDATA[select * from (select ROWNUM RNUM, ESTIMATE_NUM, ESTIMATE_MEMBER, ESTIMATE_NICK, ESTIMATE_TITLE, 
+		select * from (select ROWNUM RNUM, ESTIMATE_NUM, ESTIMATE_MEMBER, ESTIMATE_NICK, ESTIMATE_TITLE, 
 		ESTIMATE_DATE, ESTIMATE_CATEGORY, ESTIMATE_PAY, ESTIMATE_STATE from ESTIMATE)
-		where ROWNUM]]> >= #{startRow} <![CDATA[and ROWNUM <= ]]>#{endRow}
+		<![CDATA[where RNUM >= #{startRow} and RNUM <= #{endRow}]]>
+		<if test="ES_CATEGORY == 'title'"> and ESTIMATE_TITLE like '%'||#{ES_SEARCH}||'%'</if>
+		<if test="ES_CATEGORY == 'content'"> and ESTIMATE_CONTENT like '%'||#{ES_SEARCH}||'%'</if>
+		<if test="ES_CATEGORY == 'nick'"> and ESTIMATE_NICK like '%'||#{ES_SEARCH}||'%'</if>
+		<if test="ES_CATEGORY == 'TandC'"> and (ESTIMATE_TITLE like '%'||#{ES_SEARCH}||'%'
+		or ESTIMATE_CONTENT like '%'||#{ES_SEARCH}||'%')</if>
 		order by ESTIMATE_DATE desc
 	</select>
 	
-	<select id="estimateCount" resultType="int">
+	<select id="estimateCount" parameterType="java.util.HashMap" resultType="int">
 		select count(*) from ESTIMATE
+		<if test="ES_CATEGORY == 'title'"> where ESTIMATE_TITLE like '%'||#{ES_SEARCH}||'%'</if>
+		<if test="ES_CATEGORY == 'content'"> where ESTIMATE_CONTENT like '%'||#{ES_SEARCH}||'%'</if>
+		<if test="ES_CATEGORY == 'nick'"> where ESTIMATE_NICK like '%'||#{ES_SEARCH}||'%'</if>
+		<if test="ES_CATEGORY == 'TandC'"> where ESTIMATE_TITLE like '%'||#{ES_SEARCH}||'%'
+		or ESTIMATE_CONTENT like '%'||#{ES_SEARCH}||'%'</if>
 	</select>
 	
 	<select id="estimateDetail" parameterType="int" resultMap="estimateMap">
@@ -53,9 +63,9 @@
 	</select>
 	
 	<select id="offerList" parameterType="java.util.HashMap" resultMap="offerMap">
-        <![CDATA[select * from (select ROWNUM RNUM, OFFER_ESTIMATE, OFFER_WORKSHOP, OFFER_DATE, 
+        select * from (select ROWNUM RNUM, OFFER_ESTIMATE, OFFER_WORKSHOP, OFFER_DATE, 
         OFFER_CONTENT, OFFER_PRICE, OFFER_STATE from ESTIMATE_OFFER)
-        where ROWNUM >=]]> #{startRow} <![CDATA[and ROWNUM <= ]]>#{endRow} and OFFER_ESTIMATE = #{ESTIMATE_NUM}
+        <![CDATA[where RNUM >= #{startRow} and RNUM <= #{endRow} and OFFER_ESTIMATE = #{ESTIMATE_NUM}]]>
         order by OFFER_PRICE asc, OFFER_DATE desc
     </select>
     

@@ -9,7 +9,7 @@ import com.spring.estimate.EstimateVO;
 public interface EstimateMapper {
 	public int estimateInsert (EstimateVO vo);
 	public ArrayList<EstimateVO> estimateList (HashMap<String, Object> map);
-	public int estimateCount ();
+	public int estimateCount (HashMap <String, Object> map);
 	public EstimateVO estimateDetail (int ESTIMATE_NUM);
 	public ArrayList<EstimateOfferVO> offerList (HashMap<String, Object> map);    
 	public int offerCount (int ESTIMATE_NUM);

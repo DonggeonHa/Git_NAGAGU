@@ -13,7 +13,6 @@
 	int endpage = ((Integer) request.getAttribute("endpage")).intValue();
 	int rnum = ((Integer) request.getAttribute("rnum")).intValue();
 	int estimateCount = ((Integer) request.getAttribute("estimateCount")).intValue();
-	int nowpage2 = (int)request.getAttribute("page");
 	String MEMBER_EMAIL = (String)request.getAttribute("MEMBER_EMAIL");
 	
 	SimpleDateFormat df = new SimpleDateFormat("yyyy.MM.dd hh:mm");
@@ -69,6 +68,28 @@
 			a.btn-outline-dark:hover {
 				color: white !important;
 			}
+		
+			.pagination .pageNum {
+			  	color: black;
+			  	float: left;
+			 	padding: 8px 16px;
+			}
+			
+			.pagination .pagelink {
+				color:#6d6d6d;
+			 	text-decoration: none;
+			}
+			
+			.pagination .pagelink:hover {
+			  	background-color: #ef902e;
+			  	color:black;
+			  	cursor:pointer;
+			}	
+			
+			.pagination .currentpage {
+				font-weight:700;
+			}		
+			
 		</style>
 	</head>
 	<body class="order-body">
@@ -218,7 +239,6 @@
 						System.out.println(eList.size());
 						for (int i=0; i<eList.size(); i++) {
 							EstimateVO el = eList.get(i);
-							System.out.println(el.getESTIMATE_TITLE());
 				%>
 						<tr onClick="location.href='./estimate_detail.es?ESTIMATE_NUM=<%=el.getESTIMATE_NUM()%>&page=<%=nowpage %>'"
 							style="cursor: pointer;">
@@ -226,8 +246,8 @@
 							<td><%=el.getESTIMATE_NICK() %></td>
 							<td class="es_title"><%=el.getESTIMATE_TITLE() %></td>
 							<td><%=el.getESTIMATE_CATEGORY() %>
-							<td></td>
-							<td></td>
+							<td class="addComma"><%=el.getESTIMATE_MINPRICE()%></td>
+							<td><%=el.getESTIMATE_OFFERCOUNT()%></td>
 							<td><%=df.format(el.getESTIMATE_DATE()) %></td>
 							<td>
 				<%
@@ -268,30 +288,26 @@
 			</div>
 			<!-- 글찾기 -->
 	
-			<form id="search_form" action="estimate_search.es" method="post">
+			<form id="search_form" action="estimate.es" method="post">
+			<input type="hidden" name="page" value=<%=nowpage %>>
 			<div class="search" align="center">
-				<select id="category" name="color" size="1">
+				<select id="category" name="category" size="1">
 					<option value="">선택</option>
 					<option value="">-----------------</option>
-					<option value="">제목</option>
-					<option value="">본문</option>
-					<option value="">별명</option>
-					<option value="">제목+본문</option>
-				</select> <input type="text" size="12" id="search_text" name="search"> <input
-					type="button" name="search" value="검색" onClick="location.href='#'" id="btn_search"
-					style="cursor: pointer;">
+					<option value="title">제목</option>
+					<option value="content">본문</option>
+					<option value="nick">별명</option>
+					<option value="TandC">제목+본문</option>
+				</select> 
+				<input type="text" size="12" id="search_text" name="search_text"> 
+				<input type="button" name="search" value="검색" id="btn_search" style="cursor: pointer;">
 			</div>
 			</form>
 			<br />
 			<!-- 버튼 -->
 	
 	
-			<div class="pages" align="center">
-				<a href="#"><span class="page">1</span></a> &nbsp;&nbsp;&nbsp; <a
-					href="#"><span class="page">2</span></a> &nbsp;&nbsp;&nbsp; <a
-					href="#"><span class="page">3</span></a> &nbsp;&nbsp;&nbsp; <a
-					href="#"><span class="page">4</span></a> &nbsp;&nbsp;&nbsp; <a
-					href="#"><span class="page">5</span></a> &nbsp;&nbsp;&nbsp;
+			<div id = "pagination" class="pagination justify-content-center" align="center">
 			</div>
 	
 			<br />
@@ -304,14 +320,14 @@
 		<br />
 		<!-- Optional JavaScript -->
 		<script>
-			$.('#btn_search').click(function() {
-				var category = $('#category').value();
-				if (category == "선택" || category == "-----------------") {
+			$('#btn_search').click(function() {
+				var category = $('#category').val();
+				if (category == "") {
 					alert('카테고리를 선택해주십시오.');
 					
 					return false;
 				}
-				var search_text = $('#search_text').value();
+				var search_text = $('#search_text').val();
 				if (search_text == "") {
 					alert('검색어를 입력해주십시오.');
 					$('#search_text').focus();
@@ -321,8 +337,64 @@
 				
 				$('#search_form').submit();
 			});
-		
-		
+			
+			function addComma(inputNumber) {
+				   return inputNumber.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+			}
+			
+			$(document).ready(function() {
+					
+					/* 댓글 페이지네이션 */
+					var pagination = "";
+					var page = <%=nowpage%>;
+					var maxpage = <%=maxpage%>;
+					
+					if (page == maxpage && page > 5) {
+						pagination += '<div class="pageNum pagelink" value="' + Number(page-5) + '">&laqua;</div>';
+						pagination += '<div class="pageNum pagelink" value="' + Number(page-4) + '">' + Number(page-4) + '</a></div>';
+						pagination += '<div class="pageNum pagelink" value="' + Number(page-3) + '">' + Number(page-3) + '</a></div>';
+					}
+					else if (page == maxpage-1 && page > 4) {
+						pagination += '<div class="pageNum pagelink" value="' + Number(page-4) + '">&laqua;</div>';
+						pagination += '<div class="pageNum pagelink" value="' + Number(page-3) + '">' + Number(page-3) + '</a></div>';
+					}
+					else {
+						if (page > 3) {
+							pagination += '<div class="pageNum pagelink" value="' + Number(page-3) + '">&laqua;</div>';
+						}
+					} 
+					
+					if (page > 2) {
+						pagination += '<div class="pageNum pagelink" value="' + Number(page-2) + '">' + Number(page-2) + '</a></div>';
+					}
+					if (page > 1) {
+						pagination += '<div class="pageNum pagelink" value="' + Number(page-1) + '">' + Number(page-1) + '</a></div>';
+					}
+						pagination += '<div class="pageNum currentpage">' + page + '</div>';
+					if (maxpage > page) {
+						pagination += '<div class="pageNum pagelink" value="' + Number(page+1) + '">' + Number(page+1) + '</a></div>';
+					}
+					if (maxpage > page+1) {
+						pagination += '<div class="pageNum pagelink" value="' + Number(page+2) + '">' + Number(page+2) + '</a></div>';
+					}
+					
+					if (page == 1 && maxpage > 5) {
+						pagination += '<div class="pageNum pagelink" value="' + Number(page+3) + '">' + Number(page+3) + '</a></div>';
+						pagination += '<div class="pageNum pagelink" value="' + Number(page+4) + '">' + Number(page+4) + '</a></div>';
+						pagination += '<div class="pageNum pagelink" value="' + Number(page+5) + '">&raqua;</div>';
+					}
+					else if (page == 2 && maxpage > 6) {
+						pagination += '<div class="pageNum pagelink" value="' + Number(page+3) + '">' + Number(page+3) + '</a></div>';
+						pagination += '<div class="pageNum pagelink" value="' + Number(page+4) + '">&raqua;</div>';
+					}
+					else {
+						if (maxpage > page+2) {
+							pagination += '<div class="pageNum pagelink" value="' + Number(page+3) + '">&raqua;</div>';
+						}
+					}
+				
+				$('#pagination').html(pagination);
+			});
 		</script>
 		<!-- jQuery first, then Popper.js, then Bootstrap JS -->
 		<script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>

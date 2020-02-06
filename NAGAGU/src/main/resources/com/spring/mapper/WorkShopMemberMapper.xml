@@ -76,4 +76,9 @@
 	<select id="selectwmember" parameterType="com.spring.workshop.WorkShopMemberVO" resultMap="workshopMemberResultMap">
 		select * from nagagu_workshop_member where WORKSHOP_NUM = #{WORKSHOP_NUM}
 	</select>
+	
+	<!-- 기재 -->
+	<select id="name_cnt" parameterType="String" resultType="int">
+		select count(*) from nagagu_workshop_member where WORKSHOP_NAME = #{WORKSHOP_NAME}
+	</select>
 </mapper>

@@ -21,36 +21,36 @@ public class EstimateController {
 	@Autowired
 	EstimateService estimateService;
 	
-	@RequestMapping(value = "/estimate.es", method = RequestMethod.GET)
+	@RequestMapping(value = "/estimate.es")
 	public String estimate(HttpServletRequest request, Model model, HttpSession session) {
-		
+		HashMap <String, Object> map = new HashMap <String, Object>();
+		map.put("ES_CATEGORY", request.getParameter("category"));
+		map.put("ES_SEARCH", request.getParameter("search_text"));
 		int page = 1;
 		int limit = 20;
-		int estimateCount = estimateService.estimateCount();
+		int estimateCount = estimateService.estimateCount(map);
 		
 		if (request.getParameter("page") != null) {
 			page = Integer.parseInt(request.getParameter("page"));
 		}
 		
 		int maxpage = (int)((double)estimateCount/limit+0.95);
-		int startpage = (((int) ((double)page/10 + 0.9)) - 1) * 10 + 1;
-		int endpage = startpage+limit-1;
+		int startRow = (page-1)*10 + 1;
+		int endRow = startRow+limit-1;
+		map.put("startRow", startRow);
+		map.put("endRow", endRow);
 		
 		if (page == maxpage)
-			endpage = estimateCount;
+			endRow = estimateCount;
 		
 		int rnum = estimateCount - (page-1)*limit;
 
-		ArrayList<EstimateVO> eList = estimateService.estimateList(startpage, endpage);
-		System.out.println(estimateCount);
-		System.out.println(startpage);
-		System.out.println(endpage);
-		System.out.println(eList.size());
+		ArrayList<EstimateVO> eList = estimateService.estimateList(map);
 		
 		model.addAttribute("page", page);
 		model.addAttribute("maxpage", maxpage);
-		model.addAttribute("startpage", startpage);
-		model.addAttribute("endpage", endpage);
+		model.addAttribute("startpage", startRow);
+		model.addAttribute("endpage", endRow);
 		model.addAttribute("estimateCount", estimateCount);
 		model.addAttribute("rnum", rnum);
 		model.addAttribute("eList", eList);
@@ -138,26 +138,25 @@ public class EstimateController {
 		int offer_limit = 10;
         int offerCount = estimateService.offerCount(ESTIMATE_NUM);
 		
-		if (request.getParameter("offer_page") != null) {
-			offer_page = Integer.parseInt(request.getParameter("offer_page"));
+		if (request.getParameter("OFFER_PAGE") != null) {
+			offer_page = Integer.parseInt(request.getParameter("OFFER_PAGE"));
 		}
 		
 		int offer_maxpage = (int)((double)offerCount/offer_limit+0.95);
-		int offer_startpage = (((int) ((double)offer_page/10 + 0.9)) - 1) * 10 + 1;        
-		int offer_endpage = offer_startpage+offer_limit-1;
-
+		int offer_startRow = (offer_page-1)*10 + 1;
+		int offer_endRow = offer_startRow+offer_limit-1;
 		if (offer_page == offer_maxpage)
-			offer_endpage = offerCount;
+			offer_endRow = offerCount;
 		
 		int offer_rnum = offerCount - (offer_page-1)*offer_limit;
 		
         try {
-            ArrayList<EstimateOfferVO> offerList = estimateService.offerList(ESTIMATE_NUM, offer_startpage, offer_endpage);
+            ArrayList<EstimateOfferVO> offerList = estimateService.offerList(ESTIMATE_NUM, offer_startRow, offer_endRow);
             
             map.put("offer_page", offer_page);
             map.put("offer_limit", offer_limit);
             map.put("offer_maxpage", offer_maxpage);
-            map.put("offer_endpage", offer_endpage);
+            map.put("offer_endpage", offer_endRow);
             map.put("offer_rnum", offer_rnum);
             map.put("offerCount", offerCount);
             map.put("offerList", offerList);

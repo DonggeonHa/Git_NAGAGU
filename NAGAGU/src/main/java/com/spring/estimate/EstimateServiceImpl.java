@@ -20,12 +20,8 @@ public class EstimateServiceImpl implements EstimateService {
 	private SqlSession sqlSession;
 	
 	@Override
-	public ArrayList<EstimateVO> estimateList (int startpage, int endpage) {
+	public ArrayList<EstimateVO> estimateList (HashMap <String, Object> map) {
 		EstimateMapper mapper = sqlSession.getMapper(EstimateMapper.class);
-		
-		HashMap<String, Object> map = new HashMap<String, Object>();
-		map.put("startRow", startpage);
-		map.put("endRow", endpage);
 		
 		ArrayList <EstimateVO> eList = mapper.estimateList(map);
 		
@@ -41,9 +37,9 @@ public class EstimateServiceImpl implements EstimateService {
 	}
 	
 	@Override
-	public int estimateCount () {
+	public int estimateCount (HashMap <String, Object> map) {
 		EstimateMapper mapper = sqlSession.getMapper(EstimateMapper.class);
-		int cnt = mapper.estimateCount();
+		int cnt = mapper.estimateCount(map);
 		
 		return cnt;
 	}

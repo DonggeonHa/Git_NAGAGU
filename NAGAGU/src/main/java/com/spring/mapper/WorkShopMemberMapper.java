@@ -10,4 +10,5 @@ public interface WorkShopMemberMapper {
 	WorkShopMemberVO workshop_email_chk(WorkShopMemberVO workshopVO);
 	WorkShopMemberVO select_workshop_member(WorkShopMemberVO workshopVO);
 	WorkShopMemberVO selectwmember(WorkShopMemberVO workshopVO);
+	int name_cnt(String WORKSHOP_NAME);
 }

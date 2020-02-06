@@ -140,6 +140,13 @@ public class NoteServiceImpl implements NoteService {
 		}
 	}
 	
+	public int checkMail(String WORKSHOP_NAME) {
+		WorkShopMemberMapper mapper = sqlSession.getMapper(WorkShopMemberMapper.class);
+		int res = mapper.name_cnt(WORKSHOP_NAME);
+		
+		return res;
+	}
+	
 	public MemberVO getMember(String mem_mail) throws Exception {
 		memberMapper mapper = sqlSession.getMapper(memberMapper.class);
 		MemberVO vo = mapper.getMember(mem_mail);
