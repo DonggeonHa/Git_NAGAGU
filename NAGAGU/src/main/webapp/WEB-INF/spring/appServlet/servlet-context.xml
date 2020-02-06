@@ -82,4 +82,5 @@
 	<context:component-scan base-package="com.spring.workshop" />
 	<context:component-scan base-package="com.spring.admin" />
 	<context:component-scan base-package="com.spring.order" />
+	<context:component-scan base-package="com.spring.workshopMypage" />
 </beans:beans>

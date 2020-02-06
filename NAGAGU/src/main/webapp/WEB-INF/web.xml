@@ -40,6 +40,7 @@
 		<url-pattern>*.nt</url-pattern> <!-- Note -->
 		<url-pattern>*.ws</url-pattern>	<!-- 사업자 -->
 		<url-pattern>*.ad</url-pattern>	<!-- 사업자 -->
+		<url-pattern>*.mywork</url-pattern>	<!-- 공방 마이페이지 -->
 	</servlet-mapping>
 	
 	<welcome-file-list>

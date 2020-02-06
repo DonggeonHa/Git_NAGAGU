@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.spring.mapper.AcademyManagementMapper">
+	<resultMap type="com.spring.academy.ClassVO" id="classResultMap">
+		<result property="CLASS_NUMBER" column="CLASS_NUMBER" />	
+		<result property="WORKSHOP_NUM" column="WORKSHOP_NUM" />
+		<result property="WORKSHOP_NAME" column="WORKSHOP_NAME" />
+		<result property="WORKSHOP_PICTURE" column="WORKSHOP_PICTURE" />
+		<result property="CLASS_DIVISION" column="CLASS_DIVISION" />	
+		<result property="CLASS_NAME" column="CLASS_NAME" />	
+		<result property="CLASS_ABRIEF" column="CLASS_ABRIEF" />	
+		<result property="CLASS_AMOUNT" column="CLASS_AMOUNT" />	
+		<result property="CLASS_DATE" column="CLASS_DATE" />	
+		<result property="CLASS_DATE_CONFIGURATION_1" column="CLASS_DATE_CONFIGURATION_1" />	
+		<result property="CLASS_DATE_CONFIGURATION_2" column="CLASS_DATE_CONFIGURATION_2" />	
+		<result property="CLASS_AREA" column="CLASS_AREA" />	
+		<result property="CLASS_CATEGORY" column="CLASS_CATEGORY" />	
+		<result property="CLASS_INTRODUCTION_1" column="CLASS_INTRODUCTION_1" />	
+		<result property="CLASS_INTRODUCTION_2" column="CLASS_INTRODUCTION_2" />	
+		<result property="CLASS_INTRODUCTION_3" column="CLASS_INTRODUCTION_3" />	
+		<result property="CLASS_ETC" column="CLASS_ETC" />	
+		<result property="CLASS_BANNER" column="CLASS_BANNER" />	
+		<result property="CLASS_IMAGE" column="CLASS_IMAGE" />	
+		<result property="CLASS_ADDRESS" column="CLASS_ADDRESS" />	
+		<result property="CLASS_DETAIL_ADDRESS" column="CLASS_DETAIL_ADDRESS" />
+		<result property="CLASS_COUNT_MEMBER" column="CLASS_COUNT_MEMBER" />
+	</resultMap>
+	
+	<resultMap type="java.util.HashMap" id="hashmapVO">
+		<result property="CLASS_NUMBER" column="CLASS_NUMBER" />	
+		<result property="WORKSHOP_NUM" column="WORKSHOP_NUM" />
+		<result property="WORKSHOP_NAME" column="WORKSHOP_NAME" />
+		<result property="WORKSHOP_PICTURE" column="WORKSHOP_PICTURE" />
+		<result property="CLASS_DIVISION" column="CLASS_DIVISION" />	
+		<result property="CLASS_NAME" column="CLASS_NAME" />	
+		<result property="CLASS_ABRIEF" column="CLASS_ABRIEF" />	
+		<result property="CLASS_AMOUNT" column="CLASS_AMOUNT" />	
+		<result property="CLASS_DATE" column="CLASS_DATE" />	
+		<result property="CLASS_DATE_CONFIGURATION_1" column="CLASS_DATE_CONFIGURATION_1" />	
+		<result property="CLASS_DATE_CONFIGURATION_2" column="CLASS_DATE_CONFIGURATION_2" />	
+		<result property="CLASS_AREA" column="CLASS_AREA" />	
+		<result property="CLASS_CATEGORY" column="CLASS_CATEGORY" />	
+		<result property="CLASS_INTRODUCTION_1" column="CLASS_INTRODUCTION_1" />	
+		<result property="CLASS_INTRODUCTION_2" column="CLASS_INTRODUCTION_2" />	
+		<result property="CLASS_INTRODUCTION_3" column="CLASS_INTRODUCTION_3" />	
+		<result property="CLASS_ETC" column="CLASS_ETC" />	
+		<result property="CLASS_BANNER" column="CLASS_BANNER" />	
+		<result property="CLASS_IMAGE" column="CLASS_IMAGE" />	
+		<result property="CLASS_ADDRESS" column="CLASS_ADDRESS" />
+		<result property="CLASS_DETAIL_ADDRESS" column="CLASS_DETAIL_ADDRESS" />
+		<result property="CLASS_COUNT_MEMBER" column="CLASS_COUNT_MEMBER" />
+	</resultMap>
+	
+	<resultMap type="com.spring.workshop.WorkShopMemberVO" id="workshopMemberResultMap">
+		<result property="WORKSHOP_NUM" column="WORKSHOP_NUM" />
+		<result property="WORKSHOP_EMAIL" column="WORKSHOP_EMAIL" />
+		<result property="WORKSHOP_PASS" column="WORKSHOP_PASS" />
+		<result property="WORKSHOP_NAME" column="WORKSHOP_NAME" />
+		<result property="WORKSHOP_CEO_NAME" column="WORKSHOP_CEO_NAME" />
+		<result property="WORKSHOP_PHONE" column="WORKSHOP_PHONE" />
+		<result property="WORKSHOP_ZIP" column="WORKSHOP_ZIP" />
+		<result property="WORKSHOP_ADDRESS1" column="WORKSHOP_ADDRESS1" />
+		<result property="WORKSHOP_ADDRESS2" column="WORKSHOP_ADDRESS2" />
+		<result property="WORKSHOP_LICENSE" column="WORKSHOP_LICENSE" />
+		<result property="WORKSHOP_DATE" column="WORKSHOP_DATE" />		
+		<result property="WORKSHOP_INTRO" column="WORKSHOP_INTRO" />		
+		<result property="WORKSHOP_OWNER" column="WORKSHOP_OWNER" />		
+		<result property="WORKSHOP_BANK" column="WORKSHOP_BANK" />
+		<result property="WORKSHOP_ACNUM" column="WORKSHOP_ACNUM" />
+		<result property="WORKSHOP_STATUS" column="WORKSHOP_STATUS" />
+		<result property="WORKSHOP_PICTURE" column="WORKSHOP_PICTURE" />
+	</resultMap>
+	
+	<resultMap type="com.spring.academy.MyClassVO" id="myclassResultMap">
+		<result property="MY_CLASS_NUM" column="MY_CLASS_NUM" />	
+		<result property="MY_CLASS_MEMBERNUM" column="MY_CLASS_MEMBERNUM" />
+		<result property="MY_CLASS_CLASSNUM" column="MY_CLASS_CLASSNUM" />
+		<result property="MY_CLASS_STATUS" column="MY_CLASS_STATUS" />
+	</resultMap>
+	
+	<select id="getManagementClassList" resultMap="classResultMap">
+	    select * from (select CLASS_NUMBER, CLASS_STATUS, CLASS_AREA, CLASS_AMOUNT, CLASS_NAME, CLASS_CATEGORY, 
+	    CLASS_DATE_CONFIGURATION_1, CLASS_DATE_CONFIGURATION_2, CLASS_COUNT_MEMBER from ACADEMY order by CLASS_DATE DESC)
+	</select>
+	
+	<select id="getSearchList" resultMap="classResultMap">
+		select * from (select CLASS_NUMBER, CLASS_STATUS, CLASS_AREA, CLASS_AMOUNT, CLASS_NAME, CLASS_CATEGORY, 
+	    CLASS_DATE_CONFIGURATION_1, CLASS_DATE_CONFIGURATION_2, CLASS_COUNT_MEMBER from (select * from ACADEMY where
+	    <if test="searchType == 'className'"> CLASS_NAME LIKE '%'||#{keyword}||'%'</if>
+	    <if test="searchType == 'area'"> CLASS_AREA LIKE '%'||#{keyword}||'%'</if>
+	    <if test="searchType == 'category'"> CLASS_CATEGORY LIKE '%'||#{keyword}||'%'</if>
+	    ) order by CLASS_DATE desc)    
+	</select>
+</mapper>
