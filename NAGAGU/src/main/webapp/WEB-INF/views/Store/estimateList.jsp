@@ -13,7 +13,7 @@
 	int endpage = ((Integer) request.getAttribute("endpage")).intValue();
 	int rnum = ((Integer) request.getAttribute("rnum")).intValue();
 	int estimateCount = ((Integer) request.getAttribute("estimateCount")).intValue();
-	String MEMBER_EMAIL = (String)request.getAttribute("MEMBER_EMAIL");
+	String MEMBER_EMAIL = (String)session.getAttribute("MEMBER_EMAIL");
 	
 	SimpleDateFormat df = new SimpleDateFormat("yyyy.MM.dd hh:mm");
 %>
