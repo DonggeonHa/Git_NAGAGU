@@ -10,7 +10,24 @@
 		<result property="ADMIN_DATE" column="ADMIN_DATE" />
 	</resultMap>
 	
-	<!-- 공방 회원가입 신청용 -->
+	<!-- 일반회원관리 -->
+	<resultMap type="com.spring.member.MemberVO" id="memberResultMap">
+		<result property="MEMBER_NUM" column="MEMBER_NUM" />
+		<result property="MEMBER_EMAIL" column="MEMBER_EMAIL" />
+		<result property="MEMBER_PASS" column="MEMBER_PASS" />
+		<result property="MEMBER_NAME" column="MEMBER_NAME" />
+		<result property="MEMBER_NICK" column="MEMBER_NICK" />
+		<result property="MEMBER_PHONE" column="MEMBER_PHONE" />
+		<result property="MEMBER_DATE" column="MEMBER_DATE" />
+		<result property="MEMBER_PICTURE" column="MEMBER_PICTURE" />
+		<result property="MEMBER_LIKE_PRODUCT" column="MEMBER_LIKE_PRODUCT" />
+		<result property="MEMBER_STATUS" column="MEMBER_STATUS" />		
+		<result property="ADDRESS_ZIP" column="ADDRESS_ZIP" />		
+		<result property="ADDRESS_ADDRESS1" column="ADDRESS_ADDRESS1" />		
+		<result property="ADDRESS_ADDRESS2" column="ADDRESS_ADDRESS2" />		
+	</resultMap>
+	
+	<!-- 공방회원관리 -->
 	<resultMap type="com.spring.workshop.WorkShopMemberVO" id="workshopMemberResultMap">
 		<result property="WORKSHOP_NUM" column="WORKSHOP_NUM" />
 		<result property="WORKSHOP_EMAIL" column="WORKSHOP_EMAIL" />
@@ -31,7 +48,8 @@
 		<result property="WORKSHOP_PICTURE" column="WORKSHOP_PICTURE" />
 	</resultMap>
 	
-	<insert id="insert_member" parameterType="com.spring.admin.AdminMemberVO">
+	<!-- 어드민 -->
+	<insert id="insert_admin" parameterType="com.spring.admin.AdminMemberVO">
 		<selectKey resultType="int" keyProperty="ADMIN_NUM" order="BEFORE">
            SELECT admin_member_seq.nextval FROM dual        
        </selectKey>
@@ -43,8 +61,27 @@
 		SELECT * from ADMIN_MEMBER WHERE ADMIN_ID = #{ADMIN_ID} and ADMIN_PASS = #{ADMIN_PASS}
 	</select>
 	
-	<!-- 공방회원가입 신청용  -->
-	<select id="getListCount" resultType="int"> 
+	<!-- 일반회원관리 -->
+	<select id="memberListCount" resultType="int"> 
+ 		SELECT COUNT(*) FROM NAGAGU_MEMBER
+ 	</select>
+ 	
+	<select id="getMembers" parameterType="int" resultMap="memberResultMap"> <!-- 이거 처리한 결과물을 list 타입으로 만들어주면 된다. select id은 내용을 호출 함. -->
+		select *
+		from (select rownum rnum, MEMBER_NUM, MEMBER_EMAIL, MEMBER_NAME, MEMBER_NICK, MEMBER_PHONE, 
+					 MEMBER_ADDRESS1, MEMBER_ADDRESS2, MEMBER_STATUS
+			  from(select * 
+			  	   from NAGAGU__MEMBER 
+			  	   order by MEMBER_NUM ASC))
+		<![CDATA[ WHERE rnum >= #{startrow} AND rnum <= #{endrow} ]]>
+ 	</select>
+ 	
+ 	<delete id="deleteMember" parameterType="com.spring.member.MemberVO">
+ 		DELETE FROM NAGAGU_MEMBER WHERE MEMBER_NUM = #{MEMBER_NUM}
+ 	</delete>
+	
+	<!-- 공방회원관리  -->
+	<select id="WmemberListCount" resultType="int"> 
  		SELECT COUNT(*) FROM NAGAGU_WORKSHOP_MEMBER
  	</select>
  	
@@ -56,10 +93,6 @@
 			  	   from NAGAGU_WORKSHOP_MEMBER 
 			  	   order by WORKSHOP_STATUS ASC))
 		<![CDATA[ WHERE rnum >= #{startrow} AND rnum <= #{endrow} ]]>
- 	</select>
- 	
-	<select id="getWMember" resultMap="workshopMemberResultMap"> <!-- resultMap은 매칭시킬려고씀 -->
- 		SELECT * FROM NAGAGU_WORKSHOP_MEMBER WHERE WORKSHOP_NUM = #{WORKSHOP_NUM}
  	</select>
  	
  	<delete id="deleteWMember" parameterType="com.spring.workshop.WorkShopMemberVO">

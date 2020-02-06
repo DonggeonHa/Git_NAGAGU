@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.spring.mapper.AdminMapper;
+import com.spring.member.MemberVO;
 import com.spring.workshop.WorkShopMemberVO;
 
 @Service
@@ -15,6 +16,7 @@ public class AdminServiceImpl implements AdminService {
 	@Autowired
 	private SqlSession sqlSession;
 	
+	/*============================= 어드민 ===============================*/
 	@Override
 	public int insert_admin(AdminMemberVO adminVO) {
 		int res = 0;
@@ -63,7 +65,41 @@ public class AdminServiceImpl implements AdminService {
 		return result;	//결과값이 1,0,-1
 	}
 
-	/* 공방회원승인 */
+	/* ================================= 일반회원관리 ======================================*/
+	@Override
+	public int memberListCount() {
+		int x = 0;
+		int result = 0;
+		
+		AdminMapper adminMapper = sqlSession.getMapper(AdminMapper.class);
+		result = adminMapper.memberListCount();
+		
+		if (result != 0)
+			x = result;
+		
+		return x;
+	}
+
+	@Override
+	public ArrayList<MemberVO> getMembers(int startrow, int endrow) {
+		ArrayList<MemberVO> memberList = new ArrayList<MemberVO>();
+		AdminMapper adminMapper = sqlSession.getMapper(AdminMapper.class);
+		
+		memberList = adminMapper.getMembers(startrow, endrow);
+		
+		return memberList;
+	}
+
+	@Override
+	public int deleteMember(MemberVO vo) {
+		AdminMapper adminMapper = sqlSession.getMapper(AdminMapper.class);
+		int res = adminMapper.deleteMember(vo);
+		
+		return res;
+		
+	}
+	
+	/* ================================= 공방회원관리 ======================================*/
 	@Override
 	public ArrayList<WorkShopMemberVO> getWMembers(int startrow, int endrow) {
 		ArrayList<WorkShopMemberVO> wmemberList = new ArrayList<WorkShopMemberVO>();
@@ -72,17 +108,6 @@ public class AdminServiceImpl implements AdminService {
 		wmemberList = adminMapper.getWMembers(startrow, endrow);
 		
 		return wmemberList;
-	}
-
-	@Override
-	public WorkShopMemberVO getWMember(WorkShopMemberVO vo) {
-		WorkShopMemberVO member = new WorkShopMemberVO();
-		AdminMapper adminMapper = sqlSession.getMapper(AdminMapper.class);
-		
-		member = adminMapper.getWMember(vo);
-		System.out.println("getWMember 넘어감");
-		
-		return member;
 	}
 
 	@Override
@@ -98,16 +123,18 @@ public class AdminServiceImpl implements AdminService {
 	}
 
 	@Override
-	public int getListCount() {
+	public int WmemberListCount() {
 		int x = 0;
 		int result = 0;
 		
 		AdminMapper adminMapper = sqlSession.getMapper(AdminMapper.class);
-		result = adminMapper.getListCount();
+		result = adminMapper.WmemberListCount();
 		
 		if (result != 0)
 			x = result;
 		
 		return x;
 	}
+
+	
 }

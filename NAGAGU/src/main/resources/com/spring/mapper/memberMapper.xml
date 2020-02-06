@@ -15,7 +15,6 @@
 		<result property="ADDRESS_ZIP" column="ADDRESS_ZIP" />		
 		<result property="ADDRESS_ADDRESS1" column="ADDRESS_ADDRESS1" />		
 		<result property="ADDRESS_ADDRESS2" column="ADDRESS_ADDRESS2" />		
-		
 	</resultMap>
 	
 	<resultMap type="java.util.HashMap" id="hashmapVO">

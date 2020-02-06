@@ -2,7 +2,11 @@
 <%@ page import="java.util.*" %>
 <%@ page import="com.spring.workshop.*" %>
 <%
-
+	if(session.getAttribute("ADMIN_NUM") == null) {
+		out.println("<script>");
+		out.println("location.href='./index.ma'");
+		out.println("</script>");
+	}
 %>
 <!DOCTYPE html>
 <html>
@@ -77,15 +81,15 @@
 				<nav>
 					<ul class="sidebar-nav">
 						<li class="sidebar-brand" style="margin: 15px 0;">
-							<a href="./index.ma">
+							<a href="./index.ad">
 								<img src="${pageContext.request.contextPath}/resources/images/Main/NAGAGU2.png">
 							</a>
 						</li>
 						<li class="main text-white">
 							회원관리
 							<ul>
-								<li>전체회원 관리</li>
-								<li>공방회원승인</li>
+								<li>일반회원관리</li>
+								<li><a href="./WMemberList.ad">공방회원관리</a></li>
 							</ul>
 						</li>
 						<li class="main text-white">
@@ -141,21 +145,19 @@
 		<script>
 			/* 사이드 바 스크립트 */
 			$(function(){
-	            $("nav").children("ul").mouseenter(function(){ // 마우스 들어갈때
-	                $(".main").find("li").slideDown(200,function(){ // li가 나타남
+	            $(".sidebar-nav").mouseenter(function(){ // 마우스 들어갈때
+	                $(".main").find("li").stop().slideDown(300,function(){ // li가 나타남
 	                    $(this).mouseover(function(){
 	                        $(this).css("font-weight","800");
-	                    });
-	                    $(this).mouseleave(function(){
-	                        $(this).css("font-weight","500");
+	                        
 	                    });
 	                });
 	            });
-	            $("nav").children("ul").mouseleave(function(){ // 마우스 나갈때
-	                $(".main").find("li").slideUp(300,function(){ // li가 사라짐
-	                    $(this).stop(false,false).slideUp(300); 
-	                    // 사라지고 난뒤 애니매이션이 남아있을수도 있기때문에
-	                    //stop을 사용하여 남은 애니매이션 종료하기.
+	            $(".sidebar-nav").mouseleave(function(){ // 마우스 나갈때
+	                $(".main").find("li").stop().slideUp(300,function(){ // li가 사라짐
+	                    $(this).mouseleave(function(){
+	                        $(this).css("font-weight","500");
+	                    });
 	                });
 	            });
 	        });
