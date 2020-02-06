@@ -8,6 +8,7 @@ public class Product_qnaVO {
 	private int QNA_PRODUCT;
 	private Date QNA_DATE;
 	private String QNA_CONTENT;
+	private int QNA_RE;
 	public int getQNA_NUM() {
 		return QNA_NUM;
 	}
@@ -38,5 +39,15 @@ public class Product_qnaVO {
 	public void setQNA_CONTENT(String qNA_CONTENT) {
 		QNA_CONTENT = qNA_CONTENT;
 	}
+	public int getQNA_RE() {
+		return QNA_RE;
+	}
+	public void setQNA_RE(int qNA_RE) {
+		QNA_RE = qNA_RE;
+	}
+
+	
+	
+	
 	
 }

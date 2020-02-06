@@ -9,7 +9,8 @@ create table PRODUCT_QNA(
     CONSTRAINT PRODUCT_REVIEW_NUM FOREIGN KEY (REVIEW_PRODUCT) 
         REFERENCES PRODUCT(PRODUCT_NUM)ON DELETE CASCADE, 
     QNA_DATE         DATE,
-    QNA_CONTENT      VARCHAR2(1000)
+    QNA_CONTENT      VARCHAR2(1000),
+    QNA_RE			NUMBER
 );
 
 
@@ -17,6 +18,27 @@ create sequence store_qna_seq
     start with 1
     increment by 1
     maxvalue 10000;
+
+
+/*qna 답글테이블 따로 생성- 리스트 출력시 공방workshop정보 빼오기 위해*/
+create table PRODUCT_QNA_WORKSHOP(
+    QNA_WORKSHOP_NUM          NUMBER PRIMARY KEY,   /*seq*/
+    QNA_WORKSHOP_REF_NUM          NUMBER ,   /*원글을 참조할 컬럼(원글의 QNA_NUM과 같다)*/    
+    CONSTRAINT QNA_QNA_RE FOREIGN KEY (QNA_WORKSHOP_REF_NUM)   /*PRODUCT_QNA 테이블의 QNA_NUM을 외래키로 지정 (QNA_WORKSHOP_REF_NUM과 연결)*/  
+        REFERENCES PRODUCT_QNA(QNA_NUM)ON DELETE CASCADE,     
+    QNA_WORKSHOP_MEMBER       NUMBER,   /*작성한 공방의 번호*/
+    QNA_WORKSHOP_PRODUCT      NUMBER,   /*qna글이 작성된 상품번호*/
+    CONSTRAINT PRODUCT_QNA_RE_NUM FOREIGN KEY (QNA_WORKSHOP_PRODUCT)      /*PRODUCT 테이블의 PRODUCT_NUM을 외래키로 지정 (QNA_WORKSHOP_PRODUCT과 연결)*/ 
+        REFERENCES PRODUCT(PRODUCT_NUM)ON DELETE CASCADE, 
+    QNA_WORKSHOP_DATE         DATE,
+    QNA_WORKSHOP_CONTENT      VARCHAR2(1000)
+);    
+
+create sequence store_qna_workshop_seq
+    start with 1
+    increment by 1
+    maxvalue 10000;   
+
 
 -->
 
@@ -28,6 +50,8 @@ create sequence store_qna_seq
 		<result property="QNA_PRODUCT" column="QNA_PRODUCT" />	
 		<result property="QNA_DATE" column="QNA_DATE" />		
 		<result property="QNA_CONTENT" column="QNA_CONTENT" />
+		<result property="QNA_RE" column="QNA_RE" />
+		<result property="QNA_REF" column="QNA_REF" />
 	</resultMap>
 
 	<resultMap type="com.spring.store.Product_qnaVO" id="productQnaResultMap">
@@ -36,6 +60,8 @@ create sequence store_qna_seq
 		<result property="QNA_PRODUCT" column="QNA_PRODUCT" />	
 		<result property="QNA_DATE" column="QNA_DATE" />		
 		<result property="QNA_CONTENT" column="QNA_CONTENT" />	
+		<result property="QNA_RE" column="QNA_RE" />
+		<result property="QNA_REF" column="QNA_REF" />
 	</resultMap>
 
 	<resultMap type="com.spring.member.MemberVO" id="memberqnaResultMap">
@@ -52,15 +78,27 @@ create sequence store_qna_seq
 	</resultMap>
 	
 	
+	<!-- 원글이 존재하는지 확인하기 위한 -->
 	<select id="getQnaCount" parameterType="java.util.HashMap" resultType="int">
-		SELECT count(*) FROM PRODUCT_QNA WHERE QNA_PRODUCT=#{PRODUCT_NUM}
+		SELECT count(*) FROM PRODUCT_QNA WHERE QNA_PRODUCT=#{PRODUCT_NUM} AND QNA_RE = 0
+	</select>
+	
+	<select id="getQna_RE_Count" parameterType="java.util.HashMap" resultType="int">
+		SELECT count(*) FROM PRODUCT_QNA WHERE QNA_PRODUCT=#{PRODUCT_NUM} AND QNA_RE != 0
 	</select>
 	
 
 	<select id="getQnaList" parameterType="java.util.HashMap" resultMap="productQnaResultMap">
 		SELECT * FROM
-		(SELECT rownum rnum, QNA_NUM, QNA_MEMBER, QNA_PRODUCT, QNA_DATE, QNA_CONTENT
-		 FROM (SELECT * FROM PRODUCT_QNA WHERE QNA_PRODUCT=#{PRODUCT_NUM} ORDER BY QNA_DATE DESC))
+		(SELECT rownum rnum, QNA_NUM, QNA_MEMBER, QNA_PRODUCT, QNA_DATE, QNA_CONTENT, QNA_RE
+		 FROM (SELECT * FROM PRODUCT_QNA WHERE QNA_PRODUCT=#{PRODUCT_NUM} AND QNA_RE=0 ORDER BY QNA_DATE DESC))
+		<![CDATA[ WHERE rnum >= #{qnastartrow} AND rnum <= #{qnaendrow} ]]>
+	</select>
+
+	<select id="getQna_RE_List" parameterType="java.util.HashMap" resultMap="productQnaResultMap">
+		SELECT * FROM
+		(SELECT rownum rnum, QNA_NUM, QNA_MEMBER, QNA_PRODUCT, QNA_DATE, QNA_CONTENT, QNA_RE
+		 FROM (SELECT * FROM PRODUCT_QNA WHERE QNA_PRODUCT=#{PRODUCT_NUM} AND QNA_RE!=0 ORDER BY QNA_DATE DESC))
 		<![CDATA[ WHERE rnum >= #{qnastartrow} AND rnum <= #{qnaendrow} ]]>
 	</select>
 	
@@ -77,7 +115,7 @@ create sequence store_qna_seq
 	
 	<insert id="insertQna" parameterType="com.spring.store.Product_qnaVO">
 		INSERT INTO PRODUCT_QNA VALUES
-		(store_qna_seq.nextval, #{QNA_MEMBER}, #{QNA_PRODUCT}, #{QNA_DATE}, #{QNA_CONTENT})
+		(store_qna_seq.nextval, #{QNA_MEMBER}, #{QNA_PRODUCT}, #{QNA_DATE}, #{QNA_CONTENT}, #{QNA_RE})
 	</insert>	
 	
 	

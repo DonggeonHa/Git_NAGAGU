@@ -147,9 +147,16 @@ public class ProductController {
 		
 		/*이 product의 워크샵 넘버 필요함*/	
 		WorkshopVO workshopVO = productService.selectWorkshop(vo);
-		int WotkshopMatchingNumber = workshopVO.getWORKSHOP_NUM();
-		model.addAttribute("WotkshopMatchingNumber",WotkshopMatchingNumber);
-		
+		int WorkshopMatchingNumber = workshopVO.getWORKSHOP_NUM();
+		int WorkshopNum = workshopVO.getWORKSHOP_NUM();
+		model.addAttribute("WorkshopNum",WorkshopNum);
+		model.addAttribute("WorkshopMatchingNumber",WorkshopMatchingNumber);
+		/*qna 답글 출력시 워크샵 name, pic 필요함*/
+		String WorkshopName = workshopVO.getWORKSHOP_NAME();
+		String WorkshopPicture = workshopVO.getWORKSHOP_PICTURE();
+		model.addAttribute("WorkshopName",WorkshopName);
+		model.addAttribute("WorkshopPicture",WorkshopPicture);
+
 		
 		/*리뷰 리스트*/
 		int reviewpage = 1; //초기값 1
@@ -197,6 +204,7 @@ public class ProductController {
 		
 		
 		/*qna 리스트*/
+		//qna 원글 리스트
 		int qnapage = 1; //초기값 1
 		int qnalimit = 5; //한 페이지당 출력할 글의 수
 		
@@ -214,20 +222,17 @@ public class ProductController {
 		System.out.println("qnastartrow="+qnastartrow);
 		System.out.println("qnaendrow="+qnaendrow);
 		int qnaCount;
+		int qna_RE_Count;
 		ArrayList<Product_qnaVO> qnaList = null;
-		qnaCount = qnaService.getQnaCount(qnamap);
-		qnaList = qnaService.getQnaList(qnamap);
+		ArrayList<Product_qnaVO> qna_RE_List = null;
+		qnaCount = qnaService.getQnaCount(qnamap);	//원글이 존재하면, qna리스트 출력
+		qna_RE_Count = qnaService.getQna_RE_Count(qnamap);	//원글이 존재하면, qna리스트 출력
+		qnaList = qnaService.getQnaList(qnamap);	//원글 리스트
+		qna_RE_List = qnaService.getQna_RE_List(qnamap);	//원글 리스트
 
-		System.out.println("qnaCount =" + qnaCount);
-		if(qnaList != null) {
-			System.out.println("qnaList 는 널 아님");
-		} else {
-			System.out.println("qnaList 는 널");
-		}
+
 		
-		for(int i=0; i<qnaList.size(); i++) {
-			System.out.println(qnaList.get(i).getQNA_MEMBER());
-		};		
+		
 		
 		
 		//qna 총 페이지 수
@@ -238,7 +243,8 @@ public class ProductController {
 		if (qnaendpage > qnamaxpage)
 			qnaendpage = qnamaxpage;		
 		
-		//리뷰 멤버
+		
+		//qna 멤버
 		ArrayList<MemberVO> qnaMemberList = null;
 		qnaMemberList = qnaService.getqnaMemberList(map);
 		
@@ -277,7 +283,9 @@ public class ProductController {
 		model.addAttribute("qnastartpage", qnastartpage);
 		model.addAttribute("qnaendpage", qnaendpage);
 		model.addAttribute("qnaCount", qnaCount);
+		model.addAttribute("qna_RE_Count", qna_RE_Count);
 		model.addAttribute("qnaList", qnaList);
+		model.addAttribute("qna_RE_List", qna_RE_List);
 		
 		/*qna 멤버 관련*/
 		model.addAttribute("qnaMemberList", qnaMemberList);		
@@ -884,26 +892,43 @@ public class ProductController {
 	   
 	
 	//=====================================================
-	//===============================================QNA
+	//===============================================QNA insert
+	//-------------------------------------------QNA_RE_insert
 	@RequestMapping(value="/qna_insert.do",  produces="application/json;charset=UTF-8")
 	@ResponseBody
 	public String insert_qna(HttpServletRequest request, HttpSession session) throws Exception {
 		System.out.println("qna_insert 컨트롤러 왔다");
 
-		int MEMBER_NUM = (int)session.getAttribute("MEMBER_NUM");
-		
+		int MEMBER_NUM = 0;
+		int WORKSHOP_NUM = 0;
 		Product_qnaVO qnaVO = new Product_qnaVO();
 		
+		
+		if(session.getAttribute("MEMBER_NUM") != null) {	//멤버로그인(원글)
+			System.out.println("원글");
+			MEMBER_NUM = (int)session.getAttribute("MEMBER_NUM");
+	    	qnaVO.setQNA_RE(0);
+	    	qnaVO.setQNA_MEMBER(MEMBER_NUM);
+		}else {	//공방로그인(답글)
+			System.out.println("답글");
+			WORKSHOP_NUM = (int)session.getAttribute("WORKSHOP_NUM");
+			qnaVO.setQNA_RE(Integer.parseInt(request.getParameter("QNA_RE")));
+	    	qnaVO.setQNA_MEMBER(WORKSHOP_NUM);
+
+		}
+		
+		
+		
 		System.out.println("QNA_CONTENT=" + request.getParameter("QNA_CONTENT"));
+		System.out.println("QNA_PRODUCT=" + request.getParameter("QNA_PRODUCT"));
+		System.out.println("WORKSHOP_NUM=" + request.getParameter("WORKSHOP_NUM"));
+		System.out.println("MEMBER_NUM=" + request.getParameter("MEMBER_NUM"));
 
 //		qnaVO.setQNA_NUM(qNA_NUM);	//시퀀스 이용
 	    qnaVO.setQNA_CONTENT(request.getParameter("QNA_CONTENT"));
 	    qnaVO.setQNA_DATE(new Timestamp(System.currentTimeMillis()));
-	    qnaVO.setQNA_MEMBER(MEMBER_NUM);
-		
-		qnaVO.setQNA_PRODUCT(Integer.parseInt(request.getParameter("QNA_PRODUCT")));
+	    qnaVO.setQNA_PRODUCT(Integer.parseInt(request.getParameter("QNA_PRODUCT")));
 	
-		
 		
 		int res = qnaService.insertQna(qnaVO);
 		System.out.println("res="+res);		
@@ -978,6 +1003,14 @@ public class ProductController {
 		return retVal;
 		
 	}			
+	
+	
+
+	
+	
+	
+	
+	
 	
 	
 }

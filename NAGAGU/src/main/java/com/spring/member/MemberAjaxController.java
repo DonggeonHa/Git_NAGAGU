@@ -128,7 +128,8 @@ public class MemberAjaxController {
 					session.setAttribute("WORKSHOP_NAME", workshopMember.getWORKSHOP_NAME());
 					session.setAttribute("WORKSHOP_CEO_NAME", workshopMember.getWORKSHOP_CEO_NAME());
 					session.setAttribute("WORKSHOP_NUM", workshopMember.getWORKSHOP_NUM());
-					
+					session.setAttribute("WORKSHOP_PICTURE", workshopMember.getWORKSHOP_PICTURE());
+					System.out.println("WORKSHOP_PICTURE=="+workshopMember.getWORKSHOP_PICTURE());
 					retVal.put("res", "login_success");
 				} else if(result == 0) {
 					retVal.put("res", "workshop_loginFail_unconfirm");

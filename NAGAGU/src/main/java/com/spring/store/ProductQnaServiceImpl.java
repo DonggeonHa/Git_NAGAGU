@@ -25,18 +25,27 @@ public class ProductQnaServiceImpl implements ProductQnaService{
 	}
 
 	@Override
+	public int getQna_RE_Count(HashMap<String, Object> map) {
+		ProductQnaMapper qnaMapper = sqlSession.getMapper(ProductQnaMapper.class);
+		int qna_RE_Count;
+		qna_RE_Count = qnaMapper.getQna_RE_Count(map);
+		return qna_RE_Count;
+	}
+
+	@Override
 	public ArrayList<Product_qnaVO> getQnaList(HashMap<String, Object> map) {
 		ProductQnaMapper qnaMapper = sqlSession.getMapper(ProductQnaMapper.class);
 		ArrayList<Product_qnaVO> qnaList = null;
-
-		System.out.println("qnastartrow="+map.get("qnastartrow"));
-		System.out.println("qnaendrow="+map.get("qnaendrow"));
 		qnaList = qnaMapper.getQnaList(map);
-		System.out.println("----------impl-----------");
-		System.out.println(qnaList.size());
-	//	System.out.println(qnaList.get(0).getQNA_CONTENT());
-		System.out.println("----------impl-----------");
 		return qnaList;
+	}
+
+	@Override
+	public ArrayList<Product_qnaVO> getQna_RE_List(HashMap<String, Object> map) {
+		ProductQnaMapper qnaMapper = sqlSession.getMapper(ProductQnaMapper.class);
+		ArrayList<Product_qnaVO> getQna_RE_List = null;
+		getQna_RE_List = qnaMapper.getQna_RE_List(map);
+		return getQna_RE_List;
 	}
 
 	@Override
@@ -71,6 +80,7 @@ public class ProductQnaServiceImpl implements ProductQnaService{
 		res = qnaMapper.deleteQna(QNA_NUM);
 		return res;
 	}
+
 
 
 }
