@@ -896,7 +896,7 @@ public class ProductController {
 	//-------------------------------------------QNA_RE_insert
 	@RequestMapping(value="/qna_insert.do",  produces="application/json;charset=UTF-8")
 	@ResponseBody
-	public String insert_qna(HttpServletRequest request, HttpSession session) throws Exception {
+	public Map<String, Object> insert_qna(HttpServletRequest request, HttpSession session) throws Exception {
 		System.out.println("qna_insert 컨트롤러 왔다");
 
 		int MEMBER_NUM = 0;
@@ -917,12 +917,9 @@ public class ProductController {
 
 		}
 		
-		
-		
 		System.out.println("QNA_CONTENT=" + request.getParameter("QNA_CONTENT"));
 		System.out.println("QNA_PRODUCT=" + request.getParameter("QNA_PRODUCT"));
 		System.out.println("WORKSHOP_NUM=" + request.getParameter("WORKSHOP_NUM"));
-		System.out.println("MEMBER_NUM=" + request.getParameter("MEMBER_NUM"));
 
 //		qnaVO.setQNA_NUM(qNA_NUM);	//시퀀스 이용
 	    qnaVO.setQNA_CONTENT(request.getParameter("QNA_CONTENT"));
@@ -930,20 +927,19 @@ public class ProductController {
 	    qnaVO.setQNA_PRODUCT(Integer.parseInt(request.getParameter("QNA_PRODUCT")));
 	
 		
-		int res = qnaService.insertQna(qnaVO);
-		System.out.println("res="+res);		
-	
-		String str="";
-		ObjectMapper mapper = new ObjectMapper();
+
+		
+		Map<String, Object> retVal = new HashMap<String, Object>();
 		try {
-			str = mapper.writeValueAsString(qnaVO);
-			System.out.println(str);
+			int res = qnaService.insertQna(qnaVO);
+			Product_qnaVO vo = qnaService.getQnaVO(qnaVO);
+			retVal.put("res", "OK");
+			retVal.put("vo", vo);
 		}catch(Exception e) {
-			System.out.println("first() mapper : " + e.getMessage());
+			retVal.put("res", "FAIL");
+			retVal.put("message", "Failure");
 		}
-		
-		return str;
-		
+		return retVal;
 	}		
 	
 	//===============================================QNA modify

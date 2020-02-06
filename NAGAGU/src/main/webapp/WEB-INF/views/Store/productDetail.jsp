@@ -960,11 +960,22 @@
 								</div>
 							</div>
 							<!-- 답글 폼 끝 -->
-							<!-- qna 답글 리스트 -->
-								<!-- 공방이 qna 답글 insert시 추가됨-->
-							<div class="qna_re_space" id="qna_re_space<%=qnaVO.getQNA_NUM()%>">
+						</div> <!-- 11끝 -->	
+					</div>		
+				</div>			
 							
-							</div>
+							
+							
+							
+				<div class="qna_re_sum justify-content-center" id="qna_re_sum<%=qnaVO.getQNA_NUM() %>"> 			
+					<div class="row">		
+						<div class="col-1 justify-content-end"></div>	
+						<div class="col-11">
+						<!-- qna 답글 리스트 -->
+							<!-- 공방이 qna 답글 insert시 추가됨-->
+						<div class="qna_re_space" id="qna_re_space<%=qnaVO.getQNA_NUM()%>">
+						
+						</div>
 	             
 	             <!-- 답글은 해당 공방 주인과 원글 작성자만 볼 수 있다. -->
 	              <% if(MEMBER_NUM == qnaVO.getQNA_MEMBER() || WORKSHOP_NUM == WorkshopNum ) { %>
@@ -2326,30 +2337,42 @@
                   dataType: 'json',
                   contentType: 'application/x-www-form-urlencoded; charset=utf-8',
                   type : 'POST',
-                  success:function(data) {
+                  success:function(retVal) {
                      alert('성공!');
+                    
+                     
                      
                      var qnaoutput = '';
-                     var QNA_NUM = data.qna_NUM;
-                     var qna_DATE = new Date(data.qna_DATE);
+                     alert(retVal.vo.qna_MEMBER);
+                     console.log(retVal.vo.qna_DATE);
+                     
+                     
+                      
+                     var QNA_NUM = retVal.vo.qna_NUM;
+                     var qna_DATE = new Date(retVal.vo.qna_DATE);
                      var date = date_format(qna_DATE);
                      
+                     
+                     alert("insert 후 num 확인 : "+  retVal.vo.qna_NUM);
+                     
                      qnaoutput += '<div class="col-1 justify-content-end">';
-                     qnaoutput += '<input type="hidden" name="QNA_MEMBER" value="'+data.qna_MEMBER+'">';
+                     qnaoutput += '<input type="hidden" name="QNA_MEMBER" value="'+retVal.vo.qna_MEMBER+'">';
                      qnaoutput += '<img src="'+loginmember_pic+'" alt="" class="rounded-circle"></div>'; 
                      qnaoutput += '<div class="col-11"><div class="row">';
                      qnaoutput += '<div class="col-10 justify-content-end name">';
                      qnaoutput += loginmember_nick + '</div>';
                      qnaoutput += '<div class="col-2 justify-content-center smallfont">' + date;
                      qnaoutput += '</div></div><div class="row">';
-                     qnaoutput += '<div class="col rep_content" id="qna_modify_block'+ data.qna_NUM +'">';
-                     qnaoutput += data.qna_CONTENT + '</div></div>';
+                     qnaoutput += '<div class="col rep_content" id="qna_modify_block'+ retVal.vo.qna_NUM +'">';
+                     qnaoutput += retVal.vo.qna_CONTENT + '</div></div>';
                      qnaoutput += '<div class="row " >';
                      qnaoutput += '<div class="col qna_control pr-5">';
-                     qnaoutput += '<input type="hidden" name="QNA_NUM" value="'+data.qna_NUM+'">';
-                     qnaoutput += '<a class="smallfont qna_modify" id="qna_modify'+ data.qna_NUM +'" style="cursor: pointer;" >수정</a> &nbsp; ';
-                     qnaoutput += '<a class="smallfont qna_delete" id="qna_delete'+ data.qna_NUM +'" style="cursor: pointer;">삭제</a></div></div></div>';
+                     qnaoutput += '<input type="hidden" name="QNA_NUM" value="'+retVal.vo.qna_NUM+'">';
+                     qnaoutput += '<a class="smallfont qna_modify" id="qna_modify'+ retVal.vo.qna_NUM +'" style="cursor: pointer;" >수정</a> &nbsp; ';
+                     qnaoutput += '<a class="smallfont qna_delete" id="qna_delete'+ retVal.vo.qna_NUM +'" style="cursor: pointer;">삭제</a></div></div></div>';
                     
+                      
+                     
                     // console.log("qnaoutput:" + qnaoutput);
                      $('.qnaspace').append(qnaoutput);
                      $('#QNA_CONTENT').val('');
@@ -2500,42 +2523,49 @@
   		           dataType: 'json',
   		           contentType : 'application/x-www-form-urlencoded; charset=UTF-8',
   		           type : 'POST',
-  		           success:function(data) {
+  		           success:function(retVal) {
   		           
+  		        	   
+   		              console.log('retVal.vo.qna_RE='+retVal.vo.qna_RE);
+  		              console.log('retVal.vo.qna_CONTENT='+retVal.vo.qna_CONTENT);
+  		              console.log('QNA_NUM='+QNA_NUM);
+  		              
   		              var re_form = '';
-  		              var qna_DATE = new Date(data.qna_DATE);
+  		              var qna_DATE = new Date(retVal.vo.qna_DATE);
   		              var date = date_format(qna_DATE);
   		              
-  		              alert('ajax 후 data.qna_CONTENT' + data.qna_CONTENT);
+  		              alert('ajax 후 retVal.vo.qna_CONTENT' + retVal.vo.qna_CONTENT);
+
   		              
   						re_form += '<div class="row "><div class="col-1 justify-content-end" >';
   						re_form += '<img src="<%=WORKSHOP_PICTURE%>" alt="" class="rounded-circle"></div>';
   						re_form += '<div class="col-11"><div class="row">';
   						re_form += '<div class="col-10 justify-content-end name pr-0"><%=WORKSHOP_NAME %></div>';
   						re_form += '<div class="col-2 justify-content-center smallfont pl-0 pr-3">'+date+'</div></div>';
-  						re_form += '<form class="qnareviewform" id="qnareviewform'+data.qna_RE+'">';
-  						re_form += '<input type="hidden" name="QNA_RE" value="'+data.qna_RE+'">';
-  						re_form += '<input type="hidden" name="QNA_PRODUCT" value="'+data.qna_RE+'">';
-  						re_form += '<div class="qna_re_modifycontent" id="qna_re_modifycontent'+data.qna_RE+'">';
-  						re_form += '<div class="row pl-3"><input type="hidden" name="QNA_NUM" value="'+data.qna_RE+'">';
-  						re_form += data.qna_CONTENT;
+  						re_form += '<form class="qnareviewform" id="qnareviewform'+retVal.vo.qna_RE+'">';
+  						re_form += '<input type="hidden" name="QNA_RE" value="'+retVal.vo.qna_RE+'">';
+  						re_form += '<input type="hidden" name="QNA_PRODUCT" value="'+retVal.vo.qna_RE+'">';
+  						re_form += '<div class="qna_re_modifycontent" id="qna_re_modifycontent'+retVal.vo.qna_RE+'">';
+  						re_form += '<div class="row pl-3"><input type="hidden" name="QNA_NUM" value="'+retVal.vo.qna_RE+'">';
+  						re_form += retVal.vo.qna_CONTENT;
   						re_form += '</div></div>';
-  						re_form += '<div class="row qna_re_modifyform" id="qna_re_modifyform'+data.qna_RE+'"style="display:none">';
-  						re_form += '<input type="hidden" name="QNA_NUM" value="'+data.qna_RE+'">';
+  						re_form += '<div class="row qna_re_modifyform" id="qna_re_modifyform'+retVal.vo.qna_RE+'"style="display:none">';
+  						re_form += '<input type="hidden" name="QNA_NUM" value="'+retVal.vo.qna_RE+'">';
   						re_form += '<textarea rows="2" name="QNA_CONTENT" class="col-11 rep_content ml-3 pl-0 mr-5" ';
-  						re_form += 'id="qna_re_mod_content'+data.qna_RE+'">'+data.qna_CONTENT+'</textarea>';
+  						re_form += 'id="qna_re_mod_content'+retVal.vo.qna_RE+'">'+retVal.vo.qna_CONTENT+'</textarea>';
   						
   						re_form += '</div></form>';
   						re_form += '<div class="row "  style="cursor: pointer;">';
-  						re_form += '<div class="col qna_re_control pr-5" id="qna_re_control'+data.qna_RE+'">';
-  						re_form += '<input type="hidden" name="QNA_NUM" value="'+data.qna_RE+'">';
-  						re_form += '<a class="smallfont qna_re_modify" id="qna_re_modify'+data.qna_RE+'" style="cursor: pointer;">수정</a>&nbsp;';
-  						re_form += '<a class="smallfont qna_re_delete" id="qna_re_delete'+data.qna_RE+'" style="cursor: pointer;">삭제</a>';
+  						re_form += '<div class="col qna_re_control pr-5" id="qna_re_control'+retVal.vo.qna_RE+'">';
+  						re_form += '<input type="hidden" name="QNA_NUM" value="'+retVal.vo.qna_RE+'">';
+  						re_form += '<a class="smallfont qna_re_modify" id="qna_re_modify'+retVal.vo.qna_RE+'" style="cursor: pointer;">수정</a>&nbsp;';
+  						re_form += '<a class="smallfont qna_re_delete" id="qna_re_delete'+retVal.vo.qna_RE+'" style="cursor: pointer;">삭제</a>';
   						re_form += '</div></div></div></div>';
   									
   		              
   		            //data.qna_RE는 원글의 num과 같다(QNA_NUM)
-  		              $('#qna_re_space'+data.qna_RE).append(re_form);
+  		            alert('qna_re_space'+retVal.vo.qna_RE);
+  		              $('#qna_re_space'+retVal.vo.qna_RE).append(re_form);
   		            $('#qna_re_form'+QNA_NUM).css('display', 'none');
   						
   		           },
