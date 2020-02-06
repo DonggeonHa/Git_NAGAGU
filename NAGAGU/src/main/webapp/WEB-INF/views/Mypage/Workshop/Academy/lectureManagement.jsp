@@ -1,10 +1,16 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ page import="java.util.*" %>
+<%@ page import="com.spring.workshopMypage.*" %>
 <!DOCTYPE html>
-<html lang="ko">
+<html>
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="icon" type="image/png" href="http://example.com/myicon.png"> 
+	<script src="https://code.jquery.com/jquery-3.4.1.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
     <title>Document</title>
 
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
@@ -15,8 +21,180 @@
     <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/css/Mypage/Workshop/workshop_my.css">
     <!-- 페이지 고유 스타일 -->
     <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/css/Mypage/Workshop/Lecture_Management.css">
-    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
 
+
+	<script>
+	
+	
+	
+		$(document).ready(function() {
+			alert("문서준비");
+			classList();
+			
+		});
+		
+		function classList() {
+			$('#academyList').empty();
+			var number = 1;
+			
+			$.ajax({
+				url: '/NAGAGU/classManagementList.my',
+				type: 'POST',
+				dataType: 'json',
+				contentType: 'application/x-www-form-urlencoded; charset=utf-8',
+				success: function(data) {
+					$('.listnum_num').text(data.length+"건");
+					console.log(data);
+					$.each(data, function(index, item) {
+						
+						var output = ' ';
+						output += '<tr>';
+						output += '<td><input type="checkbox"></td>';
+						output += '<td>' + number + '</td>';
+						
+						if(item.class_STATUS == 0) {
+							output += '<td>' + "준비중" + '</td>';
+						} else if(item.class_STATUS == 1) {
+							output += '<td>' + "강의중" + '</td>';
+						} else {
+							output += '<td>' + "강의종료" + '</td>';
+						}
+						output += '<td>' + item.class_AREA + '</td>';
+						output += '<td>' + item.class_AMOUNT + '</td>';
+						output += '<td>' + item.class_NAME + '</td>';
+						output += '<td>' + item.class_CATEGORY + '</td>';
+						output += '<td>' + item.class_DATE_CONFIGURATION_1 + ' ~ ' + item.class_DATE_CONFIGURATION_2  + '</td>';
+						output += '<td>' + item.class_COUNT_MEMBER + '</td>';
+						output += '<td><button class="btn_modify">' + "수정" + '</button></td>';
+						output += '</tr>';
+						
+						$('#academyList').append(output);
+						number += 1;
+					});
+				},
+				error: function() {
+					alert("ajax 통신 실패!");
+				}
+			});
+		}
+		
+		$(document).on('click', '#btn_search', function(event) {
+			var searchType = $('#searchType').val();
+			var keyword = $('#keyword').val();
+			var number = 1;
+			
+			$('#academyList').empty();
+			alert(searchType + keyword);
+			
+			if(!keyword || !searchType){
+				alert("카테고리 선택, 검색어를 입력하세요.");
+				classList();
+				return false;
+			}
+			
+			$.ajax({
+				url: '/NAGAGU/searchTypeList.my',
+				type: 'POST',
+				data: {"searchType" : searchType, "keyword" : keyword},
+				dataType: 'json',
+				contentType: 'application/x-www-form-urlencoded; charset=utf-8',
+				success: function(data) {
+					$('.listnum_num').text(data.length+"건");
+					console.log(data);
+					$.each(data, function(index, item) {
+						
+						var output = ' ';
+						output += '<tr>';
+						output += '<td><input type="checkbox"></td>';
+						output += '<td>' + number + '</td>';
+						
+						if(item.class_STATUS == 0) {
+							output += '<td>' + "준비중" + '</td>';
+						} else if(item.class_STATUS == 1) {
+							output += '<td>' + "강의중" + '</td>';
+						} else {
+							output += '<td>' + "강의종료" + '</td>';
+						}
+						output += '<td>' + item.class_AREA + '</td>';
+						output += '<td>' + item.class_AMOUNT + '</td>';
+						output += '<td>' + item.class_NAME + '</td>';
+						output += '<td>' + item.class_CATEGORY + '</td>';
+						output += '<td>' + item.class_DATE_CONFIGURATION_1 + ' ~ ' + item.class_DATE_CONFIGURATION_2  + '</td>';
+						output += '<td>' + item.class_COUNT_MEMBER + '</td>';
+						output += '<td><button class="btn_modify">' + "수정" + '</button></td>';
+						output += '</tr>';
+						
+						$('#academyList').append(output);
+						number += 1;
+					});
+				},
+				error: function() {
+					alert("ajax 통신 실패!");
+				}
+			});
+			event.preventDefault();
+		});
+		
+		function keyupSearch(event) {
+			var searchType = $('#searchType').val();
+			var keyword = $('#keyword').val();
+			var number = 1;
+			
+			$('#academyList').empty();
+			alert(searchType + keyword);
+			
+			if(!keyword || !searchType){
+				alert("카테고리 선택,검색어를 입력하세요.");
+				classList();
+				return false;
+			}
+			$.ajax({
+				url: '/NAGAGU/searchTypeList.my',
+				type: 'POST',
+				data: {"searchType" : searchType, "keyword" : keyword},
+				dataType: 'json',
+				contentType: 'application/x-www-form-urlencoded; charset=utf-8',
+				success: function(data) {
+					$('.listnum_num').text(data.length+"건");
+					console.log(data);
+					$.each(data, function(index, item) {
+						
+						var output = ' ';
+						output += '<tr>';
+						output += '<td><input type="checkbox"></td>';
+						output += '<td>' + number + '</td>';
+						
+						if(item.class_STATUS == 0) {
+							output += '<td>' + "준비중" + '</td>';
+						} else if(item.class_STATUS == 1) {
+							output += '<td>' + "강의중" + '</td>';
+						} else {
+							output += '<td>' + "강의종료" + '</td>';
+						}
+						output += '<td>' + item.class_AREA + '</td>';
+						output += '<td>' + item.class_AMOUNT + '</td>';
+						output += '<td>' + item.class_NAME + '</td>';
+						output += '<td>' + item.class_CATEGORY + '</td>';
+						output += '<td>' + item.class_DATE_CONFIGURATION_1 + ' ~ ' + item.class_DATE_CONFIGURATION_2  + '</td>';
+						output += '<td>' + item.class_COUNT_MEMBER + '</td>';
+						output += '<td><button class="btn_modify">' + "수정" + '</button></td>';
+						output += '</tr>';
+						
+						$('#academyList').append(output);
+						number += 1;
+					});
+				},
+				error: function() {
+					alert("ajax 통신 실패!");
+				}
+			});
+			event.preventDefault();
+		}
+		
+		function selectClassType() {
+			
+		}
+	</script>
     
 
 </head>
@@ -101,34 +279,36 @@
                     <div class="row pt-2 pb-2">
                         <button type="button" id="all_select" class="btn btn-sm btn-outline-dark mr-2">전체표시</button>                        
                         <span class="listnum_txt pt-2">전체 문의내역</span>
-                        <span class="listnum_num pt-2">194건</span>
+                        <span class="listnum_num pt-2"></span>
                     </div>
 
 
                     <div class="row">
                         <!-- Example split danger button -->
                         <div class="dropdown">
-                            <button class="btn dropbtn btn-sm dropdown-toggle btn-search-mode" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                선택
+                            <button class="btn dropbtn btn-sm dropdown-toggle btn-search-mode" type="button" id="searchType" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            	선택
                             </button>
-                            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                <a class="dropdown-item" href="#">강의명</a>
-                                <a class="dropdown-item" href="#">지역</a>
-                                <a class="dropdown-item" href="#">상태</a>
-                                <a class="dropdown-item" href="#">카테고리</a>
+                            <div class="dropdown-menu" aria-labelledby="searchType">
+                                <button class="dropdown-item" id="dropdown-item-1" onclick="class_name()">강의명</button>
+                                <button class="dropdown-item" id="dropdown-item-2" onclick="area()">지역</button>
+                                <button class="dropdown-item" id="dropdown-item-3" onclick="category()">카테고리</button>
                             </div>
                         </div>
                         <!-- search -->
                         <nav class="navbar-light bg-light">
-                          <form class="form-inline" >
-                            <input class="form-control mr-sm-2" type="search" aria-label="Search" style="height:90%">
-                            <button class="btn btn_search btn-sm my-2 my-sm-0" type="submit">검색</button>
+                        <!-- input에 enter키 누르면 자동으로 submit -->
+                          <form class="form-inline" onsubmit="return false">
+                            <input class="form-control mr-sm-2" type="search" id="keyword" aria-label="Search" style="height:90%">
+                            <button class="btn btn_search btn-sm my-2 my-sm-0" type="button" id="btn_search">검색</button>
                           </form>
                         </nav>
-                        <select class="search_hidden_state" >
-                            <option>전체</option>
-                            <option value="0">강의중</option>
-                            <option value="1">강의종료</option>
+                        <select class="search_hidden_state" id="selectClassType" name="selectClassType" onchange="btn_select()">
+                            <option value="allClass">전체</option>
+                            <option value="inClass">강의중</option>
+                            <option value="endClass">강의종료</option>
+                            <option value="onedayClass">원데이클래스</option>
+                            <option value="regularClass">정규클래스</option>
                         </select>
                     </div>
                
@@ -137,7 +317,7 @@
                 <thead>
                 <tr>
                     <th scope="col" class="th1"><input id="all_select" type="checkbox"></th>
-                    <th scope="col" class="th2">분류</th>
+                    <th scope="col" class="th2">번호</th>
                     <th scope="col" class="th3">상태</th>
                     <th scope="col" class="th4">지역</th>
                     <th scope="col" class="th5">가격</th>
@@ -148,138 +328,9 @@
                     <th scope="col" class="th10">관리</th>                    
                 </tr>
                 </thead>
-                <tbody>
-                <tr>
-                    <td><input type="checkbox"></td>
-                    <td>1</td>
-                    <td>강의중</td>
-                    <td>동작</td>
-                    <td>55,000원</td>
-                    <td>원데이클래스</td>
-                    <td>책상</td>
-                    <td>2020.01.25 ~ 2020.02.02</td>
-                    <td>00명</td>
-                    <td><button class="btn_modify">수정</button></td>
-                    
-                </tr>
-                <tr>
-                    <td><input type="checkbox"></td>
-                    <td>1</td>
-                    <td>강의중</td>
-                    <td>동작</td>
-                    <td>55,000원</td>
-                    <td>원데이클래스</td>
-                    <td>책상</td>
-                    <td>2020.01.25 ~ 2020.02.02</td>
-                    <td>00명</td>
-                    <td><button class="btn_modify">수정</button></td>
-                    
-                </tr>
-                <tr>
-                    <td><input type="checkbox"></td>
-                    <td>1</td>
-                    <td>강의중</td>
-                    <td>동작</td>
-                    <td>55,000원</td>
-                    <td>원데이클래스</td>
-                    <td>책상</td>
-                    <td>2020.01.25 ~ 2020.02.02</td>
-                    <td>00명</td>
-                    <td><button class="btn_modify">수정</button></td>
-                    
-                </tr>
-                <tr>
-                    <td><input type="checkbox"></td>
-                    <td>1</td>
-                    <td>강의중</td>
-                    <td>동작</td>
-                    <td>55,000원</td>
-                    <td>원데이클래스</td>
-                    <td>책상</td>
-                    <td>2020.01.25 ~ 2020.02.02</td>
-                    <td>00명</td>
-                    <td><button class="btn_modify">수정</button></td>
-                    
-                </tr>
-                <tr>
-                    <td><input type="checkbox"></td>
-                    <td>1</td>
-                    <td>강의중</td>
-                    <td>동작</td>
-                    <td>55,000원</td>
-                    <td>원데이클래스</td>
-                    <td>책상</td>
-                    <td>2020.01.25 ~ 2020.02.02</td>
-                    <td>00명</td>
-                    <td><button class="btn_modify">수정</button></td>
-                    
-                </tr>
-                <tr>
-                    <td><input type="checkbox"></td>
-                    <td>1</td>
-                    <td>강의중</td>
-                    <td>동작</td>
-                    <td>55,000원</td>
-                    <td>원데이클래스</td>
-                    <td>책상</td>
-                    <td>2020.01.25 ~ 2020.02.02</td>
-                    <td>00명</td>
-                    <td><button class="btn_modify">수정</button></td>
-                    
-                </tr>
-                <tr>
-                    <td><input type="checkbox"></td>
-                    <td>1</td>
-                    <td>강의중</td>
-                    <td>동작</td>
-                    <td>55,000원</td>
-                    <td>원데이클래스</td>
-                    <td>책상</td>
-                    <td>2020.01.25 ~ 2020.02.02</td>
-                    <td>00명</td>
-                    <td><button class="btn_modify">수정</button></td>
-                    
-                </tr>
-                <tr>
-                    <td><input type="checkbox"></td>
-                    <td>1</td>
-                    <td>강의중</td>
-                    <td>동작</td>
-                    <td>55,000원</td>
-                    <td>원데이클래스</td>
-                    <td>책상</td>
-                    <td>2020.01.25 ~ 2020.02.02</td>
-                    <td>00명</td>
-                    <td><button class="btn_modify">수정</button></td>
-                    
-                </tr>
-                <tr>
-                    <td><input type="checkbox"></td>
-                    <td>1</td>
-                    <td>강의중</td>
-                    <td>동작</td>
-                    <td>55,000원</td>
-                    <td>원데이클래스</td>
-                    <td>책상</td>
-                    <td>2020.01.25 ~ 2020.02.02</td>
-                    <td>00명</td>
-                    <td><button class="btn_modify">수정</button></td>
-                    
-                </tr>
-                <tr>
-                    <td><input type="checkbox"></td>
-                    <td>1</td>
-                    <td>강의중</td>
-                    <td>동작</td>
-                    <td>55,000원</td>
-                    <td>원데이클래스</td>
-                    <td>책상</td>
-                    <td>2020.01.25 ~ 2020.02.02</td>
-                    <td>00명</td>
-                    <td><button class="btn_modify">수정</button></td>
-                    
-                </tr>
-                 </tbody>
+                <tbody id="academyList">
+                	
+                </tbody>
             </table>
             <div class="table_bottom">
                 <div class="page_nav">
@@ -296,25 +347,51 @@
 </div>
 
 <script>
-$(document).ready(function(){
-    var all_check = false;
-
-    $("#all_select").click(function() {
-        if (all_check == false) {
-                $("input[type=checkbox]").prop("checked",true);
-                all_check = true;
-        }
-        else {
-                $("input[type=checkbox]").prop("checked",false);
-                all_check = false;
-        }
-        
-    });
-});
+	$(document).ready(function(){
+	    var all_check = false;
+	
+	    $("#all_select").click(function() {
+	        if (all_check == false) {
+	                $("input[type=checkbox]").prop("checked",true);
+	                all_check = true;
+	        }
+	        else {
+	                $("input[type=checkbox]").prop("checked",false);
+	                all_check = false;
+	        }
+	        
+	    });
+	});
+	
+	function class_name() {
+		$('#searchType').html('강의명');
+		$('#searchType').val('className');
+	};
+	function area() {
+		$('#searchType').html('지역');
+		$('#searchType').val('area');
+	}
+	function category() {
+		$('#searchType').html('카테고리');
+		$('#searchType').val('category');
+	}
+    
+	
+	$("#keyword").keyup(function(event){
+		if (event.keyCode == 13) {
+			event.preventDefault();
+			keyupSearch(event);
+			return;
+		}
+	});
+	
+	
+	function btn_select() {
+		
+		selectClassType();
+	}
 </script>
-
-<script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
-<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
 </body>
 </html>
+
+

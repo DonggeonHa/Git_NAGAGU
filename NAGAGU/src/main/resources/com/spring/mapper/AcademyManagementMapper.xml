@@ -1,8 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-
-<!-- 이 xml문서와 맵핑할 인터페이스 경로, 이름 -->
-<mapper namespace="com.spring.mapper.AcademyMapper">
+<mapper namespace="com.spring.mapper.AcademyManagementMapper">
 	<resultMap type="com.spring.academy.ClassVO" id="classResultMap">
 		<result property="CLASS_NUMBER" column="CLASS_NUMBER" />	
 		<result property="WORKSHOP_NUM" column="WORKSHOP_NUM" />
@@ -26,7 +24,6 @@
 		<result property="CLASS_ADDRESS" column="CLASS_ADDRESS" />	
 		<result property="CLASS_DETAIL_ADDRESS" column="CLASS_DETAIL_ADDRESS" />
 		<result property="CLASS_COUNT_MEMBER" column="CLASS_COUNT_MEMBER" />
-		<result property="CLASS_STATUS" column="CLASS_STATUS" />
 	</resultMap>
 	
 	<resultMap type="java.util.HashMap" id="hashmapVO">
@@ -52,7 +49,6 @@
 		<result property="CLASS_ADDRESS" column="CLASS_ADDRESS" />
 		<result property="CLASS_DETAIL_ADDRESS" column="CLASS_DETAIL_ADDRESS" />
 		<result property="CLASS_COUNT_MEMBER" column="CLASS_COUNT_MEMBER" />
-		<result property="CLASS_STATUS" column="CLASS_STATUS" />
 	</resultMap>
 	
 	<resultMap type="com.spring.workshop.WorkShopMemberVO" id="workshopMemberResultMap">
@@ -82,56 +78,17 @@
 		<result property="MY_CLASS_STATUS" column="MY_CLASS_STATUS" />
 	</resultMap>
 	
-	<insert id="insertClassInfo" parameterType="com.spring.academy.MyClassVO">
-		<selectKey resultType="int" keyProperty="MY_CLASS_NUM" order="BEFORE">
-			SELECT my_class_seq.nextval FROM dual     
-		</selectKey>
- 		INSERT INTO my_class(MY_CLASS_NUM, MY_CLASS_MEMBERNUM, MY_CLASS_CLASSNUM) 
-			 		VALUES(#{MY_CLASS_NUM}, #{MY_CLASS_MEMBERNUM}, #{MY_CLASS_CLASSNUM})
- 	</insert>
-
-	 
-	<select id="getClassList" parameterType="java.util.HashMap" resultMap="classResultMap">
-		SELECT * 
-		FROM (SELECT ROWNUM RNUM, WORKSHOP_NUM, WORKSHOP_NAME, WORKSHOP_PICTURE, CLASS_NUMBER, CLASS_DIVISION, CLASS_NAME, CLASS_ABRIEF, CLASS_AMOUNT, CLASS_DATE, 
-			  CLASS_DATE_CONFIGURATION_1, CLASS_DATE_CONFIGURATION_2, CLASS_AREA, CLASS_CATEGORY, 
-			  CLASS_INTRODUCTION_1, CLASS_INTRODUCTION_2, CLASS_INTRODUCTION_3, CLASS_ETC, CLASS_BANNER, CLASS_IMAGE, CLASS_ADDRESS, CLASS_DETAIL_ADDRESS, CLASS_COUNT_MEMBER
-			  FROM (SELECT * 
-			  		FROM academy
-					<if test="CLASS_CATEGORY != 'all'"> WHERE CLASS_CATEGORY = #{CLASS_CATEGORY}  </if>
-					ORDER BY <if test="sort == 'new'"> CLASS_DATE </if> DESC))
-					<!-- [CDATA[ WHERE RNUM >= #{startrow} AND RNUM <= #{endrow} ]]-->  
- 	</select>
-
-	 
-	<insert id="insertClass" parameterType="com.spring.academy.ClassVO">
- 		INSERT INTO academy(CLASS_NUMBER, WORKSHOP_NUM, WORKSHOP_NAME, WORKSHOP_PICTURE, CLASS_DIVISION, CLASS_NAME, CLASS_ABRIEF, 
- 								 CLASS_AMOUNT, CLASS_DATE, CLASS_DATE_CONFIGURATION_1, CLASS_DATE_CONFIGURATION_2, CLASS_AREA, CLASS_CATEGORY, 
-			  					 CLASS_INTRODUCTION_1, CLASS_INTRODUCTION_2, CLASS_INTRODUCTION_3, CLASS_ETC, CLASS_BANNER, 
-			  					 CLASS_IMAGE, CLASS_ADDRESS, CLASS_DETAIL_ADDRESS) 
-			 		VALUES(academy_seq.nextval, #{WORKSHOP_NUM}, #{WORKSHOP_NAME}, #{WORKSHOP_PICTURE}, #{CLASS_DIVISION}, #{CLASS_NAME}, #{CLASS_ABRIEF}, 
-			 			   #{CLASS_AMOUNT}, SYSDATE, #{CLASS_DATE_CONFIGURATION_1}, #{CLASS_DATE_CONFIGURATION_2}, #{CLASS_AREA}, #{CLASS_CATEGORY}, 
-			 			   #{CLASS_INTRODUCTION_1}, #{CLASS_INTRODUCTION_2}, #{CLASS_INTRODUCTION_3}, #{CLASS_ETC}, #{CLASS_BANNER}, 
-			 			   #{CLASS_IMAGE}, #{CLASS_ADDRESS}, #{CLASS_DETAIL_ADDRESS})
- 	</insert>
- 	
-
-	<select id="getCount" parameterType="java.util.HashMap" resultType="int"> <!-- 갯수구함, resultType="int"은 생략가능, -->
- 		SELECT count(*) FROM academy  
-		<if test="CLASS_CATEGORY != 'all'"> WHERE CLASS_CATEGORY=#{CLASS_CATEGORY}  </if>
-		<!-- [CDATA[ WHERE rnum >= #{startrow} AND rnum <= #{endrow} ]]-->
- 	</select>
- 	
- 	<select id="getDetail" parameterType="com.spring.academy.ClassVO" resultMap="classResultMap"> 
- 		SELECT * FROM academy WHERE CLASS_NUMBER = #{CLASS_NUMBER}
- 	</select>
- 	
- 	<select id="selectWMember" parameterType="com.spring.academy.ClassVO" resultMap="workshopMemberResultMap">
-		SELECT * FROM nagagu_workshop_member WHERE WORKSHOP_NUM = #{WORKSHOP_NUM}
+	<select id="getManagementClassList" resultMap="classResultMap">
+	    select * from (select CLASS_NUMBER, CLASS_STATUS, CLASS_AREA, CLASS_AMOUNT, CLASS_NAME, CLASS_CATEGORY, 
+	    CLASS_DATE_CONFIGURATION_1, CLASS_DATE_CONFIGURATION_2, CLASS_COUNT_MEMBER from ACADEMY order by CLASS_DATE DESC)
 	</select>
 	
-	<update id="countUp" parameterType="com.spring.academy.ClassVO">
-		update academy set CLASS_COUNT_MEMBER = CLASS_COUNT_MEMBER + 1 where CLASS_NUMBER = #{CLASS_NUMBER}
-	</update>
-
+	<select id="getSearchList" resultMap="classResultMap">
+		select * from (select CLASS_NUMBER, CLASS_STATUS, CLASS_AREA, CLASS_AMOUNT, CLASS_NAME, CLASS_CATEGORY, 
+	    CLASS_DATE_CONFIGURATION_1, CLASS_DATE_CONFIGURATION_2, CLASS_COUNT_MEMBER from (select * from ACADEMY where
+	    <if test="searchType == 'className'"> CLASS_NAME LIKE '%'||#{keyword}||'%'</if>
+	    <if test="searchType == 'area'"> CLASS_AREA LIKE '%'||#{keyword}||'%'</if>
+	    <if test="searchType == 'category'"> CLASS_CATEGORY LIKE '%'||#{keyword}||'%'</if>
+	    ) order by CLASS_DATE desc)    
+	</select>
 </mapper>
