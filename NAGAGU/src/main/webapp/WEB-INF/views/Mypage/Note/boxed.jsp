@@ -179,7 +179,7 @@
     }
 
     .content_list {
-        height:600px;
+        height:450px;
     }
 
     .note_list {

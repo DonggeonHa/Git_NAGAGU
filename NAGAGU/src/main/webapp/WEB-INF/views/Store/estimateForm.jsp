@@ -56,25 +56,8 @@
 		}
 		
 		#dropZone {
-			width:580px;
-			height:400px;
-			border:3px solid #808080;
-			border-radius:10px;
-			margin:0 auto;
-		}
-		
-		#dropZone #fileDragDesc {
-			color:#d3d3d3;
-			font-weight:700;
-			font-size:1.1rem;
-			padding-top:180px;
-			user-select:none;
-			padding:0;
-		}
-		
-		#fileList {
 			display:inline-box;
-			width:580px;
+			width:600px;
 			height:120px;
 			border:2px solid #808080;
 			border-radius:4px;
@@ -84,6 +67,17 @@
 			white-space:nowrap;
 		}
 		
+		#dropZone #fileDragDesc {
+			color:#d3d3d3;
+			font-weight:700;
+			font-size:1.1rem;
+			line-height:120px;
+			user-select:none;
+			margin:0 auto;
+			padding:0;
+			position:relative;
+		}
+		
 		.imageThumb {
 			margin:3px;
 			padding:0;
@@ -91,7 +85,14 @@
 			height:110px;
 			float:left;
 			position:relative;
+			z-index:1;
+			transition:opacity 0.3s;
 		}
+		
+		.imageThumb:hover {
+			opacity:0.6;
+		}
+		
 		
 		.imageThumb .thumbItem {
 			width:110px;
@@ -104,7 +105,24 @@
 			top:5px;
 			right:5px;
 			position:absolute;
+			z-index:3;
+		}
+		
+		.imageThumb .close:hover {
+			cursor:pointer;
+		}
+		
+		.imageThumb .thumb_title {
+			background: transparent;
+			height:110px;
+			width:110px;
+			position:absolute;
+			line-height:110px;
+			text-align:center;
+			user-select:none;
+			color:black;
 			z-index:2;
+			display:none;'
 		}
 		
 		.coat_radio {
@@ -114,6 +132,7 @@
 		.coat_label {
 			border-radius:4px;
 			padding:4px;
+			margin:8px;
 		}
 		
 		.coat_uncheck {
@@ -125,6 +144,7 @@
 			border:1px solid #000000;
 			color:#000000;
 			background:#d3d3d3;
+			cursor:pointer;
 		}
 		
 		.coat_checked {
@@ -138,6 +158,7 @@
 			border:1px solid #d3d3d3;
 			color:#d3d3d3;
 			background:#000000;
+			cursor:pointer;
 		}
 
 
@@ -157,37 +178,35 @@
 		<br />
 		<br />
 		<input type="file" id="input_file" multiple="multiple" name="ESTIMATE_FILE" style="display:none">
-		<div id="dropZone" class="row justify-content-center pb-3">
-			<div id="fileDragDesc">파일을 드래그 해주세요.</div>
-		</div>
 		<br/><br/>
-		<div id="fileList" class="row">
+		<div id="dropZone" class="row">
+			<div id="fileDragDesc">클릭 또는 파일을 드래그 해주세요.</div>
 		</div>
 			<div class="row text-center pt-1 pb-1 ">
 				<div class="col-md-4 d-flex justify-content-end title">제목</div>
 				<div class="col-md-8 d-flex justify-content-start">
-					<input type="text" name="ESTIMATE_TITLE" size="50" maxlength="30"
+					<input type="text" id="ESTIMATE_TITLE" name="ESTIMATE_TITLE" size="50" maxlength="30"
 						placeholder="제목을 입력하세요 ">
 				</div>
 			</div>
 			<div class="row text-center pt-1 pb-1 ">
 				<div class="col-md-4 d-flex justify-content-end title">제품 종류</div>
 				<div class="col-md-8 d-flex justify-content-start">
-					<input type="text" name="ESTIMATE_CATEGORY" size="50" maxlength="15"
+					<input type="text" id="ESTIMATE_CATEGORY" name="ESTIMATE_CATEGORY" size="50" maxlength="15"
 						placeholder="ex)침대, 서랍장, 의자.. ">
 				</div>
 			</div>
 			<div class="row text-center">
 				<div class="col-md-4 d-flex justify-content-end title">소재</div>
 				<div class="col-md-8 d-flex justify-content-start">
-					<input type="text" name="ESTIMATE_SOURCE" size="50" maxlength="20"
+					<input type="text" id="ESTIMATE_SOURCE" name="ESTIMATE_SOURCE" size="50" maxlength="20"
 						placeholder="ex)편백나무 원목(상판), 소나무 (하부)">
 				</div>
 			</div>
 			<div class="row text-center">
 				<div class="col-md-4 d-flex justify-content-end title">색상(염색)</div>
 				<div class="col-md-8 d-flex justify-content-start">
-					<input type="text" name="ESTIMATE_COLOR" size="50" maxlength="20"
+					<input type="text" id="ESTIMATE_COLOR" name="ESTIMATE_COLOR" size="50" maxlength="20"
 						placeholder="ex)투명, 블루..">
 				</div>
 			</div>
@@ -201,14 +220,14 @@
 			<div class="row text-center">
 				<div class="col-md-4 d-flex justify-content-end title">규격</div>
 				<div class="col-md-8 d-flex justify-content-start">
-					<input type="text" name="ESTIMATE_SIZE" size="50" maxlength="50"
+					<input type="text" id="ESTIMATE_SIZE" name="ESTIMATE_SIZE" size="50" maxlength="50"
 						placeholder="ex)가로100*세로150*높이200 ">
 				</div>
 			</div>
 			<div class="row text-center">
 				<div class="col-md-4 d-flex justify-content-end title">결제 방법</div>
 				<div class="col-md-8 d-flex justify-content-start">
-					<input type="checkbox" name="ESTIMATE_PAY" value="신용카드">신용카드
+					<input type="checkbox" id="ESTIMATE_PAY" name="ESTIMATE_PAY" value="신용카드">신용카드
 				</div>
 			</div>
 			<div class="row text-center pt-1 pb-1">
@@ -230,17 +249,31 @@
 	
 	
 	<script>
-	$(document).ready(function() {
+
+    // 파일 리스트
+    var fileList = new Array();
+    var fileUrlList = new Array();
+    var uploadCnt = 0;
+
+    $(document).ready(function() {
         $("#input_file").bind('change', function() {
             selectFile(this.files);
             //this.files[0].size gets the size of your file.
             //alert(this.files[0].size);
         });
+        
+        $(document).on('mouseenter', '.imageThumb', function() {
+        	console.log("hey");
+       		var test = $(this).find('div.thumb_title').attr('idx');
+       		console.log(test);
+        	$(this).find('div.thumb_title').show(200);
+        });
+        
+        $(document).on('mouseleave', '.imageThumb', function() {
+        	$(this).find('div.thumb_title').hide(200);
+        });
     });
-    // 파일 리스트
-    var fileList = new Array();
-    var fileUrlList = new Array();
-
+    
     $(function() {
         // 파일 드롭 다운
         fileDropDown();
@@ -271,7 +304,7 @@
             e.preventDefault();
             // 드롭다운 영역 css
             dropZone.css('background-color', '#E3F2FC');
-            dropZone.css('cursor', 'url(${pageContext.request.contextPath}/resources/images/Estimate/cursor.cur)');
+            dropZone.css('cursor', 'url("${pageContext.request.contextPath}/resources/images/Estimate/cursor.cur")');
         });
         dropZone.on('drop', function(e) {
         	console.log('drop');
@@ -280,58 +313,79 @@
             dropZone.css('background-color', '#FFFFFF');
 
             var files = e.originalEvent.dataTransfer.files;
-            if (files != null) {
-                if (files.length < 1) {
-                    console.log("폴더 업로드 불가");
-                    return;
-                } else {
-                	
-                	for(var i = 0; i < files.length; i++) {
-                        var fileName = files[i].name;
-                        var fileNameArr = fileName.split("\.");
-                        // 확장자
-                        var ext = fileNameArr[fileNameArr.length - 1];
-                        var fileSize = files[i].size;
-                        
-                        if (fileSize <= 0) {
-                            console.log("0kb file return");
-                            return;
-                        }
-                		
-                		if (!files[0].type.match('image.*')) {
-                            alert("등록이 불가능한 파일 입니다.("+fileName+")");
-                        } else {
-	                		var file = files[i];
-	                		var size = fileList.push(file); //업로드 목록에 추가
-	                		preview(file, size - 1); //미리보기 만들기
-                        }
-                	}
-                	}
-            } else {
-                alert("ERROR");
-            }
+			
+            selectFile(files);
         });
     }
+    $(document).on('click', '#dropZone', function() {
+    	$("#input_file").click();
+    });
     
+    function selectFile(files) {
+    	
+    	if (files != null) {
+            if (files.length < 1) {
+                console.log("폴더 업로드 불가");
+                return;
+            } else {
+            	
+            	for(var i = 0; i < files.length; i++) {
+                    var fileName = files[i].name;
+                    console.log(fileName);
+                    var fileNameArr = fileName.split("\.");
+                    // 확장자
+                    var ext = fileNameArr[fileNameArr.length - 1];
+                    var fileSize = files[i].size;
+                    
+                    if (fileSize <= 0) {
+                        console.log("0kb file return");
+                        return;
+                    }
+            		
+            		if (!files[0].type.match('image.*')) {
+                        alert("등록이 불가능한 파일 입니다.("+fileName+")");
+                    } else {
+                		var file = files[i];
+                		var size = fileList.push(file); //업로드 목록에 추가
+                		console.log(size);
+                		preview(file, size-1); //미리보기 만들기
+                    	
+                    	uploadCnt++;
+                    }
+            	}
+            	$("#fileDragDesc").hide();
+            }
+        } else {
+            alert("ERROR");
+        }
+    }
+    
+    // 업로드 파일 목록 생성
     function preview(file, idx) {
     	  var reader = new FileReader();
     	  reader.onload = (function(f, idx) {
     	    return function(e) {
-    	      var div = '<div class="imageThumb"><div class="thumbItem"><img src="' + e.target.result + '" title="' + escape(f.name) + '" width="110" height="110"/></div><div class="close" data-idx="' + idx + '">X</div></div>';
-    	      $("#fileList").append(div);	
+    	      var div = '<div class="imageThumb"><div class="thumbItem"><div class="thumb_title" idx="' + idx + '">' + escape(f.name) + '</div><img src="' + e.target.result + '" title="' + escape(f.name) + '" width="110" height="110"/></div><div class="close" data-idx="' + idx + '">X</div></div>';
+    	      $("#dropZone").append(div);	
     	    };
     	  })(file, idx);
     	  reader.readAsDataURL(file);
     	}
 
-    // 업로드 파일 목록 생성
-    $("#imageThumb").on("click", ".close", function(e) {
+    $(document).on('click', '.close', function(e) {
+		e.stopPropagation();
+    	console.log("test");
 		var $target = $(e.target);
 		var idx = $target.attr('data-idx');
 		fileList[idx].upload = 'disable'; //삭제된 항목은 업로드하지 않기 위해 플래그 생성
 		$target.parent().remove(); //프리뷰 삭제
+
+    	uploadCnt--;
+		if (uploadCnt == 0) {
+			$("#fileDragDesc").show();
+		}
 	});
-    
+
     /* ---------------------------- 체크박스 스타일 ------------------------------*/
     
     $("#coat_yes").click(function() {
@@ -349,12 +403,46 @@
     
     /* --------------------------- submit 실행부  ----------------------------*/
     function checkList() {
-    	
+    	if ($("#ESTIMATE_TITLE").val() == "") {
+    		alert("제목을 입력해주십시오.");
+    		$("#ESTIMATE_TITLE").focus();
+    		return false;
+    	}
+    	if ($("#ESTIMATE_CATEGORY").val() == "") {
+    		alert("제품 종류를 입력해주십시오.");
+    		$("#ESTIMATE_CATEGORY").focus();
+    		return false;
+    	}
+    	if ($("#ESTIMATE_SOURCE").val() == "") {
+    		alert("소재를 입력해주십시오.");
+    		$("#ESTIMATE_SOURCE").focus();
+    		return false;
+    	}
+    	if ($("#ESTIMATE_COLOR").val() == "") {
+    		alert("색상을 입력해주십시오.");
+    		$("#ESTIMATE_COLOR").focus();
+    		return false;
+    	}
+    	if ($("input:checkbox[class='coat_radio']:checked").length < 1) {
+    		alert("코팅 여부를 선택해 주십시오.");
+    		$("#coat_yes").focus();
+    		return false;
+    	}
+    	if ($("#ESTIMATE_SIZE").val() == "") {
+    		alert("희망 규격을 입력해주십시오.");
+    		$("#ESTIMATE_SIZE").focus();
+    		return false;
+    	}
+    	if ($("#ESTIMATE_PAY").val() == "") {
+    		alert("결제 방법을 선택해주십시오.");
+    		$("#ESTIMATE_PAY").focus();
+    		return false;
+    	}
     }
     
     $('#btn_estimate').click(function(e) {
     	
-    	checkList();
+    	if(!checkList()) return false;
 	
 		if (fileList != null) {
 			for (var i = 0; i < fileList.length; i++) {
@@ -398,16 +486,9 @@
 	
 	<!-- content 끝 -->
 	<script src="<c:url value="/resources/js/Store/estimateform.js"/>"></script>
-	<script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
-		integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n"
-		crossorigin="anonymous"></script>
-	<script
-		src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
-		integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
-		crossorigin="anonymous"></script>
-	<script
-		src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
-		integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
-		crossorigin="anonymous"></script>
+	<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+
 </body>
 </html>

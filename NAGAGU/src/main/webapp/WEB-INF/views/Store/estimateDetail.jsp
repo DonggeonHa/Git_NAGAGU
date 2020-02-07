@@ -127,8 +127,8 @@
         }
         
         .item_head {
-            transition:border 0.2s;
             text-align:center;
+            transition:border 0.2s;
         }
         
         .item_head:hover {

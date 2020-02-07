@@ -173,7 +173,7 @@
     }
 
     .content_body {
-        height:600px;
+        min-height:450px;
     }
     
     .note_view {
