@@ -2,12 +2,14 @@ package com.spring.academy;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Map;
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.spring.mapper.AcademyMapper;
+import com.spring.mapper.ProductReviewMapper;
 import com.spring.member.MemberVO;
 import com.spring.workshop.WorkShopMemberVO;
 
@@ -98,5 +100,14 @@ public class AcademyServiceImpl implements AcademyService {
 			return false;
 		
 		return true;
+	}
+
+	@Override
+	public ArrayList<Map<String, Object>> getLoginMemberClass(HashMap<String, Object> map) {
+		ArrayList<Map<String, Object>> classList =null;
+		AcademyMapper classMapper = sqlSession.getMapper(AcademyMapper.class);
+		classList= classMapper.getLoginMemberClass(map);
+		System.out.println("getLoginMemberClass Impl결과="+classList);
+		return classList;
 	}
 }

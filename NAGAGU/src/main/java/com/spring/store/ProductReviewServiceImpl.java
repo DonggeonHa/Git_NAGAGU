@@ -168,7 +168,7 @@ public class ProductReviewServiceImpl implements ProductReviewService {
 		System.out.println("getLoginMemberReply Impl결과="+commentList);
 		return commentList;
 	}
-	//경태<리뷰 댓글 가져오기>
+	//경태<리뷰 가져오기>
 	@Override
 	public ArrayList<Map<String, Object>> getLoginMemberReview(HashMap<String, Object> map) {
 		ArrayList<Map<String, Object>> reviewList =null;

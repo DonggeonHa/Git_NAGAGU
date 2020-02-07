@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
+import com.spring.academy.AcademyService;
 import com.spring.member.MemberServiceImpl;
 import com.spring.member.MemberVO;
 import com.spring.store.ProductReviewServiceImpl;
@@ -36,6 +37,8 @@ public class CommunityController {
 	private ProductReviewServiceImpl productReviewService;
 	@Autowired
 	private ProductServiceImpl productService;
+	@Autowired(required = false)
+	private AcademyService academyService;
 	@RequestMapping(value = "/community.cm")
 	public String CommunityList(PicsVO picsVO, Model model,MemberVO memberVO, HttpServletRequest request, HttpSession session) {
 		
@@ -434,6 +437,29 @@ public class CommunityController {
 		}
 		return retVal;
 	}
+	//로그인 멤버가 올린 댓글 리스트
+		@RequestMapping(value = "/loginMemberClass.cm")
+		public @ResponseBody Map<String, Object> getLoginMemberClass(HttpSession session, HttpServletRequest request){
+			HashMap<String, Object> map = new HashMap<String, Object>();
+			int MEMBER_NUM = (int)session.getAttribute("MEMBER_NUM");
+			map.put("MEMBER_NUM", MEMBER_NUM);
+			
+			Map<String, Object> retVal = new HashMap<String, Object>();
+			try {
+				String category = request.getParameter("category");
+				ArrayList<Map<String, Object>> classList = null;
+				if(category.equals("toClass")) {
+					classList = academyService.getLoginMemberClass(map);
+				}
+				retVal.put("classList", classList);
+				retVal.put("res", "OK");
+			}catch(Exception e) {
+				retVal.put("res", "FAIL");
+				retVal.put("message", "Failure");
+			}
+			return retVal;
+		}
+	
 	
 	@RequestMapping(value = "/followAction.cm")
 	public @ResponseBody Map<String, Object> followAction(PicsVO picsVO,HttpServletRequest request) {

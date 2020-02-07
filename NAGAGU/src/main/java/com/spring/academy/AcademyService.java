@@ -2,7 +2,9 @@ package com.spring.academy;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Map;
 
+import com.spring.mapper.ProductReviewMapper;
 import com.spring.workshop.WorkShopMemberVO;
 
 public interface AcademyService {
@@ -14,4 +16,6 @@ public interface AcademyService {
 	public int countUp(ClassVO academy) throws Exception;
 	
 	public boolean insertClassInfo(MyClassVO vo) throws Exception;
+	//경태 마이페이지 강의목록
+	public ArrayList<Map<String, Object>> getLoginMemberClass(HashMap<String, Object> map);
 }

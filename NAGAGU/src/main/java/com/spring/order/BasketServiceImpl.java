@@ -41,6 +41,20 @@ public class BasketServiceImpl implements BasketService{
 		System.out.println("deleteBasket결과"+result);
 		return 0;
 	}
+	@Override
+	public int updateAmount(BasketVO basketVO) {
+		BasketMapper basket = sqlSession.getMapper(BasketMapper.class);
+		int result =basket.updateAmount(basketVO);
+		System.out.println("updateBasket결과"+result);
+		return result;
+	}
+	@Override
+	public int updateCheck(HashMap<String, Object> map) {
+		BasketMapper basket = sqlSession.getMapper(BasketMapper.class);
+		int result =basket.updateCheck(map);
+		System.out.println("updateBasket결과"+result);
+		return result;
+	}
  
 	
 }

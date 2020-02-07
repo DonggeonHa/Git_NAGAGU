@@ -1,6 +1,9 @@
+<%@page import="java.text.SimpleDateFormat"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-
+<%//날짜 포맷 형식
+SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+%>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -231,6 +234,19 @@ height: auto;
 <script src="https://kit.fontawesome.com/97dbc99ea1.js" crossorigin="anonymous"></script>
 <script>
 	$(document).ready(function(){
+	  /*날짜 형식 변경*/
+      function date_format(format) {
+          var year = format.getFullYear();
+          var month = format.getMonth() + 1;
+          if(month<10) {
+             month = '0' + month;
+          }
+          var date = format.getDate();
+          if(date<10) {
+             date = '0' + date;
+          }
+         return year + "-" + month + "-" + date + " " ;
+      }
 		//사진 댓글  가져오기 함수 정의
 		function getPics(event){
 			var loginNum = '<%=session.getAttribute("MEMBER_NUM")%>'; 
@@ -251,10 +267,11 @@ height: auto;
 	        			console.log(retVal.PicsNum)
 			        	for(var j=0; j<retVal.PicsNum.length; j++){
 			        		var imgsrc = retVal.PicsNum[j].MEMBER_PICTURE
-			        		var date = retVal.PicsNum[j].PICS_RE_DATE
 			        		var content = retVal.PicsNum[j].PICS_RE_CONTENT
 			        		var nickname = retVal.PicsNum[j].PICS_NICK
-			        		console.log(imgsrc)
+
+			        		var d_date = new Date(retVal.PicsNum[j].PICS_RE_DATE);
+			        		var date = date_format(d_date);
 				    		output += '<div class="col-1"><img src="${pageContext.request.contextPath}/'+imgsrc+'"></div>'
 				    		output += '<div class="col-11"><div class="row justify-content-between"><div class="name">'+nickname+'에게 단 댓글</div>'
 				    		output += '<div class="smallfont">'+date+'</div></div><div class="row">'
@@ -295,9 +312,10 @@ height: auto;
 	        			console.log(retVal.PicsNum)
 			        	for(var j=0; j<retVal.PicsNum.length; j++){
 			        		var imgsrc = retVal.PicsNum[j].PRODUCT_IMAGE
-			        		var date = retVal.PicsNum[j].REVIEW_DATE
 			        		var content = retVal.PicsNum[j].REVIEW_CONTENT
 			        		var title = retVal.PicsNum[j].PRODUCT_TITLE
+			        		var d_date = new Date(retVal.PicsNum[j].PRODUCT_DATE);
+			        		var date = date_format(d_date);
 			        		console.log(imgsrc)
 				    		output += '<div class="col-1"><img src="/productupload/image/'+imgsrc+'"></div>'
 				    		output += '<div class="col-11"><div class="row justify-content-between"><div class="name">'+title+'</div>'
