@@ -92,5 +92,9 @@
 	<select id="estimateMinPrice" parameterType="int">
 		select min(OFFER_PRICE) from estimate_offer where OFFER_ESTIMATE = #{ESTIMATE_NUM}
 	</select>
+	
+	<select id="esOrderList" parameterType="int" resultType="com.spring.estimate.EstimateOrderVO">
+		select * from ESTIMATE_ORDER where ES_ORDER_BUYER = #{ES_ORDER_BUYER}
+	</select>
     
 </mapper>

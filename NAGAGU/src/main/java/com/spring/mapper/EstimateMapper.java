@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 import com.spring.estimate.EstimateOfferVO;
+import com.spring.estimate.EstimateOrderVO;
 import com.spring.estimate.EstimateVO;
 
 public interface EstimateMapper {
@@ -18,4 +19,5 @@ public interface EstimateMapper {
 	public int offerDecrease (int ESTIMATE_NUM);
 	public int estimateSetMin (EstimateVO vo);
 	public int estimateMinPrice (int ESTIMATE_NUM);
+	public ArrayList<EstimateOrderVO> esOrderList (int ES_ORDER_BUYER);
 }

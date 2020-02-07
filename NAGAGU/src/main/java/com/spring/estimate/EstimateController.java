@@ -189,4 +189,15 @@ public class EstimateController {
 			return "Offer add failed..";
 		}
 	}
+	
+
+	/* 의뢰된 견적 리스트 */
+	@RequestMapping(value = "/order_estimate_list.my")
+	public String MypageEsOrderDetail(HttpServletRequest request, Model model) {
+		int ES_ORDER_BUYER = Integer.parseInt(request.getParameter("ES_ORDER_BUYER"));
+		ArrayList<EstimateOrderVO> esOrderList = estimateService.esOrderList(ES_ORDER_BUYER);
+		model.addAttribute("esOrderList", esOrderList);
+		
+		return "Mypage/es_order_list";
+	}
 }
