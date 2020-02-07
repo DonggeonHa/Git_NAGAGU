@@ -109,11 +109,14 @@
 	}
 	*/
 	System.out.println("qnaCount = " + qnaCount);
+	//qna 원글 일반 멤버 관련
+	
 	//qna 답글 공방 멤버 관련
 	int WorkshopNum = ((Integer) request.getAttribute("WorkshopNum")).intValue();
 	String WorkshopName = (String)request.getParameter("WorkshopName");
 	String WorkshopPicture = (String)request.getParameter("WorkshopPicture");
-	
+	System.out.println("WorkshopName="+WorkshopName);
+	System.out.println("WorkshopPicture="+WorkshopPicture);
 	
 	//날짜 포맷 형식
 	SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
@@ -978,6 +981,12 @@
 						</div>
 	             
 	             <!-- 답글은 해당 공방 주인과 원글 작성자만 볼 수 있다. -->
+	             <%
+	             System.out.println("멤버넘="+MEMBER_NUM);
+	             System.out.println("getQNA_MEMBER="+qnaVO.getQNA_MEMBER());
+	             System.out.println("WORKSHOP_NUM="+WORKSHOP_NUM);
+	             System.out.println("WorkshopNum="+WorkshopNum);
+	             %>
 	              <% if(MEMBER_NUM == qnaVO.getQNA_MEMBER() || WORKSHOP_NUM == WorkshopNum ) { %>
 	             <%
 	                     if(qna_RE_Count > 0) {
@@ -991,11 +1000,11 @@
 							<div class="qna_re_table" id="qna_re_table<%=qna_re_VO.getQNA_NUM()%>">
 								<div class="row ">
 									<div class="col-1 justify-content-end" >
-										<img src="<%=WORKSHOP_PICTURE%>" alt="" class="rounded-circle">
+										<img src="<%=WorkshopPicture%>" alt="" class="rounded-circle">
 									</div>
 									<div class="col-11">
 										<div class="row">
-											<div class="col-10 justify-content-end name pr-0"><%=WORKSHOP_NAME %></div>
+											<div class="col-10 justify-content-end name pr-0"><%=WorkshopName %></div>
 											<div class="col-2 justify-content-center smallfont pl-0 pr-3"><%=sdf.format(qna_re_VO.getQNA_DATE())%></div>
 										</div>
 										<form class="qnareviewform" id="qnareviewform<%=qna_re_VO.getQNA_NUM() %>">
@@ -1648,8 +1657,13 @@
       function infochange() {
           if($('#comment_info').val() == '등록된 댓글이 없습니다') {
              $('#comment_info').val('');
-          } else if($('#qna_info').val() == '등록된 문의가 없습니다') {
+          } else {
+      //  	  $('#comment_info').val('등록된 댓글이 없습니다');
+          }
+          if($('#qna_info').val() == '등록된 문의가 없습니다') {
           	$('#qna_info').val('');
+          } else {
+  //      	  $('#qna_info').val('등록된 문의가 없습니다');  
           }
        }      
       
@@ -2321,6 +2335,7 @@
             } else { //버튼이 닫기이면 hidden 구역이 닫히고 버튼은 댓글 달기로 바뀜
                $(this).html('문의하기');
                $(".qna_add_section").css('display','none');
+               
             } 
             event.preventDefault();
          })
@@ -2378,7 +2393,7 @@
                      $('#QNA_CONTENT').val('');
                      infochange();
                      $(".qna_add_section").css('display','none');
-                     $(".qna_add_section").html('댓글 달기');
+                     $(".qna_add_btn").html('문의하기');
                      document.getElementById('qna_scroll').scrollIntoView();                     
                      },
                      error:function() {
@@ -2559,9 +2574,14 @@
   						re_form += '<div class="col qna_re_control pr-5" id="qna_re_control'+retVal.vo.qna_RE+'">';
   						re_form += '<input type="hidden" name="QNA_NUM" value="'+retVal.vo.qna_RE+'">';
   						re_form += '<a class="smallfont qna_re_modify" id="qna_re_modify'+retVal.vo.qna_RE+'" style="cursor: pointer;">수정</a>&nbsp;';
-  						re_form += '<a class="smallfont qna_re_delete" id="qna_re_delete'+retVal.vo.qna_RE+'" style="cursor: pointer;">삭제</a>';
-  						re_form += '</div></div></div></div>';
-  									
+  						re_form += '<a class="smallfont qna_re_delete" id="qna_re_delete'+retVal.vo.qna_RE+'" style="cursor: pointer;">삭제</a></div>';
+  						re_form += '<div class="col qna_re_control_hidden pr-5" id="qna_re_control_hidden'+retVal.vo.qna_RE+'">';
+  						re_form += '<input type="hidden" name="QNA_NUM" value="'+retVal.vo.qna_RE+'">';
+  						re_form += '<a class="smallfont qna_re_modify_process" id="qna_re_modify_process'+retVal.vo.qna_RE+'" style="cursor: pointer;">수정</a>&nbsp;';
+  						re_form += '<a class="smallfont qna_re_modify_reset" id="qna_re_modify_reset'+retVal.vo.qna_RE+'" style="cursor: pointer;">삭제</a></div>';
+  						
+  						re_form += '</div></div></div>';
+  								
   		              
   		            //data.qna_RE는 원글의 num과 같다(QNA_NUM)
   		            alert('qna_re_space'+retVal.vo.qna_RE);
@@ -2601,10 +2621,7 @@
      	   $('#qna_re_modifyform'+QNA_RE_NUM).css('display', 'block');		//수정폼 보임
      	   $('#qna_re_control'+QNA_RE_NUM).css('display', 'none');		//수정,삭제버튼 지움
      	   $('#qna_re_control_hidden'+QNA_RE_NUM).css('display', 'block');		//수정하기, 취소 버튼 보임
-     	  
-     	 
-     	     
-     	   
+   
 			
 			
         });      
@@ -2645,7 +2662,7 @@
 
                 },
                    error:function() {
-                      alert("ajax통신 실패!!!");
+                      alert("답변이 달려있는 글은 삭제할 수 없습니다.");
                    }
              });
 			
@@ -2659,8 +2676,15 @@
 				if(delete_confirm) {
 					var QNA_RE_NUM = $(this).prev().prev().val();
 					alert(QNA_RE_NUM);   
- 
-				   $.ajax({
+		/* 			
+					if($(this).parent( 'div' ).attr('id')= 'qna_re_space'+QNA_RE_NUM) {
+    	  alert('aaaaaa');
+      }
+					 */
+/* 					$( 'p' ).parent( 'div' ).css( 'color', 'green' );
+					var b = $(this).parent().val();
+					alert(b); 
+ */				   $.ajax({
 				      url: '/NAGAGU/delete_qna.do' ,
 				      type:'GET',
 				      data : {'QNA_NUM':QNA_RE_NUM},
@@ -2669,6 +2693,12 @@
 				      success:function(retVal) {
 				         if(retVal.res == "OK") {
 				            alert('댓글이 삭제되었습니다.');
+				            	/* alert()
+				            	if() {	//부모가
+				            		qna_re_space
+				            	} else {
+				            		
+				            	} */
 				            $('#qna_re_table'+QNA_RE_NUM).css('display','none');	//원래 qns댓글 영역 숨겨짐(리스트 띄울 땐 사라짐)
 				            document.getElementById('qna_scroll').scrollIntoView();                         
 				         }

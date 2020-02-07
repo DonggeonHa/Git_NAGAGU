@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.spring.mapper.ProductQnaMapper;
+import com.spring.mapper.ProductReviewMapper;
 import com.spring.member.MemberVO;
 
 @Service
@@ -81,6 +82,14 @@ public class ProductQnaServiceImpl implements ProductQnaService{
 		return res;
 	}
 
+	@Override
+	public int findChildrenRE(int QNA_NUM) {
+		ProductQnaMapper qnaMapper = sqlSession.getMapper(ProductQnaMapper.class);
+		int count;
+		count = qnaMapper.findChildrenRE(QNA_NUM);
+		return count;
+	}
+	
 	@Override
 	public int deleteQna(int QNA_NUM) {
 		ProductQnaMapper qnaMapper = sqlSession.getMapper(ProductQnaMapper.class);

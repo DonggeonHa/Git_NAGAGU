@@ -15,5 +15,6 @@ public interface ProductQnaMapper {
 	int insertQna(Product_qnaVO qnaVO);
 	Product_qnaVO getQnaVO(Product_qnaVO qnaVO);
 	int modifyQna(Product_qnaVO qnaVO);
+	int findChildrenRE(int QNA_NUM);
 	int deleteQna(int QNA_NUM);
 }

@@ -135,6 +135,10 @@ create sequence store_qna_workshop_seq
 		WHERE QNA_NUM =#{QNA_NUM} 
 	</update>
 	
+	<select id="findChildrenRE" parameterType="int" resultType="int">
+		SELECT count(*) FROM PRODUCT_QNA WHERE QNA_RE=#{QNA_NUM} 
+	</select>	
+	
 	<delete id="deleteQna" parameterType="int">
 		DELETE FROM PRODUCT_QNA WHERE QNA_NUM=#{QNA_NUM}
 	</delete>		

@@ -141,10 +141,12 @@ public class ProductController {
 		/*상품 vo 가져오기*/
 		String PRODUCT_CATEGORY = request.getParameter("PRODUCT_CATEGORY");
 		int PRODUCT_NUM = Integer.parseInt(request.getParameter("PRODUCT_NUM"));
-				
+		System.out.println("pNum="+PRODUCT_NUM);
 		ProductVO vo = null;
+//		vo.setPRODUCT_NUM(PRODUCT_NUM);
 		vo = productService.getproductVO(PRODUCT_NUM);
-		
+		System.out.println("wks="+vo.getPRODUCT_WORKSHOP());
+		System.out.println("??");
 		/*이 product의 워크샵 넘버 필요함*/	
 		WorkshopVO workshopVO = productService.selectWorkshop(vo);
 		int WorkshopMatchingNumber = workshopVO.getWORKSHOP_NUM();
@@ -156,8 +158,10 @@ public class ProductController {
 		String WorkshopPicture = workshopVO.getWORKSHOP_PICTURE();
 		model.addAttribute("WorkshopName",WorkshopName);
 		model.addAttribute("WorkshopPicture",WorkshopPicture);
-
-		
+System.out.println("WorkshopName="+WorkshopName);
+System.out.println("WorkshopPicture="+WorkshopPicture);
+		System.out.println(workshopVO.getWORKSHOP_PICTURE());
+		System.out.println(workshopVO.getWORKSHOP_BANK());
 		/*리뷰 리스트*/
 		int reviewpage = 1; //초기값 1
 		int limit = 5; //한 페이지당 출력할 글의 수
@@ -969,21 +973,21 @@ public class ProductController {
 			
 			
 			int res = 0;
-			res = qnaService.deleteQna(QNA_NUM);
+			
 			System.out.println(res);
-			/*
+			
 			//답글을 가지고 있는 댓글을 삭제하면, 해당 답글까지 다 삭제돼야 한다.
 			//답글을 가지고 있는 댓글은 삭제할 수 없다.
-			//본인의 review_num을 review_re로 하는 데이터가 있을 경우, 삭제 불가
-			int count = reviewService.findChildrenRE(REVIEW_NUM);
+			//본인의 qna_num을 qna_re로 하는 데이터가 있을 경우, 삭제 불가
+			int count = qnaService.findChildrenRE(QNA_NUM);
 			//있으면 답글이 있는 것
 			if(count == 0) {
 				//없으면 삭제 가능
-				res = reviewService.deleteReview(REVIEW_NUM);
+				res = qnaService.deleteQna(QNA_NUM);
 			} else {
 				
 			}
-			*/
+			
 			if(res != 0) {
 				retVal.put("res", "OK");
 			} else {
