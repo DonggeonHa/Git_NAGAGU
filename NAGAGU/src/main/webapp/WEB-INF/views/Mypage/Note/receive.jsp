@@ -175,8 +175,8 @@
     }
 
     .content_list {
-        height:600px;
-    }
+        min-height:450px;
+     }
 
     .note_list {
         width:100%;
@@ -281,8 +281,7 @@
         float:right;
         color:white;
         height:20px;
-        padding
-        :10px;
+        padding:10px;
         transition:color 0.2s;
     }
     
