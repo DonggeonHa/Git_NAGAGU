@@ -9,8 +9,7 @@
 
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
     <script src="https://kit.fontawesome.com/b74b42490f.js" crossorigin="anonymous"></script>
-    <!-- 사이드 바 스타일 -->
-    <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/css/Mypage/Workshop/sidebar_kt.css">
+
     <!-- 공방관리 기본 스타일 -->
     <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/css/Mypage/Workshop/workshop_my.css">
     <!-- 페이지 고유 스타일 -->
@@ -22,64 +21,7 @@
 </head>
 <body>
 <div class="work_container">
-    <!-- 사이드바 -->
-    <div class="work_side">
-        <!-- 사이드바 헤드 -->
-        <div class="sidebar_head">
-            <a href="./workshop.no">
-                <div class="sidebar_title">
-                    <i class="fas fa-store"></i> 공방관리센터
-                </div>
-            </a>
-        </div>
-        <!-- 사이드바 프로필 -->
-        <div class="sidebar_profile">
-            <div class="sidebar_pic">
-                <a href="./workshop_modify.no"><img src="https://testkj.s3.ap-northeast-2.amazonaws.com/images/20150803_1257391.png" class="img-circle profile_img"></a>
-            </div>
-            <div class="sidebar_name">
-                <h3><a href="./workshop_modify.no">공방 이름</a></h3>
-            </div>
-        </div>
-
-
-        <!-- 사이드바 메뉴 -->
-        <div id="sidebar_menu">
-            <div class="menu_section">
-                <ul class="nav side-menu">
-                    <li><a>공방정보</a>
-                        <ul class="nav child_menu">
-                            <li><a href="./workshop.no">대시보드</a></li>
-                            <li><a href="./workshop_modify.no">정보수정</a></li>
-                        </ul>
-                    </li>
-                    <li><a>후기/문의 관리</a>
-                        <ul class="nav child_menu">
-                            <li><a href="./workshop_review_Store.no">상품후기 목록</a></li>
-                            <li><a href="./workshop_review_reqStore.no">상품문의 목록</a></li>
-                            <li><a href="./workshop_review_Academy.no">강의후기 목록</a></li>
-                            <li><a href="./workshop_review_reqAcademy.no">강의문의 목록</a></li>
-                        </ul>                            
-                    </li>
-                    <li><a>스토어관리</a>
-                        <ul class="nav child_menu">
-                            <li><a href="./workshop_Store_product.no">등록된 상품 관리</a></li>
-                            <li><a href="./workshop_Store_selled.no">판매된 상품 관리</a></li>
-                            <li><a href="./workshop_Store_estOffers.no">견적 제안 관리</a></li>
-                            <li><a href="./workshop_Store_estProduct.no">견적 주문 관리</a></li>
-                        </ul>
-                    </li>
-                    <li><a>아카데미관리</a>
-                        <ul class="nav child_menu">
-                            <li><a href="./workshop_academy_Management.no">등록된 강의 관리</a></li>
-                            <li><a href="./workshop_academy_Membership.no">회원 관리</a></li>
-                        </ul>
-                    </li>
-                </ul>
-            </div>
-        </div>
-    </div>
-
+	<%@ include file="../../sidebar.jsp" %>
 
 
 

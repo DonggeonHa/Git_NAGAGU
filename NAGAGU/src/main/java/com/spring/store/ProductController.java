@@ -131,6 +131,9 @@ public class ProductController {
 			//int index = ((Integer)(session.getAttribute("index"))).intValue();
 			MemberVO LoginMemberVO = reviewService.getLoginMemberbyNUM(memberVO);			
 			System.out.println("1"+memberVO.getMEMBER_NUM());
+			System.out.println("로그인 멤버 확인- membernum="+(int)session.getAttribute("MEMBER_NUM"));
+			System.out.println("로그인 멤버 확인- membernick="+LoginMemberVO.getMEMBER_NICK());
+			System.out.println("로그인 멤버 확인- memberpicture="+LoginMemberVO.getMEMBER_PICTURE());
 			/*로그인 멤버 관련*/
 			model.addAttribute("LoginMemberVO",LoginMemberVO);
 		
@@ -141,14 +144,14 @@ public class ProductController {
 		/*상품 vo 가져오기*/
 		String PRODUCT_CATEGORY = request.getParameter("PRODUCT_CATEGORY");
 		int PRODUCT_NUM = Integer.parseInt(request.getParameter("PRODUCT_NUM"));
-		System.out.println("pNum="+PRODUCT_NUM);
+System.out.println("pNum="+PRODUCT_NUM);
 		ProductVO vo = null;
 //		vo.setPRODUCT_NUM(PRODUCT_NUM);
 		vo = productService.getproductVO(PRODUCT_NUM);
-		System.out.println("wks="+vo.getPRODUCT_WORKSHOP());
-		System.out.println("??");
+System.out.println("wks="+vo.getPRODUCT_WORKSHOP());
 		/*이 product의 워크샵 넘버 필요함*/	
 		WorkshopVO workshopVO = productService.selectWorkshop(vo);
+System.out.println(workshopVO.getWORKSHOP_NUM());		
 		int WorkshopMatchingNumber = workshopVO.getWORKSHOP_NUM();
 		int WorkshopNum = workshopVO.getWORKSHOP_NUM();
 		model.addAttribute("WorkshopNum",WorkshopNum);
@@ -160,8 +163,8 @@ public class ProductController {
 		model.addAttribute("WorkshopPicture",WorkshopPicture);
 System.out.println("WorkshopName="+WorkshopName);
 System.out.println("WorkshopPicture="+WorkshopPicture);
-		System.out.println(workshopVO.getWORKSHOP_PICTURE());
-		System.out.println(workshopVO.getWORKSHOP_BANK());
+
+
 		/*리뷰 리스트*/
 		int reviewpage = 1; //초기값 1
 		int limit = 5; //한 페이지당 출력할 글의 수
@@ -365,10 +368,6 @@ System.out.println("WorkshopPicture="+WorkshopPicture);
 		}
 
 	    
-	    
-
-		
-	   
 		//reviewVO.setREVIEW_NUM(0); //시퀀스 이용
 		reviewVO.setREVIEW_MEMBER((int)session.getAttribute("MEMBER_NUM"));
 		reviewVO.setREVIEW_PRODUCT(Integer.parseInt(request.getParameter("REVIEW_PRODUCT")));
@@ -377,7 +376,6 @@ System.out.println("WorkshopPicture="+WorkshopPicture);
 		reviewVO.setREVIEW_CONTENT(request.getParameter("REVIEW_CONTENT"));
 		
 
-		
 		//넘겨받은 REVIEW_RE가 존재하면 답글이고(원글의 REVIEW_NUM을 전달해줌), null이면 원글이다.
 		if(request.getParameter("REVIEW_RE") != null) {	
 			//답글 - GRADE=10, RE=NUM
@@ -391,7 +389,6 @@ System.out.println("WorkshopPicture="+WorkshopPicture);
 		
 		int res = reviewService.insertReview(reviewVO);
 		
-	
 		
 		//답글
 		//댓글(review) 입력시 grade update(답글 입력시는  grade 상관 없다)

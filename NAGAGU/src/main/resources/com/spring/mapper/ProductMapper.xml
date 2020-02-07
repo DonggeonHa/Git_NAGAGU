@@ -119,6 +119,7 @@ create sequence product_seq
 		<result property="WORKSHOP_OWNER" column="WORKSHOP_OWNER" />		
 		<result property="WORKSHOP_BANK" column="WORKSHOP_BANK" />		
 		<result property="WORKSHOP_ACNUM" column="WORKSHOP_ACNUM" />		
+		<result property="WORKSHOP_PICTURE" column="WORKSHOP_PICTURE" />		
 			
 	</resultMap>
 

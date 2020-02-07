@@ -165,26 +165,26 @@ public class MypageController {
 		
 		return "Mypage/Workshop/Review/reviewStore";
 	}
-	
-	@RequestMapping(value = "/workshop_Store_estOffers.no")
+	//견적 제안 관리
+	@RequestMapping(value = "/workshop_estimate_offers.no")
 	public String WorkshopStoreestOffers() {
 		
 		return "Mypage/Workshop/Store/estOffers";
 	}
-	
-	@RequestMapping(value = "/workshop_Store_estProduct.no")
+	//견적 주문 관리
+	@RequestMapping(value = "/workshop_estimate_product.no")
 	public String WorkshopStoreestProduct() {
 		
 		return "Mypage/Workshop/Store/estProduct";
 	}
-	
-	@RequestMapping(value = "/workshop_Store_selled.no")
+	//판매된 상품 관리
+	@RequestMapping(value = "/workshop_product_selled.no")
 	public String WorkshopStoreselled() {
 		
 		return "Mypage/Workshop/Store/selled";
 	}
-	
-	@RequestMapping(value = "/workshop_Store_product.no")
+	//등록된 상품 관리
+	@RequestMapping(value = "/workshop_product_items.no")
 	public String WorkshopStoreproduct() {
 		
 		return "Mypage/Workshop/Store/product";

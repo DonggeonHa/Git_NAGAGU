@@ -24,6 +24,10 @@
 		MEMBER_PICTURE = LoginMemberVO.getMEMBER_PICTURE();
 		MEMBER_NICK = LoginMemberVO.getMEMBER_NICK();
 	}
+	System.out.println("MEMBER_NUM="+MEMBER_NUM);
+	System.out.println("MEMBER_PICTURE="+MEMBER_PICTURE);
+	System.out.println("MEMBER_NICK="+MEMBER_NICK);
+	
 	
 	//로그인 상태 체크 위한
 	String WORKSHOP_CEO_NAME = (String)session.getAttribute("WORKSHOP_CEO_NAME");
@@ -113,8 +117,8 @@
 	
 	//qna 답글 공방 멤버 관련
 	int WorkshopNum = ((Integer) request.getAttribute("WorkshopNum")).intValue();
-	String WorkshopName = (String)request.getParameter("WorkshopName");
-	String WorkshopPicture = (String)request.getParameter("WorkshopPicture");
+	String WorkshopName = (String)request.getAttribute("WorkshopName");
+	String WorkshopPicture = (String)request.getAttribute("WorkshopPicture");
 	System.out.println("WorkshopName="+WorkshopName);
 	System.out.println("WorkshopPicture="+WorkshopPicture);
 	
@@ -894,13 +898,16 @@
 				</div>
 				<%
 				System.out.println("qnaList.size="+qnaList.size());	
+				
+				
 					if(qnaCount > 0) {
 						for(int i = 0; i < qnaList.size(); i++) {
 							Product_qnaVO qnaVO = qnaList.get(i);	
 							MemberVO memberVO = qnaMemberList.get(i);
 					
+							if((MEMBER_NUM == qnaVO.getQNA_MEMBER()) && (MEMBER_NUM != 0) || (WORKSHOP_NUM == WorkshopNum ) && (WORKSHOP_NUM != 0)) {
 				%>
-				<!-- qna 댓글 출력(답글 포함) -->
+				<!-- qna 댓글 출력 -->
 				<!-- qna원글은 작성자와 해당 공방회원만 볼 수 있다. -->
 				<div class="qna_sum justify-content-center" id="qna_<%=qnaVO.getQNA_NUM() %>">
 					<input type="hidden" name="QNA_MEMBER" value="<%=qnaVO.getQNA_MEMBER() %>">
@@ -966,7 +973,13 @@
 						</div> <!-- 11끝 -->	
 					</div>		
 				</div>			
-							
+				<%
+							} else {
+				%>			
+							작성 회원만 확인 가능한 글입니다.
+				<%
+							}
+				%>
 							
 							
 							
@@ -987,7 +1000,7 @@
 	             System.out.println("WORKSHOP_NUM="+WORKSHOP_NUM);
 	             System.out.println("WorkshopNum="+WorkshopNum);
 	             %>
-	              <% if(MEMBER_NUM == qnaVO.getQNA_MEMBER() || WORKSHOP_NUM == WorkshopNum ) { %>
+	              <% if( (MEMBER_NUM == qnaVO.getQNA_MEMBER()) && (MEMBER_NUM != 0) || (WORKSHOP_NUM == WorkshopNum ) && (WORKSHOP_NUM != 0) ) { %>
 	             <%
 	                     if(qna_RE_Count > 0) {
 	                        for(int j=0; j<qna_RE_List.size(); j++)  {
@@ -1126,8 +1139,53 @@
                   </div>
                </div>
                <!-- qna 등록 끝 -->
-              
-               
+               <br />
+            <%
+            if (reviewCount > 0) {
+            %>            
+               <div class="row justify-content-center">
+                  <div class="pagination">
+                  <%
+                     if (nowpage <= 1) {
+                  %>         
+                        &laquo;
+                  <%
+                     } else {
+                  %>
+                        <a href="./productList.pro?page=<%=nowpage - 1%>">&laquo;</a>
+                  <%
+                     }
+                  %>
+                  
+                  <%
+                     for (int a = startpage; a <= endpage; a++) {
+                        if (a == nowpage) {
+                  %><!-- 현재 보고있는 페이지에는 링크를 걸지 않겠다. --> 
+                           <%=a%>
+                  <%
+                        } else {
+                  %>
+                           <a href="./productList.pro?page=<%=a%>"><%=a%></a>
+                  <%
+                        }
+                     }
+                  %><!-- 현재 보는 페이지가 마지막 페이지 이면 -->
+                  <%
+                     if (nowpage >= maxpage) {
+                  %>
+                        &raquo;
+                  <%
+                     } else {
+                  %>         
+                        <a href="./productList.pro?page=<%=nowpage + 1%>">&raquo;</a>
+                  <%
+                     }
+                  %>
+                  </div>
+               </div>   <!-- pagenation 끝 -->   
+            <%
+            }
+            %>               
                
                <br />
             </div>
@@ -1683,9 +1741,14 @@
 		 //댓글 등록 위해 댓글달기 버튼 눌렀을 시 css
 		 //확인해야함
          $(".review_add").click(function() {
+             var MEMBER_NUM = <%=MEMBER_NUM%>;
+             alert(MEMBER_NUM);
+             if(MEMBER_NUM==0){
+                alert('로그인 해주세요!');
+                return
+             }
             if($(this).html() == '댓글 달기') { //댓글달기이면 hidden구역 보이고 버튼은 닫기로 바뀜
                 //멤버가 아닐 때
-                alert('b');
 <%--             	var MEMBER_EMAIL = <%=MEMBER_EMAIL%>;
             	var WORKSHOP_CEO_NAME = <%=WORKSHOP_CEO_NAME%>;
                 if(MEMBER_EMAIL == null) {
