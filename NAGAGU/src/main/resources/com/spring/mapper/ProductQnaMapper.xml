@@ -110,20 +110,34 @@ create sequence store_qna_workshop_seq
         ORDER BY P.QNA_DATE DESC
   	</select>
 	
+
 	
 	
 	
 	<insert id="insertQna" parameterType="com.spring.store.Product_qnaVO">
+		<selectKey keyProperty="QNA_NUM" resultType="int" order="AFTER">
+				SELECT store_qna_seq.currval FROM dual
+			</selectKey>
 		INSERT INTO PRODUCT_QNA VALUES
 		(store_qna_seq.nextval, #{QNA_MEMBER}, #{QNA_PRODUCT}, #{QNA_DATE}, #{QNA_CONTENT}, #{QNA_RE})
+			
 	</insert>	
-	
+	 
+	 
+	<select id="getQnaVO" parameterType="com.spring.store.Product_qnaVO" resultMap="productQnaResultMap">
+		SELECT * FROM PRODUCT_QNA WHERE QNA_NUM=#{QNA_NUM} 
+	</select>	 
+	 
 	
 	<update id="modifyQna" parameterType="com.spring.store.Product_reviewVO">
 		UPDATE PRODUCT_QNA SET 
 			QNA_DATE=#{QNA_DATE}, QNA_CONTENT=#{QNA_CONTENT}
 		WHERE QNA_NUM =#{QNA_NUM} 
 	</update>
+	
+	<select id="findChildrenRE" parameterType="int" resultType="int">
+		SELECT count(*) FROM PRODUCT_QNA WHERE QNA_RE=#{QNA_NUM} 
+	</select>	
 	
 	<delete id="deleteQna" parameterType="int">
 		DELETE FROM PRODUCT_QNA WHERE QNA_NUM=#{QNA_NUM}

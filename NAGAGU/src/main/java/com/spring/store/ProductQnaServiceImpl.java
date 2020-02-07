@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.spring.mapper.ProductQnaMapper;
+import com.spring.mapper.ProductReviewMapper;
 import com.spring.member.MemberVO;
 
 @Service
@@ -66,6 +67,14 @@ public class ProductQnaServiceImpl implements ProductQnaService{
 	}
 
 	@Override
+	public Product_qnaVO getQnaVO(Product_qnaVO qnaVO) {
+		ProductQnaMapper qnaMapper = sqlSession.getMapper(ProductQnaMapper.class);
+		Product_qnaVO vo = null;
+		vo = qnaMapper.getQnaVO(qnaVO);
+		return vo;
+	}
+
+	@Override
 	public int modifyQna(Product_qnaVO qnaVO) {
 		ProductQnaMapper qnaMapper = sqlSession.getMapper(ProductQnaMapper.class);
 		int res;
@@ -74,12 +83,22 @@ public class ProductQnaServiceImpl implements ProductQnaService{
 	}
 
 	@Override
+	public int findChildrenRE(int QNA_NUM) {
+		ProductQnaMapper qnaMapper = sqlSession.getMapper(ProductQnaMapper.class);
+		int count;
+		count = qnaMapper.findChildrenRE(QNA_NUM);
+		return count;
+	}
+	
+	@Override
 	public int deleteQna(int QNA_NUM) {
 		ProductQnaMapper qnaMapper = sqlSession.getMapper(ProductQnaMapper.class);
 		int res;
 		res = qnaMapper.deleteQna(QNA_NUM);
 		return res;
 	}
+
+	
 
 
 

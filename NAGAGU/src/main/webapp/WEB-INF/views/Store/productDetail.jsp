@@ -24,6 +24,10 @@
 		MEMBER_PICTURE = LoginMemberVO.getMEMBER_PICTURE();
 		MEMBER_NICK = LoginMemberVO.getMEMBER_NICK();
 	}
+	System.out.println("MEMBER_NUM="+MEMBER_NUM);
+	System.out.println("MEMBER_PICTURE="+MEMBER_PICTURE);
+	System.out.println("MEMBER_NICK="+MEMBER_NICK);
+	
 	
 	//로그인 상태 체크 위한
 	String WORKSHOP_CEO_NAME = (String)session.getAttribute("WORKSHOP_CEO_NAME");
@@ -109,11 +113,14 @@
 	}
 	*/
 	System.out.println("qnaCount = " + qnaCount);
+	//qna 원글 일반 멤버 관련
+	
 	//qna 답글 공방 멤버 관련
 	int WorkshopNum = ((Integer) request.getAttribute("WorkshopNum")).intValue();
-	String WorkshopName = (String)request.getParameter("WorkshopName");
-	String WorkshopPicture = (String)request.getParameter("WorkshopPicture");
-	
+	String WorkshopName = (String)request.getAttribute("WorkshopName");
+	String WorkshopPicture = (String)request.getAttribute("WorkshopPicture");
+	System.out.println("WorkshopName="+WorkshopName);
+	System.out.println("WorkshopPicture="+WorkshopPicture);
 	
 	//날짜 포맷 형식
 	SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
@@ -891,13 +898,16 @@
 				</div>
 				<%
 				System.out.println("qnaList.size="+qnaList.size());	
+				
+				
 					if(qnaCount > 0) {
 						for(int i = 0; i < qnaList.size(); i++) {
 							Product_qnaVO qnaVO = qnaList.get(i);	
 							MemberVO memberVO = qnaMemberList.get(i);
 					
+							if((MEMBER_NUM == qnaVO.getQNA_MEMBER()) && (MEMBER_NUM != 0) || (WORKSHOP_NUM == WorkshopNum ) && (WORKSHOP_NUM != 0)) {
 				%>
-				<!-- qna 댓글 출력(답글 포함) -->
+				<!-- qna 댓글 출력 -->
 				<!-- qna원글은 작성자와 해당 공방회원만 볼 수 있다. -->
 				<div class="qna_sum justify-content-center" id="qna_<%=qnaVO.getQNA_NUM() %>">
 					<input type="hidden" name="QNA_MEMBER" value="<%=qnaVO.getQNA_MEMBER() %>">
@@ -960,14 +970,37 @@
 								</div>
 							</div>
 							<!-- 답글 폼 끝 -->
-							<!-- qna 답글 리스트 -->
-								<!-- 공방이 qna 답글 insert시 추가됨-->
-							<div class="qna_re_space" id="qna_re_space<%=qnaVO.getQNA_NUM()%>">
+						</div> <!-- 11끝 -->	
+					</div>		
+				</div>			
+				<%
+							} else {
+				%>			
+							작성 회원만 확인 가능한 글입니다.
+				<%
+							}
+				%>
 							
-							</div>
+							
+							
+				<div class="qna_re_sum justify-content-center" id="qna_re_sum<%=qnaVO.getQNA_NUM() %>"> 			
+					<div class="row">		
+						<div class="col-1 justify-content-end"></div>	
+						<div class="col-11">
+						<!-- qna 답글 리스트 -->
+							<!-- 공방이 qna 답글 insert시 추가됨-->
+						<div class="qna_re_space" id="qna_re_space<%=qnaVO.getQNA_NUM()%>">
+						
+						</div>
 	             
 	             <!-- 답글은 해당 공방 주인과 원글 작성자만 볼 수 있다. -->
-	              <% if(MEMBER_NUM == qnaVO.getQNA_MEMBER() || WORKSHOP_NUM == WorkshopNum ) { %>
+	             <%
+	             System.out.println("멤버넘="+MEMBER_NUM);
+	             System.out.println("getQNA_MEMBER="+qnaVO.getQNA_MEMBER());
+	             System.out.println("WORKSHOP_NUM="+WORKSHOP_NUM);
+	             System.out.println("WorkshopNum="+WorkshopNum);
+	             %>
+	              <% if( (MEMBER_NUM == qnaVO.getQNA_MEMBER()) && (MEMBER_NUM != 0) || (WORKSHOP_NUM == WorkshopNum ) && (WORKSHOP_NUM != 0) ) { %>
 	             <%
 	                     if(qna_RE_Count > 0) {
 	                        for(int j=0; j<qna_RE_List.size(); j++)  {
@@ -980,11 +1013,11 @@
 							<div class="qna_re_table" id="qna_re_table<%=qna_re_VO.getQNA_NUM()%>">
 								<div class="row ">
 									<div class="col-1 justify-content-end" >
-										<img src="<%=WORKSHOP_PICTURE%>" alt="" class="rounded-circle">
+										<img src="<%=WorkshopPicture%>" alt="" class="rounded-circle">
 									</div>
 									<div class="col-11">
 										<div class="row">
-											<div class="col-10 justify-content-end name pr-0"><%=WORKSHOP_NAME %></div>
+											<div class="col-10 justify-content-end name pr-0"><%=WorkshopName %></div>
 											<div class="col-2 justify-content-center smallfont pl-0 pr-3"><%=sdf.format(qna_re_VO.getQNA_DATE())%></div>
 										</div>
 										<form class="qnareviewform" id="qnareviewform<%=qna_re_VO.getQNA_NUM() %>">
@@ -1106,8 +1139,53 @@
                   </div>
                </div>
                <!-- qna 등록 끝 -->
-              
-               
+               <br />
+            <%
+            if (reviewCount > 0) {
+            %>            
+               <div class="row justify-content-center">
+                  <div class="pagination">
+                  <%
+                     if (nowpage <= 1) {
+                  %>         
+                        &laquo;
+                  <%
+                     } else {
+                  %>
+                        <a href="./productList.pro?page=<%=nowpage - 1%>">&laquo;</a>
+                  <%
+                     }
+                  %>
+                  
+                  <%
+                     for (int a = startpage; a <= endpage; a++) {
+                        if (a == nowpage) {
+                  %><!-- 현재 보고있는 페이지에는 링크를 걸지 않겠다. --> 
+                           <%=a%>
+                  <%
+                        } else {
+                  %>
+                           <a href="./productList.pro?page=<%=a%>"><%=a%></a>
+                  <%
+                        }
+                     }
+                  %><!-- 현재 보는 페이지가 마지막 페이지 이면 -->
+                  <%
+                     if (nowpage >= maxpage) {
+                  %>
+                        &raquo;
+                  <%
+                     } else {
+                  %>         
+                        <a href="./productList.pro?page=<%=nowpage + 1%>">&raquo;</a>
+                  <%
+                     }
+                  %>
+                  </div>
+               </div>   <!-- pagenation 끝 -->   
+            <%
+            }
+            %>               
                
                <br />
             </div>
@@ -1637,8 +1715,13 @@
       function infochange() {
           if($('#comment_info').val() == '등록된 댓글이 없습니다') {
              $('#comment_info').val('');
-          } else if($('#qna_info').val() == '등록된 문의가 없습니다') {
+          } else {
+      //  	  $('#comment_info').val('등록된 댓글이 없습니다');
+          }
+          if($('#qna_info').val() == '등록된 문의가 없습니다') {
           	$('#qna_info').val('');
+          } else {
+  //      	  $('#qna_info').val('등록된 문의가 없습니다');  
           }
        }      
       
@@ -1658,9 +1741,14 @@
 		 //댓글 등록 위해 댓글달기 버튼 눌렀을 시 css
 		 //확인해야함
          $(".review_add").click(function() {
+             var MEMBER_NUM = <%=MEMBER_NUM%>;
+             alert(MEMBER_NUM);
+             if(MEMBER_NUM==0){
+                alert('로그인 해주세요!');
+                return
+             }
             if($(this).html() == '댓글 달기') { //댓글달기이면 hidden구역 보이고 버튼은 닫기로 바뀜
                 //멤버가 아닐 때
-                alert('b');
 <%--             	var MEMBER_EMAIL = <%=MEMBER_EMAIL%>;
             	var WORKSHOP_CEO_NAME = <%=WORKSHOP_CEO_NAME%>;
                 if(MEMBER_EMAIL == null) {
@@ -2310,6 +2398,7 @@
             } else { //버튼이 닫기이면 hidden 구역이 닫히고 버튼은 댓글 달기로 바뀜
                $(this).html('문의하기');
                $(".qna_add_section").css('display','none');
+               
             } 
             event.preventDefault();
          })
@@ -2326,36 +2415,48 @@
                   dataType: 'json',
                   contentType: 'application/x-www-form-urlencoded; charset=utf-8',
                   type : 'POST',
-                  success:function(data) {
+                  success:function(retVal) {
                      alert('성공!');
+                    
+                     
                      
                      var qnaoutput = '';
-                     var QNA_NUM = data.qna_NUM;
-                     var qna_DATE = new Date(data.qna_DATE);
+                     alert(retVal.vo.qna_MEMBER);
+                     console.log(retVal.vo.qna_DATE);
+                     
+                     
+                      
+                     var QNA_NUM = retVal.vo.qna_NUM;
+                     var qna_DATE = new Date(retVal.vo.qna_DATE);
                      var date = date_format(qna_DATE);
                      
+                     
+                     alert("insert 후 num 확인 : "+  retVal.vo.qna_NUM);
+                     
                      qnaoutput += '<div class="col-1 justify-content-end">';
-                     qnaoutput += '<input type="hidden" name="QNA_MEMBER" value="'+data.qna_MEMBER+'">';
+                     qnaoutput += '<input type="hidden" name="QNA_MEMBER" value="'+retVal.vo.qna_MEMBER+'">';
                      qnaoutput += '<img src="'+loginmember_pic+'" alt="" class="rounded-circle"></div>'; 
                      qnaoutput += '<div class="col-11"><div class="row">';
                      qnaoutput += '<div class="col-10 justify-content-end name">';
                      qnaoutput += loginmember_nick + '</div>';
                      qnaoutput += '<div class="col-2 justify-content-center smallfont">' + date;
                      qnaoutput += '</div></div><div class="row">';
-                     qnaoutput += '<div class="col rep_content" id="qna_modify_block'+ data.qna_NUM +'">';
-                     qnaoutput += data.qna_CONTENT + '</div></div>';
+                     qnaoutput += '<div class="col rep_content" id="qna_modify_block'+ retVal.vo.qna_NUM +'">';
+                     qnaoutput += retVal.vo.qna_CONTENT + '</div></div>';
                      qnaoutput += '<div class="row " >';
                      qnaoutput += '<div class="col qna_control pr-5">';
-                     qnaoutput += '<input type="hidden" name="QNA_NUM" value="'+data.qna_NUM+'">';
-                     qnaoutput += '<a class="smallfont qna_modify" id="qna_modify'+ data.qna_NUM +'" style="cursor: pointer;" >수정</a> &nbsp; ';
-                     qnaoutput += '<a class="smallfont qna_delete" id="qna_delete'+ data.qna_NUM +'" style="cursor: pointer;">삭제</a></div></div></div>';
+                     qnaoutput += '<input type="hidden" name="QNA_NUM" value="'+retVal.vo.qna_NUM+'">';
+                     qnaoutput += '<a class="smallfont qna_modify" id="qna_modify'+ retVal.vo.qna_NUM +'" style="cursor: pointer;" >수정</a> &nbsp; ';
+                     qnaoutput += '<a class="smallfont qna_delete" id="qna_delete'+ retVal.vo.qna_NUM +'" style="cursor: pointer;">삭제</a></div></div></div>';
                     
+                      
+                     
                     // console.log("qnaoutput:" + qnaoutput);
                      $('.qnaspace').append(qnaoutput);
                      $('#QNA_CONTENT').val('');
                      infochange();
                      $(".qna_add_section").css('display','none');
-                     $(".qna_add_section").html('댓글 달기');
+                     $(".qna_add_btn").html('문의하기');
                      document.getElementById('qna_scroll').scrollIntoView();                     
                      },
                      error:function() {
@@ -2500,42 +2601,54 @@
   		           dataType: 'json',
   		           contentType : 'application/x-www-form-urlencoded; charset=UTF-8',
   		           type : 'POST',
-  		           success:function(data) {
+  		           success:function(retVal) {
   		           
+  		        	   
+   		              console.log('retVal.vo.qna_RE='+retVal.vo.qna_RE);
+  		              console.log('retVal.vo.qna_CONTENT='+retVal.vo.qna_CONTENT);
+  		              console.log('QNA_NUM='+QNA_NUM);
+  		              
   		              var re_form = '';
-  		              var qna_DATE = new Date(data.qna_DATE);
+  		              var qna_DATE = new Date(retVal.vo.qna_DATE);
   		              var date = date_format(qna_DATE);
   		              
-  		              alert('ajax 후 data.qna_CONTENT' + data.qna_CONTENT);
+  		              alert('ajax 후 retVal.vo.qna_CONTENT' + retVal.vo.qna_CONTENT);
+
   		              
   						re_form += '<div class="row "><div class="col-1 justify-content-end" >';
   						re_form += '<img src="<%=WORKSHOP_PICTURE%>" alt="" class="rounded-circle"></div>';
   						re_form += '<div class="col-11"><div class="row">';
   						re_form += '<div class="col-10 justify-content-end name pr-0"><%=WORKSHOP_NAME %></div>';
   						re_form += '<div class="col-2 justify-content-center smallfont pl-0 pr-3">'+date+'</div></div>';
-  						re_form += '<form class="qnareviewform" id="qnareviewform'+data.qna_RE+'">';
-  						re_form += '<input type="hidden" name="QNA_RE" value="'+data.qna_RE+'">';
-  						re_form += '<input type="hidden" name="QNA_PRODUCT" value="'+data.qna_RE+'">';
-  						re_form += '<div class="qna_re_modifycontent" id="qna_re_modifycontent'+data.qna_RE+'">';
-  						re_form += '<div class="row pl-3"><input type="hidden" name="QNA_NUM" value="'+data.qna_RE+'">';
-  						re_form += data.qna_CONTENT;
+  						re_form += '<form class="qnareviewform" id="qnareviewform'+retVal.vo.qna_RE+'">';
+  						re_form += '<input type="hidden" name="QNA_RE" value="'+retVal.vo.qna_RE+'">';
+  						re_form += '<input type="hidden" name="QNA_PRODUCT" value="'+retVal.vo.qna_RE+'">';
+  						re_form += '<div class="qna_re_modifycontent" id="qna_re_modifycontent'+retVal.vo.qna_RE+'">';
+  						re_form += '<div class="row pl-3"><input type="hidden" name="QNA_NUM" value="'+retVal.vo.qna_RE+'">';
+  						re_form += retVal.vo.qna_CONTENT;
   						re_form += '</div></div>';
-  						re_form += '<div class="row qna_re_modifyform" id="qna_re_modifyform'+data.qna_RE+'"style="display:none">';
-  						re_form += '<input type="hidden" name="QNA_NUM" value="'+data.qna_RE+'">';
+  						re_form += '<div class="row qna_re_modifyform" id="qna_re_modifyform'+retVal.vo.qna_RE+'"style="display:none">';
+  						re_form += '<input type="hidden" name="QNA_NUM" value="'+retVal.vo.qna_RE+'">';
   						re_form += '<textarea rows="2" name="QNA_CONTENT" class="col-11 rep_content ml-3 pl-0 mr-5" ';
-  						re_form += 'id="qna_re_mod_content'+data.qna_RE+'">'+data.qna_CONTENT+'</textarea>';
+  						re_form += 'id="qna_re_mod_content'+retVal.vo.qna_RE+'">'+retVal.vo.qna_CONTENT+'</textarea>';
   						
   						re_form += '</div></form>';
   						re_form += '<div class="row "  style="cursor: pointer;">';
-  						re_form += '<div class="col qna_re_control pr-5" id="qna_re_control'+data.qna_RE+'">';
-  						re_form += '<input type="hidden" name="QNA_NUM" value="'+data.qna_RE+'">';
-  						re_form += '<a class="smallfont qna_re_modify" id="qna_re_modify'+data.qna_RE+'" style="cursor: pointer;">수정</a>&nbsp;';
-  						re_form += '<a class="smallfont qna_re_delete" id="qna_re_delete'+data.qna_RE+'" style="cursor: pointer;">삭제</a>';
-  						re_form += '</div></div></div></div>';
-  									
+  						re_form += '<div class="col qna_re_control pr-5" id="qna_re_control'+retVal.vo.qna_RE+'">';
+  						re_form += '<input type="hidden" name="QNA_NUM" value="'+retVal.vo.qna_RE+'">';
+  						re_form += '<a class="smallfont qna_re_modify" id="qna_re_modify'+retVal.vo.qna_RE+'" style="cursor: pointer;">수정</a>&nbsp;';
+  						re_form += '<a class="smallfont qna_re_delete" id="qna_re_delete'+retVal.vo.qna_RE+'" style="cursor: pointer;">삭제</a></div>';
+  						re_form += '<div class="col qna_re_control_hidden pr-5" id="qna_re_control_hidden'+retVal.vo.qna_RE+'">';
+  						re_form += '<input type="hidden" name="QNA_NUM" value="'+retVal.vo.qna_RE+'">';
+  						re_form += '<a class="smallfont qna_re_modify_process" id="qna_re_modify_process'+retVal.vo.qna_RE+'" style="cursor: pointer;">수정</a>&nbsp;';
+  						re_form += '<a class="smallfont qna_re_modify_reset" id="qna_re_modify_reset'+retVal.vo.qna_RE+'" style="cursor: pointer;">삭제</a></div>';
+  						
+  						re_form += '</div></div></div>';
+  								
   		              
   		            //data.qna_RE는 원글의 num과 같다(QNA_NUM)
-  		              $('#qna_re_space'+data.qna_RE).append(re_form);
+  		            alert('qna_re_space'+retVal.vo.qna_RE);
+  		              $('#qna_re_space'+retVal.vo.qna_RE).append(re_form);
   		            $('#qna_re_form'+QNA_NUM).css('display', 'none');
   						
   		           },
@@ -2571,10 +2684,7 @@
      	   $('#qna_re_modifyform'+QNA_RE_NUM).css('display', 'block');		//수정폼 보임
      	   $('#qna_re_control'+QNA_RE_NUM).css('display', 'none');		//수정,삭제버튼 지움
      	   $('#qna_re_control_hidden'+QNA_RE_NUM).css('display', 'block');		//수정하기, 취소 버튼 보임
-     	  
-     	 
-     	     
-     	   
+   
 			
 			
         });      
@@ -2615,7 +2725,7 @@
 
                 },
                    error:function() {
-                      alert("ajax통신 실패!!!");
+                      alert("답변이 달려있는 글은 삭제할 수 없습니다.");
                    }
              });
 			
@@ -2629,8 +2739,15 @@
 				if(delete_confirm) {
 					var QNA_RE_NUM = $(this).prev().prev().val();
 					alert(QNA_RE_NUM);   
- 
-				   $.ajax({
+		/* 			
+					if($(this).parent( 'div' ).attr('id')= 'qna_re_space'+QNA_RE_NUM) {
+    	  alert('aaaaaa');
+      }
+					 */
+/* 					$( 'p' ).parent( 'div' ).css( 'color', 'green' );
+					var b = $(this).parent().val();
+					alert(b); 
+ */				   $.ajax({
 				      url: '/NAGAGU/delete_qna.do' ,
 				      type:'GET',
 				      data : {'QNA_NUM':QNA_RE_NUM},
@@ -2639,6 +2756,12 @@
 				      success:function(retVal) {
 				         if(retVal.res == "OK") {
 				            alert('댓글이 삭제되었습니다.');
+				            	/* alert()
+				            	if() {	//부모가
+				            		qna_re_space
+				            	} else {
+				            		
+				            	} */
 				            $('#qna_re_table'+QNA_RE_NUM).css('display','none');	//원래 qns댓글 영역 숨겨짐(리스트 띄울 땐 사라짐)
 				            document.getElementById('qna_scroll').scrollIntoView();                         
 				         }

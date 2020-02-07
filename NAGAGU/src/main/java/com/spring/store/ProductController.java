@@ -131,6 +131,9 @@ public class ProductController {
 			//int index = ((Integer)(session.getAttribute("index"))).intValue();
 			MemberVO LoginMemberVO = reviewService.getLoginMemberbyNUM(memberVO);			
 			System.out.println("1"+memberVO.getMEMBER_NUM());
+			System.out.println("로그인 멤버 확인- membernum="+(int)session.getAttribute("MEMBER_NUM"));
+			System.out.println("로그인 멤버 확인- membernick="+LoginMemberVO.getMEMBER_NICK());
+			System.out.println("로그인 멤버 확인- memberpicture="+LoginMemberVO.getMEMBER_PICTURE());
 			/*로그인 멤버 관련*/
 			model.addAttribute("LoginMemberVO",LoginMemberVO);
 		
@@ -141,12 +144,14 @@ public class ProductController {
 		/*상품 vo 가져오기*/
 		String PRODUCT_CATEGORY = request.getParameter("PRODUCT_CATEGORY");
 		int PRODUCT_NUM = Integer.parseInt(request.getParameter("PRODUCT_NUM"));
-				
+System.out.println("pNum="+PRODUCT_NUM);
 		ProductVO vo = null;
+//		vo.setPRODUCT_NUM(PRODUCT_NUM);
 		vo = productService.getproductVO(PRODUCT_NUM);
-		
+System.out.println("wks="+vo.getPRODUCT_WORKSHOP());
 		/*이 product의 워크샵 넘버 필요함*/	
 		WorkshopVO workshopVO = productService.selectWorkshop(vo);
+System.out.println(workshopVO.getWORKSHOP_NUM());		
 		int WorkshopMatchingNumber = workshopVO.getWORKSHOP_NUM();
 		int WorkshopNum = workshopVO.getWORKSHOP_NUM();
 		model.addAttribute("WorkshopNum",WorkshopNum);
@@ -156,8 +161,10 @@ public class ProductController {
 		String WorkshopPicture = workshopVO.getWORKSHOP_PICTURE();
 		model.addAttribute("WorkshopName",WorkshopName);
 		model.addAttribute("WorkshopPicture",WorkshopPicture);
+System.out.println("WorkshopName="+WorkshopName);
+System.out.println("WorkshopPicture="+WorkshopPicture);
 
-		
+
 		/*리뷰 리스트*/
 		int reviewpage = 1; //초기값 1
 		int limit = 5; //한 페이지당 출력할 글의 수
@@ -361,10 +368,6 @@ public class ProductController {
 		}
 
 	    
-	    
-
-		
-	   
 		//reviewVO.setREVIEW_NUM(0); //시퀀스 이용
 		reviewVO.setREVIEW_MEMBER((int)session.getAttribute("MEMBER_NUM"));
 		reviewVO.setREVIEW_PRODUCT(Integer.parseInt(request.getParameter("REVIEW_PRODUCT")));
@@ -373,7 +376,6 @@ public class ProductController {
 		reviewVO.setREVIEW_CONTENT(request.getParameter("REVIEW_CONTENT"));
 		
 
-		
 		//넘겨받은 REVIEW_RE가 존재하면 답글이고(원글의 REVIEW_NUM을 전달해줌), null이면 원글이다.
 		if(request.getParameter("REVIEW_RE") != null) {	
 			//답글 - GRADE=10, RE=NUM
@@ -387,7 +389,6 @@ public class ProductController {
 		
 		int res = reviewService.insertReview(reviewVO);
 		
-	
 		
 		//답글
 		//댓글(review) 입력시 grade update(답글 입력시는  grade 상관 없다)
@@ -896,7 +897,7 @@ public class ProductController {
 	//-------------------------------------------QNA_RE_insert
 	@RequestMapping(value="/qna_insert.do",  produces="application/json;charset=UTF-8")
 	@ResponseBody
-	public String insert_qna(HttpServletRequest request, HttpSession session) throws Exception {
+	public Map<String, Object> insert_qna(HttpServletRequest request, HttpSession session) throws Exception {
 		System.out.println("qna_insert 컨트롤러 왔다");
 
 		int MEMBER_NUM = 0;
@@ -917,12 +918,9 @@ public class ProductController {
 
 		}
 		
-		
-		
 		System.out.println("QNA_CONTENT=" + request.getParameter("QNA_CONTENT"));
 		System.out.println("QNA_PRODUCT=" + request.getParameter("QNA_PRODUCT"));
 		System.out.println("WORKSHOP_NUM=" + request.getParameter("WORKSHOP_NUM"));
-		System.out.println("MEMBER_NUM=" + request.getParameter("MEMBER_NUM"));
 
 //		qnaVO.setQNA_NUM(qNA_NUM);	//시퀀스 이용
 	    qnaVO.setQNA_CONTENT(request.getParameter("QNA_CONTENT"));
@@ -930,20 +928,19 @@ public class ProductController {
 	    qnaVO.setQNA_PRODUCT(Integer.parseInt(request.getParameter("QNA_PRODUCT")));
 	
 		
-		int res = qnaService.insertQna(qnaVO);
-		System.out.println("res="+res);		
-	
-		String str="";
-		ObjectMapper mapper = new ObjectMapper();
+
+		
+		Map<String, Object> retVal = new HashMap<String, Object>();
 		try {
-			str = mapper.writeValueAsString(qnaVO);
-			System.out.println(str);
+			int res = qnaService.insertQna(qnaVO);
+			Product_qnaVO vo = qnaService.getQnaVO(qnaVO);
+			retVal.put("res", "OK");
+			retVal.put("vo", vo);
 		}catch(Exception e) {
-			System.out.println("first() mapper : " + e.getMessage());
+			retVal.put("res", "FAIL");
+			retVal.put("message", "Failure");
 		}
-		
-		return str;
-		
+		return retVal;
 	}		
 	
 	//===============================================QNA modify
@@ -973,21 +970,21 @@ public class ProductController {
 			
 			
 			int res = 0;
-			res = qnaService.deleteQna(QNA_NUM);
+			
 			System.out.println(res);
-			/*
+			
 			//답글을 가지고 있는 댓글을 삭제하면, 해당 답글까지 다 삭제돼야 한다.
 			//답글을 가지고 있는 댓글은 삭제할 수 없다.
-			//본인의 review_num을 review_re로 하는 데이터가 있을 경우, 삭제 불가
-			int count = reviewService.findChildrenRE(REVIEW_NUM);
+			//본인의 qna_num을 qna_re로 하는 데이터가 있을 경우, 삭제 불가
+			int count = qnaService.findChildrenRE(QNA_NUM);
 			//있으면 답글이 있는 것
 			if(count == 0) {
 				//없으면 삭제 가능
-				res = reviewService.deleteReview(REVIEW_NUM);
+				res = qnaService.deleteQna(QNA_NUM);
 			} else {
 				
 			}
-			*/
+			
 			if(res != 0) {
 				retVal.put("res", "OK");
 			} else {
