@@ -2,6 +2,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ page import="java.util.*" %>
 <%@ page import="com.spring.workshopMypage.*" %>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -22,7 +23,13 @@
     <!-- 페이지 고유 스타일 -->
     <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/css/Mypage/Workshop/Lecture_Management.css">
 
-
+	<style>
+		.clickable {cursor: pointer;}
+.hover {text-decoration: underline;}
+.odd{ background: #FFC;}
+.even{ background: #FF9;}
+.active{ width:10px; height:10px; background:#f60; color:white;}
+	</style>
 	<script>
 	
 	
@@ -34,12 +41,14 @@
 		});
 		
 		function classList() {
+			$('#remo').remove();
 			$('#academyList').empty();
-			var number = 1;
-			
+			var selectClassType = $("#selectClassType option:selected").val();	//필터 값 가져오기
+			var title = "";
 			$.ajax({
 				url: '/NAGAGU/classManagementList.my',
 				type: 'POST',
+				data: {"selectClassType" : selectClassType},
 				dataType: 'json',
 				contentType: 'application/x-www-form-urlencoded; charset=utf-8',
 				success: function(data) {
@@ -50,7 +59,6 @@
 						var output = ' ';
 						output += '<tr>';
 						output += '<td><input type="checkbox"></td>';
-						output += '<td>' + number + '</td>';
 						
 						if(item.class_STATUS == 0) {
 							output += '<td>' + "준비중" + '</td>';
@@ -61,7 +69,16 @@
 						}
 						output += '<td>' + item.class_AREA + '</td>';
 						output += '<td>' + item.class_AMOUNT + '</td>';
-						output += '<td>' + item.class_NAME + '</td>';
+						output += '<td>' + item.class_DIVISION + '</td>';
+						
+						if(item.class_NAME.length >= 14) {
+							title = item.class_NAME.substr(0,14)+"...";
+							
+							output += '<td><a href="classdetail.ac?CLASS_NUMBER=' + item.class_NUMBER + '">' + title + '</a></td>';
+						} else {
+							output += '<td><a href="classdetail.ac?CLASS_NUMBER=' + item.class_NUMBER + '">' + item.class_NAME + '<a/></td>';
+						}
+						
 						output += '<td>' + item.class_CATEGORY + '</td>';
 						output += '<td>' + item.class_DATE_CONFIGURATION_1 + ' ~ ' + item.class_DATE_CONFIGURATION_2  + '</td>';
 						output += '<td>' + item.class_COUNT_MEMBER + '</td>';
@@ -69,8 +86,8 @@
 						output += '</tr>';
 						
 						$('#academyList').append(output);
-						number += 1;
 					});
+					page();
 				},
 				error: function() {
 					alert("ajax 통신 실패!");
@@ -79,9 +96,10 @@
 		}
 		
 		$(document).on('click', '#btn_search', function(event) {
+			$('#remo').remove();
 			var searchType = $('#searchType').val();
 			var keyword = $('#keyword').val();
-			var number = 1;
+			var title = "";
 			
 			$('#academyList').empty();
 			alert(searchType + keyword);
@@ -106,7 +124,6 @@
 						var output = ' ';
 						output += '<tr>';
 						output += '<td><input type="checkbox"></td>';
-						output += '<td>' + number + '</td>';
 						
 						if(item.class_STATUS == 0) {
 							output += '<td>' + "준비중" + '</td>';
@@ -117,7 +134,16 @@
 						}
 						output += '<td>' + item.class_AREA + '</td>';
 						output += '<td>' + item.class_AMOUNT + '</td>';
-						output += '<td>' + item.class_NAME + '</td>';
+						output += '<td>' + item.class_DIVISION + '</td>';
+						
+						if(item.class_NAME.length >= 14) {
+							title = item.class_NAME.substr(0,14)+"...";
+							
+							output += '<td><a href="classdetail.ac?CLASS_NUMBER=' + item.class_NUMBER + '">' + title + '</a></td>';
+						} else {
+							output += '<td><a href="classdetail.ac?CLASS_NUMBER=' + item.class_NUMBER + '">' + item.class_NAME + '<a/></td>';
+						}
+						
 						output += '<td>' + item.class_CATEGORY + '</td>';
 						output += '<td>' + item.class_DATE_CONFIGURATION_1 + ' ~ ' + item.class_DATE_CONFIGURATION_2  + '</td>';
 						output += '<td>' + item.class_COUNT_MEMBER + '</td>';
@@ -125,8 +151,8 @@
 						output += '</tr>';
 						
 						$('#academyList').append(output);
-						number += 1;
 					});
+					page();
 				},
 				error: function() {
 					alert("ajax 통신 실패!");
@@ -138,7 +164,8 @@
 		function keyupSearch(event) {
 			var searchType = $('#searchType').val();
 			var keyword = $('#keyword').val();
-			var number = 1;
+			var title = "";
+			$('#remo').remove();
 			
 			$('#academyList').empty();
 			alert(searchType + keyword);
@@ -162,7 +189,6 @@
 						var output = ' ';
 						output += '<tr>';
 						output += '<td><input type="checkbox"></td>';
-						output += '<td>' + number + '</td>';
 						
 						if(item.class_STATUS == 0) {
 							output += '<td>' + "준비중" + '</td>';
@@ -173,7 +199,16 @@
 						}
 						output += '<td>' + item.class_AREA + '</td>';
 						output += '<td>' + item.class_AMOUNT + '</td>';
-						output += '<td>' + item.class_NAME + '</td>';
+						output += '<td>' + item.class_DIVISION + '</td>';
+						
+						if(item.class_NAME.length >= 14) {
+							title = item.class_NAME.substr(0,14)+"...";
+							
+							output += '<td><a href="classdetail.ac?CLASS_NUMBER=' + item.class_NUMBER + '">' + title + '</a></td>';
+						} else {
+							output += '<td><a href="classdetail.ac?CLASS_NUMBER=' + item.class_NUMBER + '">' + item.class_NAME + '<a/></td>';
+						}
+						
 						output += '<td>' + item.class_CATEGORY + '</td>';
 						output += '<td>' + item.class_DATE_CONFIGURATION_1 + ' ~ ' + item.class_DATE_CONFIGURATION_2  + '</td>';
 						output += '<td>' + item.class_COUNT_MEMBER + '</td>';
@@ -181,8 +216,8 @@
 						output += '</tr>';
 						
 						$('#academyList').append(output);
-						number += 1;
 					});
+					page();
 				},
 				error: function() {
 					alert("ajax 통신 실패!");
@@ -191,8 +226,101 @@
 			event.preventDefault();
 		}
 		
-		function selectClassType() {
-			
+		// 만들어진 테이블에 페이지 처리
+		function page() { 	
+		$('#remo').empty();
+		var reSortColors = function($table) {
+		  /* $('tbody tr:odd td', $table).removeClass('even').removeClass('listtd').addClass('odd'); */
+		  /* $('tbody tr:even td', $table).removeClass('odd').removeClass('listtd').addClass('even'); */
+		 };
+		 $('table.paginated').each(function() {
+		  var pagesu = 10;  //페이지 번호 갯수
+		  var currentPage = 0;
+		  var numPerPage = 10;  //목록의 수
+		  var $table = $('#work_store');    
+		  
+		  //length로 원래 리스트의 전체길이구함
+		  var numRows = $table.find('tbody tr').length;
+		  //Math.ceil를 이용하여 반올림
+		  var numPages = Math.ceil(numRows / numPerPage);
+		  //리스트가 없으면 종료
+		  if (numPages==0) return;
+		  //pager라는 클래스의 div엘리먼트 작성
+		  var $pager = $('<td align="center" id="remo" colspan="10"><div class="pager"></div></td>');
+		  
+		  var nowp = currentPage;
+		  var endp = nowp+10;
+		  
+		  //페이지를 클릭하면 다시 셋팅
+		  $table.bind('repaginate', function() {
+		  //기본적으로 모두 감춘다, 현재페이지+1 곱하기 현재페이지까지 보여준다
+		  
+		   $table.find('tbody tr').hide().slice(currentPage * numPerPage, (currentPage + 1) * numPerPage).show();
+		   $("#remo").html("");
+		   
+		   if (numPages > 1) {     // 한페이지 이상이면
+		    if (currentPage < 5 && numPages-currentPage >= 5) {   // 현재 5p 이하이면
+		     nowp = 0;     // 1부터 
+		     endp = pagesu;    // 10까지
+		    }else{
+		     nowp = currentPage -5;  // 6넘어가면 2부터 찍고
+		     endp = nowp+pagesu;   // 10까지
+		     pi = 1;
+		    }
+		    
+		    if (numPages < endp) {   // 10페이지가 안되면
+		     endp = numPages;   // 마지막페이지를 갯수 만큼
+		     nowp = numPages-pagesu;  // 시작페이지를   갯수 -10
+		    }
+		    if (nowp < 1) {     // 시작이 음수 or 0 이면
+		     nowp = 0;     // 1페이지부터 시작
+		    }
+		   }else{       // 한페이지 이하이면
+		    nowp = 0;      // 한번만 페이징 생성
+		    endp = numPages;
+		   }
+		   // [처음]
+		   $('<br /><span class="page-number" cursor: "pointer">[처음]</span>').bind('click', {newPage: page},function(event) {
+		          currentPage = 0;   
+		          $table.trigger('repaginate');  
+		          $($(".page-number")[2]).addClass('active').siblings().removeClass('active');
+		      }).appendTo($pager).addClass('clickable');
+		    // [이전]
+		      $('<span class="page-number" cursor: "pointer">&nbsp;&nbsp;&nbsp;[이전]&nbsp;</span>').bind('click', {newPage: page},function(event) {
+		          if(currentPage == 0) return; 
+		          currentPage = currentPage-1;
+		    $table.trigger('repaginate'); 
+		    $($(".page-number")[(currentPage-nowp)+2]).addClass('active').siblings().removeClass('active');
+		   }).appendTo($pager).addClass('clickable');
+		    // [1,2,3,4,5,6,7,8]
+		   for (var page = nowp ; page < endp; page++) {
+		    $('<span class="page-number" cursor: "pointer" style="margin-left: 8px;"></span>').text(page + 1).bind('click', {newPage: page}, function(event) {
+		     currentPage = event.data['newPage'];
+		     $table.trigger('repaginate');
+		     $($(".page-number")[(currentPage-nowp)+2]).addClass('active').siblings().removeClass('active');
+		     }).appendTo($pager).addClass('clickable');
+		   } 
+		    // [다음]
+		      $('<span class="page-number" cursor: "pointer">&nbsp;&nbsp;&nbsp;[다음]&nbsp;</span>').bind('click', {newPage: page},function(event) {
+		    if(currentPage == numPages-1) return;
+		        currentPage = currentPage+1;
+		    $table.trigger('repaginate'); 
+		     $($(".page-number")[(currentPage-nowp)+2]).addClass('active').siblings().removeClass('active');
+		   }).appendTo($pager).addClass('clickable');
+		    // [끝]
+		   $('<span class="page-number" cursor: "pointer">&nbsp;[끝]</span>').bind('click', {newPage: page},function(event) {
+		           currentPage = numPages-1;
+		           $table.trigger('repaginate');
+		           $($(".page-number")[endp-nowp+1]).addClass('active').siblings().removeClass('active');
+		   }).appendTo($pager).addClass('clickable');
+		     
+		     $($(".page-number")[2]).addClass('active');
+		reSortColors($table);
+		  });
+		   $pager.insertAfter($table).find('span.page-number:first').next().next().addClass('active');   
+		   $pager.appendTo($table);
+		   $table.trigger('repaginate');
+		 });
 		}
 	</script>
     
@@ -283,33 +411,42 @@
                     </div>
 
 
-                    <div class="row">
-                        <!-- Example split danger button -->
-                        <div class="dropdown">
-                            <button class="btn dropbtn btn-sm dropdown-toggle btn-search-mode" type="button" id="searchType" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            	선택
-                            </button>
-                            <div class="dropdown-menu" aria-labelledby="searchType">
-                                <button class="dropdown-item" id="dropdown-item-1" onclick="class_name()">강의명</button>
-                                <button class="dropdown-item" id="dropdown-item-2" onclick="area()">지역</button>
-                                <button class="dropdown-item" id="dropdown-item-3" onclick="category()">카테고리</button>
-                            </div>
+                    <div class="row" style="display: flex;">
+                    	<div class="col-5" style="padding: 0;">
+                    		<div class="row justify-content-start">
+                    			<select class="search_hidden_state d-flex justify-content-start" id="selectClassType" name="selectClassType" onchange="btn_select()" style="height: 100%;">
+		                            <option value="allClass">전체</option>
+		                            <option value="inClass">강의중</option>
+		                            <option value="endClass">강의종료</option>
+		                            <option value="onedayClass">원데이클래스</option>
+		                            <option value="regularClass">정규클래스</option>
+	                        	</select>
+	                        	<button class="btn-sm my-2 my-sm-0" type="button">강의종료</button>
+                    		</div>
+                    	</div>
+                        <div class="col" style="padding: 0;">
+                        	<div class="row justify-content-end">
+                        		<!-- Example split danger button -->
+		                        <div class="dropdown">
+		                            <button class="btn dropbtn btn-sm dropdown-toggle btn-search-mode" type="button" id="searchType" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+		                            	선택
+		                            </button>
+		                            <div class="dropdown-menu" aria-labelledby="searchType">
+		                                <button class="dropdown-item" id="dropdown-item-1" onclick="class_name()">강의명</button>
+		                                <button class="dropdown-item" id="dropdown-item-2" onclick="area()">지역</button>
+		                                <button class="dropdown-item" id="dropdown-item-3" onclick="category()">카테고리</button>
+		                            </div>
+		                        </div>
+		                        <!-- search -->
+		                        <nav class="navbar-light bg-light">
+		                        <!-- input에 enter키 누르면 자동으로 submit -->
+		                          <form class="form-inline" onsubmit="return false">
+		                            <input class="form-control mr-sm-2" type="search" id="keyword" aria-label="Search" style="height:90%">
+		                            <button class="btn btn_search btn-sm my-2 my-sm-0" type="button" id="btn_search">검색</button>
+		                          </form>
+		                        </nav>
+                        	</div>
                         </div>
-                        <!-- search -->
-                        <nav class="navbar-light bg-light">
-                        <!-- input에 enter키 누르면 자동으로 submit -->
-                          <form class="form-inline" onsubmit="return false">
-                            <input class="form-control mr-sm-2" type="search" id="keyword" aria-label="Search" style="height:90%">
-                            <button class="btn btn_search btn-sm my-2 my-sm-0" type="button" id="btn_search">검색</button>
-                          </form>
-                        </nav>
-                        <select class="search_hidden_state" id="selectClassType" name="selectClassType" onchange="btn_select()">
-                            <option value="allClass">전체</option>
-                            <option value="inClass">강의중</option>
-                            <option value="endClass">강의종료</option>
-                            <option value="onedayClass">원데이클래스</option>
-                            <option value="regularClass">정규클래스</option>
-                        </select>
                     </div>
                
             </div>
@@ -317,10 +454,10 @@
                 <thead>
                 <tr>
                     <th scope="col" class="th1"><input id="all_select" type="checkbox"></th>
-                    <th scope="col" class="th2">번호</th>
                     <th scope="col" class="th3">상태</th>
                     <th scope="col" class="th4">지역</th>
                     <th scope="col" class="th5">가격</th>
+					<th scope="col" class="th11">클래스</th>
                     <th scope="col" class="th6">강의명</th>
                     <th scope="col" class="th7">카테고리</th>
                     <th scope="col" class="th8">일시</th>
@@ -333,14 +470,16 @@
                 </tbody>
             </table>
             <div class="table_bottom">
-                <div class="page_nav">
+                <!-- <div class="page_nav">
                     <strong class="current_page">1</strong> 
                     <a href="">2</a>
                     <a href="">3</a>
                     <a href="">4</a>
                     <a href="">5</a>  
                     <a href="">→</a>
-                </div>
+                </div> -->
+                <table class="tbl paginated" id="tbl">
+				</table>
             </div>
         </div>
     </div>
@@ -388,8 +527,9 @@
 	
 	function btn_select() {
 		
-		selectClassType();
+		classList();
 	}
+
 </script>
 </body>
 </html>

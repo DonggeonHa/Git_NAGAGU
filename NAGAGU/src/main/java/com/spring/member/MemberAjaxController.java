@@ -136,8 +136,9 @@ public class MemberAjaxController {
 				} else {
 					retVal.put("res", "login_IdPw_fail");
 				}
+			} else {
+				retVal.put("res", "login_IdPw_fail");
 			}
-			
 			
 		} catch (Exception e) {
 			retVal.put("res", "AjaxControllerFAIL");

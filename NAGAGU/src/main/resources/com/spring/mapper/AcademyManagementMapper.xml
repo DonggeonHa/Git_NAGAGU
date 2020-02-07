@@ -24,6 +24,7 @@
 		<result property="CLASS_ADDRESS" column="CLASS_ADDRESS" />	
 		<result property="CLASS_DETAIL_ADDRESS" column="CLASS_DETAIL_ADDRESS" />
 		<result property="CLASS_COUNT_MEMBER" column="CLASS_COUNT_MEMBER" />
+		<result property="CLASS_STATUS" column="CLASS_STATUS" />
 	</resultMap>
 	
 	<resultMap type="java.util.HashMap" id="hashmapVO">
@@ -49,6 +50,7 @@
 		<result property="CLASS_ADDRESS" column="CLASS_ADDRESS" />
 		<result property="CLASS_DETAIL_ADDRESS" column="CLASS_DETAIL_ADDRESS" />
 		<result property="CLASS_COUNT_MEMBER" column="CLASS_COUNT_MEMBER" />
+		<result property="CLASS_STATUS" column="CLASS_STATUS" />
 	</resultMap>
 	
 	<resultMap type="com.spring.workshop.WorkShopMemberVO" id="workshopMemberResultMap">
@@ -79,16 +81,22 @@
 	</resultMap>
 	
 	<select id="getManagementClassList" resultMap="classResultMap">
-	    select * from (select CLASS_NUMBER, CLASS_STATUS, CLASS_AREA, CLASS_AMOUNT, CLASS_NAME, CLASS_CATEGORY, 
-	    CLASS_DATE_CONFIGURATION_1, CLASS_DATE_CONFIGURATION_2, CLASS_COUNT_MEMBER from ACADEMY order by CLASS_DATE DESC)
+	    select * from (select CLASS_NUMBER, CLASS_STATUS, CLASS_AREA, CLASS_AMOUNT, CLASS_DIVISION, CLASS_NAME, CLASS_CATEGORY, 
+	    CLASS_DATE_CONFIGURATION_1, CLASS_DATE_CONFIGURATION_2, CLASS_COUNT_MEMBER from (select * from ACADEMY where
+	    	<if test="selectClassType == 'allClass'"> 1=1 and WORKSHOP_NAME=#{WORKSHOP_NAME})</if>
+	    	<if test="selectClassType == 'inClass'"> CLASS_STATUS=1 and WORKSHOP_NAME=#{WORKSHOP_NAME})</if>
+	    	<if test="selectClassType == 'endClass'"> CLASS_STATUS=2 and WORKSHOP_NAME=#{WORKSHOP_NAME})</if>
+	    	<if test="selectClassType == 'onedayClass'"> CLASS_DIVISION='원데이클래스' and WORKSHOP_NAME=#{WORKSHOP_NAME})</if>
+	    	<if test="selectClassType == 'regularClass'"> CLASS_DIVISION='정규클래스' and WORKSHOP_NAME=#{WORKSHOP_NAME})</if>
+	    	 order by CLASS_DATE DESC)
 	</select>
 	
 	<select id="getSearchList" resultMap="classResultMap">
-		select * from (select CLASS_NUMBER, CLASS_STATUS, CLASS_AREA, CLASS_AMOUNT, CLASS_NAME, CLASS_CATEGORY, 
+		select * from (select CLASS_NUMBER, CLASS_STATUS, CLASS_AREA, CLASS_AMOUNT, CLASS_DIVISION, CLASS_NAME, CLASS_CATEGORY, 
 	    CLASS_DATE_CONFIGURATION_1, CLASS_DATE_CONFIGURATION_2, CLASS_COUNT_MEMBER from (select * from ACADEMY where
-	    <if test="searchType == 'className'"> CLASS_NAME LIKE '%'||#{keyword}||'%'</if>
-	    <if test="searchType == 'area'"> CLASS_AREA LIKE '%'||#{keyword}||'%'</if>
-	    <if test="searchType == 'category'"> CLASS_CATEGORY LIKE '%'||#{keyword}||'%'</if>
+	    <if test="searchType == 'className'"> CLASS_NAME LIKE '%'||#{keyword}||'%' and WORKSHOP_NAME=#{WORKSHOP_NAME}</if>
+	    <if test="searchType == 'area'"> CLASS_AREA LIKE '%'||#{keyword}||'%' and WORKSHOP_NAME=#{WORKSHOP_NAME}</if>
+	    <if test="searchType == 'category'"> CLASS_CATEGORY LIKE '%'||#{keyword}||'%' and WORKSHOP_NAME=#{WORKSHOP_NAME}</if>
 	    ) order by CLASS_DATE desc)    
 	</select>
 </mapper>

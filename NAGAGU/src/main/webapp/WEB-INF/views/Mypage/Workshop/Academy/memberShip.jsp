@@ -92,8 +92,6 @@
 
                 </div>
                 <div>
-
-
                     <div class="row pt-2 pb-2">
                         <button type="button" id="all_select" class="btn btn-sm btn-outline-dark mr-2">전체표시</button> 
                         <button type="button" id="all_select" class="btn btn-sm btn-outline-dark mr-2">선택 삭제</button> 
