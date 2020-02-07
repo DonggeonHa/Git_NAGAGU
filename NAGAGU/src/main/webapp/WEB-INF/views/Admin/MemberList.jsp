@@ -1,17 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ page import="java.util.*" %>
 <%@ page import="com.spring.workshop.*" %>
-<%
-	List<WorkShopMemberVO> wmemberList = (ArrayList<WorkShopMemberVO>)request.getAttribute("wmemberList");
 
-	int listcount = ((Integer)request.getAttribute("listcount")).intValue(); // 글 개수
-	int nowpage = ((Integer)request.getAttribute("page")).intValue();
-	int maxpage = ((Integer)request.getAttribute("maxpage")).intValue();
-	int startpage = ((Integer)request.getAttribute("startpage")).intValue();
-	int startrow = ((Integer)request.getAttribute("startrow")).intValue();
-	int endpage = ((Integer)request.getAttribute("endpage")).intValue();
-	
-%>
 <!DOCTYPE html>
 <html>
 	<head>
@@ -129,7 +119,7 @@
 						<li class="main text-white">
 							회원관리
 							<ul>
-								<li>일반회원관리</li>
+								<li><a href="./MemberList.ad">일반회원관리</a></li>
 								<li><a href="./WMemberList.ad">공방회원관리</a></li>
 							</ul>
 						</li>
@@ -172,71 +162,9 @@
 			<!-- 본문 -->
 			<div id="page-content-wrapper">
 				<div class="container-fluid">
-					<h1 class="text-center">공방회원관리</h1>
-					<br><br>
-					
-					<div class="input-group justify-content-end mb-3" style="width: 300px !important;">
-						<div class="input-group-prepend">
-							<span class="input-group-text" id="inputGroup-sizing-default"><i class="fas fa-search"></i></span>
-						</div>
-						<input type="text" class="form-control" aria-describedby="inputGroup-sizing-default" placeholder="공방명을 입력하세요" id="keyword">
-					</div>
+					<h1 class="text-center">일반회원관리</h1>
 					<br><br>
 					<table class="table table-hover tableCSS" id="user-table"></table>
-					
-					<nav aria-label="Page navigation example">
-						<ul class="pagination pagination-lg justify-content-center">
-							<%
-								if(nowpage <= 1) { 
-							%>
-									<li class="page-item disabled">
-										<a class="page-link" href="#" tabindex="-1" aria-disabled="true">이전</a>
-									</li>
-							<%	
-								} else { 
-							%>
-									<li class="page-item">
-										<a class="page-link" href="./WMemberList.ad?page=<%=nowpage-1%>">이전 </a>
-									</li>
-							<% 
-								} 
-							%>
-							
-							<%
-								for(int a = startpage; a <= endpage; a++) {
-									if(a == nowpage) { 
-							%>
-										<li class="page-item disabled">
-											<a class="page-link" href="#" tabindex="-1" aria-disabled="true"><%=a%></a>
-										</li> <!-- 현재 보고있는 페이지에는 링크를 걸지 않겠다. -->
-							<% 	
-									} else { 
-							%>
-										<li class="page-item">
-											<a class="page-link" href="./WMemberList.ad?page=<%=a%>"><%=a%></a>
-										</li>
-							<% 	
-									}
-								}
-							%>	
-							
-							<%
-								if(nowpage >= maxpage) { 
-							%> 
-									<li class="page-item disabled">
-										<a class="page-link" href="#" tabindex="-1" aria-disabled="true">다음</a>
-									</li> <!-- 현재 보는 페이지가 마지막 페이지 이면 -->
-							<%
-								} else { 
-							%>
-									<li class="page-item">
-										<a class="page-link" href="./WMemberList.ad?page=<%=nowpage+1%>">다음</a>
-									</li>
-							<%
-								} 
-							%>
-						</ul>
-					</nav>
 				</div>
 			</div>
 			<!-- /본문 -->
@@ -269,43 +197,57 @@
 	        });
 			
 			$(document).ready(function() {
-				// table 내부 내용 모두 제거(초기화)
-				$('#user-table').empty();
-				var MEMBER_NUM = "MEMBER_NUM=" + <%=%>;
-				$.ajax({
-					url: '/NAGAGU/MemberList.ad',
-					type: 'POST',
-					data : MEMBER_NUM,
-					dataType : "json", //서버에서 보내줄 데이터 타입
-					contentType : 'application/x-www-form-urlencoded; charset=UTF-8',
-					success:function(data) {
-						var title = '';
-						title += '<thead class="text-center">';
-						title += '<tr>';
-						title += '<th scope="col">번호</th>';
-						title += '<th scope="col">이메일</th>';
-						title += '<th scope="col">이름</th>';
-						title += '<th scope="col">닉네임</th>';
-						title += '<th scope="col">핸드폰</th>';
-						title += '<th scope="col">주소</th>';
-						title += '<th scope="col">상세주소</th>';
-						title += '<th scope="col">상태</th>';
-						title += '</tr>';
-						title += '</thead>';
-						$('#user-table').append(title);
-					}
-				});
-			})
+				// 목록
+				function selectData() {
+					// table 내부 내용 모두 제거(초기화)
+					$('#user-table').empty();
+					$.ajax({
+						url: './Member.ad',
+						type: 'POST',
+						dataType : "json", //서버에서 보내줄 데이터 타입
+						contentType : 'application/x-www-form-urlencoded; charset=UTF-8',
+						success:function(data) {
+							var title = '';
+							title += '<thead class="text-center">';
+							title += '<tr>';
+							title += '<th scope="col">번호</th>';
+							title += '<th scope="col">이메일</th>';
+							title += '<th scope="col">이름</th>';
+							title += '<th scope="col">닉네임</th>';
+							title += '<th scope="col">핸드폰</th>';
+							title += '<th scope="col">주소</th>';
+							title += '<th scope="col">상세주소</th>';
+							title += '<th scope="col">상태</th>';
+							title += '</tr>';
+							title += '</thead>';
+							$('#user-table').append(title);
+							$.each(data, function(index, item) {
+								var output = '';
+								output += '<tbody class="text-center">'
+								output += '<tr>';
+								output += '<td>' + item.MEMBER_NUM + '</td>';
+								output += '<td>' + item.MEMBER_EMAIL + '</td>';
+								output += '<td>' + item.MEMBER_NAME + '</td>';
+								output += '<td>' + item.MEMBER_NICK + '</td>';
+								output += '<td>' + item.MEMBER_PHONE + '</td>';
+								output += '<td>' + item.ADDRESS_ADDRESS1 + '</td>';
+								output += '<td>' + item.ADDRESS_ADDRESS2 + '</td>';
+								output += '<td>' + item.MEMBER_STATUS + '</td>';
+								output += '</tr>';
+								output += '</tbody>'
+								console.dir("output : " + output);
+								$('#user-table').append(output);
+							});
+						},
+						error: function() {
+							alert("ajax list 통신 실패!");
+						}
+					});
+				}
+				
+				selectData();
+			});
 			
-			$(document).ready(function() {
-				$("#keyword").keyup(function() {
-					var k = $(this).val();
-					$("#user-table > tbody > tr").hide();
-					var temp = $("#user-table > tbody > tr > td:nth-child(10n+3):contains('" + k + "')");
-					
-					$(temp).parent().show();					
-				})
-			})
 		</script>
 	</body>
 </html>

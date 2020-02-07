@@ -129,7 +129,7 @@
 						<li class="main text-white">
 							회원관리
 							<ul>
-								<li>일반회원관리</li>
+								<li><a href="./MemberList.ad">일반회원관리</a></li>
 								<li><a href="./WMemberList.ad">공방회원관리</a></li>
 							</ul>
 						</li>

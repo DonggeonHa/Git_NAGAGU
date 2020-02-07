@@ -1,6 +1,7 @@
 package com.spring.admin;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -81,11 +82,10 @@ public class AdminServiceImpl implements AdminService {
 	}
 
 	@Override
-	public ArrayList<MemberVO> getMembers(int startrow, int endrow) {
-		ArrayList<MemberVO> memberList = new ArrayList<MemberVO>();
+	public List<MemberVO> getMembers() {
+		List<MemberVO> memberList = null;
 		AdminMapper adminMapper = sqlSession.getMapper(AdminMapper.class);
-		
-		memberList = adminMapper.getMembers(startrow, endrow);
+		memberList = adminMapper.getMembers();
 		
 		return memberList;
 	}

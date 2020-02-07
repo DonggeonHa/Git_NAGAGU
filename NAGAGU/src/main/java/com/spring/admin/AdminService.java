@@ -1,6 +1,7 @@
 package com.spring.admin;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import com.spring.member.MemberVO;
 import com.spring.workshop.WorkShopMemberVO;
@@ -11,7 +12,7 @@ public interface AdminService {
 	
 	/* 일반회원관리 */
 	public int memberListCount();
-	public ArrayList<MemberVO> getMembers(int startrow, int endrow);
+	public List<MemberVO> getMembers();
 	public int deleteMember(MemberVO vo);
 	
 	/* 공방회원관리 */

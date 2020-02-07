@@ -66,14 +66,13 @@
  		SELECT COUNT(*) FROM NAGAGU_MEMBER
  	</select>
  	
-	<select id="getMembers" parameterType="int" resultMap="memberResultMap"> <!-- 이거 처리한 결과물을 list 타입으로 만들어주면 된다. select id은 내용을 호출 함. -->
+	<select id="getMembers" resultMap="memberResultMap"> <!-- 이거 처리한 결과물을 list 타입으로 만들어주면 된다. select id은 내용을 호출 함. -->
 		select *
 		from (select rownum rnum, MEMBER_NUM, MEMBER_EMAIL, MEMBER_NAME, MEMBER_NICK, MEMBER_PHONE, 
-					 MEMBER_ADDRESS1, MEMBER_ADDRESS2, MEMBER_STATUS
+					 ADDRESS_ADDRESS1, ADDRESS_ADDRESS2, MEMBER_STATUS
 			  from(select * 
-			  	   from NAGAGU__MEMBER 
+			  	   from NAGAGU_MEMBER
 			  	   order by MEMBER_NUM ASC))
-		<![CDATA[ WHERE rnum >= #{startrow} AND rnum <= #{endrow} ]]>
  	</select>
  	
  	<delete id="deleteMember" parameterType="com.spring.member.MemberVO">

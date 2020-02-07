@@ -1,6 +1,7 @@
 package com.spring.mapper;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import org.apache.ibatis.annotations.Param;
 
@@ -15,7 +16,7 @@ public interface AdminMapper {
 	
 	/* 일반회원관리 */
 	int memberListCount();
-	ArrayList<MemberVO> getMembers(@Param("startrow") int startrow, @Param("endrow") int endrow);
+	List<MemberVO> getMembers();
 	int deleteMember(MemberVO vo);
 	
 	/* 공방회원관리 */

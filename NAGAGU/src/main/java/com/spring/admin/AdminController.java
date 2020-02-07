@@ -11,8 +11,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.spring.member.MemberVO;
 import com.spring.workshop.WorkShopMemberVO;
 
@@ -45,7 +48,7 @@ public class AdminController {
 		}
 		
 		mav.addObject("adminVO", adminVO);
-		mav.setViewName("redirect:index.ad");
+		mav.setViewName("Admin/Aindex");
 		
 		return mav;
 	}
@@ -57,44 +60,31 @@ public class AdminController {
 	}
 	
 	/*=========================== 일반회원관리 ==============================*/
-	@RequestMapping(value = "/MemberList.ad", method = {RequestMethod.GET, RequestMethod.POST})
-	public ModelAndView MemberList(HttpServletRequest request) {
-		ModelAndView mav = new ModelAndView();
-		int page = 1; // 초기값 1
-		int limit = 10; // 한 페이지당 출력할 글의 수
-		
-		if(request.getParameter("page") != null) {
-			page = Integer.parseInt(request.getParameter("page"));
-		}
-		
-		int startrow = (page -1) * 10 + 1; // 읽기 시작할 row 번호
-		int endrow = startrow + limit - 1; // 읽을 마지막 row 번호.
-		
-		int listcount = adminService.memberListCount();
-		List<MemberVO> memberList = adminService.getMembers(startrow, endrow);
-		
-		// 총 페이지의 수
-		int maxpage = (int)((double)listcount / limit + 0.95);
-		int startpage = (((int)((double)page / 10 + 0.9)) -1) * 10 + 1;
-		int endpage = startpage + 10 - 1;
-		
-		if(endpage > maxpage)
-			endpage = maxpage;
-		
-		
-		mav.addObject("page", page);
-		mav.addObject("maxpage", maxpage);
-		mav.addObject("startpage", startpage);
-		mav.addObject("startrow", startrow);
-		mav.addObject("endpage", endpage);
-		mav.addObject("listcount", listcount);
-		mav.addObject("memberList", memberList);
-		mav.setViewName("Admin/MemberList");
-		
-		return mav;
+	@RequestMapping(value = "/MemberList.ad")
+	public String MemberList() {
+		return "Admin/MemberList";
 	}
 	
-	@RequestMapping(value = "/deleteMember.ad", method = {RequestMethod.GET, RequestMethod.POST})
+	//produces 속성을 이용해 Response의 Content-Type을 제어할 수 있다
+	@RequestMapping(value = "/Member.ad", produces="application/json;charset=UTF-8")
+	@ResponseBody
+	public String MemberList2() {
+		List<MemberVO> memberList = adminService.getMembers();
+		
+		String str = "";
+		
+		ObjectMapper mapper = new ObjectMapper();
+		try {
+			str = mapper.writeValueAsString(memberList);
+		} catch (Exception e) {
+			System.out.println("first() mapper : " + e.getMessage());
+		}
+		
+		return str;
+	}
+	
+	@RequestMapping(value = "/deleteMember.ad", produces="application/json;charset=UTF-8", method = {RequestMethod.GET, RequestMethod.POST})
+	@ResponseBody
 	public Map<String, Object> deleteWMember(MemberVO vo) {
 		Map<String, Object> retVal = new HashMap<String, Object>();
 		
