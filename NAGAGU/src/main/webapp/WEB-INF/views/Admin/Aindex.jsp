@@ -95,29 +95,25 @@
 						<li class="main text-white">
 							커뮤니티관리
 							<ul>
-								<li>블랙리스트 관리</li>
-								<li>기다려봐</li>
+								<li>게시글관리</li>
 							</ul>
 						</li>
 						<li class="main text-white">
 							아카데미관리
 							<ul>
-								<li>강의관리</li>
-								<li>기다려봐</li>
+								<li>강의게시글관리</li>
 							</ul>
 						</li>
 						<li class="main text-white">
 							상품관리
 							<ul>
-								<li>블랙리스트 관리</li>
-								<li>기다려봐</li>
+								<li>상품게시글관리</li>
 							</ul>
 						</li>
 						<li class="main text-white">
 							견적관리
 							<ul>
-								<li>블랙리스트 관리</li>
-								<li>기다려봐</li>
+								<li>견적게시글관리</li>
 							</ul>
 						</li>
 						<li class="main text-white">

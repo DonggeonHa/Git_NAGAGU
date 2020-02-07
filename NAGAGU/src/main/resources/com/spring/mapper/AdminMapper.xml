@@ -76,7 +76,7 @@
  	</select>
  	
  	<delete id="deleteMember" parameterType="com.spring.member.MemberVO">
- 		DELETE FROM NAGAGU_MEMBER WHERE MEMBER_NUM = #{MEMBER_NUM}
+ 		delete from NAGAGU_MEMBER where MEMBER_NUM = #{MEMBER_NUM}
  	</delete>
 	
 	<!-- 공방회원관리  -->

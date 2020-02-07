@@ -109,6 +109,9 @@
 		<div id="page-wrapper">
 			<!-- 사이드바 -->
 			<div id="sidebar-wrapper">
+				<div class="text-white" style="position:static; left: 2.8%; top:3%;">
+					메인페이지로 가기
+				</div>
 				<nav>
 					<ul class="sidebar-nav">
 						<li class="sidebar-brand" style="margin: 15px 0;">
@@ -126,29 +129,38 @@
 						<li class="main text-white">
 							커뮤니티관리
 							<ul>
-								<li>블랙리스트 관리</li>
-								<li>기다려봐</li>
+								<li>게시글관리</li>
 							</ul>
 						</li>
 						<li class="main text-white">
 							아카데미관리
 							<ul>
-								<li>강의관리</li>
-								<li>기다려봐</li>
+								<li>강의게시글관리</li>
 							</ul>
 						</li>
 						<li class="main text-white">
 							상품관리
 							<ul>
-								<li>블랙리스트 관리</li>
-								<li>기다려봐</li>
+								<li>상품게시글관리</li>
 							</ul>
 						</li>
 						<li class="main text-white">
 							견적관리
 							<ul>
-								<li>블랙리스트 관리</li>
-								<li>기다려봐</li>
+								<li>견적게시글관리</li>
+								<li>견적게시글관리</li>
+								<li>견적게시글관리</li>
+								<li>견적게시글관리</li>
+								<li>견적게시글관리</li>
+								<li>견적게시글관리</li>
+								<li>견적게시글관리</li>
+								<li>견적게시글관리</li>
+								<li>견적게시글관리</li>
+								<li>견적게시글관리</li>
+								<li>견적게시글관리</li>
+								<li>견적게시글관리</li>
+								<li>견적게시글관리</li>
+								
 							</ul>
 						</li>
 						<li class="main text-white">
@@ -156,6 +168,7 @@
 						</li>
 					</ul>
 				</nav>
+				
 			</div>
 			<!-- /사이드바 -->
 			
@@ -164,6 +177,13 @@
 				<div class="container-fluid">
 					<h1 class="text-center">일반회원관리</h1>
 					<br><br>
+					<div class="input-group justify-content-end mb-3" style="width: 300px !important;">
+						<div class="input-group-prepend">
+							<span class="input-group-text" id="inputGroup-sizing-default"><i class="fas fa-search"></i></span>
+						</div>
+						<input type="text" class="form-control" aria-describedby="inputGroup-sizing-default" placeholder="이름을 입력하세요" id="keyword">
+					</div>
+					
 					<table class="table table-hover tableCSS" id="user-table"></table>
 				</div>
 			</div>
@@ -218,6 +238,7 @@
 							title += '<th scope="col">주소</th>';
 							title += '<th scope="col">상세주소</th>';
 							title += '<th scope="col">상태</th>';
+							title += '<th scope="col">관리</th>';
 							title += '</tr>';
 							title += '</thead>';
 							$('#user-table').append(title);
@@ -225,14 +246,37 @@
 								var output = '';
 								output += '<tbody class="text-center">'
 								output += '<tr>';
-								output += '<td>' + item.MEMBER_NUM + '</td>';
-								output += '<td>' + item.MEMBER_EMAIL + '</td>';
-								output += '<td>' + item.MEMBER_NAME + '</td>';
-								output += '<td>' + item.MEMBER_NICK + '</td>';
-								output += '<td>' + item.MEMBER_PHONE + '</td>';
-								output += '<td>' + item.ADDRESS_ADDRESS1 + '</td>';
-								output += '<td>' + item.ADDRESS_ADDRESS2 + '</td>';
-								output += '<td>' + item.MEMBER_STATUS + '</td>';
+								output += '<td>' + item.member_NUM + '</td>'; // undefined ㅗ
+								output += '<td>' + item.member_EMAIL + '</td>';
+								output += '<td>' + item.member_NAME + '</td>';
+								output += '<td>' + item.member_NICK + '</td>';
+								
+								if (item.member_PHONE == null) {
+									output += '<td>미입력</td>';
+								} else {
+									output += '<td>' + item.member_PHONE + '</td>';	
+								}
+								
+								if (item.address_ADDRESS1 == null) {
+									output += '<td>미입력</td>';
+								} else {
+									output += '<td>' + item.address_ADDRESS1 + '</td>';	
+								}
+								
+								if (item.address_ADDRESS2 == null) {
+									output += '<td>미입력</td>';
+								} else {
+									output += '<td>' + item.address_ADDRESS2 + '</td>';	
+								}
+								
+								if (item.member_STATUS == 0) {
+									output += '<td>이메일 인증대기</td>';
+								} else {
+									output += '<td>이메일 인증완료</td>';
+								}
+								
+								output += '<td><a href="./deleteMember.ad" class="del_data" ';
+								output += 'MEMBER_NUM=' + item.member_NUM +  '><i class="fas fa-trash-alt" ></i></a></td>';
 								output += '</tr>';
 								output += '</tbody>'
 								console.dir("output : " + output);
@@ -245,9 +289,43 @@
 					});
 				}
 				
+				$(document).on('click', '.del_data', function(event) {
+					jQuery.ajax({
+						url : $(this).attr("href"), //$(this) : //항목을 눌렀을때 그 걸 가르킴 .attr("href") 속성된 이름값중에 "href"을 통해서? 읽어온다??
+						type : 'GET',
+						data : {'MEMBER_NUM' : $(this).attr("member_NUM")},
+						contentType : 'application/x-www-form-urlencoded; charset=UTF-8',
+						dataType : 'json',
+						success : function (retVal) {
+							alert("삭제 성공");
+							if (retVal.res == "OK") {
+								// 데이터 성공할 때 이벤트 작성
+								selectData();
+							} else {
+								alert("delete Fail !!");
+							}
+						},
+						error : function() {
+							alert("ajax 삭제 통신 실패!");
+						}
+					});
+					
+					// 기본 이벤트 제거
+					event.preventDefault();
+				});
+				
 				selectData();
 			});
 			
+			$(document).ready(function() {
+				$("#keyword").keyup(function() {
+					var k = $(this).val();
+					$("#user-table > tbody > tr").hide();
+					var temp = $("#user-table > tbody > tr > td:nth-child(10n+3):contains('" + k + "')");
+					
+					$(temp).parent().show();					
+				})
+			})
 		</script>
 	</body>
 </html>

@@ -76,6 +76,7 @@ public class AdminController {
 		ObjectMapper mapper = new ObjectMapper();
 		try {
 			str = mapper.writeValueAsString(memberList);
+			System.out.println("memberList 변환 : " + str);
 		} catch (Exception e) {
 			System.out.println("first() mapper : " + e.getMessage());
 		}
@@ -83,18 +84,19 @@ public class AdminController {
 		return str;
 	}
 	
-	@RequestMapping(value = "/deleteMember.ad", produces="application/json;charset=UTF-8", method = {RequestMethod.GET, RequestMethod.POST})
+	@RequestMapping(value = "/deleteMember.ad", produces="application/json; charset=UTF-8", method = {RequestMethod.GET, RequestMethod.POST})
 	@ResponseBody
 	public Map<String, Object> deleteWMember(MemberVO vo) {
 		Map<String, Object> retVal = new HashMap<String, Object>();
 		
-		int res = adminService.deleteMember(vo);
-		
-		if (res != 0) { 
+		try {
+			System.out.println("MEMBER_NUM = " + vo.getMEMBER_NUM());
+			int res = adminService.deleteMember(vo);
+			
 			retVal.put("res", "OK");
-		} else {
-			retVal.put("res", "Fail");
-			retVal.put("res", "삭제가 되지 않았습니다.");
+		} catch(Exception e) {
+			retVal.put("res", "FAIL");
+			retVal.put("message", "삭제가 되지 않았습니다.");
 		}
 		
 		return retVal;
