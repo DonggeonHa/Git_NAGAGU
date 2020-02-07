@@ -184,7 +184,7 @@
                   <div>
                   	<h6><a href="community.cm">COMMUNITY</a> > 상세보기 </h6>
                   </div>
-                  <%if(picsVO.getPICS_MEMBER()== memberVO.getMEMBER_NUM()){
+                  <%if(picsVO.getPICS_MEMBER()== MEMBER_NUM){
                   %>
                   <c:set var="num" value="<%=MEMBER_NUM%>" />
 					<c:if test="${num != 0}">

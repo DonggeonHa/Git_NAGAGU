@@ -1,14 +1,6 @@
-<%@page import="java.util.ArrayList"%>
-<%@page import="java.util.Map"%>
-<%@page import="java.util.HashMap"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%
-	Map<String, Object> retVal = (Map<String, Object>)request.getAttribute("retVal");
-	int countBasket = (int)retVal.get("countBasket");
-	System.out.println(countBasket);
-	ArrayList<Map<String, Object>> basketList = (ArrayList<Map<String,Object>>)retVal.get("getbasketList");
-	System.out.println(basketList.size());
 %>
 <!DOCTYPE html>
 <html>
@@ -32,11 +24,10 @@
   width: 25%;
   height: 25vh;
 }
-
 .sidebar {
   position: -webkit-sticky;
   position: sticky ;
-  top: 0;
+  top: 10;
 }
 @font-face {
 	font-family: 'KOMACON';
@@ -50,10 +41,12 @@ body {
 	font-family: '만화진흥원체', 'KOMACON', KOMACON !important;
 	font-size: 15px;
 }
-.main, .sidebar{  
-	margin-top:30px !important;
+.main, .sidebar{   
+	margin-top:30px;
 	min-height: 65vh; 
 } 
+.main-output{
+margin-top:15px; }
 .each-row{
 	margin-bottom: 15px;
 	border-bottom: 1px solid black;
@@ -63,21 +56,24 @@ body {
   text-decoration: none !important;
   color: black !important;
 } 
+.sidebarOutput{
+	font-size:1.5rem;
+	min-height: 25vh;
+}
 </style>
 <body>
 <div class="container">
 	<div class="wrapper row justify-content-between">
 		<div class="main">
 			<div class="d-flex">
-				<p>
-					<input type="checkbox" id="check_all">&nbsp;전체선택
-				</p>
+				<input type="checkbox" id="check_all" style="align-self:center;">
+				<span></span>
 			</div>
 			<div class="row img-wrap main-output">
 				<div class="col-12">배송업체</div>
 				<hr>
 				<div class="col-1">
-					<input type="checkbox" checked>
+					<input type="checkbox" checked >
 				</div>
 				<div class="col-11 row">
 					<div class="col-2">
@@ -132,13 +128,13 @@ body {
 		<div class="sidebar" id="sidebar">
 			<div class="row justify-content-around text-center sidebarOutput">
 				<div class="col-6">상품금액</div>
-				<div class="col-6 sumPrice"></div>
-				<div class="col-6">배송비</div>
-				<div class="col-6 shipPrice">+</div>
+				<div class="col-6 totalPrice"></div>
+				<div class="col-6">+배송비</div>
+				<div class="col-6 totalShipPrice">+</div>
 				<div class="col-6">결제금액</div>
-				<div class="col-6 toPayPrice"></div>
+				<div class="col-6 totalPayPrice"></div>
 				<div class="">
-					<a href="" class="btn btn-warning text-white">구매하기</a>
+					<a href="#" class="btn btn-warning text-white">구매하기</a>
 				</div>
 			</div>
 			<!-- side bar end -->
@@ -179,33 +175,27 @@ $(document).ready(function(){
         			console.log(retVal.getbasketList)
         			console.log(retVal.countBasket)
         			var output="";
-        			var sumOfPrice = 0;       
-        			var shipPrice = 0;
+        			var countOutput= '전체선택 '+retVal.countBasket+'개';
         			var url = './productdetail.pro?PRODUCT_NUM='
 		        	for(var j=0; j<retVal.getbasketList.length; j++){
-			    		output += '<div class="col-1"><input class="checkbox" type="checkbox"></div>' 
-			    		output += '<div class="col-11 row each-row" id="'+retVal.getbasketList[j].PRODUCT_NUM+'"><div class="col-2"><a href="'+url+retVal.getbasketList[j].PRODUCT_NUM+'"><img src="/productupload/image/'+retVal.getbasketList[j].PRODUCT_IMAGE+'"></div></a>'
+			    		output += '<div class="col-1"><input class="checkbox" type="checkbox" value='+retVal.getbasketList[j].BASKET_NUM+'></div>' 
+			    		output += '<div class="col-11 row each-row" id="'+retVal.getbasketList[j].PRODUCT_NUM+'"><div class="col-2"><a href="'+url+retVal.getbasketList[j].PRODUCT_NUM+'">'
+			    		output += '<img src="/productupload/image/'+retVal.getbasketList[j].PRODUCT_IMAGE+'"></a></div>'
 			    		output += '<div class="col-10"><div class="d-flex justify-content-between"><a href="'+url+retVal.getbasketList[j].PRODUCT_NUM+'"><div>'+retVal.getbasketList[j].PRODUCT_TITLE+'</div></a>'
 			    		output += '<div><i class="fas fa-times"></i></div></div><font size="1">무료배송|일반택배</font>'
 			    		output += '<div class="d-flex justify-content-between"><div>'+retVal.getbasketList[j].PRODUCT_BRIEF+'</div>'
-			    		output += '<div class="price" value="수량">수량&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<select class="amount"><option selected>1</option><option>2</option><option>3</option></select>'
-			    		output += '<div>가격 :'+retVal.getbasketList[j].PRODUCT_PRICE+'</div></div></div></div><div class="col-12 d-flex justify-content-between"><div>'
-			    		//output += '<span>옵션 :'+retVal.getbasketList[j].BASKET_OPTION+'</span>&nbsp;&nbsp;'
+			    		output += '<div class="price" value="수량">수량&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<select class="amount"><option>1</option><option>2</option><option>3</option></select>'
+			    		output += '<div class="basic_price" value='+retVal.getbasketList[j].PRODUCT_PRICE+'>가격 :'+retVal.getbasketList[j].PRODUCT_PRICE+'</div></div></div></div><div class="col-12 d-flex justify-content-between"><div>'
 		    			output += '<div>사이즈 :'+retVal.getbasketList[j].BASKET_SIZE+'</div>'
 	    				output += '<div>컬러 :'+retVal.getbasketList[j].BASKET_COLOR+'</div>'
 	    				output += '<div>배송업체 :'+retVal.getbasketList[j].PRODUCT_SHIP_COMPANY+'</div>'
-			    		output += '</div><div style="align-self: flex-end;">총<span class="totalprice">'+retVal.getbasketList[j].PRODUCT_PRICE+'</span></div></div></div>'
-			    		//총 가격
-			    		sumOfPrice += retVal.getbasketList[j].PRODUCT_PRICE
-			    		//배송비
-			    		shipPrice += retVal.getbasketList[j].PRODUCT_SHIP_PRICE
-		        	} 
-		        	
-		        	$('.main-output').html(output)
-					$('.sumPrice').text(sumOfPrice)
-		        	$('.shipPrice').append(shipPrice)
-		        	$('.toPayPrice').text(sumOfPrice+shipPrice)
-				}else{
+			    		output += '</div><div style="align-self: flex-end;"><div class="shipPrice">+배송비 :'+retVal.getbasketList[j].PRODUCT_SHIP_PRICE+'</div>'
+			    		output += '<span class="chongprice"></span></div></div></div>'
+		        	}  
+        			$('#check_all').next().text(countOutput).css('margin-left','15px')
+		        	$('.main-output').html(output) 
+		        	changePrice()
+				}else{ 
 					alert("update fail"); 
 				}  
 			 },
@@ -216,7 +206,6 @@ $(document).ready(function(){
 	} 
 	//전체선택
 	$(document).on('click','#check_all',function(){
-		alert('hi')
 		var chk = $(this).is(":checked");//.attr('checked');
         if(chk){
         	$(".checkbox").prop('checked', true);
@@ -224,36 +213,65 @@ $(document).ready(function(){
         	$(".checkbox").prop('checked', false);
         }
 	});
-	//수량 변경시 가격 변경
+	//수량 변경시 가격 변경(update)
 	$(document).on('change','.amount',function(){
-		changePrice(this)
+		var num = $('.amount').parent().parent().parent().parent().attr('id')
+		var amount = $(this).val()
+		var category = 'updateAmount'
+ 		$.ajax({
+			  url: "/NAGAGU/updateBasket.my",
+              type: "POST",
+              data: { 'BASKET_PRODUCT' : num, 'BASKET_AMOUNT' : amount, 'category' : category},
+              contentType:
+  				'application/x-www-form-urlencoded; charset=utf-8',
+              success: function (retVal) {
+        		if(retVal.res=="OK"){
+					alert('수량 변경성공')
+				}else{
+					alert("update fail");
+				}  
+			 },
+			error:function(){
+				alert("ajax통신 실패!!");
+			}
+		})
+		changePrice(this);
 	}) 
-		
-		
+	
 	function changePrice(a){
-		//수량 선택
-		var changeValue =  $(a).val() 
-		//가격
-		var price =  $(a).next().text().substr(4)
-		//선택 수량 x 가격
-		var changePrice= changeValue*price
-		console.log(changeValue)
-		console.log(price)
-		console.log(changePrice)
-		$(a).parent().parent().parent().next().find('.totalprice').text(changePrice)
-		
-		var sumPrice = 0;
-		for(var i=0; i<$('.totalprice').length; i++){  
-			var each = $('.totalprice')[i];
-			var getPrice = $(each).text()
-			getPrice *= 1;
-			sumPrice += getPrice 
-		}
-		$('.sumPrice').text(sumPrice)
-		var shipPrice = $('.shipPrice').text().substr(1)
-		shipPrice *= 1;
-		$('.toPayPrice').text(sumPrice+shipPrice)
+		if(a!=null){
+			alert('change')
+			//수량 선택
+			var changeValue =  $(a).val() 
+			//가격
+			var price =  $(a).next().attr('value')
+			//선택 수량 x 가격
+			var changePrice= changeValue*price
+			console.log(changePrice)
+			$(a).next().text('가격: '+changePrice)
+		} 
+		//가격+배송비 구해서 총가격에 뿌리기
+		$('.amount').each(function (index,item){
+			var price = $(item).next().text().substr(4)*1
+			var ship = $('.shipPrice');
+			ship = $(ship)[index].textContent.substr(6)*1
+			var target = $('.chongprice')[index]
+			$(target).text('총가격 '+(price+ship))
+		}) 
+		//오른쪽 상품금액 + 배송비 + 결제금액 구해서 뿌리기
+		var totalPrice=0;
+		var totalShipPrice=0;
+		var totalPayPrice=0;
+		$('.amount').each(function (index,item){
+			totalPrice += $(item).next().text().substr(4)*1
+			var ship = $('.shipPrice');
+			totalShipPrice += $(ship)[index].textContent.substr(6)*1
+		})
+		$('.totalPrice').text(totalPrice)
+		$('.totalShipPrice').text(totalShipPrice)
+		$('.totalPayPrice').text(totalPrice+totalShipPrice)
 	}
+	
 	//누르면 장바구니에서 삭제
 	$(document).on('click','.fa-times',function(){
 		var num = $(this).parent().parent().parent().parent().attr('id')
@@ -277,7 +295,65 @@ $(document).ready(function(){
 			}
 		})
 	}) 
-	alert('get??')
+	//셀렉트 한 값만 넘기기
+ 	$(document).on('click','.btn',function(){ 
+		alert('hi')
+		var url = '/NAGAGU/mypage_order.my'
+		
+		var arrChecked = new Array();
+		$('.checkbox').each(function (index,item){
+			var chk = $(item).is(":checked")
+			var num = $(item).attr('value')
+			if(chk){
+				arrChecked.push(num)
+			}
+			console.log('chkc'+chk);
+/* 			ship = $(ship)[index].textContent.substr(6)*1
+			var target = $('.chongprice')[index]
+			$(target).text('총가격 '+(price+ship)) */
+		}) 
+		
+		console.log('arr'+arrChecked);
+		var Data = { "arr": arrChecked }; 
+		$.ajax({ 
+			type: "post", 
+			url: "/NAGAGU/mypage_order.my",
+			dataType: "json", 
+			data: Data, 
+			success: function (data) { 
+				alert('abc')
+			},
+			error:function(){
+				alert("ajax통신 실패!!");
+			} 
+		});
+
+
+	}); 
+/* 	$(document).on('click','.checkbox',function(){
+		var num = $('.amount').parent().parent().parent().parent().attr('id')
+		var amount = $(this).val()
+		var category = 'updateCheck'
+ 		$.ajax({
+			  url: "/NAGAGU/updateBasket.my",
+              type: "POST",
+              data: { 'BASKET_PRODUCT' : num, 'BASKET_AMOUNT' : amount, 'category' : category},
+              contentType:
+  				'application/x-www-form-urlencoded; charset=utf-8',
+              success: function (retVal) {
+        		if(retVal.res=="OK"){
+					alert('체크 변경성공')
+				}else{
+					alert("update fail");
+				}  
+			 },
+			error:function(){
+				alert("ajax통신 실패!!");
+			}
+		})
+	}); */
+	
+	
 	//처음 로드하고 사진 가져오기 호출
 	getBasket();
 })

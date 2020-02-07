@@ -11,7 +11,8 @@
 		<result property="BASKET_COLOR" column="BASKET_COLOR" />	
 		<result property="BASKET_SIZE" column="BASKET_SIZE" />	
 		<result property="BASKET_OPTION" column="BASKET_OPTION" />		
-		<result property="BASKET_AMOUNT" column="BASKET_AMOUNT" />	
+		<result property="BASKET_AMOUNT" column="BASKET_AMOUNT" />
+		<result property="BASKET_CHECK" column="BASKET_CHECK" />		
 	</resultMap>
 	<resultMap type="com.spring.order.BasketVO" id="basketVO">
 		<result property="BASKET_NUM" column="BASKET_NUM" />	
@@ -20,7 +21,8 @@
 		<result property="BASKET_COLOR" column="BASKET_COLOR" />	
 		<result property="BASKET_SIZE" column="BASKET_SIZE" />	
 		<result property="BASKET_OPTION" column="BASKET_OPTION" />		
-		<result property="BASKET_AMOUNT" column="BASKET_AMOUNT" />	
+		<result property="BASKET_AMOUNT" column="BASKET_AMOUNT" />
+		<result property="BASKET_CHECK" column="BASKET_CHECK" />		
 	</resultMap>
 <!-- 	<select id="getProductLike" parameterType="java.util.HashMap" resultType="int">
 		SELECT count(*)FROM MEMBER_LIKE WHERE LIKE_MEMBER=#{LIKE_MEMBER} AND LIKE_PRODUCT=#{PRODUCT_NUM}
@@ -32,7 +34,7 @@
     </select>
     <insert id="insertCart" parameterType="java.util.HashMap">
 		insert into BASKET values
-		(SEQ_BASKET.nextval,#{BASKET_MEMBER},#{BASKET_PRODUCT},#{BASKET_COLOR},#{BASKET_SIZE},#{BASKET_OPTION},#{BASKET_AMOUNT})	
+		(SEQ_BASKET.nextval,#{BASKET_MEMBER},#{BASKET_PRODUCT},#{BASKET_COLOR},#{BASKET_SIZE},#{BASKET_OPTION},#{BASKET_AMOUNT},#{BASKET_CHECK})	
 	</insert>
 	<select id="countBasket"  resultType="int">
 		SELECT count(*) FROM BASKET WHERE BASKET_MEMBER=#{BASKET_MEMBER}
@@ -40,4 +42,14 @@
 	<delete id="deleteBasket" parameterType="com.spring.order.BasketVO">	
 		DELETE FROM BASKET WHERE BASKET_MEMBER=#{BASKET_MEMBER} AND BASKET_PRODUCT=#{BASKET_PRODUCT}
 	</delete>
+	<update id="updateAmount" parameterType="java.util.HashMap"> 
+		UPDATE BASKET 
+		SET BASKET_AMOUNT =#{BASKET_AMOUNT}
+		WHERE BASKET_MEMBER=#{BASKET_MEMBER} AND BASKET_PRODUCT=#{BASKET_PRODUCT}	
+	</update>
+	<update id="updateCheck" parameterType="java.util.HashMap"> 
+		UPDATE BASKET 
+		SET BASKET_CHECK = 1
+		WHERE BASKET_NUM=#{BASKET_NUM}	
+	</update>
 </mapper>

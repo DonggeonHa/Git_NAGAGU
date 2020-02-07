@@ -33,12 +33,6 @@ public class MypageController {
 		return "Mypage/like";
 	}
 
-	@RequestMapping(value = "/mypage_order.my")
-	public String MypageOrder() {
-		
-		return "Mypage/order";
-	}
-	
 	@RequestMapping(value = "/mypage_support.my")
 	public String MypageSupport() {
 		

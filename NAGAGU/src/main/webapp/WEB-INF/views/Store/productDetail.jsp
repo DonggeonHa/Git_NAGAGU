@@ -467,16 +467,26 @@
             background-color:#23272B !important;
             color:white !important; 
          }
+         .row h6{
+         	margin-left:30px; 
+         }
+         .row h6 a,.row h6 a:link,.row h6 a:hover{
+		  text-decoration: none !important;
+		  color: black !important;
+		} 
       </style>
 
    </head>
 	<body class="order-body">
 		<!-- content start -->
 		<div class="container class-detail-container">
+			<div class="row justify-content-between title">
+                <h6><a href="productlist.pro?PRODUCT_CATEGORY=all">STORE</a> > 상세보기 </h6>
+            </div>
 			<div class="col-12 text-center" style="padding-bottom: 5%;">
 				<div id="carouselExampleFade" class="carousel slide carousel-fade" data-ride="carousel">
 					<div class="carousel-inner text-center">
-					<% for(int i = 0; i < (bannerImgCount)+1; i++) {
+					<% for(int i = 0; i < (bannerImgCount)+1; i++) { 
 						if(vo.getPRODUCT_BANNER().equals("#")) { %>
 						<div class="carousel-item">
 						     <img src="#" class="d-block w-100" style="display: none;">
@@ -1299,6 +1309,7 @@
               contentType:
   				'application/x-www-form-urlencoded; charset=utf-8',
               success: function (retVal) {
+            	  console.log(params)
         		if(retVal.res=="OK"){
         			if(confirm('장바구니로 이동하시겠습니까?')){
         				location.href= '${pageContext.request.contextPath}/mypage_basket.my'

@@ -8,6 +8,13 @@ public class BasketVO {
 	private String BASKET_SIZE	;
 	private String BASKET_OPTION ; 
 	private int BASKET_AMOUNT ;/* 수량 */
+	private int BASKET_CHECK;
+	public int getBASKET_CHECK() {
+		return BASKET_CHECK;
+	}
+	public void setBASKET_CHECK(int bASKET_CHECK) {
+		BASKET_CHECK = bASKET_CHECK;
+	}
 	public int getBASKET_NUM() {
 		return BASKET_NUM;
 	}

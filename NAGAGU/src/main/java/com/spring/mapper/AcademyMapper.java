@@ -2,6 +2,7 @@ package com.spring.mapper;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Map;
 
 import com.spring.academy.ClassVO;
 import com.spring.academy.MyClassVO;
@@ -16,4 +17,6 @@ public interface AcademyMapper {
 	int countUp(ClassVO academy);
 	
 	int insertClassInfo(MyClassVO vo); // 회원관리
+	//경태 마이페이지 강의목록
+	public ArrayList<Map<String, Object>> getLoginMemberClass(HashMap<String, Object> map);
 }

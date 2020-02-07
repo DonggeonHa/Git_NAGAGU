@@ -27,37 +27,13 @@ public class BasketController {
 	@Autowired
 	private MemberService memberService;
 	
-
 	//폼에서 받아와서 장바구니페이지(이동)
 	@RequestMapping(value = "/mypage_basket.my")
-	public String MypageBasket(HttpSession session, Model model) {
-		HashMap<String, Object> map = new HashMap<String, Object>();
-		int MEMBER_NUM = (int)session.getAttribute("MEMBER_NUM");
-		map.put("MEMBER_NUM", MEMBER_NUM);
-		
-		Map<String, Object> retVal = new HashMap<String, Object>();
-		try {
-			//장바구니 개수세기
-			int countBasket = basketService.countBasket(MEMBER_NUM);
-			System.out.println("장바구니 개수="+countBasket);
-			
-			ArrayList<Map<String, Object>> getbasketList = null;
-			getbasketList = basketService.getbasketList(map);
-			//ArrayList<MemberVO> followMembers = communityService.getFollowMembers(map);
-			retVal.put("countBasket", countBasket);
-			retVal.put("getbasketList", getbasketList);
-			//retVal.put("picsLikeCount", returnInfo.get("picsLikeCount"));
-			//retVal.put("cnt", returnInfo.get("cnt"));
-			retVal.put("res", "OK");
-			model.addAttribute("retVal",retVal);
-		}catch(Exception e) {
-			retVal.put("res", "FAIL");
-			retVal.put("message", "Failure");
-		}
+	public String MypageBasket() {
 		return "Mypage/basket";
 	}
 	@RequestMapping(value = "/insertBasket.my")
-	public @ResponseBody  Map<String, Object> insertBasket(BasketVO basketVO, HttpSession session, ProductVO productVO, HttpServletRequest request) {
+	public @ResponseBody  Map<String, Object> insertBasket(BasketVO basketVO, HttpSession session, HttpServletRequest request) {
 		int MEMBER_NUM = (int)session.getAttribute("MEMBER_NUM");
 		Map<String, Object> retVal = new HashMap<String, Object>();
 		
@@ -67,7 +43,32 @@ public class BasketController {
 		System.out.println("amount는"+basketVO.getBASKET_AMOUNT());
 		
 		try {
+			
 			basketService.insertCart(basketVO);
+			retVal.put("res", "OK");
+		}catch(Exception e) {
+			retVal.put("res", "FAIL");
+			retVal.put("message", "Failure");
+		}
+		return retVal;
+	}
+	//수량 변경 업데이트
+	@RequestMapping(value = "/updateBasket.my")
+	public @ResponseBody  Map<String, Object> updateBasket(BasketVO basketVO, HttpSession session, HttpServletRequest request) {
+		int MEMBER_NUM = (int)session.getAttribute("MEMBER_NUM");
+		Map<String, Object> retVal = new HashMap<String, Object>();
+		
+		System.out.println("updateBasket 컨트롤러");
+		basketVO.setBASKET_MEMBER(MEMBER_NUM);
+		
+		String category = request.getParameter("category");
+		System.out.println(category);
+		
+		
+		try {
+			if(category.equals("updateAmount")) {
+				basketService.updateAmount(basketVO);
+			}
 			retVal.put("res", "OK");
 		}catch(Exception e) {
 			retVal.put("res", "FAIL");
@@ -93,14 +94,10 @@ public class BasketController {
 			int countBasket = basketService.countBasket(MEMBER_NUM);
 			System.out.println("장바구니 개수="+countBasket);
 			
-			
 			ArrayList<Map<String, Object>> getbasketList = null;
 			getbasketList = basketService.getbasketList(map);
-			//ArrayList<MemberVO> followMembers = communityService.getFollowMembers(map);
 			retVal.put("countBasket", countBasket);
 			retVal.put("getbasketList", getbasketList);
-			//retVal.put("picsLikeCount", returnInfo.get("picsLikeCount"));
-			//retVal.put("cnt", returnInfo.get("cnt"));
 			retVal.put("res", "OK");
 		}catch(Exception e) {
 			retVal.put("res", "FAIL");
@@ -110,7 +107,7 @@ public class BasketController {
 	} 
 	//장바구니에서 삭제
 	@RequestMapping(value = "/deleteBasket.my")
-	public @ResponseBody Map<String, Object> deleteBasket(BasketVO basketVO, HttpSession session, ProductVO productVO, HttpServletRequest request) {
+	public @ResponseBody Map<String, Object> deleteBasket(BasketVO basketVO, HttpSession session,HttpServletRequest request) {
 		HashMap<String, Object> map = new HashMap<String, Object>();
 		int MEMBER_NUM = (int)session.getAttribute("MEMBER_NUM");
 		basketVO.setBASKET_MEMBER(MEMBER_NUM);
@@ -130,12 +127,17 @@ public class BasketController {
 		}
 		return retVal;
 	} 
-	
-	
-//	
 //	@RequestMapping(value = "/mypage_order.my")
-//	public String MypageOrder() {
-//		
+//	public String MypageOrder(HttpSession session,HttpServletRequest request,BasketVO basketVO) {
+//		HashMap<String, Object> map = new HashMap<String, Object>();
+//		System.out.println("mypage_order컨트롤로");
+//		String[] arr = request.getParameterValues("arr[]");
+//		for(int i=0; i<arr.length; i++) {
+//			map.put("BASKET_NUM", Integer.parseInt(arr[i]));
+//			System.out.println(basketVO.getBASKET_NUM());
+//			int result = basketService.updateCheck(map);
+//			System.out.println(result);
+//		}
 //		return "Mypage/order";
 //	}
 //	
