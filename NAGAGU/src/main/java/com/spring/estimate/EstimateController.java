@@ -1,4 +1,4 @@
-package com.spring.estimate;
+ package com.spring.estimate;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -116,7 +116,7 @@ public class EstimateController {
 		try {
 			String uploadedFile = estimateService.imageUpload(url, file);
 			
-			img_name = "/NAGAGU/images/"+uploadedFile;
+			img_name = "/estimateupload/image/"+uploadedFile;
 			
 			return img_name;
 		}

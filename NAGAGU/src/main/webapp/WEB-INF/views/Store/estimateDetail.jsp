@@ -296,6 +296,37 @@
 				</table>
 			</div>
 		</div>
+		
+		<!--  modal -->
+		<div class="modal fade" id="offerFormModal" tabindex="-1" role="dialog"
+			aria-labelledby="offerFormLabel" aria-hidden="true">
+			<div class="modal-dialog modal-dialog-centered" role="document">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h5 class="modal-title" id="offerFormLabel">견적 제안</h5>
+						<button type="button" class="close" data-dismiss="modal"
+							aria-label="Close">
+							<span aria-hidden="true">&times;</span>
+						</button>
+					</div>
+					<div class="modal-body">
+						<form id="offerForm" method="POST">
+						<input type="hidden" name="OFFER_ESTIMATE" value="<%=vo.getESTIMATE_NUM() %>">
+						<input type="hidden" name="OFFER_WORKSHOP" value="<%=workshop_name %>">
+							<label class="modalLabel" for="OFFER_PRICE">제시 가격</label>
+							<input class="modalInput" type="text" name="OFFER_PRICE"><br>
+							<label class="modalLabel" for="OFFER_CONTENT">내용</label>
+							<textarea class="modalInput" name="OFFER_CONTENT"></textarea>
+						</form>
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-secondary"
+							data-dismiss="modal">닫기</button>
+						<button type="button" id="btn_offer" class="btn btn-primary">제시하기</button>
+					</div>
+				</div>
+			</div>
+		</div>
 	
 		<br/><br/><br/>
 	
@@ -447,6 +478,26 @@
 				$('#OFFER_PAGE').val($(this).attr("value"));
 				console.log($('#OFFER_PAGE').val());
 				getOfferList();
+			});
+			
+			/* 견적 제시 */
+			$('#btn_offer').click(function() {
+				var params = $('#offerForm').serialize();
+				$.ajax({
+					url:'/NAGAGU/offer_insert.es',
+					type:'POST',
+					data:params,
+					contentType: 'application/x-www-form-urlencoded; charset=utf-8',
+					dataType : false,
+					success : function(data) {
+						alert(data);
+					},
+					error : function(data) {
+						alert('ajax 통신 실패!');
+					}
+					
+				});
+				event.preventDefault();
 			});
 			
 			getOfferList();
