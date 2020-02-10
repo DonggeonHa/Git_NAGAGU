@@ -16,6 +16,160 @@
     <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/css/Mypage/Workshop/Membership.css">
     <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
 
+	<script type="text/javascript">
+		$(document).ready(function() {
+			alert("회원문서준비");
+			memberList();
+			
+		});
+		
+		function memberList() {
+			$('#remo').remove();
+			$('#memberList').empty();
+			var title = "";
+			
+			$.ajax({
+				url: '/NAGAGU/classMemberManagementList.my',
+				type: 'POST',
+				dataType: 'json',
+				contentType: 'application/x-www-form-urlencoded; charset=utf-8',
+				success: function(data) {
+					$('.listnum_num').text(data.length+"명");
+					console.log(data);
+					$.each(data, function(index, item) {
+						
+						var output = ' ';
+						output += '<tr>';
+						output += '<td><input type="checkbox"></td>';
+						output += '<td>' + item.class_DIVISION + '</td>';
+						
+						if(item.class_NAME.length >= 14) {
+							title = item.class_NAME.substr(0,14)+"...";
+							
+							output += '<td><a href="classdetail.ac?CLASS_NUMBER=' + item.class_NUMBER + '">' + title + '</a></td>';
+						} else {
+							output += '<td><a href="classdetail.ac?CLASS_NUMBER=' + item.class_NUMBER + '">' + item.class_NAME + '<a/></td>';
+						}
+						
+						output += '<td>' + item.member_NAME + '</td>';
+						
+						if(item.member_PHONE==null){
+							output += '<td>미입력 상태</td>';
+						} else {
+							output += '<td>' + item.member_PHONE + '</td>';
+						}
+						
+						output += '<td>' + item.member_EMAIL + '</td>';
+						output += '<td><button class="btn_modify">삭제</button></td>';
+						output += '</tr>';
+						
+						$('#memberList').append(output);
+					});
+					page();
+				},
+				error: function() {
+					alert("ajax 통신 실패!");
+				}
+			});
+		}
+		
+		// 만들어진 테이블에 페이지 처리
+		function page() { 	
+		$('#remo').empty();
+		var reSortColors = function($table) {
+		  /* $('tbody tr:odd td', $table).removeClass('even').removeClass('listtd').addClass('odd'); */
+		  /* $('tbody tr:even td', $table).removeClass('odd').removeClass('listtd').addClass('even'); */
+		 };
+		 $('table.paginated').each(function() {
+		  var pagesu = 10;  //페이지 번호 갯수
+		  var currentPage = 0;
+		  var numPerPage = 10;  //목록의 수
+		  var $table = $('#work_store');    
+		  
+		  //length로 원래 리스트의 전체길이구함
+		  var numRows = $table.find('tbody tr').length;
+		  //Math.ceil를 이용하여 반올림
+		  var numPages = Math.ceil(numRows / numPerPage);
+		  //리스트가 없으면 종료
+		  if (numPages==0) return;
+		  //pager라는 클래스의 div엘리먼트 작성
+		  var $pager = $('<td align="center" id="remo" colspan="10"><div class="pager"></div></td>');
+		  
+		  var nowp = currentPage;
+		  var endp = nowp+10;
+		  
+		  //페이지를 클릭하면 다시 셋팅
+		  $table.bind('repaginate', function() {
+		  //기본적으로 모두 감춘다, 현재페이지+1 곱하기 현재페이지까지 보여준다
+		  
+		   $table.find('tbody tr').hide().slice(currentPage * numPerPage, (currentPage + 1) * numPerPage).show();
+		   $("#remo").html("");
+		   
+		   if (numPages > 1) {     // 한페이지 이상이면
+		    if (currentPage < 5 && numPages-currentPage >= 5) {   // 현재 5p 이하이면
+		     nowp = 0;     // 1부터 
+		     endp = pagesu;    // 10까지
+		    }else{
+		     nowp = currentPage -5;  // 6넘어가면 2부터 찍고
+		     endp = nowp+pagesu;   // 10까지
+		     pi = 1;
+		    }
+		    
+		    if (numPages < endp) {   // 10페이지가 안되면
+		     endp = numPages;   // 마지막페이지를 갯수 만큼
+		     nowp = numPages-pagesu;  // 시작페이지를   갯수 -10
+		    }
+		    if (nowp < 1) {     // 시작이 음수 or 0 이면
+		     nowp = 0;     // 1페이지부터 시작
+		    }
+		   }else{       // 한페이지 이하이면
+		    nowp = 0;      // 한번만 페이징 생성
+		    endp = numPages;
+		   }
+		   // [처음]
+		   $('<br /><span class="page-number" cursor: "pointer">[처음]</span>').bind('click', {newPage: page},function(event) {
+		          currentPage = 0;   
+		          $table.trigger('repaginate');  
+		          $($(".page-number")[2]).addClass('active').siblings().removeClass('active');
+		      }).appendTo($pager).addClass('clickable');
+		    // [이전]
+		      $('<span class="page-number" cursor: "pointer">&nbsp;&nbsp;&nbsp;[이전]&nbsp;</span>').bind('click', {newPage: page},function(event) {
+		          if(currentPage == 0) return; 
+		          currentPage = currentPage-1;
+		    $table.trigger('repaginate'); 
+		    $($(".page-number")[(currentPage-nowp)+2]).addClass('active').siblings().removeClass('active');
+		   }).appendTo($pager).addClass('clickable');
+		    // [1,2,3,4,5,6,7,8]
+		   for (var page = nowp ; page < endp; page++) {
+		    $('<span class="page-number" cursor: "pointer" style="margin-left: 8px;"></span>').text(page + 1).bind('click', {newPage: page}, function(event) {
+		     currentPage = event.data['newPage'];
+		     $table.trigger('repaginate');
+		     $($(".page-number")[(currentPage-nowp)+2]).addClass('active').siblings().removeClass('active');
+		     }).appendTo($pager).addClass('clickable');
+		   } 
+		    // [다음]
+		      $('<span class="page-number" cursor: "pointer">&nbsp;&nbsp;&nbsp;[다음]&nbsp;</span>').bind('click', {newPage: page},function(event) {
+		    if(currentPage == numPages-1) return;
+		        currentPage = currentPage+1;
+		    $table.trigger('repaginate'); 
+		     $($(".page-number")[(currentPage-nowp)+2]).addClass('active').siblings().removeClass('active');
+		   }).appendTo($pager).addClass('clickable');
+		    // [끝]
+		   $('<span class="page-number" cursor: "pointer">&nbsp;[끝]</span>').bind('click', {newPage: page},function(event) {
+		           currentPage = numPages-1;
+		           $table.trigger('repaginate');
+		           $($(".page-number")[endp-nowp+1]).addClass('active').siblings().removeClass('active');
+		   }).appendTo($pager).addClass('clickable');
+		     
+		     $($(".page-number")[2]).addClass('active');
+		reSortColors($table);
+		  });
+		   $pager.insertAfter($table).find('span.page-number:first').next().next().addClass('active');   
+		   $pager.appendTo($table);
+		   $table.trigger('repaginate');
+		 });
+		}
+	</script>
     
 
 </head>
@@ -48,19 +202,18 @@
                     <div class="row">
                         <div class="dropdown">
                             <button class="btn dropbtn btn-sm dropdown-toggle btn-search-mode" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                선택
+                                	선택
                             </button>
                             <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                <a class="dropdown-item" href="#">강의명</a>
-                                <a class="dropdown-item" href="#">회원 이름</a>
-                                <a class="dropdown-item" href="#">전화번호</a>
-                                <a class="dropdown-item" href="#">이메일</a>
+                                <a class="dropdown-item" onclick="class_name()">강의명</a>
+                                <a class="dropdown-item" onclick="member_name()">회원 이름</a>
+                                <a class="dropdown-item" onclick="member_phone()">전화번호</a>
                             </div>
                         </div>
                         <!-- search -->
                         <nav class="navbar-light bg-light">
-                          <form class="form-inline" >
-                            <input class="form-control mr-sm-2" type="search" aria-label="Search" style="height:90%">
+                          <form class="form-inline" onsubmit="return false">
+                            <input class="form-control mr-sm-2" id="keyword" type="search" aria-label="Search" style="height:90%">
                             <button class="btn btn_search btn-sm my-2 my-sm-0" type="submit">검색</button>
                           </form>
                         </nav>
@@ -77,171 +230,14 @@
                     <th scope="col" class="th5">전화번호</th>
                     <th scope="col" class="th6">이메일</th>
                     <th scope="col" class="th7">관리</th>
-                    <th scope="col" class="th8">채팅</th>
                 </tr>
                 </thead>
-                <tbody>
-                <tr>
-                    <td><input type="checkbox"></td>
-                    <td>1</td>
-                    <td>원데이클래스</td>
-                    <td>하동건</td>
-                    <td>010-1234-5678</td>
-                    <td>liverpool93@kakao.com</td>
-                    <td><button class="btn_modify">삭제</button></td>
-                    <td><button class="btn_modify">채팅</button></td>
-                </tr>
-                <tr>
-                    <td><input type="checkbox"></td>
-                    <td>1</td>
-                    <td>원데이클래스</td>
-                    <td>하동건</td>
-                    <td>010-1234-5678</td>
-                    <td>liverpool93@kakao.com</td>
-                    <td><button class="btn_modify">삭제</button></td>
-                    <td><button class="btn_modify">채팅</button></td>
-                </tr>
-                <tr>
-                    <td><input type="checkbox"></td>
-                    <td>1</td>
-                    <td>원데이클래스</td>
-                    <td>하동건</td>
-                    <td>010-1234-5678</td>
-                    <td>liverpool93@kakao.com</td>
-                    <td><button class="btn_modify">삭제</button></td>
-                    <td><button class="btn_modify">채팅</button></td>
-                </tr>
-                <tr>
-                    <td><input type="checkbox"></td>
-                    <td>1</td>
-                    <td>원데이클래스</td>
-                    <td>하동건</td>
-                    <td>010-1234-5678</td>
-                    <td>liverpool93@kakao.com</td>
-                    <td><button class="btn_modify">삭제</button></td>
-                    <td><button class="btn_modify">채팅</button></td>
-                </tr>
-                <tr>
-                    <td><input type="checkbox"></td>
-                    <td>1</td>
-                    <td>원데이클래스</td>
-                    <td>하동건</td>
-                    <td>010-1234-5678</td>
-                    <td>liverpool93@kakao.com</td>
-                    <td><button class="btn_modify">삭제</button></td>
-                    <td><button class="btn_modify">채팅</button></td>
-                </tr>
-                <tr>
-                    <td><input type="checkbox"></td>
-                    <td>1</td>
-                    <td>원데이클래스</td>
-                    <td>하동건</td>
-                    <td>010-1234-5678</td>
-                    <td>liverpool93@kakao.com</td>
-                    <td><button class="btn_modify">삭제</button></td>
-                    <td><button class="btn_modify">채팅</button></td>
-                </tr>
-                <tr>
-                    <td><input type="checkbox"></td>
-                    <td>1</td>
-                    <td>원데이클래스</td>
-                    <td>하동건</td>
-                    <td>010-1234-5678</td>
-                    <td>liverpool93@kakao.com</td>
-                    <td><button class="btn_modify">삭제</button></td>
-                    <td><button class="btn_modify">채팅</button></td>
-                </tr>
-                <tr>
-                    <td><input type="checkbox"></td>
-                    <td>1</td>
-                    <td>원데이클래스</td>
-                    <td>하동건</td>
-                    <td>010-1234-5678</td>
-                    <td>liverpool93@kakao.com</td>
-                    <td><button class="btn_modify">삭제</button></td>
-                    <td><button class="btn_modify">채팅</button></td>
-                </tr>
-                <tr>
-                    <td><input type="checkbox"></td>
-                    <td>1</td>
-                    <td>원데이클래스</td>
-                    <td>하동건</td>
-                    <td>010-1234-5678</td>
-                    <td>liverpool93@kakao.com</td>
-                    <td><button class="btn_modify">삭제</button></td>
-                    <td><button class="btn_modify">채팅</button></td>
-                </tr>
-                <tr>
-                    <td><input type="checkbox"></td>
-                    <td>1</td>
-                    <td>원데이클래스</td>
-                    <td>하동건</td>
-                    <td>010-1234-5678</td>
-                    <td>liverpool93@kakao.com</td>
-                    <td><button class="btn_modify">삭제</button></td>
-                    <td><button class="btn_modify">채팅</button></td>
-                </tr>
-                <tr>
-                    <td><input type="checkbox"></td>
-                    <td>1</td>
-                    <td>원데이클래스</td>
-                    <td>하동건</td>
-                    <td>010-1234-5678</td>
-                    <td>liverpool93@kakao.com</td>
-                    <td><button class="btn_modify">삭제</button></td>
-                    <td><button class="btn_modify">채팅</button></td>
-                </tr>
-                <tr>
-                    <td><input type="checkbox"></td>
-                    <td>1</td>
-                    <td>원데이클래스</td>
-                    <td>하동건</td>
-                    <td>010-1234-5678</td>
-                    <td>liverpool93@kakao.com</td>
-                    <td><button class="btn_modify">삭제</button></td>
-                    <td><button class="btn_modify">채팅</button></td>
-                </tr>
-                <tr>
-                    <td><input type="checkbox"></td>
-                    <td>1</td>
-                    <td>원데이클래스</td>
-                    <td>하동건</td>
-                    <td>010-1234-5678</td>
-                    <td>liverpool93@kakao.com</td>
-                    <td><button class="btn_modify">삭제</button></td>
-                    <td><button class="btn_modify">채팅</button></td>
-                </tr>
-                <tr>
-                    <td><input type="checkbox"></td>
-                    <td>1</td>
-                    <td>원데이클래스</td>
-                    <td>하동건</td>
-                    <td>010-1234-5678</td>
-                    <td>liverpool93@kakao.com</td>
-                    <td><button class="btn_modify">삭제</button></td>
-                    <td><button class="btn_modify">채팅</button></td>
-                </tr>
-                <tr>
-                    <td><input type="checkbox"></td>
-                    <td>1</td>
-                    <td>원데이클래스</td>
-                    <td>하동건</td>
-                    <td>010-1234-5678</td>
-                    <td>liverpool93@kakao.com</td>
-                    <td><button class="btn_modify">삭제</button></td>
-                    <td><button class="btn_modify">채팅</button></td>
-                </tr>
-                 </tbody>
+                <tbody id="memberList">
+                </tbody>
             </table>
             <div class="table_bottom">
-                <div class="page_nav">
-                    <strong class="current_page">1</strong> 
-                    <a href="">2</a>
-                    <a href="">3</a>
-                    <a href="">4</a>
-                    <a href="">5</a>  
-                    <a href="">→</a>
-                </div>
+                <table class="tbl paginated" id="tbl">
+				</table>
             </div>
         </div>
     </div>
@@ -262,6 +258,29 @@ $(document).ready(function(){
         }
         
     });
+});
+
+function class_name() {
+	$('#dropdownMenuButton').html('강의명');
+	$('#dropdownMenuButton').val('className');
+}
+function member_name() {
+	$('#dropdownMenuButton').html('회원이름');
+	$('#dropdownMenuButton').val('memberName');
+	$('#dropdownMenuButton').css('width', '77px');
+}
+function member_phone() {
+	$('#dropdownMenuButton').html('전화번호');
+	$('#dropdownMenuButton').val('memberPhone');
+	$('#dropdownMenuButton').css('width', '77px');
+}
+
+$("#keyword").keyup(function(event){
+	if (event.keyCode == 13) {
+		event.preventDefault();
+		keyupSearch(event);
+		return;
+	}
 });
 </script>
 

@@ -36,11 +36,25 @@ public class AcademyManagementAjaxController {
 		String WORKSHOP_NAME = (String)session.getAttribute("WORKSHOP_NAME");
 		
 		List<ClassVO> list = null;
-		System.out.println(searchType + " 그리고 " + keyword);
+		System.out.println(searchType + ", " + keyword);
 		
 		list = academyManagementService.getSearchList(keyword, searchType, WORKSHOP_NAME);
 		
 		
 		return list;
 	}
+	
+	@PostMapping(value="/classMemberManagementList.my", produces = "application/json;charset=UTF-8")
+	public List<WsMemberVO> memberList(HttpSession session) {
+		
+		int WORKSHOP_NUM = (int)session.getAttribute("WORKSHOP_NUM");
+		System.out.println(WORKSHOP_NUM);
+		List<WsMemberVO> member_list = null;
+
+		member_list = academyManagementService.getMemberList(WORKSHOP_NUM);
+		
+		return member_list;
+	}
 }
+
+

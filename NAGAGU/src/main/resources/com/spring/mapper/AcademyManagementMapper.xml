@@ -80,6 +80,16 @@
 		<result property="MY_CLASS_STATUS" column="MY_CLASS_STATUS" />
 	</resultMap>
 	
+	<resultMap type="com.spring.workshopMypage.WsMemberVO" id="myclassMemberResultMap">
+		<result property="MY_CLASS_CLASSNUM" column="MY_CLASS_CLASSNUM" />	
+		<result property="MY_CLASS_MEMBERNUM" column="MY_CLASS_MEMBERNUM" />
+		<result property="CLASS_NAME" column="CLASS_NAME" />
+		<result property="CLASS_DIVISION" column="CLASS_DIVISION" />
+		<result property="MEMBER_EMAIL" column="MEMBER_EMAIL" />
+		<result property="MEMBER_PHONE" column="MEMBER_PHONE" />
+		<result property="MEMBER_NUM" column="MEMBER_NUM" />
+	</resultMap>
+	
 	<select id="getManagementClassList" resultMap="classResultMap">
 	    select * from (select CLASS_NUMBER, CLASS_STATUS, CLASS_AREA, CLASS_AMOUNT, CLASS_DIVISION, CLASS_NAME, CLASS_CATEGORY, 
 	    CLASS_DATE_CONFIGURATION_1, CLASS_DATE_CONFIGURATION_2, CLASS_COUNT_MEMBER from (select * from ACADEMY where
@@ -99,4 +109,11 @@
 	    <if test="searchType == 'category'"> CLASS_CATEGORY LIKE '%'||#{keyword}||'%' and WORKSHOP_NAME=#{WORKSHOP_NAME}</if>
 	    ) order by CLASS_DATE desc)    
 	</select>
+	
+	<select id="getMemberList" resultMap="myclassMemberResultMap">
+		select DISTINCT mc.my_class_classnum, mc.my_class_membernum, ac.class_name, ac.class_division, m.member_email, m.member_name, m.member_phone, m.member_num 
+		from my_class mc inner join academy ac on mc.my_class_classnum = ac.class_number inner join nagagu_member m on mc.my_class_membernum = m.member_num 
+		where ac.workshop_num = #{WORKSHOP_NUM}
+	</select>
+	
 </mapper>
