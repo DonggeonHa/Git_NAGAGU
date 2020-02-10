@@ -88,6 +88,7 @@
 		<result property="MEMBER_EMAIL" column="MEMBER_EMAIL" />
 		<result property="MEMBER_PHONE" column="MEMBER_PHONE" />
 		<result property="MEMBER_NUM" column="MEMBER_NUM" />
+		<result property="MEMBER_NAME" column="MEMBER_NAME" />
 	</resultMap>
 	
 	<select id="getManagementClassList" resultMap="classResultMap">
