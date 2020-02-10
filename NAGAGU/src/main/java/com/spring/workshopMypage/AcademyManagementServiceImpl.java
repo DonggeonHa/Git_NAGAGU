@@ -35,5 +35,16 @@ public class AcademyManagementServiceImpl implements AcademyManagementService {
 		
 		return searchList;
 	}
+
+	@Override
+	public List<WsMemberVO> getMemberList(int WORKSHOP_NUM) {
+		List<WsMemberVO> member_list = null;
+		
+		AcademyManagementMapper managementMapper = sqlSession.getMapper(AcademyManagementMapper.class);
+		member_list = managementMapper.getMemberList(WORKSHOP_NUM);
+		
+		return member_list;
+	}
+
 	
 }
