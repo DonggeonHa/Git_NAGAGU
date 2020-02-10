@@ -88,15 +88,14 @@
          <input type="hidden" name="PICS_NICK" value="<%=memberVO.getMEMBER_NICK()%>">       
          <!-- Small button group -->
           <select class="form-control mr-2 col-2 " name="PICS_CATEGORY" value="(this).value" id="category_select" >
-           <option selected>카테고리</option>   
-           <option value="table">책상</option>       
-           <option value="chair">의자</option>       
-           <option value="bookshelf">책장</option>       
-           <option value="bed">침대</option>       
-           <option value="drawer">서랍장</option>       
-           <option value="sidetable">협탁</option>       
-           <option value="dressing_table">화장대</option>       
-           <option value="other">기타</option>       
+			<option value="table">책상</option>
+			<option value="chair">의자</option>
+			<option value="bookshelf">책장</option>
+			<option value="bed">침대</option>
+			<option value="drawer">서랍장</option>
+			<option value="sidetable">협탁</option>
+			<option value="dressing_table">화장대</option>
+			<option value="others">기타</option>	     
          </select>
          <select class="form-control mr-2 col-2 " name="PICS_REVIEW" id="review_select" value="(this).value" >
            <option selected>분류</option> 

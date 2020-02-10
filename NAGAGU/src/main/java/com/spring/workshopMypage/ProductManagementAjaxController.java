@@ -71,13 +71,10 @@ public class ProductManagementAjaxController {
 		return qnaList;
 	}
 	
-	@ResponseBody
-	@PostMapping(value="/productQnaList1.my" ,produces="application/json;charset=UTF-8")
-	public ArrayList<Map<String, Object>> productManagement_QnaList1(String selectClassType, String searchType, String keyword, String categorySelect, HttpSession session) {
-		System.out.println("productQnaList1 컨트롤러 진입");
+		
+	@PostMapping(value="/searchTypeQnaList.my", produces = "application/json;charset=UTF-8")
+	public ArrayList<Map<String, Object>> getQnaSearchList(String selectClassType, String searchType, String keyword, String categorySelect, HttpSession session){
 		Integer WORKSHOP_NUM = (Integer)session.getAttribute("WORKSHOP_NUM");
-		
-		
 		HashMap<String, Object> map = new HashMap<String, Object>();
 		map.put("selectClassType", selectClassType);
 		map.put("WORKSHOP_NUM", WORKSHOP_NUM);
@@ -90,30 +87,30 @@ public class ProductManagementAjaxController {
 		System.out.println("keyword="+keyword);
 		System.out.println("categorySelect="+categorySelect);
 		
-		ArrayList<Map<String, Object>> qnaList = productManagementService.getproductQnaList1(map);
-		
-		System.out.println("productQnaList의 size : " +qnaList.size());
-		
-		return qnaList;
-	}
-		
-	@PostMapping(value="/searchTypeQnaList.my", produces = "application/json;charset=UTF-8")
-	public ArrayList<Map<String, Object>> getQnaSearchList(String searchType, String keyword, String categorySelect, HttpSession session){
-		Integer WORKSHOP_NUM = (Integer)session.getAttribute("WORKSHOP_NUM");
-		HashMap<String, Object> map = new HashMap<String, Object>();
-//		map.put("selectClassType", selectClassType);
-		map.put("WORKSHOP_NUM", WORKSHOP_NUM);
-		map.put("searchType", searchType);
-		map.put("keyword", keyword);
-		map.put("categorySelect", categorySelect);
-		
-		System.out.println("searchType = " + searchType + ", keyword = " + keyword);
-		
 		ArrayList<Map<String, Object>> searchList = null;
 		searchList = productManagementService.getQnaSearchList(map);
 		
 		
 		return searchList;
+	}
+	
+	
+	//---------------------------------------상품 관리 페이지
+	@ResponseBody
+	@PostMapping(value="/AllproductsList.my" ,produces="application/json;charset=UTF-8")
+	public ArrayList<Map<String, Object>> productList(String selectClassType, HttpSession session) {
+		
+		Integer WORKSHOP_NUM = (Integer)session.getAttribute("WORKSHOP_NUM");
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		map.put("selectClassType", selectClassType);
+		map.put("WORKSHOP_NUM", WORKSHOP_NUM);
+		
+		System.out.println("selectClassType="+selectClassType);
+		ArrayList<Map<String, Object>> qnaList = productManagementService.getproductQnaList(map);
+	
+		System.out.println("productQnaList의 size : " +qnaList.size());
+		
+		return qnaList;
 	}
 	
 }

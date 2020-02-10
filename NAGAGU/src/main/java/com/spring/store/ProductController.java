@@ -140,18 +140,14 @@ public class ProductController {
 		}
 	
 		
-		
 		/*상품 vo 가져오기*/
 		String PRODUCT_CATEGORY = request.getParameter("PRODUCT_CATEGORY");
 		int PRODUCT_NUM = Integer.parseInt(request.getParameter("PRODUCT_NUM"));
-System.out.println("pNum="+PRODUCT_NUM);
 		ProductVO vo = null;
 //		vo.setPRODUCT_NUM(PRODUCT_NUM);
 		vo = productService.getproductVO(PRODUCT_NUM);
-System.out.println("wks="+vo.getPRODUCT_WORKSHOP());
 		/*이 product의 워크샵 넘버 필요함*/	
 		WorkshopVO workshopVO = productService.selectWorkshop(vo);
-System.out.println(workshopVO.getWORKSHOP_NUM());		
 		int WorkshopMatchingNumber = workshopVO.getWORKSHOP_NUM();
 		int WorkshopNum = workshopVO.getWORKSHOP_NUM();
 		model.addAttribute("WorkshopNum",WorkshopNum);
@@ -161,10 +157,8 @@ System.out.println(workshopVO.getWORKSHOP_NUM());
 		String WorkshopPicture = workshopVO.getWORKSHOP_PICTURE();
 		model.addAttribute("WorkshopName",WorkshopName);
 		model.addAttribute("WorkshopPicture",WorkshopPicture);
-System.out.println("WorkshopName="+WorkshopName);
-System.out.println("WorkshopPicture="+WorkshopPicture);
 
-
+		
 		/*리뷰 리스트*/
 		int reviewpage = 1; //초기값 1
 		int limit = 5; //한 페이지당 출력할 글의 수
@@ -758,32 +752,8 @@ System.out.println("WorkshopPicture="+WorkshopPicture);
 		PRODUCT_COLOR = PRODUCT_COLOR.substring(0, PRODUCT_COLOR.length()-1);
 		System.out.println("PRODUCT_COLOR2="+PRODUCT_COLOR);
 		
-		//---------option
-		System.out.println(request.getParameter("PRODUCT_OPTION_TMP"));
-		if(request.getParameter("PRODUCT_OPTION_TMP").equals("없음")) {
-			PRODUCT_OPTION = "없음";
-			System.out.println("PRODUCT_OPTION="+PRODUCT_OPTION);
-		} else {
-			String[] OptionStr = request.getParameterValues("PRODUCT_OPTION");
-			for(int i = 0; i < OptionStr.length; i++) {
-				PRODUCT_OPTION += OptionStr[i] + ",";
-				System.out.println("PRODUCT_OPTION="+PRODUCT_OPTION);
-			}
-			PRODUCT_OPTION = PRODUCT_OPTION.substring(0, PRODUCT_OPTION.length()-1);
-			System.out.println("PRODUCT_OPTION2="+PRODUCT_OPTION);      
-		}
-	  
-	  
-	  //-------------------중복 제거
-	  /*
-	  resultList = new ArrayList<String>();
-	  for (int i = 0; i < dataList.size(); i++) {
-	      if (!resultList.contains(dataList.get(i))) {
-	          resultList.add(dataList.get(i));
-	      }
-	  }
-	  */
-	  
+
+	 
 	
 	  //---------배너 이미지 네 장
 	  List<MultipartFile> fileList = new ArrayList<MultipartFile>();    
@@ -854,7 +824,6 @@ System.out.println("WorkshopPicture="+WorkshopPicture);
 	  vo.setPRODUCT_SALES(0);   //결제시 update 해주기
 	  vo.setPRODUCT_LIKE(0);   //실시간 update 해주기      (오케이)
 	  vo.setPRODUCT_SIZE(PRODUCT_SIZE);
-	  vo.setPRODUCT_OPTION(PRODUCT_OPTION);
 	  vo.setPRODUCT_COLOR(PRODUCT_COLOR);
 	  vo.setPRODUCT_INFO(request.getParameter("PRODUCT_INFO"));
 	  vo.setPRODUCT_SHIP_PRICE(Integer.parseInt(request.getParameter("PRODUCT_SHIP_PRICE")));
@@ -868,7 +837,8 @@ System.out.println("WorkshopPicture="+WorkshopPicture);
 	  vo.setPRODUCT_RETURN_INFO(request.getParameter("PRODUCT_RETURN_INFO"));
 	  vo.setPRODUCT_STORE_INFO(request.getParameter("PRODUCT_STORE_INFO"));
 	  vo.setPRODUCT_BANNER(str);
-	  
+	  vo.setPRODUCT_STATUS(0);
+	  vo.setPRODUCT_STOCK(Integer.parseInt(request.getParameter("PRODUCT_STOCK")));
 	  System.out.println("aaa"+request.getParameter("PRODUCT_CATEGORY"));
 	  
 	  ModelAndView mav = new ModelAndView();
