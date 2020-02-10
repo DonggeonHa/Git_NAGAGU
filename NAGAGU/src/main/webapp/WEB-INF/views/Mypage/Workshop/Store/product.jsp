@@ -421,16 +421,16 @@
 								</div>
 								<!-- 카테고리 선택시 나타나는 드롭박스 -->
 								<span class="ml-1 mr-2" id="categoryKeyword">
-						<select id="categorySelect" style="height:98%;">
-							<option value="table">책상</option>
-							<option value="chair">의자</option>
-							<option value="bookshelf">책장</option>
-							<option value="bed">침대</option>
-							<option value="drawer">서랍장</option>
-							<option value="sidetable">협탁</option>
-							<option value="dressing_table">화장대</option>
-							<option value="others">기타</option>	
-						</select>
+									<select id="categorySelect" style="height:98%;">
+										<option value="table">책상</option>
+										<option value="chair">의자</option>
+										<option value="bookshelf">책장</option>
+										<option value="bed">침대</option>
+										<option value="drawer">서랍장</option>
+										<option value="sidetable">협탁</option>
+										<option value="dressing_table">화장대</option>
+										<option value="others">기타</option>	
+									</select>
 								</span>									
 								<!-- search -->
 								<nav class="navbar-light bg-light">
