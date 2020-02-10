@@ -96,8 +96,9 @@ function selectData() {
 			});
 			page();
 		},
-		error: function() {
-			alert("ajax list 통신 실패!");
+		error: function(request,status,error) {
+			alert("ajax wmemberlist 통신 실패!");
+			alert("code:"+request.status+"\n"+"error:"+error);
 		}
 	});
 }

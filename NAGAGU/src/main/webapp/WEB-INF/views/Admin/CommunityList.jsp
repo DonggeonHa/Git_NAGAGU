@@ -76,8 +76,9 @@ function selectData() {
 			});
 			page();
 		},
-		error: function() {
-			alert("ajax list 통신 실패!");
+		error: function(request,status,error) {
+			alert("community list 통신 실패!");
+			alert("code:"+request.status+"\n"+"error:"+error);
 		}
 	});
 }
