@@ -1,32 +1,53 @@
+<%@page import="com.spring.order.BasketVO"%>
+<%@page import="com.spring.order.ProductOrderVO"%>
+<%@page import="java.util.Map"%>
+<%@page import="java.util.ArrayList"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%
+ArrayList<Map<String, Object>> orderList = (ArrayList<Map<String, Object>>) request.getAttribute("orderList");
+System.out.println(orderList.size());
+String[] array = new String[orderList.size()];
+%>
 <!DOCTYPE html>
 <html>
-	<head>
-		<meta charset="UTF-8">
-		<title>주문/결제</title>
-		<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
-		<link rel="stylesheet" type="text/css" href="./resources/css/Mypage/order.css">
-  		
-		<style type="text/css">
-			@font-face { font-family: 'KOMACON'; src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_seven@1.2/KOMACON.woff') format('woff'); font-weight: normal; font-style: normal; }
-			
-			.order-body {
-			   font-family: '만화진흥원체', 'KOMACON', KOMACON;
-			   font-size: 15px;
-			}
-			
-			.order-container {
-				margin-top: 100px;
-				margin-bottom: 100px;
-			}
-			
-			.nav-link.active {
-				background-color: #EAEAEA !important;
-			}
-		</style>
-	</head>
+<head>
+<meta charset="UTF-8">
+<title>주문/결제</title>
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+<link rel="stylesheet" type="text/css" href="./resources/css/Mypage/order.css">
+<script type="text/javascript" src="https://service.iamport.kr/js/iamport.payment-1.1.2.js"></script>		
+<style type="text/css">
+@font-face { font-family: 'KOMACON'; src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_seven@1.2/KOMACON.woff') format('woff'); font-weight: normal; font-style: normal; }
+.basket-size {
+	width: 100px;
+	height: 100px;
+}
+
+.nav-link.active {
+	background-color: #EAEAEA !important;
+}
+
+.radius {
+	border-radius: 10px;
+}
+.order-body {
+   font-family: '만화진흥원체', 'KOMACON', KOMACON;
+   font-size: 15px;
+}
+
+.order-container {
+	margin-top: 100px;
+	margin-bottom: 100px;
+}
+
+.nav-link.active {
+	background-color: #EAEAEA !important;
+}
+</style>
+</head>
 	<body class="order-body">
 		<div class="container order-container">
+			<form id="orderForm">
 			<div class="second-container">
 				<div>
 				<h3>주문/결제</h3>
@@ -36,45 +57,49 @@
 				</div>
 				<div class="mb-5">
 					<table class="table table-hover">
+						<%
+							for(int i=0; i<orderList.size(); i++){
+								Map<String, Object>	list = orderList.get(i);
+							
+						%>
 						<tr>
 							<td align="center">
-								<img class="basket-size" src="${pageContext.request.contextPath}/resources/images/Mypage/basket.jpg" style="padding: 0 3% 3% 0;">
+								<img class="basket-size" src="/productupload/image/<%=list.get("PRODUCT_IMAGE")%>" style="padding: 0 3% 3% 0;">
+								<input type="hidden" name="BASKET_NUM" value="<%=list.get("BASKET_NUM")%>">
+								<input type="hidden" name="BASKET_AMOUNT" value="<%=list.get("BASKET_AMOUNT")%>">
+								<input type="hidden" name="PRODUCT_PRICE" value="<%=list.get("PRODUCT_PRICE")%>">
 							</td>
 							<td colspan="2">
 								<dl>
-									<dt>모던 트롤리 스윙 빨래바구니 2단/3단</dt>
-									<dd>★반짝특가★ 03_모던 트롤리 뉴 스윙 2단 빨래바구니</dd>
-									<dd>23,900원 | 1개</dd>
+									<c:forTokens var="list" items="${orderList}">  
+									</c:forTokens> 
+									<dt><%=list.get("PRODUCT_TITLE")%></dt>
+									<dd><%=list.get("PRODUCT_BRIEF")%></dd>
+									<dd>사이즈 : <%=list.get("BASKET_SIZE")%> | 컬러 : <%=list.get("BASKET_COLOR")%></dd>
 								</dl>
 							</td>
 							<td>
-								<dl>
-									<dt>&nbsp;</dt>
-									<dd class="text-center">무료배송</dd>
+								<dl> 
+									<div>
+										<span>가격</span>
+										<span class="text-center price"><%=list.get("PRODUCT_PRICE")%></span>
+									</div>
+									<div>
+										<span>수량</span>
+										<span class="text-center amount"><%=list.get("BASKET_AMOUNT")%></span>
+									</div>
 									<dd>&nbsp;</dd>
+									<div>
+										<span>+배송비</span>
+										<span class="text-center ship"><%=list.get("PRODUCT_SHIP_PRICE")%></span>
+									</div>
 								</dl>
 	
 							</td>
 						</tr>
-						<tr>
-							<td align="center">
-								<img class="basket-size" src="${pageContext.request.contextPath}/resources/images/Mypage/basket.jpg" style="padding: 0 3% 3% 0;">
-							</td>
-							<td colspan="2">
-								<dl>
-									<dt>모던 트롤리 스윙 빨래바구니 2단/3단</dt>
-									<dd>★반짝특가★ 03_모던 트롤리 뉴 스윙 2단 빨래바구니</dd>
-									<dd>23,900원 | 1개</dd>
-								</dl>
-							</td>
-							<td>
-								<dl>
-									<dt>&nbsp;</dt>
-									<dd class="text-center">무료배송</dd>
-									<dd>&nbsp;</dd>
-								</dl>
-							</td>
-						</tr>
+						<%
+						} 
+						%>
 					</table><hr>
 				</div>
 	
@@ -88,13 +113,13 @@
 						</div>
 					</div>
 					<hr>
-					<form>
+					<form id="orderForm">
 						<div class="form-group row">
 							<div class="col-2">
 								<label for="inputAddress">받는분</label>
 							</div>
 							<div class="col-5">
-								<input type="text" class="form-control">
+								<input type="text" class="form-control name">
 							</div>
 							<div class="col-5">
 							</div>
@@ -104,7 +129,7 @@
 								<label for="inputAddress">우편번호</label>
 							</div>
 							<div class="col-3">
-								<input type="text" class="form-control">
+								<input type="text" class="form-control addrNum">
 							</div>
 							<div class="col-2">
 								<a href="#" class="btn btn-dark text-white w-100" role="button" aria-pressed="true">우편번호</a>
@@ -117,7 +142,7 @@
 								<label for="inputAddress">주소</label>
 							</div>
 							<div class="col-10 input-group">
-								<input type="text" class="form-control">
+								<input type="text" class="form-control address1" >
 							</div>
 						</div>
 						<div class="form-group row">
@@ -125,7 +150,7 @@
 								
 							</div>
 							<div class="col-10 input-group">
-								<input type="text" class="form-control">
+								<input type="text" class="form-control address2" >
 							</div>
 						</div>
 						<div class="form-group row">
@@ -133,7 +158,7 @@
 								<label for="inputAddress">휴대전화</label>
 							</div>
 							<div class="col-5">
-								<input type="text" class="form-control">
+								<input type="text" class="form-control phone" >
 							</div>
 							<div class="col-5">
 							</div>
@@ -143,7 +168,7 @@
 								<label for="inputAddress">배송 메모</label>
 							</div>
 							<div class="col-10 input-group">
-								<input type="text" class="form-control">
+								<input type="text" class="form-control memo">
 							</div>
 						</div>
 					</form>
@@ -155,7 +180,7 @@
 							<h5 style="padding-top: 2%;">주문자</h5>
 						</div>
 						<div class="col-10">
-							<button type="button" class="btn btn-outline-dark"><font size="2">배송지 정보와 동일하게 채우기</button>
+							<button type="button" id="getInfo_btn" class="btn btn-outline-dark"><font size="2">배송지 정보와 동일하게 채우기</button>
 							
 						</div>
 					</div>
@@ -166,19 +191,24 @@
 								<label for="inputAddress">이름</label>
 							</div>
 							<div class="col-5">
-								<input type="text" class="form-control">
+								<input type="text" class="form-control toName" name="ORDER_PERSON">
 							</div>
 							<div class="col-5">
 							</div>
 						</div>
 						<div class="form-group row">
 							<div class="col-2">
-								<label for="inputAddress">이름</label>
+								<label for="inputAddress">주소</label>
 							</div>
-							<div class="col-5">
-								<input type="text" class="form-control">
+							<div class="col-10">
+								<input type="text" class="form-control toAddress1">
 							</div>
-							<div class="col-5">
+						</div>
+						<div class="form-group row">
+							<div class="col-2">
+							</div>
+							<div class="col-10 input-group">
+								<input type="text" class="form-control toAddress2">
 							</div>
 						</div>
 						<div class="form-group row">
@@ -186,12 +216,9 @@
 								<label for="inputAddress">휴대전화</label>
 							</div>
 							<div class="col-5">
-								<input type="text" class="form-control">
+								<input type="text" class="form-control toPhone" >
 							</div>
-							<div class="col-2">
-								<a href="#" class="btn btn-dark text-white w-100" role="button" aria-pressed="true">인증받기</a>
-							</div>
-							<div class="col-3">
+							<div class="col-5">
 							</div>
 						</div>
 						<div class="form-group row">
@@ -218,33 +245,28 @@
 						</div>
 					</div>
 					<hr>
-					<div class="row" style="font-size: 16px; padding-bottom: 1%;">
+					<div class="row" style="font-size: 24px; padding-bottom: 1%;">
 						<div class="col-2">
 							총 상품 금액
 						</div>
 						<div class="col-8">
 						</div>
-						<div class="col-2 d-flex justify-content-end">
-							83,700
+						<div class="col-2 d-flex justify-content-end totalPrice">
 						</div>
 					</div>
 					<div class="row" style="font-size: 16px; padding-bottom: 1%;">
 						<div class="col-2">
-							배송비
+							+ 배송비  
 						</div>
 						<div class="col-8">
 						</div>
-						<div class="col-2 d-flex justify-content-end">
-							0
+						<div class="col-2 d-flex justify-content-end totalShipPrice">
 						</div>
 					</div>
 					<div class="row" style="font-size: 30px; padding-bottom: 1%;">
-						<div class="col-2">
+						<div class="col-4">
 						</div>
-						<div class="col-7">
-						</div>
-						<div class="col-3 d-flex justify-content-end">
-							83,700원
+						<div class="col-8 d-flex justify-content-end totalPayPrice">
 						</div>
 					</div>
 				</div>
@@ -368,18 +390,185 @@
 						</div>
 						<div class="row mt-5">
 							<div class="col-12" style="padding-bottom:5%;">
-								<a href="./order_vbank.my" class="btn btn-dark btn-lg text-white w-100" role="button" aria-pressed="true">결제하기</a>
+								<a class="btn btn-dark btn-lg text-white w-100 IMP_pay" role="button" aria-pressed="true">결제하기</a>
 							</div>
 						</div>
 					</div>
 				</div>
 			</div>
+			</form>
 		</div>
 		
 
-		<script src="https://kit.fontawesome.com/b74b42490f.js" crossorigin="anonymous"></script>
-		<script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
-		<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="	sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
-		<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
-	</body>
+<script src="https://kit.fontawesome.com/b74b42490f.js" crossorigin="anonymous"></script>
+<script src="https://code.jquery.com/jquery-3.4.1.js" integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU="	crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="	sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+<script>
+
+	
+	
+	$(document).ready(function(){
+		
+		var totalPrice=0;
+		var totalShipPrice=0;
+		var totalPayPrice=0;
+		function getTotalPrice(){
+	 		//오른쪽 상품금액 + 배송비 + 결제금액 구해서 뿌리기
+			$('.price').each(function (index,item){
+				var price = $(item).text()
+				var amount = $(item).parent().parent().find('.amount').text()
+				totalPrice += price*amount
+				$('.totalPrice').text(totalPrice);
+			})
+			$('.ship').each(function (index,item){
+				totalShipPrice += $(item).text()*1
+				$('.totalShipPrice').text('+'+totalShipPrice);
+			})
+			totalPayPrice = totalPrice+totalShipPrice;
+			$('.totalPayPrice').text('총 결제금액 : '+totalPayPrice);
+	 	}
+		getTotalPrice();
+		
+		//배송지 정보와 동일하게 채우기
+		$(document).on('click','#getInfo_btn',function(){ 
+			$('.toName').val($('.name').val())
+			$('.toAddress1').val($('.address1').val())
+			$('.toAddress2').val($('.address2').val())
+			$('.toPhone').val($('.phone').val())
+		});
+		
+		
+		$(document).on('click','.IMP_pay',function(){
+			var BASKET_NUMS ='';
+			var BASKET_AMOUNTS='';
+			var ORDER_PRICE = totalPayPrice;
+			var ORDER_PERSON = $('.toName').val();
+			var ORDER_ADDRESS = $('.toAddress1').val();
+				ORDER_ADDRESS += $('.toAddress2').val();
+			var ORDER_PHONE= parseInt($('.toPhone').val());
+			var ORDER_MEMO= $('.memo').val();
+			
+			
+			var nums = $('input[name=BASKET_NUM]')
+			for (var i = 0; i < nums.length; i++) {
+				if (i != nums.length - 1) {
+					BASKET_NUMS += nums[i].value + ',';
+				} else {
+					BASKET_NUMS += nums[i].value;
+				} 
+			}
+			$('input[name=BASKET_AMOUNT]').each(function (index,item){
+				if(index== ($('input[name=BASKET_AMOUNT]').length-1)){
+					BASKET_AMOUNTS += $(item).val()
+				}else{
+					BASKET_AMOUNTS += $(item).val() + ',';	
+				}
+			})
+			console.log(BASKET_NUMS)
+			console.log(BASKET_AMOUNTS)
+			console.log(ORDER_PRICE)
+			console.log(ORDER_PERSON)
+			console.log(ORDER_ADDRESS)
+			console.log(ORDER_PHONE)
+			
+			console.log(typeof BASKET_NUMS)
+			console.log(typeof BASKET_AMOUNTS)
+			console.log(typeof ORDER_PRICE)
+			console.log(typeof ORDER_PERSON)
+			console.log(typeof ORDER_ADDRESS)
+			console.log(typeof ORDER_PHONE)
+			$.ajax({
+				  url: "/NAGAGU/insertOrderProduct.my", 
+	              type: "POST",
+	              data: {'ORDER_PRODUCT' : BASKET_NUMS, 'ORDER_AMOUNT': BASKET_AMOUNTS , 'ORDER_PRICE' : ORDER_PRICE, 
+	            	  'ORDER_PERSON' : ORDER_PERSON, 'ORDER_ADDRESS':ORDER_ADDRESS, 'ORDER_PHONE':ORDER_PHONE,'ORDER_MEMO':ORDER_MEMO},
+	              contentType:
+	  				'application/x-www-form-urlencoded; charset=utf-8',
+	              success: function (retVal) {
+            		//console.log(params)
+	        		if(retVal.res=="OK"){
+	        			if(confirm('결제하시겠습니까?')){
+	        				return
+	        			}else{
+	        				alert("장바구니에 담겼습니다") 
+	        			}
+					}else{
+						alert("update fail");
+					}  
+				 },
+				 error:function(request,status,error){
+			        console.log("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+				}
+			})
+		 	
+		 	   var IMP = window.IMP; // 생략가능
+			   IMP.init('imp41335180');  // 가맹점 식별 코드
+				
+<%-- 			   var arrChecked = new Array();
+			   <%
+			   for(int i=0; i<orderList.size(); i++){
+			   	Map<String, Object>	list = orderList.get(i); 
+			    	array[i] = String.valueOf(list.get("BASKET_NUM"));
+			   %>  
+				arrChecked.push(<%=array[i]%>)
+			   <%
+			   }
+	    	   %>
+			   var Data = { "arr": arrChecked }; --%>
+			   
+			   
+			   IMP.request_pay({
+		       pg : 'html5_inicis', // 결제방식 
+		       pay_method : 'card',	// 결제 수단
+		       merchant_uid : 'merchant_' + new Date().getTime(),
+		       name : 'NAGAGU 결제',	// order 테이블에 들어갈 주문명 혹은 주문 번호
+		       amount : '100',	// 결제 금액
+		       
+		       buyer_name :  $('.toName').val(),	// 구매자 이름
+		       buyer_tel :  $('.toPhone').val(),	// 구매자 전화번호
+		       buyer_addr1 :  $('.toAddress1').val(),	// 구매자 주소
+		       buyer_addr2 :  $('.toAddress2').val(),
+		       buyer_postcode :  '',	// 구매자 우편번호
+			   }, function(rsp) {
+				if ( rsp.success ) { // 성공시
+				console.log(rsp.success)
+				console.log('status='+rsp.status)//paid
+				//[1] 서버단에서 결제정보 조회를 위해 jQuery ajax로 imp_uid 전달하기
+			    jQuery.ajax({
+ 			    url: '/NAGAGU/mypage_order_success.my', //cross-domain error가 발생하지 않도록 동일한 도메인으로 전송
+			    type: 'POST',
+			    dataType: 'json',
+			    }).done(function(data){
+			    	  if(data.status=="success"){
+			    		var msg = '결제가 완료되었습니다.';
+						msg += '고유ID : ' + rsp.imp_uid;
+						msg += '상점 거래ID : ' + rsp.merchant_uid;
+						msg += '결제 금액 : ' + rsp.paid_amount;
+						msg += '카드 승인번호 : ' + rsp.apply_num;
+						console.log('MSG'+msg)
+						console.log('data.status'+data.status)
+						//성공시 이동할 페이지
+		                location.href='./mypage_order_success.my?' 
+			    	  }else{
+			    	  //[3] 아직 제대로 결제가 되지 않았습니다.
+			          //[4] 결제된 금액이 요청한 금액과 달라 결제를 자동취소처리하였습니다.
+			          }
+			      });
+					
+				}else{ // 실패시 
+					var msg = '결제에 실패하였습니다.';
+					msg += '에러내용 : ' + rsp.error_msg;
+					console.log('msg'+msg)
+					location.href="./index.ma";
+				}
+			});
+		});
+	
+	});
+	
+	
+	//$('#Amount').html(amount.toLocaleString()+"원");
+</script>
+</body>
 </html>

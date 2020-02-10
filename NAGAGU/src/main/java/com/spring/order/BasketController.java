@@ -1,6 +1,7 @@
 package com.spring.order;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -53,18 +54,17 @@ public class BasketController {
 		return retVal;
 	}
 	//수량 변경 업데이트
-	@RequestMapping(value = "/updateBasket.my")
+	@RequestMapping(value = "/updateAmount.my")
 	public @ResponseBody  Map<String, Object> updateBasket(BasketVO basketVO, HttpSession session, HttpServletRequest request) {
 		int MEMBER_NUM = (int)session.getAttribute("MEMBER_NUM");
 		Map<String, Object> retVal = new HashMap<String, Object>();
 		
 		System.out.println("updateBasket 컨트롤러");
 		basketVO.setBASKET_MEMBER(MEMBER_NUM);
-		
+		System.out.println(basketVO.getBASKET_AMOUNT());
+		basketVO.setBASKET_AMOUNT(Integer.parseInt(request.getParameter("BASKET_AMOUNT")));
+		System.out.println(basketVO.getBASKET_AMOUNT());
 		String category = request.getParameter("category");
-		System.out.println(category);
-		
-		
 		try {
 			if(category.equals("updateAmount")) {
 				basketService.updateAmount(basketVO);
@@ -80,9 +80,6 @@ public class BasketController {
 	//장바구니 페이지
 	@RequestMapping(value = "/getMyBasket.my")
 	public @ResponseBody Map<String, Object> getMyBasket(HttpSession session) {
-		//HashMap<String, Object> map = new HashMap<String, Object>();
-		//String fromNum = request.getParameter("fromNum");
-		//map.put("fromNum", fromNum);
 		HashMap<String, Object> map = new HashMap<String, Object>();
 		int MEMBER_NUM = (int)session.getAttribute("MEMBER_NUM");
 		map.put("MEMBER_NUM", MEMBER_NUM);
@@ -127,18 +124,78 @@ public class BasketController {
 		}
 		return retVal;
 	} 
-//	@RequestMapping(value = "/mypage_order.my")
-//	public String MypageOrder(HttpSession session,HttpServletRequest request,BasketVO basketVO) {
-//		HashMap<String, Object> map = new HashMap<String, Object>();
-//		System.out.println("mypage_order컨트롤로");
-//		String[] arr = request.getParameterValues("arr[]");
-//		for(int i=0; i<arr.length; i++) {
-//			map.put("BASKET_NUM", Integer.parseInt(arr[i]));
-//			System.out.println(basketVO.getBASKET_NUM());
-//			int result = basketService.updateCheck(map);
-//			System.out.println(result);
-//		}
-//		return "Mypage/order";
+	@RequestMapping(value = "/updateCheck.my")
+	public @ResponseBody Map<String, Object> MypageOrder(HttpSession session,HttpServletRequest request,BasketVO basketVO) {
+		System.out.println("mypage_order컨트롤로");
+		String[] arr = request.getParameterValues("arr[]");
+
+		Map<String, Object> retVal = new HashMap<String, Object>();
+		try {
+			for(int i=0; i<arr.length; i++) {
+				basketVO.setBASKET_NUM(Integer.parseInt(arr[i]));
+				int result = basketService.updateCheck(basketVO);
+			}
+			retVal.put("res", "OK");
+		}catch(Exception e) {
+			retVal.put("res", "FAIL");
+			retVal.put("message", "Failure");
+		}
+		return retVal;
+	}
+	@RequestMapping(value = "/mypage_order.my")
+		public String mypage_order(BasketVO basketVO, HttpSession session,HttpServletRequest request, Model model) {
+			HashMap<String, Object> map = new HashMap<String, Object>();
+			int MEMBER_NUM = (int)session.getAttribute("MEMBER_NUM");
+			map.put("MEMBER_NUM", MEMBER_NUM);
+			
+			ArrayList<Map<String, Object>> orderList = null;
+			orderList  = basketService.getOrderList(map);
+			request.setAttribute("orderSet", orderList);
+			model.addAttribute("orderList",orderList);
+			return "Mypage/order";
+		}
+	@RequestMapping(value = "/mypage_order_success.my")
+	public String mypage_order_success(HttpServletRequest request) {
+		return "Mypage/success";
+	}
+	@RequestMapping(value = "/insertOrderProduct.my")
+	public @ResponseBody  Map<String, Object> insertOrderProduct(ProductOrderVO productOrderVO, BasketVO basketVO, HttpSession session, HttpServletRequest request) {
+		int MEMBER_NUM = (int)session.getAttribute("MEMBER_NUM");
+		Map<String, Object> retVal = new HashMap<String, Object>();
+		productOrderVO.setORDER_MEMBER(MEMBER_NUM);
+		productOrderVO.setORDER_METHOD("CARD");
+		productOrderVO.setORDER_STATE(0);		
+		//data: {'ORDER_PRODUCT' : BASKET_NUMS, 'ORDER_AMOUNT': BASKET_AMOUNTS , 'ORDER_PRICE' : ORDER_PRICE, 
+  	  	//'ORDER_PERSON' : ORDER_PERSON, 'ORDER_ADDRESS':ORDER_ADDRESS, 'ORDER_PHONE':ORDER_PHONE},
+		System.out.println("insertOrderProduct 컨트롤러");
+		System.out.println(productOrderVO.getORDER_PRODUCT());
+		System.out.println(productOrderVO.getORDER_MEMBER());
+		System.out.println(productOrderVO.getORDER_PRICE());
+		
+		System.out.println(productOrderVO.getORDER_AMOUNT());		
+		System.out.println(productOrderVO.getORDER_PERSON());
+		System.out.println(productOrderVO.getORDER_MEMO());
+		System.out.println(productOrderVO.getORDER_ADDRESS());
+		System.out.println(productOrderVO.getORDER_PHONE());
+//		productOrderVO.setORDER_PRODUCT((String)request.getAttribute("ORDER_PRODUCT"));
+//		productOrderVO.setORDER_PRICE((int)request.getAttribute("ORDER_PRICE"));
+//		productOrderVO.setORDER_AMOUNT((String)request.getAttribute("ORDER_AMOUNT"));
+//		productOrderVO.setORDER_PERSON((String)request.getAttribute("ORDER_PERSON"));
+//		productOrderVO.setORDER_MEMO((String)request.getAttribute("ORDER_MEMO"));
+//		productOrderVO.setORDER_ADDRESS((String)request.getAttribute("ORDER_ADDRESS"));
+//		productOrderVO.setORDER_PHONE((int)request.getAttribute("ORDER_PHONE"));
+		
+		
+		try {
+			
+			basketService.insertOrder(productOrderVO);
+			retVal.put("res", "OK");
+		}catch(Exception e) {
+			retVal.put("res", "FAIL");
+			retVal.put("message", "Failure");
+		}
+		return retVal;
+	}
 //	}
 //	
 //	@RequestMapping(value = "/mypage_support.my")
