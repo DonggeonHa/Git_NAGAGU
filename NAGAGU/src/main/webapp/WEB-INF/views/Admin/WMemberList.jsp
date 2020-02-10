@@ -3,16 +3,20 @@
 <!-- 본문 -->
 <div id="page-content-wrapper">
 	<div class="container-fluid">
-		<h1 class="text-center">공방회원관리</h1>
-		<br><br>
-		<div class="input-group justify-content-end mb-3" style="width: 300px !important;">
-			<div class="input-group-prepend">
-				<span class="input-group-text" id="inputGroup-sizing-default"><i class="fas fa-search"></i></span>
+		<div class="d-flex bd-highlight mb-3">
+			<div class="mr-auto p-2 bd-highlight align-self-end">
+				<h6>회원관리 > 공방회원관리 </h6>
 			</div>
-			<input type="text" class="form-control" aria-describedby="inputGroup-sizing-default" placeholder="공방명을 입력하세요" id="keyword">
+			<br><br>
+			<div class="input-group p-2 bd-highlight" style="width: 300px !important;">
+				<div class="input-group-prepend">
+					<span class="input-group-text" id="inputGroup-sizing-default"><i class="fas fa-search"></i></span>
+				</div>
+				<input type="text" class="form-control" aria-describedby="inputGroup-sizing-default" placeholder="공방명을 입력하세요" id="keyword">
+			</div>
 		</div>
-		
-		<div style="height: 600px; overflow-y: auto;">
+				
+		<div style="height: 550px; overflow-y: auto;">
 			<table class="table table-hover tableCSS" id="user-wtable"></table>
 		</div>
 		<div class="d-flex justify-content-center">
@@ -25,7 +29,6 @@
 <!-- WMemberList -->
 <script>
    $(document).ready(function() {
-	alert("문서준비");
 	selectData();
 });
   
