@@ -24,13 +24,27 @@
 		<result property="BASKET_AMOUNT" column="BASKET_AMOUNT" />
 		<result property="BASKET_CHECK" column="BASKET_CHECK" />		
 	</resultMap>
-<!-- 	<select id="getProductLike" parameterType="java.util.HashMap" resultType="int">
-		SELECT count(*)FROM MEMBER_LIKE WHERE LIKE_MEMBER=#{LIKE_MEMBER} AND LIKE_PRODUCT=#{PRODUCT_NUM}
-	</select>	 -->
+		<resultMap type="com.spring.order.ProductOrderVO" id="orderVO">
+		<result property="ORDER_NUM" column="ORDER_NUM" />	
+		<result property="ORDER_PRODUCT" column="ORDER_PRODUCT" />	
+		<result property="ORDER_MEMBER" column="ORDER_MEMBER" />
+		<result property="ORDER_PRICE" column="ORDER_PRICE" />	
+		<result property="ORDER_DATE" column="ORDER_DATE" />	
+		<result property="ORDER_AMOUNT" column="ORDER_AMOUNT" />		
+		<result property="ORDER_PERSON" column="ORDER_PERSON" />
+		<result property="ORDER_MEMO" column="ORDER_MEMO" />		
+		<result property="ORDER_METHOD" column="ORDER_METHOD" />	
+		<result property="ORDER_STATE" column="ORDER_STATE" />	
+		<result property="ORDER_ADDRESS" column="ORDER_ADDRESS" />		
+		<result property="ORDER_PHONE" column="ORDER_PHONE" />
+	</resultMap>
 	
 	<!-- 좋아요 한 사진 리스트(좋아요사진=사진넘버 중에서 파라미터 멤버가 좋아한 사진들) -->
 	<select id="getbasketList" parameterType="java.util.HashMap" resultMap="hashmapVO">
-      SELECT * FROM BASKET,PRODUCT WHERE BASKET_MEMBER=#{MEMBER_NUM} AND BASKET_PRODUCT=PRODUCT_NUM 
+      SELECT * FROM BASKET,PRODUCT WHERE BASKET_MEMBER=#{MEMBER_NUM} AND BASKET_PRODUCT=PRODUCT_NUM ORDER BY BASKET_NUM
+    </select>
+    <select id="getOrderList" parameterType="java.util.HashMap" resultMap="hashmapVO">
+      SELECT * FROM BASKET,PRODUCT WHERE BASKET_MEMBER=#{MEMBER_NUM} AND BASKET_CHECK=1 AND BASKET_PRODUCT=PRODUCT_NUM ORDER BY BASKET_NUM
     </select>
     <insert id="insertCart" parameterType="java.util.HashMap">
 		insert into BASKET values
@@ -45,11 +59,15 @@
 	<update id="updateAmount" parameterType="java.util.HashMap"> 
 		UPDATE BASKET 
 		SET BASKET_AMOUNT =#{BASKET_AMOUNT}
-		WHERE BASKET_MEMBER=#{BASKET_MEMBER} AND BASKET_PRODUCT=#{BASKET_PRODUCT}	
+		WHERE BASKET_NUM=#{BASKET_NUM}	
 	</update>
-	<update id="updateCheck" parameterType="java.util.HashMap"> 
+	<update id="updateCheck" parameterType="java.util.HashMap">  
 		UPDATE BASKET 
 		SET BASKET_CHECK = 1
 		WHERE BASKET_NUM=#{BASKET_NUM}	
 	</update>
+	<insert id="insertOrder" parameterType="java.util.HashMap">
+		insert into PRODUCT_ORDER values
+		(SEQ_PRODUCT_ORDER.nextval,#{ORDER_PRODUCT},#{ORDER_MEMBER},#{ORDER_PRICE},SYSDATE,#{ORDER_AMOUNT},#{ORDER_PERSON},#{ORDER_MEMO},#{ORDER_METHOD},#{ORDER_STATE},#{ORDER_ADDRESS},#{ORDER_PHONE})
+	</insert>
 </mapper>

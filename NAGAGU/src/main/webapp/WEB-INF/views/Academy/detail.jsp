@@ -743,7 +743,7 @@
 		    } 
 		});
 		
-		function Payment_Card() {
+		function Payment_Card(){
 			var Amount = $('#Amount').text();
 			var IMP = window.IMP; // 생략가능
 			IMP.init('imp91912911');
@@ -789,6 +789,7 @@
 	            }
 	        });
 	    }
+		
 		</script>
 		<script src="https://use.fontawesome.com/releases/v5.2.0/js/all.js"></script>	
 		<script src="https://kit.fontawesome.com/b74b42490f.js" crossorigin="anonymous"></script>
