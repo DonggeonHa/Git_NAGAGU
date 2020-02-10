@@ -70,6 +70,21 @@ public class EstimateServiceImpl implements EstimateService {
 		}
 	}
 	
+	@Override public int imageDelete(String[] filesrc) { 
+		String uploadPath="C://Project138//upload"; 
+		int res = 0; 
+		for (int i=0; i<filesrc.length; i++) { 
+			String path = uploadPath + filesrc[i]; 
+			System.out.println("file path : " + path); 
+			File file = new File(path); 
+			if (file.exists()) { 
+				file.delete(); 
+			} 
+			res++; 
+		} 
+		return res; 
+	}
+	
 	@Override
 	public EstimateVO estimateDetail(int ESTIMATE_NUM) {
 		EstimateMapper mapper = sqlSession.getMapper(EstimateMapper.class);
@@ -108,16 +123,17 @@ public class EstimateServiceImpl implements EstimateService {
 	public int offerInsert (EstimateOfferVO vo) {
 		EstimateMapper mapper = sqlSession.getMapper(EstimateMapper.class);
 		int res = 0;
-		int ESTIMATE_NUM = vo.getOFFER_ESTIMATE();
-		int ESTIMATE_MINPRICE = mapper.estimateMinPrice(ESTIMATE_NUM);
-		
-		EstimateVO estimatevo = new EstimateVO();
-		estimatevo.setESTIMATE_NUM(ESTIMATE_NUM);
-		estimatevo.setESTIMATE_MINPRICE(ESTIMATE_MINPRICE);
 		
 		int res1 = mapper.offerInsert(vo);
 		
 		if (res1 == 1) {
+			int ESTIMATE_NUM = vo.getOFFER_ESTIMATE();
+			int ESTIMATE_MINPRICE = mapper.estimateMinPrice(ESTIMATE_NUM);
+			
+			EstimateVO estimatevo = new EstimateVO();
+			estimatevo.setESTIMATE_NUM(ESTIMATE_NUM);
+			estimatevo.setESTIMATE_MINPRICE(ESTIMATE_MINPRICE);
+			
 			HashMap <String, Object> map = new HashMap <String, Object>();
 			map.put("ESTIMATE_NUM", ESTIMATE_NUM);
 			int ESTIMATE_OFFERCOUNT = mapper.offerCount(map);
@@ -128,7 +144,50 @@ public class EstimateServiceImpl implements EstimateService {
 		
 		return res;
 	}
+	
+	@Override
+	public int offerModify (EstimateOfferVO vo) {
+		EstimateMapper mapper = sqlSession.getMapper(EstimateMapper.class);
+		int res = 0;
+		
+		int res1 = mapper.offerModify(vo);
+		if (res1 == 1) {
+			int ESTIMATE_NUM = vo.getOFFER_ESTIMATE();
+			int ESTIMATE_MINPRICE = mapper.estimateMinPrice(ESTIMATE_NUM);
 
+			EstimateVO estimatevo = new EstimateVO();
+			estimatevo.setESTIMATE_NUM(ESTIMATE_NUM);
+			estimatevo.setESTIMATE_MINPRICE(ESTIMATE_MINPRICE);
+			
+			res = mapper.offerSetInfo(estimatevo);
+		}
+		
+		return res;
+	}
+	
+	@Override
+	public int offerDelete (int ESTIMATE_NUM, int OFFER_NUM) {
+		EstimateMapper mapper = sqlSession.getMapper(EstimateMapper.class);
+		int res = 0;
+		int res1 = mapper.offerDelete(OFFER_NUM);
+		
+		if (res1 == 1) {
+			int ESTIMATE_MINPRICE = mapper.estimateMinPrice(ESTIMATE_NUM);
+			
+			EstimateVO estimatevo = new EstimateVO();
+			estimatevo.setESTIMATE_NUM(ESTIMATE_NUM);
+			estimatevo.setESTIMATE_MINPRICE(ESTIMATE_MINPRICE);
+			
+			HashMap <String, Object> map = new HashMap <String, Object>();
+			map.put("ESTIMATE_NUM", ESTIMATE_NUM);
+			int ESTIMATE_OFFERCOUNT = mapper.offerCount(map);
+			estimatevo.setESTIMATE_OFFERCOUNT(ESTIMATE_OFFERCOUNT);
+			
+			res = mapper.offerSetInfo(estimatevo);
+		}
+		
+		return res;
+	}
 	@Override
 	public ArrayList<EstimateOrderVO> esOrderList(int ES_ORDER_BUYER) {
 		EstimateMapper mapper = sqlSession.getMapper(EstimateMapper.class);

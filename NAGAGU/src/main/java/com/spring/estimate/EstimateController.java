@@ -9,7 +9,6 @@ import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
@@ -62,6 +61,43 @@ public class EstimateController {
 	public String estimateForm(HttpServletRequest request) {
 		
 		return "Store/estimateForm";
+	}
+	
+	@RequestMapping(value="/estimate_modify.es")
+	public String estimateModifyForm(HttpServletRequest request, Model model) {
+		int ESTIMATE_NUM = Integer.parseInt(request.getParameter("ESTIMATE_NUM"));
+		String page = request.getParameter("page");
+		
+		EstimateVO esvo = estimateService.estimateDetail(ESTIMATE_NUM);
+		
+		model.addAttribute("esvo", esvo);
+		model.addAttribute("page", page);
+		
+		return "Store/estimateModifyForm";
+	}
+	
+	@RequestMapping(value="/estimate_update.es")
+	public String estimateModify(HttpServletRequest request, Model model) {
+		
+			EstimateVO vo = new EstimateVO();
+			String page = request.getParameter("page");
+			
+			vo.setESTIMATE_MEMBER(request.getParameter("ESTIMATE_MEMBER"));
+			vo.setESTIMATE_NICK(request.getParameter("ESTIMATE_NICK"));
+			vo.setESTIMATE_TITLE(request.getParameter("ESTIMATE_TITLE"));
+			vo.setESTIMATE_CATEGORY(request.getParameter("ESTIMATE_CATEGORY"));
+			vo.setESTIMATE_SOURCE(request.getParameter("ESTIMATE_SOURCE"));
+			vo.setESTIMATE_COLOR(request.getParameter("ESTIMATE_COLOR"));
+			vo.setESTIMATE_COAT(request.getParameter("ESTIMATE_COAT"));
+			vo.setESTIMATE_SIZE(request.getParameter("ESTIMATE_SIZE"));
+			vo.setESTIMATE_FILE(request.getParameter("ESTIMATE_FILE"));
+			vo.setESTIMATE_CONTENT(request.getParameter("ESTIMATE_CONTENT"));
+			vo.setESTIMATE_PAY(request.getParameter("ESTIMATE_PAY"));
+			
+			String redirect = "redirect:/estimate.es?page=";
+			redirect += page;
+			
+			return redirect;
 	}
 	
 	@RequestMapping(value="/estimate_input.es")
@@ -126,6 +162,37 @@ public class EstimateController {
 			return img_name;
 		}
 	}
+
+	@RequestMapping(value = "/estimate_modify_file.es")
+	@ResponseBody 
+	public String handlerFileModify(MultipartHttpServletRequest request) throws Exception {
+		
+		String img_name = null;
+		String uploadedFile = null;
+		MultipartFile file = request.getFile("file");
+		
+		String url = "C:/Project138/upload/";
+		
+		try {
+			EstimateVO prevo = estimateService.estimateDetail(Integer.parseInt(request.getParameter("ESTIMATE_NUM")));
+			String[] filesrc = prevo.getESTIMATE_FILE().split(",");
+		
+			int imgDelRes = estimateService.imageDelete(filesrc);
+			
+			if (imgDelRes == filesrc.length) {
+				uploadedFile = estimateService.imageUpload(url, file);
+			}
+			
+			img_name = "/estimateupload/image/"+uploadedFile;
+			
+			return img_name;
+		}
+		catch (Exception e) {
+			
+			e.printStackTrace();
+			return img_name;
+		}
+	}
 	
 	@RequestMapping(value = "/offer_list.es")
     @ResponseBody
@@ -173,26 +240,71 @@ public class EstimateController {
 	
 	@RequestMapping(value = "/offer_insert.es", produces="application/json; charset=UTF-8")
 	@ResponseBody
-	public String offerInsert (HttpServletRequest request) {
+	public HashMap<String, Object> offerInsert (HttpServletRequest request) {
 		EstimateOfferVO vo = new EstimateOfferVO();
 		vo.setOFFER_ESTIMATE(Integer.parseInt(request.getParameter("OFFER_ESTIMATE")));
 		vo.setOFFER_WORKSHOP(request.getParameter("OFFER_WORKSHOP"));
 		vo.setOFFER_PRICE(Integer.parseInt(request.getParameter("OFFER_PRICE")));
 		vo.setOFFER_CONTENT(request.getParameter("OFFER_CONTENT"));
-		System.out.println("제안 공방 : " + vo.getOFFER_WORKSHOP());
-		System.out.println("내용 : " + vo.getOFFER_CONTENT());
-		System.out.println("가격 : " + vo.getOFFER_PRICE());
-		System.out.println("글번호 : " + vo.getOFFER_ESTIMATE());
 		
 		int res = estimateService.offerInsert(vo);
+		HashMap<String, Object> map = new HashMap<String, Object>();
 		
 		if (res == 1) {
-			return "Offer successfully added";
+			map.put("res", "Offer successfully added");
 		}
 		else {
-			return "Offer add failed..";
+			map.put("res", "Offer add failed...");
 		}
+		
+		return map;
 	}
+
+	@RequestMapping(value = "/offer_modify.es", produces="application/json; charset=UTF-8")
+	@ResponseBody
+	public HashMap<String, Object> offerModify (HttpServletRequest request) {
+		EstimateOfferVO vo = new EstimateOfferVO();
+		vo.setOFFER_NUM(Integer.parseInt(request.getParameter("OFFER_NUM")));
+		vo.setOFFER_ESTIMATE(Integer.parseInt(request.getParameter("OFFER_ESTIMATE")));
+		vo.setOFFER_PRICE(Integer.parseInt(request.getParameter("OFFER_PRICE")));
+		vo.setOFFER_CONTENT(request.getParameter("OFFER_CONTENT"));
+		
+		int res = estimateService.offerModify(vo);
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		
+		if (res == 1) {
+			map.put("res", "Offer successfully added");
+		}
+		else {
+			map.put("res", "Offer add failed...");
+		}
+		
+		return map;
+	}
+	
+
+	@RequestMapping(value = "/offer_delete.es", produces="application/json; charset=UTF-8")
+	@ResponseBody
+	public HashMap<String, Object> offerDelete (HttpServletRequest request) {
+		System.out.println(request.getParameter("ESTIMATE_NUM"));
+		int ESTIMATE_NUM = Integer.parseInt(request.getParameter("ESTIMATE_NUM"));
+		int OFFER_NUM = Integer.parseInt(request.getParameter("OFFER_NUM"));
+		System.out.println(ESTIMATE_NUM);
+		System.out.println(OFFER_NUM);
+		
+		int res = estimateService.offerDelete(ESTIMATE_NUM, OFFER_NUM);
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		
+		if (res == 1) {
+			map.put("res", "Offer successfully added");
+		}
+		else {
+			map.put("res", "Offer add failed...");
+		}
+		
+		return map;
+	}
+	
 	
 
 	/* 의뢰된 견적 리스트 */

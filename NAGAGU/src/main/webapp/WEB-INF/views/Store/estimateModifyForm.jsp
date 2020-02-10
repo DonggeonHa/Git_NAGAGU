@@ -1,14 +1,15 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ page import="com.spring.estimate.EstimateVO" %>
 <%
-	String ESTIMATE_MEMBER = (String)session.getAttribute("MEMBER_EMAIL");
-	String ESTIMATE_NICK = (String)session.getAttribute("MEMBER_NICK");
+	EstimateVO vo = (EstimateVO)request.getAttribute("esvo");
+	int nowpage = (int)request.getAttribute("page");
 %>
 <!DOCTYPE html>
 <html>
 <head>
-<title>견적문의 폼</title>
+<title>견적문의 수정</title>
 <meta charset="utf-8">
 <meta name="viewport"
 	content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -172,9 +173,9 @@
 		<form id="estimate" name="store_estimateform" class="store_estimateform"
 			action="./estimate_input.es" method="post"
 			enctype="multipart/form-data">
-		<input type="hidden" name="ESTIMATE_MEMBER" value=<%=ESTIMATE_MEMBER%>>
-		<input type="hidden" name="ESTIMATE_NICK" value=<%=ESTIMATE_NICK%>>
-		<input type="hidden" id="ESTIMATE_FILE" NAME="ESTIMATE_FILE">
+		<input type="hidden" name="ESTIMATE_MEMBER" value=<%=vo.getESTIMATE_MEMBER()%>>
+		<input type="hidden" name="ESTIMATE_NICK" value=<%=vo.getESTIMATE_NICK()%>>
+		<input type="hidden" id="ESTIMATE_FILE" NAME="ESTIMATE_FILE" value=<%=vo.getESTIMATE_FILE() %>>
 		<br />
 		<br />
 		<br />
@@ -187,42 +188,47 @@
 				<div class="col-md-4 d-flex justify-content-end title">제목</div>
 				<div class="col-md-8 d-flex justify-content-start">
 					<input type="text" id="ESTIMATE_TITLE" name="ESTIMATE_TITLE" size="50" maxlength="30"
-						placeholder="제목을 입력하세요 ">
+						placeholder="제목을 입력하세요 " value=<%=vo.getESTIMATE_TITLE() %>>
 				</div>
 			</div>
 			<div class="row text-center pt-1 pb-1 ">
 				<div class="col-md-4 d-flex justify-content-end title">제품 종류</div>
 				<div class="col-md-8 d-flex justify-content-start">
 					<input type="text" id="ESTIMATE_CATEGORY" name="ESTIMATE_CATEGORY" size="50" maxlength="15"
-						placeholder="ex)침대, 서랍장, 의자.. ">
+						placeholder="ex)침대, 서랍장, 의자.. " value=<%=vo.getESTIMATE_CATEGORY() %>>
 				</div>
 			</div>
 			<div class="row text-center">
 				<div class="col-md-4 d-flex justify-content-end title">소재</div>
 				<div class="col-md-8 d-flex justify-content-start">
 					<input type="text" id="ESTIMATE_SOURCE" name="ESTIMATE_SOURCE" size="50" maxlength="20"
-						placeholder="ex)편백나무 원목(상판), 소나무 (하부)">
+						placeholder="ex)편백나무 원목(상판), 소나무 (하부)" value=<%=vo.getESTIMATE_SOURCE() %>>
 				</div>
 			</div>
 			<div class="row text-center">
 				<div class="col-md-4 d-flex justify-content-end title">색상(염색)</div>
 				<div class="col-md-8 d-flex justify-content-start">
 					<input type="text" id="ESTIMATE_COLOR" name="ESTIMATE_COLOR" size="50" maxlength="20"
-						placeholder="ex)투명, 블루..">
+						placeholder="ex)투명, 블루.." value=<%=vo.getESTIMATE_COLOR() %>>
 				</div>
 			</div>
 			<div class="row text-center pt-1 pb-1">
 				<div class="col-md-4 d-flex justify-content-end title">코팅</div>
 				<div class="col-md-8 d-flex justify-content-start">
-					<label id="coat_yes" class="coat_label coat_uncheck" for="check_yes"><input type="radio" id="check_yes" class="coat_radio" name="ESTIMATE_COAT" value="코팅"> 원함</label> &nbsp;&nbsp; 
+				<% if (vo.getESTIMATE_COAT() == "코팅")  { %>
+					<label id="coat_yes" class="coat_label coat_checked" for="check_yes"><input type="radio" id="check_yes" class="coat_radio" name="ESTIMATE_COAT" value="코팅" checked="checked"> 원함</label> &nbsp;&nbsp; 
 					<label id="coat_no" class="coat_label coat_uncheck" for="check_no"><input type="radio" id="check_no" class="coat_radio" name="ESTIMATE_COAT" value="코팅 안함"> 원하지 않음</label>
+				<% } else { %>
+					<label id="coat_yes" class="coat_label coat_uncheck" for="check_yes"><input type="radio" id="check_yes" class="coat_radio" name="ESTIMATE_COAT" value="코팅"> 원함</label> &nbsp;&nbsp; 
+					<label id="coat_no" class="coat_label coat_checked" for="check_no"><input type="radio" id="check_no" class="coat_radio" name="ESTIMATE_COAT" value="코팅 안함" checked="checked"> 원하지 않음</label>
+				<% } %>
 				</div>
 			</div>
 			<div class="row text-center">
 				<div class="col-md-4 d-flex justify-content-end title">규격</div>
 				<div class="col-md-8 d-flex justify-content-start">
 					<input type="text" id="ESTIMATE_SIZE" name="ESTIMATE_SIZE" size="50" maxlength="50"
-						placeholder="ex)가로100*세로150*높이200 ">
+						placeholder="ex)가로100*세로150*높이200 " value=<%=vo.getESTIMATE_SIZE() %>>
 				</div>
 			</div>
 			<div class="row text-center">
@@ -235,7 +241,8 @@
 				<div class="col-md-4 d-flex justify-content-end title">기타</div>
 				<div class="col-md-8 d-flex justify-content-start">
 					<textarea name="ESTIMATE_CONTENT" placeholder="기타 설명 (500자 까지)" cols="54" maxlength="500"
-						rows="15"></textarea>
+						rows="15" value=<%=vo.getESTIMATE_CONTENT() %>>
+						</textarea>
 				</div>
 			</div>
 
@@ -467,7 +474,6 @@
     }
     
     $('#btn_estimate').click(function(e) {
-    	console.log("체크박스 : " + $("input[name=ESTIMATE_COAT]").val());
     	
     	if(!checkList()) return false;
 	

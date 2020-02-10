@@ -129,6 +129,7 @@
         .item_head {
             text-align:center;
             transition:border 0.2s;
+            box-sizing:border-box;
         }
         
         .item_head:hover {
@@ -200,6 +201,48 @@
 			height:14px;
 			font-size:12px;
 		}
+		
+		.btn_offer_modify {
+			border:1px solid #575b69;
+			color:#575b69;
+			transition:color 0.3s, background 0.3s;
+		}
+		
+		.btn_offer_modify:hover {
+			background:#575b69;
+			color:#ffffff;
+		}
+		
+		
+		.btn_offer_delete {
+			border:1px solid #ef902e;
+			color:#ef902e;
+			transition:color 0.3s, background 0.3s;
+		}
+		
+		.btn_offer_delete:hover {
+			background:#ef902e;
+			color:#ffffff;
+		}
+		
+		.thumbItem {
+			width:64px;
+			height:64px;
+			overflow:hidden;
+			display:block;
+			transition:transform 0.2s;
+		}
+		
+		.thumbItem:hover {
+			transform:scale(1.05);
+			cursor:pointer;
+		}
+		
+		.thumbItem img {
+			display:block;
+			min-height:100%;
+			max-height:100%;
+		}
 
 	</style>
 	</head>
@@ -218,11 +261,11 @@
 			</div>			
 			<div class="row justify-content-center pb-3">
 				<div class="slider-for"></div>
-				<div class="slider-nav">
+				<div class="thumnList">
 				<%
 					for (int i=0; i<imgArr.length; i++) {
 				%>
-					<div><img src=<%=imgArr[i] %> width="640" height="480"></div>
+					<div class="thumbItem"><img src=<%=imgArr[i] %>></div>
 				<% 
 					} 
 				%>
@@ -269,6 +312,9 @@
 				<% if (login_state==2) { %>
 					<button class="btn btn-dark btn-md" alt="" data-toggle="modal" data-target="#offerFormModal" aria-haspopup="true" aria-expanded="false">
 					입찰하기</button>&nbsp;&nbsp;&nbsp;
+				<% } else if (member_mail == mailChk) { %>
+					<button id="btn_modify" class="btn btn-dark btn-md" onclick="loaction.href='estimate_modify.es?ESTIMATE_NUM=<%=ESTIMATE_NUM%>&page=<%=nowpage%>'">수정</button>  &nbsp;
+					<button id="btn_delete" class="btn btn-dark btn-md" onclick="location.href='estimate_delete.es?ESIMATE_NUM=<%=ESTIMATE_NUM%>'">삭제</button>  &nbsp;
 				<% } %>
 					<button class="btn btn-dark btn-md" onclick="location.href='estimate.es?page=<%=nowpage%>'">목록보기</button>
 				</div>
@@ -290,8 +336,8 @@
 							<th width="10%">번호</th>
 							<th width="20%">공방 이름</th>
 							<th width="15%">제시 가격</th>
-							<th width="15%">문의</th>				
-							<th width="15%">낙찰</th>
+							<th width="15%">문의</th>		
+							<th width="15%">처리</th>
 						<tr>
 					</thead>
 					<tbody>
@@ -300,7 +346,7 @@
 			</div>
 		</div>
 		
-		<!--  modal -->
+		<!--  견적 제시 modal -->
 		<div class="modal fade" id="offerFormModal" tabindex="-1" role="dialog"
 			aria-labelledby="offerFormLabel" aria-hidden="true">
 			<div class="modal-dialog modal-dialog-centered" role="document">
@@ -314,18 +360,49 @@
 					</div>
 					<div class="modal-body">
 						<form id="offerForm" method="POST">
-						<input type="hidden" name="OFFER_ESTIMATE" value="<%=vo.getESTIMATE_NUM() %>">
+						<input type="hidden" id="offer_price" name="OFFER_ESTIMATE" value="<%=vo.getESTIMATE_NUM() %>">
 						<input type="hidden" name="OFFER_WORKSHOP" value="<%=workshop_name %>">
 							<label class="modalLabel" for="OFFER_PRICE">제시 가격</label>
 							<input class="modalInput" type="text" name="OFFER_PRICE"><br>
 							<label class="modalLabel" for="OFFER_CONTENT">내용</label>
-							<textarea class="modalInput" name="OFFER_CONTENT"></textarea>
+							<textarea class="modalInput" id="offer_content" name="OFFER_CONTENT"></textarea>
 						</form>
 					</div>
 					<div class="modal-footer">
 						<button type="button" class="btn btn-secondary"
 							data-dismiss="modal">닫기</button>
 						<button type="button" id="btn_offer" class="btn btn-primary">제시하기</button>
+					</div>
+				</div>
+			</div>
+		</div>
+		
+		<!--  견적 수정 modal -->
+		<div class="modal fade" id="modifyFormModal" tabindex="-1" role="dialog"
+			aria-labelledby="offerFormLabel" aria-hidden="true">
+			<div class="modal-dialog modal-dialog-centered" role="document">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h5 class="modal-title" id="offerFormLabel">견적 수정</h5>
+						<button type="button" class="close" data-dismiss="modal"
+							aria-label="Close">
+							<span aria-hidden="true">&times;</span>
+						</button>
+					</div>
+					<div class="modal-body">
+						<form id="modifyForm" method="POST">
+						<input type="hidden" name="OFFER_ESTIMATE" value="<%=vo.getESTIMATE_NUM() %>">
+						<input type="hidden" id="modify_offer_num" name="OFFER_NUM">
+							<label class="modalLabel" for="OFFER_PRICE">제시 가격</label>
+							<input class="modalInput" id="modify_offer_price" type="text" name="OFFER_PRICE"><br>
+							<label class="modalLabel" for="OFFER_CONTENT">내용</label>
+							<textarea class="modalInput" id="modify_offer_content" name="OFFER_CONTENT" maxlength="200"></textarea>
+						</form>
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-secondary"
+							data-dismiss="modal">닫기</button>
+						<button type="button" id="btn_modify_submit" class="btn btn-primary">수정하기</button>
 					</div>
 				</div>
 			</div>
@@ -348,6 +425,7 @@
 	
 	<script>
 	var login_state = <%=login_state%>
+	var checkPrice = /^[0-9]$/;
 	
 		$(document).ready(function (){
 			
@@ -389,14 +467,21 @@
 								output += '<tr value="' + index + '" class="item_head">';
 								output += '<td>' + rnum + '</td>';
 								output += '<td><b>' + item.offer_WORKSHOP + '</b></td>';
-								output += '<td>' + offerPrice + ' 원</td>';
+								output += '<td id="offer_price_' + item.offer_NUM + '">' + offerPrice + '</td>';
+								if (login_state == 1) {
 								output += '<td><button value="' + item.offer_WORKSHOP + '" class="btn_note btn btn-outline-dark btn-sm">쪽지보내기</button></td>';
 								output += '<td><button value="' + item.offer_NUM + '" class="btn_bid btn btn-outline-dark btn-xs">낙찰하기</button></td>';
+								} else {
+								output += '<td> - </td>';
+								output += '<td><button value="' + item.offer_NUM + '" class="btn_offer_modify btn-sm" alt="" data-toggle="modal" data-target="#modifyFormModal" aria-haspopup="true" aria-expanded="false">수정</button>&nbsp;';
+								output += '<button value="' + item.offer_NUM + '" class="btn_offer_delete btn-sm">삭제</button></td>';
+								}
 								output += '</tr>';
 								output += '<tr id="item_content_'+ index + '" class="item_content">';
 								output += '<td colspan="5">';
-								output += '<div class="item_content_body">' + item.offer_CONTENT+ '</div>';
+								output += '<div id = "offer_content_' + item.offer_NUM + '" class="item_content_body">' + item.offer_CONTENT+ '</div>';
 								output += '</td></tr>';
+								
 								rnum--;
 							});
 							
@@ -485,21 +570,128 @@
 			
 			/* 견적 제시 */
 			$('#btn_offer').click(function() {
+				var offer_price = $('#offer_price').val();
+				var offer_content = $('#offer_content').val();
+				
+				if (!checkPrice.test(modify_price)) {
+					alert("가격란은 숫자만 입력 가능합니다.");
+					$('offer_price').focus();
+					
+					return false;
+				}
+				if (offer_price == "") {
+					alert("가격을 입력해주십시시오.");
+					$('#offer_price').focus();
+					
+					return false;
+				}
+				if (offer_content == "") {
+					alert("내용을 입력해주십시오.");
+					$('#offer_content').focus();
+				}
+				
 				var params = $('#offerForm').serialize();
 				$.ajax({
 					url:'/NAGAGU/offer_insert.es',
 					type:'POST',
 					data:params,
+					aync:false,
 					contentType: 'application/x-www-form-urlencoded; charset=utf-8',
 					success : function(data) {
-						alert(data);
+						alert("제안글이 성공적으로 등록되었습니다.");
+						$('#offerFormModal').modal("hide");
+						getOfferList();
 					},
-					error : function(data) {
-						alert('ajax 통신 실패!');
+				     error:function(request,status,error){
+				         alert("code = "+ request.status + " message = " + request.responseText + " error = " + error);
 					}
 					
 				});
-				event.preventDefault();
+
+			});
+			
+			/* 견적 수정 모달 */
+			$(document).delegate('.btn_offer_modify', 'click', function() {
+				
+				var m_offer_num = $(this).attr('value');
+				console.log(m_offer_num);
+				$('#modify_offer_num').val(m_offer_num);
+				var m_price = $('#offer_price_' + m_offer_num).html();
+				$('#modify_offer_price').val(m_price);
+				console.log(m_price);
+				var m_content = $('#offer_content_' + m_offer_num).html();
+				$('#modify_offer_content').val(m_content);
+				console.log(m_content);
+
+				return false;
+			});
+			
+			/* 견적 수정 신청 */
+			$('#btn_modify_submit').click(function() {
+				var modify_price = $('#modify_offer_price').val();
+				var modify_content = $('#modify_offer_content').val();
+				
+				if (!checkPrice.test(modify_price)) {
+					alert("가격란은 숫자만 입력 가능합니다.");
+					$('#modify_offer_price').focus();
+					
+					return false;
+				}
+				if (modify_price == "") {
+					alert("가격을 입력해주십시시오.");
+					$('#modify_offer_price').focus();
+					
+					return false;
+				}
+				if (offer_content == "") {
+					alert("내용을 입력해주십시오.");
+					$('#modify_offer_content').focus();
+				}
+				
+				var params = $('#modifyForm').serialize();
+				$.ajax({
+					url:'/NAGAGU/offer_modify.es',
+					type:'POST',
+					data:params,
+					aync:false,
+					contentType: 'application/x-www-form-urlencoded; charset=utf-8',
+					success : function(data) {
+						alert("제안글이 성공적으로 수정되었습니다.");
+						$('#modifyFormModal').modal("hide");
+						getOfferList();
+					},
+				     error:function(request,status,error){
+				         alert("code = "+ request.status + " message = " + request.responseText + " error = " + error);
+					}
+					
+				});
+			});
+			
+			$(document).delegate('.btn_offer_delete', 'click', function() {
+				var of_num = $(this).attr('value');
+				var es_num = <%=ESTIMATE_NUM%>;
+				console.log(of_num);
+				console.log(es_num);
+				var params = {"OFFER_NUM" : of_num, "ESTIMATE_NUM" : es_num };
+				console.log(params);
+				$.ajax({
+					url:'/NAGAGU/offer_delete.es',
+					type:'POST',
+					data:params,
+					aync:false,
+					contentType: 'application/x-www-form-urlencoded; charset=utf-8',
+					success : function(data) {
+						alert("제안글이 성공적으로 삭제되었습니다.");
+						$('#modifyFormModal').modal("hide");
+						getOfferList();
+					},
+				     error:function(request,status,error){
+				         alert("code = "+ request.status + " message = " + request.responseText + " error = " + error);
+					}
+					
+				});
+
+				return false;
 			});
 			
 			getOfferList();
