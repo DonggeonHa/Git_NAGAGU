@@ -28,8 +28,8 @@ create table PRODUCT (
     PRODUCT_STORE_INFO          VARCHAR2(2000),
     PRODUCT_BANNER              VARCHAR2(2000),
     PRODUCT_IMAGE               VARCHAR2(2000),
-    PRODUCT_STATUS              NUMBER
-    
+    PRODUCT_STATUS              NUMBER,
+    PRODUCT_STOCK				NUMBER
 );
 
 /*상품시퀀스*/ 
