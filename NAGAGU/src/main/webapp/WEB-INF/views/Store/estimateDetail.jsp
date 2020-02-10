@@ -48,8 +48,6 @@
 	<title>견적문의 상세</title>
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-	<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/css/Store/slick/slick.css"/>
-	<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/css/Store/slick/slick-theme.css"/>
 	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
 	
 	
@@ -256,7 +254,7 @@
 			<br />
 			<div class="row justify-content-between title">
 				<div class="col-10 page-tap">
-					<h6><a href="estmate.es">STORE 견적 문의</a> > 상세보기 </h6>
+					<h6><a href="estimate.es">STORE 견적 문의</a> > 상세보기 </h6>
 				</div>
 			</div>			
 			<div class="row justify-content-center pb-3">
