@@ -14,7 +14,6 @@ create table PRODUCT (
     PRODUCT_SALES               NUMBER,
     PRODUCT_LIKE                NUMBER,
     PRODUCT_COLOR               VARCHAR2(50),
-    PRODUCT_OPTION              VARCHAR2(100),
     PRODUCT_SIZE                VARCHAR2(50),
     PRODUCT_INFO                VARCHAR2(1000),
     PRODUCT_SHIP_PRICE          NUMBER,
@@ -29,7 +28,7 @@ create table PRODUCT (
     PRODUCT_STORE_INFO          VARCHAR2(2000),
     PRODUCT_BANNER              VARCHAR2(2000),
     PRODUCT_IMAGE               VARCHAR2(2000),
-    PRODUCT_STATUS              NUMBER default 0
+    PRODUCT_STATUS              NUMBER
     
 );
 

@@ -16,7 +16,6 @@ public class ProductVO {
 	private int PRODUCT_SALES;	
 	private int PRODUCT_LIKE;
 	private String PRODUCT_COLOR;
-	private String PRODUCT_OPTION;	
 	private String PRODUCT_SIZE;	
 	private String PRODUCT_INFO;	
 	private int PRODUCT_SHIP_PRICE;
@@ -31,6 +30,9 @@ public class ProductVO {
 	private String PRODUCT_STORE_INFO;	
 	private String PRODUCT_BANNER;	
 	private String PRODUCT_IMAGE;
+	private int PRODUCT_STATUS;
+	private int PRODUCT_STOCK;
+
 	public int getPRODUCT_NUM() {
 		return PRODUCT_NUM;
 	}
@@ -109,12 +111,7 @@ public class ProductVO {
 	public void setPRODUCT_COLOR(String pRODUCT_COLOR) {
 		PRODUCT_COLOR = pRODUCT_COLOR;
 	}
-	public String getPRODUCT_OPTION() {
-		return PRODUCT_OPTION;
-	}
-	public void setPRODUCT_OPTION(String pRODUCT_OPTION) {
-		PRODUCT_OPTION = pRODUCT_OPTION;
-	}
+
 	public String getPRODUCT_SIZE() {
 		return PRODUCT_SIZE;
 	}
@@ -199,7 +196,18 @@ public class ProductVO {
 	public void setPRODUCT_IMAGE(String pRODUCT_IMAGE) {
 		PRODUCT_IMAGE = pRODUCT_IMAGE;
 	}
-	
+	public int getPRODUCT_STATUS() {
+		return PRODUCT_STATUS;
+	}
+	public void setPRODUCT_STATUS(int pRODUCT_STATUS) {
+		PRODUCT_STATUS = pRODUCT_STATUS;
+	}	
+	public int getPRODUCT_STOCK() {
+		return PRODUCT_STOCK;
+	}
+	public void setPRODUCT_STOCK(int pRODUCT_STOCK) {
+		PRODUCT_STOCK = pRODUCT_STOCK;
+	}
 
 	
 	

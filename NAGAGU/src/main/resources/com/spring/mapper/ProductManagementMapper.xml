@@ -144,6 +144,44 @@
 		AND W.WORKSHOP_NUM=P.PRODUCT_WORKSHOP
 		AND W.WORKSHOP_NUM=#{WORKSHOP_NUM}
 		AND Q.QNA_MEMBER=N.MEMBER_NUM
+			<if test="selectClassType == 'all'">
+				<if test="searchType == 'member_nick'">AND N.MEMBER_NICK LIKE '%'||#{keyword}||'%'</if>
+				<if test="searchType == 'product_title'">AND P.PRODUCT_TITLE LIKE '%'||#{keyword}||'%'</if>
+				<if test="searchType == 'category'">
+					AND P.PRODUCT_CATEGORY = #{categorySelect}
+					AND P.PRODUCT_TITLE LIKE '%'||#{keyword}||'%'
+				</if>		
+			</if>
+			<if test="selectClassType == 'Standby'">
+					<if test="searchType == 'member_nick'">AND N.MEMBER_NICK LIKE '%'||#{keyword}||'%'</if>
+					<if test="searchType == 'product_title'">AND P.PRODUCT_TITLE LIKE '%'||#{keyword}||'%'</if>
+					<if test="searchType == 'category'">
+						AND P.PRODUCT_CATEGORY = #{categorySelect}
+						AND P.PRODUCT_TITLE LIKE '%'||#{keyword}||'%'
+					</if>
+					AND Q.QNA_STATUS=0
+			</if>
+			<if test="selectClassType == 'Completed'">
+				<if test="searchType == 'member_nick'">AND N.MEMBER_NICK LIKE '%'||#{keyword}||'%'</if>
+				<if test="searchType == 'product_title'">AND P.PRODUCT_TITLE LIKE '%'||#{keyword}||'%'</if>
+				<if test="searchType == 'category'">
+					AND P.PRODUCT_CATEGORY = #{categorySelect}
+					AND P.PRODUCT_TITLE LIKE '%'||#{keyword}||'%'
+				</if>
+				AND Q.QNA_STATUS=1
+			</if>
+		ORDER BY Q.QNA_DATE DESC	
+	</select>
+
+<!--   
+	<select id="getQnaSearchList" parameterType="java.util.HashMap" resultMap="productReviewResultMap">
+		SELECT P.PRODUCT_CATEGORY, P.PRODUCT_TITLE, P.PRODUCT_NUM, N.MEMBER_NICK, Q.QNA_NUM, Q.QNA_MEMBER, Q.QNA_PRODUCT, Q.QNA_DATE, 
+		Q.QNA_CONTENT, Q.QNA_RE, Q.QNA_STATUS
+		FROM PRODUCT P, PRODUCT_QNA Q, nagagu_workshop_member W, nagagu_member N
+		WHERE P.PRODUCT_NUM =Q.QNA_PRODUCT
+		AND W.WORKSHOP_NUM=P.PRODUCT_WORKSHOP
+		AND W.WORKSHOP_NUM=#{WORKSHOP_NUM}
+		AND Q.QNA_MEMBER=N.MEMBER_NUM
 		<if test="searchType == 'member_nick'">AND N.MEMBER_NICK LIKE '%'||#{keyword}||'%'</if>
 		<if test="searchType == 'product_title'">AND P.PRODUCT_TITLE LIKE '%'||#{keyword}||'%'</if>
 		<if test="searchType == 'category'">
@@ -152,7 +190,7 @@
 		</if>
 		ORDER BY Q.QNA_DATE DESC	
 	</select>
-
+-->
 
 
 </mapper>

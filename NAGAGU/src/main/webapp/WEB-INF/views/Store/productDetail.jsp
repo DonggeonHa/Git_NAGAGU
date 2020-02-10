@@ -58,7 +58,6 @@
 	int PRODUCT_NUM = ((Integer)request.getAttribute("PRODUCT_NUM")).intValue();
 	String PRODUCT_COLOR = vo.getPRODUCT_COLOR();
 	String PRODUCT_SIZE = vo.getPRODUCT_SIZE();
-	String PRODUCT_OPTION = vo.getPRODUCT_OPTION();
 	int bannerImgCount = StringUtils.countOccurrencesOf(vo.getPRODUCT_BANNER(), ",");
 	
 	//리뷰 관련
@@ -479,9 +478,24 @@
          .row h6 a,.row h6 a:link,.row h6 a:hover{
 		  text-decoration: none !important;
 		  color: black !important;
-		} 
+		}
+		
+			.clickable {cursor: pointer;}
+		.hover {text-decoration: underline;}
+		.odd{ background: #FFC;}
+		.even{ background: #FF9;}
+		.active{ width:10px; height:10px; background:#f60; color:white;}	 
       </style>
+	<script>
+	$(document).ready(function() {
+		
+	});
+	
+	
 
+	
+	
+	</script>
    </head>
 	<body class="order-body">
 		<!-- content start -->
@@ -849,7 +863,7 @@
                   <%
                      } else {
                   %>
-                        <a href="./productList.pro?page=<%=nowpage - 1%>">&laquo;</a>
+                        <a href="./productdetail.pro?PRODUCT_NUM=<%=PRODUCT_NUM%>&PRODUCT_CATEGORY=<%=PRODUCT_CATEGORY%>&page=<%=nowpage - 1%>">&laquo;
                   <%
                      }
                   %>
@@ -862,7 +876,7 @@
                   <%
                         } else {
                   %>
-                           <a href="./productList.pro?page=<%=a%>"><%=a%></a>
+                           <a href="./productdetail.pro?PRODUCT_NUM=<%=PRODUCT_NUM%>&PRODUCT_CATEGORY=<%=PRODUCT_CATEGORY%>&page=<%=a%>"><%=a%></a>
                   <%
                         }
                      }
@@ -874,7 +888,7 @@
                   <%
                      } else {
                   %>         
-                        <a href="./productList.pro?page=<%=nowpage + 1%>">&raquo;</a>
+                        <a href="./productdetail.pro?PRODUCT_NUM=<%=PRODUCT_NUM%>&PRODUCT_CATEGORY=<%=PRODUCT_CATEGORY%>&page=<%=nowpage + 1%>">&raquo;</a>
                   <%
                      }
                   %>
@@ -884,11 +898,22 @@
             }
             %>
                
+
                
                <br />
             </div><!-- <div class="reviews_table" > 끝 -->
             <!-- 리뷰 테이블 끝 -->
       
+<!-- 지은 리뷰 pagination -->
+
+
+			<div class="review_bottom">
+				<table class="tbl paginated" id="tbl">
+				</table>
+			</div>
+
+
+<!-- 지은 리뷰 pagination 끝 -->
             <span id="t3"></span>
             <br />
             <br />
@@ -1322,23 +1347,6 @@
                                     <option value="">선택</option>
                                     <c:forTokens var="size" items="<%=PRODUCT_SIZE %>" delims=",">
                                        <option value="${fn:trim(size)}">${fn:trim(size)}</option>
-                                    </c:forTokens>
-                                 </select>
-                               </td>
-                            </tr>
-                            <tr>
-                               <th scope="row">옵션선택</th>
-                               <td>
-                                    <select name="BASKET_OPTION" size="1">
-                                    <%
-                                       if(!PRODUCT_OPTION.equals("없음")) {
-                                    %>
-                                    <option value="">선택</option>
-                                 <%
-                                       }
-                                 %>   
-                                    <c:forTokens var="option" items="<%=PRODUCT_OPTION %>" delims=",">
-                                       <option value="${fn:trim(option)}">${fn:trim(option)}</option>
                                     </c:forTokens>
                                  </select>
                                </td>

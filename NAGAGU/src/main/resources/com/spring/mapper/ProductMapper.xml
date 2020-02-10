@@ -16,7 +16,6 @@ create table PRODUCT (
     PRODUCT_SALES               NUMBER,
     PRODUCT_LIKE                NUMBER,
     PRODUCT_COLOR               VARCHAR2(50),
-    PRODUCT_OPTION              VARCHAR2(100),
     PRODUCT_SIZE                VARCHAR2(50),
     PRODUCT_INFO                VARCHAR2(1000),
     PRODUCT_SHIP_PRICE          NUMBER,
@@ -30,7 +29,9 @@ create table PRODUCT (
     PRODUCT_RETURN_INFO         VARCHAR2(2000),
     PRODUCT_STORE_INFO          VARCHAR2(2000),
     PRODUCT_BANNER              VARCHAR2(2000),
-    PRODUCT_IMAGE               VARCHAR2(2000)
+    PRODUCT_IMAGE               VARCHAR2(2000),
+    PRODUCT_STATUS				NUMBER,
+    PRODUCT_STOCK				NUMBER
 ); 
 create sequence product_seq
     start with 1
@@ -56,7 +57,6 @@ create sequence product_seq
 		<result property="PRODUCT_SALES" column="PRODUCT_SALES" />		
 		<result property="PRODUCT_LIKE" column="PRODUCT_LIKE" />	
 		<result property="PRODUCT_COLOR" column="PRODUCT_COLOR" />			
-		<result property="PRODUCT_OPTION" column="PRODUCT_OPTION" />		
 		<result property="PRODUCT_SIZE" column="PRODUCT_SIZE" />		
 		<result property="PRODUCT_INFO" column="PRODUCT_INFO" />		
 		<result property="PRODUCT_SHIP_PRICE" column="PRODUCT_SHIP_PRICE" />		
@@ -71,6 +71,8 @@ create sequence product_seq
 		<result property="PRODUCT_STORE_INFO" column="PRODUCT_STORE_INFO" />		
 		<result property="PRODUCT_BANNER" column="PRODUCT_BANNER" />		
 		<result property="PRODUCT_IMAGE" column="PRODUCT_IMAGE" />		
+		<result property="PRODUCT_STATUS" column="PRODUCT_STATUS" />		
+		<result property="PRODUCT_STOCK" column="PRODUCT_STOCK" />		
 	</resultMap>
 
 	<resultMap type="com.spring.store.ProductVO" id="productResultMap">
@@ -87,7 +89,6 @@ create sequence product_seq
 		<result property="PRODUCT_SALES" column="PRODUCT_SALES" />		
 		<result property="PRODUCT_LIKE" column="PRODUCT_LIKE" />	
 		<result property="PRODUCT_COLOR" column="PRODUCT_COLOR" />			
-		<result property="PRODUCT_OPTION" column="PRODUCT_OPTION" />		
 		<result property="PRODUCT_SIZE" column="PRODUCT_SIZE" />		
 		<result property="PRODUCT_INFO" column="PRODUCT_INFO" />		
 		<result property="PRODUCT_SHIP_PRICE" column="PRODUCT_SHIP_PRICE" />		
@@ -102,6 +103,8 @@ create sequence product_seq
 		<result property="PRODUCT_STORE_INFO" column="PRODUCT_STORE_INFO" />		
 		<result property="PRODUCT_BANNER" column="PRODUCT_BANNER" />		
 		<result property="PRODUCT_IMAGE" column="PRODUCT_IMAGE" />	
+		<result property="PRODUCT_STATUS" column="PRODUCT_STATUS" />
+		<result property="PRODUCT_STOCK" column="PRODUCT_STOCK" />
 	</resultMap>
 
 	<resultMap type="com.spring.workshop.WorkshopVO" id="workshopResultMap">
@@ -135,17 +138,17 @@ create sequence product_seq
 	<insert id="insertProduct" parameterType="com.spring.workshop.WorkshopVO">
  		INSERT INTO PRODUCT(PRODUCT_NUM, PRODUCT_WORKSHOP, PRODUCT_SHOPNAME, PRODUCT_DATE, PRODUCT_TITLE, PRODUCT_BRIEF, PRODUCT_CATEGORY, 
  								 PRODUCT_PRICE, PRODUCT_GRADE, PRODUCT_READ, PRODUCT_SALES, PRODUCT_LIKE, PRODUCT_COLOR, 
-			  					 PRODUCT_OPTION, PRODUCT_SIZE, PRODUCT_INFO, PRODUCT_SHIP_PRICE, PRODUCT_SHIP_COMPANY, 
+			  					 PRODUCT_SIZE, PRODUCT_INFO, PRODUCT_SHIP_PRICE, PRODUCT_SHIP_COMPANY, 
 			  					 PRODUCT_SHIP_RETURN_PRICE, PRODUCT_SHIP_CHANGE_PRICE, PRODUCT_SHIP_RETURN_PLACE,
 			  					 PRODUCT_SHIP_DAYS, PRODUCT_SHIP_INFO, PRODUCT_AS_INFO, PRODUCT_RETURN_INFO, PRODUCT_STORE_INFO,
-			  					 PRODUCT_BANNER, PRODUCT_IMAGE
+			  					 PRODUCT_BANNER, PRODUCT_IMAGE, PRODUCT_STATUS, PRODUCT_STOCK
 			  					 ) 
 			 		VALUES(product_seq.nextval, #{PRODUCT_WORKSHOP}, #{PRODUCT_SHOPNAME}, #{PRODUCT_DATE}, #{PRODUCT_TITLE}, #{PRODUCT_BRIEF}, #{PRODUCT_CATEGORY}, 
 			 			   #{PRODUCT_PRICE}, #{PRODUCT_GRADE}, #{PRODUCT_READ}, #{PRODUCT_SALES}, #{PRODUCT_LIKE}, #{PRODUCT_COLOR}, 
-			 			   #{PRODUCT_OPTION}, #{PRODUCT_SIZE}, #{PRODUCT_INFO}, #{PRODUCT_SHIP_PRICE}, #{PRODUCT_SHIP_COMPANY}, 
+			 			   #{PRODUCT_SIZE}, #{PRODUCT_INFO}, #{PRODUCT_SHIP_PRICE}, #{PRODUCT_SHIP_COMPANY}, 
 			 			   #{PRODUCT_SHIP_RETURN_PRICE}, #{PRODUCT_SHIP_CHANGE_PRICE}, #{PRODUCT_SHIP_RETURN_PLACE},
 			 			   #{PRODUCT_SHIP_DAYS}, #{PRODUCT_SHIP_INFO}, #{PRODUCT_AS_INFO}, #{PRODUCT_RETURN_INFO}, #{PRODUCT_STORE_INFO}, 
-			 			   #{PRODUCT_BANNER}, #{PRODUCT_IMAGE}
+			 			   #{PRODUCT_BANNER}, #{PRODUCT_IMAGE}, #{PRODUCT_STATUS}, #{PRODUCT_STOCK}
 			 			   )
  	</insert>	
 	
@@ -159,10 +162,10 @@ create sequence product_seq
 		SELECT * FROM
 		(SELECT rownum rnum, PRODUCT_NUM, PRODUCT_WORKSHOP, PRODUCT_SHOPNAME, PRODUCT_DATE, PRODUCT_TITLE, PRODUCT_BRIEF, PRODUCT_CATEGORY, 
 		PRODUCT_PRICE, PRODUCT_GRADE, PRODUCT_READ, PRODUCT_SALES, PRODUCT_LIKE, PRODUCT_COLOR,
-		PRODUCT_OPTION, PRODUCT_SIZE, PRODUCT_INFO, PRODUCT_SHIP_PRICE, PRODUCT_SHIP_COMPANY,  
+		PRODUCT_SIZE, PRODUCT_INFO, PRODUCT_SHIP_PRICE, PRODUCT_SHIP_COMPANY,  
 		PRODUCT_SHIP_RETURN_PRICE, PRODUCT_SHIP_CHANGE_PRICE, PRODUCT_SHIP_RETURN_PLACE,
 		PRODUCT_SHIP_DAYS, PRODUCT_SHIP_INFO, PRODUCT_AS_INFO, PRODUCT_RETURN_INFO, PRODUCT_STORE_INFO,
-		PRODUCT_BANNER, PRODUCT_IMAGE FROM
+		PRODUCT_BANNER, PRODUCT_IMAGE, PRODUCT_STATUS, PRODUCT_STOCK FROM
 			(SELECT * FROM PRODUCT
 			<if test="PRODUCT_CATEGORY != 'all'"> WHERE PRODUCT_CATEGORY=#{PRODUCT_CATEGORY}  </if>
 			ORDER BY 

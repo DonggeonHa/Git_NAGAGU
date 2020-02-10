@@ -1,6 +1,16 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ page import="java.util.*" %>
+<%
+if (session.getAttribute("WORKSHOP_NUM") == null) {
+	out.println("<script>");
+	out.println("alert('회원 로그인 해주세요!');");
+	out.println("location.href='./index.ma'");
+	out.println("</script>");	
+} 
+
+%>
+
 <!DOCTYPE html>
 <html lang="ko">
 <head>
@@ -91,7 +101,6 @@
 			    		var REVIEW_CONTENT = reviewList[j].REVIEW_CONTENT
     		
 						output += '<tr>';
-						output += '<td><input type="checkbox"></td>';
 						output += '<td>' + number + '</td>';
 						output += '<td>' + PRODUCT_CATEGORY + '</td>';
 						output += '<td>' + MEMBER_NICK + '</td>';
@@ -193,7 +202,6 @@
 		        		var REVIEW_CONTENT = reviewList[j].REVIEW_CONTENT
 		        		
 						output += '<tr>';
-						output += '<td><input type="checkbox"></td>';
 						output += '<td>' + number + '</td>';
 						
 						output += '<td>' + PRODUCT_CATEGORY + '</td>';
@@ -396,7 +404,6 @@
 			<table class="table" id="work_store">
 				<thead>
 					<tr>
-					    <th scope="col" class="th1"><input id="all_select" type="checkbox"></th>
 					    <th scope="col" class="th2">번호</th>
 					    <th scope="col" class="th3">카테고리</th>
 					    <th scope="col" class="th4">작성자</th>

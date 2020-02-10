@@ -4,45 +4,12 @@
 <%@ page import="java.util.*"%>
 <%@ page import="com.spring.store.ProductVO" %>
 <%
-	/*
-	//productForm은 공방 회원만 들어올 수 있다(MEMBER_STATUS = 2)
-	String MEMBER_NICK = (String)session.getAttribute("MEMBER_NICK");
-	int MEMBER_STATUS = 5;
-	if (request.getAttribute("MEMBER_STATUS") != null) {
-		MEMBER_STATUS = ((Integer)request.getAttribute("MEMBER_STATUS")).intValue();
-	} 
-	
-	if((MEMBER_NICK == null) || (MEMBER_STATUS != 2)) {
-	      out.println("<script>");
-	      out.println("alert('로그인 해주세요!');");
-	      out.println("location.href='./productlist.pro'");
-	      out.println("</script>");	
-	}
-	//여기까지는 확인해봐야함
-	*/	
-	//공방 회원의 product 리스트 가져와서 select에 뿌려주기!!!!!
-	
-	
-	int WORKSHOP_NUM = 0;
-	if (session.getAttribute("WORKSHOP_NUM") != null) {
-		WORKSHOP_NUM = (int)session.getAttribute("WORKSHOP_NUM");
-	} else {
+	if (session.getAttribute("WORKSHOP_NUM") == null) {
 		out.println("<script>");
-		out.println("alert('로그인 해주세요!');");
-		out.println("location.href='./productlist.pro?PRODUCT_CATEGORY=all'");
+		out.println("alert('회원 로그인 해주세요!');");
+		out.println("location.href='./index.ma'");
 		out.println("</script>");	
-//		WORKSHOP_NUM = (Integer)session.getAttribute("WORKSHOP_NUM");
-	}
-	
-	ArrayList<ProductVO> productList = null;
-	productList = (ArrayList<ProductVO>) request.getAttribute("WorkshopProoductList");
-	
-	if(productList == null) {
-		System.out.println("null이다");
-	} else {
-		System.out.println("null 아니다");
-	}
-	
+	}	
 %>       
 <!DOCTYPE html>
 <html>
@@ -65,9 +32,7 @@
 				font-size: 14px;
 			}
 			
-			.addoption_section {
-				display:none;
-			}
+
 			#noOptionInfo {
 				color:red;
 				font-size=0.9rem;
@@ -139,6 +104,19 @@
 						</td>
 					</tr>
 					<tr>
+						<th>재고</th>
+						<td>
+						 	<div class="row">
+						 		<div class="input_box" style="margin-right: 10px;">
+						 			<input class="form-control" type="text" name="PRODUCT_STOCK" placeholder="" value="" style="text-align: right;">		
+						 		</div>
+						 		<div class="d-flex align-items-center">
+	                    				&nbsp;개&nbsp;
+	                    		</div>
+						 	</div>	
+						</td>
+					</tr>
+					<tr>
 						<th>사이즈
                     		<input class="btn btn-outline-dark btn-sm ml-3" type="button" value="추가" onclick="addSize();">
                     		<input class="btn btn-outline-dark btn-sm ml-3" type="button" value="삭제" onclick="deleteSize();">
@@ -167,51 +145,6 @@
 	                    	</div>                   		
 						</td>
 					</tr>
-					<tr>
-						<th>옵션</th>
-						<td>
-							<div class="row">
-								<div class="option-control option-radio" style="margin-right: 2%">
-									<input type="radio" value="없음" class="option-control-input" id="optionControlValidation2" name="PRODUCT_OPTION_TMP" onchange="setDisplay(this.value)" required>
-									<label class="option-control-label"	for="optionControlValidation2">없음</label>
-								</div>
-								<div class="option-control option-radio" style="margin-left: 2%">
-									<input type="radio" value="추가구매" class="option-control-input" id="optionControlValidation3" name="PRODUCT_OPTION_TMP" onchange="setDisplay(this.value)" required>
-									<label class="option-control-label"	for="optionControlValidation3">추가구매</label>
-								</div>
-								<div class="pl-2" id="noOptionInfo"></div>
-							</div>
-						</td>
-					</tr>
-					<tr class="addoption_section">
-						<th>추가구매
-							<input class="btn btn-outline-dark btn-sm ml-3" type="button" value="추가" onclick="addOption();">
-                    		<input class="btn btn-outline-dark btn-sm ml-3" type="button" value="삭제" onclick="deleteOption();">
-						</th>
-						<td>
-							<div class="row mr-3"  id="optionappend" >
-								<div class="addoption mr-3">
-								<%
-									if(productList != null) {
-								%>
-										<select name="PRODUCT_OPTION" class=" form-control" id="" style="margin-left: 2%">
-									<%
-											for(int i=0; i<productList.size(); i++) {
-									%>
-											<option value="<%=productList.get(i).getPRODUCT_NUM() %>" selected><%=productList.get(i).getPRODUCT_TITLE() %></option>
-									<%
-											}
-									%>
-										</select>
-									<%
-										} 
-									%>		
-										
-									
-								</div>
-							</div>
-						</td>
-					</tr>					
 					<tr>      
 	                    <th>상품 소개</th>
 	                    <td>
@@ -369,22 +302,6 @@
 
 		<script>
 		
-			/* 라디오 부분 */
-			function setDisplay(val){
-				if(val == '없음') {
-					$('.addoption_section').hide();
-				} else {
-					if(<%=productList.get(0).getPRODUCT_NUM()%> == null) {
-						$('.addoption_section').hide();
-						$('#noOptionInfo').html('선택할 수 있는 상품이 없습니다.');
-						$('#optionControlValidation2').prop('checked', true); 
-					} else {
-						$('.addoption_section').show();
-					}
-					
-				}
-			}
-			
 		
 			/* 썸머노트 부분 */
 			 $(document).ready(function() {
@@ -686,18 +603,7 @@
 				$('#lastaddoption').remove();       
 			}
 				
-		<%-- 	
-			$(document).ready(function (e){
-				$('#optionControlValidation3').on('click', function(event) {
-					if(<%=productList%> == null) {
-						$('.addoption_section').hide();
-					}
-					
-					$('#noOptionInfo').html('선택할 수 있는 상품이 없습니다.');
-					
-				})				
-			});
-			 --%>
+
 		</script>
 	</body>
 </html>

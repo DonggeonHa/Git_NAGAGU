@@ -348,6 +348,7 @@
                     	</div>
                         <div class="col" style="padding: 0;">
                         	<div class="row justify-content-end">
+                        	
                         		<!-- Example split danger button -->
 		                        <div class="dropdown">
 		                            <button class="btn dropbtn btn-sm dropdown-toggle btn-search-mode" type="button" id="searchType" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
