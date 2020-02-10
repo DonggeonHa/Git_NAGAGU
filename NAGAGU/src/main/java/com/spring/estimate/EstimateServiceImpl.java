@@ -79,12 +79,13 @@ public class EstimateServiceImpl implements EstimateService {
 	}
 	
 	@Override
-	public ArrayList<EstimateOfferVO> offerList(int ESTIMATE_NUM, int startpage, int endpage) {
+	public ArrayList<EstimateOfferVO> offerList(int ESTIMATE_NUM, int startpage, int endpage, String OFFER_WORKSHOP) {
 		EstimateMapper mapper = sqlSession.getMapper(EstimateMapper.class);
 		HashMap <String, Object> map = new HashMap <String, Object>();
 		map.put("ESTIMATE_NUM", ESTIMATE_NUM);
 		map.put("startRow", startpage);
 		map.put("endRow", endpage);
+		map.put("OFFER_WORKSHOP", OFFER_WORKSHOP);
 		
 		ArrayList<EstimateOfferVO> offerList = mapper.offerList(map);
 		
@@ -92,9 +93,13 @@ public class EstimateServiceImpl implements EstimateService {
 	}
 	
     @Override
-    public int offerCount (int ESTIMATE_NUM) {
+    public int offerCount (int ESTIMATE_NUM, String OFFER_WORKSHOP) {
         EstimateMapper mapper = sqlSession.getMapper(EstimateMapper.class);
-        int cnt = mapper.offerCount(ESTIMATE_NUM);
+		HashMap <String, Object> map = new HashMap <String, Object>();
+		map.put("ESTIMATE_NUM", ESTIMATE_NUM);
+		map.put("OFFER_WORKSHOP", OFFER_WORKSHOP);
+		
+        int cnt = mapper.offerCount(map);
         
         return cnt;
     }
@@ -110,14 +115,15 @@ public class EstimateServiceImpl implements EstimateService {
 		estimatevo.setESTIMATE_NUM(ESTIMATE_NUM);
 		estimatevo.setESTIMATE_MINPRICE(ESTIMATE_MINPRICE);
 		
-		int res1 = mapper.estimateSetMin(estimatevo);
-			
+		int res1 = mapper.offerInsert(vo);
+		
 		if (res1 == 1) {
-			res = mapper.offerInsert(vo);
-			mapper.offerIncrease(ESTIMATE_NUM);
-		}
-		else {
-			res = 2;
+			HashMap <String, Object> map = new HashMap <String, Object>();
+			map.put("ESTIMATE_NUM", ESTIMATE_NUM);
+			int ESTIMATE_OFFERCOUNT = mapper.offerCount(map);
+			estimatevo.setESTIMATE_OFFERCOUNT(ESTIMATE_OFFERCOUNT);
+			
+			res = mapper.offerSetInfo(estimatevo);
 		}
 		
 		return res;

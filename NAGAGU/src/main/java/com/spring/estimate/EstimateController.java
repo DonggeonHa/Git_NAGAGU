@@ -9,8 +9,8 @@ import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
@@ -133,10 +133,11 @@ public class EstimateController {
 		
         HashMap<String, Object> map = new HashMap<String, Object>();
 		int ESTIMATE_NUM = Integer.parseInt(request.getParameter("ESTIMATE_NUM"));
+		String OFFER_WORKSHOP = request.getParameter("OFFER_WORKSHOP");
 		
 		int offer_page = 1;
 		int offer_limit = 10;
-        int offerCount = estimateService.offerCount(ESTIMATE_NUM);
+        int offerCount = estimateService.offerCount(ESTIMATE_NUM, OFFER_WORKSHOP);
 		
 		if (request.getParameter("OFFER_PAGE") != null) {
 			offer_page = Integer.parseInt(request.getParameter("OFFER_PAGE"));
@@ -151,7 +152,7 @@ public class EstimateController {
 		int offer_rnum = offerCount - (offer_page-1)*offer_limit;
 		
         try {
-            ArrayList<EstimateOfferVO> offerList = estimateService.offerList(ESTIMATE_NUM, offer_startRow, offer_endRow);
+            ArrayList<EstimateOfferVO> offerList = estimateService.offerList(ESTIMATE_NUM,offer_startRow, offer_endRow, OFFER_WORKSHOP);
             
             map.put("offer_page", offer_page);
             map.put("offer_limit", offer_limit);
@@ -168,22 +169,25 @@ public class EstimateController {
 		
 		return map;
 	}
+
 	
 	@RequestMapping(value = "/offer_insert.es", produces="application/json; charset=UTF-8")
+	@ResponseBody
 	public String offerInsert (HttpServletRequest request) {
 		EstimateOfferVO vo = new EstimateOfferVO();
 		vo.setOFFER_ESTIMATE(Integer.parseInt(request.getParameter("OFFER_ESTIMATE")));
 		vo.setOFFER_WORKSHOP(request.getParameter("OFFER_WORKSHOP"));
 		vo.setOFFER_PRICE(Integer.parseInt(request.getParameter("OFFER_PRICE")));
 		vo.setOFFER_CONTENT(request.getParameter("OFFER_CONTENT"));
+		System.out.println("제안 공방 : " + vo.getOFFER_WORKSHOP());
+		System.out.println("내용 : " + vo.getOFFER_CONTENT());
+		System.out.println("가격 : " + vo.getOFFER_PRICE());
+		System.out.println("글번호 : " + vo.getOFFER_ESTIMATE());
 		
 		int res = estimateService.offerInsert(vo);
 		
 		if (res == 1) {
 			return "Offer successfully added";
-		}
-		else if (res == 2) {
-			return "Set min price failed..";
 		}
 		else {
 			return "Offer add failed..";

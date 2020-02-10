@@ -4,6 +4,7 @@
 <%@ page import ="java.util.*" %>
 <%@ page import ="com.spring.estimate.EstimateVO" %>
 <%@ page import ="java.text.SimpleDateFormat" %>
+<%@ page import ="java.text.DecimalFormat" %>
 <%
 	System.out.println("---------------------------------------");
 	ArrayList<EstimateVO> eList = (ArrayList<EstimateVO>)request.getAttribute("eList");
@@ -239,6 +240,8 @@
 						System.out.println(eList.size());
 						for (int i=0; i<eList.size(); i++) {
 							EstimateVO el = eList.get(i);
+							DecimalFormat dfmp = new DecimalFormat("#,###");
+							String minprice = dfmp.format(el.getESTIMATE_MINPRICE());
 				%>
 						<tr onClick="location.href='./estimate_detail.es?ESTIMATE_NUM=<%=el.getESTIMATE_NUM()%>&page=<%=nowpage %>'"
 							style="cursor: pointer;">
@@ -246,7 +249,7 @@
 							<td><%=el.getESTIMATE_NICK() %></td>
 							<td class="es_title"><%=el.getESTIMATE_TITLE() %></td>
 							<td><%=el.getESTIMATE_CATEGORY() %>
-							<td class="addComma"><%=el.getESTIMATE_MINPRICE()%></td>
+							<td class="addComma"><%=minprice%></td>
 							<td><%=el.getESTIMATE_OFFERCOUNT()%></td>
 							<td><%=df.format(el.getESTIMATE_DATE()) %></td>
 							<td>

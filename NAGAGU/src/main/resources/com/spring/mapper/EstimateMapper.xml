@@ -18,6 +18,8 @@
 		<result property="ESTIMATE_CONTENT" column="ESTIMATE_CONTENT"/> 
 		<result property="ESTIMATE_PAY" column="ESTIMATE_PAY"/> 
 		<result property="ESTIMATE_STATE" column="ESTIMATE_STATE"/>
+		<result property="ESTIMATE_MINPRICE" column="ESTIMATE_MINPRICE"/>
+		<result property="ESTIMATE_OFFERCOUNT" column="ESTIMATE_OFFERCOUNT"/>
 	</resultMap>
 	
 	<resultMap type="com.spring.estimate.EstimateOfferVO" id="offerMap">
@@ -39,7 +41,7 @@
 	
 	<select id="estimateList" parameterType="java.util.HashMap" resultMap="estimateMap">
 		select * from (select ROWNUM RNUM, ESTIMATE_NUM, ESTIMATE_MEMBER, ESTIMATE_NICK, ESTIMATE_TITLE, 
-		ESTIMATE_DATE, ESTIMATE_CATEGORY, ESTIMATE_PAY, ESTIMATE_STATE from ESTIMATE)
+		ESTIMATE_DATE, ESTIMATE_CATEGORY, ESTIMATE_PAY, ESTIMATE_STATE, ESTIMATE_MINPRICE, ESTIMATE_OFFERCOUNT from ESTIMATE)
 		<![CDATA[where RNUM >= #{startRow} and RNUM <= #{endRow}]]>
 		<if test="ES_CATEGORY == 'title'"> and ESTIMATE_TITLE like '%'||#{ES_SEARCH}||'%'</if>
 		<if test="ES_CATEGORY == 'content'"> and ESTIMATE_CONTENT like '%'||#{ES_SEARCH}||'%'</if>
@@ -66,30 +68,24 @@
         select * from (select ROWNUM RNUM, OFFER_ESTIMATE, OFFER_WORKSHOP, OFFER_DATE, 
         OFFER_CONTENT, OFFER_PRICE, OFFER_STATE from ESTIMATE_OFFER)
         <![CDATA[where RNUM >= #{startRow} and RNUM <= #{endRow} and OFFER_ESTIMATE = #{ESTIMATE_NUM}]]>
+        <if test="OFFER_WORKSHOP != null"> and OFFER_WORKSHOP = #{OFFER_WORKSHOP}</if>
         order by OFFER_PRICE asc, OFFER_DATE desc
     </select>
     
-    <select id="offerCount" parameterType="int" resultType="int">
+    <select id="offerCount" parameterType="java.util.HashMap" resultType="int">
         select count(*) from ESTIMATE_OFFER where OFFER_ESTIMATE = #{ESTIMATE_NUM}
+        <if test="OFFER_WORKSHOP != null"> and OFFER_WORKSHOP = #{OFFER_WORKSHOP}</if>
     </select>
     
     <insert id="offerInsert" parameterType="com.spring.estimate.EstimateOfferVO">
         insert into ESTIMATE_OFFER values (estimate_offer_seq.nextval, #{OFFER_ESTIMATE}, #{OFFER_WORKSHOP}, sysdate, #{OFFER_CONTENT}, #{OFFER_PRICE}, 0)
     </insert>
 	
-	<update id="offerIncrease" parameterType="int">
-		update ESTIMATE set ESTIMATE_OFFERCOUNT = ESTIMATE_OFFERCOUNT+1 where ESTIMATE_NUM = #{ESTIMATE_NUM}
+	<update id="offerSetInfo" parameterType="com.spring.estimate.EstimateVO">
+		update ESTIMATE set ESTIMATE_OFFERCOUNT = #{ESTIMATE_OFFERCOUNT}, ESTIMATE_MINPRICE = #{ESTIMATE_MINPRICE} where ESTIMATE_NUM = #{ESTIMATE_NUM}
 	</update>
 	
-	<update id="offerDecrease" parameterType="int">
-		update ESTIMATE set ESTIMATE_OFFERCOUNT = ESTIMATE_OFFERCOUNT-1 where ESTIMATE_NUM = #{ESTIMATE_NUM}
-	</update>
-	
-	<update id="estimateSetMin" parameterType="com.spring.estimate.EstimateVO">
-		update ESTIMATE set ESTIMATE_MINPRICE = #{ESTIMATE_MINPRICE} where ESTIMATE_NUM = #{ESTIMATE_NUM}
-	</update>
-	
-	<select id="estimateMinPrice" parameterType="int">
+	<select id="estimateMinPrice" parameterType="int" resultType="int">
 		select min(OFFER_PRICE) from estimate_offer where OFFER_ESTIMATE = #{ESTIMATE_NUM}
 	</select>
 	

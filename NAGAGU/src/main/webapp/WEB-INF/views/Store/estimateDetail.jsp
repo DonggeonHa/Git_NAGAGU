@@ -222,7 +222,7 @@
 				<%
 					for (int i=0; i<imgArr.length; i++) {
 				%>
-					<div><img src=<%=imgArr[i] %>></div>
+					<div><img src=<%=imgArr[i] %> width="640" height="480"></div>
 				<% 
 					} 
 				%>
@@ -265,7 +265,7 @@
 					</div>
 				</div>
 	
-				<div class="row justify-content-center pt-5 pl-1 ml-1">
+				<div class="row justify-content-center pt-5">
 				<% if (login_state==2) { %>
 					<button class="btn btn-dark btn-md" alt="" data-toggle="modal" data-target="#offerFormModal" aria-haspopup="true" aria-expanded="false">
 					입찰하기</button>&nbsp;&nbsp;&nbsp;
@@ -278,6 +278,9 @@
 		<form id="offer_data">
 			<input type="hidden" name="ESTIMATE_NUM" value=<%=ESTIMATE_NUM%>>
 			<input type="hidden" id="OFFER_PAGE" name="OFFER_PAGE" value=1>
+			<% if (login_state == 2) { %>
+			<input type="hidden" name="OFFER_WORKSHOP" value=<%=workshop_name%>>
+			<% } %>
 		</form>
 		<div id="offerWrap" class ="offer_wrap row justify-content-center">
 			<div id="offerTable">
@@ -349,7 +352,7 @@
 		$(document).ready(function (){
 			
 			function getOfferList () {
-				if ('<%=member_mail%>' != '<%=mailChk%>') {
+				if (login_state != 2 && '<%=member_mail%>' != '<%=mailChk%>') {
 					var output='';
 					output += '<tr><td class="list_caution" colspan="5">제안글은 <b><font color="#f2400">작성자</font></b>만 열람 가능합니다</td></tr>';
 					
@@ -386,7 +389,7 @@
 								output += '<tr value="' + index + '" class="item_head">';
 								output += '<td>' + rnum + '</td>';
 								output += '<td><b>' + item.offer_WORKSHOP + '</b></td>';
-								output += '<td>' + offerPrice + '</td>';
+								output += '<td>' + offerPrice + ' 원</td>';
 								output += '<td><button value="' + item.offer_WORKSHOP + '" class="btn_note btn btn-outline-dark btn-sm">쪽지보내기</button></td>';
 								output += '<td><button value="' + item.offer_NUM + '" class="btn_bid btn btn-outline-dark btn-xs">낙찰하기</button></td>';
 								output += '</tr>';
@@ -488,7 +491,6 @@
 					type:'POST',
 					data:params,
 					contentType: 'application/x-www-form-urlencoded; charset=utf-8',
-					dataType : false,
 					success : function(data) {
 						alert(data);
 					},

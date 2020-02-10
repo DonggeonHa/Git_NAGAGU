@@ -441,7 +441,7 @@
     		$("#ESTIMATE_COLOR").focus();
     		return false;
     	}
-    	if ($('input:radio[name=ESTIMATE_COAT]').val() == null) {
+    	if (coat_chk == 0) {
     		alert("코팅 여부를 선택해 주십시오.");
     		$("#coat_yes").focus();
     		return false;
