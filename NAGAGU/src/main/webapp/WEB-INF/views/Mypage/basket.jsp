@@ -142,20 +142,20 @@ margin-top:15px; }
 		<!-- wrapper end -->
 	</div>
 	</div><!-- container end -->
-	<script src="https://kit.fontawesome.com/b74b42490f.js"
-			crossorigin="anonymous"></script>
-		<script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
-			integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n"
-			crossorigin="anonymous"></script>
-		<script
-			src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
-			integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
-			crossorigin="anonymous"></script>
-		<script
-			src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
-			integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
-			crossorigin="anonymous"></script>
-		<script>
+<script src="https://kit.fontawesome.com/b74b42490f.js"
+		crossorigin="anonymous"></script>
+	<script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
+		integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n"
+		crossorigin="anonymous"></script>
+	<script
+		src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
+		integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
+		crossorigin="anonymous"></script>
+	<script
+		src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
+		integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
+		crossorigin="anonymous"></script>
+	<script>
 $(document).ready(function(){
 	
 	//사진 가져오기 함수 정의
@@ -186,15 +186,22 @@ $(document).ready(function(){
 			    		output += '<div class="d-flex justify-content-between"><div>'+retVal.getbasketList[j].PRODUCT_BRIEF+'</div>'
 			    		output += '<div class="price" value="수량">수량&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'
 			    		var amount = retVal.getbasketList[j].BASKET_AMOUNT;
+			    		console.log(amount)
 			    		switch(amount){
 			    			case 1:
-			    				output += '<select class="amount forTotal"><option>1</option><option>2</option><option>3</option></select>'
+			    				output += '<select class="amount forTotal"><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option></select>'
 			    				break;
 			    			case 2:
-			    				output += '<select class="amount forTotal"><option>1</option><option selected>2</option><option>3</option></select>'
+			    				output += '<select class="amount forTotal"><option>1</option><option selected>2</option><option>3</option><option>4</option><option>5</option></select>'
 			    				break;
 			    			case 3:
-			    				output += '<select class="amount forTotal"><option>1</option><option>2</option><option selected>3</option></select>'
+			    				output += '<select class="amount forTotal"><option>1</option><option>2</option><option selected>3</option><option>4</option><option>5</option></select>'
+			    				break;
+			    			case 4:
+			    				output += '<select class="amount forTotal"><option>1</option><option>2</option><option>3</option><option selected>4</option><option>5</option></select>'
+			    				break;
+			    			case 5:
+			    				output += '<select class="amount forTotal"><option>1</option><option>2</option><option>3</option><option>4</option><option selected>5</option></select>'
 			    				break;
 			    		}
 			    		output += '<div class="basic_price" value='+retVal.getbasketList[j].PRODUCT_PRICE+'>가격 :<span>'+retVal.getbasketList[j].PRODUCT_PRICE+'</span></div></div></div></div><div class="col-12 d-flex justify-content-between"><div>'
@@ -311,11 +318,11 @@ $(document).ready(function(){
 	
 	//누르면 장바구니에서 삭제
 	$(document).on('click','.fa-times',function(){
-		var num = $(this).parent().parent().parent().parent().attr('id')
+		var num = $(this).parent().parent().parent().parent().attr('bnum')
 		$.ajax({
 			  url: "/NAGAGU/deleteBasket.my",
               type: "POST",
-              data: { 'BASKET_PRODUCT' : num},
+              data: { 'BASKET_NUM' : num},
               contentType:
   				'application/x-www-form-urlencoded; charset=utf-8',
               success: function (retVal) {
@@ -341,8 +348,9 @@ $(document).ready(function(){
 			if(chk){
 				arrChecked.push(num)
 			}
-			console.log('arr='+arrChecked);
-			var Data = { "arr": arrChecked }; 
+		});
+			var category='order'
+			var Data = { "arr": arrChecked,"category":category}; 
 			$.ajax({ 
 				type: "post", 
 				url: "/NAGAGU/updateCheck.my",
@@ -358,7 +366,6 @@ $(document).ready(function(){
 				} 
 			});
 		});
- 	});
 	//처음 로드하고 사진 가져오기 호출
 	getBasket();
 })

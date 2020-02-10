@@ -40,11 +40,10 @@ public class BasketController {
 		
 		System.out.println("insertbasket 컨트롤러");
 		basketVO.setBASKET_MEMBER(MEMBER_NUM);
-		basketVO.setBASKET_PRODUCT(request.getParameter("PRODUCT_NUM"));
+		int BASKET_PRODUCT = Integer.parseInt(request.getParameter("PRODUCT_NUM"));
+		basketVO.setBASKET_PRODUCT(BASKET_PRODUCT);
 		System.out.println("amount는"+basketVO.getBASKET_AMOUNT());
-		
 		try {
-			
 			basketService.insertCart(basketVO);
 			retVal.put("res", "OK");
 		}catch(Exception e) {
@@ -108,7 +107,8 @@ public class BasketController {
 		HashMap<String, Object> map = new HashMap<String, Object>();
 		int MEMBER_NUM = (int)session.getAttribute("MEMBER_NUM");
 		basketVO.setBASKET_MEMBER(MEMBER_NUM);
-		basketVO.setBASKET_PRODUCT(request.getParameter("BASKET_PRODUCT"));
+		int num = Integer.parseInt(request.getParameter("BASKET_NUM"));
+		basketVO.setBASKET_NUM(num);
 		Map<String, Object> retVal = new HashMap<String, Object>();
 		try {
 			System.out.println("deleteBasket컨트롤러");
@@ -128,12 +128,27 @@ public class BasketController {
 	public @ResponseBody Map<String, Object> MypageOrder(HttpSession session,HttpServletRequest request,BasketVO basketVO) {
 		System.out.println("mypage_order컨트롤로");
 		String[] arr = request.getParameterValues("arr[]");
-
+		HashMap<String, Object> map = new HashMap<String, Object>();
 		Map<String, Object> retVal = new HashMap<String, Object>();
+		String category = request.getParameter("category");
 		try {
-			for(int i=0; i<arr.length; i++) {
-				basketVO.setBASKET_NUM(Integer.parseInt(arr[i]));
-				int result = basketService.updateCheck(basketVO);
+			if(category.equals("order")) {
+				System.out.println("check1로 업데이트");
+				map.put("num", 1);
+				for(int i=0; i<arr.length; i++) {
+					map.put("BASKET_NUM", Integer.parseInt(arr[i]));
+					//basketVO.setBASKET_NUM(Integer.parseInt(arr[i]));
+					int result = basketService.updateCheck(map);
+				}
+			}
+			if(category.equals("paid")) {
+				System.out.println("check2로 업데이트");
+				map.put("num", 2);
+				for(int i=0; i<arr.length; i++) {
+					map.put("BASKET_NUM", Integer.parseInt(arr[i]));
+					//basketVO.setBASKET_NUM(Integer.parseInt(arr[i]));
+					int result = basketService.updateCheck(map);
+				}
 			}
 			retVal.put("res", "OK");
 		}catch(Exception e) {
@@ -150,44 +165,44 @@ public class BasketController {
 			
 			ArrayList<Map<String, Object>> orderList = null;
 			orderList  = basketService.getOrderList(map);
-			request.setAttribute("orderSet", orderList);
 			model.addAttribute("orderList",orderList);
 			return "Mypage/order";
 		}
 	@RequestMapping(value = "/mypage_order_success.my")
-	public String mypage_order_success(HttpServletRequest request) {
+	public String mypage_order_success() {
 		return "Mypage/success";
 	}
+	//결제내역 페이지
+	@RequestMapping(value = "/getMyPaidOrder.my")
+	public @ResponseBody Map<String, Object> getMyPaidOrder(HttpSession session,HttpServletRequest request,ProductOrderVO productOrderVO) {
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		int MEMBER_NUM = (int)session.getAttribute("MEMBER_NUM");
+		map.put("MEMBER_NUM", MEMBER_NUM);
+		Map<String, Object> retVal = new HashMap<String, Object>();
+		try {
+			System.out.println("start");
+			productOrderVO.setORDER_MEMBER(MEMBER_NUM);
+			System.out.println(productOrderVO.getORDER_MEMBER());
+			ArrayList<Map<String, Object>> myPaidOrder = null;
+			//ProductOrderVO paidVO = basketService.getPaidProductOrderVO(productOrderVO);
+			myPaidOrder  = basketService.getPaidList(map);
+			System.out.println("myPaidOrder="+myPaidOrder);
+			//retVal.put("paidVO", paidVO);
+			retVal.put("myPaidOrder", myPaidOrder);
+			retVal.put("res", "OK");
+		}catch(Exception e) {
+			retVal.put("res", "FAIL");
+			retVal.put("message", "Failure");
+		}
+		return retVal; 
+	} 
 	@RequestMapping(value = "/insertOrderProduct.my")
 	public @ResponseBody  Map<String, Object> insertOrderProduct(ProductOrderVO productOrderVO, BasketVO basketVO, HttpSession session, HttpServletRequest request) {
 		int MEMBER_NUM = (int)session.getAttribute("MEMBER_NUM");
 		Map<String, Object> retVal = new HashMap<String, Object>();
 		productOrderVO.setORDER_MEMBER(MEMBER_NUM);
-		productOrderVO.setORDER_METHOD("CARD");
-		productOrderVO.setORDER_STATE(0);		
-		//data: {'ORDER_PRODUCT' : BASKET_NUMS, 'ORDER_AMOUNT': BASKET_AMOUNTS , 'ORDER_PRICE' : ORDER_PRICE, 
-  	  	//'ORDER_PERSON' : ORDER_PERSON, 'ORDER_ADDRESS':ORDER_ADDRESS, 'ORDER_PHONE':ORDER_PHONE},
 		System.out.println("insertOrderProduct 컨트롤러");
-		System.out.println(productOrderVO.getORDER_PRODUCT());
-		System.out.println(productOrderVO.getORDER_MEMBER());
-		System.out.println(productOrderVO.getORDER_PRICE());
-		
-		System.out.println(productOrderVO.getORDER_AMOUNT());		
-		System.out.println(productOrderVO.getORDER_PERSON());
-		System.out.println(productOrderVO.getORDER_MEMO());
-		System.out.println(productOrderVO.getORDER_ADDRESS());
-		System.out.println(productOrderVO.getORDER_PHONE());
-//		productOrderVO.setORDER_PRODUCT((String)request.getAttribute("ORDER_PRODUCT"));
-//		productOrderVO.setORDER_PRICE((int)request.getAttribute("ORDER_PRICE"));
-//		productOrderVO.setORDER_AMOUNT((String)request.getAttribute("ORDER_AMOUNT"));
-//		productOrderVO.setORDER_PERSON((String)request.getAttribute("ORDER_PERSON"));
-//		productOrderVO.setORDER_MEMO((String)request.getAttribute("ORDER_MEMO"));
-//		productOrderVO.setORDER_ADDRESS((String)request.getAttribute("ORDER_ADDRESS"));
-//		productOrderVO.setORDER_PHONE((int)request.getAttribute("ORDER_PHONE"));
-		
-		
 		try {
-			
 			basketService.insertOrder(productOrderVO);
 			retVal.put("res", "OK");
 		}catch(Exception e) {

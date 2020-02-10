@@ -56,9 +56,9 @@ public class BasketServiceImpl implements BasketService{
 		return result;
 	}
 	@Override
-	public int updateCheck(BasketVO basketVO) {
+	public int updateCheck(HashMap<String, Object> map) {
 		BasketMapper basket = sqlSession.getMapper(BasketMapper.class);
-		int result =basket.updateCheck(basketVO);
+		int result =basket.updateCheck(map);
 		System.out.println("updateBasket결과"+result);
 		return result;
 	}
@@ -67,6 +67,20 @@ public class BasketServiceImpl implements BasketService{
 		BasketMapper basket = sqlSession.getMapper(BasketMapper.class);
 		int result =basket.insertOrder(productOrderVO);
 		System.out.println("insertOrder결과"+result);
+		return result;
+	}
+	@Override
+	public ArrayList<Map<String, Object>> getPaidList(HashMap<String, Object> map) {
+		BasketMapper basket = sqlSession.getMapper(BasketMapper.class);
+		ArrayList<Map<String, Object>> result =basket.getPaidList(map);
+		System.out.println("getPaidList결과"+result);
+		return result;
+	}
+	@Override
+	public ProductOrderVO getPaidProductOrderVO(ProductOrderVO productOrderVO) {
+		BasketMapper basket = sqlSession.getMapper(BasketMapper.class);
+		ProductOrderVO result =basket.getPaidProductOrderVO(productOrderVO);
+		System.out.println("getPaidProductOrderVO결과"+result);
 		return result;
 	}
 	

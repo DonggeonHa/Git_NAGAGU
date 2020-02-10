@@ -65,9 +65,10 @@ String[] array = new String[orderList.size()];
 						<tr>
 							<td align="center">
 								<img class="basket-size" src="/productupload/image/<%=list.get("PRODUCT_IMAGE")%>" style="padding: 0 3% 3% 0;">
-								<input type="hidden" name="BASKET_NUM" value="<%=list.get("BASKET_NUM")%>">
+								<input type="hidden" class="BASKET_NUM" name="BASKET_NUM" value="<%=list.get("BASKET_NUM")%>">
 								<input type="hidden" name="BASKET_AMOUNT" value="<%=list.get("BASKET_AMOUNT")%>">
 								<input type="hidden" name="PRODUCT_PRICE" value="<%=list.get("PRODUCT_PRICE")%>">
+								<input type="hidden" class="PRODUCT_NUM" name="PRODUCT_NUM" value="<%=list.get("PRODUCT_NUM")%>">
 							</td>
 							<td colspan="2">
 								<dl>
@@ -220,19 +221,7 @@ String[] array = new String[orderList.size()];
 							</div>
 							<div class="col-5">
 							</div>
-						</div>
-						<div class="form-group row">
-							<div class="col-2">
-							</div>
-							<div class="col-6">
-								<div class="custom-control custom-checkbox my-1 mr-sm-2">
-								    <input type="checkbox" class="custom-control-input" id="customControlInline">
-								    <label class="custom-control-label" for="customControlInline"><font size="3">SMS 수신동의</font> (배송 정보를 SMS로 보내드립니다)</label>
-								  </div>
-							</div>
-							<div class="col-4">
-							</div>
-						</div>
+						</div> 
 					</form>
 				</div>
 	
@@ -282,7 +271,7 @@ String[] array = new String[orderList.size()];
 					<div>
 						<ul class="nav nav-pills mb-3 table table-bordered" id="pills-tab" role="tablist">
 							<li class="nav-item">
-								<a class="nav-link active" id="pills-toss-tab" data-toggle="pill" href="#pills-toss" role="tab" aria-controls="pills-home" aria-selected="true">
+								<a class="nav-link active pay_method" value="toss" id="pills-toss-tab" data-toggle="pill" href="#pills-toss" role="tab" aria-controls="pills-home" aria-selected="true">
 									<label>
 										<img width="64" src="https://bucketplace-v2-development.s3.amazonaws.com/pg/toss.png" alt="Toss">
 										<div class="text-center"><font color="black">토스</font></div>
@@ -290,7 +279,7 @@ String[] array = new String[orderList.size()];
 								</a>
 							</li>
 							<li class="nav-item">
-								<a class="nav-link" id="pills-card-tab" data-toggle="pill" href="#pills-card" role="tab" aria-controls="pills-home" aria-selected="true">
+								<a class="nav-link pay_method" value="card" id="pills-card-tab" data-toggle="pill" href="#pills-card" role="tab" aria-controls="pills-home" aria-selected="true">
 									<label>
 										<img width="64" src="https://bucketplace-v2-development.s3.amazonaws.com/pg/card.png" alt="Toss">
 										<div class="text-center"><font color="black">카드</font></div>
@@ -298,26 +287,26 @@ String[] array = new String[orderList.size()];
 								</a>
 							</li>
 							<li class="nav-item">
-								<a class="nav-link" id="pills-naver-tab" data-toggle="pill" href="#pills-naver" role="tab" aria-controls="pills-home" aria-selected="true">
+								<a class="nav-link pay_method" value="kakao" id="pills-naver-tab" data-toggle="pill" href="#pills-naver" role="tab" aria-controls="pills-home" aria-selected="true">
 									<label>
 										<img width="64" src="https://bucketplace-v2-development.s3.amazonaws.com/pg/naver.png" alt="Toss">
-										<div class="text-center"><font color="black">네이버페이</font></div>
+										<div class="text-center"><font color="black">카카오페이</font></div>
 									</label>
 								</a>
 							</li>
 							<li class="nav-item">
-								<a class="nav-link" id="pills-vbank-tab" data-toggle="pill" href="#pills-vbank" role="tab" aria-controls="pills-home" aria-selected="true">
+								<a class="nav-link pay_method" value="payco"  id="pills-vbank-tab" data-toggle="pill" href="#pills-vbank" role="tab" aria-controls="pills-home" aria-selected="true">
 									<label>
 										<img width="64" src="https://bucketplace-v2-development.s3.amazonaws.com/pg/vbank.png" alt="Toss">
-										<div class="text-center"><font color="black">무통장입금</font></div>
+										<div class="text-center"><font color="black">페이코</font></div>
 									</label>
 								</a>
 							</li>
 							<li class="nav-item">
-								<a class="nav-link" id="pills-phone-tab" data-toggle="pill" href="#pills-phone" role="tab" aria-controls="pills-home" aria-selected="true">
+								<a class="nav-link pay_method" value="samsung" id="pills-phone-tab" data-toggle="pill" href="#pills-phone" role="tab" aria-controls="pills-home" aria-selected="true">
 									<label>
 										<img width="64" src="https://bucketplace-v2-development.s3.amazonaws.com/pg/phone.png" alt="Toss">
-										<div class="text-center"><font color="black">핸드폰</font></div>
+										<div class="text-center"><font color="black">삼성페이</font></div>
 									</label>
 								</a>
 							</li>
@@ -438,17 +427,44 @@ String[] array = new String[orderList.size()];
 			$('.toPhone').val($('.phone').val())
 		});
 		
+		var card ='';
+		$(document).on('click','.pay_method',function(){ 
+			if($(this).hasClass('active')){
+				card = $(this).attr('value')  
+			}
+		})
+		
+		
 		
 		$(document).on('click','.IMP_pay',function(){
+			//유효성 검사
+			if($('.toName').val()==''){
+				alert('이름을 채워주세요'); 
+				return
+			}if($('.toAddress1').val()=='' || $('.toAddress2').val()==''){
+				alert('주소를 채워주세요'); 
+				return
+			}if($('.toAddress1').val()=='' || $('.toAddress2').val()==''){
+				alert('주소를 채워주세요'); 
+				return
+			}if($('.toPhone').val()==''){
+				alert('번호를 채워주세요'); 
+				return
+			}if(!$('.active').find('input').is(':checked')){
+				alert('동의란에 체크주세요'); 
+				return
+			}
+			
+			
 			var BASKET_NUMS ='';
 			var BASKET_AMOUNTS='';
 			var ORDER_PRICE = totalPayPrice;
 			var ORDER_PERSON = $('.toName').val();
 			var ORDER_ADDRESS = $('.toAddress1').val();
 				ORDER_ADDRESS += $('.toAddress2').val();
-			var ORDER_PHONE= parseInt($('.toPhone').val());
+			var ORDER_PHONE= $('.toPhone').val();
 			var ORDER_MEMO= $('.memo').val();
-			
+			var PRODUCT_NUM = '';
 			
 			var nums = $('input[name=BASKET_NUM]')
 			for (var i = 0; i < nums.length; i++) {
@@ -465,106 +481,72 @@ String[] array = new String[orderList.size()];
 					BASKET_AMOUNTS += $(item).val() + ',';	
 				}
 			})
-			console.log(BASKET_NUMS)
-			console.log(BASKET_AMOUNTS)
-			console.log(ORDER_PRICE)
-			console.log(ORDER_PERSON)
-			console.log(ORDER_ADDRESS)
-			console.log(ORDER_PHONE)
-			
-			console.log(typeof BASKET_NUMS)
-			console.log(typeof BASKET_AMOUNTS)
-			console.log(typeof ORDER_PRICE)
-			console.log(typeof ORDER_PERSON)
-			console.log(typeof ORDER_ADDRESS)
-			console.log(typeof ORDER_PHONE)
-			$.ajax({
-				  url: "/NAGAGU/insertOrderProduct.my", 
-	              type: "POST",
-	              data: {'ORDER_PRODUCT' : BASKET_NUMS, 'ORDER_AMOUNT': BASKET_AMOUNTS , 'ORDER_PRICE' : ORDER_PRICE, 
-	            	  'ORDER_PERSON' : ORDER_PERSON, 'ORDER_ADDRESS':ORDER_ADDRESS, 'ORDER_PHONE':ORDER_PHONE,'ORDER_MEMO':ORDER_MEMO},
-	              contentType:
-	  				'application/x-www-form-urlencoded; charset=utf-8',
-	              success: function (retVal) {
-            		//console.log(params)
-	        		if(retVal.res=="OK"){
-	        			if(confirm('결제하시겠습니까?')){
-	        				return
-	        			}else{
-	        				alert("장바구니에 담겼습니다") 
-	        			}
-					}else{
-						alert("update fail");
-					}  
-				 },
-				 error:function(request,status,error){
-			        console.log("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+			var p_nums = $('input[name=PRODUCT_NUM]')
+			$(p_nums).each(function(index,item){
+				if(index== ($(p_nums).length-1)){
+					PRODUCT_NUM += $(item).val()
+				}else{
+					PRODUCT_NUM += $(item).val() + ',';	
 				}
 			})
-		 	
-		 	   var IMP = window.IMP; // 생략가능
-			   IMP.init('imp41335180');  // 가맹점 식별 코드
-				
-<%-- 			   var arrChecked = new Array();
-			   <%
-			   for(int i=0; i<orderList.size(); i++){
-			   	Map<String, Object>	list = orderList.get(i); 
-			    	array[i] = String.valueOf(list.get("BASKET_NUM"));
-			   %>  
-				arrChecked.push(<%=array[i]%>)
-			   <%
-			   }
-	    	   %>
-			   var Data = { "arr": arrChecked }; --%>
-			   
-			   
-			   IMP.request_pay({
-		       pg : 'html5_inicis', // 결제방식 
-		       pay_method : 'card',	// 결제 수단
-		       merchant_uid : 'merchant_' + new Date().getTime(),
-		       name : 'NAGAGU 결제',	// order 테이블에 들어갈 주문명 혹은 주문 번호
-		       amount : '100',	// 결제 금액
-		       
-		       buyer_name :  $('.toName').val(),	// 구매자 이름
-		       buyer_tel :  $('.toPhone').val(),	// 구매자 전화번호
-		       buyer_addr1 :  $('.toAddress1').val(),	// 구매자 주소
-		       buyer_addr2 :  $('.toAddress2').val(),
-		       buyer_postcode :  '',	// 구매자 우편번호
-			   }, function(rsp) {
-				if ( rsp.success ) { // 성공시
-				console.log(rsp.success)
-				console.log('status='+rsp.status)//paid
-				//[1] 서버단에서 결제정보 조회를 위해 jQuery ajax로 imp_uid 전달하기
-			    jQuery.ajax({
- 			    url: '/NAGAGU/mypage_order_success.my', //cross-domain error가 발생하지 않도록 동일한 도메인으로 전송
-			    type: 'POST',
-			    dataType: 'json',
-			    }).done(function(data){
-			    	  if(data.status=="success"){
-			    		var msg = '결제가 완료되었습니다.';
-						msg += '고유ID : ' + rsp.imp_uid;
-						msg += '상점 거래ID : ' + rsp.merchant_uid;
-						msg += '결제 금액 : ' + rsp.paid_amount;
-						msg += '카드 승인번호 : ' + rsp.apply_num;
-						console.log('MSG'+msg)
-						console.log('data.status'+data.status)
-						//성공시 이동할 페이지
-		                location.href='./mypage_order_success.my?' 
+			//결제수단 구하기
+			console.log(new Date().getTime());
+			console.log(card)
+				var IMP = window.IMP; // 생략가능
+				   IMP.init('imp41335180');  // 가맹점 식별 코드
+				   
+				   IMP.request_pay({
+			       pg : 'html5_inicis', // 결제방식 
+			       merchant_uid : 'merchant_' + new Date().getTime(),
+			       name : 'NAGAGU 결제',	// order 테이블에 들어갈 주문명 혹은 주문 번호
+			       amount : '100',	// 결제 금액
+			       
+			       buyer_name :  $('.toName').val(),	// 구매자 이름
+			       buyer_tel :  $('.toPhone').val(),	// 구매자 전화번호
+			       buyer_addr1 :  $('.toAddress1').val(),	// 구매자 주소
+			       buyer_addr2 :  $('.toAddress2').val(),
+			       buyer_postcode :  '',	// 구매자 우편번호
+				   }, function(rsp) {
+					  if ( rsp.success ){
+							for(var i=0; i<$('.BASKET_NUM').length;i++){
+								var BASKET_NUM = $('input[name=BASKET_NUM]')[i].value
+								console.log('bnum'+BASKET_NUM)
+								$.ajax({
+									  url: "/NAGAGU/insertOrderProduct.my", 
+						              type: "POST",
+						              data: {'ORDER_NUM' : BASKET_NUM,'ORDER_PERSON' : ORDER_PERSON, 'ORDER_ADDRESS':ORDER_ADDRESS, 'ORDER_PHONE':ORDER_PHONE,'ORDER_MEMO':ORDER_MEMO, 'ORDER_METHOD' : card},
+						              contentType:
+						  				'application/x-www-form-urlencoded; charset=utf-8'
+						  		});
+							}
+							var arr = new Array();
+							$('.BASKET_NUM').each(function (index,item){
+								var num = $(item).attr('value')
+								arr.push(num)
+							});
+							var category='paid'
+							var Data = { "arr": arr,"category":category}; 
+								$.ajax({ 
+									type: "post", 
+									url: "/NAGAGU/updateCheck.my",
+									dataType: "json", 
+									data: Data, 
+									success: function(){ 
+										alert('성공')
+									},
+									error:function(){
+										alert("ajax통신 실패!!");
+									} 
+								}).done(function(retVal){
+				                	console.log(retVal.merchant_uid)
+				                	location.href='./mypage_order_success.my'    
+				                });
 			    	  }else{
 			    	  //[3] 아직 제대로 결제가 되지 않았습니다.
 			          //[4] 결제된 금액이 요청한 금액과 달라 결제를 자동취소처리하였습니다.
 			          }
 			      });
-					
-				}else{ // 실패시 
-					var msg = '결제에 실패하였습니다.';
-					msg += '에러내용 : ' + rsp.error_msg;
-					console.log('msg'+msg)
-					location.href="./index.ma";
-				}
 			});
-		});
-	
 	});
 	
 	

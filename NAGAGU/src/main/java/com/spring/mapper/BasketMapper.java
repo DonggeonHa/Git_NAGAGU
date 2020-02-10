@@ -12,8 +12,10 @@ public interface BasketMapper {
 	int countBasket(int num);//장바구니 담기
 	int deleteBasket(BasketVO basketVO);
 	int updateAmount(BasketVO basketVO);
-	int updateCheck(BasketVO basketVO);
+	int updateCheck(HashMap<String, Object> map);
 	int insertOrder(ProductOrderVO productOrderVO);
 	ArrayList<Map<String, Object>> getbasketList(HashMap<String, Object> map);//장바구니 리스트
 	ArrayList<Map<String, Object>> getOrderList(HashMap<String, Object> map);//장바구니 리스트
+	ArrayList<Map<String, Object>> getPaidList(HashMap<String, Object> map);//장바구니 리스트
+	ProductOrderVO getPaidProductOrderVO(ProductOrderVO productOrderVO);//주문 내역
 }
