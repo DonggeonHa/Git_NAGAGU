@@ -387,70 +387,87 @@
 				    <button type="button" id="" class="btn btn-sm btn-outline-dark mr-2">선택 판매중</button>  
 				    <button type="button" id="" class="btn btn-sm btn-outline-dark mr-2">선택 품절</button>  
 				    <button type="button" id="" class="btn btn-sm btn-outline-dark mr-2">선택 판매종료</button>                              
+				    <button type="button" id="" class="btn btn-sm btn-outline-dark mr-2">선택 삭제</button>                              
 				    <span class="listnum_txt pt-2">전체 상품내역</span>
 				    <span class="listnum_num pt-2"></span>
 				</div>
                     
                     
                     
-					<div class="row" style="display: flex;">
-						<div class="col-5" style="padding: 0;">
-							<div class="row justify-content-start">
-								<select class="search_hidden_state d-flex justify-content-start" id="selectClassType" name="selectClassType" onchange="btn_select()" style="height: 100%;">
-								    <option value="allClass">전체</option>
-								    <option value="inClass">판매중</option>
-								    <option value="endClass">품절</option>
-								    <option value="onedayClass">판매종료</option>
-								    <option value="regularClass">최근 등록순</option>
-								    <option value="regularClass">평점순</option>
+				<div class="row" style="display: flex;">
+					<div class="col-5" style="padding: 0;">
+						<div class="row justify-content-start">
+							<div class="select1">
+								<select class="search_hidden_state justify-content-start" id="selectClassType" name="selectClassType" onchange="btn_select1()" style="height: 33px;">
+									<option value="allProducts">전체</option>
+									<option value="ingSale">판매중</option>
+									<option value="pauseSale">품절</option>
+									<option value="endSale">판매종료</option>
 								</select>
 							</div>
-						</div>
-						<div class="col" style="padding: 0;">
-							<div class="row justify-content-end">
-								<!-- Example split danger button -->
-								<div class="dropdown">
-									<button class="btn dropbtn btn-sm dropdown-toggle btn-search-mode" type="button" id="searchType" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-								        선택
-								    </button>
-								    <div class="dropdown-menu" aria-labelledby="searchType">
-								        <a class="dropdown-item" id="dropdown-item-1" onclick="product_title()">상품명</a>
-								        <a class="dropdown-item" id="dropdown-item-2" onclick="category()">카테고리</a>
-								        <a class="dropdown-item" id="dropdown-item-3" onclick="product_price()">판매가격</a>
-								    </div>
-								</div>
-								<!-- 카테고리 선택시 나타나는 드롭박스 -->
-								<span class="ml-1 mr-2" id="categoryKeyword">
-									<select id="categorySelect" style="height:98%;">
-										<option value="table">책상</option>
-										<option value="chair">의자</option>
-										<option value="bookshelf">책장</option>
-										<option value="bed">침대</option>
-										<option value="drawer">서랍장</option>
-										<option value="sidetable">협탁</option>
-										<option value="dressing_table">화장대</option>
-										<option value="others">기타</option>	
-									</select>
-								</span>									
-								<!-- search -->
-								<nav class="navbar-light bg-light">
-									<!-- input에 enter키 누르면 자동으로 submit -->
-									<form class="form-inline" onsubmit="return false">
-										<input class="form-control mr-sm-2" type="search" id="keyword" aria-label="Search" style="height:90%">
-										<button class="btn btn_search btn-sm my-2 my-sm-0" type="button" id="btn_search">검색</button>
-									</form>
-								</nav>
-								<!--  
-								<select class="search_hidden_state">
-								    <option value="0">대기</option>
-								    <option value="1">판매중</option>
-								    <option value="2">품절</option>
-								    <option value="3">판매종료</option>
+							<div class="select2" style="padding-left:5px">
+								<select class="search_hidden_state justify-content-start"  id="selectCategory" name="selectCategory" onchange="btn_select2()" style="height: 33px;">
+									<option value="all">전체</option>
+									<option value="table">책상</option>
+									<option value="chair">의자</option>
+									<option value="bookshelf">책장</option>
+									<option value="bed">침대</option>
+									<option value="drawer">서랍장</option>
+									<option value="sidetable">협탁</option>
+									<option value="dressing_table">화장대</option>
+									<option value="others">기타</option>		
 								</select>
-								-->
+							</div>	
+							<div class="select3" style="padding-left:5px">	<!-- 보기 정렬 -->
+								<select class="search_hidden_state justify-content-start" id="selectListAlign" name="selectListAlign" onchange="btn_select3()" style="height: 33px;">
+									<option value="date">최근 등록순</option>									
+									<option value='sales'>판매량순</option>
+									<option value="grade">평점순</option>
+									<option value="readcount">조회순</option>
+									<option value="like">좋아요순</option>
+									<option value="price">가격순</option>
+								</select>
 							</div>
+						
 						</div>
-                    </div>       
+					</div>
+					<div class="col" style="padding: 0;">
+						<div class="row justify-content-end">
+							<!-- Example split danger button -->
+							<div class="dropdown">
+								<button class="btn dropbtn btn-sm dropdown-toggle btn-search-mode" type="button" id="searchType" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+							        선택
+							    </button>
+							    <div class="dropdown-menu" aria-labelledby="searchType">
+							        <a class="dropdown-item" id="dropdown-item-1" onclick="product_title()">상품명</a>
+							        <a class="dropdown-item" id="dropdown-item-2" onclick="product_price()">판매가격</a>
+							    </div>
+							</div>
+							<!-- 카테고리 선택시 나타나는 드롭박스 
+							<span class="ml-1 mr-2" id="categoryKeyword">
+								<select id="categorySelect" style="height:98%;">
+									<option value="table">책상</option>
+									<option value="chair">의자</option>
+									<option value="bookshelf">책장</option>
+									<option value="bed">침대</option>
+									<option value="drawer">서랍장</option>
+									<option value="sidetable">협탁</option>
+									<option value="dressing_table">화장대</option>
+									<option value="others">기타</option>	
+								</select>
+							</span>
+							-->									
+							<!-- search -->
+							<nav class="navbar-light bg-light">
+								<!-- input에 enter키 누르면 자동으로 submit -->
+								<form class="form-inline" onsubmit="return false">
+									<input class="form-control mr-sm-2" type="search" id="keyword" aria-label="Search" style="height:90%">
+									<button class="btn btn_search btn-sm my-2 my-sm-0" type="button" id="btn_search">검색</button>
+								</form>
+							</nav>
+						</div>
+					</div>
+                   </div>       
 			</div>
             <table class="table" id="work_store">
                 <thead>
@@ -472,6 +489,7 @@
                 </tr>
                 </thead>
                 <tbody id="productList">
+                	<!--  
 		                <tr>
 		                    <td><input type="checkbox"></td>
 		                    <td>1</td>
@@ -495,7 +513,7 @@
 		                    </td>
 		                    <td><button class="btn_modify">이동</button></td>
 		                </tr>
-                
+          	      -->
                  </tbody>
             </table>
 			<div id="list_none"></div>
@@ -507,103 +525,124 @@
     </div>
 </div>
 
-<script>
-	$(document).ready(function(){
-		var all_check = false;
-			$("#all_select").click(function() {
-				if (all_check == false) {
-					$("input[type=checkbox]").prop("checked",true);
-					all_check = true;
-				}
-				else {
-					$("input[type=checkbox]").prop("checked",false);
-					all_check = false;
-				}
-			});
-	});
-
-
-
-
-	function product_title() {
-		alert("searchType : onclick=product_title() 실행")
-		$('#categoryKeyword').css('display', 'none');
-		$('#searchType').html('상품명');
-		$('#searchType').val('product_title');
-		$("#keyword").val('');
-	}
+	<script>
+		$(document).ready(function(){
+			var all_check = false;
+				$("#all_select").click(function() {
+					if (all_check == false) {
+						$("input[type=checkbox]").prop("checked",true);
+						all_check = true;
+					}
+					else {
+						$("input[type=checkbox]").prop("checked",false);
+						all_check = false;
+					}
+				});
+		});
 	
-	function category() {
-		alert("searchType : onclick=category() 실행")
-		$('#categoryKeyword').css('display', 'block');
-		$('#searchType').html('카테고리');
-		$('#searchType').val('category');
-		$("#keyword").val('');
-	}
-	function product_price() {
-		alert("searchType : onclick=member_nick() 실행")
-		$('#categoryKeyword').css('display', 'none');
-		$('#searchType').html('작성자');
-		$('#searchType').val('product_price');
-		$("#keyword").val('');
-	};	
-	$(document).on('click', '#btn_search', function(event) {
-	//	$("#selectClassType").val('all').prop("selected", true);	//display를 all로 바꿔줌
-			console.log("1"+$("#selectClassType option:selected").val())
-		searchList(event);
-		$('#list_none').empty();
-		event.preventDefault();
-	});    
 	
-	$(document).on('click', '#listall', function(event) {
-		$("#keyword").val('');
-		$('#list_none').empty();
-		$("#selectClassType").val('all').prop("selected", true);
-		ProductqnaList();
-	});    
 	
-	$("#keyword").keyup(function(event){
-		if (event.keyCode == 13) {
-			event.preventDefault();
-	//		$("#selectClassType option:selected").val('all');
-	//		$("#selectClassType").val('all').prop("selected", true);
+		function product_title() {
+			alert("searchType : onclick=product_title() 실행")
+			$('#categoryKeyword').css('display', 'none');
+			$('#searchType').html('상품명');
+			$('#searchType').val('product_title');
+			$("#keyword").val('');
+		}
+		
+		function category() {
+			alert("searchType : onclick=category() 실행")
+			$('#categoryKeyword').css('display', 'block');
+			$('#searchType').html('카테고리');
+			$('#searchType').val('category');
+			$("#keyword").val('');
+		}
+		function product_price() {
+			alert("searchType : onclick=member_nick() 실행")
+			$('#categoryKeyword').css('display', 'none');
+			$('#searchType').html('작성자');
+			$('#searchType').val('product_price');
+			$("#keyword").val('');
+		};	
+		$(document).on('click', '#btn_search', function(event) {
+		//	$("#selectClassType").val('all').prop("selected", true);	//display를 all로 바꿔줌
+				console.log("1"+$("#selectClassType option:selected").val())
 			searchList(event);
 			$('#list_none').empty();
 			event.preventDefault();
-			return;
-		}
+		});    
 		
-	});	
-	
-	function btn_select() {		
-		alert("btn_select의 selectClassType : " + $("#selectClassType option:selected").val());
-		$('#ProductqnaList').empty();
-		if ($('#keyword').val() && $('#searchType').val()){	//keyword, searchtype(categorySelect) 있을 경우 - search 후 정렬하는 경우
-			searchList(event);
-		}else {	//없을 경우	- 처음 리스트 정렬
+		$(document).on('click', '#listall', function(event) {
+			$("#keyword").val('');
+			$('#list_none').empty();
+			$("#selectClassType").val('all').prop("selected", true);
 			ProductqnaList();
-		}
-	}	
+		});    
+		
+		$("#keyword").keyup(function(event){
+			if (event.keyCode == 13) {
+				event.preventDefault();
+		//		$("#selectClassType option:selected").val('all');
+		//		$("#selectClassType").val('all').prop("selected", true);
+				searchList(event);
+				$('#list_none').empty();
+				event.preventDefault();
+				return;
+			}
+			
+		});	
+			
+		/*select1-판매상태 선택*/	
+		function btn_select1() {		
+			alert("btn_select1의 selectClassType : " + $("#selectClassType option:selected").val());
 	
-	/*날짜 형식 변경*/
-	function date_format(format) {
-		var year = format.getFullYear();
-		var month = format.getMonth() + 1;
-		if(month<10) {
-			month = '0' + month;
+			$('#ProductqnaList').empty();
+			if ($('#keyword').val() && $('#searchType').val()){	//keyword, searchtype(categorySelect) 있을 경우 - search 후 정렬하는 경우
+				searchList(event);
+			}else {	//없을 경우	- 처음 리스트 정렬
+				ProductqnaList();
+			}
+		}	
+		
+		/*select2-카테고리 선택*/	
+		function btn_select2() {		
+			alert("btn_select2의 selectCategory : " + $("#selectCategory option:selected").val());
+	
+			$('#ProductqnaList').empty();
+			if ($('#keyword').val() && $('#searchType').val()){	//keyword, searchtype(categorySelect) 있을 경우 - search 후 정렬하는 경우
+				searchList(event);
+			}else {	//없을 경우	- 처음 리스트 정렬
+				ProductqnaList();
+			}
+		}	
+		
+		/*select3-리스트 정렬*/
+		function btn_select3() {		
+			alert("btn_select3의 selectListAlign : " + $("#selectListAlign option:selected").val());
+		
+			$('#ProductqnaList').empty();
+			if ($('#keyword').val() && $('#searchType').val()){	//keyword, searchtype(categorySelect) 있을 경우 - search 후 정렬하는 경우
+				searchList(event);
+			}else {	//없을 경우	- 처음 리스트 정렬
+				ProductqnaList();
+			}
+		}	
+		
+		/*날짜 형식 변경*/
+		function date_format(format) {
+			var year = format.getFullYear();
+			var month = format.getMonth() + 1;
+			if(month<10) {
+				month = '0' + month;
+			}
+			var date = format.getDate();
+			if(date<10) {
+				date = '0' + date;
+			}
+			return year + "-" + month + "-" + date + " " ;
 		}
-		var date = format.getDate();
-		if(date<10) {
-			date = '0' + date;
-		}
-		return year + "-" + month + "-" + date + " " ;
-	}
-
-
-</script>
-
-<script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
-<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+	
+	
+	</script>
 </body>
 </html>

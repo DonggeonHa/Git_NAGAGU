@@ -339,7 +339,7 @@ if (session.getAttribute("WORKSHOP_NUM") == null) {
 				<div class="row" style="display: flex;">
 					<div class="col-5" style="padding: 0;">
 						<div class="row justify-content-start">
-							<select class="search_hidden_state justify-content-start" id="selectClassType" name="selectClassType" onchange="btn_select()" style="height: 35px;">
+							<select class="search_hidden_state justify-content-start" id="selectClassType" name="selectClassType" onchange="btn_select()" style="height: 33px;">
 								<option value="all">전체</option>
 								<option value="Standby">답변대기</option>
 								<option value="Completed">답변완료</option>
