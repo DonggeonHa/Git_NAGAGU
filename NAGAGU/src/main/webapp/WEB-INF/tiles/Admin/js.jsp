@@ -12,7 +12,8 @@
 	<!-- sidebar -->
 	<script src="${pageContext.request.contextPath}/resources/js/Admin/sidebar.js"></script>
 	
+	<!-- Chart.js -->
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.bundle.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.js"></script>
 	
-	
-	
-    
+
