@@ -24,9 +24,8 @@
 		<result property="BASKET_AMOUNT" column="BASKET_AMOUNT" />
 		<result property="BASKET_CHECK" column="BASKET_CHECK" />		
 	</resultMap>
-		<resultMap type="com.spring.order.ProductOrderVO" id="orderVO">
+	<resultMap type="com.spring.order.ProductOrderVO" id="orderVO">
 		<result property="ORDER_NUM" column="ORDER_NUM" />	
-		<result property="ORDER_PRODUCT" column="ORDER_PRODUCT" />	
 		<result property="ORDER_MEMBER" column="ORDER_MEMBER" />
 		<result property="ORDER_PRICE" column="ORDER_PRICE" />	
 		<result property="ORDER_DATE" column="ORDER_DATE" />	
@@ -46,6 +45,12 @@
     <select id="getOrderList" parameterType="java.util.HashMap" resultMap="hashmapVO">
       SELECT * FROM BASKET,PRODUCT WHERE BASKET_MEMBER=#{MEMBER_NUM} AND BASKET_CHECK=1 AND BASKET_PRODUCT=PRODUCT_NUM ORDER BY BASKET_NUM
     </select>
+    <select id="getPaidList" parameterType="java.util.HashMap" resultMap="hashmapVO">
+      SELECT * FROM BASKET, PRODUCT_ORDER,PRODUCT WHERE ORDER_NUM= BASKET_NUM AND BASKET_PRODUCT = PRODUCT_NUM AND BASKET_MEMBER=#{MEMBER_NUM}
+    </select>
+<!--      <select id="getPaidProductOrderVO" parameterType="com.spring.order.ProductOrderVO" resultMap="orderVO">
+      	SELECT * FROM PRODUCT_ORDER WHERE ORDER_MEMBER=#{ORDER_MEMBER}
+    </select> -->
     <insert id="insertCart" parameterType="java.util.HashMap">
 		insert into BASKET values
 		(SEQ_BASKET.nextval,#{BASKET_MEMBER},#{BASKET_PRODUCT},#{BASKET_COLOR},#{BASKET_SIZE},#{BASKET_OPTION},#{BASKET_AMOUNT},#{BASKET_CHECK})	
@@ -54,7 +59,7 @@
 		SELECT count(*) FROM BASKET WHERE BASKET_MEMBER=#{BASKET_MEMBER}
 	</select>
 	<delete id="deleteBasket" parameterType="com.spring.order.BasketVO">	
-		DELETE FROM BASKET WHERE BASKET_MEMBER=#{BASKET_MEMBER} AND BASKET_PRODUCT=#{BASKET_PRODUCT}
+		DELETE FROM BASKET WHERE BASKET_MEMBER=#{BASKET_MEMBER} AND BASKET_NUM=#{BASKET_NUM}
 	</delete>
 	<update id="updateAmount" parameterType="java.util.HashMap"> 
 		UPDATE BASKET 
@@ -63,11 +68,11 @@
 	</update>
 	<update id="updateCheck" parameterType="java.util.HashMap">  
 		UPDATE BASKET 
-		SET BASKET_CHECK = 1
+		SET BASKET_CHECK = #{num}
 		WHERE BASKET_NUM=#{BASKET_NUM}	
 	</update>
 	<insert id="insertOrder" parameterType="java.util.HashMap">
 		insert into PRODUCT_ORDER values
-		(SEQ_PRODUCT_ORDER.nextval,#{ORDER_PRODUCT},#{ORDER_MEMBER},#{ORDER_PRICE},SYSDATE,#{ORDER_AMOUNT},#{ORDER_PERSON},#{ORDER_MEMO},#{ORDER_METHOD},#{ORDER_STATE},#{ORDER_ADDRESS},#{ORDER_PHONE})
+		(#{ORDER_NUM},#{ORDER_MEMBER},#{ORDER_PRICE},SYSDATE,#{ORDER_AMOUNT},#{ORDER_PERSON},#{ORDER_MEMO},#{ORDER_METHOD},#{ORDER_STATE},#{ORDER_ADDRESS},#{ORDER_PHONE})
 	</insert>
 </mapper>

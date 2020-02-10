@@ -3,12 +3,19 @@ package com.spring.order;
 public class BasketVO {
 	private int BASKET_NUM ; /* 장바구니 ID */
 	private int BASKET_MEMBER ; /* 회원 번호 */
-	private String BASKET_PRODUCT ; /* 완제품 ID */
+	private int BASKET_PRODUCT; /* 완제품 ID */
 	private String BASKET_COLOR ;
 	private String BASKET_SIZE	;
 	private String BASKET_OPTION ; 
 	private int BASKET_AMOUNT ;/* 수량 */
 	private int BASKET_CHECK;
+	
+	public int getBASKET_PRODUCT() {
+		return BASKET_PRODUCT;
+	}
+	public void setBASKET_PRODUCT(int bASKET_PRODUCT) {
+		BASKET_PRODUCT = bASKET_PRODUCT;
+	}
 	public int getBASKET_CHECK() {
 		return BASKET_CHECK;
 	}
@@ -26,12 +33,6 @@ public class BasketVO {
 	}
 	public void setBASKET_MEMBER(int bASKET_MEMBER) {
 		BASKET_MEMBER = bASKET_MEMBER;
-	}
-	public String getBASKET_PRODUCT() {
-		return BASKET_PRODUCT;
-	}
-	public void setBASKET_PRODUCT(String bASKET_PRODUCT) {
-		BASKET_PRODUCT = bASKET_PRODUCT;
 	}
 	public String getBASKET_COLOR() {
 		return BASKET_COLOR;

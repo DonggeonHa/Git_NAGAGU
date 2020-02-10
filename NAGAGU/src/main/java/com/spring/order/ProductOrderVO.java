@@ -14,18 +14,18 @@ public class ProductOrderVO {
 	private String ORDER_METHOD; /* 결제방법 */
 	private int ORDER_STATE; /* 주문상태 */
 	private String ORDER_ADDRESS; /* 주문상태 */
-	private int ORDER_PHONE; /* 주문상태 */
+	private String ORDER_PHONE; /* 주문상태 */
+	public String getORDER_PHONE() {
+		return ORDER_PHONE;
+	}
+	public void setORDER_PHONE(String oRDER_PHONE) {
+		ORDER_PHONE = oRDER_PHONE;
+	}
 	public String getORDER_ADDRESS() {
 		return ORDER_ADDRESS;
 	}
 	public void setORDER_ADDRESS(String oRDER_ADDRESS) {
 		ORDER_ADDRESS = oRDER_ADDRESS;
-	}
-	public int getORDER_PHONE() {
-		return ORDER_PHONE;
-	}
-	public void setORDER_PHONE(int oRDER_PHONE) {
-		ORDER_PHONE = oRDER_PHONE;
 	}
 	public int getORDER_NUM() {
 		return ORDER_NUM;
