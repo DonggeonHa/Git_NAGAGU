@@ -14,4 +14,5 @@ public interface EstimateService {
 	public ArrayList<EstimateOfferVO> offerList(int ESTIMATE_NUM, int startpage, int endpage);
     public int offerCount (int ESTIMATE_NUM);
 	public int offerInsert (EstimateOfferVO vo);
+	public ArrayList<EstimateOrderVO> esOrderList(int ES_ORDER_BUYER);
 }

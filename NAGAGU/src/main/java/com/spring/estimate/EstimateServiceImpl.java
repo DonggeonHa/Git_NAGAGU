@@ -123,4 +123,12 @@ public class EstimateServiceImpl implements EstimateService {
 		return res;
 	}
 
+	@Override
+	public ArrayList<EstimateOrderVO> esOrderList(int ES_ORDER_BUYER) {
+		EstimateMapper mapper = sqlSession.getMapper(EstimateMapper.class);
+		ArrayList<EstimateOrderVO> esOrderList = mapper.esOrderList(ES_ORDER_BUYER);
+		
+		return esOrderList;
+	}
+
 }

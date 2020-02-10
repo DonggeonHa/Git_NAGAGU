@@ -388,16 +388,34 @@
 
     /* ---------------------------- 체크박스 스타일 ------------------------------*/
     
-    $("#coat_yes").click(function() {
+    var coat_chk = 0;
+    
+    $("#coat_yes").click(function(e) {
+		e.stopPropagation();
+    	if (coat_chk == 1){
+        	$(this).attr('class', 'coat_label');
+        	coat_chk = 0;
+        	return false;
+    	}
     	$(this).attr('class', 'coat_label coat_checked');
     	$("#coat_no").attr('class', 'coat_label coat_uncheck');
-    	$("#check_no").checked = false;
+    	coat_chk = 1;
+    	
+    	return false;
     });
     
-    $("#coat_no").click(function() {
+    $("#coat_no").click(function(e) {
+		e.stopPropagation();	
+    	if (coat_chk == 2) {
+        	$(this).attr('class', 'coat_label');
+        	coat_chk = 0;
+        	return false;
+    	}
     	$(this).attr('class', 'coat_label coat_checked');
     	$("#coat_yes").attr('class', 'coat_label coat_uncheck');
-    	$("#check_yes").checked = false;
+    	coat_chk = 2;
+
+    	return false;
     });
     
     
@@ -423,7 +441,7 @@
     		$("#ESTIMATE_COLOR").focus();
     		return false;
     	}
-    	if ($("input:checkbox[class='coat_radio']:checked").length < 1) {
+    	if ($('input:radio[name=ESTIMATE_COAT]').val() == null) {
     		alert("코팅 여부를 선택해 주십시오.");
     		$("#coat_yes").focus();
     		return false;
@@ -438,9 +456,12 @@
     		$("#ESTIMATE_PAY").focus();
     		return false;
     	}
+    	
+    	return true;
     }
     
     $('#btn_estimate').click(function(e) {
+    	console.log("체크박스 : " + $("input[name=ESTIMATE_COAT]").val());
     	
     	if(!checkList()) return false;
 	

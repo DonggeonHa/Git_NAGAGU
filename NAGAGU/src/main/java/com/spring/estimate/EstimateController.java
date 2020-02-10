@@ -1,4 +1,4 @@
-package com.spring.estimate;
+ package com.spring.estimate;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -116,7 +116,7 @@ public class EstimateController {
 		try {
 			String uploadedFile = estimateService.imageUpload(url, file);
 			
-			img_name = "/NAGAGU/images/"+uploadedFile;
+			img_name = "/estimateupload/image/"+uploadedFile;
 			
 			return img_name;
 		}
@@ -188,5 +188,16 @@ public class EstimateController {
 		else {
 			return "Offer add failed..";
 		}
+	}
+	
+
+	/* 의뢰된 견적 리스트 */
+	@RequestMapping(value = "/order_estimate_list.my")
+	public String MypageEsOrderDetail(HttpServletRequest request, Model model) {
+		int ES_ORDER_BUYER = Integer.parseInt(request.getParameter("ES_ORDER_BUYER"));
+		ArrayList<EstimateOrderVO> esOrderList = estimateService.esOrderList(ES_ORDER_BUYER);
+		model.addAttribute("esOrderList", esOrderList);
+		
+		return "Mypage/es_order_list";
 	}
 }
