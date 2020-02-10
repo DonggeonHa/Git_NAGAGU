@@ -28,7 +28,9 @@ create table PRODUCT (
     PRODUCT_RETURN_INFO         VARCHAR2(2000),
     PRODUCT_STORE_INFO          VARCHAR2(2000),
     PRODUCT_BANNER              VARCHAR2(2000),
-    PRODUCT_IMAGE               VARCHAR2(2000)
+    PRODUCT_IMAGE               VARCHAR2(2000),
+    PRODUCT_STATUS              NUMBER default 0
+    
 );
 
 /*상품시퀀스*/ 
@@ -71,7 +73,8 @@ create table PRODUCT_QNA(
         REFERENCES PRODUCT(PRODUCT_NUM)ON DELETE CASCADE, 
     QNA_DATE        DATE,
     QNA_CONTENT     VARCHAR2(1000),
-    QNA_RE			NUMBER
+    QNA_RE			NUMBER,
+    QNA_STATUS		NUMBER
 );   
 
 /*상품qna 시퀀스*/      

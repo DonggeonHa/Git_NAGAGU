@@ -57,9 +57,9 @@
                     <li><a>후기/문의 관리</a>
                         <ul class="nav child_menu">
                             <li><a href="./workshop_review_Store.no">상품후기 목록</a></li>
-                            <li><a href="./workshop_review_reqStore.no">상품문의 목록</a></li>
+                            <li><a href="./workshop_review_qnaStore.no">상품문의 목록</a></li>
                             <li><a href="./workshop_review_Academy.no">강의후기 목록</a></li>
-                            <li><a href="./workshop_review_reqAcademy.no">강의문의 목록</a></li>
+                            <li><a href="./workshop_review_qnaAcademy.no">강의문의 목록</a></li>
                         </ul>                            
                     </li>
                     <li><a>스토어관리</a>

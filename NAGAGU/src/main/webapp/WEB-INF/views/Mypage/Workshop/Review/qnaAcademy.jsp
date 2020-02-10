@@ -13,7 +13,7 @@
     <!-- 공방관리 기본 스타일 -->
     <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/css/Mypage/Workshop/workshop_my.css">
     <!-- 페이지 고유 스타일 -->
-    <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/css/Mypage/Workshop/req_store.css">
+    <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/css/Mypage/Workshop/qna_academy.css">
     <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
 
     
@@ -32,11 +32,13 @@
                 </div>
 
                 <div class="header2 row p-2">
-                    <h1 class="col-3 header2_adj">상품 문의</h1>
+                    <h1 class="col-3 header2_adj">강의 문의</h1>
                     <div class="col-9 px-0">
                     </div>
                 </div>
                 <div>
+
+
                     <div class="row pt-2 pb-2">
                         <button type="button" id="all_select" class="btn btn-sm btn-outline-dark mr-2">전체표시</button>                        
                         <span class="listnum_txt pt-2">전체 문의내역</span>
@@ -51,18 +53,21 @@
                             </button>
                             <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                                 <a class="dropdown-item" href="#">작성자</a>
-                                <a class="dropdown-item" href="#">상품명</a>
+                                <a class="dropdown-item" href="#">강의명</a>
                                 <a class="dropdown-item" href="#">카테고리</a>
                                 <a class="dropdown-item" href="#">답변여부</a>
                             </div>
                         </div>
+
+        
                         <!-- search -->
                         <nav class="navbar-light bg-light">
                           <form class="form-inline" >
                             <input class="form-control mr-sm-2" type="search" aria-label="Search" style="height:90%">
                             <button class="btn btn_search btn-sm my-2 my-sm-0" type="submit">검색</button>
                           </form>
-                        </nav>                        <select class="search_hidden_state">
+                        </nav>
+                        <select class="search_hidden_state">
                             <option>전체</option>
                             <option value="0">답변대기</option>
                             <option value="1">답변완료</option>
@@ -77,7 +82,7 @@
                     <th scope="col" class="th2">번호</th>
                     <th scope="col" class="th3">카테고리</th>
                     <th scope="col" class="th4">작성자</th>
-                    <th scope="col" class="th5">상품명</th>
+                    <th scope="col" class="th5">강의명</th>
                     <th scope="col" class="th6">작성날짜</th>
                     <th scope="col" class="th7">답변여부</th>
                     <th scope="col" class="th8">보기</th>
@@ -88,8 +93,20 @@
                     <td><input type="checkbox"></td>
                     <td>5</td>
                     <td>테이블</td>
-                    <td>박이름</td>
-                    <td>원목 테이블</td>
+                    <td>abc123</td>
+                    <td>[텐텐클래스](동작)귀여운 진저맨 디저트 캔들 만들기</td>
+                    <td>2020.01.08</td>
+                    <td>완료</td>
+                    <td>
+                        <button class="btn_modify">보기</button>
+                    </td>
+                </tr>
+                <tr>
+                    <td><input type="checkbox"></td>
+                    <td>5</td>
+                    <td>테이블</td>
+                    <td>abc123</td>
+                    <td>[텐텐클래스](동작)귀여운 진저맨 디저트 캔들 만들기</td>
                     <td>2020.01.08</td>
                     <td>대기</td>
                     <td>
@@ -100,10 +117,10 @@
                     <td><input type="checkbox"></td>
                     <td>5</td>
                     <td>테이블</td>
-                    <td>박이름</td>
-                    <td>원목 테이블</td>
+                    <td>abc123</td>
+                    <td>[텐텐클래스](동작)귀여운 진저맨 디저트 캔들 만들기</td>
                     <td>2020.01.08</td>
-                    <td>완료</td>
+                    <td>대기</td>
                     <td>
                         <button class="btn_modify">보기</button>
                     </td>
@@ -112,10 +129,10 @@
                     <td><input type="checkbox"></td>
                     <td>5</td>
                     <td>테이블</td>
-                    <td>박이름</td>
-                    <td>원목 테이블</td>
+                    <td>abc123</td>
+                    <td>[텐텐클래스](동작)귀여운 진저맨 디저트 캔들 만들기</td>
                     <td>2020.01.08</td>
-                    <td>완료</td>
+                    <td>대기</td>
                     <td>
                         <button class="btn_modify">보기</button>
                     </td>
@@ -124,10 +141,10 @@
                     <td><input type="checkbox"></td>
                     <td>5</td>
                     <td>테이블</td>
-                    <td>박이름</td>
-                    <td>원목 테이블</td>
+                    <td>abc123</td>
+                    <td>[텐텐클래스](동작)귀여운 진저맨 디저트 캔들 만들기</td>
                     <td>2020.01.08</td>
-                    <td>완료</td>
+                    <td>대기</td>
                     <td>
                         <button class="btn_modify">보기</button>
                     </td>
@@ -136,10 +153,10 @@
                     <td><input type="checkbox"></td>
                     <td>5</td>
                     <td>테이블</td>
-                    <td>박이름</td>
-                    <td>원목 테이블</td>
+                    <td>abc123</td>
+                    <td>[텐텐클래스](동작)귀여운 진저맨 디저트 캔들 만들기</td>
                     <td>2020.01.08</td>
-                    <td>완료</td>
+                    <td>대기</td>
                     <td>
                         <button class="btn_modify">보기</button>
                     </td>
@@ -148,10 +165,22 @@
                     <td><input type="checkbox"></td>
                     <td>5</td>
                     <td>테이블</td>
-                    <td>박이름</td>
-                    <td>원목 테이블</td>
+                    <td>abc123</td>
+                    <td>[텐텐클래스](동작)귀여운 진저맨 디저트 캔들 만들기</td>
                     <td>2020.01.08</td>
-                    <td>완료</td>
+                    <td>대기</td>
+                    <td>
+                        <button class="btn_modify">보기</button>
+                    </td>
+                </tr>                
+                <tr>
+                    <td><input type="checkbox"></td>
+                    <td>5</td>
+                    <td>테이블</td>
+                    <td>abc123</td>
+                    <td>[텐텐클래스](동작)귀여운 진저맨 디저트 캔들 만들기</td>
+                    <td>2020.01.08</td>
+                    <td>대기</td>
                     <td>
                         <button class="btn_modify">보기</button>
                     </td>
@@ -160,22 +189,10 @@
                     <td><input type="checkbox"></td>
                     <td>5</td>
                     <td>테이블</td>
-                    <td>박이름</td>
-                    <td>원목 테이블</td>
+                    <td>abc123</td>
+                    <td>[텐텐클래스](동작)귀여운 진저맨 디저트 캔들 만들기</td>
                     <td>2020.01.08</td>
-                    <td>완료</td>
-                    <td>
-                        <button class="btn_modify">보기</button>
-                    </td>
-                </tr>               
-                <tr>
-                    <td><input type="checkbox"></td>
-                    <td>5</td>
-                    <td>테이블</td>
-                    <td>박이름</td>
-                    <td>원목 테이블</td>
-                    <td>2020.01.08</td>
-                    <td>완료</td>
+                    <td>대기</td>
                     <td>
                         <button class="btn_modify">보기</button>
                     </td>
@@ -184,22 +201,10 @@
                     <td><input type="checkbox"></td>
                     <td>5</td>
                     <td>테이블</td>
-                    <td>박이름</td>
-                    <td>원목 테이블</td>
+                    <td>abc123</td>
+                    <td>[텐텐클래스](동작)귀여운 진저맨 디저트 캔들 만들기</td>
                     <td>2020.01.08</td>
-                    <td>완료</td>
-                    <td>
-                        <button class="btn_modify">보기</button>
-                    </td>
-                </tr>
-                <tr>
-                    <td><input type="checkbox"></td>
-                    <td>5</td>
-                    <td>테이블</td>
-                    <td>박이름</td>
-                    <td>원목 테이블</td>
-                    <td>2020.01.08</td>
-                    <td>완료</td>
+                    <td>대기</td>
                     <td>
                         <button class="btn_modify">보기</button>
                     </td>

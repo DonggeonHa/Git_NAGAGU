@@ -59,12 +59,15 @@ td {
     width:8%;
 }
 .th6 {
-    width:23%;
+    width:3%;
 }
 .th7 {
-    width:8%;
+    width:23%;
 }
 .th8 {
+    width:8%;
+}
+.th9 {
     width:4%;
 }
 
@@ -77,7 +80,7 @@ img {
 .p_title {
     text-align:left;
 }
-.btn_modify {
+.btn_move {
     width:50px;
     border-radius: 4px;
     border:1px solid orangered;

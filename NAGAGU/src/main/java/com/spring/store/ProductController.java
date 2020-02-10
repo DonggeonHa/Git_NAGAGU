@@ -237,10 +237,7 @@ System.out.println("WorkshopPicture="+WorkshopPicture);
 		qnaList = qnaService.getQnaList(qnamap);	//원글 리스트
 		qna_RE_List = qnaService.getQna_RE_List(qnamap);	//원글 리스트
 
-
-		
-		
-		
+	
 		
 		//qna 총 페이지 수
 		int qnamaxpage = (int)((double)qnaCount / qnalimit + 0.95); // 0.95를 더해서 올림 처리
@@ -898,7 +895,7 @@ System.out.println("WorkshopPicture="+WorkshopPicture);
 	@RequestMapping(value="/qna_insert.do",  produces="application/json;charset=UTF-8")
 	@ResponseBody
 	public Map<String, Object> insert_qna(HttpServletRequest request, HttpSession session) throws Exception {
-		System.out.println("qna_insert 컨트롤러 왔다");
+		System.out.println("qna_insert 컨트롤러 start!");
 
 		int MEMBER_NUM = 0;
 		int WORKSHOP_NUM = 0;
@@ -906,28 +903,29 @@ System.out.println("WorkshopPicture="+WorkshopPicture);
 		
 		
 		if(session.getAttribute("MEMBER_NUM") != null) {	//멤버로그인(원글)
-			System.out.println("원글");
+			System.out.println("원글qna insert");
 			MEMBER_NUM = (int)session.getAttribute("MEMBER_NUM");
+			qnaVO.setQNA_STATUS(0);
 	    	qnaVO.setQNA_RE(0);
 	    	qnaVO.setQNA_MEMBER(MEMBER_NUM);
 		}else {	//공방로그인(답글)
-			System.out.println("답글");
+			System.out.println("답글qna insert");
 			WORKSHOP_NUM = (int)session.getAttribute("WORKSHOP_NUM");
+			qnaVO.setQNA_STATUS(-1);
 			qnaVO.setQNA_RE(Integer.parseInt(request.getParameter("QNA_RE")));
 	    	qnaVO.setQNA_MEMBER(WORKSHOP_NUM);
-
 		}
 		
 		System.out.println("QNA_CONTENT=" + request.getParameter("QNA_CONTENT"));
 		System.out.println("QNA_PRODUCT=" + request.getParameter("QNA_PRODUCT"));
 		System.out.println("WORKSHOP_NUM=" + request.getParameter("WORKSHOP_NUM"));
+		System.out.println("MEMBER_NUM=" + request.getParameter("MEMBER_NUM"));
 
 //		qnaVO.setQNA_NUM(qNA_NUM);	//시퀀스 이용
 	    qnaVO.setQNA_CONTENT(request.getParameter("QNA_CONTENT"));
 	    qnaVO.setQNA_DATE(new Timestamp(System.currentTimeMillis()));
 	    qnaVO.setQNA_PRODUCT(Integer.parseInt(request.getParameter("QNA_PRODUCT")));
 	
-		
 
 		
 		Map<String, Object> retVal = new HashMap<String, Object>();
@@ -963,24 +961,21 @@ System.out.println("WorkshopPicture="+WorkshopPicture);
 	public Map<String, Object> delete_qna(HttpServletRequest request) throws Exception {
 		System.out.println("delete_qna 컨트롤러 왔다");
 		int QNA_NUM = Integer.parseInt(request.getParameter("QNA_NUM"));
+		Product_qnaVO qnaVO = new Product_qnaVO();
+		qnaVO.setQNA_NUM(QNA_NUM);	
+		System.out.println(qnaVO.getQNA_NUM());
 		Map<String, Object> retVal = new HashMap<String, Object>(); //리턴값 저장
 		try {
-			
-			System.out.println("QNA_NUM = " + QNA_NUM);
-			
-			
 			int res = 0;
-			
 			System.out.println(res);
 			
-			//답글을 가지고 있는 댓글을 삭제하면, 해당 답글까지 다 삭제돼야 한다.
 			//답글을 가지고 있는 댓글은 삭제할 수 없다.
-			//본인의 qna_num을 qna_re로 하는 데이터가 있을 경우, 삭제 불가
-			int count = qnaService.findChildrenRE(QNA_NUM);
-			//있으면 답글이 있는 것
+			//삭제하고자 하는 댓글의 qna_num을 qna_re로 하는 데이터가 있을 경우, 삭제 불가
+			int count = qnaService.findChildrenRE(qnaVO);
+			//답변 존재(삭제 불가능)
 			if(count == 0) {
-				//없으면 삭제 가능
-				res = qnaService.deleteQna(QNA_NUM);
+				//답변 달려있지 않음(삭제 가능)
+				res = qnaService.deleteQna(qnaVO);
 			} else {
 				
 			}

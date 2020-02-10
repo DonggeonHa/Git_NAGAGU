@@ -60,9 +60,14 @@ public class ProductQnaServiceImpl implements ProductQnaService{
 	@Override
 	public int insertQna(Product_qnaVO qnaVO) {
 		ProductQnaMapper qnaMapper = sqlSession.getMapper(ProductQnaMapper.class);
-		int res = 0;
+		int res, plusQnares = 0;
 		res = qnaMapper.insertQna(qnaVO);
-		
+		System.out.println(qnaVO.getQNA_STATUS());
+		//답글일 경우 원글의 상태 변경해줘야함
+		if(qnaVO.getQNA_STATUS()==-1) {
+			System.out.println("insert하는 답글의 qna_re : "+qnaVO.getQNA_RE()+" => 원글의 QNA_NUM과 같다.");
+			plusQnares = qnaMapper.PlusQnaStatus(qnaVO);
+		}	
 		return res;
 	}
 
@@ -83,18 +88,33 @@ public class ProductQnaServiceImpl implements ProductQnaService{
 	}
 
 	@Override
-	public int findChildrenRE(int QNA_NUM) {
+	public int findChildrenRE(Product_qnaVO qnaVO) {
 		ProductQnaMapper qnaMapper = sqlSession.getMapper(ProductQnaMapper.class);
 		int count;
-		count = qnaMapper.findChildrenRE(QNA_NUM);
+		count = qnaMapper.findChildrenRE(qnaVO);
 		return count;
 	}
 	
 	@Override
-	public int deleteQna(int QNA_NUM) {
+	public int deleteQna(Product_qnaVO qnaVO) {
 		ProductQnaMapper qnaMapper = sqlSession.getMapper(ProductQnaMapper.class);
-		int res;
-		res = qnaMapper.deleteQna(QNA_NUM);
+		int res, minusQnares = 0;
+		Product_qnaVO vo = qnaMapper.getQnaVO(qnaVO);
+		
+		res = qnaMapper.deleteQna(qnaVO);
+		
+		//답글 삭제할 경우, 다른 답변이 더 달려있는지 확인 후 없을 때 원글의 STATUS 변경해줘야함
+		if(vo.getQNA_STATUS()==-1) {
+			int qnaReCount;
+			qnaReCount = qnaMapper.getqnaReCount(vo);
+			System.out.println("qnaReCount="+qnaReCount);
+			if(qnaReCount == 0) {
+				//다른 답글 존재하지 않으므로 상태 변경 필요하다
+				minusQnares = qnaMapper.MinusQnaStatus(vo);
+			}
+			
+		
+		}			
 		return res;
 	}
 

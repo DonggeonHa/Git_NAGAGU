@@ -136,16 +136,16 @@ public class MypageController {
 		return "Mypage/Workshop/Academy/memberShip";
 	}
 	
-	@RequestMapping(value = "/workshop_review_reqAcademy.no")
+	@RequestMapping(value = "/workshop_review_qnaAcademy")
 	public String WorkshopReviewreqAcademy() {
 		
-		return "Mypage/Workshop/Review/reqAcademy";
+		return "Mypage/Workshop/Review/qnaAcademy";
 	}
 	
-	@RequestMapping(value = "/workshop_review_reqStore.no")
+	@RequestMapping(value = "/workshop_review_qnaStore.no")
 	public String WorkshopReviewreqStore() {
 		
-		return "Mypage/Workshop/Review/reqStore";
+		return "Mypage/Workshop/Review/qnaStore";
 	}
 	
 	@RequestMapping(value = "/workshop_review_Academy.no")

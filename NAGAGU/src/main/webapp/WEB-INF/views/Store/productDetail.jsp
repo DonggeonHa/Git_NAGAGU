@@ -982,7 +982,40 @@
 							<!-- 답글 폼 끝 -->
 						</div> <!-- 11끝 -->	
 					</div>		
-				</div>			
+				</div>
+
+			    <!-- qna 수정폼 -->
+			   <div class="qna_mod_section justify-content-center " id="qna_mod_section<%=qnaVO.getQNA_NUM() %>" style="width: 100%; margin: 0 auto;">
+			      <div class="row">
+			         <div class="col-1 justify-content-end">
+			            <img src="<%=memberVO.getMEMBER_PICTURE() %>" alt="" class="rounded-circle">
+			         </div>
+			         <div class="col-11">
+			            <div class="row">
+			               <div class="col-10 justify-content-end name"><%=memberVO.getMEMBER_NICK() %></div>
+			               <div class="col-2 justify-content-center smallfont"><%=sdf.format(qnaVO.getQNA_DATE())%></div>
+			            </div>
+			            <form class="qnamodifyform" id="qnamodifyform<%=qnaVO.getQNA_NUM() %>">
+			             <div class="row ">
+			             		<input type="hidden" name="QNA_NUM" value="<%=qnaVO.getQNA_NUM() %>">
+			               <textarea rows="2" name="QNA_CONTENT" class="col rep_content ml-3 pl-0 mr-5"  
+			              	id="qna_mod_content<%=qnaVO.getQNA_NUM() %>"><%=qnaVO.getQNA_CONTENT()%></textarea>
+			             </div>                        
+			            </form>
+			            <div class="row "  style="cursor: pointer;">
+			            	<div class="col qna_control_hidden pr-5">
+			  		          	<input type="hidden" name="QNA_NUM" value="<%=qnaVO.getQNA_NUM() %>">
+			             	<a class="smallfont qna_modify_process" id="qna_modify_process<%=qnaVO.getQNA_NUM()%>" style="cursor: pointer;">수정하기</a>&nbsp;
+			             	<a class="smallfont qna_modify_reset" id="qna_modify_reset<%=qnaVO.getQNA_NUM()%>" style="cursor: pointer;">취소</a>
+			                
+			             </div>
+			            </div>
+			         </div>
+			      </div>
+			   </div>      
+			
+			   <!-- qna 수정폼 끝 -->
+							
 				<%
 							} else {
 				%>			
@@ -1051,8 +1084,15 @@
 										<div class="row" style="cursor: pointer;">
 											<div class="col qna_re_control pr-5" id="qna_re_control<%=qna_re_VO.getQNA_NUM() %>">
 												<input type="hidden" name="QNA_NUM" value="<%=qna_re_VO.getQNA_NUM() %>">
+												<%
+													if((WORKSHOP_NUM == WorkshopNum ) && (WORKSHOP_NUM != 0)) {
+												%>
 												<a class="smallfont qna_re_modify" id="qna_re_modify<%=qna_re_VO.getQNA_NUM()%>" style="cursor: pointer;">수정</a>&nbsp;
 												<a class="smallfont qna_re_delete" id="qna_re_delete<%=qna_re_VO.getQNA_NUM()%>" style="cursor: pointer;">삭제</a>
+												<%
+													}
+												%>
+											
 											</div>
 											<div class="col qna_re_control_hidden pr-5" id="qna_re_control_hidden<%=qna_re_VO.getQNA_NUM() %>">
 												<input type="hidden" name="QNA_NUM" value="<%=qna_re_VO.getQNA_NUM() %>">
@@ -1078,37 +1118,7 @@
 				   </div>
 				</div>
 			   
-			    <!-- qna 수정폼 -->
-			   <div class="qna_mod_section justify-content-center " id="qna_mod_section<%=qnaVO.getQNA_NUM() %>" style="width: 100%; margin: 0 auto;">
-			      <div class="row">
-			         <div class="col-1 justify-content-end">
-			            <img src="<%=memberVO.getMEMBER_PICTURE() %>" alt="" class="rounded-circle">
-			         </div>
-			         <div class="col-11">
-			            <div class="row">
-			               <div class="col-10 justify-content-end name"><%=memberVO.getMEMBER_NICK() %></div>
-			               <div class="col-2 justify-content-center smallfont"><%=sdf.format(qnaVO.getQNA_DATE())%></div>
-			            </div>
-			            <form class="qnamodifyform" id="qnamodifyform<%=qnaVO.getQNA_NUM() %>">
-			             <div class="row ">
-			             		<input type="hidden" name="QNA_NUM" value="<%=qnaVO.getQNA_NUM() %>">
-			               <textarea rows="2" name="QNA_CONTENT" class="col rep_content ml-3 pl-0 mr-5"  
-			              	id="qna_mod_content<%=qnaVO.getQNA_NUM() %>"><%=qnaVO.getQNA_CONTENT()%></textarea>
-			             </div>                        
-			            </form>
-			            <div class="row "  style="cursor: pointer;">
-			            	<div class="col qna_control_hidden pr-5">
-			  		          	<input type="hidden" name="QNA_NUM" value="<%=qnaVO.getQNA_NUM() %>">
-			             	<a class="smallfont qna_modify_process" id="qna_modify_process<%=qnaVO.getQNA_NUM()%>" style="cursor: pointer;">수정하기</a>&nbsp;
-			             	<a class="smallfont qna_modify_reset" id="qna_modify_reset<%=qnaVO.getQNA_NUM()%>" style="cursor: pointer;">취소</a>
-			                
-			             </div>
-			            </div>
-			         </div>
-			      </div>
-			   </div>      
-			
-			   <!-- qna 수정폼 끝 -->
+
 			   
 			   
 			   
@@ -1460,8 +1470,8 @@
             for (i = 0; i < grade.length; i++) 
             {
                alert(grade.length);
-               ch = grade.substring(i, i + 1);
-               if (!(ch >= "0" && ch <= "5")) // 0부터 5사이 숫자가 아닐시.
+               var ch = grade.substring(i, i + 1);
+               if (!(ch >= 0 && ch <= 5)) // 0부터 5사이 숫자가 아닐시.
                {
                   alert("평점은 0부터 5까지 숫자를 입력해주세요!");
                   reviewform.REVIEW_GRADE.focus();
@@ -2405,7 +2415,8 @@
                    return
                 }           
                $(".qna_add_section").css('display','block');
-               $(this).html('닫기');   
+               $(this).html('닫기');  
+               $('#QNA_CONTENT').focus();
             } else { //버튼이 닫기이면 hidden 구역이 닫히고 버튼은 댓글 달기로 바뀜
                $(this).html('문의하기');
                $(".qna_add_section").css('display','none');
@@ -2417,9 +2428,7 @@
 	//-------------------------------------------qna1-qna달기 insert(qna) 
          $(document).on("click","#qna_insert",function(event){
             if(qna_check()) {
-            	alert('qna_check 성공');
             	var params = $('#qnaform').serialize();
-            	alert(params);
                $.ajax({
                   url : "/NAGAGU/qna_insert.do", 
                   data : params,
@@ -2427,12 +2436,8 @@
                   contentType: 'application/x-www-form-urlencoded; charset=utf-8',
                   type : 'POST',
                   success:function(retVal) {
-                     alert('성공!');
-                    
-                     
                      
                      var qnaoutput = '';
-                     alert(retVal.vo.qna_MEMBER);
                      console.log(retVal.vo.qna_DATE);
                      
                      
@@ -2571,7 +2576,7 @@
                          document.getElementById('qna_scroll').scrollIntoView();                         
                       }
                       else {
-                         alert("삭제 ajax 실패!");
+                    	  alert("답변이 달려있는 글은 삭제할 수 없습니다.");
                       }
                    },
                    error:function(request, error) {
@@ -2652,7 +2657,7 @@
   						re_form += '<div class="col qna_re_control_hidden pr-5" id="qna_re_control_hidden'+retVal.vo.qna_RE+'">';
   						re_form += '<input type="hidden" name="QNA_NUM" value="'+retVal.vo.qna_RE+'">';
   						re_form += '<a class="smallfont qna_re_modify_process" id="qna_re_modify_process'+retVal.vo.qna_RE+'" style="cursor: pointer;">수정</a>&nbsp;';
-  						re_form += '<a class="smallfont qna_re_modify_reset" id="qna_re_modify_reset'+retVal.vo.qna_RE+'" style="cursor: pointer;">삭제</a></div>';
+  						re_form += '<a class="smallfont qna_re_modify_reset" id="qna_re_modify_reset'+retVal.vo.qna_RE+'" style="cursor: pointer;">취소</a></div>';
   						
   						re_form += '</div></div></div>';
   								
@@ -2661,6 +2666,7 @@
   		            alert('qna_re_space'+retVal.vo.qna_RE);
   		              $('#qna_re_space'+retVal.vo.qna_RE).append(re_form);
   		            $('#qna_re_form'+QNA_NUM).css('display', 'none');
+  		          $('#qna_re_content'+QNA_NUM).val('')
   						
   		           },
   		              error:function() {
@@ -2750,15 +2756,8 @@
 				if(delete_confirm) {
 					var QNA_RE_NUM = $(this).prev().prev().val();
 					alert(QNA_RE_NUM);   
-		/* 			
-					if($(this).parent( 'div' ).attr('id')= 'qna_re_space'+QNA_RE_NUM) {
-    	  alert('aaaaaa');
-      }
-					 */
-/* 					$( 'p' ).parent( 'div' ).css( 'color', 'green' );
-					var b = $(this).parent().val();
-					alert(b); 
- */				   $.ajax({
+
+					$.ajax({
 				      url: '/NAGAGU/delete_qna.do' ,
 				      type:'GET',
 				      data : {'QNA_NUM':QNA_RE_NUM},
@@ -2767,13 +2766,8 @@
 				      success:function(retVal) {
 				         if(retVal.res == "OK") {
 				            alert('댓글이 삭제되었습니다.');
-				            	/* alert()
-				            	if() {	//부모가
-				            		qna_re_space
-				            	} else {
-				            		
-				            	} */
-				            $('#qna_re_table'+QNA_RE_NUM).css('display','none');	//원래 qns댓글 영역 숨겨짐(리스트 띄울 땐 사라짐)
+
+				            $('#qna_re_table'+QNA_RE_NUM).css('display','none');	//원래 qna댓글 영역 숨겨짐(리스트 띄울 땐 사라짐)
 				            document.getElementById('qna_scroll').scrollIntoView();                         
 				         }
 				         else {
