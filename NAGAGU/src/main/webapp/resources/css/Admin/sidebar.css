@@ -84,10 +84,12 @@ tr.pageing:hover {
 	background-color: transparent !important;
 }
 
-.page-link {
-	color: rgba(239, 144, 14);
+.page-item.active .page-link {
+	background-color: rgba(239, 144, 14) !important;
+	color: #ffffff !important;
+	border-color: none !important;
 }
 
-.page-item.disabled .page-link {
+.page-link {
 	color: #1B1B27 !important;
 }

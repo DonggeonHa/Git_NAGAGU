@@ -1,8 +1,8 @@
 package com.spring.admin;
 
-import java.util.ArrayList;
 import java.util.List;
 
+import com.spring.community.PicsVO;
 import com.spring.member.MemberVO;
 import com.spring.workshop.WorkShopMemberVO;
 
@@ -11,13 +11,15 @@ public interface AdminService {
 	public int user_chk(AdminMemberVO adminVO);
 	
 	/* 일반회원관리 */
-	public int memberListCount();
 	public List<MemberVO> getMembers();
 	public int deleteMember(MemberVO vo);
 	
 	/* 공방회원관리 */
-	public int WmemberListCount();
-	public ArrayList<WorkShopMemberVO> getWMembers(int startrow, int endrow);
-	public void deleteWMember(WorkShopMemberVO vo);
-	public void updateStatus(WorkShopMemberVO vo);
+	public List<WorkShopMemberVO> getWMembers();
+	public int deleteWMember(WorkShopMemberVO vo);
+	public int updateWMember(WorkShopMemberVO vo);
+	
+	/* 커뮤니티관리 */
+	public List<PicsVO> getPICS();
+	public int deletePICS(PicsVO vo);
 }

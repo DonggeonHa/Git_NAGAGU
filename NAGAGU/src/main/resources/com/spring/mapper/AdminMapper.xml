@@ -48,6 +48,27 @@
 		<result property="WORKSHOP_PICTURE" column="WORKSHOP_PICTURE" />
 	</resultMap>
 	
+	<!-- 커뮤니티관리 -->
+	<resultMap type="com.spring.community.PicsVO" id="picsResultMap">
+		<result property="PICS_NUM" column="PICS_NUM" />	
+		<result property="PICS_MEMBER" column="PICS_MEMBER" />	
+		<result property="PICS_NICK" column="PICS_NICK" />
+		<result property="PICS_DATE" column="PICS_DATE" />	
+		<result property="PICS_CATEGORY" column="PICS_CATEGORY" />		
+		<result property="PICS_LIKE" column="PICS_LIKE" />	
+		<result property="PICS_WORKSHOP" column="PICS_WORKSHOP" />			
+		<result property="PICS_TAG" column="PICS_TAG" />	
+		<result property="PICS_READ" column="PICS_READ" />
+		<result property="PICS_REVIEW" column="PICS_REVIEW" />		
+		<result property="PICS_CONTENT_1" column="PICS_CONTENT_1" />	
+		<result property="PICS_CONTENT_2" column="PICS_CONTENT_2" />
+		<result property="PICS_CONTENT_3" column="PICS_CONTENT_3" />	
+		<result property="PICS_FILE_1" column="PICS_FILE_1" />
+		<result property="PICS_FILE_2" column="PICS_FILE_2" />
+		<result property="PICS_FILE_3" column="PICS_FILE_3" />
+		<result property="PICS_REF" column="PICS_REF" />		
+	</resultMap>
+	
 	<!-- 어드민 -->
 	<insert id="insert_admin" parameterType="com.spring.admin.AdminMemberVO">
 		<selectKey resultType="int" keyProperty="ADMIN_NUM" order="BEFORE">
@@ -91,14 +112,26 @@
 			  from(select * 
 			  	   from NAGAGU_WORKSHOP_MEMBER 
 			  	   order by WORKSHOP_STATUS ASC))
-		<![CDATA[ WHERE rnum >= #{startrow} AND rnum <= #{endrow} ]]>
  	</select>
  	
  	<delete id="deleteWMember" parameterType="com.spring.workshop.WorkShopMemberVO">
  		DELETE FROM NAGAGU_WORKSHOP_MEMBER WHERE WORKSHOP_NUM = #{WORKSHOP_NUM}
  	</delete>
  	
- 	<update id="updateStatus" parameterType="com.spring.workshop.WorkShopMemberVO"> <!-- MemberVO 타입에 있는게 아니라면 해쉬맵으로 써야 한다. -->
+ 	<update id="updateWMember" parameterType="com.spring.workshop.WorkShopMemberVO"> <!-- MemberVO 타입에 있는게 아니라면 해쉬맵으로 써야 한다. -->
  		UPDATE NAGAGU_WORKSHOP_MEMBER SET WORKSHOP_STATUS = 2 WHERE WORKSHOP_NUM = #{WORKSHOP_NUM}
  	</update>
+ 	
+ 	<!-- 커뮤니티관리 -->
+ 	<select id="getPICS" parameterType="int" resultMap="picsResultMap"> <!-- 이거 처리한 결과물을 list 타입으로 만들어주면 된다. select id은 내용을 호출 함. -->
+		select *
+		from (select rownum rnum, PICS_NUM, PICS_NICK, PICS_CATEGORY, PICS_LIKE, PICS_WORKSHOP, PICS_READ
+			  from(select * 
+			  	   from PICS 
+			  	   order by PICS_DATE ASC))
+ 	</select>
+ 	
+ 	<delete id="deletePICS" parameterType="com.spring.community.PicsVO">
+ 		delete from PICS where PICS_NUM = #{PICS_NUM}
+ 	</delete>
 </mapper>

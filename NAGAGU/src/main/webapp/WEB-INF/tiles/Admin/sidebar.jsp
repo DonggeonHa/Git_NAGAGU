@@ -19,29 +19,34 @@
 			<li class="main text-white">
 				커뮤니티관리
 				<ul>
-					<li>게시글관리</li>
+					<li><a href="./picsList.ad">게시글 관리</a></li>
 				</ul>
 			</li>
 			<li class="main text-white">
 				아카데미관리
 				<ul>
-					<li>강의게시글관리</li>
+					<li><a href="#">진행중인강의</a></li>
+					<li><a href="#">종료된강의</a></li>
 				</ul>
 			</li>
 			<li class="main text-white">
 				상품관리
 				<ul>
-					<li>상품게시글관리</li>
+					<li><a href="#">판매중인 상품</a></li>
 				</ul>
 			</li>
 			<li class="main text-white">
 				견적관리
 				<ul>
-					<li>견적게시글관리</li>
+					<li><a href="#">견적관리</a></li>
 				</ul>
 			</li>
 			<li class="main text-white">
 				댓글관리
+				<ul>
+					<li><a href="#">리뷰관리</a></li>
+					<li><a href="#">문의관리</a></li>
+				</ul>
 			</li>
 		</ul>
 	</nav>

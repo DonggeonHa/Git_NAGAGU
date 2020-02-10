@@ -5,28 +5,28 @@
 	<div class="container-fluid">
 		<div class="d-flex bd-highlight mb-3">
 			<div class="mr-auto p-2 bd-highlight align-self-end">
-				<h6>회원관리 > 일반회원관리 </h6>
+				<h6>커뮤니티관리 > 게시글관리 </h6>
 			</div>
 			<br><br>
 			<div class="input-group p-2 bd-highlight" style="width: 300px !important;">
 				<div class="input-group-prepend">
 					<span class="input-group-text" id="inputGroup-sizing-default"><i class="fas fa-search"></i></span>
 				</div>
-				<input type="text" class="form-control" aria-describedby="inputGroup-sizing-default" placeholder="이름을 입력하세요" id="keyword">
+				<input type="text" class="form-control" aria-describedby="inputGroup-sizing-default" placeholder="글쓴이를 입력하세요" id="keyword">
 			</div>
 		</div>
 		
 		<div style="height: 550px; overflow-y: auto;">
-			<table class="table table-hover tableCSS" id="user-table"></table>
+			<table class="table table-hover tableCSS" id="community-table"></table>
 		</div>
 		<div class="d-flex justify-content-center">
-			<nav aria-label="Page navigation example" class="paginated" id="user-page"></nav>
+			<nav aria-label="Page navigation example" class="paginated" id="community-page"></nav>
 		</div>
 	</div>
 </div>
 <!-- /본문 -->
 
-<!-- MemberList -->
+<!-- CommunityList -->
 <script>
    $(document).ready(function() {
 	selectData();
@@ -37,9 +37,9 @@
 function selectData() {
 	$('#remo').remove();
 	// table 내부 내용 모두 제거(초기화)
-	$('#user-table').empty();
+	$('#community-table').empty();
 	$.ajax({
-		url: './Member.ad',
+		url: './Pics.ad',
 		type: 'POST',
 		dataType : "json", //서버에서 보내줄 데이터 타입
 		contentType : 'application/x-www-form-urlencoded; charset=UTF-8',
@@ -48,56 +48,31 @@ function selectData() {
 			title += '<thead class="text-center">';
 			title += '<tr>';
 			title += '<th scope="col">번호</th>';
-			title += '<th scope="col">이메일</th>';
-			title += '<th scope="col">이름</th>';
-			title += '<th scope="col">닉네임</th>';
-			title += '<th scope="col">핸드폰</th>';
-			title += '<th scope="col">주소</th>';
-			title += '<th scope="col">상세주소</th>';
-			title += '<th scope="col">상태</th>';
+			title += '<th scope="col">카테고리</th>';
+			title += '<th scope="col">글쓴이</th>';
+			title += '<th scope="col">제작공방</th>';
+			title += '<th scope="col">좋아요</th>';
+			title += '<th scope="col">조회수</th>';
 			title += '<th scope="col">관리</th>';
 			title += '</tr>';
 			title += '</thead>';
-			$('#user-table').append(title);
+			$('#community-table').append(title);
 			$.each(data, function(index, item) {
 				var output = '';
 				output += '<tbody class="text-center">'
 				output += '<tr>';
-				output += '<td>' + item.member_NUM + '</td>'; // undefined ㅗ
-				output += '<td>' + item.member_EMAIL + '</td>';
-				output += '<td>' + item.member_NAME + '</td>';
-				output += '<td>' + item.member_NICK + '</td>';
-				
-				if (item.member_PHONE == null) {
-					output += '<td>미입력</td>';
-				} else {
-					output += '<td>' + item.member_PHONE + '</td>';	
-				}
-				
-				if (item.address_ADDRESS1 == null) {
-					output += '<td>미입력</td>';
-				} else {
-					output += '<td>' + item.address_ADDRESS1 + '</td>';	
-				}
-				
-				if (item.address_ADDRESS2 == null) {
-					output += '<td>미입력</td>';
-				} else {
-					output += '<td>' + item.address_ADDRESS2 + '</td>';	
-				}
-				
-				if (item.member_STATUS == 0) {
-					output += '<td>이메일 인증대기</td>';
-				} else {
-					output += '<td>이메일 인증완료</td>';
-				}
-				
-				output += '<td><a href="./deleteMember.ad" class="del_data" ';
-				output += 'MEMBER_NUM=' + item.member_NUM +  '><i class="fas fa-trash-alt" ></i></a></td>';
+				output += '<td>' + item.pics_NUM + '</td>'; // undefined ㅗ
+				output += '<td>' + item.pics_CATEGORY + '</td>';
+				output += '<td>' + item.pics_NICK + '</td>';
+				output += '<td>' + item.pics_WORKSHOP + '</td>';
+				output += '<td>' + item.pics_LIKE + '</td>';
+				output += '<td>' + item.pics_READ + '</td>';
+				output += '<td><a href="./deletePICS.ad" class="del_data" ';
+				output += 'PICS_NUM=' + item.pics_NUM +  '><i class="fas fa-trash-alt" ></i></a></td>';
 				output += '</tr>';
 				output += '</tbody>'
 				console.dir("output : " + output);
-				$('#user-table').append(output);
+				$('#community-table').append(output);
 			});
 			page();
 		},
@@ -112,7 +87,7 @@ $(document).on('click', '.del_data', function(event) {
 	jQuery.ajax({
 		url : $(this).attr("href"), //$(this) : //항목을 눌렀을때 그 걸 가르킴 .attr("href") 속성된 이름값중에 "href"을 통해서? 읽어온다??
 		type : 'GET',
-		data : {'MEMBER_NUM' : $(this).attr("member_NUM")},
+		data : {'PICS_NUM' : $(this).attr("pics_NUM")},
 		contentType : 'application/x-www-form-urlencoded; charset=UTF-8',
 		dataType : 'json',
 		success : function (retVal) {
@@ -142,8 +117,8 @@ function page() {
 		var pagesu = 10;  //페이지 번호 갯수
   		var currentPage = 0;
   		var numPerPage = 10;  //목록의 수
-  		var $table = $('#user-table');    
-  		var $user = $('#user-page');
+  		var $table = $('#community-table');    
+  		var $user = $('#community-page');
   
 		//length로 원래 리스트의 전체길이구함
 		var numRows = $table.find('tbody tr').length;
@@ -236,8 +211,8 @@ function page() {
 $(document).ready(function() {
 	$("#keyword").keyup(function() {
 		var k = $(this).val();
-		$("#user-table > tbody > tr").hide();
-		var temp = $("#user-table > tbody > tr > td:nth-child(10n+3):contains('" + k + "')");
+		$("#community-table > tbody > tr").hide();
+		var temp = $("#community-table > tbody > tr > td:nth-child(10n+3):contains('" + k + "')");
 		
 		$(temp).parent().show();					
 	})

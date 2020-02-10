@@ -8,6 +8,7 @@
 <html> 
 	<head> 
 		<tiles:insertAttribute name="css" ignore="true" />
+		<tiles:insertAttribute name="js" ignore="true" />
 	</head> 
 	<body> 
 		<div id="page-wrapper">
@@ -15,9 +16,6 @@
 			
 			<tiles:insertAttribute name="Aindex" ignore="true" />
 		</div>
-		
-		
-		<tiles:insertAttribute name="js" ignore="true" />
 	</body>
 </html>
 
