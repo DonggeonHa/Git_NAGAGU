@@ -46,5 +46,15 @@ public class AcademyManagementServiceImpl implements AcademyManagementService {
 		return member_list;
 	}
 
+	@Override
+	public List<WsMemberVO> getMemberSearch(String keyword, String searchType, int WORKSHOP_NUM) {
+		List<WsMemberVO> searchMember = null;
+		
+		AcademyManagementMapper managementMapper = sqlSession.getMapper(AcademyManagementMapper.class);
+		searchMember = managementMapper.getMemberSearch(keyword, searchType, WORKSHOP_NUM);
+		
+		return searchMember;
+	}
+
 	
 }
