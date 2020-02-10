@@ -1,8 +1,7 @@
 @font-face { font-family: 'KOMACON'; src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_seven@1.2/KOMACON.woff') format('woff'); font-weight: normal; font-style: normal; }
-            
+
 body {
-    font-family: '만화진흥원체', 'KOMACON', KOMACON;
-    overflow-y:auto !important;
+    font-family: '만화진흥원체', 'KOMACON', KOMACON !important;
 }
 
 .work_side {
@@ -10,9 +9,11 @@ body {
     top:0;
     left:0;
     background: #1b1b27;
-    width:215px;
+    width:250px;
     height:100%;
     z-index:2;
+    overflow-y: auto;
+    border-right: 4px solid #ef900e;
 }
 
 .sidebar_head {

@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE tiles-definitions PUBLIC "-//Apache Software Foundation//DTD Tiles Configuration 3.0//EN" "http://tiles.apache.org/dtds/tiles-config_3_0.dtd">
+ 
+<tiles-definitions>
+ 
+	<!-- 메뉴 미표시 --> 
+	<definition name="Empty" template="/WEB-INF/tiles/templateEmpty.jsp">
+	 	<put-attribute name="content" value="" />
+	</definition> 
+	
+	<definition name="Mypage/Note/*" extends="Empty">
+		<put-attribute name="content" value="/WEB-INF/views/Mypage/Note/{1}.jsp" /> 
+	</definition> 
+	
+	<definition name="Mypage/Note/*/*" extends="Empty"> 
+		<put-attribute name="content" value="/WEB-INF/views/Mypage/Note/{1}/{2}.jsp" /> 
+	</definition> 
+	
+	<definition name="Mypage/Note/*/*/*" extends="Empty"> 
+		<put-attribute name="content" value="/WEB-INF/views/Mypage/Note/{1}/{2}/{3}.jsp" /> 
+	</definition>
+	
+	<definition name="Mypage/Workshop/*" extends="Empty"> 
+		<put-attribute name="content" value="/WEB-INF/views/Mypage/Workshop/{1}.jsp" /> 
+	</definition> 
+	
+	<definition name="Mypage/Workshop/*/*" extends="Empty"> 
+		<put-attribute name="content" value="/WEB-INF/views/Mypage/Workshop/{1}/{2}.jsp" /> 
+	</definition> 
+	
+	<definition name="Mypage/Workshop/*/*/*" extends="Empty">
+		<put-attribute name="content" value="/WEB-INF/views/Mypage/Workshop/{1}/{2}/{3}.jsp" />
+	</definition>
+	
+	<definition name="Admin/login" extends="Empty"> 
+		<put-attribute name="content" value="/WEB-INF/views/Admin/login.jsp" /> 
+	</definition>
+
+	<!-- Main 쪽 --> 
+	<definition name="Main" template="/WEB-INF/tiles/layouts.jsp"> 
+		<put-attribute name="header" value="/WEB-INF/tiles/header.jsp" /> 
+		<put-attribute name="body" value="" /> 
+		<put-attribute name="footer" value="/WEB-INF/tiles/footer.jsp" /> 
+	</definition> 
+	
+	<definition name="*" extends="Main"> 
+		<put-attribute name="body" value="/WEB-INF/views/{1}.jsp" /> 
+	</definition>
+	
+	<definition name="Academy/*" extends="Main"> 
+		<put-attribute name="body" value="/WEB-INF/views/Academy/{1}.jsp" /> 
+	</definition>
+	
+	<definition name="Community/*" extends="Main"> 
+		<put-attribute name="body" value="/WEB-INF/views/Community/{1}.jsp" /> 
+	</definition>
+	
+	<definition name="Mypage/*" extends="Main"> 
+		<put-attribute name="body" value="/WEB-INF/views/Mypage/{1}.jsp" /> 
+	</definition>
+	
+	<definition name="Store/*" extends="Main"> 
+		<put-attribute name="body" value="/WEB-INF/views/Store/{1}.jsp" /> 
+	</definition>
+	
+	<!-- Admin 쪽 -->
+	<definition name="Admin" template="/WEB-INF/tiles/Admin/layouts.jsp"> 
+		<put-attribute name="Asidebar" value="/WEB-INF/tiles/Admin/sidebar.jsp" />
+		<put-attribute name="css" value="/WEB-INF/tiles/Admin/css.jsp" />
+		<put-attribute name="js" value="/WEB-INF/tiles/Admin/js.jsp" />
+		<put-attribute name="Aindex" value="" /> 
+	</definition> 
+	
+	<definition name="Admin/*" extends="Admin"> 
+		<put-attribute name="Aindex" value="/WEB-INF/views/Admin/{1}.jsp" /> 
+	</definition> 
+	
+	<definition name="Admin/*/*" extends="Admin"> 
+		<put-attribute name="Aindex" value="/WEB-INF/views/Admin/{1}/{2}.jsp" /> 
+	</definition> 
+	
+</tiles-definitions>

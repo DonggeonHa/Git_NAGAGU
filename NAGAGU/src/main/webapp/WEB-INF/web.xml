@@ -33,7 +33,6 @@
 		<url-pattern>*.ac</url-pattern>
 		<url-pattern>*.ma</url-pattern>
 		<url-pattern>*.my</url-pattern>
-		<url-pattern>*.no</url-pattern>
 		<url-pattern>*.su</url-pattern>
 		<url-pattern>*.do</url-pattern> <!-- Store AJAX -->
 		<url-pattern>*.ch</url-pattern> <!-- Chat -->

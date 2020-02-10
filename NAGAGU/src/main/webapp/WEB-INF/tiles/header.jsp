@@ -400,7 +400,7 @@
 										} else { 
 									%>
 											<li>
-												<a href="./workshop.no">MYPAGE</a>
+												<a href="./workshop.ws">MYPAGE</a>
 											</li>
 									<%
 										} 

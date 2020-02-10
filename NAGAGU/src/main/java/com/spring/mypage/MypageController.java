@@ -106,31 +106,31 @@ public class MypageController {
 		return "Mypage/search";
 	}
 	
-	@RequestMapping(value = "/workshop.no")
+	@RequestMapping(value = "/workshop.ws")
 	public String Workshopadmin() {
 		
 		return "Mypage/Workshop/main";
 	}
 	
-	@RequestMapping(value = "/workshop_modify.no")
+	@RequestMapping(value = "/workshop_modify.ws")
 	public String WorkshopModify() {
 		
 		return "Mypage/Workshop/modify";
 	}
 	
-	@RequestMapping(value = "/workshop_academy_Registration.no")
+	@RequestMapping(value = "/workshop_academy_Registration.ws")
 	public String WorkshopAcademyRegistration() {
 		
 		return "Mypage/Workshop/Academy/courseRegistration";
 	}
 	
-	@RequestMapping(value = "/workshop_academy_Management.no")
+	@RequestMapping(value = "/workshop_academy_Management.ws")
 	public String WorkshopAcademyManagement() {
 		
 		return "Mypage/Workshop/Academy/lectureManagement";
 	}
 	
-	@RequestMapping(value = "/workshop_academy_Membership.no")
+	@RequestMapping(value = "/workshop_academy_Membership.ws")
 	public String WorkshopAcademyMembership() {
 		
 		return "Mypage/Workshop/Academy/memberShip";
@@ -142,43 +142,43 @@ public class MypageController {
 		return "Mypage/Workshop/Review/qnaAcademy";
 	}
 	
-	@RequestMapping(value = "/workshop_review_qnaStore.no")
+	@RequestMapping(value = "/workshop_review_qnaStore.ws")
 	public String WorkshopReviewreqStore() {
 		
 		return "Mypage/Workshop/Review/qnaStore";
 	}
 	
-	@RequestMapping(value = "/workshop_review_Academy.no")
+	@RequestMapping(value = "/workshop_review_Academy.ws")
 	public String WorkshopReviewAcademy() {
 		
 		return "Mypage/Workshop/Review/reviewAcademy";
 	}
 	
-	@RequestMapping(value = "/workshop_review_Store.no")
+	@RequestMapping(value = "/workshop_review_Store.ws")
 	public String WorkshopReviewStore() {
 		
 		return "Mypage/Workshop/Review/reviewStore";
 	}
 	//견적 제안 관리
-	@RequestMapping(value = "/workshop_estimate_offers.no")
+	@RequestMapping(value = "/workshop_estimate_offers.ws")
 	public String WorkshopStoreestOffers() {
 		
 		return "Mypage/Workshop/Store/estOffers";
 	}
 	//견적 주문 관리
-	@RequestMapping(value = "/workshop_estimate_product.no")
+	@RequestMapping(value = "/workshop_estimate_product.ws")
 	public String WorkshopStoreestProduct() {
 		
 		return "Mypage/Workshop/Store/estProduct";
 	}
 	//판매된 상품 관리
-	@RequestMapping(value = "/workshop_product_selled.no")
+	@RequestMapping(value = "/workshop_product_selled.ws")
 	public String WorkshopStoreselled() {
 		
 		return "Mypage/Workshop/Store/selled";
 	}
 	//등록된 상품 관리
-	@RequestMapping(value = "/workshop_product_items.no")
+	@RequestMapping(value = "/workshop_product_items.ws")
 	public String WorkshopStoreproduct() {
 		
 		return "Mypage/Workshop/Store/product";

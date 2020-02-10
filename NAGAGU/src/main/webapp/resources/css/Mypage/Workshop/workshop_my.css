@@ -20,7 +20,7 @@ a {
 }
 
 a:hover {
-    text-decoration:none;
+    text-decoration:none !important;
 }
 
 .work_title {
@@ -74,7 +74,7 @@ td {
 
 .work_main {
     width:100%;
-    margin-left:215px;
+    margin-left:250px;
 }
 
 .work_body {

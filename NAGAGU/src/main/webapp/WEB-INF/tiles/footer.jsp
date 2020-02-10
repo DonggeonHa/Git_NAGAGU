@@ -22,11 +22,6 @@
 		<link rel="stylesheet" href="https://netdna.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.css" />
 		
 		<style>
-		#footer2 {
-			border-top: 4px solid #ef900e;
-			height: 200px;
-		}
-		
 		@font-face {
 			font-family: 'KOMACON';
 			src:
@@ -73,5 +68,5 @@
 		    </div>
 		</div>
 		
-	</body-footer>
+	</body>
 </html>
