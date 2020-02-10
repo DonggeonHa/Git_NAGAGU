@@ -3,6 +3,7 @@
 <%
 	if(session.getAttribute("ADMIN_NUM") == null) {
 		out.println("<script>");
+		out.println("alert('당신은 어드민이 아닙니다.')");
 		out.println("location.href='./index.ma'");
 		out.println("</script>");
 	}

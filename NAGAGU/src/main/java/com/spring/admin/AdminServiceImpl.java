@@ -7,6 +7,7 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.spring.community.PicsVO;
 import com.spring.mapper.AdminMapper;
 import com.spring.member.MemberVO;
 import com.spring.workshop.WorkShopMemberVO;
@@ -68,20 +69,6 @@ public class AdminServiceImpl implements AdminService {
 
 	/* ================================= 일반회원관리 ======================================*/
 	@Override
-	public int memberListCount() {
-		int x = 0;
-		int result = 0;
-		
-		AdminMapper adminMapper = sqlSession.getMapper(AdminMapper.class);
-		result = adminMapper.memberListCount();
-		
-		if (result != 0)
-			x = result;
-		
-		return x;
-	}
-
-	@Override
 	public List<MemberVO> getMembers() {
 		List<MemberVO> memberList = null;
 		AdminMapper adminMapper = sqlSession.getMapper(AdminMapper.class);
@@ -101,40 +88,45 @@ public class AdminServiceImpl implements AdminService {
 	
 	/* ================================= 공방회원관리 ======================================*/
 	@Override
-	public ArrayList<WorkShopMemberVO> getWMembers(int startrow, int endrow) {
-		ArrayList<WorkShopMemberVO> wmemberList = new ArrayList<WorkShopMemberVO>();
+	public List<WorkShopMemberVO> getWMembers() {
+		List<WorkShopMemberVO> wmemberList = new ArrayList<WorkShopMemberVO>();
 		AdminMapper adminMapper = sqlSession.getMapper(AdminMapper.class);
-		
-		wmemberList = adminMapper.getWMembers(startrow, endrow);
+		wmemberList = adminMapper.getWMembers();
 		
 		return wmemberList;
 	}
 
 	@Override
-	public void deleteWMember(WorkShopMemberVO vo) {
+	public int deleteWMember(WorkShopMemberVO vo) {
 		AdminMapper adminMapper = sqlSession.getMapper(AdminMapper.class);
-		adminMapper.deleteWMember(vo);
+		int res = adminMapper.deleteWMember(vo);
+		
+		return res;
 	}
 
 	@Override
-	public void updateStatus(WorkShopMemberVO vo) {
+	public int updateWMember(WorkShopMemberVO vo) {
 		AdminMapper adminMapper = sqlSession.getMapper(AdminMapper.class);
-		adminMapper.updateStatus(vo);
+		int res = adminMapper.updateWMember(vo);
+		
+		return res;
+	}
+
+	/* ================================= 커뮤니티관리 ======================================*/
+	@Override
+	public List<PicsVO> getPICS() {
+		List<PicsVO> picsList = new ArrayList<PicsVO>();
+		AdminMapper adminMapper = sqlSession.getMapper(AdminMapper.class);
+		picsList = adminMapper.getPICS();
+		
+		return picsList;
 	}
 
 	@Override
-	public int WmemberListCount() {
-		int x = 0;
-		int result = 0;
-		
+	public int deletePICS(PicsVO vo) {
 		AdminMapper adminMapper = sqlSession.getMapper(AdminMapper.class);
-		result = adminMapper.WmemberListCount();
+		int res = adminMapper.deletePICS(vo);
 		
-		if (result != 0)
-			x = result;
-		
-		return x;
+		return res;
 	}
-
-	
 }

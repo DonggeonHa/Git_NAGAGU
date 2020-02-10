@@ -3,26 +3,26 @@
 <!-- 본문 -->
 <div id="page-content-wrapper">
 	<div class="container-fluid">
-		<h1 class="text-center">공방회원관리</h1>
+		<h1 class="text-center">커뮤니티관리</h1>
 		<br><br>
 		<div class="input-group justify-content-end mb-3" style="width: 300px !important;">
 			<div class="input-group-prepend">
 				<span class="input-group-text" id="inputGroup-sizing-default"><i class="fas fa-search"></i></span>
 			</div>
-			<input type="text" class="form-control" aria-describedby="inputGroup-sizing-default" placeholder="공방명을 입력하세요" id="keyword">
+			<input type="text" class="form-control" aria-describedby="inputGroup-sizing-default" placeholder="글쓴이를 입력하세요" id="keyword">
 		</div>
 		
 		<div style="height: 600px; overflow-y: auto;">
-			<table class="table table-hover tableCSS" id="user-wtable"></table>
+			<table class="table table-hover tableCSS" id="community-table"></table>
 		</div>
 		<div class="d-flex justify-content-center">
-			<nav aria-label="Page navigation example" class="paginated" id="user-wpage"></nav>
+			<nav aria-label="Page navigation example" class="paginated" id="community-page"></nav>
 		</div>
 	</div>
 </div>
 <!-- /본문 -->
 
-<!-- WMemberList -->
+<!-- CommunityList -->
 <script>
    $(document).ready(function() {
 	alert("문서준비");
@@ -34,62 +34,42 @@
 function selectData() {
 	$('#remo').remove();
 	// table 내부 내용 모두 제거(초기화)
-	$('#user-wtable').empty();
+	$('#community-table').empty();
 	$.ajax({
-		url: './WMember.ad',
+		url: './Pics.ad',
 		type: 'POST',
 		dataType : "json", //서버에서 보내줄 데이터 타입
 		contentType : 'application/x-www-form-urlencoded; charset=UTF-8',
 		success:function(data) {
-			var startnum = 1;
 			var title = '';
 			title += '<thead class="text-center">';
 			title += '<tr>';
-			title += '<th>번호</th>';
-			title += '<th>이메일</th>';
-			title += '<th>공방명</th>';
-			title += '<th>대표자</th>';
-			title += '<th>핸드폰</th>';
-			title += '<th>사업자번호</th>';
-			title += '<th>주소</th>';
-			title += '<th>상세주소</th>';
-			title += '<th>상태</th>';
-			title += '<th colspan="2">관리</th>';
+			title += '<th scope="col">번호</th>';
+			title += '<th scope="col">카테고리</th>';
+			title += '<th scope="col">글쓴이</th>';
+			title += '<th scope="col">제작공방</th>';
+			title += '<th scope="col">좋아요</th>';
+			title += '<th scope="col">조회수</th>';
+			title += '<th scope="col">관리</th>';
 			title += '</tr>';
 			title += '</thead>';
-			$('#user-wtable').append(title);
+			$('#community-table').append(title);
 			$.each(data, function(index, item) {
-				
 				var output = '';
 				output += '<tbody class="text-center">'
 				output += '<tr>';
-				output += '<td>' + startnum + '</td>'; // undefined ㅗ
-				output += '<td>' + item.workshop_EMAIL + '</td>';
-				output += '<td>' + item.workshop_NAME + '</td>';
-				output += '<td>' + item.workshop_CEO_NAME + '</td>';
-				output += '<td>' + item.workshop_PHONE + '</td>';
-				output += '<td>' + item.workshop_LICENSE + '</td>';
-				output += '<td>' + item.workshop_ADDRESS1 + '</td>';
-				output += '<td>' + item.workshop_ADDRESS2 + '</td>';
-				
-				if (item.workshop_STATUS == 0) {
-					output += '<td>공방회원 신청대기</td>';
-					output += '<td><a href="./updateWMember.ad" class="update_data" ';
-					output += 'WORKSHOP_NUM=' + item.workshop_NUM +  '><i class="fas fa-arrow-up" ></i></a></td>';
-					output += '<td><a href="./deleteWMember.ad" class="del_data" ';
-					output += 'WORKSHOP_NUM=' + item.workshop_NUM +  '><i class="fas fa-trash-alt" ></i></a></td>';
-				} else {
-					output += '<td>공방회원 신청완료</td>';
-					output += '<td colspan="2"><a href="./deleteWMember.ad" class="del_data" ';
-					output += 'WORKSHOP_NUM=' + item.workshop_NUM +  '><i class="fas fa-trash-alt" ></i></a></td>';
-				}
-				
+				output += '<td>' + item.pics_NUM + '</td>'; // undefined ㅗ
+				output += '<td>' + item.pics_CATEGORY + '</td>';
+				output += '<td>' + item.pics_NICK + '</td>';
+				output += '<td>' + item.pics_WORKSHOP + '</td>';
+				output += '<td>' + item.pics_LIKE + '</td>';
+				output += '<td>' + item.pics_READ + '</td>';
+				output += '<td><a href="./deletePICS.ad" class="del_data" ';
+				output += 'PICS_NUM=' + item.pics_NUM +  '><i class="fas fa-trash-alt" ></i></a></td>';
 				output += '</tr>';
 				output += '</tbody>'
 				console.dir("output : " + output);
-				startnum += 1;
-				$('#user-wtable').append(output);
-				
+				$('#community-table').append(output);
 			});
 			page();
 		},
@@ -104,7 +84,7 @@ $(document).on('click', '.del_data', function(event) {
 	jQuery.ajax({
 		url : $(this).attr("href"), //$(this) : //항목을 눌렀을때 그 걸 가르킴 .attr("href") 속성된 이름값중에 "href"을 통해서? 읽어온다??
 		type : 'GET',
-		data : {'WORKSHOP_NUM' : $(this).attr("workshop_NUM")},
+		data : {'PICS_NUM' : $(this).attr("pics_NUM")},
 		contentType : 'application/x-www-form-urlencoded; charset=UTF-8',
 		dataType : 'json',
 		success : function (retVal) {
@@ -126,33 +106,6 @@ $(document).on('click', '.del_data', function(event) {
 	event.preventDefault();
 });
 
-$(document).on('click', '.update_data', function(event) {
-	$('#remo').remove();
-	jQuery.ajax({
-		url : $(this).attr("href"), //$(this) : //항목을 눌렀을때 그 걸 가르킴 .attr("href") 속성된 이름값중에 "href"을 통해서? 읽어온다??
-		type : 'GET',
-		data : {'WORKSHOP_NUM' : $(this).attr("workshop_NUM")},
-		contentType : 'application/x-www-form-urlencoded; charset=UTF-8',
-		dataType : 'json',
-		success : function (retVal) {
-			alert("수정 성공");
-			if (retVal.res == "OK") {
-				// 데이터 성공할 때 이벤트 작성
-				selectData();
-			} else {
-				alert("update Fail !!");
-			}
-			page();
-		},
-		error : function() {
-			alert("ajax 삭제 통신 실패!");
-		}
-	});
-	
-	// 기본 이벤트 제거
-	event.preventDefault();
-});
-
 // 만들어진 테이블에 페이지 처리
 function page() { 	
 	$('#remo').empty();
@@ -161,8 +114,8 @@ function page() {
 		var pagesu = 10;  //페이지 번호 갯수
   		var currentPage = 0;
   		var numPerPage = 10;  //목록의 수
-  		var $table = $('#user-wtable');    
-  		var $user = $('#user-wpage');
+  		var $table = $('#community-table');    
+  		var $user = $('#community-page');
   
 		//length로 원래 리스트의 전체길이구함
 		var numRows = $table.find('tbody tr').length;
@@ -255,10 +208,11 @@ function page() {
 $(document).ready(function() {
 	$("#keyword").keyup(function() {
 		var k = $(this).val();
-		$("#user-wtable > tbody > tr").hide();
-		var temp = $("#user-wtable > tbody > tr > td:nth-child(10n+3):contains('" + k + "')");
+		$("#community-table > tbody > tr").hide();
+		var temp = $("#community-table > tbody > tr > td:nth-child(10n+3):contains('" + k + "')");
 		
 		$(temp).parent().show();					
 	})
 })
 </script>
+

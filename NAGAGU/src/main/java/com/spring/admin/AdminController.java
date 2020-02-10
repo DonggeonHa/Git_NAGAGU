@@ -4,7 +4,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,8 +13,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.spring.community.PicsVO;
 import com.spring.member.MemberVO;
 import com.spring.workshop.WorkShopMemberVO;
 
@@ -86,7 +85,7 @@ public class AdminController {
 	
 	@RequestMapping(value = "/deleteMember.ad", produces="application/json; charset=UTF-8", method = {RequestMethod.GET, RequestMethod.POST})
 	@ResponseBody
-	public Map<String, Object> deleteWMember(MemberVO vo) {
+	public Map<String, Object> deleteMember(MemberVO vo) {
 		Map<String, Object> retVal = new HashMap<String, Object>();
 		
 		try {
@@ -104,120 +103,105 @@ public class AdminController {
 	
 	/*=========================== 공방회원관리 ==============================*/
 	@RequestMapping(value = "/WMemberList.ad")
-	public ModelAndView WMemberList(HttpServletRequest request) {
-		ModelAndView mav = new ModelAndView();
-		int page = 1; // 초기값 1
-		int limit = 10; // 한 페이지당 출력할 글의 수
-		
-		if(request.getParameter("page") != null) {
-			page = Integer.parseInt(request.getParameter("page"));
-		}
-		
-		int startrow = (page -1) * 10 + 1; // 읽기 시작할 row 번호
-		int endrow = startrow + limit - 1; // 읽을 마지막 row 번호.
-		
-		int listcount = adminService.WmemberListCount();
-		List<WorkShopMemberVO> wmemberList = adminService.getWMembers(startrow, endrow);
-		
-		// 총 페이지의 수
-		int maxpage = (int)((double)listcount / limit + 0.95);
-		int startpage = (((int)((double)page / 10 + 0.9)) -1) * 10 + 1;
-		int endpage = startpage + 10 - 1;
-		
-		if(endpage > maxpage)
-			endpage = maxpage;
-		
-		
-		mav.addObject("page", page);
-		mav.addObject("maxpage", maxpage);
-		mav.addObject("startpage", startpage);
-		mav.addObject("startrow", startrow);
-		mav.addObject("endpage", endpage);
-		mav.addObject("listcount", listcount);
-		mav.addObject("wmemberList", wmemberList);
-		mav.setViewName("Admin/WMemberList");
-		
-		return mav;
+	public String WMemberList() {
+		return "Admin/WMemberList";
 	}
 	
-	@RequestMapping(value = "/updateWMember.ad")
-	public ModelAndView updateWMember(WorkShopMemberVO WMember, HttpServletRequest request) {
-		adminService.updateStatus(WMember);
-		System.out.println("update Complete");
+	//produces 속성을 이용해 Response의 Content-Type을 제어할 수 있다
+	@RequestMapping(value = "/WMember.ad", produces="application/json;charset=UTF-8")
+	@ResponseBody
+	public String WMemberList2() {
+		List<WorkShopMemberVO> wmemberList = adminService.getWMembers();
 		
-		ModelAndView mav = new ModelAndView();
-		int page = 1;
-		int limit = 10;
+		String str = "";
 		
-		if(request.getParameter("page") != null) {
-			page = Integer.parseInt(request.getParameter("page"));
+		ObjectMapper mapper = new ObjectMapper();
+		try {
+			str = mapper.writeValueAsString(wmemberList);
+			System.out.println("wmemberList 변환 : " + str);
+		} catch (Exception e) {
+			System.out.println("first() mapper : " + e.getMessage());
 		}
 		
-		int startrow = (page -1) * 10 + 1; // 읽기 시작할 row 번호
-		int endrow = startrow + limit - 1; // 읽을 마지막 row 번호.
-		
-		int listcount = adminService.WmemberListCount();
-		List<WorkShopMemberVO> wmemberList = adminService.getWMembers(startrow, endrow);
-		
-		int maxpage = (int)((double)listcount / limit + 0.95);
-		int startpage = (((int)((double)page / 10 + 0.9)) -1) * 10 + 1;
-		int endpage = startpage + 10 - 1;
-		
-		if(endpage > maxpage)
-			endpage = maxpage;
-		
-		
-		mav.addObject("page", page);
-		mav.addObject("maxpage", maxpage);
-		mav.addObject("startpage", startpage);
-		mav.addObject("startrow", startrow);
-		mav.addObject("endpage", endpage);
-		mav.addObject("listcount", listcount);
-		mav.addObject("wmemberList", wmemberList);
-		mav.setViewName("Admin/WMemberList");
-		
-		return mav;
+		return str;
 	}
 	
-	@RequestMapping(value = "/deleteWMember.ad")
-	public ModelAndView deleteWMember(WorkShopMemberVO WMember, HttpServletRequest request) {
-		WorkShopMemberVO vo = new WorkShopMemberVO();
-		vo.setWORKSHOP_NUM(WMember.getWORKSHOP_NUM());
+	@RequestMapping(value = "/updateWMember.ad", produces="application/json; charset=UTF-8", method = {RequestMethod.GET, RequestMethod.POST})
+	@ResponseBody
+	public Map<String, Object> updateWMember(WorkShopMemberVO vo) {
+		Map<String, Object> retVal = new HashMap<String, Object>();
 		
-		adminService.deleteWMember(vo);
-		System.out.println("delete Complete");
-		
-		ModelAndView mav = new ModelAndView();
-		int page = 1;
-		int limit = 10;
-		
-		if(request.getParameter("page") != null) {
-			page = Integer.parseInt(request.getParameter("page"));
+		try {
+			System.out.println("WORKSHOP_NUM = " + vo.getWORKSHOP_NUM());
+			int res = adminService.updateWMember(vo);
+			
+			retVal.put("res", "OK");
+		} catch(Exception e) {
+			retVal.put("res", "FAIL");
+			retVal.put("message", "삭제가 되지 않았습니다.");
 		}
 		
-		int startrow = (page -1) * 10 + 1; // 읽기 시작할 row 번호
-		int endrow = startrow + limit - 1; // 읽을 마지막 row 번호.
+		return retVal;
+	}
+	
+	@RequestMapping(value = "/deleteWMember.ad", produces="application/json; charset=UTF-8", method = {RequestMethod.GET, RequestMethod.POST})
+	@ResponseBody
+	public Map<String, Object> deleteWMember(WorkShopMemberVO vo) {
+		Map<String, Object> retVal = new HashMap<String, Object>();
 		
-		int listcount = adminService.WmemberListCount();
-		List<WorkShopMemberVO> wmemberList = adminService.getWMembers(startrow, endrow);
+		try {
+			System.out.println("WORKSHOP_NUM = " + vo.getWORKSHOP_NUM());
+			int res = adminService.deleteWMember(vo);
+			
+			retVal.put("res", "OK");
+		} catch(Exception e) {
+			retVal.put("res", "FAIL");
+			retVal.put("message", "삭제가 되지 않았습니다.");
+		}
 		
-		int maxpage = (int)((double)listcount / limit + 0.95);
-		int startpage = (((int)((double)page / 10 + 0.9)) -1) * 10 + 1;
-		int endpage = startpage + 10 - 1;
+		return retVal;
+	}
+	
+	/*=========================== 커뮤니티관리 ==============================*/
+	@RequestMapping(value = "/picsList.ad")
+	public String picsList() {
+		return "Admin/CommunityList";
+	}
+	
+	//produces 속성을 이용해 Response의 Content-Type을 제어할 수 있다
+	@RequestMapping(value = "/Pics.ad", produces="application/json;charset=UTF-8")
+	@ResponseBody
+	public String picsList2() {
+		List<PicsVO> picsList = adminService.getPICS();
 		
-		if(endpage > maxpage)
-			endpage = maxpage;
+		String str = "";
 		
+		ObjectMapper mapper = new ObjectMapper();
+		try {
+			str = mapper.writeValueAsString(picsList);
+			System.out.println("picsList 변환 : " + str);
+		} catch (Exception e) {
+			System.out.println("first() mapper : " + e.getMessage());
+		}
 		
-		mav.addObject("page", page);
-		mav.addObject("maxpage", maxpage);
-		mav.addObject("startpage", startpage);
-		mav.addObject("startrow", startrow);
-		mav.addObject("endpage", endpage);
-		mav.addObject("listcount", listcount);
-		mav.addObject("wmemberList", wmemberList);
-		mav.setViewName("Admin/WMemberList");
+		return str;
+	}
+	
+	@RequestMapping(value = "/deletePICS.ad", produces="application/json; charset=UTF-8", method = {RequestMethod.GET, RequestMethod.POST})
+	@ResponseBody
+	public Map<String, Object> deletePICS(PicsVO vo) {
+		Map<String, Object> retVal = new HashMap<String, Object>();
 		
-		return mav;
+		try {
+			System.out.println("PICS_NUM = " + vo.getPICS_NUM());
+			int res = adminService.deletePICS(vo);
+			
+			retVal.put("res", "OK");
+		} catch(Exception e) {
+			retVal.put("res", "FAIL");
+			retVal.put("message", "삭제가 되지 않았습니다.");
+		}
+		
+		return retVal;
 	}
 }
