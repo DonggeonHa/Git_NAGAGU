@@ -76,8 +76,8 @@ public class ProductManagementAjaxController {
 	public ArrayList<Map<String, Object>> getQnaSearchList(String selectClassType, String searchType, String keyword, String categorySelect, HttpSession session){
 		Integer WORKSHOP_NUM = (Integer)session.getAttribute("WORKSHOP_NUM");
 		HashMap<String, Object> map = new HashMap<String, Object>();
-		map.put("selectClassType", selectClassType);
 		map.put("WORKSHOP_NUM", WORKSHOP_NUM);
+		map.put("selectClassType", selectClassType);
 		map.put("searchType", searchType);
 		map.put("keyword", keyword);
 		map.put("categorySelect", categorySelect);
@@ -98,19 +98,29 @@ public class ProductManagementAjaxController {
 	//---------------------------------------상품 관리 페이지
 	@ResponseBody
 	@PostMapping(value="/AllproductsList.my" ,produces="application/json;charset=UTF-8")
-	public ArrayList<Map<String, Object>> productList(String selectClassType, HttpSession session) {
+	public ArrayList<Map<String, Object>> productList(String selectClassType, String selectCategory, String selectListAlign, String searchType, String keyword, HttpSession session) {
+		System.out.println("AllproductsList 컨트롤러 start!");
 		
 		Integer WORKSHOP_NUM = (Integer)session.getAttribute("WORKSHOP_NUM");
 		HashMap<String, Object> map = new HashMap<String, Object>();
 		map.put("selectClassType", selectClassType);
+		map.put("selectCategory", selectCategory);
+		map.put("selectListAlign", selectListAlign);
 		map.put("WORKSHOP_NUM", WORKSHOP_NUM);
+		map.put("searchType", searchType);
+		map.put("keyword", keyword);
 		
 		System.out.println("selectClassType="+selectClassType);
-		ArrayList<Map<String, Object>> qnaList = productManagementService.getproductQnaList(map);
+		System.out.println("selectCategory="+selectCategory);
+		System.out.println("selectListAlign="+selectListAlign);
+		System.out.println("WORKSHOP_NUM="+WORKSHOP_NUM);
+		System.out.println("searchType="+searchType);
+		System.out.println("keyword="+keyword);
+		ArrayList<Map<String, Object>> productList = productManagementService.getproductList(map);
 	
-		System.out.println("productQnaList의 size : " +qnaList.size());
+		System.out.println("productQnaList의 size : " +productList.size());
 		
-		return qnaList;
+		return productList;
 	}
 	
 }

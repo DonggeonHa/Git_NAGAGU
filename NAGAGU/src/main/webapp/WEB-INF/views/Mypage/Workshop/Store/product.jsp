@@ -1,4 +1,13 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%
+if (session.getAttribute("WORKSHOP_NUM") == null) {
+	out.println("<script>");
+	out.println("alert('로그인 해주세요!');");
+	out.println("location.href='./index.ma'");
+	out.println("</script>");	
+} 
+%>
+
 <!DOCTYPE html>
 <html lang="ko">
 <head>
@@ -30,29 +39,50 @@
 	$(document).ready(function() {
 		productList();
 	});
-
+			
 	function productList() {
 		alert("productList 실행");
 		$('#remo').remove();
 		$('#productList').empty();
 		var selectClassType = $("#selectClassType option:selected").val();	//필터 값 가져오기
+		var selectCategory = $("#selectCategory option:selected").val();	//필터 값 가져오기
+		var selectListAlign = $("#selectListAlign option:selected").val();	//필터 값 가져오기
+		var searchType = ''; 
+		var keyword = ''; 
+		if ($('#searchType').val() != null) {
+			searchType = $('#searchType').val();
+		}
+		if ($('#keyword').val() != null) {
+			keyword = $("#keyword").val();
+		}
+		console.log("selectClassType="+selectClassType)
+		console.log("selectCategory="+selectCategory)
+		console.log("selectListAlign="+selectListAlign)
+		console.log("searchType : " + searchType)
+		console.log("keyword : " + keyword)
+		
 		var title = "";
 		var number = 1;
 		$.ajax({
 			url: '/NAGAGU/AllproductsList.my',
 			type: 'POST',
-			data: {"selectClassType" : selectClassType},
+			data: {"selectClassType" : selectClassType, 
+					"selectCategory" : selectCategory, 
+					"selectListAlign" : selectListAlign,
+					"searchType" : searchType,
+					"keyword" : keyword
+				},
 			dataType: 'json',
 			contentType: 'application/x-www-form-urlencoded; charset=utf-8',
-			success: function(qnaList) {
-				console.log(qnaList);
+			success: function(productList) {
+				console.log(productList);
 				var output = ' ';	
 				
-				if(qnaList.length!=0) {
-					$('.listnum_num').text(qnaList.length+"건");
+				if(productList.length!=0) {
+					$('.listnum_num').text(productList.length+"건");
 					var myreply = new Array();
-			     	for(var j=0; j<qnaList.length; j++){
-			      		var PRODUCT_CATEGORY = qnaList[j].PRODUCT_CATEGORY
+			     	for(var j=0; j<productList.length; j++){
+			      		var PRODUCT_CATEGORY = productList[j].PRODUCT_CATEGORY
 			      		switch(PRODUCT_CATEGORY){
 				      	    case 'table' : 
 				      	    	PRODUCT_CATEGORY = '책상'
@@ -79,45 +109,56 @@
 				      	    	PRODUCT_CATEGORY = '기타' 
 				      	        break;
 			      	    }
-				      	var product_category = qnaList[j].PRODUCT_CATEGORY;
-				      	var MEMBER_NICK = qnaList[j].MEMBER_NICK;
-			    		var PRODUCT_TITLE = qnaList[j].PRODUCT_TITLE;
-			    		var PRODUCT_NUM = qnaList[j].PRODUCT_NUM;
-			    		var QNA_DATE = new Date(qnaList[j].QNA_DATE);
-			    		var date = date_format(QNA_DATE);
-			    		var QNA_CONTENT = qnaList[j].QNA_CONTENT;
-    					var QNA_RE = qnaList[j].QNA_RE;
-    					var QNA_STATUS = qnaList[j].QNA_STATUS;
 
+			      		
+				      	var product_category = productList[j].PRODUCT_CATEGORY;
+				      	var PRODUCT_STATUS = productList[j].PRODUCT_STATUS;
+			      		switch(PRODUCT_STATUS){
+			      	    case 0 : 
+			      	    	PRODUCT_STATUS = '판매중'
+			      	        break;
+			      	    case 1 : 
+			      	    	PRODUCT_STATUS = '품절' 
+			      	        break;  
+			      	    case 2 : 
+			      	    	PRODUCT_STATUS = '판매 종료'
+			      	        break;
+		   		   	    }
+			    		var PRODUCT_TITLE = productList[j].PRODUCT_TITLE;
+			    		var PRODUCT_NUM = productList[j].PRODUCT_NUM;
+			    		var PRODUCT_PRICE = productList[j].PRODUCT_PRICE;
+    					var PRODUCT_STOCK = productList[j].PRODUCT_STOCK;
+    					var PRODUCT_SALES = productList[j].PRODUCT_SALES;
+    					var PRODUCT_GRADE = productList[j].PRODUCT_GRADE;
+    					var PRODUCT_READ = productList[j].PRODUCT_READ;
+    					var PRODUCT_LIKE = productList[j].PRODUCT_LIKE;
+			    		var PRODUCT_DATE = new Date(productList[j].PRODUCT_DATE);
+			    		var date = date_format(PRODUCT_DATE);
+			      
 						output += '<tr>';
+						output += '<td><input type="checkbox"></td>';
 						output += '<td>' + number + '</td>';
+						output += '<td>' + PRODUCT_STATUS + '</td>';
 						output += '<td>' + PRODUCT_CATEGORY + '</td>';
-						output += '<td>' + MEMBER_NICK + '</td>';
 						if(PRODUCT_TITLE.length >= 14) {
 							PRODUCT_TITLE = PRODUCT_TITLE.substr(0,14)+"...";
 						}
 						output += '<td><a href="productdetail.pro?PRODUCT_NUM=' + PRODUCT_NUM + '&PRODUCT_CATEGORY=' + product_category + '">'+PRODUCT_TITLE+'</a></td>';
-						if(QNA_CONTENT.length >= 45) {
-							QNA_CONTENT = QNA_CONTENT.substr(0,45)+"...";
-						}
-						if(QNA_STATUS == 0) {
-							//답변이 달리지 않은 문의
-							output += '<td style="text-align:left;">'+QNA_CONTENT+'</td>';
-							output += '<td>' + date + '</td>';
-							output += '<td>'+'답변 대기'+'</td>';
-							output += '<td><button class="btn_write" onclick="location.href=">' + "작성" + '</button></td>';
-						} else if (QNA_STATUS == 1){
-							//답변이 달린 문의
-							output += '<td style="text-align:left;">'+QNA_CONTENT+'</td>';
-							output += '<td>' + date + '</td>';
-							output += '<td>'+'답변 완료'+'</td>';
-							output += '<td><button class="btn_modify" onclick="location.href=">'+"수정"+'</button></td>';
-						}
+						output += '<td>' + PRODUCT_PRICE + '</td>';
+						output += '<td>' + PRODUCT_STOCK + '</td>';
+						output += '<td>' + PRODUCT_SALES + '</td>';
+						output += '<td>' + PRODUCT_GRADE + '</td>';
+						output += '<td>' + PRODUCT_READ + '</td>';
+						output += '<td>' + PRODUCT_LIKE + '</td>';
+						output += '<td>' + date + '</td>';
+
+						output += '<td><button class="btn_modify" onclick="location.href=">' + "수정 " + '</button>&nbsp;&nbsp;';
+						output += '<button class="btn_remove" onclick="location.href=">' + "삭제" + '</button></td>';
 						output += '<td><button class="btn_move" onclick="location.href=">' + "이동" + '</button></td>';
 						output += '</tr>';
 						number += 1;
      				}					
-					$('#ProductqnaList').append(output);
+					$('#productList').append(output);
 				} else {
 					output += '검색 결과가 없습니다.';
 					$('.listnum_num').text("0건");
@@ -126,7 +167,7 @@
 				page();
 			},
 			error: function() {
-				alert("QNA List를 띄울 수 없습니다.");
+				alert("productList를 띄울 수 없습니다.");
 			}
 		});
 	}		
@@ -147,28 +188,32 @@
 			
  		var number = 1;
 		var title = "";
+
+		var searchType = $('#searchType').val();
+		var keyword = $("#keyword").val();
+
 		console.log("selectClassType : " + selectClassType)
 		console.log("searchType : " + searchType)
-		console.log("categorySelect : " + categorySelect)
+		console.log("searchType : " + searchType)
 		console.log("keyword : " + keyword)
 		
-		$('#ProductqnaList').empty();
+		$('#productList').empty();
 		alert(searchType + keyword);
 		
 		if(!keyword || !searchType){
 			alert("카테고리 선택, 검색어를 입력하세요.");
-			ProductqnaList();
+			ProductList();
 			return false;
 		}
 
 		$.ajax({
-			url: '/NAGAGU/searchTypeQnaList.my',
+			url: '/NAGAGU/searchTypeList.my',
 			type: 'POST',
 			data: {"selectClassType" : selectClassType, "searchType" : searchType, "keyword" : keyword, "categorySelect" : categorySelect},
 			dataType: 'json',
 			contentType: 'application/x-www-form-urlencoded; charset=utf-8',
-			success: function(qnaList) {
-				console.log(qnaList);
+			success: function(productList) {
+				console.log(productList);
 				var output = ' ';	
 				
 				if(qnaList.length!=0) {
@@ -241,7 +286,7 @@
 						output += '</tr>';
 						number += 1;
 		        	}					
-					$('#ProductqnaList').append(output);
+					$('#productList').append(output);
 				} else {
 					alert('0임');
 					output += '검색 결과가 없습니다.';
@@ -420,12 +465,12 @@
 							</div>	
 							<div class="select3" style="padding-left:5px">	<!-- 보기 정렬 -->
 								<select class="search_hidden_state justify-content-start" id="selectListAlign" name="selectListAlign" onchange="btn_select3()" style="height: 33px;">
-									<option value="date">최근 등록순</option>									
-									<option value='sales'>판매량순</option>
-									<option value="grade">평점순</option>
-									<option value="readcount">조회순</option>
-									<option value="like">좋아요순</option>
-									<option value="price">가격순</option>
+									<option value="product_date">최근 등록순</option>									
+									<option value='product_sales'>판매량순</option>
+									<option value="product_grade">평점순</option>
+									<option value="product_readcount">조회순</option>
+									<option value="product_like">좋아요순</option>
+									<option value="product_price">가격순</option>
 								</select>
 							</div>
 						
@@ -489,31 +534,6 @@
                 </tr>
                 </thead>
                 <tbody id="productList">
-                	<!--  
-		                <tr>
-		                    <td><input type="checkbox"></td>
-		                    <td>1</td>
-		                    <td>판매중</td>
-		                    <td>책상</td>
-		                    <td class="p_title">
-		                        <a href="">
-		                            상품명
-		                        </a>
-		                    </td>
-		                    <td>29900 원</td>
-		                    <td>28 개</td>
-		                    <td>11 개</td>
-		                    <td>5</td>
-		                    <td>347</td>
-		                    <td>79</td>
-		                    <td>2020.01.08</td>
-		                    <td>
-		                    	<button class="btn_modify">수정</button>
-		                    	<button class="btn_modify">삭제</button>
-		                    </td>
-		                    <td><button class="btn_modify">이동</button></td>
-		                </tr>
-          	      -->
                  </tbody>
             </table>
 			<div id="list_none"></div>
@@ -551,9 +571,9 @@
 		}
 		
 		function category() {
+			$('#searchType').html('카테고리');
 			alert("searchType : onclick=category() 실행")
 			$('#categoryKeyword').css('display', 'block');
-			$('#searchType').html('카테고리');
 			$('#searchType').val('category');
 			$("#keyword").val('');
 		}
@@ -595,32 +615,48 @@
 		/*select1-판매상태 선택*/	
 		function btn_select1() {		
 			alert("btn_select1의 selectClassType : " + $("#selectClassType option:selected").val());
-	
-			$('#ProductqnaList').empty();
+			console.log("$('#selectClassType option:selected').val() : "+$("#selectClassType option:selected").val())
+			$('#productList').empty();
+			productList();
+			/*
 			if ($('#keyword').val() && $('#searchType').val()){	//keyword, searchtype(categorySelect) 있을 경우 - search 후 정렬하는 경우
 				searchList(event);
 			}else {	//없을 경우	- 처음 리스트 정렬
 				ProductqnaList();
 			}
+			
+			<option value="allProducts">전체</option>
+			<option value="ingSale">판매중</option>
+			<option value="pauseSale">품절</option>
+			<option value="endSale">판매종료</option>
+			
+			var selectClassType = $("#selectClassType option:selected").val();
+			var searchType = $('#searchType').val();
+			var keyword = $('#keyword').val();
+			var categorySelect = '';
+			if(searchType == 'category') {
+				categorySelect = $('#categorySelect').val();
+			} 
+			*/
 		}	
 		
 		/*select2-카테고리 선택*/	
 		function btn_select2() {		
 			alert("btn_select2의 selectCategory : " + $("#selectCategory option:selected").val());
 	
-			$('#ProductqnaList').empty();
+			$('#productList').empty();
 			if ($('#keyword').val() && $('#searchType').val()){	//keyword, searchtype(categorySelect) 있을 경우 - search 후 정렬하는 경우
 				searchList(event);
 			}else {	//없을 경우	- 처음 리스트 정렬
 				ProductqnaList();
 			}
 		}	
-		
+
 		/*select3-리스트 정렬*/
 		function btn_select3() {		
 			alert("btn_select3의 selectListAlign : " + $("#selectListAlign option:selected").val());
 		
-			$('#ProductqnaList').empty();
+			$('#productList').empty();
 			if ($('#keyword').val() && $('#searchType').val()){	//keyword, searchtype(categorySelect) 있을 경우 - search 후 정렬하는 경우
 				searchList(event);
 			}else {	//없을 경우	- 처음 리스트 정렬

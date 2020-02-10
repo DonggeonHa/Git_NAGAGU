@@ -11,7 +11,18 @@
 		<result property="REVIEW_GRADE" column="REVIEW_GRADE" />	
 		<result property="REVIEW_RE" column="REVIEW_RE" />	
 	</resultMap>
-	
+
+	<resultMap type="java.util.HashMap" id="hashmapVO">
+		<result property="REVIEW_NUM" column="REVIEW_NUM" />	
+		<result property="REVIEW_MEMBER" column="REVIEW_MEMBER" />
+		<result property="REVIEW_PRODUCT" column="REVIEW_PRODUCT" />
+		<result property="REVIEW_DATE" column="REVIEW_DATE" />
+		<result property="REVIEW_FILE" column="REVIEW_FILE" />	
+		<result property="REVIEW_CONTENT" column="REVIEW_CONTENT" />	
+		<result property="REVIEW_GRADE" column="REVIEW_GRADE" />	
+		<result property="REVIEW_RE" column="REVIEW_RE" />	
+	</resultMap>
+		
 	<resultMap type="java.util.HashMap" id="productReviewResultMap">
 		<result property="PRODUCT_CATEGORY" column="PRODUCT_CATEGORY" />
 		<result property="PRODUCT_TITLE" column="PRODUCT_TITLE" />
@@ -41,16 +52,38 @@
 		<result property="QNA_STATUS" column="QNA_STATUS" />	
 	</resultMap>
 
-	<resultMap type="java.util.HashMap" id="hashmapVO">
-		<result property="REVIEW_NUM" column="REVIEW_NUM" />	
-		<result property="REVIEW_MEMBER" column="REVIEW_MEMBER" />
-		<result property="REVIEW_PRODUCT" column="REVIEW_PRODUCT" />
-		<result property="REVIEW_DATE" column="REVIEW_DATE" />
-		<result property="REVIEW_FILE" column="REVIEW_FILE" />	
-		<result property="REVIEW_CONTENT" column="REVIEW_CONTENT" />	
-		<result property="REVIEW_GRADE" column="REVIEW_GRADE" />	
-		<result property="REVIEW_RE" column="REVIEW_RE" />	
+	<resultMap type="java.util.HashMap" id="productListResultMap">
+		<result property="PRODUCT_NUM" column="PRODUCT_NUM" />	
+		<result property="PRODUCT_WORKSHOP" column="PRODUCT_WORKSHOP" />	
+		<result property="PRODUCT_SHOPNAME" column="PRODUCT_SHOPNAME" />	
+		<result property="PRODUCT_DATE" column="PRODUCT_DATE" />	
+		<result property="PRODUCT_TITLE" column="PRODUCT_TITLE" />	
+		<result property="PRODUCT_BRIEF" column="PRODUCT_BRIEF" />	
+		<result property="PRODUCT_CATEGORY" column="PRODUCT_CATEGORY" />
+		<result property="PRODUCT_PRICE" column="PRODUCT_PRICE" />		
+		<result property="PRODUCT_GRADE" column="PRODUCT_GRADE" />		
+		<result property="PRODUCT_READ" column="PRODUCT_READ" />
+		<result property="PRODUCT_SALES" column="PRODUCT_SALES" />		
+		<result property="PRODUCT_LIKE" column="PRODUCT_LIKE" />	
+		<result property="PRODUCT_COLOR" column="PRODUCT_COLOR" />			
+		<result property="PRODUCT_SIZE" column="PRODUCT_SIZE" />		
+		<result property="PRODUCT_INFO" column="PRODUCT_INFO" />		
+		<result property="PRODUCT_SHIP_PRICE" column="PRODUCT_SHIP_PRICE" />		
+		<result property="PRODUCT_SHIP_COMPANY" column="PRODUCT_SHIP_COMPANY" />		
+		<result property="PRODUCT_SHIP_RETURN_PRICE" column="PRODUCT_SHIP_RETURN_PRICE" />		
+		<result property="PRODUCT_SHIP_CHANGE_PRICE" column="PRODUCT_SHIP_CHANGE_PRICE" />		
+		<result property="PRODUCT_SHIP_RETURN_PLACE" column="PRODUCT_SHIP_RETURN_PLACE" />		
+		<result property="PRODUCT_SHIP_DAYS" column="PRODUCT_SHIP_DAYS" />		
+		<result property="PRODUCT_SHIP_INFO" column="PRODUCT_SHIP_INFO" />		
+		<result property="PRODUCT_AS_INFO" column="PRODUCT_AS_INFO" />		
+		<result property="PRODUCT_RETURN_INFO" column="PRODUCT_RETURN_INFO" />		
+		<result property="PRODUCT_STORE_INFO" column="PRODUCT_STORE_INFO" />		
+		<result property="PRODUCT_BANNER" column="PRODUCT_BANNER" />		
+		<result property="PRODUCT_IMAGE" column="PRODUCT_IMAGE" />	
+		<result property="PRODUCT_STATUS" column="PRODUCT_STATUS" />
+		<result property="PRODUCT_STOCK" column="PRODUCT_STOCK" />
 	</resultMap>
+
 	
 
 	
@@ -95,6 +128,7 @@
 			<if test="selectClassType == 'Completed'">AND Q.QNA_STATUS=1</if>
 		ORDER BY Q.QNA_DATE DESC
 	</select>
+
 
 	<select id="getproductQnaList1" parameterType="java.util.HashMap" resultMap="productQnaResultMap">
 		SELECT P.PRODUCT_CATEGORY, P.PRODUCT_TITLE, P.PRODUCT_NUM, N.MEMBER_NICK, Q.QNA_NUM, Q.QNA_MEMBER, Q.QNA_PRODUCT, Q.QNA_DATE, 
@@ -173,24 +207,164 @@
 		ORDER BY Q.QNA_DATE DESC	
 	</select>
 
-<!--   
-	<select id="getQnaSearchList" parameterType="java.util.HashMap" resultMap="productReviewResultMap">
-		SELECT P.PRODUCT_CATEGORY, P.PRODUCT_TITLE, P.PRODUCT_NUM, N.MEMBER_NICK, Q.QNA_NUM, Q.QNA_MEMBER, Q.QNA_PRODUCT, Q.QNA_DATE, 
-		Q.QNA_CONTENT, Q.QNA_RE, Q.QNA_STATUS
-		FROM PRODUCT P, PRODUCT_QNA Q, nagagu_workshop_member W, nagagu_member N
-		WHERE P.PRODUCT_NUM =Q.QNA_PRODUCT
-		AND W.WORKSHOP_NUM=P.PRODUCT_WORKSHOP
-		AND W.WORKSHOP_NUM=#{WORKSHOP_NUM}
-		AND Q.QNA_MEMBER=N.MEMBER_NUM
-		<if test="searchType == 'member_nick'">AND N.MEMBER_NICK LIKE '%'||#{keyword}||'%'</if>
-		<if test="searchType == 'product_title'">AND P.PRODUCT_TITLE LIKE '%'||#{keyword}||'%'</if>
-		<if test="searchType == 'category'">
-			AND P.PRODUCT_CATEGORY = #{categorySelect}
-			AND P.PRODUCT_TITLE LIKE '%'||#{keyword}||'%'
-		</if>
-		ORDER BY Q.QNA_DATE DESC	
+ 
+	<select id="getproductList" parameterType="java.util.HashMap" resultMap="productListResultMap">
+		SELECT * FROM PRODUCT WHERE PRODUCT_WORKSHOP = #{WORKSHOP_NUM}
+			<if test="selectClassType == 'allProducts'">
+				<if test="selectCategory == 'all'">
+					<if test="searchType == 'product_title'">AND PRODUCT_TITLE LIKE '%'||#{keyword}||'%'</if>
+					<if test="searchType == 'product_price'">AND PRODUCT_PRICE LIKE '%'||#{keyword}||'%'</if>				
+				</if>
+				<if test="selectCategory == 'table'"> AND PRODUCT_CATEGORY = #{selectCategory}
+					<if test="searchType == 'product_title'">AND PRODUCT_TITLE LIKE '%'||#{keyword}||'%'</if>
+					<if test="searchType == 'product_price'">AND PRODUCT_PRICE LIKE '%'||#{keyword}||'%'</if>			
+				</if>
+				<if test="selectCategory == 'chair'"> AND PRODUCT_CATEGORY = #{selectCategory}
+					<if test="searchType == 'product_title'">AND PRODUCT_TITLE LIKE '%'||#{keyword}||'%'</if>
+					<if test="searchType == 'product_price'">AND PRODUCT_PRICE LIKE '%'||#{keyword}||'%'</if>			
+				</if>
+				<if test="selectCategory == 'bookshelf'"> AND PRODUCT_CATEGORY = #{selectCategory}
+					<if test="searchType == 'product_title'">AND PRODUCT_TITLE LIKE '%'||#{keyword}||'%'</if>
+					<if test="searchType == 'product_price'">AND PRODUCT_PRICE LIKE '%'||#{keyword}||'%'</if>			
+				</if>
+				<if test="selectCategory == 'bed'"> AND PRODUCT_CATEGORY = #{selectCategory}
+					<if test="searchType == 'product_title'">AND PRODUCT_TITLE LIKE '%'||#{keyword}||'%'</if>
+					<if test="searchType == 'product_price'">AND PRODUCT_PRICE LIKE '%'||#{keyword}||'%'</if>			
+				</if>
+				<if test="selectCategory == 'drawer'"> AND PRODUCT_CATEGORY = #{selectCategory}
+					<if test="searchType == 'product_title'">AND PRODUCT_TITLE LIKE '%'||#{keyword}||'%'</if>
+					<if test="searchType == 'product_price'">AND PRODUCT_PRICE LIKE '%'||#{keyword}||'%'</if>				
+				</if>
+				<if test="selectCategory == 'sidetable'"> AND PRODUCT_CATEGORY = #{selectCategory}
+					<if test="searchType == 'product_title'">AND PRODUCT_TITLE LIKE '%'||#{keyword}||'%'</if>
+					<if test="searchType == 'product_price'">AND PRODUCT_PRICE LIKE '%'||#{keyword}||'%'</if>				
+				</if>
+				<if test="selectCategory == 'dressing_table'"> AND PRODUCT_CATEGORY = #{selectCategory}
+					<if test="searchType == 'product_title'">AND PRODUCT_TITLE LIKE '%'||#{keyword}||'%'</if>
+					<if test="searchType == 'product_price'">AND PRODUCT_PRICE LIKE '%'||#{keyword}||'%'</if>			
+				</if>
+				<if test="selectCategory == 'others'"> AND PRODUCT_CATEGORY = #{selectCategory}
+					<if test="searchType == 'product_title'">AND PRODUCT_TITLE LIKE '%'||#{keyword}||'%'</if>
+					<if test="searchType == 'product_price'">AND PRODUCT_PRICE LIKE '%'||#{keyword}||'%'</if>				
+				</if>			
+			</if>
+			<if test="selectClassType == 'ingSale'">
+				<if test="selectCategory == 'all'">
+					<if test="searchType == 'product_title'">AND PRODUCT_TITLE LIKE '%'||#{keyword}||'%'</if>
+					<if test="searchType == 'product_price'">AND PRODUCT_PRICE LIKE '%'||#{keyword}||'%'</if>					
+				</if>
+				<if test="selectCategory == 'table'">
+					<if test="searchType == 'product_title'">AND PRODUCT_TITLE LIKE '%'||#{keyword}||'%'</if>
+					<if test="searchType == 'product_price'">AND PRODUCT_PRICE LIKE '%'||#{keyword}||'%'</if>					
+				</if>
+				<if test="selectCategory == 'chair'">
+					<if test="searchType == 'product_title'">AND PRODUCT_TITLE LIKE '%'||#{keyword}||'%'</if>
+					<if test="searchType == 'product_price'">AND PRODUCT_PRICE LIKE '%'||#{keyword}||'%'</if>					
+				</if>
+				<if test="selectCategory == 'bookshelf'">
+					<if test="searchType == 'product_title'">AND PRODUCT_TITLE LIKE '%'||#{keyword}||'%'</if>
+					<if test="searchType == 'product_price'">AND PRODUCT_PRICE LIKE '%'||#{keyword}||'%'</if>				
+				</if>
+				<if test="selectCategory == 'bed'">
+					<if test="searchType == 'product_title'">AND PRODUCT_TITLE LIKE '%'||#{keyword}||'%'</if>
+					<if test="searchType == 'product_price'">AND PRODUCT_PRICE LIKE '%'||#{keyword}||'%'</if>					
+				</if>
+				<if test="selectCategory == 'drawer'">
+					<if test="searchType == 'product_title'">AND PRODUCT_TITLE LIKE '%'||#{keyword}||'%'</if>
+					<if test="searchType == 'product_price'">AND PRODUCT_PRICE LIKE '%'||#{keyword}||'%'</if>				
+				</if>
+				<if test="selectCategory == 'sidetable'">
+					<if test="searchType == 'product_title'">AND PRODUCT_TITLE LIKE '%'||#{keyword}||'%'</if>
+					<if test="searchType == 'product_price'">AND PRODUCT_PRICE LIKE '%'||#{keyword}||'%'</if>				
+				</if>
+				<if test="selectCategory == 'dressing_table'">
+					<if test="searchType == 'product_title'">AND PRODUCT_TITLE LIKE '%'||#{keyword}||'%'</if>
+					<if test="searchType == 'product_price'">AND PRODUCT_PRICE LIKE '%'||#{keyword}||'%'</if>				
+				</if>
+				<if test="selectCategory == 'others'">
+					<if test="searchType == 'product_title'">AND PRODUCT_TITLE LIKE '%'||#{keyword}||'%'</if>
+					<if test="searchType == 'product_price'">AND PRODUCT_PRICE LIKE '%'||#{keyword}||'%'</if>				
+				</if>			
+			</if>
+			<if test="selectClassType == 'pauseSale'">
+				<if test="selectCategory == 'all'">
+					<if test="searchType == 'product_title'">AND PRODUCT_TITLE LIKE '%'||#{keyword}||'%'</if>
+					<if test="searchType == 'product_price'">AND PRODUCT_PRICE LIKE '%'||#{keyword}||'%'</if>					
+				</if>
+				<if test="selectCategory == 'table'">
+					<if test="searchType == 'product_title'">AND PRODUCT_TITLE LIKE '%'||#{keyword}||'%'</if>
+					<if test="searchType == 'product_price'">AND PRODUCT_PRICE LIKE '%'||#{keyword}||'%'</if>					
+				</if>
+				<if test="selectCategory == 'chair'">
+					<if test="searchType == 'product_title'">AND PRODUCT_TITLE LIKE '%'||#{keyword}||'%'</if>
+					<if test="searchType == 'product_price'">AND PRODUCT_PRICE LIKE '%'||#{keyword}||'%'</if>					
+				</if>
+				<if test="selectCategory == 'bookshelf'">
+					<if test="searchType == 'product_title'">AND PRODUCT_TITLE LIKE '%'||#{keyword}||'%'</if>
+					<if test="searchType == 'product_price'">AND PRODUCT_PRICE LIKE '%'||#{keyword}||'%'</if>				
+				</if>
+				<if test="selectCategory == 'bed'">
+					<if test="searchType == 'product_title'">AND PRODUCT_TITLE LIKE '%'||#{keyword}||'%'</if>
+					<if test="searchType == 'product_price'">AND PRODUCT_PRICE LIKE '%'||#{keyword}||'%'</if>					
+				</if>
+				<if test="selectCategory == 'drawer'">
+					<if test="searchType == 'product_title'">AND PRODUCT_TITLE LIKE '%'||#{keyword}||'%'</if>
+					<if test="searchType == 'product_price'">AND PRODUCT_PRICE LIKE '%'||#{keyword}||'%'</if>				
+				</if>
+				<if test="selectCategory == 'sidetable'">
+					<if test="searchType == 'product_title'">AND PRODUCT_TITLE LIKE '%'||#{keyword}||'%'</if>
+					<if test="searchType == 'product_price'">AND PRODUCT_PRICE LIKE '%'||#{keyword}||'%'</if>				
+				</if>
+				<if test="selectCategory == 'dressing_table'">
+					<if test="searchType == 'product_title'">AND PRODUCT_TITLE LIKE '%'||#{keyword}||'%'</if>
+					<if test="searchType == 'product_price'">AND PRODUCT_PRICE LIKE '%'||#{keyword}||'%'</if>				
+				</if>
+				<if test="selectCategory == 'others'">
+					<if test="searchType == 'product_title'">AND PRODUCT_TITLE LIKE '%'||#{keyword}||'%'</if>
+					<if test="searchType == 'product_price'">AND PRODUCT_PRICE LIKE '%'||#{keyword}||'%'</if>				
+				</if>			
+			</if>
+			<if test="selectClassType == 'endSale'">
+				<if test="selectCategory == 'all'">
+					<if test="searchType == 'product_title'">AND PRODUCT_TITLE LIKE '%'||#{keyword}||'%'</if>
+					<if test="searchType == 'product_price'">AND PRODUCT_PRICE LIKE '%'||#{keyword}||'%'</if>				
+				</if>
+				<if test="selectCategory == 'table'">
+					<if test="searchType == 'product_title'">AND PRODUCT_TITLE LIKE '%'||#{keyword}||'%'</if>
+					<if test="searchType == 'product_price'">AND PRODUCT_PRICE LIKE '%'||#{keyword}||'%'</if>				
+				</if>
+				<if test="selectCategory == 'chair'">
+					<if test="searchType == 'product_title'">AND PRODUCT_TITLE LIKE '%'||#{keyword}||'%'</if>
+					<if test="searchType == 'product_price'">AND PRODUCT_PRICE LIKE '%'||#{keyword}||'%'</if>				
+				</if>
+				<if test="selectCategory == 'bookshelf'">
+					<if test="searchType == 'product_title'">AND PRODUCT_TITLE LIKE '%'||#{keyword}||'%'</if>
+					<if test="searchType == 'product_price'">AND PRODUCT_PRICE LIKE '%'||#{keyword}||'%'</if>				
+				</if>
+				<if test="selectCategory == 'bed'">
+					<if test="searchType == 'product_title'">AND PRODUCT_TITLE LIKE '%'||#{keyword}||'%'</if>
+					<if test="searchType == 'product_price'">AND PRODUCT_PRICE LIKE '%'||#{keyword}||'%'</if>				
+				</if>
+				<if test="selectCategory == 'drawer'">
+					<if test="searchType == 'product_title'">AND PRODUCT_TITLE LIKE '%'||#{keyword}||'%'</if>
+					<if test="searchType == 'product_price'">AND PRODUCT_PRICE LIKE '%'||#{keyword}||'%'</if>				
+				</if>
+				<if test="selectCategory == 'sidetable'">
+					<if test="searchType == 'product_title'">AND PRODUCT_TITLE LIKE '%'||#{keyword}||'%'</if>
+					<if test="searchType == 'product_price'">AND PRODUCT_PRICE LIKE '%'||#{keyword}||'%'</if>				
+				</if>
+				<if test="selectCategory == 'dressing_table'">
+					<if test="searchType == 'product_title'">AND PRODUCT_TITLE LIKE '%'||#{keyword}||'%'</if>
+					<if test="searchType == 'product_price'">AND PRODUCT_PRICE LIKE '%'||#{keyword}||'%'</if>				
+				</if>
+				<if test="selectCategory == 'others'">
+					<if test="searchType == 'product_title'">AND PRODUCT_TITLE LIKE '%'||#{keyword}||'%'</if>
+					<if test="searchType == 'product_price'">AND PRODUCT_PRICE LIKE '%'||#{keyword}||'%'</if>				
+				</if>			
+			</if>
+		ORDER BY #{selectListAlign} DESC	
 	</select>
--->
+
 
 
 </mapper>

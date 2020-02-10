@@ -49,37 +49,37 @@ td {
     width:3%;
 }
 .th3 {
-    width:5%;
+    width:4%;
 }
 .th4 {
-    width:8%;
+    width:7%;
 }
 .th5 {
-    width:15%;
+    width:13%;
 }
 .th6 {
-    width:10%;
+    width:8%;
 }
 .th7 {
-    width:5%;
+    width:4%;
 }
 .th8 {
-    width:5%;
+    width:4%;
 }
 .th9 {
     width:3%;
 }
 .th10 {
-    width:5%;
+    width:3%;
 }
 .th11 {
-    width:5%;
+    width:3%;
 }
 .th12 {
     width:13%;
 }
 .th13 {
-    width:15%;
+    width:12%;
 }
 .th14 {
     width:4%;
@@ -98,6 +98,21 @@ img {
     border-radius: 4px;
     border:1px solid orangered;
     color:orangered;
+    font-size:14px;
+}
+
+.btn_remove {
+    width:50px;
+    border-radius: 4px;
+    border:1px solid orangered;
+    color:#1B1B27;
+    font-size:14px;
+}
+.btn_move {
+    width:50px;
+    border-radius: 4px;
+    border:1px solid orangered;
+    color:orangered;   
     font-size:14px;
 }
 

@@ -8,7 +8,6 @@ if (session.getAttribute("WORKSHOP_NUM") == null) {
 } 
 
 %>
-
 <!DOCTYPE html>
 <html lang="ko">
 <head>
@@ -65,7 +64,34 @@ if (session.getAttribute("WORKSHOP_NUM") == null) {
 					var myreply = new Array();
 			     	for(var j=0; j<qnaList.length; j++){
 			      		var PRODUCT_CATEGORY = qnaList[j].PRODUCT_CATEGORY;
-				      	var MEMBER_NICK = qnaList[j].MEMBER_NICK;
+			      		switch(PRODUCT_CATEGORY){
+				      	    case 'table' : 
+				      	    	PRODUCT_CATEGORY = '책상'
+				      	        break;
+				      	    case 'chair' : 
+				      	    	PRODUCT_CATEGORY = '의자' 
+				      	        break;  
+				      	    case 'bookshelf' : 
+				      	    	PRODUCT_CATEGORY = '책장'
+				      	        break;
+				      	    case 'bed' : 
+				      	    	PRODUCT_CATEGORY = '침대' 
+				      	        break;  
+				      	    case 'drawer' : 
+				      	    	PRODUCT_CATEGORY = '서랍장'
+				      	        break;
+				      	    case 'sidetable' : 
+				      	    	PRODUCT_CATEGORY = '협탁' 
+				      	        break;  
+				      	    case 'dressing_table' : 
+				      	    	PRODUCT_CATEGORY = '화장대'
+				      	        break;
+				      	    case 'others' : 
+				      	    	PRODUCT_CATEGORY = '기타' 
+				      	        break;
+			      	    }
+			      		var product_category = qnaList[j].PRODUCT_CATEGORY;
+			      		var MEMBER_NICK = qnaList[j].MEMBER_NICK;
 			    		var PRODUCT_TITLE = qnaList[j].PRODUCT_TITLE;
 			    		var PRODUCT_NUM = qnaList[j].PRODUCT_NUM;
 			    		var QNA_DATE = new Date(qnaList[j].QNA_DATE);
@@ -81,7 +107,7 @@ if (session.getAttribute("WORKSHOP_NUM") == null) {
 						if(PRODUCT_TITLE.length >= 14) {
 							PRODUCT_TITLE = PRODUCT_TITLE.substr(0,14)+"...";
 						}
-						output += '<td><a href="productdetail.pro?PRODUCT_NUM=' + PRODUCT_NUM + '&PRODUCT_CATEGORY=' + PRODUCT_CATEGORY + '">'+PRODUCT_TITLE+'</a></td>';
+						output += '<td><a href="productdetail.pro?PRODUCT_NUM=' + PRODUCT_NUM + '&PRODUCT_CATEGORY=' + product_category + '">'+PRODUCT_TITLE+'</a></td>';
 						if(QNA_CONTENT.length >= 45) {
 							QNA_CONTENT = QNA_CONTENT.substr(0,45)+"...";
 						}
@@ -160,6 +186,33 @@ if (session.getAttribute("WORKSHOP_NUM") == null) {
 					$('.listnum_num').text(qnaList.length+"건");					
 		        	for(var j=0; j<qnaList.length; j++){
 	 	        		var PRODUCT_CATEGORY = qnaList[j].PRODUCT_CATEGORY;
+			      		switch(PRODUCT_CATEGORY){
+				      	    case 'table' : 
+				      	    	PRODUCT_CATEGORY = '책상'
+				      	        break;
+				      	    case 'chair' : 
+				      	    	PRODUCT_CATEGORY = '의자' 
+				      	        break;  
+				      	    case 'bookshelf' : 
+				      	    	PRODUCT_CATEGORY = '책장'
+				      	        break;
+				      	    case 'bed' : 
+				      	    	PRODUCT_CATEGORY = '침대' 
+				      	        break;  
+				      	    case 'drawer' : 
+				      	    	PRODUCT_CATEGORY = '서랍장'
+				      	        break;
+				      	    case 'sidetable' : 
+				      	    	PRODUCT_CATEGORY = '협탁' 
+				      	        break;  
+				      	    case 'dressing_table' : 
+				      	    	PRODUCT_CATEGORY = '화장대'
+				      	        break;
+				      	    case 'others' : 
+				      	    	PRODUCT_CATEGORY = '기타' 
+				      	        break;
+			      	    }
+		      			var product_category = qnaList[j].PRODUCT_CATEGORY;	 	        		
 		 	        	var MEMBER_NICK = qnaList[j].MEMBER_NICK;
 		        		var PRODUCT_TITLE = qnaList[j].PRODUCT_TITLE;
 		        		var PRODUCT_NUM = qnaList[j].PRODUCT_NUM;
@@ -176,7 +229,7 @@ if (session.getAttribute("WORKSHOP_NUM") == null) {
 						if(PRODUCT_TITLE.length >= 14) {
 							PRODUCT_TITLE = PRODUCT_TITLE.substr(0,14)+"...";
 						}
-						output += '<td><a href="productdetail.pro?PRODUCT_NUM=' + PRODUCT_NUM + '&PRODUCT_CATEGORY=' + PRODUCT_CATEGORY + '">'+PRODUCT_TITLE+'</a></td>';
+						output += '<td><a href="productdetail.pro?PRODUCT_NUM=' + PRODUCT_NUM + '&PRODUCT_CATEGORY=' + product_category + '">'+PRODUCT_TITLE+'</a></td>';
 						if(QNA_CONTENT.length >= 45) {
 							QNA_CONTENT = QNA_CONTENT.substr(0,45)+"...";
 						}
