@@ -55,6 +55,17 @@ public class AcademyManagementAjaxController {
 		
 		return member_list;
 	}
+	
+	@PostMapping(value = "/searchMemberManagementList.my", produces = "application/json;charset=UTF-8")
+	public List<WsMemberVO> memberList(String searchType, String keyword, HttpSession session) {
+		
+		int WORKSHOP_NUM = (int)session.getAttribute("WORKSHOP_NUM");
+		List<WsMemberVO> searchMemberList = null;
+		System.out.println(keyword+"느느느느느"+searchType);
+		searchMemberList = academyManagementService.getMemberSearch(keyword, searchType, WORKSHOP_NUM);
+		
+		return searchMemberList;
+	}
 }
 
 

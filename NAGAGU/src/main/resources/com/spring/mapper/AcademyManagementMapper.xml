@@ -117,4 +117,13 @@
 		where ac.workshop_num = #{WORKSHOP_NUM}
 	</select>
 	
+	<select id="getMemberSearch" resultMap="myclassMemberResultMap">
+		select DISTINCT mc.my_class_classnum, mc.my_class_membernum, ac.class_name, ac.class_division, m.member_email, m.member_name, m.member_phone, m.member_num 
+		from my_class mc inner join academy ac on mc.my_class_classnum = ac.class_number inner join nagagu_member m on mc.my_class_membernum = m.member_num 
+		where ac.workshop_num = #{WORKSHOP_NUM}
+		<if test="searchType == 'className'"> and ac.class_name LIKE '%'||#{keyword}||'%'</if>
+		<if test="searchType == 'memberName'"> and m.member_name LIKE '%'||#{keyword}||'%'</if>
+		<if test="searchType == 'memberPhone'"> and m.member_phone LIKE '%'||#{keyword}||'%'</if>
+	</select>
+	
 </mapper>

@@ -22,17 +22,7 @@
     <!-- 페이지 고유 스타일 -->
     <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/css/Mypage/Workshop/Lecture_Management.css">
 
-	<style>
-		.clickable {cursor: pointer;}
-		.hover {text-decoration: underline;}
-		.odd{ background: #FFC;}
-		.even{ background: #FF9;}
-		.active{ width:10px; height:10px; background:#f60; color:white;}
-	</style>
 	<script>
-	
-	
-	
 		$(document).ready(function() {
 			alert("문서준비");
 			classList();
@@ -125,12 +115,11 @@
 						output += '<td><input type="checkbox"></td>';
 						
 						if(item.class_STATUS == 0) {
-							output += '<td>' + "준비중" + '</td>';
+							output += '<td>' + "강의종료" + '</td>';
 						} else if(item.class_STATUS == 1) {
 							output += '<td>' + "강의중" + '</td>';
-						} else {
-							output += '<td>' + "강의종료" + '</td>';
 						}
+						
 						output += '<td>' + item.class_AREA + '</td>';
 						output += '<td>' + item.class_AMOUNT + '</td>';
 						output += '<td>' + item.class_DIVISION + '</td>';
@@ -227,99 +216,89 @@
 		
 		// 만들어진 테이블에 페이지 처리
 		function page() { 	
-		$('#remo').empty();
-		var reSortColors = function($table) {
-		  /* $('tbody tr:odd td', $table).removeClass('even').removeClass('listtd').addClass('odd'); */
-		  /* $('tbody tr:even td', $table).removeClass('odd').removeClass('listtd').addClass('even'); */
-		 };
-		 $('table.paginated').each(function() {
-		  var pagesu = 10;  //페이지 번호 갯수
-		  var currentPage = 0;
-		  var numPerPage = 10;  //목록의 수
-		  var $table = $('#work_store');    
-		  
-		  //length로 원래 리스트의 전체길이구함
-		  var numRows = $table.find('tbody tr').length;
-		  //Math.ceil를 이용하여 반올림
-		  var numPages = Math.ceil(numRows / numPerPage);
-		  //리스트가 없으면 종료
-		  if (numPages==0) return;
-		  //pager라는 클래스의 div엘리먼트 작성
-		  var $pager = $('<td align="center" id="remo" colspan="10"><div class="pager"></div></td>');
-		  
-		  var nowp = currentPage;
-		  var endp = nowp+10;
-		  
-		  //페이지를 클릭하면 다시 셋팅
-		  $table.bind('repaginate', function() {
-		  //기본적으로 모두 감춘다, 현재페이지+1 곱하기 현재페이지까지 보여준다
-		  
-		   $table.find('tbody tr').hide().slice(currentPage * numPerPage, (currentPage + 1) * numPerPage).show();
-		   $("#remo").html("");
-		   
-		   if (numPages > 1) {     // 한페이지 이상이면
-		    if (currentPage < 5 && numPages-currentPage >= 5) {   // 현재 5p 이하이면
-		     nowp = 0;     // 1부터 
-		     endp = pagesu;    // 10까지
-		    }else{
-		     nowp = currentPage -5;  // 6넘어가면 2부터 찍고
-		     endp = nowp+pagesu;   // 10까지
-		     pi = 1;
-		    }
-		    
-		    if (numPages < endp) {   // 10페이지가 안되면
-		     endp = numPages;   // 마지막페이지를 갯수 만큼
-		     nowp = numPages-pagesu;  // 시작페이지를   갯수 -10
-		    }
-		    if (nowp < 1) {     // 시작이 음수 or 0 이면
-		     nowp = 0;     // 1페이지부터 시작
-		    }
-		   }else{       // 한페이지 이하이면
-		    nowp = 0;      // 한번만 페이징 생성
-		    endp = numPages;
-		   }
-		   // [처음]
-		   $('<br /><span class="page-number" cursor: "pointer">[처음]</span>').bind('click', {newPage: page},function(event) {
-		          currentPage = 0;   
-		          $table.trigger('repaginate');  
-		          $($(".page-number")[2]).addClass('active').siblings().removeClass('active');
-		      }).appendTo($pager).addClass('clickable');
-		    // [이전]
-		      $('<span class="page-number" cursor: "pointer">&nbsp;&nbsp;&nbsp;[이전]&nbsp;</span>').bind('click', {newPage: page},function(event) {
-		          if(currentPage == 0) return; 
-		          currentPage = currentPage-1;
-		    $table.trigger('repaginate'); 
-		    $($(".page-number")[(currentPage-nowp)+2]).addClass('active').siblings().removeClass('active');
-		   }).appendTo($pager).addClass('clickable');
-		    // [1,2,3,4,5,6,7,8]
-		   for (var page = nowp ; page < endp; page++) {
-		    $('<span class="page-number" cursor: "pointer" style="margin-left: 8px;"></span>').text(page + 1).bind('click', {newPage: page}, function(event) {
-		     currentPage = event.data['newPage'];
-		     $table.trigger('repaginate');
-		     $($(".page-number")[(currentPage-nowp)+2]).addClass('active').siblings().removeClass('active');
-		     }).appendTo($pager).addClass('clickable');
-		   } 
-		    // [다음]
-		      $('<span class="page-number" cursor: "pointer">&nbsp;&nbsp;&nbsp;[다음]&nbsp;</span>').bind('click', {newPage: page},function(event) {
-		    if(currentPage == numPages-1) return;
-		        currentPage = currentPage+1;
-		    $table.trigger('repaginate'); 
-		     $($(".page-number")[(currentPage-nowp)+2]).addClass('active').siblings().removeClass('active');
-		   }).appendTo($pager).addClass('clickable');
-		    // [끝]
-		   $('<span class="page-number" cursor: "pointer">&nbsp;[끝]</span>').bind('click', {newPage: page},function(event) {
-		           currentPage = numPages-1;
-		           $table.trigger('repaginate');
-		           $($(".page-number")[endp-nowp+1]).addClass('active').siblings().removeClass('active');
-		   }).appendTo($pager).addClass('clickable');
-		     
-		     $($(".page-number")[2]).addClass('active');
-		reSortColors($table);
-		  });
-		   $pager.insertAfter($table).find('span.page-number:first').next().next().addClass('active');   
-		   $pager.appendTo($table);
-		   $table.trigger('repaginate');
-		 });
+			$('#remo').empty();
+			var reSortColors = function($table) {};
+			$('nav.paginated').each(function() {
+				var pagesu = 10;  //페이지 번호 갯수
+		  		var currentPage = 0;
+		  		var numPerPage = 10;  //목록의 수
+		  		var $table = $('#academyList');
+		  		var $user = $('#user-page');
+				//length로 원래 리스트의 전체길이구함
+				var numRows = $table.find('tr').length;
+				//Math.ceil를 이용하여 반올림
+				var numPages = Math.ceil(numRows / numPerPage);
+				//리스트가 없으면 종료
+				if (numPages==0) return;
+				//pager라는 클래스의 div엘리먼트 작성
+				var $pager = $('<ul id="remo" class="pager pagination"></ul>');
+				var nowp = currentPage;
+				var endp = nowp+10;
+				//페이지를 클릭하면 다시 셋팅
+				$table.bind('repaginate', function() {
+				//기본적으로 모두 감춘다, 현재페이지+1 곱하기 현재페이지까지 보여준다
+					$table.find('tr').hide().slice(currentPage * numPerPage, (currentPage + 1) * numPerPage).show();
+					$("#remo").html("");
+					if (numPages > 1) {     // 한페이지 이상이면
+						if (currentPage < 5 && numPages-currentPage >= 5) {   // 현재 5p 이하이면
+							nowp = 0;     // 1부터
+							endp = pagesu;    // 10까지
+						} else {
+							nowp = currentPage -5;  // 6넘어가면 2부터 찍고
+							endp = nowp+pagesu;   // 10까지
+							pi = 1;
+						}
+						if (numPages < endp) {   // 10페이지가 안되면
+							endp = numPages;   // 마지막페이지를 갯수 만큼
+							nowp = numPages-pagesu;  // 시작페이지를   갯수 -10
+						}
+						if (nowp < 1) {     // 시작이 음수 or 0 이면
+							nowp = 0;     // 1페이지부터 시작
+						}
+					} else {       // 한페이지 이하이면
+						nowp = 0;      // 한번만 페이징 생성
+						endp = numPages;
+					}
+					// [처음]
+					$('<li class="page-item" cursor: "pointer"><a class="page-link" href="#">처음</a></li>').bind('click', {newPage: page},function(event) {
+						currentPage = 0;
+						$table.trigger('repaginate');
+						$($(".page-item")[2]).addClass('active').siblings().removeClass('active');
+					}).appendTo($pager).addClass('clickable');
+			    	// [이전]
+					$('<li class="page-item" cursor: "pointer"><a class="page-link" href="#">이전</a></li>').bind('click', {newPage: page},function(event) {
+						if(currentPage == 0) return;
+						currentPage = currentPage-1;
+						$table.trigger('repaginate');
+						$($(".page-item")[(currentPage-nowp)+2]).addClass('active').siblings().removeClass('active');
+					}).appendTo($pager).addClass('clickable');
+			    	// [1,2,3,4,5,6,7,8]
+					for (var page = nowp ; page < endp; page++) {
+						$('<li class="page-item" cursor: "pointer"></li>').html('<a class="page-link" href="#">' + (page + 1) + '</a>').bind('click', {newPage: page}, function(event) {
+							currentPage = event.data['newPage'];
+							$table.trigger('repaginate');
+							$($(".page-item")[(currentPage-nowp)+2]).addClass('active').siblings().removeClass('active');
+						}).appendTo($pager).addClass('clickable');
+					}
+			    	// [다음]
+					$('<li class="page-item" cursor: "pointer"><a class="page-link" href="#">다음</a></li>').bind('click', {newPage: page},function(event) {
+						if(currentPage == numPages-1) return;
+						currentPage = currentPage+1;
+						$table.trigger('repaginate');
+						$($(".page-item")[(currentPage-nowp)+2]).addClass('active').siblings().removeClass('active');
+					}).appendTo($pager).addClass('clickable');
+			    	// [끝]
+					$('<li class="page-item" cursor: "pointer"><a class="page-link" href="#">끝</a></li>').bind('click', {newPage: page},function(event) {
+						currentPage = numPages-1;
+						$table.trigger('repaginate');
+						$($(".page-item")[endp-nowp+1]).addClass('active').siblings().removeClass('active');
+					}).appendTo($pager).addClass('clickable');
+			     	$($(".page-item")[2]).addClass('active');
+		  		});
+				$pager.insertAfter($pager).find('li.page-item:first').next().next().addClass('active');
+				$pager.appendTo($user);
+				$table.trigger('repaginate');
+			});
 		}
 	</script>
     
@@ -348,7 +327,7 @@
                 </div>
 
                     <div class="row pt-2 pb-2">
-                        <button type="button" id="all_select" class="btn btn-sm btn-outline-dark mr-2">전체표시</button>                        
+                        <button type="button" id="selectall" class="btn btn-sm btn-outline-dark mr-2">전체표시</button>                        
                         <span class="listnum_txt pt-2">전체 문의내역</span>
                         <span class="listnum_num pt-2"></span>
                     </div>
@@ -393,37 +372,30 @@
                     </div>
                
             </div>
-            <table class="table" id="work_store">
-                <thead>
-                <tr>
-                    <th scope="col" class="th1"><input id="all_select" type="checkbox"></th>
-                    <th scope="col" class="th3">상태</th>
-                    <th scope="col" class="th4">지역</th>
-                    <th scope="col" class="th5">가격</th>
-					<th scope="col" class="th11">클래스</th>
-                    <th scope="col" class="th6">강의명</th>
-                    <th scope="col" class="th7">카테고리</th>
-                    <th scope="col" class="th8">일시</th>
-                    <th scope="col" class="th9">회원수</th>
-                    <th scope="col" class="th10">관리</th>                    
-                </tr>
-                </thead>
-                <tbody id="academyList">
-                	
-                </tbody>
-            </table>
-            <div class="table_bottom">
-                <!-- <div class="page_nav">
-                    <strong class="current_page">1</strong> 
-                    <a href="">2</a>
-                    <a href="">3</a>
-                    <a href="">4</a>
-                    <a href="">5</a>  
-                    <a href="">→</a>
-                </div> -->
-                <table class="tbl paginated" id="tbl">
-				</table>
+            <div style="height: 600px; overflow-y: auto;">
+	            <table class="table table-hover" id="work_store">
+	                <thead>
+	                <tr>
+	                    <th scope="col" class="th1"><input id="all_select" type="checkbox"></th>
+	                    <th scope="col" class="th3">상태</th>
+	                    <th scope="col" class="th4">지역</th>
+	                    <th scope="col" class="th5">가격</th>
+						<th scope="col" class="th11">클래스</th>
+	                    <th scope="col" class="th6">강의명</th>
+	                    <th scope="col" class="th7">카테고리</th>
+	                    <th scope="col" class="th8">일시</th>
+	                    <th scope="col" class="th9">회원수</th>
+	                    <th scope="col" class="th10">관리</th>                    
+	                </tr>
+	                </thead>
+	                <tbody id="academyList">
+	                	
+	                </tbody>
+	            </table>
             </div>
+			<div class="d-flex justify-content-center">
+				<nav aria-label="Page navigation example" class="paginated" id="user-page"></nav>
+			</div>
         </div>
     </div>
 </div>
