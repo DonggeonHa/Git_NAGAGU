@@ -1,12 +1,31 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ page import="com.spring.store.ProductVO"%>
 <%
-if (session.getAttribute("WORKSHOP_NUM") == null) {
-	out.println("<script>");
-	out.println("alert('로그인 해주세요!');");
-	out.println("location.href='./index.ma'");
-	out.println("</script>");	
-} 
+	if (session.getAttribute("WORKSHOP_NUM") == null) {
+		out.println("<script>");
+		out.println("alert('로그인 해주세요!');");
+		out.println("location.href='./index.ma'");
+		out.println("</script>");	
+	} 
 
+	String voExist = "N";
+	ProductVO productVO = null;
+	String PRODUCT_CATEGORY = null;
+	String PRODUCT_TITLE = null;
+	int PRODUCT_NUM = 0;
+	if(request.getAttribute("productVO") != null) {
+		productVO = (ProductVO)request.getAttribute("productVO");
+		voExist = "Y";
+		PRODUCT_CATEGORY = productVO.getPRODUCT_CATEGORY();
+		PRODUCT_TITLE = productVO.getPRODUCT_TITLE();
+		//if(productVO.getPRODUCT_NUM() == -1) 
+		System.out.println("VO 존재함 : 상품관리페이지 통해 들어옴");
+	}
+
+	System.out.println(PRODUCT_CATEGORY);
+	System.out.println(PRODUCT_TITLE);
+	
+	
 %>
 <!DOCTYPE html>
 <html lang="ko">
@@ -38,7 +57,22 @@ if (session.getAttribute("WORKSHOP_NUM") == null) {
 	</style>
 	<script>
 	$(document).ready(function() {
+		if("<%=voExist%>"=="Y") {	//vo 존재한다
+			//vo정보로 검색한다
+			//selectCategory, searchType(상품명), keyword(상품이름)
+			$("#selectClassType").val('all').prop("selected", true);
+			$("#selectCategory").val('<%=PRODUCT_CATEGORY%>').prop("selected", true);	
+			$('#searchType').html('상품명');
+			$('#searchType').val('product_title');
+			$("#keyword").val('<%=PRODUCT_TITLE%>');	
+		}
+		
 		ProductqnaList();
+		
+	});	
+	
+	$(document).ready(function() {
+		
 	});
 
 	function ProductqnaList() {
