@@ -1508,7 +1508,7 @@
             {
                alert(grade.length);
                ch = grade.substring(i, i + 1);
-               if (!(ch >= "0" && ch <= "5")) // 0부터 5사이 숫자가 아닐시.
+               if (!(ch >= 0 && ch <= 5)) // 0부터 5사이 숫자가 아닐시.
                {
                   alert("평점은 0부터 5까지 숫자를 입력해주세요!");
                   document.getElementById('modifyform_'+REVIEW_NUM).REVIEW_GRADE.focus();

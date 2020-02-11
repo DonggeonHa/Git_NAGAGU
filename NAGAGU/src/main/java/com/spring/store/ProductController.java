@@ -837,12 +837,13 @@ public class ProductController {
 	  vo.setPRODUCT_RETURN_INFO(request.getParameter("PRODUCT_RETURN_INFO"));
 	  vo.setPRODUCT_STORE_INFO(request.getParameter("PRODUCT_STORE_INFO"));
 	  vo.setPRODUCT_BANNER(str);
-	  vo.setPRODUCT_STATUS(0);
+	  vo.setPRODUCT_STATUS(1);		//1:판매중 2:판매완료 0:품절
 	  vo.setPRODUCT_STOCK(Integer.parseInt(request.getParameter("PRODUCT_STOCK")));
 	  System.out.println("aaa"+request.getParameter("PRODUCT_CATEGORY"));
 	  
 	  ModelAndView mav = new ModelAndView();
-	  mav.setViewName("redirect:productlist.pro?PRODUCT_CATEGORY="+request.getParameter("PRODUCT_CATEGORY"));
+//	  mav.setViewName("redirect:productlist.pro?PRODUCT_CATEGORY="+request.getParameter("PRODUCT_CATEGORY"));
+	  mav.setViewName("redirect:productlist.pro?PRODUCT_CATEGORY=all");
 	  mav.addObject("ProductVO", vo);
 	   
 	      

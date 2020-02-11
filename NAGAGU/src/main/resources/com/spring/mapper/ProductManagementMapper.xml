@@ -11,7 +11,18 @@
 		<result property="REVIEW_GRADE" column="REVIEW_GRADE" />	
 		<result property="REVIEW_RE" column="REVIEW_RE" />	
 	</resultMap>
-	
+
+	<resultMap type="java.util.HashMap" id="hashmapVO">
+		<result property="REVIEW_NUM" column="REVIEW_NUM" />	
+		<result property="REVIEW_MEMBER" column="REVIEW_MEMBER" />
+		<result property="REVIEW_PRODUCT" column="REVIEW_PRODUCT" />
+		<result property="REVIEW_DATE" column="REVIEW_DATE" />
+		<result property="REVIEW_FILE" column="REVIEW_FILE" />	
+		<result property="REVIEW_CONTENT" column="REVIEW_CONTENT" />	
+		<result property="REVIEW_GRADE" column="REVIEW_GRADE" />	
+		<result property="REVIEW_RE" column="REVIEW_RE" />	
+	</resultMap>
+		
 	<resultMap type="java.util.HashMap" id="productReviewResultMap">
 		<result property="PRODUCT_CATEGORY" column="PRODUCT_CATEGORY" />
 		<result property="PRODUCT_TITLE" column="PRODUCT_TITLE" />
@@ -41,19 +52,39 @@
 		<result property="QNA_STATUS" column="QNA_STATUS" />	
 	</resultMap>
 
-	<resultMap type="java.util.HashMap" id="hashmapVO">
-		<result property="REVIEW_NUM" column="REVIEW_NUM" />	
-		<result property="REVIEW_MEMBER" column="REVIEW_MEMBER" />
-		<result property="REVIEW_PRODUCT" column="REVIEW_PRODUCT" />
-		<result property="REVIEW_DATE" column="REVIEW_DATE" />
-		<result property="REVIEW_FILE" column="REVIEW_FILE" />	
-		<result property="REVIEW_CONTENT" column="REVIEW_CONTENT" />	
-		<result property="REVIEW_GRADE" column="REVIEW_GRADE" />	
-		<result property="REVIEW_RE" column="REVIEW_RE" />	
+	<resultMap type="java.util.HashMap" id="productListResultMap">
+		<result property="PRODUCT_NUM" column="PRODUCT_NUM" />	
+		<result property="PRODUCT_WORKSHOP" column="PRODUCT_WORKSHOP" />	
+		<result property="PRODUCT_SHOPNAME" column="PRODUCT_SHOPNAME" />	
+		<result property="PRODUCT_DATE" column="PRODUCT_DATE" />	
+		<result property="PRODUCT_TITLE" column="PRODUCT_TITLE" />	
+		<result property="PRODUCT_BRIEF" column="PRODUCT_BRIEF" />	
+		<result property="PRODUCT_CATEGORY" column="PRODUCT_CATEGORY" />
+		<result property="PRODUCT_PRICE" column="PRODUCT_PRICE" />		
+		<result property="PRODUCT_GRADE" column="PRODUCT_GRADE" />		
+		<result property="PRODUCT_READ" column="PRODUCT_READ" />
+		<result property="PRODUCT_SALES" column="PRODUCT_SALES" />		
+		<result property="PRODUCT_LIKE" column="PRODUCT_LIKE" />	
+		<result property="PRODUCT_COLOR" column="PRODUCT_COLOR" />			
+		<result property="PRODUCT_SIZE" column="PRODUCT_SIZE" />		
+		<result property="PRODUCT_INFO" column="PRODUCT_INFO" />		
+		<result property="PRODUCT_SHIP_PRICE" column="PRODUCT_SHIP_PRICE" />		
+		<result property="PRODUCT_SHIP_COMPANY" column="PRODUCT_SHIP_COMPANY" />		
+		<result property="PRODUCT_SHIP_RETURN_PRICE" column="PRODUCT_SHIP_RETURN_PRICE" />		
+		<result property="PRODUCT_SHIP_CHANGE_PRICE" column="PRODUCT_SHIP_CHANGE_PRICE" />		
+		<result property="PRODUCT_SHIP_RETURN_PLACE" column="PRODUCT_SHIP_RETURN_PLACE" />		
+		<result property="PRODUCT_SHIP_DAYS" column="PRODUCT_SHIP_DAYS" />		
+		<result property="PRODUCT_SHIP_INFO" column="PRODUCT_SHIP_INFO" />		
+		<result property="PRODUCT_AS_INFO" column="PRODUCT_AS_INFO" />		
+		<result property="PRODUCT_RETURN_INFO" column="PRODUCT_RETURN_INFO" />		
+		<result property="PRODUCT_STORE_INFO" column="PRODUCT_STORE_INFO" />		
+		<result property="PRODUCT_BANNER" column="PRODUCT_BANNER" />		
+		<result property="PRODUCT_IMAGE" column="PRODUCT_IMAGE" />	
+		<result property="PRODUCT_STATUS" column="PRODUCT_STATUS" />
+		<result property="PRODUCT_STOCK" column="PRODUCT_STOCK" />
 	</resultMap>
-	
 
-	
+
 	<select id="getproductReviewList" parameterType="java.util.HashMap" resultMap="productReviewResultMap">
 		SELECT P.PRODUCT_CATEGORY, P.PRODUCT_TITLE, P.PRODUCT_NUM, N.MEMBER_NICK, R.REVIEW_NUM, R.REVIEW_MEMBER, R.REVIEW_PRODUCT, R.REVIEW_DATE, 
 		R.REVIEW_FILE, R.REVIEW_CONTENT, R.REVIEW_GRADE, R.REVIEW_RE
@@ -62,26 +93,15 @@
 		AND W.WORKSHOP_NUM=P.PRODUCT_WORKSHOP
 		AND W.WORKSHOP_NUM=#{WORKSHOP_NUM}
 		AND R.REVIEW_MEMBER=N.MEMBER_NUM
-		ORDER BY R.REVIEW_DATE DESC		
+			<if test="selectCategory != 'all'"> AND P.PRODUCT_CATEGORY = #{selectCategory} </if>
+			<if test="searchType == 'member_nick'"> AND N.MEMBER_NICK LIKE '%'||#{keyword}||'%' </if>
+			<if test="searchType == 'product_title'"> AND P.PRODUCT_TITLE LIKE '%'||#{keyword}||'%' </if>
+			<if test="searchType == 'review_content'"> AND R.REVIEW_CONTENT LIKE '%'||#{keyword}||'%' </if>			
+		ORDER BY R.${selectListAlign} DESC			
+				
 	</select>
-	
-	<select id="getReviewSearchList" parameterType="java.util.HashMap" resultMap="productReviewResultMap">
-		SELECT P.PRODUCT_CATEGORY, P.PRODUCT_TITLE, P.PRODUCT_NUM, N.MEMBER_NICK, R.REVIEW_NUM, R.REVIEW_MEMBER, R.REVIEW_PRODUCT, R.REVIEW_DATE, 
-		R.REVIEW_FILE, R.REVIEW_CONTENT, R.REVIEW_GRADE, R.REVIEW_RE
-		FROM PRODUCT P, PRODUCT_REVIEW R, nagagu_workshop_member W, nagagu_member N
-		WHERE P.PRODUCT_NUM =R.REVIEW_PRODUCT
-		AND W.WORKSHOP_NUM=P.PRODUCT_WORKSHOP
-		AND W.WORKSHOP_NUM=#{WORKSHOP_NUM}
-		AND R.REVIEW_MEMBER=N.MEMBER_NUM
-		<if test="searchType == 'member_nick'">AND N.MEMBER_NICK LIKE '%'||#{keyword}||'%'</if>
-		<if test="searchType == 'product_title'">AND P.PRODUCT_TITLE LIKE '%'||#{keyword}||'%'</if>
-		<if test="searchType == 'category'">
-			AND P.PRODUCT_CATEGORY = #{categorySelect}
-			AND P.PRODUCT_TITLE LIKE '%'||#{keyword}||'%'
-		</if>
-		ORDER BY R.REVIEW_DATE DESC			
-	</select>
-	
+
+
 	<select id="getproductQnaList" parameterType="java.util.HashMap" resultMap="productQnaResultMap">
 		SELECT P.PRODUCT_CATEGORY, P.PRODUCT_TITLE, P.PRODUCT_NUM, N.MEMBER_NICK, Q.QNA_NUM, Q.QNA_MEMBER, Q.QNA_PRODUCT, Q.QNA_DATE, 
 		Q.QNA_CONTENT, Q.QNA_RE, Q.QNA_STATUS
@@ -90,107 +110,66 @@
 		AND W.WORKSHOP_NUM=P.PRODUCT_WORKSHOP
 		AND W.WORKSHOP_NUM=#{WORKSHOP_NUM}
 		AND Q.QNA_MEMBER=N.MEMBER_NUM
-			<if test="selectClassType == 'all'"></if>
-			<if test="selectClassType == 'Standby'">AND Q.QNA_STATUS=0</if>
-			<if test="selectClassType == 'Completed'">AND Q.QNA_STATUS=1</if>
-		ORDER BY Q.QNA_DATE DESC
-	</select>
-
-	<select id="getproductQnaList1" parameterType="java.util.HashMap" resultMap="productQnaResultMap">
-		SELECT P.PRODUCT_CATEGORY, P.PRODUCT_TITLE, P.PRODUCT_NUM, N.MEMBER_NICK, Q.QNA_NUM, Q.QNA_MEMBER, Q.QNA_PRODUCT, Q.QNA_DATE, 
-		Q.QNA_CONTENT, Q.QNA_RE, Q.QNA_STATUS
-		FROM PRODUCT P, PRODUCT_QNA Q, nagagu_workshop_member W, nagagu_member N
-		WHERE P.PRODUCT_NUM =Q.QNA_PRODUCT
-		AND W.WORKSHOP_NUM=P.PRODUCT_WORKSHOP
-		AND W.WORKSHOP_NUM=#{WORKSHOP_NUM}
-		AND Q.QNA_MEMBER=N.MEMBER_NUM
 			<if test="selectClassType == 'all'">
-				<if test="searchType == 'member_nick'">AND N.MEMBER_NICK LIKE '%'||#{keyword}||'%'</if>
-				<if test="searchType == 'product_title'">AND P.PRODUCT_TITLE LIKE '%'||#{keyword}||'%'</if>
-				<if test="searchType == 'category'">
-					AND P.PRODUCT_CATEGORY = #{categorySelect}
-					AND P.PRODUCT_TITLE LIKE '%'||#{keyword}||'%'
-				</if>		
+				<if test="selectCategory != 'all'"> AND P.PRODUCT_CATEGORY = #{selectCategory} </if>
+				<if test="searchType == 'member_nick'"> AND N.MEMBER_NICK LIKE '%'||#{keyword}||'%' </if>
+				<if test="searchType == 'product_title'"> AND P.PRODUCT_TITLE LIKE '%'||#{keyword}||'%' </if>
+				<if test="searchType == 'qna_content'"> AND Q.QNA_CONTENT LIKE '%'||#{keyword}||'%' </if>				
 			</if>
-			<if test="selectClassType == 'Standby'">
-					<if test="searchType == 'member_nick'">AND N.MEMBER_NICK LIKE '%'||#{keyword}||'%'</if>
-					<if test="searchType == 'product_title'">AND P.PRODUCT_TITLE LIKE '%'||#{keyword}||'%'</if>
-					<if test="searchType == 'category'">
-						AND P.PRODUCT_CATEGORY = #{categorySelect}
-						AND P.PRODUCT_TITLE LIKE '%'||#{keyword}||'%'
-					</if>
-					AND Q.QNA_STATUS=0
+			
+
+			<if test="selectClassType == 'Standby'"> AND Q.QNA_STATUS=0 
+				<if test="selectCategory != 'all'"> AND P.PRODUCT_CATEGORY = #{selectCategory} </if>
+				<if test="searchType == 'member_nick'"> AND N.MEMBER_NICK LIKE '%'||#{keyword}||'%' </if>
+				<if test="searchType == 'product_title'"> AND P.PRODUCT_TITLE LIKE '%'||#{keyword}||'%' </if>
+				<if test="searchType == 'qna_content'"> AND Q.QNA_CONTENT LIKE '%'||#{keyword}||'%' </if>
 			</if>
-			<if test="selectClassType == 'Completed'">
-				<if test="searchType == 'member_nick'">AND N.MEMBER_NICK LIKE '%'||#{keyword}||'%'</if>
-				<if test="searchType == 'product_title'">AND P.PRODUCT_TITLE LIKE '%'||#{keyword}||'%'</if>
-				<if test="searchType == 'category'">
-					AND P.PRODUCT_CATEGORY = #{categorySelect}
-					AND P.PRODUCT_TITLE LIKE '%'||#{keyword}||'%'
-				</if>
-				AND Q.QNA_STATUS=1
+			
+			
+			<if test="selectClassType == 'Completed'"> AND Q.QNA_STATUS=1 
+				<if test="selectCategory != 'all'"> AND P.PRODUCT_CATEGORY = #{selectCategory} </if>
+				<if test="searchType == 'member_nick'"> AND N.MEMBER_NICK LIKE '%'||#{keyword}||'%' </if>
+				<if test="searchType == 'product_title'"> AND P.PRODUCT_TITLE LIKE '%'||#{keyword}||'%' </if>
+				<if test="searchType == 'qna_content'"> AND Q.QNA_CONTENT LIKE '%'||#{keyword}||'%' </if>
 			</if>
-		ORDER BY Q.QNA_DATE DESC
+		ORDER BY Q.${selectListAlign} DESC	
 	</select>
-
-
 
  
-	<select id="getQnaSearchList" parameterType="java.util.HashMap" resultMap="productReviewResultMap">
-		SELECT P.PRODUCT_CATEGORY, P.PRODUCT_TITLE, P.PRODUCT_NUM, N.MEMBER_NICK, Q.QNA_NUM, Q.QNA_MEMBER, Q.QNA_PRODUCT, Q.QNA_DATE, 
-		Q.QNA_CONTENT, Q.QNA_RE, Q.QNA_STATUS
-		FROM PRODUCT P, PRODUCT_QNA Q, nagagu_workshop_member W, nagagu_member N
-		WHERE P.PRODUCT_NUM =Q.QNA_PRODUCT
-		AND W.WORKSHOP_NUM=P.PRODUCT_WORKSHOP
-		AND W.WORKSHOP_NUM=#{WORKSHOP_NUM}
-		AND Q.QNA_MEMBER=N.MEMBER_NUM
-			<if test="selectClassType == 'all'">
-				<if test="searchType == 'member_nick'">AND N.MEMBER_NICK LIKE '%'||#{keyword}||'%'</if>
-				<if test="searchType == 'product_title'">AND P.PRODUCT_TITLE LIKE '%'||#{keyword}||'%'</if>
-				<if test="searchType == 'category'">
-					AND P.PRODUCT_CATEGORY = #{categorySelect}
-					AND P.PRODUCT_TITLE LIKE '%'||#{keyword}||'%'
-				</if>		
+	<select id="getproductList" parameterType="java.util.HashMap" resultMap="productListResultMap">
+		SELECT * FROM PRODUCT WHERE PRODUCT_WORKSHOP = #{WORKSHOP_NUM} 
+			<if test="selectClassType == 'allProducts'"> 
+				<if test="selectCategory != 'all'"> AND P.PRODUCT_CATEGORY = #{selectCategory} </if>
+				<if test="keyword != null"> AND PRODUCT_TITLE LIKE '%'||#{keyword}||'%' </if>	
 			</if>
-			<if test="selectClassType == 'Standby'">
-					<if test="searchType == 'member_nick'">AND N.MEMBER_NICK LIKE '%'||#{keyword}||'%'</if>
-					<if test="searchType == 'product_title'">AND P.PRODUCT_TITLE LIKE '%'||#{keyword}||'%'</if>
-					<if test="searchType == 'category'">
-						AND P.PRODUCT_CATEGORY = #{categorySelect}
-						AND P.PRODUCT_TITLE LIKE '%'||#{keyword}||'%'
-					</if>
-					AND Q.QNA_STATUS=0
+			<if test="selectClassType == 'ingSale'"> AND PRODUCT_STATUS = 1  
+				<if test="selectCategory != 'all'"> AND P.PRODUCT_CATEGORY = #{selectCategory} </if>
+				<if test="keyword != null"> AND PRODUCT_TITLE LIKE '%'||#{keyword}||'%' </if>
 			</if>
-			<if test="selectClassType == 'Completed'">
-				<if test="searchType == 'member_nick'">AND N.MEMBER_NICK LIKE '%'||#{keyword}||'%'</if>
-				<if test="searchType == 'product_title'">AND P.PRODUCT_TITLE LIKE '%'||#{keyword}||'%'</if>
-				<if test="searchType == 'category'">
-					AND P.PRODUCT_CATEGORY = #{categorySelect}
-					AND P.PRODUCT_TITLE LIKE '%'||#{keyword}||'%'
-				</if>
-				AND Q.QNA_STATUS=1
+			<if test="selectClassType == 'pauseSale'"> AND PRODUCT_STATUS = 0 
+				<if test="selectCategory != 'all'"> AND P.PRODUCT_CATEGORY = #{selectCategory} </if>
+				<if test="keyword != null"> AND PRODUCT_TITLE LIKE '%'||#{keyword}||'%' </if>
 			</if>
-		ORDER BY Q.QNA_DATE DESC	
+			<if test="selectClassType == 'endSale'"> AND PRODUCT_STATUS = 2 
+				<if test="selectCategory != 'all'"> AND P.PRODUCT_CATEGORY = #{selectCategory} </if>
+				<if test="keyword != null"> AND PRODUCT_TITLE LIKE '%'||#{keyword}||'%' </if>
+			</if>
+		ORDER BY ${selectListAlign} DESC	
 	</select>
 
-<!--   
-	<select id="getQnaSearchList" parameterType="java.util.HashMap" resultMap="productReviewResultMap">
-		SELECT P.PRODUCT_CATEGORY, P.PRODUCT_TITLE, P.PRODUCT_NUM, N.MEMBER_NICK, Q.QNA_NUM, Q.QNA_MEMBER, Q.QNA_PRODUCT, Q.QNA_DATE, 
-		Q.QNA_CONTENT, Q.QNA_RE, Q.QNA_STATUS
-		FROM PRODUCT P, PRODUCT_QNA Q, nagagu_workshop_member W, nagagu_member N
-		WHERE P.PRODUCT_NUM =Q.QNA_PRODUCT
-		AND W.WORKSHOP_NUM=P.PRODUCT_WORKSHOP
-		AND W.WORKSHOP_NUM=#{WORKSHOP_NUM}
-		AND Q.QNA_MEMBER=N.MEMBER_NUM
-		<if test="searchType == 'member_nick'">AND N.MEMBER_NICK LIKE '%'||#{keyword}||'%'</if>
-		<if test="searchType == 'product_title'">AND P.PRODUCT_TITLE LIKE '%'||#{keyword}||'%'</if>
-		<if test="searchType == 'category'">
-			AND P.PRODUCT_CATEGORY = #{categorySelect}
-			AND P.PRODUCT_TITLE LIKE '%'||#{keyword}||'%'
-		</if>
-		ORDER BY Q.QNA_DATE DESC	
-	</select>
--->
 
+	<update id="modifyStatus" parameterType="java.util.HashMap">  
+		UPDATE PRODUCT 
+			SET PRODUCT_STATUS = #{to_status}
+		WHERE PRODUCT_NUM=#{PRODUCT_NUM}	
+	</update>
+	
+	<delete id="deleteProducts" parameterType="com.spring.order.BasketVO">	
+		DELETE FROM PRODUCT WHERE PRODUCT_NUM=#{PRODUCT_NUM}
+	</delete>	
 
+	<select id="getProductVoOfWorkshop" parameterType="java.util.HashMap" resultMap="productListResultMap">
+		SELECT * FROM PRODUCT WHERE PRODUCT_NUM = #{PRODUCT_NUM} AND PRODUCT_WORKSHOP = #{WORKSHOP_NUM}	
+				
+	</select>	
 </mapper>
