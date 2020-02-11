@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.servlet.ModelAndView;
 
 import com.spring.store.ProductVO;
 
@@ -27,7 +28,7 @@ public class ProductManagementAjaxController {
 	//---------------------------------------상품 review 관리 페이지 리스트
 	@PostMapping(value="/productReviewList.my" ,produces="application/json;charset=UTF-8")
 	public ArrayList<Map<String, Object>> productReviewList(String selectCategory, String selectListAlign, String searchType, String keyword, HttpSession session) {
-		System.out.println("getQnaSearchList 컨트롤러 start!");
+		System.out.println("productReviewList 컨트롤러 start!");
 		
 		Integer WORKSHOP_NUM = (Integer)session.getAttribute("WORKSHOP_NUM");
 		HashMap<String, Object> map = new HashMap<String, Object>();
@@ -173,7 +174,7 @@ public class ProductManagementAjaxController {
 	
 	//---------------------------------------상품 관리 페이지에서 후기/문의로 이동
 	@RequestMapping(value="/goReviewOrQna.my" ,produces="application/json;charset=UTF-8")
-	public String goReviewOrQna(int PRODUCT_NUM, Model model, HttpServletRequest request, HttpSession session) {
+	public ModelAndView goReviewOrQna(int PRODUCT_NUM, HttpServletRequest request, HttpSession session) {
 		System.out.println("goReviewOrQna 컨트롤러 start!");
 		Integer WORKSHOP_NUM = (Integer)session.getAttribute("WORKSHOP_NUM");
 		String GO = request.getParameter("GO");
@@ -186,19 +187,22 @@ public class ProductManagementAjaxController {
 		map.put("WORKSHOP_NUM", WORKSHOP_NUM);
 		map.put("PRODUCT_NUM", PRODUCT_NUM);
 		
-		ProductVO ProductVO = null;
-		ProductVO = productManagementService.getProductVoOfWorkshop(map);
+		ProductVO productVO = null;
+		productVO = productManagementService.getProductVoOfWorkshop(map);
+	
 		
-		model.addAttribute("ProductVO", ProductVO);
-		
+		String url = "";
 		if(GO.equals("QNA")) {
-			
-			return "Mypage/Workshop/Review/qnaStore";
+			//해당 상품글에 문의가 있는지 확인(없으면 따로 알람창 띄우기)
+			url = "Mypage/Workshop/Review/qnaStore";
 		} else if (GO.equals("REVIEW")) {
-			return "Mypage/Workshop/Review/reviewStore";
+			url = "Mypage/Workshop/Review/reviewStore";
 		}
-		
-		return null;
+
+		ModelAndView mav = new ModelAndView();
+		mav.setViewName(url);
+		mav.addObject("productVO", productVO);
+		return mav;
 	}
 	
 	

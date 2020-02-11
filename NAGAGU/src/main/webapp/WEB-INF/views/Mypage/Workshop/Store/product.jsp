@@ -151,7 +151,7 @@ if (session.getAttribute("WORKSHOP_NUM") == null) {
 						output += '<td><button class="btn_modify" onclick="location.href=">' + "수정 " + '</button>&nbsp;';
 						output += '<button class="btn_remove" value="'+PRODUCT_NUM+'">' + "삭제" + '</button></td>';
 						output += '<td><button class="btn_review" value="'+PRODUCT_NUM+'" onclick="goreview(this.value)">' + "후기" + '</button>&nbsp;';
-						output += '<button class="btn_qna" value="'+PRODUCT_NUM+'" onclick="goqna(this)">' + "문의" + '</button></td>';
+						output += '<button class="btn_qna" value="'+PRODUCT_NUM+'" onclick="goqna(this.value)">' + "문의" + '</button></td>';
 						output += '</tr>';
 						number += 1;
      				}
@@ -337,7 +337,7 @@ if (session.getAttribute("WORKSHOP_NUM") == null) {
 									<option value="product_date">최근 등록순</option>									
 									<option value='product_sales'>판매량순</option>
 									<option value="product_grade">평점순</option>
-									<option value="product_readcount">조회순</option>
+									<option value="product_read">조회순</option>
 									<option value="product_like">좋아요순</option>
 									<option value="product_price">판매가격순</option>
 								</select>
@@ -619,13 +619,12 @@ if (session.getAttribute("WORKSHOP_NUM") == null) {
 		/*후기 버튼 눌렀을 때 그 상품의 후기 관리 페이지로 이동*/
 		function goqna(PRODUCT_NUM) {
 			console.log("PRODUCT_NUM : " + PRODUCT_NUM)
-			location.href='./goReviewOrQna.my?PRODUCT_NUM='+PRODUCT_NUM+'&GO=QNA';
+			location.href= './goReviewOrQna.my?PRODUCT_NUM='+PRODUCT_NUM+'&GO=QNA';
 		}		
 		
 		
 		/*후기 버튼 눌렀을 때 그 상품의 후기 관리 페이지로 이동*/
 		function goreview(PRODUCT_NUM) {
-
 			console.log("PRODUCT_NUM : " + PRODUCT_NUM)
 			location.href='./goReviewOrQna.my?PRODUCT_NUM='+PRODUCT_NUM+'&GO=REVIEW';
 		}		
