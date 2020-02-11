@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.spring.mapper.AdminMapper">
+	<!-- 어드민 -->
 	<resultMap type="com.spring.admin.AdminMemberVO" id="adminResultMap">
 		<result property="ADMIN_NUM" column="ADMIN_NUM" />
 		<result property="ADMIN_ID" column="ADMIN_ID" />
@@ -69,6 +70,86 @@
 		<result property="PICS_REF" column="PICS_REF" />		
 	</resultMap>
 	
+	<!-- 아카데미관리 -->
+	<resultMap type="com.spring.academy.ClassVO" id="classResultMap">
+		<result property="CLASS_NUMBER" column="CLASS_NUMBER" />	
+		<result property="WORKSHOP_NUM" column="WORKSHOP_NUM" />
+		<result property="WORKSHOP_NAME" column="WORKSHOP_NAME" />
+		<result property="WORKSHOP_PICTURE" column="WORKSHOP_PICTURE" />
+		<result property="CLASS_DIVISION" column="CLASS_DIVISION" />	
+		<result property="CLASS_NAME" column="CLASS_NAME" />	
+		<result property="CLASS_ABRIEF" column="CLASS_ABRIEF" />	
+		<result property="CLASS_AMOUNT" column="CLASS_AMOUNT" />	
+		<result property="CLASS_DATE" column="CLASS_DATE" />	
+		<result property="CLASS_DATE_CONFIGURATION_1" column="CLASS_DATE_CONFIGURATION_1" />	
+		<result property="CLASS_DATE_CONFIGURATION_2" column="CLASS_DATE_CONFIGURATION_2" />	
+		<result property="CLASS_AREA" column="CLASS_AREA" />	
+		<result property="CLASS_CATEGORY" column="CLASS_CATEGORY" />	
+		<result property="CLASS_INTRODUCTION_1" column="CLASS_INTRODUCTION_1" />	
+		<result property="CLASS_INTRODUCTION_2" column="CLASS_INTRODUCTION_2" />	
+		<result property="CLASS_INTRODUCTION_3" column="CLASS_INTRODUCTION_3" />	
+		<result property="CLASS_ETC" column="CLASS_ETC" />	
+		<result property="CLASS_BANNER" column="CLASS_BANNER" />	
+		<result property="CLASS_IMAGE" column="CLASS_IMAGE" />
+		<result property="CLASS_ADDRESS" column="CLASS_ADDRESS" />
+		<result property="CLASS_DETAIL_ADDRESS" column="CLASS_DETAIL_ADDRESS" />
+		<result property="CLASS_COUNT_MEMBER" column="CLASS_COUNT_MEMBER" />
+		<result property="CLASS_STATUS" column="CLASS_STATUS" />
+	</resultMap>
+	
+	<!-- 상품관리 -->
+	<resultMap type="com.spring.store.ProductVO" id="productResultMap">
+		<result property="PRODUCT_NUM" column="PRODUCT_NUM" />	
+		<result property="PRODUCT_WORKSHOP" column="PRODUCT_WORKSHOP" />	
+		<result property="PRODUCT_SHOPNAME" column="PRODUCT_SHOPNAME" />	
+		<result property="PRODUCT_DATE" column="PRODUCT_DATE" />	
+		<result property="PRODUCT_TITLE" column="PRODUCT_TITLE" />	
+		<result property="PRODUCT_BRIEF" column="PRODUCT_BRIEF" />	
+		<result property="PRODUCT_CATEGORY" column="PRODUCT_CATEGORY" />
+		<result property="PRODUCT_PRICE" column="PRODUCT_PRICE" />		
+		<result property="PRODUCT_GRADE" column="PRODUCT_GRADE" />		
+		<result property="PRODUCT_READ" column="PRODUCT_READ" />
+		<result property="PRODUCT_SALES" column="PRODUCT_SALES" />		
+		<result property="PRODUCT_LIKE" column="PRODUCT_LIKE" />	
+		<result property="PRODUCT_COLOR" column="PRODUCT_COLOR" />			
+		<result property="PRODUCT_SIZE" column="PRODUCT_SIZE" />		
+		<result property="PRODUCT_INFO" column="PRODUCT_INFO" />		
+		<result property="PRODUCT_SHIP_PRICE" column="PRODUCT_SHIP_PRICE" />		
+		<result property="PRODUCT_SHIP_COMPANY" column="PRODUCT_SHIP_COMPANY" />		
+		<result property="PRODUCT_SHIP_RETURN_PRICE" column="PRODUCT_SHIP_RETURN_PRICE" />		
+		<result property="PRODUCT_SHIP_CHANGE_PRICE" column="PRODUCT_SHIP_CHANGE_PRICE" />		
+		<result property="PRODUCT_SHIP_RETURN_PLACE" column="PRODUCT_SHIP_RETURN_PLACE" />		
+		<result property="PRODUCT_SHIP_DAYS" column="PRODUCT_SHIP_DAYS" />		
+		<result property="PRODUCT_SHIP_INFO" column="PRODUCT_SHIP_INFO" />		
+		<result property="PRODUCT_AS_INFO" column="PRODUCT_AS_INFO" />		
+		<result property="PRODUCT_RETURN_INFO" column="PRODUCT_RETURN_INFO" />		
+		<result property="PRODUCT_STORE_INFO" column="PRODUCT_STORE_INFO" />		
+		<result property="PRODUCT_BANNER" column="PRODUCT_BANNER" />		
+		<result property="PRODUCT_IMAGE" column="PRODUCT_IMAGE" />	
+		<result property="PRODUCT_STATUS" column="PRODUCT_STATUS" />
+		<result property="PRODUCT_STOCK" column="PRODUCT_STOCK" />
+	</resultMap>
+	
+	<!-- 견적관리 -->
+	<resultMap type="com.spring.estimate.EstimateVO" id="estimateMap">
+		<result property="ESTIMATE_NUM" column="ESTIMATE_NUM"/>
+		<result property="ESTIMATE_MEMBER" column="ESTIMATE_MEMBER"/> 
+		<result property="ESTIMATE_NICK" column="ESTIMATE_NICK"/> 
+		<result property="ESTIMATE_TITLE" column="ESTIMATE_TITLE"/> 
+		<result property="ESTIMATE_DATE" column="ESTIMATE_DATE"/> 
+		<result property="ESTIMATE_CATEGORY" column="ESTIMATE_CATEGORY"/> 
+		<result property="ESTIMATE_SOURCE" column="ESTIMATE_SOURCE"/> 
+		<result property="ESTIMATE_COLOR" column="ESTIMATE_COLOR"/> 
+		<result property="ESTIMATE_COAT" column="ESTIMATE_COAT"/> 
+		<result property="ESTIMATE_SIZE" column="ESTIMATE_SIZE"/> 
+		<result property="ESTIMATE_FILE" column="ESTIMATE_FILE"/> 
+		<result property="ESTIMATE_CONTENT" column="ESTIMATE_CONTENT"/> 
+		<result property="ESTIMATE_PAY" column="ESTIMATE_PAY"/> 
+		<result property="ESTIMATE_STATE" column="ESTIMATE_STATE"/>
+		<result property="ESTIMATE_MINPRICE" column="ESTIMATE_MINPRICE"/>
+		<result property="ESTIMATE_OFFERCOUNT" column="ESTIMATE_OFFERCOUNT"/>
+	</resultMap>
+	
 	<!-- 어드민 -->
 	<insert id="insert_admin" parameterType="com.spring.admin.AdminMemberVO">
 		<selectKey resultType="int" keyProperty="ADMIN_NUM" order="BEFORE">
@@ -133,5 +214,45 @@
  	
  	<delete id="deletePICS" parameterType="com.spring.community.PicsVO">
  		delete from PICS where PICS_NUM = #{PICS_NUM}
+ 	</delete>
+ 	
+ 	<!-- 아카데미 관리 -->
+ 	<select id="getAcademy" parameterType="int" resultMap="classResultMap"> <!-- 이거 처리한 결과물을 list 타입으로 만들어주면 된다. select id은 내용을 호출 함. -->
+		select *
+		from (select rownum rnum, CLASS_NUMBER, CLASS_DIVISION, WORKSHOP_NAME, CLASS_NAME, CLASS_AMOUNT, CLASS_DATE_CONFIGURATION_1, CLASS_DATE_CONFIGURATION_2, 
+			  CLASS_AREA, CLASS_CATEGORY, CLASS_ADDRESS, CLASS_DETAIL_ADDRESS, CLASS_STATUS
+			  from(select * 
+			  	   from ACADEMY
+			  	   order by CLASS_DATE ASC))
+ 	</select>
+ 	
+ 	<delete id="deleteAcademy" parameterType="com.spring.academy.ClassVO">
+ 		delete from ACADEMY where CLASS_NUMBER = #{CLASS_NUMBER}
+ 	</delete>
+ 	
+ 	<!-- 상품관리 -->
+ 	<select id="getProduct" parameterType="int" resultMap="productResultMap"> <!-- 이거 처리한 결과물을 list 타입으로 만들어주면 된다. select id은 내용을 호출 함. -->
+		select *
+		from (select rownum rnum, PRODUCT_NUM, PRODUCT_SHOPNAME, PRODUCT_TITLE, PRODUCT_CATEGORY, PRODUCT_PRICE, PRODUCT_STATUS
+			  from(select * 
+			  	   from PRODUCT
+			  	   order by PRODUCT_DATE ASC))
+ 	</select>
+ 	
+ 	<delete id="deleteProduct" parameterType="com.spring.store.ProductVO">
+ 		delete from PRODUCT where PRODUCT_NUM = #{PRODUCT_NUM}
+ 	</delete>
+ 	
+ 	<!-- 견적관리 -->
+ 	<select id="getEstimate" parameterType="int" resultMap="estimateMap"> <!-- 이거 처리한 결과물을 list 타입으로 만들어주면 된다. select id은 내용을 호출 함. -->
+		select *
+		from (select rownum rnum, ESTIMATE_NUM, ESTIMATE_MEMBER, ESTIMATE_NICK, ESTIMATE_TITLE, ESTIMATE_CATEGORY, ESTIMATE_MINPRICE, ESTIMATE_OFFERCOUNT, ESTIMATE_STATE
+			  from(select * 
+			  	   from ESTIMATE
+			  	   order by ESTIMATE_DATE ASC))
+ 	</select>
+ 	
+ 	<delete id="deleteEstimate" parameterType="com.spring.estimate.EstimateVO">
+ 		delete from ESTIMATE where ESTIMATE_NUM = #{ESTIMATE_NUM}
  	</delete>
 </mapper>

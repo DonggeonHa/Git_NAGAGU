@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 
 <!-- 본문 -->
-<div id="page-content-wrapper">
+<div id="page-content-wrapper" style="padding-top: 5%;">
 	<div class="container-fluid">
 		<div class="d-flex bd-highlight mb-3">
 			<div class="mr-auto p-2 bd-highlight align-self-end">
@@ -48,16 +48,16 @@ function selectData() {
 			var title = '';
 			title += '<thead class="text-center">';
 			title += '<tr>';
-			title += '<th>번호</th>';
-			title += '<th>이메일</th>';
-			title += '<th>공방명</th>';
-			title += '<th>대표자</th>';
-			title += '<th>핸드폰</th>';
-			title += '<th>사업자번호</th>';
-			title += '<th>주소</th>';
-			title += '<th>상세주소</th>';
-			title += '<th>상태</th>';
-			title += '<th colspan="2">관리</th>';
+			title += '<th style="width: 5%;">번호</th>';
+			title += '<th style="width: 15%;">이메일</th>';
+			title += '<th style="width: 10%;">공방명</th>';
+			title += '<th style="width: 5%;">대표자</th>';
+			title += '<th style="width: 10%;">핸드폰</th>';
+			title += '<th style="width: 10%;">사업자번호</th>';
+			title += '<th style="width: 18%;"">주소</th>';
+			title += '<th style="width: 12%;">상세주소</th>';
+			title += '<th style="width: 10%;">상태</th>';
+			title += '<th colspan="2" style="width: 5%;">관리</th>';
 			title += '</tr>';
 			title += '</thead>';
 			$('#user-wtable').append(title);

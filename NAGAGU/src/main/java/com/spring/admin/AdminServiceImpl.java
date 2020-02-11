@@ -11,6 +11,9 @@ import com.spring.community.PicsVO;
 import com.spring.mapper.AdminMapper;
 import com.spring.member.MemberVO;
 import com.spring.workshop.WorkShopMemberVO;
+import com.spring.store.ProductVO;
+import com.spring.estimate.EstimateVO;
+import com.spring.academy.ClassVO;
 
 @Service
 public class AdminServiceImpl implements AdminService {
@@ -129,4 +132,60 @@ public class AdminServiceImpl implements AdminService {
 		
 		return res;
 	}
+	
+	/* ================================= 아카데미관리 ======================================*/
+	@Override
+	public List<ClassVO> getAcademy() {
+		List<ClassVO> classList = new ArrayList<ClassVO>();
+		AdminMapper adminMapper = sqlSession.getMapper(AdminMapper.class);
+		classList = adminMapper.getAcademy();
+		
+		return classList;
+	}
+
+	@Override
+	public int deleteAcademy(ClassVO vo) {
+		AdminMapper adminMapper = sqlSession.getMapper(AdminMapper.class);
+		int res = adminMapper.deleteAcademy(vo);
+		
+		return res;
+	}
+	
+	/* ================================= 상품관리 ======================================*/
+	@Override
+	public List<ProductVO> getProduct() {
+		List<ProductVO> productList = new ArrayList<ProductVO>();
+		AdminMapper adminMapper = sqlSession.getMapper(AdminMapper.class);
+		productList = adminMapper.getProduct();
+		
+		return productList;
+	}
+
+	@Override
+	public int deleteProduct(ProductVO vo) {
+		AdminMapper adminMapper = sqlSession.getMapper(AdminMapper.class);
+		int res = adminMapper.deleteProduct(vo);
+		
+		return res;
+	}
+
+	/* ================================= 견적관리 ======================================*/
+	@Override
+	public List<EstimateVO> getEstimate() {
+		List<EstimateVO> EstimateList = new ArrayList<EstimateVO>();
+		AdminMapper adminMapper = sqlSession.getMapper(AdminMapper.class);
+		EstimateList = adminMapper.getEstimate();
+		
+		return EstimateList;
+	}
+
+	@Override
+	public int deleteEstimate(EstimateVO vo) {
+		AdminMapper adminMapper = sqlSession.getMapper(AdminMapper.class);
+		int res = adminMapper.deleteEstimate(vo);
+		
+		return res;
+	}
+
+	
 }

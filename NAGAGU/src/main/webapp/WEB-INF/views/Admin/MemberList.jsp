@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 
 <!-- 본문 -->
-<div id="page-content-wrapper">
+<div id="page-content-wrapper" style="padding-top: 5%;">
 	<div class="container-fluid">
 		<div class="d-flex bd-highlight mb-3">
 			<div class="mr-auto p-2 bd-highlight align-self-end">
@@ -47,15 +47,15 @@ function selectData() {
 			var title = '';
 			title += '<thead class="text-center">';
 			title += '<tr>';
-			title += '<th scope="col">번호</th>';
-			title += '<th scope="col">이메일</th>';
-			title += '<th scope="col">이름</th>';
-			title += '<th scope="col">닉네임</th>';
-			title += '<th scope="col">핸드폰</th>';
-			title += '<th scope="col">주소</th>';
-			title += '<th scope="col">상세주소</th>';
-			title += '<th scope="col">상태</th>';
-			title += '<th scope="col">관리</th>';
+			title += '<th style="width: 5%;">번호</th>';
+			title += '<th style="width: 16%;">이메일</th>';
+			title += '<th style="width: 11%;">이름</th>';
+			title += '<th style="width: 11%;">닉네임</th>';
+			title += '<th style="width: 11%;">핸드폰</th>';
+			title += '<th style="width: 18%;"">주소</th>';
+			title += '<th style="width: 12%;">상세주소</th>';
+			title += '<th style="width: 11%;">상태</th>';
+			title += '<th style="width: 5%;">관리</th>';
 			title += '</tr>';
 			title += '</thead>';
 			$('#user-table').append(title);

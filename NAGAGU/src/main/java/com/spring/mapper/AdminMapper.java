@@ -2,9 +2,12 @@ package com.spring.mapper;
 
 import java.util.List;
 
+import com.spring.academy.ClassVO;
 import com.spring.admin.AdminMemberVO;
 import com.spring.community.PicsVO;
+import com.spring.estimate.EstimateVO;
 import com.spring.member.MemberVO;
+import com.spring.store.ProductVO;
 import com.spring.workshop.WorkShopMemberVO;
 
 public interface AdminMapper {
@@ -24,4 +27,15 @@ public interface AdminMapper {
 	List<PicsVO> getPICS();
 	int deletePICS(PicsVO vo);
 
+	/* 아카데미관리 */
+	List<ClassVO> getAcademy();
+	int deleteAcademy(ClassVO vo);
+	
+	/* 상품관리 */
+	List<ProductVO> getProduct();
+	int deleteProduct(ProductVO vo);
+	
+	/* 견적관리 */
+	List<EstimateVO> getEstimate();
+	int deleteEstimate(EstimateVO vo);
 }

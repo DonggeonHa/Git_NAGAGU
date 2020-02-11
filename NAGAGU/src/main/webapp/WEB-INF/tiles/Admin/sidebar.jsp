@@ -25,20 +25,19 @@
 			<li class="main text-white">
 				아카데미관리
 				<ul>
-					<li><a href="#">진행중인강의</a></li>
-					<li><a href="#">종료된강의</a></li>
+					<li><a href="./academyList.ad">클래스관리</a></li>
 				</ul>
 			</li>
 			<li class="main text-white">
 				상품관리
 				<ul>
-					<li><a href="#">판매중인 상품</a></li>
+					<li><a href="./productList.ad">판매중인 상품</a></li>
 				</ul>
 			</li>
 			<li class="main text-white">
 				견적관리
 				<ul>
-					<li><a href="#">견적관리</a></li>
+					<li><a href="./estimateList.ad">견적관리</a></li>
 				</ul>
 			</li>
 			<li class="main text-white">
