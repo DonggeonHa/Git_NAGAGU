@@ -157,7 +157,7 @@ public class EstimateController {
 		
 		if (res == 1) {
 			System.out.println("estimate deleted");
-			return "estimate.es";
+			return "redirect:/estimate.es";
 		}
 		else {
 			System.out.println("estimate delete failed..");
