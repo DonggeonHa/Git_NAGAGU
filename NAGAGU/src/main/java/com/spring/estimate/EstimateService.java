@@ -8,6 +8,8 @@ import org.springframework.web.multipart.MultipartFile;
 public interface EstimateService {
 	public ArrayList<EstimateVO> estimateList(HashMap <String, Object> map);
 	public int estimateInsert (EstimateVO vo);
+	public int estimateModify (EstimateVO vo);
+	public int estimateDelete (int ESTIMATE_NUM);
 	public int estimateCount (HashMap <String, Object> map);
 	public String imageUpload(String url, MultipartFile file) throws Exception;
 	public int imageDelete(String[] filesrc);

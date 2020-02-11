@@ -35,6 +35,22 @@ public class EstimateServiceImpl implements EstimateService {
 		
 		return res;
 	}
+
+	@Override
+	public int estimateModify (EstimateVO vo) {
+		EstimateMapper mapper = sqlSession.getMapper(EstimateMapper.class);
+		int res = mapper.estimateUpdate(vo);
+		
+		return res;
+	}
+	
+	@Override
+	public int estimateDelete (int ESTIMATE_NUM) {
+		EstimateMapper mapper = sqlSession.getMapper(EstimateMapper.class);
+		int res = mapper.estimateDelete(ESTIMATE_NUM);
+		
+		return res;
+	}
 	
 	@Override
 	public int estimateCount (HashMap <String, Object> map) {

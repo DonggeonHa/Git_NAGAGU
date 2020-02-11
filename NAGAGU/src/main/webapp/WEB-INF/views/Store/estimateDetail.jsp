@@ -37,8 +37,8 @@
 	}
 	
 	String images = vo.getESTIMATE_FILE();
-	System.out.println(images);
 	String[] imgArr = images.split(",");
+
 %>
 
     
@@ -65,7 +65,10 @@
 			font-family: '만화진흥원체', 'KOMACON', KOMACON;
 		}
 		
-
+		.es_body {
+			min-width:720px;
+		}
+		
 		.es_requestform {
 			font-size: 1.1em;
 			margin: 0 180px 0 0;
@@ -223,23 +226,45 @@
 			color:#ffffff;
 		}
 		
-		.thumbItem {
-			width:64px;
-			height:64px;
+		.thumbMain {
+			width:400px;
+			height:400px;
 			overflow:hidden;
 			display:block;
-			transition:transform 0.2s;
+			margin-right:10px;
 		}
 		
-		.thumbItem:hover {
-			transform:scale(1.05);
-			cursor:pointer;
+		.thumbMain img {
+			display:block;
+			min-height:100%;
+			min-width:100%;
+			-ms-interpolation-mode: bicubic;
+		}
+		
+		.thumbItem {
+			width:76px;
+			height:76px;
+			overflow:hidden;
+			display:block;
+			margin:6px;
+		}
+		
+		.thumbCheck {
+			border:2px solid #ef902e;
+			border-radius:4px;
 		}
 		
 		.thumbItem img {
 			display:block;
 			min-height:100%;
-			max-height:100%;
+			min-width:100%;
+			-ms-interpolation-mode: bicubic;
+			transition:transform 0.2s;
+		}
+		
+		.thumbItem img:hover {
+			transform:scale(1.05);
+			cursor:pointer;
 		}
 
 	</style>
@@ -248,7 +273,7 @@
 	
 	<body class="order-body">
 		<!-- content start -->
-		<div class="container">
+		<div class="container es_body">
 			<br />
 			<br />
 			<br />
@@ -258,14 +283,16 @@
 				</div>
 			</div>			
 			<div class="row justify-content-center pb-3">
-				<div class="slider-for"></div>
+				<div class="thumbMain">
+					<a href=<%=imgArr[0] %> target="_blank"><img src=<%=imgArr[0] %>></a>
+				</div>
 				<div class="thumnList">
 				<%
 					for (int i=0; i<imgArr.length; i++) {
 				%>
-					<div class="thumbItem"><img src=<%=imgArr[i] %>></div>
+					<div class="thumbItem<% if (i==0) { %> thumbCheck <% } %>" thumb-idx=<%=i %>><img src=<%=imgArr[i] %>></div>
 				<% 
-					} 
+					}
 				%>
 				</div>
 			</div>
@@ -310,9 +337,10 @@
 				<% if (login_state==2) { %>
 					<button class="btn btn-dark btn-md" alt="" data-toggle="modal" data-target="#offerFormModal" aria-haspopup="true" aria-expanded="false">
 					입찰하기</button>&nbsp;&nbsp;&nbsp;
-				<% } else if (member_mail == mailChk) { %>
-					<button id="btn_modify" class="btn btn-dark btn-md" onclick="loaction.href='estimate_modify.es?ESTIMATE_NUM=<%=ESTIMATE_NUM%>&page=<%=nowpage%>'">수정</button>  &nbsp;
-					<button id="btn_delete" class="btn btn-dark btn-md" onclick="location.href='estimate_delete.es?ESIMATE_NUM=<%=ESTIMATE_NUM%>'">삭제</button>  &nbsp;
+				<% }
+					if (member_mail.equals(mailChk)) { %>
+					<button id="btn_modify" class="btn btn-dark btn-md" onclick="location.href='estimate_modify.es?ESTIMATE_NUM=<%=ESTIMATE_NUM%>&page=<%=nowpage%>'">수정</button>  &nbsp;
+					<button id="btn_delete" class="btn btn-dark btn-md" onclick="location.href='estimate_delete.es?ESIMATE_NUM=<%=ESTIMATE_NUM%>&ESTIMATE_NUM=<%=ESTIMATE_NUM%>'">삭제</button>  &nbsp;
 				<% } %>
 					<button class="btn btn-dark btn-md" onclick="location.href='estimate.es?page=<%=nowpage%>'">목록보기</button>
 				</div>
@@ -332,10 +360,10 @@
 					<thead>
 						<tr>
 							<th width="10%">번호</th>
-							<th width="20%">공방 이름</th>
-							<th width="15%">제시 가격</th>
-							<th width="15%">문의</th>		
-							<th width="15%">처리</th>
+							<th width="25%">공방 이름</th>
+							<th width="25%">제시 가격</th>
+							<th width="20%">문의</th>		
+							<th width="20%">처리</th>
 						<tr>
 					</thead>
 					<tbody>
@@ -423,7 +451,7 @@
 	
 	<script>
 	var login_state = <%=login_state%>
-	var checkPrice = /^[0-9]$/;
+	var checkPrice =  /^[0-9]*$/;
 	
 		$(document).ready(function (){
 			
@@ -445,6 +473,8 @@
 					async:false,
 					contentType:'application/x-www-form-urlencoded; charset=utf-8',
 					success:function(data) {
+						console.log(data.offerCount);
+						
 						var output = '';
 						var pagination = '';
 						
@@ -486,17 +516,17 @@
 							/* 댓글 페이지네이션 */
 							
 							if (offer_page == max_page && offer_page > 5) {
-								pagination += '<div class="pageNum pageNum pagelink" value="' + Number(offer_page-5) + '">&laqua;</div>';
+								pagination += '<div class="pageNum pageNum pagelink" value="' + Number(offer_page-5) + '"><i class="fas fa-angle-double-left page_num"></i></div>';
 								pagination += '<div class="pageNum pageNum pagelink" value="' + Number(offer_page-4) + '">' + Number(offer_page-4) + '</a></div>';
 								pagination += '<div class="pageNum pageNum pagelink" value="' + Number(offer_page-3) + '">' + Number(offer_page-3) + '</a></div>';
 							}
 							else if (offer_page == max_page-1 && offer_page > 4) {
-								pagination += '<div class="pageNum pageNum pagelink" value="' + Number(offer_page-4) + '">&laqua;</div>';
+								pagination += '<div class="pageNum pageNum pagelink" value="' + Number(offer_page-4) + '"><i class="fas fa-angle-double-left page_num"></i></div>';
 								pagination += '<div class="pageNum pageNum pagelink" value="' + Number(offer_page-3) + '">' + Number(offer_page-3) + '</a></div>';
 							}
 							else {
 								if (offer_page > 3) {
-									pagination += '<div class="pageNum pagelink" value="' + Number(offer_page-3) + '">&laqua;</div>';
+									pagination += '<div class="pageNum pagelink" value="' + Number(offer_page-3) + '"><i class="fas fa-angle-double-left page_num"></i></div>';
 								}
 							} 
 							
@@ -517,15 +547,15 @@
 							if (offer_page == 1 && max_page > 5) {
 								pagination += '<div class="pageNum pagelink" value="' + Number(offer_page+3) + '">' + Number(offer_page+3) + '</a></div>';
 								pagination += '<div class="pageNum pagelink" value="' + Number(offer_page+4) + '">' + Number(offer_page+4) + '</a></div>';
-								pagination += '<div class="pageNum pagelink" value="' + Number(offer_page+5) + '">&raqua;</div>';
+								pagination += '<div class="pageNum pagelink" value="' + Number(offer_page+5) + '"><i class="fas fa-angle-double-right page_num"></i></div>';
 							}
 							else if (offer_page == 2 && max_page > 6) {
 								pagination += '<div class="pageNum pagelink" value="' + Number(offer_page+3) + '">' + Number(offer_page+3) + '</a></div>';
-								pagination += '<div class="pageNum pagelink" value="' + Number(offer_page+4) + '">&raqua;</div>';
+								pagination += '<div class="pageNum pagelink" value="' + Number(offer_page+4) + '"><i class="fas fa-angle-double-right page_num"></i></div>';
 							}
 							else {
 								if (max_page > offer_page+2) {
-									pagination += '<div class="pageNum pagelink" value="' + Number(offer_page+3) + '">&raqua;</div>';
+									pagination += '<div class="pageNum pagelink" value="' + Number(offer_page+3) + '"><i class="fas fa-angle-double-right page_num"></i></div>';
 								}
 							}
 						}
@@ -570,8 +600,17 @@
 			$('#btn_offer').click(function() {
 				var offer_price = $('#offer_price').val();
 				var offer_content = $('#offer_content').val();
+				var workshop_chk = $('.item_head').length;
+				console.log(workshop_chk);
+				console.log(login_state);
 				
-				if (!checkPrice.test(modify_price)) {
+				if (login_state == 2 && workshop_chk > 0) {
+					alert('이미 제안글을 등록하셨습니다.');
+					
+					return false;
+				}
+				
+				if (!checkPrice.test(offer_price)) {
 					alert("가격란은 숫자만 입력 가능합니다.");
 					$('offer_price').focus();
 					
@@ -597,8 +636,7 @@
 					contentType: 'application/x-www-form-urlencoded; charset=utf-8',
 					success : function(data) {
 						alert("제안글이 성공적으로 등록되었습니다.");
-						$('#offerFormModal').modal("hide");
-						getOfferList();
+						location.reload();
 					},
 				     error:function(request,status,error){
 				         alert("code = "+ request.status + " message = " + request.responseText + " error = " + error);
@@ -612,14 +650,11 @@
 			$(document).delegate('.btn_offer_modify', 'click', function() {
 				
 				var m_offer_num = $(this).attr('value');
-				console.log(m_offer_num);
 				$('#modify_offer_num').val(m_offer_num);
 				var m_price = $('#offer_price_' + m_offer_num).html();
-				$('#modify_offer_price').val(m_price);
-				console.log(m_price);
+				$('#modify_offer_price').val(unComma(m_price));
 				var m_content = $('#offer_content_' + m_offer_num).html();
 				$('#modify_offer_content').val(m_content);
-				console.log(m_content);
 
 				return false;
 			});
@@ -641,7 +676,7 @@
 					
 					return false;
 				}
-				if (offer_content == "") {
+				if (modify_content == "") {
 					alert("내용을 입력해주십시오.");
 					$('#modify_offer_content').focus();
 				}
@@ -655,8 +690,7 @@
 					contentType: 'application/x-www-form-urlencoded; charset=utf-8',
 					success : function(data) {
 						alert("제안글이 성공적으로 수정되었습니다.");
-						$('#modifyFormModal').modal("hide");
-						getOfferList();
+						location.reload();
 					},
 				     error:function(request,status,error){
 				         alert("code = "+ request.status + " message = " + request.responseText + " error = " + error);
@@ -665,6 +699,7 @@
 				});
 			});
 			
+			/* 견적 제안 삭제 */
 			$(document).delegate('.btn_offer_delete', 'click', function() {
 				var of_num = $(this).attr('value');
 				var es_num = <%=ESTIMATE_NUM%>;
@@ -692,11 +727,35 @@
 				return false;
 			});
 			
+			/* 썸네일 클릭 */
+			$(document).delegate('.thumbItem', 'click', function() {
+				var idx = $(this).attr('thumb-idx');
+				$('.thumbItem').removeClass('thumbCheck');
+				$(this).addClass('thumbCheck');
+				if (idx == 0) {
+					$('.thumbMain').html('<a href="' + '<%=imgArr[0]%>' + '" target="_blank"><img src="' + '<%=imgArr[0]%>' + '"></a>');
+				} <% if (imgArr.length > 1) { %> else if (idx == 1) {
+					$('.thumbMain').html('<a href="' + '<%=imgArr[1]%>' + '" target="_blank"><img src="' + '<%=imgArr[1]%>' + '"></a>');
+				} <% } if (imgArr.length > 2) { %> else if (idx == 2) {
+					$('.thumbMain').html('<a href="' + '<%=imgArr[2]%>' + '" target="_blank"><img src="' + '<%=imgArr[2]%>' + '"></a>');
+				} <% } if (imgArr.length > 3) { %> else if (idx == 3) {
+					$('.thumbMain').html('<a href="' + '<%=imgArr[3]%>' + '" target="_blank"><img src="' + '<%=imgArr[3]%>' + '"></a>');
+				} <% } if (imgArr.length > 4) { %> else {
+					$('.thumbMain').html('<a href="' + '<%=imgArr[4]%>' + '" target="_blank"><img src="' + '<%=imgArr[4]%>' + '"></a>');
+				} <% } %>
+			});
+			
 			getOfferList();
 		});
 		
+		
 		function addComma(inputNumber) {
 			   return inputNumber.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+		}
+		
+		function unComma(str) {
+		    str = String(str);
+		    return str.replace(/[^\d]+/g, '');
 		}
 	</script>
 		<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>

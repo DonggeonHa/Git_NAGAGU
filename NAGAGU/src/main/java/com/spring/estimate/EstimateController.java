@@ -66,6 +66,7 @@ public class EstimateController {
 	@RequestMapping(value="/estimate_modify.es")
 	public String estimateModifyForm(HttpServletRequest request, Model model) {
 		int ESTIMATE_NUM = Integer.parseInt(request.getParameter("ESTIMATE_NUM"));
+		
 		String page = request.getParameter("page");
 		
 		EstimateVO esvo = estimateService.estimateDetail(ESTIMATE_NUM);
@@ -76,33 +77,15 @@ public class EstimateController {
 		return "Store/estimateModifyForm";
 	}
 	
-	@RequestMapping(value="/estimate_update.es")
-	public String estimateModify(HttpServletRequest request, Model model) {
-		
-			EstimateVO vo = new EstimateVO();
-			String page = request.getParameter("page");
-			
-			vo.setESTIMATE_MEMBER(request.getParameter("ESTIMATE_MEMBER"));
-			vo.setESTIMATE_NICK(request.getParameter("ESTIMATE_NICK"));
-			vo.setESTIMATE_TITLE(request.getParameter("ESTIMATE_TITLE"));
-			vo.setESTIMATE_CATEGORY(request.getParameter("ESTIMATE_CATEGORY"));
-			vo.setESTIMATE_SOURCE(request.getParameter("ESTIMATE_SOURCE"));
-			vo.setESTIMATE_COLOR(request.getParameter("ESTIMATE_COLOR"));
-			vo.setESTIMATE_COAT(request.getParameter("ESTIMATE_COAT"));
-			vo.setESTIMATE_SIZE(request.getParameter("ESTIMATE_SIZE"));
-			vo.setESTIMATE_FILE(request.getParameter("ESTIMATE_FILE"));
-			vo.setESTIMATE_CONTENT(request.getParameter("ESTIMATE_CONTENT"));
-			vo.setESTIMATE_PAY(request.getParameter("ESTIMATE_PAY"));
-			
-			String redirect = "redirect:/estimate.es?page=";
-			redirect += page;
-			
-			return redirect;
-	}
-	
 	@RequestMapping(value="/estimate_input.es")
 	public String estimateInput(HttpServletRequest request) {
 		EstimateVO vo = new EstimateVO();
+		
+		String ESTIMATE_FILE = request.getParameter("ESTIMATE_FILE");
+		
+		if (ESTIMATE_FILE.equals("")) {
+			ESTIMATE_FILE = "https://via.placeholder.com/400.png?text=No+Image";
+		}
 		
 		vo.setESTIMATE_MEMBER(request.getParameter("ESTIMATE_MEMBER"));
 		vo.setESTIMATE_NICK(request.getParameter("ESTIMATE_NICK"));
@@ -112,7 +95,7 @@ public class EstimateController {
 		vo.setESTIMATE_COLOR(request.getParameter("ESTIMATE_COLOR"));
 		vo.setESTIMATE_COAT(request.getParameter("ESTIMATE_COAT"));
 		vo.setESTIMATE_SIZE(request.getParameter("ESTIMATE_SIZE"));
-		vo.setESTIMATE_FILE(request.getParameter("ESTIMATE_FILE"));
+		vo.setESTIMATE_FILE(ESTIMATE_FILE);
 		vo.setESTIMATE_CONTENT(request.getParameter("ESTIMATE_CONTENT"));
 		vo.setESTIMATE_PAY(request.getParameter("ESTIMATE_PAY"));
 		
@@ -127,6 +110,62 @@ public class EstimateController {
 			return "Store/estimateForm";
 		}
 	}
+	
+	@RequestMapping(value="/estimate_update.es")
+	public String estimateModify(HttpServletRequest request, Model model) {
+
+		String ESTIMATE_FILE = request.getParameter("ESTIMATE_FILE");
+
+		if (ESTIMATE_FILE.equals("")) {
+			ESTIMATE_FILE = "https://via.placeholder.com/400.png?text=No+Image";
+		}
+
+		EstimateVO vo = new EstimateVO();
+		String page = request.getParameter("page");
+
+		vo.setESTIMATE_NUM(Integer.parseInt(request.getParameter("ESTIMATE_NUM")));
+		vo.setESTIMATE_MEMBER(request.getParameter("ESTIMATE_MEMBER"));
+		vo.setESTIMATE_NICK(request.getParameter("ESTIMATE_NICK"));
+		vo.setESTIMATE_TITLE(request.getParameter("ESTIMATE_TITLE"));
+		vo.setESTIMATE_CATEGORY(request.getParameter("ESTIMATE_CATEGORY"));
+		vo.setESTIMATE_SOURCE(request.getParameter("ESTIMATE_SOURCE"));
+		vo.setESTIMATE_COLOR(request.getParameter("ESTIMATE_COLOR"));
+		vo.setESTIMATE_COAT(request.getParameter("ESTIMATE_COAT"));
+		vo.setESTIMATE_SIZE(request.getParameter("ESTIMATE_SIZE"));
+		vo.setESTIMATE_FILE(request.getParameter("ESTIMATE_FILE"));
+		vo.setESTIMATE_CONTENT(request.getParameter("ESTIMATE_CONTENT"));
+		vo.setESTIMATE_PAY(request.getParameter("ESTIMATE_PAY"));
+		
+		int res = estimateService.estimateModify(vo);
+
+		if (res == 1) {
+			System.out.println("estimate modified");
+
+			return "redirect:/estimate.es?page=" + page;
+		}
+		else {
+			System.out.println("estimate modify failed");
+			
+			return "redirect:/estimate_detail.es?ESTIMATE_NUM=" + vo.getESTIMATE_NUM();
+		}
+	}
+	
+	@RequestMapping(value = "/estimate_delete.es")
+	public String estimateDelete(HttpServletRequest request) {
+		int ESTIMATE_NUM = Integer.parseInt(request.getParameter("ESTIMATE_NUM"));
+		int res = estimateService.estimateDelete(ESTIMATE_NUM);
+		
+		if (res == 1) {
+			System.out.println("estimate deleted");
+			return "estimate.es";
+		}
+		else {
+			System.out.println("estimate delete failed..");
+			
+			return "redirect:/estimate_detail.es?ESTIMATE_NUM=" + ESTIMATE_NUM;
+		}
+	}
+	
 	
 	@RequestMapping(value = "/estimate_detail.es")
 	public String estimateDetail(HttpServletRequest request, Model model) {

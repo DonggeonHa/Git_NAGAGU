@@ -350,20 +350,20 @@
 					/* 댓글 페이지네이션 */
 					var pagination = "";
 					var page = <%=nowpage%>;
-					var maxpage = <%=maxpage%>;
+					var max_page = <%=maxpage%>;
 					
-					if (page == maxpage && page > 5) {
-						pagination += '<div class="pageNum pagelink" value="' + Number(page-5) + '">&laqua;</div>';
-						pagination += '<div class="pageNum pagelink" value="' + Number(page-4) + '">' + Number(page-4) + '</a></div>';
-						pagination += '<div class="pageNum pagelink" value="' + Number(page-3) + '">' + Number(page-3) + '</a></div>';
+					if (page == max_page && page > 5) {
+						pagination += '<div class="pageNum pageNum pagelink" value="' + Number(page-5) + '"><i class="fas fa-angle-double-left page_num"></i></div>';
+						pagination += '<div class="pageNum pageNum pagelink" value="' + Number(page-4) + '">' + Number(page-4) + '</a></div>';
+						pagination += '<div class="pageNum pageNum pagelink" value="' + Number(page-3) + '">' + Number(page-3) + '</a></div>';
 					}
-					else if (page == maxpage-1 && page > 4) {
-						pagination += '<div class="pageNum pagelink" value="' + Number(page-4) + '">&laqua;</div>';
-						pagination += '<div class="pageNum pagelink" value="' + Number(page-3) + '">' + Number(page-3) + '</a></div>';
+					else if (page == max_page-1 && page > 4) {
+						pagination += '<div class="pageNum pageNum pagelink" value="' + Number(page-4) + '"><i class="fas fa-angle-double-left page_num"></i></div>';
+						pagination += '<div class="pageNum pageNum pagelink" value="' + Number(page-3) + '">' + Number(page-3) + '</a></div>';
 					}
 					else {
 						if (page > 3) {
-							pagination += '<div class="pageNum pagelink" value="' + Number(page-3) + '">&laqua;</div>';
+							pagination += '<div class="pageNum pagelink" value="' + Number(page-3) + '"><i class="fas fa-angle-double-left page_num"></i></div>';
 						}
 					} 
 					
@@ -374,25 +374,25 @@
 						pagination += '<div class="pageNum pagelink" value="' + Number(page-1) + '">' + Number(page-1) + '</a></div>';
 					}
 						pagination += '<div class="pageNum currentpage">' + page + '</div>';
-					if (maxpage > page) {
+					if (max_page > page) {
 						pagination += '<div class="pageNum pagelink" value="' + Number(page+1) + '">' + Number(page+1) + '</a></div>';
 					}
-					if (maxpage > page+1) {
+					if (max_page > page+1) {
 						pagination += '<div class="pageNum pagelink" value="' + Number(page+2) + '">' + Number(page+2) + '</a></div>';
 					}
 					
-					if (page == 1 && maxpage > 5) {
+					if (page == 1 && max_page > 5) {
 						pagination += '<div class="pageNum pagelink" value="' + Number(page+3) + '">' + Number(page+3) + '</a></div>';
 						pagination += '<div class="pageNum pagelink" value="' + Number(page+4) + '">' + Number(page+4) + '</a></div>';
-						pagination += '<div class="pageNum pagelink" value="' + Number(page+5) + '">&raqua;</div>';
+						pagination += '<div class="pageNum pagelink" value="' + Number(page+5) + '"><i class="fas fa-angle-double-right page_num"></i></div>';
 					}
-					else if (page == 2 && maxpage > 6) {
+					else if (page == 2 && max_page > 6) {
 						pagination += '<div class="pageNum pagelink" value="' + Number(page+3) + '">' + Number(page+3) + '</a></div>';
-						pagination += '<div class="pageNum pagelink" value="' + Number(page+4) + '">&raqua;</div>';
+						pagination += '<div class="pageNum pagelink" value="' + Number(page+4) + '"><i class="fas fa-angle-double-right page_num"></i></div>';
 					}
 					else {
-						if (maxpage > page+2) {
-							pagination += '<div class="pageNum pagelink" value="' + Number(page+3) + '">&raqua;</div>';
+						if (max_page > page+2) {
+							pagination += '<div class="pageNum pagelink" value="' + Number(page+3) + '"><i class="fas fa-angle-double-right page_num"></i></div>';
 						}
 					}
 				

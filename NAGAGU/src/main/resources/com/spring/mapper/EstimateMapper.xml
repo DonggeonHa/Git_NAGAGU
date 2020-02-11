@@ -39,6 +39,17 @@
 		#{ESTIMATE_FILE}, #{ESTIMATE_CONTENT}, #{ESTIMATE_PAY}, 0, 0, 0)
 	</insert>
 	
+	<update id="estimateUpdate" parameterType="com.spring.estimate.EstimateVO">
+		update ESTIMATE set ESTIMATE_TITLE = #{ESTIMATE_TITLE}, ESTIMATE_CATEGORY = #{ESTIMATE_CATEGORY}, 
+		ESTIMATE_SOURCE = #{ESTIMATE_SOURCE}, ESTIMATE_COLOR = #{ESTIMATE_COLOR}, ESTIMATE_COAT = #{ESTIMATE_COAT}, 
+		ESTIMATE_SIZE = #{ESTIMATE_SIZE}, ESTIMATE_FILE = #{ESTIMATE_FILE}, ESTIMATE_CONTENT = #{ESTIMATE_CONTENT},
+		ESTIMATE_PAY = #{ESTIMATE_PAY} where ESTIMATE_NUM = #{ESTIMATE_NUM}
+	</update>
+	
+	<delete id="estimateDelete" parameterType="int">
+		delete from ESTIMATE where ESTIMATE_NUM = #{ESTIMATE_NUM}
+	</delete>
+	
 	<select id="estimateList" parameterType="java.util.HashMap" resultMap="estimateMap">
 		select * from (select ROWNUM RNUM, ESTIMATE_NUM, ESTIMATE_MEMBER, ESTIMATE_NICK, ESTIMATE_TITLE, 
 		ESTIMATE_DATE, ESTIMATE_CATEGORY, ESTIMATE_PAY, ESTIMATE_STATE, ESTIMATE_MINPRICE, ESTIMATE_OFFERCOUNT from ESTIMATE)
@@ -65,11 +76,10 @@
 	</select>
 	
 	<select id="offerList" parameterType="java.util.HashMap" resultMap="offerMap">
-        select * from (select ROWNUM RNUM, OFFER_NUM, OFFER_ESTIMATE, OFFER_WORKSHOP, OFFER_DATE, 
+        select * from (select ROW_NUMBER() OVER (ORDER BY OFFER_PRICE asc, OFFER_DATE desc) AS RNUM, OFFER_NUM, OFFER_ESTIMATE, OFFER_WORKSHOP, OFFER_DATE, 
         OFFER_CONTENT, OFFER_PRICE, OFFER_STATE from ESTIMATE_OFFER)
         <![CDATA[where RNUM >= #{startRow} and RNUM <= #{endRow} and OFFER_ESTIMATE = #{ESTIMATE_NUM}]]>
         <if test="OFFER_WORKSHOP != null"> and OFFER_WORKSHOP = #{OFFER_WORKSHOP}</if>
-        order by OFFER_PRICE asc, OFFER_DATE desc
     </select>
     
     <select id="offerCount" parameterType="java.util.HashMap" resultType="int">
@@ -91,7 +101,7 @@
 	
 	<update id="offerSetInfo" parameterType="com.spring.estimate.EstimateVO">
 		update ESTIMATE set ESTIMATE_MINPRICE = #{ESTIMATE_MINPRICE}
-		<if test="ESTIMATE_MINPRICE != null">, ESTIMATE_OFFERCOUNT = #{ESTIMATE_OFFERCOUNT}</if> 
+		<if test="ESTIMATE_OFFERCOUNT != null">, ESTIMATE_OFFERCOUNT = #{ESTIMATE_OFFERCOUNT}</if> 
 		where ESTIMATE_NUM = #{ESTIMATE_NUM}
 	</update>
 	

@@ -161,6 +161,10 @@
 			background:#000000;
 			cursor:pointer;
 		}
+		
+		.nav-link.active {
+			background-color: #EAEAEA !important;
+		}
 
 
 	</style>
@@ -228,7 +232,76 @@
 			<div class="row text-center">
 				<div class="col-md-4 d-flex justify-content-end title">결제 방법</div>
 				<div class="col-md-8 d-flex justify-content-start">
-					<input type="checkbox" id="ESTIMATE_PAY" name="ESTIMATE_PAY" value="신용카드">신용카드
+					<input type="hidden" id="ESTIMATE_PAY" name="ESTIMATE_PAY">
+					<ul class="nav nav-pills mb-3 table table-bordered" id="pills-tab"
+						role="tablist">
+						<li class="nav-item payment" value="card"><a
+							class="nav-link active" id="pills-card-tab" data-toggle="pill"
+							href="#pills-card" role="tab" aria-controls="pills-home"
+							aria-selected="true"> <label> <img width="64"
+									src="https://bucketplace-v2-development.s3.amazonaws.com/pg/card.png"
+									alt="Card">
+									<div class="text-center">
+										<font color="black">카드</font>
+									</div>
+							</label>
+						</a></li>
+						<li class="nav-item payment" value="nobook"><a
+							class="nav-link" id="pills-vbank-tab" data-toggle="pill"
+							href="#pills-vbank" role="tab" aria-controls="pills-home"
+							aria-selected="true"> <label> <img width="64"
+									src="https://bucketplace-v2-development.s3.amazonaws.com/pg/vbank.png"
+									alt="Vbank">
+									<div class="text-center">
+										<font color="black">무통장입금</font>
+									</div>
+							</label>
+						</a></li>
+						<li class="nav-item payment" value="phone"><a
+							class="nav-link" id="pills-phone-tab" data-toggle="pill"
+							href="#pills-phone" role="tab" aria-controls="pills-home"
+							aria-selected="true"> <label> <img width="64"
+									src="https://bucketplace-v2-development.s3.amazonaws.com/pg/phone.png"
+									alt="Phone">
+									<div class="text-center">
+										<font color="black">핸드폰</font>
+									</div>
+							</label>
+						</a></li>
+						<li class="nav-item payment" value="toss"><a class="nav-link"
+							id="pills-toss-tab" data-toggle="pill" href="#pills-toss"
+							role="tab" aria-controls="pills-home" aria-selected="true"> <label>
+									<img width="64"
+									src="https://bucketplace-v2-development.s3.amazonaws.com/pg/toss.png"
+									alt="Toss">
+									<div class="text-center">
+										<font color="black">토스</font>
+									</div>
+							</label>
+						</a></li>
+						<li class="nav-item payment" value="naver"><a
+							class="nav-link" id="pills-naver-tab" data-toggle="pill"
+							href="#pills-naver" role="tab" aria-controls="pills-home"
+							aria-selected="true"> <label> <img width="64"
+									src="https://bucketplace-v2-development.s3.amazonaws.com/pg/naver.png"
+									alt="Naver">
+									<div class="text-center">
+										<font color="black">네이버페이</font>
+									</div>
+							</label>
+						</a></li>
+						<li class="nav-item payment" value="kakao"><a
+							class="nav-link" id="pills-kakao-tab" data-toggle="pill"
+							href="#pills-kakao" role="tab" aria-controls="pills-home"
+							aria-selected="true"> <label> <img width="64"
+									src="https://scontent-icn1-1.xx.fbcdn.net/v/t1.0-9/p960x960/52775098_2282365115374551_3623666965651914752_o.png?_nc_cat=109&_nc_ohc=l2DGRIBJakYAX-7EhT8&_nc_ht=scontent-icn1-1.xx&oh=a98e852e8cfa475f79014246688b9965&oe=5E97B88B"
+									alt="Kakao">
+									<div class="text-center">
+										<font color="black">카카오페이</font>
+									</div>
+							</label>
+						</a></li>
+					</ul>
 				</div>
 			</div>
 			<div class="row text-center pt-1 pb-1">
@@ -239,8 +312,9 @@
 				</div>
 			</div>
 
-			<div class="row justify-content-center pt-5 pl-5 ml-5">
-				<button type="button" id="btn_estimate" class="btn btn-outline-dark btn-md">신청하기</button>
+			<div class="row justify-content-center pt-5">
+				<button type="button" id="btn_estimate" class="btn btn-outline-dark btn-md">신청하기</button>&nbsp;&nbsp;
+				<button type="button" class="btn btn-outline-dark btn-md" onclick="history.go(-1)">취소</button>
 			</div>
 	
 			
@@ -264,9 +338,7 @@
         });
         
         $(document).on('mouseenter', '.imageThumb', function() {
-        	console.log("hey");
        		var test = $(this).find('div.thumb_title').attr('idx');
-       		console.log(test);
         	$(this).find('div.thumb_title').show(200);
         });
         
@@ -380,10 +452,9 @@
 
     $(document).on('click', '.close', function(e) {
 		e.stopPropagation();
-    	console.log("test");
 		var $target = $(e.target);
 		var idx = $target.attr('data-idx');
-		fileList[idx].upload = 'disable'; //삭제된 항목은 업로드하지 않기 위해 플래그 생성
+		delete fileList[idx];
 		$target.parent().remove(); //프리뷰 삭제
 
     	uploadCnt--;
@@ -392,36 +463,47 @@
 		}
 	});
 
-    /* ---------------------------- 체크박스 스타일 ------------------------------*/
+    /* ---------------------------- 코팅 여부 체크 ------------------------------*/
     
     var coat_chk = 0;
     
     $("#coat_yes").click(function(e) {
-		e.stopPropagation();
     	if (coat_chk == 1){
         	$(this).attr('class', 'coat_label');
         	coat_chk = 0;
-        	return false;
+        	$("input:radio[id='check_yes']").prop('checked', false);
+	    	return false;
     	}
-    	$(this).attr('class', 'coat_label coat_checked');
-    	$("#coat_no").attr('class', 'coat_label coat_uncheck');
-    	coat_chk = 1;
-    	
-    	return false;
+    	else {
+	    	$(this).attr('class', 'coat_label coat_checked');
+	    	$("#coat_no").attr('class', 'coat_label coat_uncheck');
+	    	coat_chk = 1;
+        	$("input:radio[id='check_yes']").prop('checked', true);
+	    	return false;
+    	}
     });
     
     $("#coat_no").click(function(e) {
-		e.stopPropagation();	
     	if (coat_chk == 2) {
         	$(this).attr('class', 'coat_label');
         	coat_chk = 0;
-        	return false;
+        	$("input:radio[id='check_no']").prop('checked', false);
+	    	return false;
     	}
-    	$(this).attr('class', 'coat_label coat_checked');
-    	$("#coat_yes").attr('class', 'coat_label coat_uncheck');
-    	coat_chk = 2;
-
-    	return false;
+    	else {
+        	$(this).attr('class', 'coat_label coat_checked');
+        	$("#coat_yes").attr('class', 'coat_label coat_uncheck');
+        	coat_chk = 2;
+        	$("input:radio[id='check_no']").prop('checked', true);
+	    	return false;
+    	}
+    });
+    
+    /* --------------------------- 결제 수단 선택 ------------------------------*/
+    
+    $('.payment').click(function() {
+    	$('#ESTIMATE_PAY').val($(this).attr('value'));
+    	console.log($('#ESTIMATE_PAY').val());
     });
     
     
@@ -476,30 +558,33 @@
                 console.log(fileList[i]);
                 var formData = new FormData();
                 	
-                formData.append('file', fileList[i]);
+                if (fileList[i] != null) {
                 	
-                $.ajax({
-                        url : "/NAGAGU/estimate_file.es",
-                        data : formData,
-                        type : 'POST',
-                        enctype : 'multipart/form-data',
-                        async: false,
-                        processData : false,
-                        contentType : false,
-                        cache : false,
-                        success : function(result) {
-                            if (result.length > 0) {
-                                if (i==fileList.length-1) {
-                                    fileUrlList += result;
-                                }
-                                else {
-                                    fileUrlList += result + ', ';
-                                }
-                            } else {
-                                alert("실패");
-                            }
-                        }
-               });
+	                formData.append('file', fileList[i]);
+	                	
+	                $.ajax({
+	                        url : "/NAGAGU/estimate_file.es",
+	                        data : formData,
+	                        type : 'POST',
+	                        enctype : 'multipart/form-data',
+	                        async: false,
+	                        processData : false,
+	                        contentType : false,
+	                        cache : false,
+	                        success : function(result) {
+	                            if (result.length > 0) {
+	                                if (i==fileList.length-1) {
+	                                    fileUrlList += result;
+	                                }
+	                                else {
+	                                    fileUrlList += result + ', ';
+	                                }
+	                            } else {
+	                                alert("실패");
+	                            }
+	                        }
+	               });
+                }
            }
 			$('#ESTIMATE_FILE').val(fileUrlList);
 		}
