@@ -14,8 +14,11 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.spring.academy.ClassVO;
 import com.spring.community.PicsVO;
+import com.spring.estimate.EstimateVO;
 import com.spring.member.MemberVO;
+import com.spring.store.ProductVO;
 import com.spring.workshop.WorkShopMemberVO;
 
 @Controller
@@ -195,6 +198,135 @@ public class AdminController {
 		try {
 			System.out.println("PICS_NUM = " + vo.getPICS_NUM());
 			int res = adminService.deletePICS(vo);
+			
+			retVal.put("res", "OK");
+		} catch(Exception e) {
+			retVal.put("res", "FAIL");
+			retVal.put("message", "삭제가 되지 않았습니다.");
+		}
+		
+		return retVal;
+	}
+	
+	/*=========================== 아카데미 관리 ==============================*/
+	@RequestMapping(value = "/academyList.ad")
+	public String academyList() {
+		return "Admin/AcademyList";
+	}
+	
+	//produces 속성을 이용해 Response의 Content-Type을 제어할 수 있다
+	@RequestMapping(value = "/Academy.ad", produces="application/json;charset=UTF-8")
+	@ResponseBody
+	public String academyList2() {
+		List<ClassVO> academyList = adminService.getAcademy();
+		
+		String str = "";
+		
+		ObjectMapper mapper = new ObjectMapper();
+		try {
+			str = mapper.writeValueAsString(academyList);
+			System.out.println("productList 변환 : " + str);
+		} catch (Exception e) {
+			System.out.println("first() mapper : " + e.getMessage());
+		}
+		
+		return str;
+	}
+	
+	@RequestMapping(value = "/deleteAcademy.ad", produces="application/json; charset=UTF-8", method = {RequestMethod.GET, RequestMethod.POST})
+	@ResponseBody
+	public Map<String, Object> deleteAcademy(ClassVO vo) {
+		Map<String, Object> retVal = new HashMap<String, Object>();
+		
+		try {
+			System.out.println("ESTIMATE_NUM = " + vo.getCLASS_NUMBER());
+			int res = adminService.deleteAcademy(vo);
+			
+			retVal.put("res", "OK");
+		} catch(Exception e) {
+			retVal.put("res", "FAIL");
+			retVal.put("message", "삭제가 되지 않았습니다.");
+		}
+		
+		return retVal;
+	}
+	
+	/*=========================== 상품 관리 ==============================*/
+	@RequestMapping(value = "/productList.ad")
+	public String productList() {
+		return "Admin/ProductList";
+	}
+	
+	//produces 속성을 이용해 Response의 Content-Type을 제어할 수 있다
+	@RequestMapping(value = "/Product.ad", produces="application/json;charset=UTF-8")
+	@ResponseBody
+	public String productList2() {
+		List<ProductVO> productList = adminService.getProduct();
+		
+		String str = "";
+		
+		ObjectMapper mapper = new ObjectMapper();
+		try {
+			str = mapper.writeValueAsString(productList);
+			System.out.println("productList 변환 : " + str);
+		} catch (Exception e) {
+			System.out.println("first() mapper : " + e.getMessage());
+		}
+		
+		return str;
+	}
+	
+	@RequestMapping(value = "/deleteProduct.ad", produces="application/json; charset=UTF-8", method = {RequestMethod.GET, RequestMethod.POST})
+	@ResponseBody
+	public Map<String, Object> deleteProduct(ProductVO vo) {
+		Map<String, Object> retVal = new HashMap<String, Object>();
+		
+		try {
+			System.out.println("PICS_NUM = " + vo.getPRODUCT_NUM());
+			int res = adminService.deleteProduct(vo);
+			
+			retVal.put("res", "OK");
+		} catch(Exception e) {
+			retVal.put("res", "FAIL");
+			retVal.put("message", "삭제가 되지 않았습니다.");
+		}
+		
+		return retVal;
+	}
+	
+	/*=========================== 견적 관리 ==============================*/
+	@RequestMapping(value = "/estimateList.ad")
+	public String estimateList() {
+		return "Admin/EstimateList";
+	}
+	
+	//produces 속성을 이용해 Response의 Content-Type을 제어할 수 있다
+	@RequestMapping(value = "/Estimate.ad", produces="application/json;charset=UTF-8")
+	@ResponseBody
+	public String estimateList2() {
+		List<EstimateVO> estimateList = adminService.getEstimate();
+		
+		String str = "";
+		
+		ObjectMapper mapper = new ObjectMapper();
+		try {
+			str = mapper.writeValueAsString(estimateList);
+			System.out.println("productList 변환 : " + str);
+		} catch (Exception e) {
+			System.out.println("first() mapper : " + e.getMessage());
+		}
+		
+		return str;
+	}
+	
+	@RequestMapping(value = "/deleteEstimate.ad", produces="application/json; charset=UTF-8", method = {RequestMethod.GET, RequestMethod.POST})
+	@ResponseBody
+	public Map<String, Object> deleteEstimate(EstimateVO vo) {
+		Map<String, Object> retVal = new HashMap<String, Object>();
+		
+		try {
+			System.out.println("ESTIMATE_NUM = " + vo.getESTIMATE_NUM());
+			int res = adminService.deleteEstimate(vo);
 			
 			retVal.put("res", "OK");
 		} catch(Exception e) {

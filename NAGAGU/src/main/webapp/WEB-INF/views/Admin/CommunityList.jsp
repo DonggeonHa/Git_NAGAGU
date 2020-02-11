@@ -48,6 +48,7 @@ function selectData() {
 			title += '<thead class="text-center">';
 			title += '<tr>';
 			title += '<th scope="col">번호</th>';
+			title += '<th scope="col">분류</th>';
 			title += '<th scope="col">카테고리</th>';
 			title += '<th scope="col">글쓴이</th>';
 			title += '<th scope="col">제작공방</th>';
@@ -61,8 +62,41 @@ function selectData() {
 				var output = '';
 				output += '<tbody class="text-center">'
 				output += '<tr>';
-				output += '<td>' + item.pics_NUM + '</td>'; // undefined ㅗ
-				output += '<td>' + item.pics_CATEGORY + '</td>';
+				output += '<td>' + item.pics_NUM + '</td>'; 
+				
+				if (item.pics_REVIEW == 1) {
+					output += '<td>후기</td>';
+				} else {
+					output += '<td>일반</td>';
+				}
+				
+				switch(item.pics_CATEGORY){
+	        	    case 'table' : 
+	        	    	output += '<td>책상</td>';
+	        	        break;
+	        	    case 'chair' : 
+	        	    	output += '<td>의자</td>';
+	        	        break;  
+	        	    case 'bookshelf' : 
+	        	    	output += '<td>책장</td>';
+	        	        break;
+	        	    case 'bed' : 
+	        	    	output += '<td>침대</td>'; 
+	        	        break;  
+	        	    case 'drawer' : 
+	        	    	output += '<td>서랍장</td>';
+	        	        break;
+	        	    case 'sidetable' : 
+	        	    	output += '<td>협탁</td>';
+	        	        break;  
+	        	    case 'dressing_table' : 
+	        	    	output += '<td>화장대</td>';
+	        	        break;
+	        	    case 'others' : 
+	        	    	output += '<td>기타</td>'; 
+	        	        break;  
+     			}
+				
 				output += '<td>' + item.pics_NICK + '</td>';
 				output += '<td>' + item.pics_WORKSHOP + '</td>';
 				output += '<td>' + item.pics_LIKE + '</td>';

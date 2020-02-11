@@ -52,7 +52,7 @@
 			        <li><a href="#"><img src="${pageContext.request.contextPath}/resources/images/sns4.png"></a></li>
 		        </ul>
 		        <ul>
-			        <li>상호명 : NAGAGU</li>
+			        <li>상호명 : <a href="./login.ad">NAGAGU</a></li>
 			        <li class="line">/</li>
 			        <li>대표 : 비트캠프</li>
 			        <li class="line">/</li>
@@ -62,7 +62,7 @@
 			        <li class="line">/</li>
 			        <li>E-mail : email@mail.com</li>
 			        <li class="line">/</li>
-			        <li><a href="mypage_support.my">고객센터</a></li>
+			        <li><a href="./mypage_support.my">고객센터</a></li>
 			        <li class="copy">Copyright &copy; Design Bitcamp All rights reserved.</li>
 		        </ul>
 		    </div>

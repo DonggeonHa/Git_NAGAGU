@@ -2,8 +2,11 @@ package com.spring.admin;
 
 import java.util.List;
 
+import com.spring.academy.ClassVO;
 import com.spring.community.PicsVO;
+import com.spring.estimate.EstimateVO;
 import com.spring.member.MemberVO;
+import com.spring.store.ProductVO;
 import com.spring.workshop.WorkShopMemberVO;
 
 public interface AdminService {
@@ -22,4 +25,16 @@ public interface AdminService {
 	/* 커뮤니티관리 */
 	public List<PicsVO> getPICS();
 	public int deletePICS(PicsVO vo);
+	
+	/* 아카데미관리 */
+	public List<ClassVO> getAcademy();
+	public int deleteAcademy(ClassVO vo);
+	
+	/* 상품관리 */
+	public List<ProductVO> getProduct();
+	public int deleteProduct(ProductVO vo);
+	
+	/* 견적관리 */
+	public List<EstimateVO> getEstimate();
+	public int deleteEstimate(EstimateVO vo);
 }

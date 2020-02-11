@@ -1,11 +1,13 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib uri = "http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib prefix = "fmt" uri = "http://java.sun.com/jsp/jstl/fmt" %>
 
 <!-- 본문 -->
 <div id="page-content-wrapper">
 	<div class="container-fluid">
 		<div class="d-flex bd-highlight mb-3">
 			<div class="mr-auto p-2 bd-highlight align-self-end">
-				<h6>회원관리 > 일반회원관리 </h6>
+				<h6>아카데미관리 > 클래스관리 </h6>
 			</div>
 			<br><br>
 			<div class="input-group p-2 bd-highlight" style="width: 300px !important;">
@@ -17,10 +19,10 @@
 		</div>
 		
 		<div style="height: 550px; overflow-y: auto;">
-			<table class="table table-hover tableCSS" id="user-table"></table>
+			<table class="table table-hover tableCSS" id="academy-table"></table>
 		</div>
 		<div class="d-flex justify-content-center">
-			<nav aria-label="Page navigation example" class="paginated" id="user-page"></nav>
+			<nav aria-label="Page navigation example" class="paginated" id="academy-page"></nav>
 		</div>
 	</div>
 </div>
@@ -37,9 +39,9 @@
 function selectData() {
 	$('#remo').remove();
 	// table 내부 내용 모두 제거(초기화)
-	$('#user-table').empty();
+	$('#academy-table').empty();
 	$.ajax({
-		url: './Member.ad',
+		url: './Academy.ad',
 		type: 'POST',
 		dataType : "json", //서버에서 보내줄 데이터 타입
 		contentType : 'application/x-www-form-urlencoded; charset=UTF-8',
@@ -48,61 +50,75 @@ function selectData() {
 			title += '<thead class="text-center">';
 			title += '<tr>';
 			title += '<th style="width: 5%;">번호</th>';
-			title += '<th style="width: 16%;">이메일</th>';
-			title += '<th style="width: 11%;">이름</th>';
-			title += '<th style="width: 11%;">닉네임</th>';
-			title += '<th style="width: 11%;">핸드폰</th>';
-			title += '<th style="width: 18%;"">주소</th>';
-			title += '<th style="width: 12%;">상세주소</th>';
-			title += '<th style="width: 11%;">상태</th>';
+			title += '<th style="width: 9%;">클래스</th>';
+			title += '<th style="width: 14%;">제목</th>';
+			title += '<th style="width: 8%;">가격</th>';
+			title += '<th style="width: 17%;">기간</th>';
+			title += '<th style="width: 7%;">지역</th>';
+			title += '<th style="width: 9%;">카테고리</th>';
+			title += '<th style="width: 20%;">주소</th>';
+			title += '<th style="width: 6%;">상태</th>';
 			title += '<th style="width: 5%;">관리</th>';
 			title += '</tr>';
 			title += '</thead>';
-			$('#user-table').append(title);
+			$('#academy-table').append(title);
 			$.each(data, function(index, item) {
 				var output = '';
 				output += '<tbody class="text-center">'
 				output += '<tr>';
-				output += '<td>' + item.member_NUM + '</td>'; // undefined ㅗ
-				output += '<td>' + item.member_EMAIL + '</td>';
-				output += '<td>' + item.member_NAME + '</td>';
-				output += '<td>' + item.member_NICK + '</td>';
+				output += '<td>' + item.class_NUMBER + '</td>'; 
+				output += '<td>' + item.class_DIVISION + '</td>'; 
+				output += '<td>' + item.class_NAME + '</td>';
+				output += '<td>' + item.class_AMOUNT.toLocaleString() + '원</td>'; 
+				output += '<td>' + item.class_DATE_CONFIGURATION_1 + '~' + item.class_DATE_CONFIGURATION_2 +'</td>';
+				output += '<td>' + item.class_AREA + '</td>';
 				
-				if (item.member_PHONE == null) {
-					output += '<td>미입력</td>';
+				switch(item.class_CATEGORY){
+        	    case 'table' : 
+        	    	output += '<td>책상</td>';
+        	        break;
+        	    case 'chair' : 
+        	    	output += '<td>의자</td>';
+        	        break;  
+        	    case 'bookshelf' : 
+        	    	output += '<td>책장</td>';
+        	        break;
+        	    case 'bed' : 
+        	    	output += '<td>침대</td>'; 
+        	        break;  
+        	    case 'drawer' : 
+        	    	output += '<td>서랍장</td>';
+        	        break;
+        	    case 'sidetable' : 
+        	    	output += '<td>협탁</td>';
+        	        break;  
+        	    case 'dressing_table' : 
+        	    	output += '<td>화장대</td>';
+        	        break;
+        	    case 'others' : 
+        	    	output += '<td>기타</td>'; 
+        	        break;  
+ 				}
+				
+				output += '<td>' + item.class_ADDRESS + '<br>' + item.class_DETAIL_ADDRESS +'</td>';
+				
+				if (item.class_STATE == 0) {
+					output += '<td>강의종료</td>';
 				} else {
-					output += '<td>' + item.member_PHONE + '</td>';	
-				}
+					output += '<td>강의중</td>';
+				}				
 				
-				if (item.address_ADDRESS1 == null) {
-					output += '<td>미입력</td>';
-				} else {
-					output += '<td>' + item.address_ADDRESS1 + '</td>';	
-				}
-				
-				if (item.address_ADDRESS2 == null) {
-					output += '<td>미입력</td>';
-				} else {
-					output += '<td>' + item.address_ADDRESS2 + '</td>';	
-				}
-				
-				if (item.member_STATUS == 0) {
-					output += '<td>이메일 인증대기</td>';
-				} else {
-					output += '<td>이메일 인증완료</td>';
-				}
-				
-				output += '<td><a href="./deleteMember.ad" class="del_data" ';
-				output += 'MEMBER_NUM=' + item.member_NUM +  '><i class="fas fa-trash-alt" ></i></a></td>';
+				output += '<td><a href="./deleteAcademy.ad" class="del_data" ';
+				output += 'CLASS_NUMBER=' + item.class_NUMBER +  '><i class="fas fa-trash-alt" ></i></a></td>';
 				output += '</tr>';
 				output += '</tbody>'
 				console.dir("output : " + output);
-				$('#user-table').append(output);
+				$('#academy-table').append(output);
 			});
 			page();
 		},
 		error: function(request,status,error) {
-			alert("ajax memberlist 통신 실패!");
+			alert("ajax academylist 통신 실패!");
 			alert("code:"+request.status+"\n"+"error:"+error);
 		}
 	});
@@ -113,7 +129,7 @@ $(document).on('click', '.del_data', function(event) {
 	jQuery.ajax({
 		url : $(this).attr("href"), //$(this) : //항목을 눌렀을때 그 걸 가르킴 .attr("href") 속성된 이름값중에 "href"을 통해서? 읽어온다??
 		type : 'GET',
-		data : {'MEMBER_NUM' : $(this).attr("member_NUM")},
+		data : {'CLASS_NUMBER' : $(this).attr("class_NUMBER")},
 		contentType : 'application/x-www-form-urlencoded; charset=UTF-8',
 		dataType : 'json',
 		success : function (retVal) {
@@ -143,8 +159,8 @@ function page() {
 		var pagesu = 10;  //페이지 번호 갯수
   		var currentPage = 0;
   		var numPerPage = 10;  //목록의 수
-  		var $table = $('#user-table');    
-  		var $user = $('#user-page');
+  		var $table = $('#academy-table');    
+  		var $user = $('#academy-page');
   
 		//length로 원래 리스트의 전체길이구함
 		var numRows = $table.find('tbody tr').length;
@@ -237,8 +253,8 @@ function page() {
 $(document).ready(function() {
 	$("#keyword").keyup(function() {
 		var k = $(this).val();
-		$("#user-table > tbody > tr").hide();
-		var temp = $("#user-table > tbody > tr > td:nth-child(10n+3):contains('" + k + "')");
+		$("#academy-table > tbody > tr").hide();
+		var temp = $("#academy-table > tbody > tr > td:nth-child(10n+3):contains('" + k + "')");
 		
 		$(temp).parent().show();					
 	})

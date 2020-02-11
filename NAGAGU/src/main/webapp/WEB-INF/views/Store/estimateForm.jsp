@@ -191,10 +191,19 @@
 				</div>
 			</div>
 			<div class="row text-center pt-1 pb-1 ">
-				<div class="col-md-4 d-flex justify-content-end title">제품 종류</div>
+				<div class="col-md-4 d-flex justify-content-end title">카테고리</div>
 				<div class="col-md-8 d-flex justify-content-start">
-					<input type="text" id="ESTIMATE_CATEGORY" name="ESTIMATE_CATEGORY" size="50" maxlength="15"
-						placeholder="ex)침대, 서랍장, 의자.. ">
+					<select name="ESTIMATE_CATEGORY" id="ESTIMATE_CATEGORY">
+						<option value="all" selected>전체</option>
+						<option value="table">책상</option>
+						<option value="chair">의자</option>
+						<option value="bookshelf">책장</option>
+						<option value="bed">침대</option>
+						<option value="drawer">서랍장</option>
+						<option value="sidetable">협탁</option>
+						<option value="dressing_table">화장대</option>
+						<option value="others">기타</option>
+					</select>
 				</div>
 			</div>
 			<div class="row text-center">
