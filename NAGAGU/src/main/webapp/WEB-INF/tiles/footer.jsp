@@ -34,6 +34,7 @@
 		.order-body {
 			font-family: '만화진흥원체', 'KOMACON', KOMACON;
 			font-size: 15px;
+			
 		}
 		
 		li a {

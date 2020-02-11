@@ -1,46 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<!-- 
-create table PRODUCT (
-    PRODUCT_NUM                 NUMBER PRIMARY KEY,
-    PRODUCT_WORKSHOP            NUMBER,
-    PRODUCT_SHOPNAME            VARCHAR2(50),
-    PRODUCT_DATE                DATE,
-    PRODUCT_TITLE               VARCHAR2(100),
-    PRODUCT_BRIEF               VARCHAR2(100),
-    PRODUCT_CATEGORY            VARCHAR2(30),
-    PRODUCT_PRICE               NUMBER,
-    PRODUCT_GRADE               NUMBER(2,1),
-    PRODUCT_READ                NUMBER,
-    PRODUCT_SALES               NUMBER,
-    PRODUCT_LIKE                NUMBER,
-    PRODUCT_COLOR               VARCHAR2(50),
-    PRODUCT_SIZE                VARCHAR2(50),
-    PRODUCT_INFO                VARCHAR2(1000),
-    PRODUCT_SHIP_PRICE          NUMBER,
-    PRODUCT_SHIP_COMPANY        VARCHAR2(20),
-    PRODUCT_SHIP_RETURN_PRICE   NUMBER,
-    PRODUCT_SHIP_CHANGE_PRICE   NUMBER,
-    PRODUCT_SHIP_RETURN_PLACE   VARCHAR2(20),
-    PRODUCT_SHIP_DAYS           VARCHAR2(20),
-    PRODUCT_SHIP_INFO           VARCHAR2(1000),
-    PRODUCT_AS_INFO             VARCHAR2(2000),
-    PRODUCT_RETURN_INFO         VARCHAR2(2000),
-    PRODUCT_STORE_INFO          VARCHAR2(2000),
-    PRODUCT_BANNER              VARCHAR2(2000),
-    PRODUCT_IMAGE               VARCHAR2(2000),
-    PRODUCT_STATUS				NUMBER,
-    PRODUCT_STOCK				NUMBER
-); 
-create sequence product_seq
-    start with 1
-    increment by 1
-    maxvalue 10000;
-
--->
-
-
 <!-- 이 xml문서와 맵핑할 인터페이스 경로, 이름 -->
 <mapper namespace="com.spring.mapper.ProductMapper">
 	<resultMap type="java.util.HashMap" id="hashmapVO">
@@ -107,11 +67,12 @@ create sequence product_seq
 		<result property="PRODUCT_STOCK" column="PRODUCT_STOCK" />
 	</resultMap>
 
-	<resultMap type="com.spring.workshop.WorkshopVO" id="workshopResultMap">
+	<resultMap type="com.spring.workshop.WorkShopMemberVO" id="workshopResultMap">
 		<result property="WORKSHOP_NUM" column="WORKSHOP_NUM" />	
 		<result property="WORKSHOP_EMAIL" column="WORKSHOP_EMAIL" />	
 		<result property="WORKSHOP_PASS" column="WORKSHOP_PASS" />	
 		<result property="WORKSHOP_NAME" column="WORKSHOP_NAME" />	
+		<result property="WORKSHOP_CEO_NAME" column="WORKSHOP_CEO_NAME" />	
 		<result property="WORKSHOP_PHONE" column="WORKSHOP_PHONE" />	
 		<result property="WORKSHOP_ADDRESS1" column="WORKSHOP_ADDRESS1" />	
 		<result property="WORKSHOP_ADDRESS2" column="WORKSHOP_ADDRESS2" />	
@@ -135,7 +96,7 @@ create sequence product_seq
 		SELECT * FROM PRODUCT WHERE PRODUCT_WORKSHOP=#{WORKSHOP_NUM}
 	</select>
 	
-	<insert id="insertProduct" parameterType="com.spring.workshop.WorkshopVO">
+	<insert id="insertProduct" parameterType="java.util.HashMap">
  		INSERT INTO PRODUCT(PRODUCT_NUM, PRODUCT_WORKSHOP, PRODUCT_SHOPNAME, PRODUCT_DATE, PRODUCT_TITLE, PRODUCT_BRIEF, PRODUCT_CATEGORY, 
  								 PRODUCT_PRICE, PRODUCT_GRADE, PRODUCT_READ, PRODUCT_SALES, PRODUCT_LIKE, PRODUCT_COLOR, 
 			  					 PRODUCT_SIZE, PRODUCT_INFO, PRODUCT_SHIP_PRICE, PRODUCT_SHIP_COMPANY, 

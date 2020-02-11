@@ -2,6 +2,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%
+	String MEMBER_NAME = (String)session.getAttribute("MEMBER_NAME");
 	String MEMBER_EMAIL = (String)session.getAttribute("MEMBER_EMAIL");
 	String WORKSHOP_NAME = (String)session.getAttribute("WORKSHOP_NAME");
 %>
@@ -342,6 +343,21 @@
 						</div>
 						<div class="header_util">
 							<ul>
+								<%	
+									if(MEMBER_EMAIL == null && WORKSHOP_NAME == null) { 
+								%>
+										<li style="color: white">로그인을 해주세요</li>
+								<%
+									} else if(MEMBER_EMAIL != null){ 
+								%>
+										<li style="color: white"><%=MEMBER_NAME%>&nbsp;님 환영합니다</li>
+								<%	
+									} else {
+								%>
+										<li style="color: white"><%=WORKSHOP_NAME%>&nbsp;님 환영합니다</li>
+								<%	
+									} 
+								%>
 								<li>
 									<a href="#"	class="icons-btn d-inline-block js-search-open"> 
 										<i class="fas fa-search" style="width: 20px; height: 25px;"></i>
@@ -393,6 +409,12 @@
 									<%	
 										} else {
 									%>
+<!-- 											<li> -->
+<!-- 												<a href="./chatRoom.ch?ES_ORDER_NUM=1"><i class="fas fa-comment" style="width: 20px; height: 25px;"></i></a> -->
+<!-- 											</li> -->
+											<li>
+												<a onclick="window.open('receiveList.nt', 'new', 'scrollbars=yes, resizable=yes, width=600, height=700, left=0, top=0');"><i class="fas fa-envelope" style="width: 20px; height: 25px;"></i></a>
+											</li>
 											<li>
 												<a href="./logout.ma">로그아웃</a>
 											</li>

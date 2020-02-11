@@ -4,10 +4,10 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 import com.spring.store.ProductVO;
-import com.spring.workshop.WorkshopVO;
+import com.spring.workshop.WorkShopMemberVO;
 
 public interface ProductMapper {
-	WorkshopVO selectWorkshop(ProductVO vo);
+	WorkShopMemberVO selectWorkshop(ProductVO vo);
 	ArrayList<ProductVO> getAllWorkshopProduct(int WORKSHOP_NUM);
 	int insertProduct(ProductVO vo); 
 	int getproductcount(HashMap<String, Object> map);

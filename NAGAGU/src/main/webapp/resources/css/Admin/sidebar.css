@@ -19,7 +19,15 @@
 	padding: 20px;
 }
 /* 사이드바 스타일 */
-.sidebar-nav {
+#index {
+	color: white !important;
+}
+
+#index:hover {
+	color: rgba(255, 255, 255, 0.2) !important;
+}
+
+.sidebar-nav, sidebar-image {
 	width: 250px;
 	margin: 0;
 	padding: 0;

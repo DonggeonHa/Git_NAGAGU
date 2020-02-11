@@ -24,8 +24,8 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.view.json.MappingJackson2JsonView;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.spring.community.PicsVO;
 import com.spring.member.MemberVO;
+import com.spring.workshop.WorkShopMemberVO;
 import com.spring.workshop.WorkshopVO;
 
 @Controller
@@ -147,7 +147,7 @@ public class ProductController {
 //		vo.setPRODUCT_NUM(PRODUCT_NUM);
 		vo = productService.getproductVO(PRODUCT_NUM);
 		/*이 product의 워크샵 넘버 필요함*/	
-		WorkshopVO workshopVO = productService.selectWorkshop(vo);
+		WorkShopMemberVO workshopVO = productService.selectWorkshop(vo);
 		int WorkshopMatchingNumber = workshopVO.getWORKSHOP_NUM();
 		int WorkshopNum = workshopVO.getWORKSHOP_NUM();
 		model.addAttribute("WorkshopNum",WorkshopNum);
@@ -714,7 +714,7 @@ public class ProductController {
 	
 	//-------------------------------------------상품 글쓰기 업로드(공방 업자)
 	@RequestMapping(value = "/addproduct.pro", method = RequestMethod.POST)
-	public ModelAndView addproduct(WorkshopVO workshopVO, MultipartHttpServletRequest request, HttpServletResponse response, HttpSession session) throws Exception {
+	public ModelAndView addproduct(WorkShopMemberVO workshopVO, MultipartHttpServletRequest request, HttpServletResponse response, HttpSession session) throws Exception {
 		boolean result = false;
 		response.setCharacterEncoding("utf-8");
 		response.setContentType("text/html; charset=utf-8"); 
@@ -727,7 +727,7 @@ public class ProductController {
 		vo.setPRODUCT_WORKSHOP(WORKSHOP_NUM);   //공방번호를 ProductVO vo에 set해줌
 		
 		//--------1. setPRODUCT_SHOPNAME
-		WorkshopVO vo2 = productService.selectWorkshop(vo);    //vo로 Workshop정보 (product_shopname) 받아온다
+		WorkShopMemberVO vo2 = productService.selectWorkshop(vo);    //vo로 Workshop정보 (product_shopname) 받아온다
 		vo.setPRODUCT_SHOPNAME(vo2.getWORKSHOP_NAME());
 		
 		//값이 여러개일 수 있는 size, color, option String으로 값 받기

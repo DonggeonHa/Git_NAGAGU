@@ -3,12 +3,12 @@ package com.spring.store;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-import com.spring.workshop.WorkshopVO;
+import com.spring.workshop.WorkShopMemberVO;
 
 public interface ProductService {
 
 	//productform
-	WorkshopVO selectWorkshop(ProductVO vo);
+	WorkShopMemberVO selectWorkshop(ProductVO vo);
 	ArrayList<ProductVO> getAllWorkshopProduct(int WORKSHOP_NUM);
 	boolean insertProduct(ProductVO vo); 
 	//ProductList

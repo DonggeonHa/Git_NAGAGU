@@ -3,12 +3,19 @@
 <!-- 사이드바 -->
 <div id="sidebar-wrapper">
 	<nav>
-		<ul class="sidebar-nav">
+		<ul class="sidebar-image">
 			<li class="sidebar-brand" style="margin: 15px 0;">
 				<a href="./index.ad">
 					<img src="${pageContext.request.contextPath}/resources/images/Main/NAGAGU2.png">
 				</a>
 			</li>
+			<li class="sidebar-brand" style="margin: 15px 0;">
+				<a href="./index.ma" id="index">
+					메인페이지로
+				</a>
+			</li>
+		</ul>
+		<ul class="sidebar-nav">
 			<li class="main text-white">
 				회원관리
 				<ul>
