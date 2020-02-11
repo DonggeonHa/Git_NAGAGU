@@ -341,6 +341,13 @@
 
     $(document).ready(function() {
         $("#input_file").bind('change', function() {
+        	
+
+            if (this.files.length + uploadCnt > 5) {
+        		alert('첨부 파일은 총 5개까지 입니다.');
+        		return false;
+            }
+			
             selectFile(this.files);
             //this.files[0].size gets the size of your file.
             //alert(this.files[0].size);
@@ -395,7 +402,7 @@
             dropZone.css('background-color', '#FFFFFF');
 
             var files = e.originalEvent.dataTransfer.files;
-			
+            
             selectFile(files);
         });
     }
@@ -410,11 +417,6 @@
                 console.log("폴더 업로드 불가");
                 return;
             } else {
-            	
-            	if (uploadCnt == 5) {
-            		alert('첨부 파일은 총 5개까지 입니다.');
-            		return false;
-            	}
             	
             	for(var i = 0; i < files.length; i++) {
                     var fileName = files[i].name;

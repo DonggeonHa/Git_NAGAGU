@@ -10,8 +10,6 @@
 	ArrayList<EstimateVO> eList = (ArrayList<EstimateVO>)request.getAttribute("eList");
 	int nowpage = ((Integer) request.getAttribute("page")).intValue();
 	int maxpage = ((Integer) request.getAttribute("maxpage")).intValue();
-	int startpage = ((Integer) request.getAttribute("startpage")).intValue();
-	int endpage = ((Integer) request.getAttribute("endpage")).intValue();
 	int rnum = ((Integer) request.getAttribute("rnum")).intValue();
 	int estimateCount = ((Integer) request.getAttribute("estimateCount")).intValue();
 	String MEMBER_EMAIL = (String)session.getAttribute("MEMBER_EMAIL");
