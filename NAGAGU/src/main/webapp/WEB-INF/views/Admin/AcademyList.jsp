@@ -1,9 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<%@ taglib uri = "http://java.sun.com/jsp/jstl/core" prefix="c"%>
-<%@ taglib prefix = "fmt" uri = "http://java.sun.com/jsp/jstl/fmt" %>
 
 <!-- 본문 -->
-<div id="page-content-wrapper">
+<div id="page-content-wrapper" style="padding-top: 5%;">
 	<div class="container-fluid">
 		<div class="d-flex bd-highlight mb-3">
 			<div class="mr-auto p-2 bd-highlight align-self-end">
@@ -51,12 +49,13 @@ function selectData() {
 			title += '<tr>';
 			title += '<th style="width: 5%;">번호</th>';
 			title += '<th style="width: 9%;">클래스</th>';
-			title += '<th style="width: 14%;">제목</th>';
+			title += '<th style="width: 7%;">강사</th>';
+			title += '<th style="width: 17%;">제목</th>';
 			title += '<th style="width: 8%;">가격</th>';
-			title += '<th style="width: 17%;">기간</th>';
+			title += '<th style="width: 11%;">기간</th>';
 			title += '<th style="width: 7%;">지역</th>';
 			title += '<th style="width: 9%;">카테고리</th>';
-			title += '<th style="width: 20%;">주소</th>';
+			title += '<th style="width: 16%;">주소</th>';
 			title += '<th style="width: 6%;">상태</th>';
 			title += '<th style="width: 5%;">관리</th>';
 			title += '</tr>';
@@ -68,9 +67,10 @@ function selectData() {
 				output += '<tr>';
 				output += '<td>' + item.class_NUMBER + '</td>'; 
 				output += '<td>' + item.class_DIVISION + '</td>'; 
+				output += '<td>' + item.workshop_NAME + '</td>'; 
 				output += '<td>' + item.class_NAME + '</td>';
 				output += '<td>' + item.class_AMOUNT.toLocaleString() + '원</td>'; 
-				output += '<td>' + item.class_DATE_CONFIGURATION_1 + '~' + item.class_DATE_CONFIGURATION_2 +'</td>';
+				output += '<td>' + item.class_DATE_CONFIGURATION_1 + '<br> ~ ' + item.class_DATE_CONFIGURATION_2 +'</td>';
 				output += '<td>' + item.class_AREA + '</td>';
 				
 				switch(item.class_CATEGORY){
@@ -100,7 +100,7 @@ function selectData() {
         	        break;  
  				}
 				
-				output += '<td>' + item.class_ADDRESS + '<br>' + item.class_DETAIL_ADDRESS +'</td>';
+				output += '<td>' + item.class_ADDRESS + '<br> 상세주소 : ' + item.class_DETAIL_ADDRESS +'</td>';
 				
 				if (item.class_STATE == 0) {
 					output += '<td>강의종료</td>';
@@ -109,7 +109,7 @@ function selectData() {
 				}				
 				
 				output += '<td><a href="./deleteAcademy.ad" class="del_data" ';
-				output += 'CLASS_NUMBER=' + item.class_NUMBER +  '><i class="fas fa-trash-alt" ></i></a></td>';
+				output += 'CLASS_NUMBER=' + item.class_NUMBER + '><i class="fas fa-trash-alt" ></i></a></td>';
 				output += '</tr>';
 				output += '</tbody>'
 				console.dir("output : " + output);

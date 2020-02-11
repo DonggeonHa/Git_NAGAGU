@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 
 <!-- 본문 -->
-<div id="page-content-wrapper">
+<div id="page-content-wrapper" style="padding-top: 5%;">
 	<div class="container-fluid">
 		<div class="d-flex bd-highlight mb-3">
 			<div class="mr-auto p-2 bd-highlight align-self-end">

@@ -10,7 +10,7 @@
 %>
 
 <!-- 본문 -->
-<div id="page-content-wrapper">
+<div id="page-content-wrapper" style="padding-top: 2%;">
 	<div class="container-fluid">
 		<!-- Area Chart Example-->
 		<div class="card mb-3 h-100">

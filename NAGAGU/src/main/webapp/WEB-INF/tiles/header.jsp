@@ -276,6 +276,22 @@
 		    	    }
 				});
 			}
+			
+			$(function () { /* 로그인 모달에서 엔터키로 로그인버튼 누르기 */
+				//Block Enter key events . 엔터키 이벤트 막기.
+				$(document).keypress(function (e) {
+					if (e.keyCode == 13) e.preventDefault();
+				});
+
+				//Click the Search button when you press Enter in the search TextBox. 검색 TextBox에서 Enter 키를 누를 때 검색 버튼을 클릭.
+				$('#MEMBER_PASS').keypress(function (e) {
+					var key = e.which;
+					if(key == 13)  {
+						$('button[id = btn_login]').click();
+						return false;  
+					}	
+				});   
+			});
 		</script>
 	</head>
 	
@@ -423,7 +439,7 @@
 						</button>
 					</div>
 					<div class="modal-body" style="margin: 0 auto; margin-top: 5px;">
-						<form method="post" action="/login.su" class="login_form">
+						<form method="post" action="/login.su" class="login_form" name="login_form">
 							<div class="row"><input type="text" name="MEMBER_EMAIL" id="MEMBER_EMAIL" class="input_css" placeholder="이메일" required="required"></div>
 							<div class="row"><input type="password" name="MEMBER_PASS" id="MEMBER_PASS" class="input_css" placeholder="비밀번호" required="required"></div>
 							<div class="row"><p class="fail_message"></p></div>

@@ -219,7 +219,7 @@
  	<!-- 아카데미 관리 -->
  	<select id="getAcademy" parameterType="int" resultMap="classResultMap"> <!-- 이거 처리한 결과물을 list 타입으로 만들어주면 된다. select id은 내용을 호출 함. -->
 		select *
-		from (select rownum rnum, CLASS_NUMBER, CLASS_DIVISION, CLASS_NAME, CLASS_AMOUNT, CLASS_DATE_CONFIGURATION_1, CLASS_DATE_CONFIGURATION_2, 
+		from (select rownum rnum, CLASS_NUMBER, CLASS_DIVISION, WORKSHOP_NAME, CLASS_NAME, CLASS_AMOUNT, CLASS_DATE_CONFIGURATION_1, CLASS_DATE_CONFIGURATION_2, 
 			  CLASS_AREA, CLASS_CATEGORY, CLASS_ADDRESS, CLASS_DETAIL_ADDRESS, CLASS_STATUS
 			  from(select * 
 			  	   from ACADEMY
