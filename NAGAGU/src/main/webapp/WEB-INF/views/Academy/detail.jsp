@@ -326,6 +326,7 @@
 				</div>
 				<div class="col-4">
 					<div class="sticky2" style="border: 1px solid #EAEAEA; padding-top: 5%;">
+						<a href="#">
 						<div class="row pt-4 pl-4">
 							<div class="col-3">
 								<img src="<%=cl.getWORKSHOP_PICTURE()%>" style="width: 95%;">
@@ -333,8 +334,9 @@
 							<div class="col-9">
 								<h3><p><%=cl.getWORKSHOP_NAME()%></p></h3>
 								<p><font size="2"><%=cl.getCLASS_ABRIEF()%></font></p>
-							</div>
+							</div> 
 						</div>
+						</a>
 						<div>
 							<table class="table table-borderless">
 								<colgroup>

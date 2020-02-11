@@ -347,7 +347,7 @@
 														id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" />
 													<div class="dropdown-menu" aria-labelledby="dropdownMenu2">
 														<a href="./logout.ma" id="logout"><button class="dropdown-item btn btn-primary" type="button">로그아웃</button></a>
-														<button class="dropdown-item" type="button"><a href="./order_detail.my">주문조회</a></button>
+														<button class="dropdown-item" type="button"><a href="./order_list.my">주문조회</a></button>
 														<button class="dropdown-item" type="button"><a href="./mypage_edit.my">내정보수정</a></button>
 														<button class="dropdown-item" type="button"><a href="./mypage_like.my">좋아요</a></button>
 														<button class="dropdown-item" type="button"><a href="./chatRoom.ch?ES_ORDER_NUM=1">채팅</a></button>

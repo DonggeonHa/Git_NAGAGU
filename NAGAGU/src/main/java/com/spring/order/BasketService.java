@@ -15,5 +15,7 @@ public interface BasketService {
 	ArrayList<Map<String, Object>> getbasketList(HashMap<String, Object> map);//장바구니 리스트
 	ArrayList<Map<String, Object>> getOrderList(HashMap<String, Object> map);//주문 리스트
 	ArrayList<Map<String, Object>> getPaidList(HashMap<String, Object> map);//주문내역(결제 리스트)
-	ProductOrderVO getPaidProductOrderVO(ProductOrderVO productOrderVO);//주문 내역
+	
+	ArrayList<Map<String, Object>> getPaidDetail(HashMap<String, Object> map);//주문내역(결제 리스트)
+	ArrayList<Map<String, Object>> getCount(HashMap<String, Object> map);//주문내역(결제 리스트)
 }

@@ -40,23 +40,27 @@
 	
 	<!-- 좋아요 한 사진 리스트(좋아요사진=사진넘버 중에서 파라미터 멤버가 좋아한 사진들) -->
 	<select id="getbasketList" parameterType="java.util.HashMap" resultMap="hashmapVO">
-      SELECT * FROM BASKET,PRODUCT WHERE BASKET_MEMBER=#{MEMBER_NUM} AND BASKET_PRODUCT=PRODUCT_NUM ORDER BY BASKET_NUM
+      SELECT * FROM BASKET,PRODUCT WHERE BASKET_MEMBER=#{MEMBER_NUM} AND BASKET_CHECK=0 AND BASKET_PRODUCT=PRODUCT_NUM ORDER BY BASKET_NUM
     </select>
     <select id="getOrderList" parameterType="java.util.HashMap" resultMap="hashmapVO">
       SELECT * FROM BASKET,PRODUCT WHERE BASKET_MEMBER=#{MEMBER_NUM} AND BASKET_CHECK=1 AND BASKET_PRODUCT=PRODUCT_NUM ORDER BY BASKET_NUM
     </select>
     <select id="getPaidList" parameterType="java.util.HashMap" resultMap="hashmapVO">
-      SELECT * FROM BASKET, PRODUCT_ORDER,PRODUCT WHERE ORDER_NUM= BASKET_NUM AND BASKET_PRODUCT = PRODUCT_NUM AND BASKET_MEMBER=#{MEMBER_NUM}
+      SELECT * FROM BASKET, PRODUCT_ORDER,PRODUCT WHERE ORDER_NUM= BASKET_NUM AND BASKET_PRODUCT = PRODUCT_NUM AND BASKET_MEMBER=#{MEMBER_NUM} ORDER BY ORDER_AMOUNT DESC
     </select>
-<!--      <select id="getPaidProductOrderVO" parameterType="com.spring.order.ProductOrderVO" resultMap="orderVO">
-      	SELECT * FROM PRODUCT_ORDER WHERE ORDER_MEMBER=#{ORDER_MEMBER}
-    </select> -->
+    <select id="getPaidDetail" parameterType="java.util.HashMap" resultMap="hashmapVO">
+      SELECT * FROM BASKET, PRODUCT_ORDER,PRODUCT WHERE ORDER_NUM= BASKET_NUM AND BASKET_PRODUCT = PRODUCT_NUM AND ORDER_AMOUNT=#{ORDER_AMOUNT} ORDER BY ORDER_AMOUNT DESC
+    </select>
+     <select id="getCount" parameterType="java.util.HashMap" resultMap="hashmapVO">
+      SELECT ORDER_MEMBER,ORDER_AMOUNT,COUNT(ORDER_AMOUNT) AS COUNT FROM PRODUCT_ORDER WHERE ORDER_MEMBER=#{MEMBER_NUM} GROUP BY ORDER_AMOUNT,ORDER_MEMBER ORDER BY ORDER_AMOUNT DESC
+    </select>
+    
     <insert id="insertCart" parameterType="java.util.HashMap">
 		insert into BASKET values
 		(SEQ_BASKET.nextval,#{BASKET_MEMBER},#{BASKET_PRODUCT},#{BASKET_COLOR},#{BASKET_SIZE},#{BASKET_OPTION},#{BASKET_AMOUNT},#{BASKET_CHECK})	
 	</insert>
 	<select id="countBasket"  resultType="int">
-		SELECT count(*) FROM BASKET WHERE BASKET_MEMBER=#{BASKET_MEMBER}
+		SELECT count(*) FROM BASKET WHERE BASKET_MEMBER=#{BASKET_MEMBER} AND BASKET_CHECK=0 
 	</select>
 	<delete id="deleteBasket" parameterType="com.spring.order.BasketVO">	
 		DELETE FROM BASKET WHERE BASKET_MEMBER=#{BASKET_MEMBER} AND BASKET_NUM=#{BASKET_NUM}

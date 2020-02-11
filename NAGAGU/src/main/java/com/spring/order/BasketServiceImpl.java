@@ -77,10 +77,17 @@ public class BasketServiceImpl implements BasketService{
 		return result;
 	}
 	@Override
-	public ProductOrderVO getPaidProductOrderVO(ProductOrderVO productOrderVO) {
+	public ArrayList<Map<String, Object>> getCount(HashMap<String, Object> map) {
 		BasketMapper basket = sqlSession.getMapper(BasketMapper.class);
-		ProductOrderVO result =basket.getPaidProductOrderVO(productOrderVO);
-		System.out.println("getPaidProductOrderVO결과"+result);
+		ArrayList<Map<String, Object>> result =basket.getCount(map);
+		System.out.println("getCount결과"+result);
+		return result;
+	}
+	@Override
+	public ArrayList<Map<String, Object>> getPaidDetail(HashMap<String, Object> map) {
+		BasketMapper basket = sqlSession.getMapper(BasketMapper.class);
+		ArrayList<Map<String, Object>> result =basket.getPaidDetail(map);
+		System.out.println("getPaidDetail결과"+result);
 		return result;
 	}
 	

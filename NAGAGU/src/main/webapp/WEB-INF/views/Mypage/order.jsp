@@ -427,14 +427,16 @@ String[] array = new String[orderList.size()];
 			$('.toPhone').val($('.phone').val())
 		});
 		
-		var card ='';
+		var card ='toss';
 		$(document).on('click','.pay_method',function(){ 
-			if($(this).hasClass('active')){
-				card = $(this).attr('value')  
-			}
+			getPayMethod(this)
 		})
 		
-		
+		function getPayMethod(item){
+			if($('.pay_method').hasClass('active')){
+				card = $(item).attr('value')  
+			}
+		}
 		
 		$(document).on('click','.IMP_pay',function(){
 			//유효성 검사
@@ -455,40 +457,18 @@ String[] array = new String[orderList.size()];
 				return
 			}
 			
-			
 			var BASKET_NUMS ='';
-			var BASKET_AMOUNTS='';
 			var ORDER_PRICE = totalPayPrice;
 			var ORDER_PERSON = $('.toName').val();
 			var ORDER_ADDRESS = $('.toAddress1').val();
 				ORDER_ADDRESS += $('.toAddress2').val();
 			var ORDER_PHONE= $('.toPhone').val();
-			var ORDER_MEMO= $('.memo').val();
-			var PRODUCT_NUM = '';
-			
-			var nums = $('input[name=BASKET_NUM]')
-			for (var i = 0; i < nums.length; i++) {
-				if (i != nums.length - 1) {
-					BASKET_NUMS += nums[i].value + ',';
-				} else {
-					BASKET_NUMS += nums[i].value;
-				} 
+			var ORDER_MEMO= '없음';
+			if($('.memo').val()!=null){
+				ORDER_MEMO=$('.memo').val();
 			}
-			$('input[name=BASKET_AMOUNT]').each(function (index,item){
-				if(index== ($('input[name=BASKET_AMOUNT]').length-1)){
-					BASKET_AMOUNTS += $(item).val()
-				}else{
-					BASKET_AMOUNTS += $(item).val() + ',';	
-				}
-			})
-			var p_nums = $('input[name=PRODUCT_NUM]')
-			$(p_nums).each(function(index,item){
-				if(index== ($(p_nums).length-1)){
-					PRODUCT_NUM += $(item).val()
-				}else{
-					PRODUCT_NUM += $(item).val() + ',';	
-				}
-			})
+			var PRODUCT_NUM = '';
+			console.log(ORDER_MEMO)
 			//결제수단 구하기
 			console.log(new Date().getTime());
 			console.log(card)
@@ -497,7 +477,7 @@ String[] array = new String[orderList.size()];
 				   
 				   IMP.request_pay({
 			       pg : 'html5_inicis', // 결제방식 
-			       merchant_uid : 'merchant_' + new Date().getTime(),
+			       merchant_uid : new Date().getTime(),
 			       name : 'NAGAGU 결제',	// order 테이블에 들어갈 주문명 혹은 주문 번호
 			       amount : '100',	// 결제 금액
 			       
@@ -508,13 +488,14 @@ String[] array = new String[orderList.size()];
 			       buyer_postcode :  '',	// 구매자 우편번호
 				   }, function(rsp) {
 					  if ( rsp.success ){
+						    var id= rsp.merchant_uid;
 							for(var i=0; i<$('.BASKET_NUM').length;i++){
 								var BASKET_NUM = $('input[name=BASKET_NUM]')[i].value
 								console.log('bnum'+BASKET_NUM)
 								$.ajax({
 									  url: "/NAGAGU/insertOrderProduct.my", 
 						              type: "POST",
-						              data: {'ORDER_NUM' : BASKET_NUM,'ORDER_PERSON' : ORDER_PERSON, 'ORDER_ADDRESS':ORDER_ADDRESS, 'ORDER_PHONE':ORDER_PHONE,'ORDER_MEMO':ORDER_MEMO, 'ORDER_METHOD' : card},
+						              data: {'ORDER_NUM' : BASKET_NUM,'ORDER_PERSON' : ORDER_PERSON, 'ORDER_ADDRESS':ORDER_ADDRESS, 'ORDER_PHONE':ORDER_PHONE,'ORDER_MEMO':ORDER_MEMO,'ORDER_AMOUNT': id, 'ORDER_METHOD' : card},
 						              contentType:
 						  				'application/x-www-form-urlencoded; charset=utf-8'
 						  		});
@@ -547,6 +528,7 @@ String[] array = new String[orderList.size()];
 			          }
 			      });
 			});
+		
 	});
 	
 	

@@ -78,7 +78,7 @@
 	.card {
 		width: 6rem;
 		font-size: 0.6rem;
-		margin: 2px 10px 2px 10px;
+		margin: 2px 2px 2px 2px;
 	}
 	.card-header, .card-body, .card-footer {
 		padding: 10px !important; 
