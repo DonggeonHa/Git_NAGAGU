@@ -75,6 +75,7 @@ public class AcademyManagementAjaxController {
 		
 		try {
 			int result = academyManagementService.deleteManagementMember(MY_CLASS_MEMBERNUM);
+			System.out.println("result : " + result);
 			
 			if(result == 1) {
 				retVal.put("res", "OK");
