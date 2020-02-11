@@ -56,7 +56,7 @@ body {
     text-align: center;
 }
 
-ul > li {
+.menu_section ul > li {
     list-style:none;
     display:block;
     padding:10px;

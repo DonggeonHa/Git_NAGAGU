@@ -126,4 +126,12 @@
 		<if test="searchType == 'memberPhone'"> and m.member_phone LIKE '%'||#{keyword}||'%'</if>
 	</select>
 	
+	<delete id="deleteManagementMember" parameterType="int">
+ 		delete from my_class where MY_CLASS_MEMBERNUM = #{MY_CLASS_MEMBERNUM}
+ 	</delete>
+ 	
+ 	<update id="updateClassStatus" parameterType="int">
+ 		update ACADEMY set CLASS_STATUS = 0 where CLASS_NUMBER = #{CLASS_NUMBER}
+ 	</update>
+ 	
 </mapper>

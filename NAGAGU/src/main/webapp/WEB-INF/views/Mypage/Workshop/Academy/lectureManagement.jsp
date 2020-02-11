@@ -2,7 +2,12 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ page import="java.util.*" %>
 <%@ page import="com.spring.workshopMypage.*" %>
-
+<%
+	if(session.getAttribute("WORKSHOP_NUM")==null){
+		
+		response.sendRedirect("/index.ma");
+	}
+%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -47,15 +52,14 @@
 						
 						var output = ' ';
 						output += '<tr>';
-						output += '<td><input type="checkbox"></td>';
+						output += '<td><input type="checkbox" name="chk_status" value="'+ item.class_NUMBER + '"></td>';
 						
 						if(item.class_STATUS == 0) {
-							output += '<td>' + "준비중" + '</td>';
+							output += '<td>' + "강의종료" + '</td>';
 						} else if(item.class_STATUS == 1) {
 							output += '<td>' + "강의중" + '</td>';
-						} else {
-							output += '<td>' + "강의종료" + '</td>';
 						}
+						
 						output += '<td>' + item.class_AREA + '</td>';
 						output += '<td>' + item.class_AMOUNT + '</td>';
 						output += '<td>' + item.class_DIVISION + '</td>';
@@ -68,10 +72,36 @@
 							output += '<td><a href="classdetail.ac?CLASS_NUMBER=' + item.class_NUMBER + '">' + item.class_NAME + '<a/></td>';
 						}
 						
-						output += '<td>' + item.class_CATEGORY + '</td>';
+						switch(item.class_CATEGORY){
+			        	    case 'table' :
+			        	    	output += '<td>책상</td>';
+			        	        break;
+			        	    case 'chair' :
+			        	    	output += '<td>의자</td>';
+			        	        break;
+			        	    case 'bookshelf' :
+			        	    	output += '<td>책장</td>';
+			        	        break;
+			        	    case 'bed' :
+			        	    	output += '<td>침대</td>';
+			        	        break;
+			        	    case 'drawer' :
+			        	    	output += '<td>서랍장</td>';
+			        	        break;
+			        	    case 'sidetable' :
+			        	    	output += '<td>협탁</td>';
+			        	        break;
+			        	    case 'dressing_table' :
+			        	    	output += '<td>화장대</td>';
+			        	        break;
+			        	    case 'others' :
+			        	    	output += '<td>기타</td>';
+			        	        break;
+		     			}
+						
 						output += '<td>' + item.class_DATE_CONFIGURATION_1 + ' ~ ' + item.class_DATE_CONFIGURATION_2  + '</td>';
 						output += '<td>' + item.class_COUNT_MEMBER + '</td>';
-						output += '<td><button class="btn_modify">' + "수정" + '</button></td>';
+						output += '<td><button class="btn_modify" onclick="updateClass(' + item.class_NUMBER + ')">' + "수정" + '</button></td>';
 						output += '</tr>';
 						
 						$('#academyList').append(output);
@@ -112,7 +142,7 @@
 						
 						var output = ' ';
 						output += '<tr>';
-						output += '<td><input type="checkbox"></td>';
+						output += '<td><input type="checkbox" name="chk_status" value="'+ item.class_NUMBER + '"></td>';
 						
 						if(item.class_STATUS == 0) {
 							output += '<td>' + "강의종료" + '</td>';
@@ -132,10 +162,36 @@
 							output += '<td><a href="classdetail.ac?CLASS_NUMBER=' + item.class_NUMBER + '">' + item.class_NAME + '<a/></td>';
 						}
 						
-						output += '<td>' + item.class_CATEGORY + '</td>';
+						switch(item.class_CATEGORY){
+			        	    case 'table' :
+			        	    	output += '<td>책상</td>';
+			        	        break;
+			        	    case 'chair' :
+			        	    	output += '<td>의자</td>';
+			        	        break;
+			        	    case 'bookshelf' :
+			        	    	output += '<td>책장</td>';
+			        	        break;
+			        	    case 'bed' :
+			        	    	output += '<td>침대</td>';
+			        	        break;
+			        	    case 'drawer' :
+			        	    	output += '<td>서랍장</td>';
+			        	        break;
+			        	    case 'sidetable' :
+			        	    	output += '<td>협탁</td>';
+			        	        break;
+			        	    case 'dressing_table' :
+			        	    	output += '<td>화장대</td>';
+			        	        break;
+			        	    case 'others' :
+			        	    	output += '<td>기타</td>';
+			        	        break;
+		     			}
+						
 						output += '<td>' + item.class_DATE_CONFIGURATION_1 + ' ~ ' + item.class_DATE_CONFIGURATION_2  + '</td>';
 						output += '<td>' + item.class_COUNT_MEMBER + '</td>';
-						output += '<td><button class="btn_modify">' + "수정" + '</button></td>';
+						output += '<td><button class="btn_modify" onclick="updateClass(' + item.class_NUMBER + ')">' + "수정" + '</button></td>';
 						output += '</tr>';
 						
 						$('#academyList').append(output);
@@ -176,7 +232,7 @@
 						
 						var output = ' ';
 						output += '<tr>';
-						output += '<td><input type="checkbox"></td>';
+						output += '<td><input type="checkbox" name="chk_status"></td>';
 						
 						if(item.class_STATUS == 0) {
 							output += '<td>' + "준비중" + '</td>';
@@ -200,7 +256,7 @@
 						output += '<td>' + item.class_CATEGORY + '</td>';
 						output += '<td>' + item.class_DATE_CONFIGURATION_1 + ' ~ ' + item.class_DATE_CONFIGURATION_2  + '</td>';
 						output += '<td>' + item.class_COUNT_MEMBER + '</td>';
-						output += '<td><button class="btn_modify">' + "수정" + '</button></td>';
+						output += '<td><button class="btn_modify" onclick="updateClass(' + item.class_NUMBER + ')">' + "수정" + '</button></td>';
 						output += '</tr>';
 						
 						$('#academyList').append(output);
@@ -212,6 +268,44 @@
 				}
 			});
 			event.preventDefault();
+		}
+		
+		$(document).on('click', '#selectClass', function(event) {
+			var checkArray = new Array();
+			 
+			 $("input[name=chk_status]:checked").each(function(i){   //jQuery로 for문 돌면서 check 된값 배열에 담는다
+				 checkArray.push($(this).val());
+		     });
+			 
+			 if(checkArray.length ==  0) {
+				 alert("삭제할 강의를 선택하세요.");
+			 } else {
+				 if (confirm("삭제하시겠습니까?") == true){
+					 $.ajax({
+						 type : 'POST',
+			             url : './updateStauts.my',
+			             data : { 0:0, checkArray : checkArray},
+			             success: function(retVal){
+			            	 if (retVal.res == "OK") {
+			            	 	alert("선택된 강의가 종료되었습니다.");
+			            	 	classList();
+			            	 } else{
+			            		 alert("삭제 실패!");
+			            	 }
+			             },
+			             error:function(request,status,error){
+			            	 alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+			             }
+			        });
+			        checkArray= new Array();
+			    }
+			 }
+		});
+		
+		function updateClass($class_NUMBER){
+			var CLASS_NUMBER = $class_NUMBER;
+			
+			location.href="./updateClass.mywork?CLASS_NUMBER=" + CLASS_NUMBER;
 		}
 		
 		// 만들어진 테이블에 페이지 처리
@@ -320,14 +414,14 @@
                     <h1 class="col-3 header2_adj">등록된 강의 관리</h1>
                     <div class="col-9 px-0">
                         <div class="row justify-content-end">
-                            <a href="./Course_registration.html" class="btn mx-2 btn-outline-dark" role="button" aria-pressed="true">강의등록</a>
-                            
+                            <a href="./classform.ac" class="btn mx-2 btn-outline-dark" role="button" aria-pressed="true">강의등록</a>
                         </div>
                     </div>
                 </div>
 
                     <div class="row pt-2 pb-2">
-                        <button type="button" id="selectall" class="btn btn-sm btn-outline-dark mr-2">전체표시</button>                        
+                        <button type="button" id="selectall" class="btn btn-sm btn-outline-dark mr-2">전체표시</button>        
+                        <button type="button" id="selectClass" class="btn btn-sm btn-outline-dark mr-2">선택 강의종료</button>                
                         <span class="listnum_txt pt-2">전체 문의내역</span>
                         <span class="listnum_num pt-2"></span>
                     </div>
@@ -343,7 +437,6 @@
 		                            <option value="onedayClass">원데이클래스</option>
 		                            <option value="regularClass">정규클래스</option>
 	                        	</select>
-	                        	<button class="btn-sm my-2 my-sm-0" type="button">강의종료</button>
                     		</div>
                     	</div>
                         <div class="col" style="padding: 0;">

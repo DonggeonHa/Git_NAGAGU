@@ -59,7 +59,7 @@
 						}
 						
 						output += '<td>' + item.member_EMAIL + '</td>';
-						output += '<td><button class="btn_modify">삭제</button></td>';
+						output += '<td><button class="btn_modify" onclick="btn_delete('+ item.my_CLASS_MEMBERNUM +')">삭제</button></td>';
 						output += '</tr>';
 						
 						$('#memberList').append(output);
@@ -118,7 +118,7 @@
 						}
 						
 						output += '<td>' + item.member_EMAIL + '</td>';
-						output += '<td><button class="btn_modify">삭제</button></td>';
+						output += '<td><button class="btn_modify" onclick="btn_delete('+ item.my_CLASS_MEMBERNUM +')">삭제</button></td>';
 						output += '</tr>';
 						
 						$('#memberList').append(output);
@@ -177,7 +177,7 @@
 						}
 						
 						output += '<td>' + item.member_EMAIL + '</td>';
-						output += '<td><button class="btn_modify">삭제</button></td>';
+						output += '<td><button class="btn_modify" onclick="btn_delete('+ item.my_CLASS_MEMBERNUM +')">삭제</button></td>';
 						output += '</tr>';
 						
 						$('#memberList').append(output);
@@ -188,6 +188,33 @@
 					alert("ajax 통신 실패!");
 				}
 			});
+		}
+		
+		function btn_delete($my_CLASS_MEMBERNUM) {
+			var MY_CLASS_MEMBERNUM = $my_CLASS_MEMBERNUM;
+			warning = "삭제된 회원은 복구가 불가능합니다.\n삭제하시겠습니까?";
+			
+			if(confirm(warning) != 0) {
+				$.ajax({
+					url:'/NAGAGU/deleteManagementMember.my',
+					type: 'POST',
+			        data: {'MY_CLASS_MEMBERNUM' : MY_CLASS_MEMBERNUM},
+			        dataType: "json",
+			        contentType: 'application/x-www-form-urlencoded; charset=utf-8',
+			        success: function(retVal) {
+			        	if (retVal.res == "OK") {
+			        		alert("삭제되었습니다.");
+			                memberList();
+			            } else {
+			            	alert("삭제 실패");
+			            }
+
+			        },
+			        error: function() {
+						alert("ajax 통신 실패!");
+					}
+				});
+			}
 		}
 		
 		// 만들어진 테이블에 페이지 처리
