@@ -168,11 +168,12 @@ public class BasketController {
 			model.addAttribute("orderList",orderList);
 			return "Mypage/order";
 		}
+	//결제완료 후 이동 페이지
 	@RequestMapping(value = "/mypage_order_success.my")
 	public String mypage_order_success() {
 		return "Mypage/success";
 	}
-	//결제내역 페이지
+	//결제내역 페이지(오더리스트?)
 	@RequestMapping(value = "/getMyPaidOrder.my")
 	public @ResponseBody Map<String, Object> getMyPaidOrder(HttpSession session,HttpServletRequest request,ProductOrderVO productOrderVO) {
 		HashMap<String, Object> map = new HashMap<String, Object>();
@@ -182,12 +183,13 @@ public class BasketController {
 		try {
 			System.out.println("start");
 			productOrderVO.setORDER_MEMBER(MEMBER_NUM);
-			System.out.println(productOrderVO.getORDER_MEMBER());
 			ArrayList<Map<String, Object>> myPaidOrder = null;
+			ArrayList<Map<String, Object>> getCount= null;
 			//ProductOrderVO paidVO = basketService.getPaidProductOrderVO(productOrderVO);
 			myPaidOrder  = basketService.getPaidList(map);
+			getCount  = basketService.getCount(map);
 			System.out.println("myPaidOrder="+myPaidOrder);
-			//retVal.put("paidVO", paidVO);
+			retVal.put("getCount", getCount);
 			retVal.put("myPaidOrder", myPaidOrder);
 			retVal.put("res", "OK");
 		}catch(Exception e) {
@@ -211,6 +213,41 @@ public class BasketController {
 		}
 		return retVal;
 	}
+	@RequestMapping(value = "/order_detail.my")
+	public String MypageOrderDetail() {
+		return "Mypage/order_detail";
+	}
+	//결제내역 페이지(오더리스트?)
+	@RequestMapping(value = "/getPaidDetail.my")
+	public @ResponseBody Map<String, Object> getPaidDetail(HttpSession session,HttpServletRequest request,ProductOrderVO productOrderVO) {
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		int MEMBER_NUM = (int)session.getAttribute("MEMBER_NUM");
+		map.put("MEMBER_NUM", MEMBER_NUM);
+		String ORDER_AMOUNT = request.getParameter("ORDER_AMOUNT");
+		System.out.println(ORDER_AMOUNT);
+		map.put("ORDER_AMOUNT", ORDER_AMOUNT);
+		Map<String, Object> retVal = new HashMap<String, Object>();
+		try {
+			ArrayList<Map<String, Object>> myPaidOrder = null;
+			ArrayList<Map<String, Object>> getCount= null;
+			myPaidOrder  = basketService.getPaidDetail(map);
+			getCount  = basketService.getCount(map);
+			retVal.put("getCount", getCount);
+			retVal.put("myPaidOrder", myPaidOrder);
+			retVal.put("res", "OK");
+		}catch(Exception e) {
+			retVal.put("res", "FAIL");
+			retVal.put("message", "Failure");
+		}
+		return retVal; 
+	}
+	
+	@RequestMapping(value = "/order_list.my")
+	public String MypageOrderList() {
+		
+		return "Mypage/order_list";
+	}
+}
 //	}
 //	
 //	@RequestMapping(value = "/mypage_support.my")
@@ -257,11 +294,7 @@ public class BasketController {
 //		return "Mypage/order_list";
 //	}
 //	
-//	@RequestMapping(value = "/order_detail.my")
-//	public String MypageOrderDetail() {
-//		
-//		return "Mypage/order_detail";
-//	}
+
 //	
 //	@RequestMapping(value = "/search.my")
 //	public String MypageSearch() {
@@ -346,4 +379,4 @@ public class BasketController {
 //		
 //		return "Mypage/Workshop/Store/product";
 //	}
-}
+

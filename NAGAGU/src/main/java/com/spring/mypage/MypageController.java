@@ -88,18 +88,6 @@ public class MypageController {
 		return "Mypage/order_vbank";
 	}
 	
-	@RequestMapping(value = "/order_list.my")
-	public String MypageOrderList() {
-		
-		return "Mypage/order_list";
-	}
-	
-	@RequestMapping(value = "/order_detail.my")
-	public String MypageOrderDetail() {
-		
-		return "Mypage/order_detail";
-	}
-	
 	@RequestMapping(value = "/search.my")
 	public String MypageSearch() {
 		

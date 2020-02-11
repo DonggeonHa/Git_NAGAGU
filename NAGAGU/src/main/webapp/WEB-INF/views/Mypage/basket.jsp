@@ -86,7 +86,7 @@ margin-top:15px; }
 								<i class="fas fa-times"></i>
 							</div>
 						</div>
-						<font size="1">무료배송|일반택배</font>
+						<font size="1">일반택배</font> 
 						<div class="d-flex justify-content-between">
 							<div>brief</div>
 							<div>
@@ -339,8 +339,17 @@ $(document).ready(function(){
 			}
 		})
 	});
+	
+	
 	//셀렉트 한 값만 넘기기(구매하기 버튼)
+	
  	$(document).on('click','.btn',function(){
+ 		if(!$('.checkbox').is(":checked")){
+ 			alert('하나 이상 선택해주세요')
+ 			return
+ 		}
+ 		
+ 		
 		var arrChecked = new Array();
 		$('.checkbox').each(function (index,item){
 			var chk = $(item).is(":checked")
