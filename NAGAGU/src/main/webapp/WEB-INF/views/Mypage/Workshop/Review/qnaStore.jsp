@@ -9,16 +9,17 @@
 	} 
 
 	String voExist = "N";
+	int count = 0;
 	ProductVO productVO = null;
 	String PRODUCT_CATEGORY = null;
 	String PRODUCT_TITLE = null;
 	int PRODUCT_NUM = 0;
-	if(request.getAttribute("productVO") != null) {
+	if(request.getAttribute("productVO") != null) {	//상품관리 페이지에서 넘어왔다
+		count = (int)request.getAttribute("count");	//
 		productVO = (ProductVO)request.getAttribute("productVO");
 		voExist = "Y";
 		PRODUCT_CATEGORY = productVO.getPRODUCT_CATEGORY();
 		PRODUCT_TITLE = productVO.getPRODUCT_TITLE();
-		//if(productVO.getPRODUCT_NUM() == -1) 
 		System.out.println("VO 존재함 : 상품관리페이지 통해 들어옴");
 	}
 
@@ -60,23 +61,26 @@
 		if("<%=voExist%>"=="Y") {	//vo 존재한다
 			//vo정보로 검색한다
 			//selectCategory, searchType(상품명), keyword(상품이름)
-			$("#selectClassType").val('all').prop("selected", true);
-			$("#selectCategory").val('<%=PRODUCT_CATEGORY%>').prop("selected", true);	
-			$('#searchType').html('상품명');
-			$('#searchType').val('product_title');
-			$("#keyword").val('<%=PRODUCT_TITLE%>');	
-		}
+			//qna 있을 경우/없을경우
+			if(<%=count%> != 0) {	//문의 있다
+				$("#selectClassType").val('all').prop("selected", true);
+				$("#selectCategory").val('<%=PRODUCT_CATEGORY%>').prop("selected", true);	
+				$('#searchType').html('상품명');
+				$('#searchType').val('product_title');
+				$("#keyword").val('<%=PRODUCT_TITLE%>');
+			} else if(<%=count%> == 0) {
+				alert('상품 "<%=PRODUCT_TITLE%>" 에 해당하는 문의가 없습니다.');
+				location.href='./workshop_product_items.ws';
+			}
+	
+		} 
 		
 		ProductqnaList();
 		
 	});	
 	
-	$(document).ready(function() {
-		
-	});
 
 	function ProductqnaList() {
-		alert("ProductqnaList 실행");
 		$('#remo').remove();
 		$('#ProductqnaList').empty();
 		$('#list_none').empty();

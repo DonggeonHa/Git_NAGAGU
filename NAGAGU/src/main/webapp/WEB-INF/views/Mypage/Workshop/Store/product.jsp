@@ -42,7 +42,6 @@ if (session.getAttribute("WORKSHOP_NUM") == null) {
 	});
 			
 	function productList() {
-		alert("productList 실행");
 		$('#remo').remove();
 		$('#productList').empty();
 		$('#list_none').empty();

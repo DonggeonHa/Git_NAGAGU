@@ -143,6 +143,7 @@
 		<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
 		<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
 		<link href="https://use.fontawesome.com/releases/v5.0.6/css/all.css" rel="stylesheet">
+		<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/js/Store/pager.css">
 		
 	<style>
          @charset "UTF-8";
@@ -480,22 +481,148 @@
 		  color: black !important;
 		}
 		
-			.clickable {cursor: pointer;}
+		.clickable {cursor: pointer;}
 		.hover {text-decoration: underline;}
 		.odd{ background: #FFC;}
 		.even{ background: #FF9;}
 		.active{ width:10px; height:10px; background:#f60; color:white;}	 
       </style>
+
 	<script>
 	$(document).ready(function() {
-		
-	});
+			page();
+//			getReviewList();
+	//		  pageMove(1);
+	});	
+<%-- 
+	function pageMove(reviewpage){
+		var perPgLine = 5;
+		$.ajax({
+			type	: "POST",
+			url: "/NAGAGU/getReviewList.pro",
+			data	: {	
+				'reviewpage'		: reviewpage,
+				'PRODUCT_NUM' : <%=PRODUCT_NUM%>
+			},
+				dataType: 'JSON',
+			success : function(result) {
+				page = pg;
+				//update board fromd data
+				updatePaging("pageMove", page, allRowCnt, perPgLine, 3);
+			},
+			error : function(e) {
+			console.log(e);
+			}
+		});
+	}	
+	function updatePaging(callFunc, page, allRowCnt, perPgLine, pgGrpCnt){
+		var boardPager	= $('.board-pager');
+		var	pager		= drawPager(callFunc, page, allRowCnt, perPgLine, pgGrpCnt);
+				
+		boardPager.empty();
+		boardPager.append(pager);
+	}
 	
+	function () {
+		callFunc : 페이지 클릭 시 호출되는 함수이다. 1을 누르면 pagemove(1) 호출.
+		page  : 현재 페이지
+		allRowCnt : 전체 게시글 수
+		perPgLine : 페이지당 게시글 수
+		pgGrpCnt : 페이징을 몇개씩 묵을 것인가. ex.3인경우  (1,2,3) (4,5,6)
+	} --%>
 	
+	// 만들어진 테이블에 페이지 처리
+	function page() { 	
+		$('#remo').empty();
+		var reSortColors = function($table) {};
+		$('nav.paginated').each(function() {
+			var pagesu = 10;  //페이지 번호 갯수
+	  		var currentPage = 0;
+	  		var numPerPage = 10;  //목록의 수
+	  		var $table = $('#ReviewListSection');
+	  		var $user = $('#user-page');
+			//length로 원래 리스트의 전체길이구함
+			var numRows = $table.find('div').length;
+			//Math.ceil를 이용하여 반올림
+			var numPages = Math.ceil(numRows / numPerPage);
+			//리스트가 없으면 종료
+			if (numPages==0) return;
+			//pager라는 클래스의 div엘리먼트 작성
+			var $pager = $('<ul id="remo" class="pager pagination"></ul>');
+			var nowp = currentPage;
+			var endp = nowp+10;
+			//페이지를 클릭하면 다시 셋팅
+			$table.bind('repaginate', function() {
+			//기본적으로 모두 감춘다, 현재페이지+1 곱하기 현재페이지까지 보여준다
+				$table.find('tr').hide().slice(currentPage * numPerPage, (currentPage + 1) * numPerPage).show();
+				$("#remo").html("");
+				if (numPages > 1) {     // 한페이지 이상이면
+					if (currentPage < 5 && numPages-currentPage >= 5) {   // 현재 5p 이하이면
+						nowp = 0;     // 1부터
+						endp = pagesu;    // 10까지
+					} else {
+						nowp = currentPage -5;  // 6넘어가면 2부터 찍고
+						endp = nowp+pagesu;   // 10까지
+						pi = 1;
+					}
+					if (numPages < endp) {   // 10페이지가 안되면
+						endp = numPages;   // 마지막페이지를 갯수 만큼
+						nowp = numPages-pagesu;  // 시작페이지를   갯수 -10
+					}
+					if (nowp < 1) {     // 시작이 음수 or 0 이면
+						nowp = 0;     // 1페이지부터 시작
+					}
+				} else {       // 한페이지 이하이면
+					nowp = 0;      // 한번만 페이징 생성
+					endp = numPages;
+				}
+				// [처음]
+				$('<li class="page-item" cursor: "pointer"><a class="page-link" href="#">처음</a></li>').bind('click', {newPage: page},function(event) {
+					currentPage = 0;
+					$table.trigger('repaginate');
+					$($(".page-item")[2]).addClass('active').siblings().removeClass('active');
+				}).appendTo($pager).addClass('clickable');
+		    	// [이전]
+				$('<li class="page-item" cursor: "pointer"><a class="page-link" href="#">이전</a></li>').bind('click', {newPage: page},function(event) {
+					if(currentPage == 0) return;
+					currentPage = currentPage-1;
+					$table.trigger('repaginate');
+					$($(".page-item")[(currentPage-nowp)+2]).addClass('active').siblings().removeClass('active');
+				}).appendTo($pager).addClass('clickable');
+		    	// [1,2,3,4,5,6,7,8]
+				for (var page = nowp ; page < endp; page++) {
+					$('<li class="page-item" cursor: "pointer"></li>').html('<a class="page-link" href="#">' + (page + 1) + '</a>').bind('click', {newPage: page}, function(event) {
+						currentPage = event.data['newPage'];
+						$table.trigger('repaginate');
+						$($(".page-item")[(currentPage-nowp)+2]).addClass('active').siblings().removeClass('active');
+					}).appendTo($pager).addClass('clickable');
+				}
+		    	// [다음]
+				$('<li class="page-item" cursor: "pointer"><a class="page-link" href="#">다음</a></li>').bind('click', {newPage: page},function(event) {
+					if(currentPage == numPages-1) return;
+					currentPage = currentPage+1;
+					$table.trigger('repaginate');
+					$($(".page-item")[(currentPage-nowp)+2]).addClass('active').siblings().removeClass('active');
+				}).appendTo($pager).addClass('clickable');
+		    	// [끝]
+				$('<li class="page-item" cursor: "pointer"><a class="page-link" href="#">끝</a></li>').bind('click', {newPage: page},function(event) {
+					currentPage = numPages-1;
+					$table.trigger('repaginate');
+					$($(".page-item")[endp-nowp+1]).addClass('active').siblings().removeClass('active');
+				}).appendTo($pager).addClass('clickable');
+		     	$($(".page-item")[2]).addClass('active');
+	  		});
+			$pager.insertAfter($pager).find('li.page-item:first').next().next().addClass('active');
+			$pager.appendTo($user);
+			$table.trigger('repaginate');
+		});
+	}
 
+		
+	
+	</script>	
 	
 	
-	</script>
    </head>
 	<body class="order-body">
 		<!-- content start -->
@@ -583,6 +710,12 @@
 				<!-- 리뷰 테이블 시작 -->
 				<h3 id="review_scroll" >Review</h3>
 				<br /><br />
+				
+				
+		<div class="ReviewListSection22">				
+
+		</div>
+		<div id="ReviewListSection">				
 				<div class="reviews_table" >
 					<!-- 리뷰 작성시 Ajax로 이 자리에 insert -->
 				<div class="review_sum justify-content-center" >
@@ -848,6 +981,8 @@
                   </form>   
                </div>         
                <!-- 리뷰 등록 끝 -->
+		</div>               
+		<!-- ReviewListSection -->               
                   
                <!-- 리뷰 pagenation -->
                <br/>
@@ -894,26 +1029,40 @@
                   %>
                   </div>
                </div>   <!-- pagenation 끝 -->   
+               
             <%
             }
             %>
-               
 
-               
+			<!-- 페이지네이션 기재오빠 -->
+			<div id = "pagination123" class="pagination justify-content-center" align="center"></div>			
+			<!-- 페이지네이션 기재오빠 끝-->               
+
+			<!-- 페이지네이션 선주 -->
+			
+			<div class=".board-pager"></div>               
+			<!-- 페이지네이션 선주 끝-->               
                <br />
             </div><!-- <div class="reviews_table" > 끝 -->
             <!-- 리뷰 테이블 끝 -->
       
-<!-- 지은 리뷰 pagination -->
-
-
-			<div class="review_bottom">
+			<!-- 지은 리뷰 pagination1 -->
+			<!-- <div class="review_bottom">
 				<table class="tbl paginated" id="tbl">
 				</table>
+			</div> -->
+			<!-- 지은 리뷰 pagination1 끝 -->
+			<!-- 지은 리뷰 pagination2 -->
+			
+			
+			<div class="d-flex justify-content-center">
+				<nav aria-label="Page navigation example" class="paginated" id="user-page"></nav>
 			</div>
-
-
-<!-- 지은 리뷰 pagination 끝 -->
+			
+			
+			<!-- 지은 리뷰 pagination2 끝 -->
+			
+			
             <span id="t3"></span>
             <br />
             <br />
@@ -2786,15 +2935,73 @@
 				      }
 				   });            
 				}
-				event.preventDefault();     	   
-     	   
-     	   
-     	   
-     	   
-     	   
-     	   
+				event.preventDefault();     	 
      	   
         });         
+      
+      
+			$(document).ready(function() {
+				
+				/* 댓글 페이지네이션 */
+				var pagination = "";
+				var page = <%=nowpage%>;
+				var max_page = <%=maxpage%>;
+				console.log(page)
+				console.log(max_page)
+				if (page == max_page && page > 5) {
+					pagination += '<div class="pageNum pageNum pagelink" value="' + Number(page-5) + '"><i class="fas fa-angle-double-left page_num"></i></div>';
+					pagination += '<div class="pageNum pageNum pagelink" value="' + Number(page-4) + '">' + Number(page-4) + '</a></div>';
+					pagination += '<div class="pageNum pageNum pagelink" value="' + Number(page-3) + '">' + Number(page-3) + '</a></div>';
+				}
+				else if (page == max_page-1 && page > 4) {
+					pagination += '<div class="pageNum pageNum pagelink" value="' + Number(page-4) + '"><i class="fas fa-angle-double-left page_num"></i></div>';
+					pagination += '<div class="pageNum pageNum pagelink" value="' + Number(page-3) + '">' + Number(page-3) + '</a></div>';
+				}
+				else {
+					alert('3');
+					if (page > 3) {
+						pagination += '<div class="pageNum pagelink" value="' + Number(page-3) + '"><i class="fas fa-angle-double-left page_num"></i></div>';
+					}
+				} 
+				
+				if (page > 2) {
+					pagination += '<div class="pageNum pagelink" value="' + Number(page-2) + '">' + Number(page-2) + '</a></div>';
+				}
+				if (page > 1) {
+					pagination += '<div class="pageNum pagelink" value="' + Number(page-1) + '">' + Number(page-1) + '</a></div>';
+				}
+				alert('7');
+					pagination += '<div class="pageNum currentpage">' + page + '</div>';
+				if (max_page > page) {
+					alert('8');
+					pagination += '<div class="pageNum pagelink" value="' + Number(page+1) + '">' + Number(page+1) + '</a></div>';
+				}
+				if (max_page > page+1) {
+					alert('9');
+					pagination += '<div class="pageNum pagelink" value="' + Number(page+2) + '">' + Number(page+2) + '</a></div>';
+				}
+				alert('10');
+				if (page == 1 && max_page > 5) {
+					pagination += '<div class="pageNum pagelink" value="' + Number(page+3) + '">' + Number(page+3) + '</a></div>';
+					pagination += '<div class="pageNum pagelink" value="' + Number(page+4) + '">' + Number(page+4) + '</a></div>';
+					pagination += '<div class="pageNum pagelink" value="' + Number(page+5) + '"><i class="fas fa-angle-double-right page_num"></i></div>';
+				}
+				else if (page == 2 && max_page > 6) {
+					pagination += '<div class="pageNum pagelink" value="' + Number(page+3) + '">' + Number(page+3) + '</a></div>';
+					pagination += '<div class="pageNum pagelink" value="' + Number(page+4) + '"><i class="fas fa-angle-double-right page_num"></i></div>';
+				}
+				else {
+					alert('13');
+					if (max_page > page+2) {
+						pagination += '<div class="pageNum pagelink" value="' + Number(page+3) + '"><i class="fas fa-angle-double-right page_num"></i></div>';
+					}
+				}
+			
+			$('#pagination123').html(pagination);
+		});      
+      
+      
+      
    </script>
    
    </body>

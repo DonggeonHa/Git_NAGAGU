@@ -48,6 +48,13 @@ public class ProductReviewServiceImpl implements ProductReviewService {
 	}
 
 	@Override
+	public ArrayList<Product_reviewVO> getReview_MemberList(HashMap<String, Object> map) {
+		ProductReviewMapper reviewMapper = sqlSession.getMapper(ProductReviewMapper.class);
+		ArrayList<Product_reviewVO> reviewList = null;
+		reviewList = reviewMapper.getReviewList(map);
+		return reviewList;
+	}
+	@Override
 	public ArrayList<Product_reviewVO> getReviewList(HashMap<String, Object> map) {
 		ProductReviewMapper reviewMapper = sqlSession.getMapper(ProductReviewMapper.class);
 		ArrayList<Product_reviewVO> reviewList = null;

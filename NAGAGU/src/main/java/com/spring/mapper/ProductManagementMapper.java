@@ -13,5 +13,6 @@ public interface ProductManagementMapper {
 	int modifyStatus(HashMap<String, Object> map);
 	int deleteProducts(HashMap<String, Object> map);
 	ProductVO getProductVoOfWorkshop(HashMap<String, Object> map);
-
+	int checkQnaCount(HashMap<String, Object> map);
+	int checkReviewCount(HashMap<String, Object> map);
 }
