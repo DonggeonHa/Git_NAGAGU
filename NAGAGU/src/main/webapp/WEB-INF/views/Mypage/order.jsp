@@ -72,8 +72,8 @@ String[] array = new String[orderList.size()];
 							</td>
 							<td colspan="2">
 								<dl>
-									<c:forTokens var="list" items="${orderList}">  
-									</c:forTokens> 
+									<%-- <c:forTokens var="list" items="${orderList}">  
+									</c:forTokens>  --%>
 									<dt><%=list.get("PRODUCT_TITLE")%></dt>
 									<dd><%=list.get("PRODUCT_BRIEF")%></dd>
 									<dd>사이즈 : <%=list.get("BASKET_SIZE")%> | 컬러 : <%=list.get("BASKET_COLOR")%></dd>
