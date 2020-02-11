@@ -9,7 +9,7 @@ import org.springframework.stereotype.Service;
 
 import com.spring.mapper.MemberLikeMapper;
 import com.spring.mapper.ProductMapper;
-import com.spring.workshop.WorkshopVO;
+import com.spring.workshop.WorkShopMemberVO;
 
 @Service
 public class ProductServiceImpl implements ProductService{
@@ -18,8 +18,8 @@ public class ProductServiceImpl implements ProductService{
 	private SqlSession sqlSession;
 	
 	@Override
-	public WorkshopVO selectWorkshop(ProductVO vo) {
-		WorkshopVO workshop = null;
+	public WorkShopMemberVO selectWorkshop(ProductVO vo) {
+		WorkShopMemberVO workshop = null;
 		try {
 			ProductMapper productMapper = sqlSession.getMapper(ProductMapper.class);
 			workshop = productMapper.selectWorkshop(vo);

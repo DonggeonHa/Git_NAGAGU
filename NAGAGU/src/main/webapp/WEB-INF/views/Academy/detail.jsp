@@ -371,29 +371,19 @@
 						%>
 								<!-- 비회원일때-->
 								<button type="button" class="btn btn-outline-dark btn-lg" data-toggle="modal" data-target="#exampleModalCenter">예약 하기</button>
-								<a href="#" class="btn btn-outline-dark btn-lg" role="button" aria-pressed="true">
-									<i class="far fa-heart"></i>
-								</a>
 						<% 
 							} else if(WORKSHOP_CEO_NAME != null){ 
 						%>
 								<!-- 공방회원일때 -->
 								<a href="#" class="btn btn-outline-dark btn-lg disabled" tabindex="-1" role="button" aria-disabled="true">예약 하기	</a>
-								<a href="#" class="btn btn-outline-dark btn-lg disabled" role="button" aria-pressed="true">
-									<i class="far fa-heart"></i>
-								</a>
 						<% 
 							} else { 
 						%>
 								<!-- 일반회원일떄 -->
 								<button type="button" class="btn btn-outline-dark btn-lg" data-toggle="modal" data-target="#Booking">예약 하기</button>
-								<a href="#" class="btn btn-outline-dark btn-lg" role="button" aria-pressed="true">
-									<i class="far fa-heart"></i>
-								</a>
 						<%
 							}
 						%>
-						
 						</div>
 						<br>
 					</div>
