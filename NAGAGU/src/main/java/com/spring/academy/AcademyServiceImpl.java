@@ -10,8 +10,10 @@ import org.springframework.stereotype.Service;
 
 import com.spring.mapper.AcademyMapper;
 import com.spring.mapper.ProductReviewMapper;
+import com.spring.mapper.WorkShopMemberMapper;
 import com.spring.member.MemberVO;
 import com.spring.workshop.WorkShopMemberVO;
+import com.spring.workshop.WorkshopVO;
 
 @Service
 public class AcademyServiceImpl implements AcademyService {
@@ -108,6 +110,15 @@ public class AcademyServiceImpl implements AcademyService {
 		AcademyMapper classMapper = sqlSession.getMapper(AcademyMapper.class);
 		classList= classMapper.getLoginMemberClass(map);
 		System.out.println("getLoginMemberClass Impl결과="+classList);
+		return classList;
+	}
+
+	@Override
+	public ArrayList<ClassVO> getClassListOfMember(HashMap<String, Object> map) throws Exception {
+		ArrayList<ClassVO> classList = null;
+		AcademyMapper classMapper = sqlSession.getMapper(AcademyMapper.class); 
+		classList = classMapper.getClassListOfMember(map); 
+		
 		return classList;
 	}
 }

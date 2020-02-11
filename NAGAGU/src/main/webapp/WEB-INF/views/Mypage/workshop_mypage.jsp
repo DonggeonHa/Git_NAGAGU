@@ -1,3 +1,5 @@
+<%@page import="com.spring.workshop.WorkshopVO"%>
+<%@page import="com.spring.workshop.WorkShopMemberVO"%>
 <%@page import="com.spring.community.PicsVO"%>
 <%@page import="java.util.ArrayList"%>
 <%@page import="com.spring.member.MemberVO"%>
@@ -14,13 +16,14 @@
 	}
 	
 	//사진 올린 멤버 디테일 받아오기 위해
-	MemberVO memberVO= (MemberVO)request.getAttribute("memberDetail");
-	System.out.println("사진 멤버이름="+memberVO.getMEMBER_NAME()); 
+	WorkShopMemberVO wsMemberVO= (WorkShopMemberVO)request.getAttribute("wsMemberDetail");
+	System.out.println("멤버이름="+wsMemberVO.getWORKSHOP_NAME()); 
 	//사진 올린 멤버가 올린 다른 사진리스트 받아오기 위해
-	ArrayList<PicsVO> memberPicsList = (ArrayList<PicsVO>) request.getAttribute("memberPicsList");
-	ArrayList<PicsVO> memberLikePics = (ArrayList<PicsVO>) request.getAttribute("memberLikePics");
+	//ArrayList<PicsVO> memberPicsList = (ArrayList<PicsVO>) request.getAttribute("memberPicsList");
+	//ArrayList<PicsVO> memberLikePics = (ArrayList<PicsVO>) request.getAttribute("memberLikePics");
+	ArrayList<WorkshopVO> classList = (ArrayList<WorkshopVO>) request.getAttribute("classList");
 	//System.out.println(memberLikePics.get(0).getPICS_FILE_1());
-	System.out.println("니가누른 사진 멤버는="+memberVO.getMEMBER_NUM());
+	System.out.println("니가누른  멤버는="+wsMemberVO.getWORKSHOP_NUM());
 	System.out.println("로그인 멤버는="+LOGIN_MEMBER_NUM);
 %>
 <!DOCTYPE html>
@@ -188,71 +191,51 @@ a, .card a:link, .card a:visited {
 				<div class="col-10 nickNameTap">
 					<div>
 						<h6>
-							<a href="#"><%=memberVO.getMEMBER_NICK()%> 님의 페이지</a>
+							<a href="#"><%=wsMemberVO.getWORKSHOP_NAME()%> 님의 페이지</a>
 						</h6>
-					</div>
+					</div> 
 				</div>
 				<div class="main p-0">
 				<div class="pics-wrap">
 				<div class="row justify-content-between title mx-0 pt-2 ">
 						<div class="col-4">
-							<h2>사진 27</h2>
+							<h2>강의</h2>
 						</div>
 						<div class="col-2 text-right">
-							<a href="memberLikePics.cm?uploadOrLike=upload&MEMBER_NUM=<%=memberVO.getMEMBER_NUM()%>">more</a>
+							<a href="memberLikePics.cm?uploadOrLike=upload&MEMBER_NUM=<%=wsMemberVO.getWORKSHOP_NUM()%>">more</a>
 						</div> 
 					</div>
-					<div class="row justify-content-start img-wrap">  
-						<c:forEach var="pics" items="${memberPicsList}" varStatus="status">
+					<div class="row justify-content-start img-wrap">   
+						<c:forEach var="list" items="${classList}" varStatus="status">
 						    <div class="col-4 img-wrap">
-							    <a href="${pageContext.request.contextPath}/community_detail.cm?PICS_NUM=${pics.PICS_NUM}&MEMBER_NUM=${pics.PICS_MEMBER}">
-								<img src="/communityupload/image/${pics.PICS_FILE_1}"></a>
+							    <a href="${pageContext.request.contextPath}/classdetail.ac?CLASS_NUMBER=${list.CLASS_NUMBER}">
+								<img src="/communityupload/image/${list.CLASS_IMAGE}"></a>
+								<div>${list.CLASS_NAME}</div>
 							</div>   
 						</c:forEach> 
 			    	</div>
 			    	</div>
-			    	<div class="like-wrap">
-					<div class="row justify-content-between title mx-0 pt-2">
-						<div class="col-4">
-							<h2>LIKE 100</h2>
-						</div>
-						<div class="col-2 text-right">
-							<a href="memberLikePics.cm?uploadOrLike=like&MEMBER_NUM=<%=memberVO.getMEMBER_NUM()%>">more</a>
-						</div>
-					</div>
-					<div class="row justify-content-start img-wrap ">
-						<c:forEach var="pics" items="${memberLikePics}" varStatus="status">
-						    <div class="col-4 img-wrap">
-							    <a href="${pageContext.request.contextPath}/community_detail.cm?PICS_NUM=${pics.PICS_NUM}&MEMBER_NUM=${pics.PICS_MEMBER}">
-								<img src="/communityupload/image/${pics.PICS_FILE_1}"></a>
-							</div>   
-						</c:forEach> 
-					</div>
-					</div>
-	
-	
 				</div>
 			<div class="sidebar">
 				<div class="row justify-content-center mb-2">
 					<div class="card-group text-center">
 						<div class="card text-white bg-secondary" style="width: 10rem;">
 						<c:set var="loginMember" value="<%=LOGIN_MEMBER_NUM%>"/>
-						<c:set var="objectMember" value="<%=memberVO.getMEMBER_NUM()%>"/>
+						<c:set var="objectMember" value="<%=wsMemberVO.getWORKSHOP_NUM()%>"/>
 						<c:choose>
 							<c:when test="${loginMember == objectMember}">
-								<a href="mypage.my?MEMBER_NUM=<%=memberVO.getMEMBER_NUM()%>">
+								<a href="mypage.my?MEMBER_NUM=<%=wsMemberVO.getWORKSHOP_NUM()%>">
 							</c:when>
 							<c:otherwise> 
 								<a href="#"></a>
 							</c:otherwise>
 						</c:choose>
-							<div class="card-header"><%=memberVO.getMEMBER_NICK()%></div>
+							<div class="card-header"><%=wsMemberVO.getWORKSHOP_NAME()%></div>
 							<div class="card-body"> 
-								<img src=<%=memberVO.getMEMBER_PICTURE()%>>
+								<img src=<%=wsMemberVO.getWORKSHOP_PICTURE()%>>
 							</div>
-							<a href="followList.cm?MEMBER_NUM=<%=memberVO.getMEMBER_NUM()%>">
-							<div class="card-footer bg-transparent ">Follow 숫자</div>
-							<div>Follower 숫자</div> 
+							<a href="#">
+								<div class="card-footer bg-transparent "><%=wsMemberVO.getWORKSHOP_INTRO()%></div>
 							</a>
 						</div>
 					</div>

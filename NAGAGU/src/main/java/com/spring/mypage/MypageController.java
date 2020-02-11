@@ -12,6 +12,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.spring.academy.AcademyService;
+import com.spring.academy.ClassVO;
 import com.spring.community.PicsVO;
 import com.spring.member.MemberService;
 import com.spring.member.MemberVO;
@@ -27,6 +29,8 @@ public class MypageController {
 	@Autowired
 	private WorkShopMemberService workShopMemberService;
 	
+	@Autowired(required = false)
+	private AcademyService academyService;
 	
 	@RequestMapping(value = "/mypage.my")
 	public String Mypage(MemberVO memberVO, HttpServletRequest request, HttpSession session) {
@@ -50,29 +54,29 @@ public class MypageController {
 		return "Mypage/support";
 	}
 	
-	//공방 마이페이지s
-//	@RequestMapping(value = "/mypage_class.my")
-//	public String MypageClass(WorkShopMemberVO wsMemberVO, Model model, HttpServletRequest request) {
-//		System.out.println("컨트롤러");
-//		//마이페이지 멤버
-//		WorkShopMemberVO wsMemberDetail = workShopMemberService.selectwmember(wsMemberVO);
-//		int WORKSHOP_NUM = Integer.parseInt(request.getParameter("WORKSHOP_NUM"));
-//		wsMemberVO.setWORKSHOP_NUM(WORKSHOP_NUM);
-//		ArrayList<WorkshopVO> classList = workShopMemberService.getClassList(wsMemberVO);
-//		//멤버가 올린 강의 리스트
-//		HashMap<String, Object> map = new HashMap<String, Object>();
-//		int LIKE_MEMBER = memberVO.getMEMBER_NUM();
-//		map.put("LIKE_MEMBER", LIKE_MEMBER);
-//		//ArrayList<PicsVO> memberLikePics = communityService.getMemberLikePics(map);
-//		model.addAttribute("memberDetail",memberDetail);
-//		//model.addAttribute("memberPicsList",memberPicsList);
-//		//model.addAttribute("memberLikePics",memberLikePics);
-//		//업로드나 라이크 값이 없으면 일반 마이페이지, 있으면 more페이지
-//		if(request.getParameter("uploadOrLike")!=null) {
-//			return"Mypage/workshop_mypage_more";
-//		}
-//		return "Mypage/workshop_mypage";
-//	}
+	//공방 마이페이지
+	@RequestMapping(value = "/mypage_class.my")
+	public String MypageClass(WorkShopMemberVO wsMemberVO, Model model, HttpServletRequest request) throws Exception {
+		System.out.println("컨트롤러");
+		//마이페이지 멤버
+		WorkShopMemberVO wsMemberDetail = workShopMemberService.selectwmember(wsMemberVO);
+		int WORKSHOP_NUM = Integer.parseInt(request.getParameter("WORKSHOP_NUM"));
+		wsMemberVO.setWORKSHOP_NUM(WORKSHOP_NUM);
+		
+		
+		//멤버가 올린 강의 리스트
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		map.put("WORKSHOP_NUM", WORKSHOP_NUM);
+		ArrayList<ClassVO> classList = academyService.getClassListOfMember(map);
+		model.addAttribute("classList",classList);
+		model.addAttribute("wsMemberDetail",wsMemberDetail);
+		System.out.println("classList="+classList);
+		//업로드나 라이크 값이 없으면 일반 마이페이지, 있으면 more페이지
+		if(request.getParameter("uploadOrLike")!=null) {
+			return"Mypage/workshop_mypage_more";
+		}
+		return "Mypage/workshop_mypage";
+	}
 	
 	@RequestMapping(value = "/mypage_edit.my")
 	public ModelAndView MypageEdit(MemberVO memberVO, HttpSession session) {

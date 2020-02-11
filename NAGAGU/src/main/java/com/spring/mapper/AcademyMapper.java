@@ -19,4 +19,5 @@ public interface AcademyMapper {
 	int insertClassInfo(MyClassVO vo); // 회원관리
 	//경태 마이페이지 강의목록
 	public ArrayList<Map<String, Object>> getLoginMemberClass(HashMap<String, Object> map);
+	ArrayList<ClassVO> getClassListOfMember(HashMap<String, Object> map) throws Exception;
 }

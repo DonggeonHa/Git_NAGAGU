@@ -7,7 +7,7 @@ public class WorkShopMemberVO {
 	private String WORKSHOP_EMAIL;
 	private String WORKSHOP_PASS;
 	private String WORKSHOP_NAME;
-	private String WORKSHOP_CEO_NAME;
+	private String WORKSHOP_CEO_NAME;	//대표 이름
 	private String WORKSHOP_PHONE;
 	private String WORKSHOP_ZIP;
 	private String WORKSHOP_ADDRESS1;

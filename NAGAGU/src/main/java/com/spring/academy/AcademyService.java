@@ -6,6 +6,7 @@ import java.util.Map;
 
 import com.spring.mapper.ProductReviewMapper;
 import com.spring.workshop.WorkShopMemberVO;
+import com.spring.workshop.WorkshopVO;
 
 public interface AcademyService {
 	public boolean insertClass(ClassVO academy) throws Exception;
@@ -18,4 +19,5 @@ public interface AcademyService {
 	public boolean insertClassInfo(MyClassVO vo) throws Exception;
 	//경태 마이페이지 강의목록
 	public ArrayList<Map<String, Object>> getLoginMemberClass(HashMap<String, Object> map);
+	ArrayList<ClassVO> getClassListOfMember(HashMap<String, Object> map) throws Exception;
 }

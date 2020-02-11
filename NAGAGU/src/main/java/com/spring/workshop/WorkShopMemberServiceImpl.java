@@ -143,11 +143,4 @@ public class WorkShopMemberServiceImpl implements WorkShopMemberService {
 		
 		return null;
 	}
-
-	@Override
-	public ArrayList<WorkshopVO> getClassList(WorkShopMemberVO workshopVO) {
-		WorkShopMemberMapper workshopMapper = sqlSession.getMapper(WorkShopMemberMapper.class);
-		ArrayList<WorkshopVO> classList = workshopMapper.getClassList(workshopVO);
-		return classList;
-	}
 }

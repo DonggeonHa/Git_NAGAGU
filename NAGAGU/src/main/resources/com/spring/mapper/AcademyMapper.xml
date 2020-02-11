@@ -139,4 +139,7 @@
 		SELECT * FROM ACADEMY, MY_CLASS
 		WHERE MY_CLASS_MEMBERNUM = #{MEMBER_NUM} AND MY_CLASS_CLASSNUM=CLASS_NUMBER
 	</select>
+	<select id="getClassListOfMember" parameterType="java.util.HashMap" resultMap="classResultMap">
+		SELECT * FROM ACADEMY WHERE WORKSHOP_NUM=#{WORKSHOP_NUM} ORDER BY CLASS_NUMBER DESC
+	</select>
 </mapper>
