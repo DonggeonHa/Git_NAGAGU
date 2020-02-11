@@ -1,7 +1,9 @@
 package com.spring.workshopMypage;
 
+import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -55,6 +57,31 @@ public class AcademyManagementServiceImpl implements AcademyManagementService {
 		
 		return searchMember;
 	}
+
+	@Override
+	public int deleteManagementMember(int MY_CLASS_MEMBERNUM) {
+		int result = 0;
+		
+		AcademyManagementMapper managementMapper = sqlSession.getMapper(AcademyManagementMapper.class);
+		result = managementMapper.deleteManagementMember(MY_CLASS_MEMBERNUM);
+		
+		return result;
+	}
+
+	@Override
+	public int updateClassStatus(ArrayList<Integer> updateArray) {
+		AcademyManagementMapper managementMapper = sqlSession.getMapper(AcademyManagementMapper.class);
+		int result = 0;
+		
+		for(int i=0; i<updateArray.size(); i++) {
+			int CLASS_NUMBER = updateArray.get(i);
+			
+			result =managementMapper.updateClassStatus(CLASS_NUMBER);
+		}
+		
+		return result;
+	}
+
 
 	
 }
