@@ -33,6 +33,7 @@ if (session.getAttribute("WORKSHOP_NUM") == null) {
 		.odd{ background: #FFC;}
 		.even{ background: #FF9;}
 		.active{ width:10px; height:10px; background:#f60; color:white;}
+		#list_none { text-align:center; padding-top:50px; }
 	</style>
 	
 	<script>
@@ -44,21 +45,17 @@ if (session.getAttribute("WORKSHOP_NUM") == null) {
 		alert("productList 실행");
 		$('#remo').remove();
 		$('#productList').empty();
+		$('#list_none').empty();
 		var selectClassType = $("#selectClassType option:selected").val();	//필터 값 가져오기
 		var selectCategory = $("#selectCategory option:selected").val();	//필터 값 가져오기
 		var selectListAlign = $("#selectListAlign option:selected").val();	//필터 값 가져오기
-		var searchType = ''; 
 		var keyword = ''; 
-		if ($('#searchType').val() != null) {
-			searchType = $('#searchType').val();
-		}
 		if ($('#keyword').val() != null) {
 			keyword = $("#keyword").val();
 		}
 		console.log("selectClassType="+selectClassType)
 		console.log("selectCategory="+selectCategory)
 		console.log("selectListAlign="+selectListAlign)
-		console.log("searchType : " + searchType)
 		console.log("keyword : " + keyword)
 		
 		var title = "";
@@ -69,7 +66,6 @@ if (session.getAttribute("WORKSHOP_NUM") == null) {
 			data: {"selectClassType" : selectClassType, 
 					"selectCategory" : selectCategory, 
 					"selectListAlign" : selectListAlign,
-					"searchType" : searchType,
 					"keyword" : keyword
 				},
 			dataType: 'json',
@@ -115,10 +111,10 @@ if (session.getAttribute("WORKSHOP_NUM") == null) {
 				      	var PRODUCT_STATUS = productList[j].PRODUCT_STATUS;
 			      		switch(PRODUCT_STATUS){
 			      	    case 0 : 
-			      	    	PRODUCT_STATUS = '판매중'
+			      	    	PRODUCT_STATUS = '품절'
 			      	        break;
 			      	    case 1 : 
-			      	    	PRODUCT_STATUS = '품절' 
+			      	    	PRODUCT_STATUS = '판매중' 
 			      	        break;  
 			      	    case 2 : 
 			      	    	PRODUCT_STATUS = '판매 종료'
@@ -136,7 +132,7 @@ if (session.getAttribute("WORKSHOP_NUM") == null) {
 			    		var date = date_format(PRODUCT_DATE);
 			      
 						output += '<tr>';
-						output += '<td><input type="checkbox"></td>';
+						output += '<td><input type="checkbox" name="chk" value="'+PRODUCT_NUM+'"></td>';
 						output += '<td>' + number + '</td>';
 						output += '<td>' + PRODUCT_STATUS + '</td>';
 						output += '<td>' + PRODUCT_CATEGORY + '</td>';
@@ -152,17 +148,23 @@ if (session.getAttribute("WORKSHOP_NUM") == null) {
 						output += '<td>' + PRODUCT_LIKE + '</td>';
 						output += '<td>' + date + '</td>';
 
-						output += '<td><button class="btn_modify" onclick="location.href=">' + "수정 " + '</button>&nbsp;&nbsp;';
-						output += '<button class="btn_remove" onclick="location.href=">' + "삭제" + '</button></td>';
-						output += '<td><button class="btn_move" onclick="location.href=">' + "이동" + '</button></td>';
+						output += '<td><button class="btn_modify" onclick="location.href=">' + "수정 " + '</button>&nbsp;';
+						output += '<button class="btn_remove" value="'+PRODUCT_NUM+'">' + "삭제" + '</button></td>';
+						output += '<td><button class="btn_review" value="'+PRODUCT_NUM+'" onclick="goreview(this.value)">' + "후기" + '</button>&nbsp;';
+						output += '<button class="btn_qna" value="'+PRODUCT_NUM+'" onclick="goqna(this)">' + "문의" + '</button></td>';
 						output += '</tr>';
 						number += 1;
-     				}					
+     				}
 					$('#productList').append(output);
 				} else {
 					output += '검색 결과가 없습니다.';
 					$('.listnum_num').text("0건");
 					$('#list_none').append(output);
+					//검색결과 없을시 select조건들 초기화
+					$("#keyword").val('');
+					$("#selectClassType").val('allProducts').prop("selected", true);
+					$("#selectCategory").val('all').prop("selected", true);
+					$("#selectListAlign").val('product_date').prop("selected", true);
 				}
 				page();
 			},
@@ -171,138 +173,6 @@ if (session.getAttribute("WORKSHOP_NUM") == null) {
 			}
 		});
 	}		
-
-	function searchList(event) {
-	alert("searchList 실행");
-		$('#remo').remove();
-		//선택 먼저 할 경우 selectClassType는 무조건 all
-		//검색 한 경우에, 그 이후 정렬을 하고 싶다면  selectClassType는 선택한 것
-		//var selectClassType = 'all';
-		var selectClassType = $("#selectClassType option:selected").val();
-		var searchType = $('#searchType').val();
-		var keyword = $('#keyword').val();
-		var categorySelect = '';
-		if(searchType == 'category') {
-			categorySelect = $('#categorySelect').val();
-		} 
-			
- 		var number = 1;
-		var title = "";
-
-		var searchType = $('#searchType').val();
-		var keyword = $("#keyword").val();
-
-		console.log("selectClassType : " + selectClassType)
-		console.log("searchType : " + searchType)
-		console.log("searchType : " + searchType)
-		console.log("keyword : " + keyword)
-		
-		$('#productList').empty();
-		alert(searchType + keyword);
-		
-		if(!keyword || !searchType){
-			alert("카테고리 선택, 검색어를 입력하세요.");
-			ProductList();
-			return false;
-		}
-
-		$.ajax({
-			url: '/NAGAGU/searchTypeList.my',
-			type: 'POST',
-			data: {"selectClassType" : selectClassType, "searchType" : searchType, "keyword" : keyword, "categorySelect" : categorySelect},
-			dataType: 'json',
-			contentType: 'application/x-www-form-urlencoded; charset=utf-8',
-			success: function(productList) {
-				console.log(productList);
-				var output = ' ';	
-				
-				if(qnaList.length!=0) {
-					$('.listnum_num').text(qnaList.length+"건");					
-		        	for(var j=0; j<qnaList.length; j++){
-	 	        		var PRODUCT_CATEGORY = qnaList[j].PRODUCT_CATEGORY
-	 	        		switch(PRODUCT_CATEGORY){
-		 	        	    case 'table' : 
-		 	        	    	PRODUCT_CATEGORY = '책상'
-		 	        	        break;
-		 	        	    case 'chair' : 
-		 	        	    	PRODUCT_CATEGORY = '의자' 
-		 	        	        break;  
-		 	        	    case 'bookshelf' : 
-		 	        	    	PRODUCT_CATEGORY = '책장'
-		 	        	        break;
-		 	        	    case 'bed' : 
-		 	        	    	PRODUCT_CATEGORY = '침대' 
-		 	        	        break;  
-		 	        	    case 'drawer' : 
-		 	        	    	PRODUCT_CATEGORY = '서랍장'
-		 	        	        break;
-		 	        	    case 'sidetable' : 
-		 	        	    	PRODUCT_CATEGORY = '협탁' 
-		 	        	        break;  
-		 	        	    case 'dressing_table' : 
-		 	        	    	PRODUCT_CATEGORY = '화장대'
-		 	        	        break;
-		 	        	    case 'others' : 
-		 	        	    	PRODUCT_CATEGORY = '기타' 
-		 	        	        break;  
-	 	        		}
-		 	        	var product_category = qnaList[j].PRODUCT_CATEGORY;
-		 	        	var MEMBER_NICK = qnaList[j].MEMBER_NICK;
-		        		var PRODUCT_TITLE = qnaList[j].PRODUCT_TITLE;
-		        		var PRODUCT_NUM = qnaList[j].PRODUCT_NUM;
-		        		var QNA_DATE = new Date(qnaList[j].QNA_DATE);
-		        		var date = date_format(QNA_DATE);
-		        		var QNA_CONTENT = qnaList[j].QNA_CONTENT;
-		        		var QNA_RE = qnaList[j].QNA_RE;
-		        		var QNA_STATUS = qnaList[j].QNA_STATUS;
-
-						output += '<tr>';
-						output += '<td><input type="checkbox"></td>';
-						output += '<td>' + number + '</td>';
-						output += '<td>' + PRODUCT_CATEGORY + '</td>';
-						output += '<td>' + MEMBER_NICK + '</td>';
-						if(PRODUCT_TITLE.length >= 14) {
-							PRODUCT_TITLE = PRODUCT_TITLE.substr(0,14)+"...";
-						}
-						output += '<td><a href="productdetail.pro?PRODUCT_NUM=' + PRODUCT_NUM + '&PRODUCT_CATEGORY=' + product_category + '">'+PRODUCT_TITLE+'</a></td>';
-						if(QNA_CONTENT.length >= 45) {
-							QNA_CONTENT = QNA_CONTENT.substr(0,45)+"...";
-						}
-						if(QNA_STATUS == 0) {
-							//답변이 달리지 않은 문의
-							output += '<td style="text-align:left;">'+QNA_CONTENT+'</td>';
-							output += '<td>' + date + '</td>';
-							output += '<td>'+'답변 대기'+'</td>';
-							output += '<td><button class="btn_write" onclick="location.href=">' + "작성" + '</button></td>';
-						} else if (QNA_STATUS == 1){
-							//답변이 달린 문의
-							output += '<td style="text-align:left;">'+QNA_CONTENT+'</td>';
-							output += '<td>' + date + '</td>';
-							output += '<td>'+'답변 완료'+'</td>';
-							output += '<td><button class="btn_modify" onclick="location.href=">'+"수정"+'</button></td>';
-						}
-
-						output += '<td><button class="btn_move" onclick="location.href=">' + "이동" + '</button></td>';
-						output += '</tr>';
-						number += 1;
-		        	}					
-					$('#productList').append(output);
-				} else {
-					alert('0임');
-					output += '검색 결과가 없습니다.';
-					$('.listnum_num').text("0건");
-					$('#list_none').append(output);
-					$("#keyword").val('');
-				}
-				page();
-			},
-			error: function() {
-				alert("Qna List를 띄울 수 없습니다.");
-			}
-		});
-		event.preventDefault();		
-	}
-	
 	
 	// 만들어진 테이블에 페이지 처리
 	function page() { 	
@@ -428,15 +298,14 @@ if (session.getAttribute("WORKSHOP_NUM") == null) {
                 </div>
                 
 				<div class="row pt-2 pb-2">
-				    <button type="button" id="" class="btn btn-sm btn-outline-dark mr-2">전체표시</button>
-				    <button type="button" id="" class="btn btn-sm btn-outline-dark mr-2">선택 판매중</button>  
-				    <button type="button" id="" class="btn btn-sm btn-outline-dark mr-2">선택 품절</button>  
-				    <button type="button" id="" class="btn btn-sm btn-outline-dark mr-2">선택 판매종료</button>                              
-				    <button type="button" id="" class="btn btn-sm btn-outline-dark mr-2">선택 삭제</button>                              
+				    <button type="button" id="listall" class="btn btn-sm btn-outline-dark mr-2">전체표시</button>
+				    <button type="button" id="to_ingSale" class="btn btn-sm btn-outline-dark mr-2">선택 판매중</button>  
+				    <button type="button" id="to_pauseSale" class="btn btn-sm btn-outline-dark mr-2">선택 품절</button>  
+				    <button type="button" id="to_endSale" class="btn btn-sm btn-outline-dark mr-2">선택 판매종료</button>                              
+				    <button type="button" id="deleteProducts" class="btn btn-sm btn-outline-dark mr-2">선택 삭제</button>                              
 				    <span class="listnum_txt pt-2">전체 상품내역</span>
 				    <span class="listnum_num pt-2"></span>
 				</div>
-                    
                     
                     
 				<div class="row" style="display: flex;">
@@ -470,7 +339,7 @@ if (session.getAttribute("WORKSHOP_NUM") == null) {
 									<option value="product_grade">평점순</option>
 									<option value="product_readcount">조회순</option>
 									<option value="product_like">좋아요순</option>
-									<option value="product_price">가격순</option>
+									<option value="product_price">판매가격순</option>
 								</select>
 							</div>
 						
@@ -480,28 +349,10 @@ if (session.getAttribute("WORKSHOP_NUM") == null) {
 						<div class="row justify-content-end">
 							<!-- Example split danger button -->
 							<div class="dropdown">
-								<button class="btn dropbtn btn-sm dropdown-toggle btn-search-mode" type="button" id="searchType" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-							        선택
+								<button class="btn btn-sm btn_search " type="button" id="searchType" disabled="disabled">
+							        상품명
 							    </button>
-							    <div class="dropdown-menu" aria-labelledby="searchType">
-							        <a class="dropdown-item" id="dropdown-item-1" onclick="product_title()">상품명</a>
-							        <a class="dropdown-item" id="dropdown-item-2" onclick="product_price()">판매가격</a>
-							    </div>
-							</div>
-							<!-- 카테고리 선택시 나타나는 드롭박스 
-							<span class="ml-1 mr-2" id="categoryKeyword">
-								<select id="categorySelect" style="height:98%;">
-									<option value="table">책상</option>
-									<option value="chair">의자</option>
-									<option value="bookshelf">책장</option>
-									<option value="bed">침대</option>
-									<option value="drawer">서랍장</option>
-									<option value="sidetable">협탁</option>
-									<option value="dressing_table">화장대</option>
-									<option value="others">기타</option>	
-								</select>
-							</span>
-							-->									
+							</div>								
 							<!-- search -->
 							<nav class="navbar-light bg-light">
 								<!-- input에 enter키 누르면 자동으로 submit -->
@@ -561,50 +412,176 @@ if (session.getAttribute("WORKSHOP_NUM") == null) {
 		});
 	
 	
-	
-		function product_title() {
-			alert("searchType : onclick=product_title() 실행")
-			$('#categoryKeyword').css('display', 'none');
-			$('#searchType').html('상품명');
-			$('#searchType').val('product_title');
-			$("#keyword").val('');
-		}
-		
-		function category() {
-			$('#searchType').html('카테고리');
-			alert("searchType : onclick=category() 실행")
-			$('#categoryKeyword').css('display', 'block');
-			$('#searchType').val('category');
-			$("#keyword").val('');
-		}
-		function product_price() {
-			alert("searchType : onclick=member_nick() 실행")
-			$('#categoryKeyword').css('display', 'none');
-			$('#searchType').html('작성자');
-			$('#searchType').val('product_price');
-			$("#keyword").val('');
-		};	
-		$(document).on('click', '#btn_search', function(event) {
-		//	$("#selectClassType").val('all').prop("selected", true);	//display를 all로 바꿔줌
-				console.log("1"+$("#selectClassType option:selected").val())
-			searchList(event);
-			$('#list_none').empty();
-			event.preventDefault();
-		});    
+    
+   
 		
 		$(document).on('click', '#listall', function(event) {
 			$("#keyword").val('');
 			$('#list_none').empty();
-			$("#selectClassType").val('all').prop("selected", true);
-			ProductqnaList();
+			$("#selectClassType").val('allProducts').prop("selected", true);
+			$("#selectCategory").val('all').prop("selected", true);
+			$("#selectListAlign").val('product_date').prop("selected", true);
+			productList();
 		});    
+		
+		
+		//선택한 체크들 상태 변경해주는 함수
+		function modifyProductStatus(to_status, checkBoxArr) {
+			alert("modifyProductStatus 실행!");
+			console.log("to_status : " + to_status)
+			for (i=0;i<checkBoxArr.length;i++) {
+				console.log("checkBoxArr[i] : " + checkBoxArr[i])
+			}
+			$.ajax({
+				url: '/NAGAGU/modifyProductStatus.my',
+				type: 'POST',
+				data: { "to_status" : to_status, "checkBoxArr" : checkBoxArr },
+				dataType: 'json',
+				contentType: 'application/x-www-form-urlencoded; charset=utf-8',
+				success: function(res) {
+					if(res == 1) {
+						alert("판매중으로 변경 완료!");						
+					} else if(res == 0) {
+						alert("품절로 변경 완료!");						
+					} else if(res == 2) {
+						alert("판매종료로 변경 완료!");						
+					} else if(res == -1) {
+						alert("삭제 완료!");	
+					} else {
+						alert("실패!");
+					}
+					
+					$("#keyword").val('');
+					$("#selectClassType").val('allProducts').prop("selected", true);
+					$("#selectCategory").val('all').prop("selected", true);
+					$("#selectListAlign").val('product_date').prop("selected", true);
+				},
+				error: function() {
+					alert("실행할 수 없습니다.");
+				}
+			});
+			event.preventDefault();
+			productList();
+		}		
+		
+		
+		
+		$(document).on('click', '#to_ingSale', function(event) {
+			if ($("input[name=chk]:checked").length == 0) {
+				alert('상품을 선택해주세요!');
+				return false;
+			}
+			var alert_confirm = confirm("선택하신 상품을 판매중 상태로 변경하시겠습니까??");
+			if (alert_confirm) {
+				var to_status = 1;
+				var checkBoxArr = [];
+				$("input[name=chk]:checked").each(function(i){
+					var PRODUCT_NUM = $(this).val(); 
+					checkBoxArr.push(PRODUCT_NUM);
+					console.log("판매중으로 update할 PRODUCT_NUM : " + PRODUCT_NUM)
+				});
+				
+				//상태 변경해주는 함수 호출
+				modifyProductStatus(to_status, checkBoxArr);				
+			}
+		});  
+		
+		
+		
+		
+		$(document).on('click', '#to_pauseSale', function(event) {
+			if ($("input[name=chk]:checked").length == 0) {
+				alert('상품을 선택해주세요!');
+				return false;
+			}
+			var alert_confirm = confirm("선택하신 상품을 품절상태로 변경하시겠습니까??");
+			if (alert_confirm) {
+				var to_status = 0;
+				var checkBoxArr = [];
+				$("input[name=chk]:checked").each(function(i){
+					var PRODUCT_NUM = $(this).val(); 
+					checkBoxArr.push(PRODUCT_NUM);
+					console.log("품절상태로 update할 PRODUCT_NUM : " + PRODUCT_NUM)
+				});
+				
+				//상태 변경해주는 함수 호출
+				modifyProductStatus(to_status, checkBoxArr);				
+			}
+		});    
+		$(document).on('click', '#to_endSale', function(event) {
+			if ($("input[name=chk]:checked").length == 0) {
+				alert('상품을 선택해주세요!');
+				return false;
+			}
+			var alert_confirm = confirm("선택하신 상품을 판매종료 상태로 변경하시겠습니까??");
+			if (alert_confirm) {
+				var to_status = 2;
+				var checkBoxArr = [];
+				$("input[name=chk]:checked").each(function(i){
+					var PRODUCT_NUM = $(this).val(); 
+					checkBoxArr.push(PRODUCT_NUM);
+					console.log("판매종료로 update할 PRODUCT_NUM : " + PRODUCT_NUM)
+				});
+				
+				//상태 변경해주는 함수 호출
+				modifyProductStatus(to_status, checkBoxArr);				
+			}
+		});    
+		$(document).on('click', '#deleteProducts', function(event) {
+			if ($("input[name=chk]:checked").length == 0) {
+				alert('상품을 선택해주세요!');
+				return false;
+			}
+			var alert_confirm = confirm("선택하신 상품을 삭제하시겠습니까??");
+			if (alert_confirm) {
+				var to_status = -1;
+				var checkBoxArr = [];
+				$("input[name=chk]:checked").each(function(i){
+					var PRODUCT_NUM = $(this).val(); 
+					checkBoxArr.push(PRODUCT_NUM);
+					console.log("삭제할 PRODUCT_NUM : " + PRODUCT_NUM)
+				});
+				
+				//상태 변경해주는 함수 호출
+				modifyProductStatus(to_status, checkBoxArr);				
+			}
+		});    
+		
+		
+		$(document).on('click', '.btn_remove', function(event) {
+			var alert_confirm = confirm("선택하신 상품을 삭제하시겠습니까??");
+			if (alert_confirm) {
+				var to_status = -1;
+				var checkBoxArr = [];
+				checkBoxArr.push($(this).val());
+				console.log("삭제할 PRODUCT_NUM : " + $(this).val())
+				
+				//상태 변경해주는 함수 호출
+				modifyProductStatus(to_status, checkBoxArr);				
+			}
+		}); 										
+		
+		
+
+		$(document).on('click', '#btn_search', function(event) {
+			if ($('#keyword').val() == null) {
+				alert("검색어를 입력하세요!");
+				$('#keyword').focus();
+				return false;
+			}
+			productList();
+			$('#list_none').empty();
+		//	$("#keyword").val('');
+			event.preventDefault();
+		//	$("#selectClassType").val('all').prop("selected", true);	//display를 all로 바꿔줌
+		});	
 		
 		$("#keyword").keyup(function(event){
 			if (event.keyCode == 13) {
 				event.preventDefault();
 		//		$("#selectClassType option:selected").val('all');
 		//		$("#selectClassType").val('all').prop("selected", true);
-				searchList(event);
+				productList(event);
 				$('#list_none').empty();
 				event.preventDefault();
 				return;
@@ -618,51 +595,42 @@ if (session.getAttribute("WORKSHOP_NUM") == null) {
 			console.log("$('#selectClassType option:selected').val() : "+$("#selectClassType option:selected").val())
 			$('#productList').empty();
 			productList();
-			/*
-			if ($('#keyword').val() && $('#searchType').val()){	//keyword, searchtype(categorySelect) 있을 경우 - search 후 정렬하는 경우
-				searchList(event);
-			}else {	//없을 경우	- 처음 리스트 정렬
-				ProductqnaList();
-			}
-			
-			<option value="allProducts">전체</option>
-			<option value="ingSale">판매중</option>
-			<option value="pauseSale">품절</option>
-			<option value="endSale">판매종료</option>
-			
-			var selectClassType = $("#selectClassType option:selected").val();
-			var searchType = $('#searchType').val();
-			var keyword = $('#keyword').val();
-			var categorySelect = '';
-			if(searchType == 'category') {
-				categorySelect = $('#categorySelect').val();
-			} 
-			*/
 		}	
 		
 		/*select2-카테고리 선택*/	
 		function btn_select2() {		
 			alert("btn_select2의 selectCategory : " + $("#selectCategory option:selected").val());
-	
+			console.log("$('#selectCategory option:selected').val() : "+$("#selectCategory option:selected").val())
+			
 			$('#productList').empty();
-			if ($('#keyword').val() && $('#searchType').val()){	//keyword, searchtype(categorySelect) 있을 경우 - search 후 정렬하는 경우
-				searchList(event);
-			}else {	//없을 경우	- 처음 리스트 정렬
-				ProductqnaList();
-			}
+			productList();
 		}	
 
 		/*select3-리스트 정렬*/
 		function btn_select3() {		
 			alert("btn_select3의 selectListAlign : " + $("#selectListAlign option:selected").val());
-		
+			console.log("$('#selectListAlign option:selected').val() : "+$("#selectListAlign option:selected").val())
+			
 			$('#productList').empty();
-			if ($('#keyword').val() && $('#searchType').val()){	//keyword, searchtype(categorySelect) 있을 경우 - search 후 정렬하는 경우
-				searchList(event);
-			}else {	//없을 경우	- 처음 리스트 정렬
-				ProductqnaList();
-			}
+			productList();	
 		}	
+		
+		
+		/*후기 버튼 눌렀을 때 그 상품의 후기 관리 페이지로 이동*/
+		function goqna(PRODUCT_NUM) {
+			console.log("PRODUCT_NUM : " + PRODUCT_NUM)
+			location.href='./goReviewOrQna.my?PRODUCT_NUM='+PRODUCT_NUM+'&GO=QNA';
+		}		
+		
+		
+		/*후기 버튼 눌렀을 때 그 상품의 후기 관리 페이지로 이동*/
+		function goreview(PRODUCT_NUM) {
+
+			console.log("PRODUCT_NUM : " + PRODUCT_NUM)
+			location.href='./goReviewOrQna.my?PRODUCT_NUM='+PRODUCT_NUM+'&GO=REVIEW';
+		}		
+		
+		
 		
 		/*날짜 형식 변경*/
 		function date_format(format) {

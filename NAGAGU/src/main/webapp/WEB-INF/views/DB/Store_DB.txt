@@ -31,6 +31,8 @@ create table PRODUCT (
     PRODUCT_STATUS              NUMBER,
     PRODUCT_STOCK				NUMBER
 );
+//PRODUCT_STATUS - 1:판매중 2:판매완료 0:품절
+
 
 /*상품시퀀스*/ 
 create sequence product_seq

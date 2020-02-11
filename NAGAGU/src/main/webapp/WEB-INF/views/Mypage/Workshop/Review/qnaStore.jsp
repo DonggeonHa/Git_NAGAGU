@@ -35,7 +35,6 @@ if (session.getAttribute("WORKSHOP_NUM") == null) {
 		.even{ background: #FF9;}
 		.active{ width:10px; height:10px; background:#f60; color:white;}
 		#list_none { text-align:center; padding-top:50px; }
-		#categoryKeyword { display:none; }
 	</style>
 	<script>
 	$(document).ready(function() {
@@ -46,13 +45,32 @@ if (session.getAttribute("WORKSHOP_NUM") == null) {
 		alert("ProductqnaList 실행");
 		$('#remo').remove();
 		$('#ProductqnaList').empty();
+		$('#list_none').empty();
 		var selectClassType = $("#selectClassType option:selected").val();	//필터 값 가져오기
+		var selectCategory = $("#selectCategory option:selected").val();	//필터 값 가져오기
+		var selectListAlign = $("#selectListAlign option:selected").val();	//필터 값 가져오기
+		var searchType = $("#searchType").val();	//필터 값 가져오기
+		var keyword = ''; 
+		if ($('#keyword').val() != null) {
+			keyword = $("#keyword").val();
+		}
+		console.log("selectClassType="+selectClassType)
+		console.log("selectCategory="+selectCategory)
+		console.log("selectListAlign="+selectListAlign)
+		console.log("searchType : " + searchType)
+		console.log("keyword : " + keyword)
+		
 		var title = "";
 		var number = 1;
 		$.ajax({
 			url: '/NAGAGU/productQnaList.my',
 			type: 'POST',
-			data: {"selectClassType" : selectClassType},
+			data: {"selectClassType" : selectClassType, 
+				"selectCategory" : selectCategory, 
+				"selectListAlign" : selectListAlign,
+				"searchType" : searchType,
+				"keyword" : keyword
+			},
 			dataType: 'json',
 			contentType: 'application/x-www-form-urlencoded; charset=utf-8',
 			success: function(qnaList) {
@@ -133,6 +151,13 @@ if (session.getAttribute("WORKSHOP_NUM") == null) {
 					output += '검색 결과가 없습니다.';
 					$('.listnum_num').text("0건");
 					$('#list_none').append(output);
+					//검색결과 없을시 select조건들 초기화
+					$("#selectClassType").val('all').prop("selected", true);
+					$("#selectCategory").val('all').prop("selected", true);
+					$("#selectListAlign").val('qna_date').prop("selected", true);
+					$('#searchType').text('선택');
+					$("#searchType").val('');
+					$("#keyword").val('');
 				}
 				page();
 			},
@@ -142,132 +167,6 @@ if (session.getAttribute("WORKSHOP_NUM") == null) {
 		});
 	}		
 
-	function searchList(event) {
-	alert("searchList 실행");
-		$('#remo').remove();
-		//선택 먼저 할 경우 selectClassType는 무조건 all
-		//검색 한 경우에, 그 이후 정렬을 하고 싶다면  selectClassType는 선택한 것
-		//var selectClassType = 'all';
-		var selectClassType = $("#selectClassType option:selected").val();
-		var searchType = $('#searchType').val();
-		var keyword = $('#keyword').val();
-		var categorySelect = '';
-		if(searchType == 'category') {
-			categorySelect = $('#categorySelect').val();
-		} 
-			
- 		var number = 1;
-		var title = "";
-		console.log("selectClassType : " + selectClassType)
-		console.log("searchType : " + searchType)
-		console.log("categorySelect : " + categorySelect)
-		console.log("keyword : " + keyword)
-		
-		$('#ProductqnaList').empty();
-		alert(searchType + keyword);
-		
-		if(!keyword || !searchType){
-			alert("카테고리 선택, 검색어를 입력하세요.");
-			ProductqnaList();
-			return false;
-		}
-
-		$.ajax({
-			url: '/NAGAGU/searchTypeQnaList.my',
-			type: 'POST',
-			data: {"selectClassType" : selectClassType, "searchType" : searchType, "keyword" : keyword, "categorySelect" : categorySelect},
-			dataType: 'json',
-			contentType: 'application/x-www-form-urlencoded; charset=utf-8',
-			success: function(qnaList) {
-				console.log(qnaList);
-				var output = ' ';	
-				
-				if(qnaList.length!=0) {
-					$('.listnum_num').text(qnaList.length+"건");					
-		        	for(var j=0; j<qnaList.length; j++){
-	 	        		var PRODUCT_CATEGORY = qnaList[j].PRODUCT_CATEGORY;
-			      		switch(PRODUCT_CATEGORY){
-				      	    case 'table' : 
-				      	    	PRODUCT_CATEGORY = '책상'
-				      	        break;
-				      	    case 'chair' : 
-				      	    	PRODUCT_CATEGORY = '의자' 
-				      	        break;  
-				      	    case 'bookshelf' : 
-				      	    	PRODUCT_CATEGORY = '책장'
-				      	        break;
-				      	    case 'bed' : 
-				      	    	PRODUCT_CATEGORY = '침대' 
-				      	        break;  
-				      	    case 'drawer' : 
-				      	    	PRODUCT_CATEGORY = '서랍장'
-				      	        break;
-				      	    case 'sidetable' : 
-				      	    	PRODUCT_CATEGORY = '협탁' 
-				      	        break;  
-				      	    case 'dressing_table' : 
-				      	    	PRODUCT_CATEGORY = '화장대'
-				      	        break;
-				      	    case 'others' : 
-				      	    	PRODUCT_CATEGORY = '기타' 
-				      	        break;
-			      	    }
-		      			var product_category = qnaList[j].PRODUCT_CATEGORY;	 	        		
-		 	        	var MEMBER_NICK = qnaList[j].MEMBER_NICK;
-		        		var PRODUCT_TITLE = qnaList[j].PRODUCT_TITLE;
-		        		var PRODUCT_NUM = qnaList[j].PRODUCT_NUM;
-		        		var QNA_DATE = new Date(qnaList[j].QNA_DATE);
-		        		var date = date_format(QNA_DATE);
-		        		var QNA_CONTENT = qnaList[j].QNA_CONTENT;
-		        		var QNA_RE = qnaList[j].QNA_RE;
-		        		var QNA_STATUS = qnaList[j].QNA_STATUS;
-
-						output += '<tr>';
-						output += '<td>' + number + '</td>';
-						output += '<td>' + PRODUCT_CATEGORY + '</td>';
-						output += '<td>' + MEMBER_NICK + '</td>';
-						if(PRODUCT_TITLE.length >= 14) {
-							PRODUCT_TITLE = PRODUCT_TITLE.substr(0,14)+"...";
-						}
-						output += '<td><a href="productdetail.pro?PRODUCT_NUM=' + PRODUCT_NUM + '&PRODUCT_CATEGORY=' + product_category + '">'+PRODUCT_TITLE+'</a></td>';
-						if(QNA_CONTENT.length >= 45) {
-							QNA_CONTENT = QNA_CONTENT.substr(0,45)+"...";
-						}
-						if(QNA_STATUS == 0) {
-							//답변이 달리지 않은 문의
-							output += '<td style="text-align:left;">'+QNA_CONTENT+'</td>';
-							output += '<td>' + date + '</td>';
-							output += '<td>'+'답변 대기'+'</td>';
-							output += '<td><button class="btn_write" onclick="location.href=">' + "작성" + '</button></td>';
-						} else if (QNA_STATUS == 1){
-							//답변이 달린 문의
-							output += '<td style="text-align:left;">'+QNA_CONTENT+'</td>';
-							output += '<td>' + date + '</td>';
-							output += '<td>'+'답변 완료'+'</td>';
-							output += '<td><button class="btn_modify" onclick="location.href=">'+"수정"+'</button></td>';
-						}
-
-						output += '<td><button class="btn_move" onclick="location.href=">' + "이동" + '</button></td>';
-						output += '</tr>';
-						number += 1;
-		        	}					
-					$('#ProductqnaList').append(output);
-				} else {
-					alert('0임');
-					output += '검색 결과가 없습니다.';
-					$('.listnum_num').text("0건");
-					$('#list_none').append(output);
-					$("#keyword").val('');
-				}
-				page();
-			},
-			error: function() {
-				alert("Qna List를 띄울 수 없습니다.");
-			}
-		});
-		event.preventDefault();		
-	}
-	
 	
 	// 만들어진 테이블에 페이지 처리
 	function page() { 	
@@ -388,18 +287,37 @@ if (session.getAttribute("WORKSHOP_NUM") == null) {
 					<button type="button" id="listall" class="btn btn-sm btn-outline-dark mr-2">전체표시</button>                        
 					<span class="listnum_txt pt-2">전체 문의내역</span>
 					<span class="listnum_num pt-2"></span>
-				</div>    
+				</div>   
+				 
 				<div class="row" style="display: flex;">
 					<div class="col-5" style="padding: 0;">
 						<div class="row justify-content-start">
-							<select class="search_hidden_state justify-content-start" id="selectClassType" name="selectClassType" onchange="btn_select()" style="height: 33px;">
-								<option value="all">전체</option>
-								<option value="Standby">답변대기</option>
-								<option value="Completed">답변완료</option>
-							</select>
-						<!-- 
-						   	<button class="btn-sm my-2 my-sm-0" type="button">강의종료</button>
-						 -->
+							<div class="select1">
+								<select class="search_hidden_state justify-content-start" id="selectClassType" name="selectClassType" onchange="btn_select1()" style="height: 33px;">
+									<option value="all">전체</option>
+									<option value="Standby">답변대기</option>
+									<option value="Completed">답변완료</option>
+								</select>
+							</div>
+							<div class="select2" style="padding-left:5px">
+								<select class="search_hidden_state justify-content-start"  id="selectCategory" name="selectCategory" onchange="btn_select2()" style="height: 33px;">
+									<option value="all">전체</option>
+									<option value="table">책상</option>
+									<option value="chair">의자</option>
+									<option value="bookshelf">책장</option>
+									<option value="bed">침대</option>
+									<option value="drawer">서랍장</option>
+									<option value="sidetable">협탁</option>
+									<option value="dressing_table">화장대</option>
+									<option value="others">기타</option>		
+								</select>
+							</div>	
+							<div class="select3" style="padding-left:5px">	<!-- 보기 정렬 -->
+								<select class="search_hidden_state justify-content-start" id="selectListAlign" name="selectListAlign" onchange="btn_select3()" style="height: 33px;">
+									<option value="qna_date">최근 등록순</option>
+								</select>
+							</div>								
+						
 						</div>
 					</div>
 					<div class="col" style="padding: 0;">
@@ -412,22 +330,9 @@ if (session.getAttribute("WORKSHOP_NUM") == null) {
 								<div class="dropdown-menu" aria-labelledby="searchType">
 									<button class="dropdown-item" id="dropdown-item-1" onclick="member_nick()">작성자</button>
 									<button class="dropdown-item" id="dropdown-item-2" onclick="product_title()">상품명</button>
-									<button class="dropdown-item" id="dropdown-item-3" onclick="category()">카테고리</button>
+									<button class="dropdown-item" id="dropdown-item-3" onclick="qna_content()">문의내용</button>
 								</div>
-							</div>
-							<!-- 카테고리 선택시 나타나는 드롭박스 -->
-							<span class="ml-1 mr-2" id="categoryKeyword">
-								<select id="categorySelect" style="height:98%;">
-									<option value="table">책상</option>
-									<option value="chair">의자</option>
-									<option value="bookshelf">책장</option>
-									<option value="bed">침대</option>
-									<option value="drawer">서랍장</option>
-									<option value="sidetable">협탁</option>
-									<option value="dressing_table">화장대</option>
-									<option value="others">기타</option>		
-								</select>
-							</span>								
+							</div>							
 							<!-- search -->
 							<nav class="navbar-light bg-light">
 								<!-- input에 enter키 누르면 자동으로 submit -->
@@ -471,48 +376,49 @@ if (session.getAttribute("WORKSHOP_NUM") == null) {
 
 	function member_nick() {
 		alert("searchType : onclick=member_nick() 실행")
-		$('#categoryKeyword').css('display', 'none');
 		$('#searchType').html('작성자');
 		$('#searchType').val('member_nick');
-		$("#keyword").val('');
 	};
 	function product_title() {
 		alert("searchType : onclick=product_title() 실행")
-		$('#categoryKeyword').css('display', 'none');
 		$('#searchType').html('상품명');
 		$('#searchType').val('product_title');
-		$("#keyword").val('');
 	}
 	
-	function category() {
-		alert("searchType : onclick=category() 실행")
-		$('#categoryKeyword').css('display', 'block');
-		$('#searchType').html('카테고리');
-		$('#searchType').val('category');
-		$("#keyword").val('');
+	function qna_content() {
+		alert("searchType : onclick=qna_content() 실행")
+		$('#searchType').html('문의내용');
+		$('#searchType').val('qna_content');
 	}
 
 	$(document).on('click', '#btn_search', function(event) {
-//		$("#selectClassType").val('all').prop("selected", true);	//display를 all로 바꿔줌
-			console.log("1"+$("#selectClassType option:selected").val())
-		searchList(event);
+		if(!$('#keyword').val() || !$('#searchType').val()){
+			alert("카테고리 선택, 검색어를 입력하세요!");
+			$('#keyword').focus();
+			return false;
+		}		
+		ProductqnaList();
 		$('#list_none').empty();
 		event.preventDefault();
+
 	});    
     
 	$(document).on('click', '#listall', function(event) {
 		$("#keyword").val('');
 		$('#list_none').empty();
 		$("#selectClassType").val('all').prop("selected", true);
+		$("#selectCategory").val('all').prop("selected", true);
+		$("#selectListAlign").val('qna_date').prop("selected", true);
+		$('#searchType').text('선택');
+		$("#searchType").val('');
+		$("#keyword").val('');
 		ProductqnaList();
 	});    
 	
 	$("#keyword").keyup(function(event){
 		if (event.keyCode == 13) {
 			event.preventDefault();
-//			$("#selectClassType option:selected").val('all');
-//			$("#selectClassType").val('all').prop("selected", true);
-			searchList(event);
+			ProductqnaList(event);
 			$('#list_none').empty();
 			event.preventDefault();
 			return;
@@ -520,6 +426,7 @@ if (session.getAttribute("WORKSHOP_NUM") == null) {
 		
 	});	
 
+	/* 
 	function btn_select() {		
 		alert("btn_select의 selectClassType : " + $("#selectClassType option:selected").val());
 		$('#ProductqnaList').empty();
@@ -529,8 +436,38 @@ if (session.getAttribute("WORKSHOP_NUM") == null) {
 			ProductqnaList();
 		}
 	}	
+*/
 
-    /*날짜 형식 변경*/
+
+	/*select1-판매상태 선택*/	
+	function btn_select1() {		
+		alert("btn_select1의 selectClassType : " + $("#selectClassType option:selected").val());
+		console.log("$('#selectClassType option:selected').val() : "+$("#selectClassType option:selected").val())
+		$('#ProductqnaList').empty();
+		ProductqnaList();
+	}	
+	
+	/*select2-카테고리 선택*/	
+	function btn_select2() {		
+		alert("btn_select2의 selectCategory : " + $("#selectCategory option:selected").val());
+		console.log("$('#selectCategory option:selected').val() : "+$("#selectCategory option:selected").val())
+		
+		$('#ProductqnaList').empty();
+		ProductqnaList();
+	}	
+	
+	/*select3-리스트 정렬*/
+	function btn_select3() {		
+		alert("btn_select3의 selectListAlign : " + $("#selectListAlign option:selected").val());
+		console.log("$('#selectListAlign option:selected').val() : "+$("#selectListAlign option:selected").val())
+		
+		$('#ProductqnaList').empty();
+		ProductqnaList();	
+	}	
+
+	
+ 
+	/*날짜 형식 변경*/
 	function date_format(format) {
 		var year = format.getFullYear();
 		var month = format.getMonth() + 1;

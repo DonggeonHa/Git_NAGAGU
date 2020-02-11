@@ -37,7 +37,6 @@ if (session.getAttribute("WORKSHOP_NUM") == null) {
 		.even{ background: #FF9;}
 		.active{ width:10px; height:10px; background:#f60; color:white;}
 		#list_none { text-align:center; padding-top:50px; }
-		#categoryKeyword { display:none; }
 	</style>
 
     <script>
@@ -48,13 +47,29 @@ if (session.getAttribute("WORKSHOP_NUM") == null) {
 	function ProductreviewList() {
 		$('#remo').remove();
 		$('#ProductreviewList').empty();
-//		var selectClassType = $("#selectClassType option:selected").val();	//필터 값 가져오기
+		$('#list_none').empty();
+		var selectCategory = $("#selectCategory option:selected").val();	//필터 값 가져오기
+		var selectListAlign = $("#selectListAlign option:selected").val();	//필터 값 가져오기
+		var searchType = $("#searchType").val();	//필터 값 가져오기
+		var keyword = ''; 
+		if ($('#keyword').val() != null) {
+			keyword = $("#keyword").val();
+		}
+		console.log("selectCategory="+selectCategory)
+		console.log("selectListAlign="+selectListAlign)
+		console.log("searchType : " + searchType)
+		console.log("keyword : " + keyword)
+		
 		var title = "";
 		var number = 1;
 		$.ajax({
 			url: '/NAGAGU/productReviewList.my',
 			type: 'POST',
-//			data: {"selectClassType" : selectClassType},
+			data: {"selectCategory" : selectCategory, 
+				"selectListAlign" : selectListAlign,
+				"searchType" : searchType,
+				"keyword" : keyword
+			},
 			dataType: 'json',
 			contentType: 'application/x-www-form-urlencoded; charset=utf-8',
 			success: function(reviewList) {
@@ -124,6 +139,12 @@ if (session.getAttribute("WORKSHOP_NUM") == null) {
 					output += '검색 결과가 없습니다.';
 					$('.listnum_num').text("0건");
 					$('#list_none').append(output);
+					//검색결과 없을시 select조건들 초기화
+					$("#selectCategory").val('all').prop("selected", true);
+					$("#selectListAlign").val('review_date').prop("selected", true);
+					$('#searchType').text('선택');
+					$("#searchType").val('');
+					$("#keyword").val('');
 				}
 				page();
 			},
@@ -133,110 +154,6 @@ if (session.getAttribute("WORKSHOP_NUM") == null) {
 		});
 	}	
 
-	
-	
-	function searchList(event) {
-		$('#remo').remove();
-		var searchType = $('#searchType').val();
-		var keyword = $('#keyword').val();
-		var categorySelect = $('#categorySelect').val();
- 		var number = 1;
-		var title = "";
-		
-		$('#ProductreviewList').empty();
-		alert(searchType + keyword);
-		
-		if(!keyword || !searchType){
-			alert("카테고리 선택, 검색어를 입력하세요.");
-			ProductreviewList();
-			return false;
-		}
-
-		$.ajax({
-			url: '/NAGAGU/searchTypeReviewList.my',
-			type: 'POST',
-			data: {"searchType" : searchType, "keyword" : keyword, "categorySelect" : categorySelect},
-			dataType: 'json',
-			contentType: 'application/x-www-form-urlencoded; charset=utf-8',
-			success: function(reviewList) {
-				console.log(reviewList);
-				var output = ' ';	
-				
-				if(reviewList.length!=0) {
-					$('.listnum_num').text(reviewList.length+"건");					
-		        	for(var j=0; j<reviewList.length; j++){
-	 	        		var PRODUCT_CATEGORY = reviewList[j].PRODUCT_CATEGORY
-	 	        		switch(PRODUCT_CATEGORY){
-		 	        	    case 'table' : 
-		 	        	    	PRODUCT_CATEGORY = '책상'
-		 	        	        break;
-		 	        	    case 'chair' : 
-		 	        	    	PRODUCT_CATEGORY = '의자' 
-		 	        	        break;  
-		 	        	    case 'bookshelf' : 
-		 	        	    	PRODUCT_CATEGORY = '책장'
-		 	        	        break;
-		 	        	    case 'bed' : 
-		 	        	    	PRODUCT_CATEGORY = '침대' 
-		 	        	        break;  
-		 	        	    case 'drawer' : 
-		 	        	    	PRODUCT_CATEGORY = '서랍장'
-		 	        	        break;
-		 	        	    case 'sidetable' : 
-		 	        	    	PRODUCT_CATEGORY = '협탁' 
-		 	        	        break;  
-		 	        	    case 'dressing_table' : 
-		 	        	    	PRODUCT_CATEGORY = '화장대'
-		 	        	        break;
-		 	        	    case 'others' : 
-		 	        	    	PRODUCT_CATEGORY = '기타' 
-		 	        	        break;  
-	 	        		}
-		 	        	var product_category = reviewList[j].PRODUCT_CATEGORY;
-		 	        	var MEMBER_NICK = reviewList[j].MEMBER_NICK;
-		        		var PRODUCT_TITLE = reviewList[j].PRODUCT_TITLE
-		        		var PRODUCT_NUM = reviewList[j].PRODUCT_NUM
-		        		var REVIEW_GRADE = reviewList[j].REVIEW_GRADE
-		        		var REVIEW_DATE = new Date(reviewList[j].REVIEW_DATE);
-		        		var date = date_format(REVIEW_DATE);
-		        		var REVIEW_CONTENT = reviewList[j].REVIEW_CONTENT
-		        		
-						output += '<tr>';
-						output += '<td>' + number + '</td>';
-						
-						output += '<td>' + PRODUCT_CATEGORY + '</td>';
-						output += '<td>' + MEMBER_NICK + '</td>';
-						if(PRODUCT_TITLE.length >= 14) {
-							PRODUCT_TITLE = PRODUCT_TITLE.substr(0,14)+"...";
-			            }
-						output += '<td><a href="productdetail.pro?PRODUCT_NUM=' + PRODUCT_NUM + '&PRODUCT_CATEGORY=' + product_category + '">'+PRODUCT_TITLE+'</a></td>';
-						output += '<td>' + REVIEW_GRADE + '</td>';
-						if(REVIEW_CONTENT.length >= 45) {
-							REVIEW_CONTENT = REVIEW_CONTENT.substr(0,45)+"...";
-						}
-						output += '<td style="text-align:left;">' + REVIEW_CONTENT + '</td>';
-						output += '<td>' + date + '</td>';
-		
-						output += '<td><button class="btn_move" onclick="location.href=">' + "보기" + '</button></td>';
-						output += '</tr>';
-						number += 1;
-		        	}					
-					$('#ProductreviewList').append(output);
-				} else {
-					output += '검색 결과가 없습니다.';
-					$('.listnum_num').text("0건");
-					$('#list_none').append(output);
-					$("#keyword").val('');
-				}
-				page();
-			},
-			error: function() {
-				alert("Review List를 띄울 수 없습니다.");
-			}
-		});
-		event.preventDefault();		
-	}
-	
 	
 	// 만들어진 테이블에 페이지 처리
 	function page() { 	
@@ -359,47 +276,53 @@ if (session.getAttribute("WORKSHOP_NUM") == null) {
 				    <span class="listnum_txt pt-2">전체 후기내역</span>
 				    <span class="listnum_num pt-2"></span>
 				</div>
-				<div class="row">
-				    <!-- Example split danger button -->
-					<div class="dropdown">
-						<button class="btn dropbtn btn-sm dropdown-toggle btn-search-mode" type="button" id="searchType" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-							선택
-						</button>
-						<div class="dropdown-menu" aria-labelledby="searchType">
-							<button class="dropdown-item" id="dropdown-item-1" onclick="member_nick()">작성자</button>
-							<button class="dropdown-item" id="dropdown-item-2" onclick="product_title()">상품명</button>
-							<button class="dropdown-item" id="dropdown-item-3" onclick="category()">카테고리</button>
+				<div class="row" style="display: flex;">
+					<div class="col-5" style="padding: 0;">
+						<div class="row justify-content-start">
+							<div class="select2">
+								<select class="search_hidden_state justify-content-start"  id="selectCategory" name="selectCategory" onchange="btn_select2()" style="height: 33px;">
+									<option value="all">전체</option>
+									<option value="table">책상</option>
+									<option value="chair">의자</option>
+									<option value="bookshelf">책장</option>
+									<option value="bed">침대</option>
+									<option value="drawer">서랍장</option>
+									<option value="sidetable">협탁</option>
+									<option value="dressing_table">화장대</option>
+									<option value="others">기타</option>		
+								</select>
+							</div>	
+							<div class="select3" style="padding-left:5px">	<!-- 보기 정렬 -->
+								<select class="search_hidden_state justify-content-start" id="selectListAlign" name="selectListAlign" onchange="btn_select3()" style="height: 33px;">
+									<option value="review_date">최근 등록순</option>
+								</select>
+							</div>								
 						</div>
-					</div>
-					<!-- 카테고리 선택시 나타나는 드롭박스 -->
-					<span class="ml-1 mr-2" id="categoryKeyword">
-						<select id="categorySelect" style="height:98%;">
-							<option value="table">책상</option>
-							<option value="chair">의자</option>
-							<option value="bookshelf">책장</option>
-							<option value="bed">침대</option>
-							<option value="drawer">서랍장</option>
-							<option value="sidetable">협탁</option>
-							<option value="dressing_table">화장대</option>
-							<option value="others">기타</option>	
-						</select>
-					</span>
-					<!-- search -->
-					<nav class="navbar-light bg-light">
-						<!-- input에 enter키 누르면 자동으로 submit -->
-						<form class="form-inline" onsubmit="return false">
-							<input class="form-control mr-sm-2" type="search" id="keyword" aria-label="Search" style="height:90%">
-							<button class="btn btn_search btn-sm my-2 my-sm-0" type="button" id="btn_search">검색</button>
-						</form>
-					</nav>
-					<!--  
-					<select class="search_hidden_state" id="selectClassType" name="selectClassType" onchange="btn_select()">
-		               <option value="allReview">전체</option>
-		               <option value="inReview">판매중</option>
-		               <option value="endReview">판매종료</option>
-		           </select>
-		           -->
-				</div>
+					</div>		
+					<div class="col" style="padding: 0;">
+						<div class="row justify-content-end">
+						    <!-- Example split danger button -->
+							<div class="dropdown">
+								<button class="btn dropbtn btn-sm dropdown-toggle btn-search-mode" type="button" id="searchType" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+									선택
+								</button>
+								<div class="dropdown-menu" aria-labelledby="searchType">
+									<button class="dropdown-item" id="dropdown-item-1" onclick="member_nick()">작성자</button>
+									<button class="dropdown-item" id="dropdown-item-2" onclick="product_title()">상품명</button>
+									<button class="dropdown-item" id="dropdown-item-3" onclick="review_content()">후기내용</button>
+								</div>
+							</div>
+							<!-- search -->
+							<nav class="navbar-light bg-light">
+								<!-- input에 enter키 누르면 자동으로 submit -->
+								<form class="form-inline" onsubmit="return false">
+									<input class="form-control mr-sm-2" type="search" id="keyword" aria-label="Search" style="height:90%">
+									<button class="btn btn_search btn-sm my-2 my-sm-0" type="button" id="btn_search">검색</button>
+								</form>
+							</nav>
+						</div>
+					</div>	
+				</div>	
 			</div>
 			<table class="table" id="work_store">
 				<thead>
@@ -411,7 +334,7 @@ if (session.getAttribute("WORKSHOP_NUM") == null) {
 					    <th scope="col" class="th6">평점</th>
 					    <th scope="col" class="th7">후기 내용</th>
 					    <th scope="col" class="th8">작성날짜</th>
-					    <th scope="col" class="th9">보기</th>
+					    <th scope="col" class="th9">이동</th>
 					</tr>
 				</thead>
 			    <tbody id="ProductreviewList"></tbody>
@@ -452,39 +375,62 @@ if (session.getAttribute("WORKSHOP_NUM") == null) {
 		$('#searchType').val('product_title');
 	}
 	
-	function category() {
-		$('#searchType').html('카테고리');
-		$('#categoryKeyword').css('display', 'block');
-		$('#searchType').val('category');
+	function review_content() {
+		alert("searchType : onclick=review_content() 실행")
+		$('#searchType').html('후기내용');
+		$('#searchType').val('review_content');
 	}
+
     
-	
 	$(document).on('click', '#btn_search', function(event) {
+		if(!$('#keyword').val() || !$('#searchType').val()){
+			alert("카테고리 선택, 검색어를 입력하세요!");
+			$('#keyword').focus();
+			return false;
+		}		
+		ProductreviewList();
 		$('#list_none').empty();
-		searchList(event);
+		event.preventDefault();
+
 	});    
     
 	$(document).on('click', '#listall', function(event) {
 		$("#keyword").val('');
 		$('#list_none').empty();
+		$("#selectCategory").val('all').prop("selected", true);
+		$("#selectListAlign").val('review_date').prop("selected", true);
+		$('#searchType').text('선택');
+		$("#searchType").val('');
+		$("#keyword").val('');
 		ProductreviewList();
 	});    
 	
 	$("#keyword").keyup(function(event){
 		if (event.keyCode == 13) {
 			event.preventDefault();
-			searchList(event);
+			ProductreviewList(event);
 			$('#list_none').empty();
 			return;
 		}
 	});
 	
-	/*
-	function btn_select() {
+	/*select2-카테고리 선택*/	
+	function btn_select2() {		
+		alert("btn_select2의 selectCategory : " + $("#selectCategory option:selected").val());
+		console.log("$('#selectCategory option:selected').val() : "+$("#selectCategory option:selected").val())
 		
-		selectClassType();
-	}
-	*/
+		$('#ProductqnaList').empty();
+		ProductreviewList();
+	}	
+	
+	/*select3-리스트 정렬*/
+	function btn_select3() {		
+		alert("btn_select3의 selectListAlign : " + $("#selectListAlign option:selected").val());
+		console.log("$('#selectListAlign option:selected').val() : "+$("#selectListAlign option:selected").val())
+		
+		$('#ProductqnaList').empty();
+		ProductreviewList();	
+	}	
 	
     /*날짜 형식 변경*/
 	function date_format(format) {
