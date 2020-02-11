@@ -40,6 +40,31 @@
 		<result property="WORKSHOP_STATUS" column="WORKSHOP_STATUS" />
 		<result property="WORKSHOP_PICTURE" column="WORKSHOP_PICTURE" />
 	</resultMap>
+	<resultMap type="com.spring.academy.ClassVO" id="classResultMap">
+		<result property="CLASS_NUMBER" column="CLASS_NUMBER" />	
+		<result property="WORKSHOP_NUM" column="WORKSHOP_NUM" />
+		<result property="WORKSHOP_NAME" column="WORKSHOP_NAME" />
+		<result property="WORKSHOP_PICTURE" column="WORKSHOP_PICTURE" />
+		<result property="CLASS_DIVISION" column="CLASS_DIVISION" />	
+		<result property="CLASS_NAME" column="CLASS_NAME" />	
+		<result property="CLASS_ABRIEF" column="CLASS_ABRIEF" />	
+		<result property="CLASS_AMOUNT" column="CLASS_AMOUNT" />	
+		<result property="CLASS_DATE" column="CLASS_DATE" />	
+		<result property="CLASS_DATE_CONFIGURATION_1" column="CLASS_DATE_CONFIGURATION_1" />	
+		<result property="CLASS_DATE_CONFIGURATION_2" column="CLASS_DATE_CONFIGURATION_2" />	
+		<result property="CLASS_AREA" column="CLASS_AREA" />	
+		<result property="CLASS_CATEGORY" column="CLASS_CATEGORY" />	
+		<result property="CLASS_INTRODUCTION_1" column="CLASS_INTRODUCTION_1" />	
+		<result property="CLASS_INTRODUCTION_2" column="CLASS_INTRODUCTION_2" />	
+		<result property="CLASS_INTRODUCTION_3" column="CLASS_INTRODUCTION_3" />	
+		<result property="CLASS_ETC" column="CLASS_ETC" />	
+		<result property="CLASS_BANNER" column="CLASS_BANNER" />	
+		<result property="CLASS_IMAGE" column="CLASS_IMAGE" />
+		<result property="CLASS_ADDRESS" column="CLASS_ADDRESS" />
+		<result property="CLASS_DETAIL_ADDRESS" column="CLASS_DETAIL_ADDRESS" />
+		<result property="CLASS_COUNT_MEMBER" column="CLASS_COUNT_MEMBER" />
+		<result property="CLASS_STATUS" column="CLASS_STATUS" />
+	</resultMap>
 	
 	<insert id="insert_workshop_member" parameterType="com.spring.member.MemberVO">
 		<selectKey resultType="int" keyProperty="WORKSHOP_NUM" order="BEFORE">
@@ -76,7 +101,10 @@
 	<select id="selectwmember" parameterType="com.spring.workshop.WorkShopMemberVO" resultMap="workshopMemberResultMap">
 		select * from nagagu_workshop_member where WORKSHOP_NUM = #{WORKSHOP_NUM}
 	</select>
-	
+	<!-- 경태 -->
+	<select id="getClassList" parameterType="com.spring.academy.ClassVO" resultMap="classResultMap">
+		SELECT * FROM ACADEMY WHERE WORKSHOP_NUM=#{WORKSHOP_NUM} ORDER BY CLASS_NUMBER DESC
+	</select>
 	<!-- 기재 -->
 	<select id="name_cnt" parameterType="String" resultType="int">
 		select count(*) from nagagu_workshop_member where WORKSHOP_NAME = #{WORKSHOP_NAME}

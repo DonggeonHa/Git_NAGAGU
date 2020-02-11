@@ -1,9 +1,12 @@
 package com.spring.workshop;
 
+import java.util.ArrayList;
+
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.spring.community.PicsVO;
 import com.spring.mapper.WorkShopMemberMapper;
 
 @Service("workShopMemberService")
@@ -139,5 +142,12 @@ public class WorkShopMemberServiceImpl implements WorkShopMemberService {
 		}
 		
 		return null;
+	}
+
+	@Override
+	public ArrayList<WorkshopVO> getClassList(WorkShopMemberVO workshopVO) {
+		WorkShopMemberMapper workshopMapper = sqlSession.getMapper(WorkShopMemberMapper.class);
+		ArrayList<WorkshopVO> classList = workshopMapper.getClassList(workshopVO);
+		return classList;
 	}
 }
