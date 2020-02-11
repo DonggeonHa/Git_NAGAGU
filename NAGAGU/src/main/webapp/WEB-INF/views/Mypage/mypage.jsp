@@ -109,7 +109,7 @@
 		<div class="row justify-content-center">
 			<div class="card-group text-center d-inline-flex">
 				<div class="card card-hover">
-					<a href="mypage_class.my" class="href">
+					<a href="./mypage_class.my" class="href">
 						<div class="card-header">CLASS</div>
 						<div class="card-body">
 							<i class="fas fa-school fa-4x"></i>
