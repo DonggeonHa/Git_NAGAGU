@@ -1,20 +1,31 @@
 package com.spring.mypage;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.spring.community.PicsVO;
 import com.spring.member.MemberService;
 import com.spring.member.MemberVO;
+import com.spring.workshop.WorkShopMemberService;
+import com.spring.workshop.WorkShopMemberVO;
+import com.spring.workshop.WorkshopVO;
 
 @Controller
 public class MypageController {
 	@Autowired
 	private MemberService memberService;
+
+	@Autowired
+	private WorkShopMemberService workShopMemberService;
 	
 	
 	@RequestMapping(value = "/mypage.my")
@@ -39,11 +50,29 @@ public class MypageController {
 		return "Mypage/support";
 	}
 	
-	@RequestMapping(value = "/mypage_class.my")
-	public String MypageClass() {
-		
-		return "Mypage/class";
-	}
+	//공방 마이페이지
+//	@RequestMapping(value = "/mypage_class.my")
+//	public String MypageClass(WorkShopMemberVO wsMemberVO, Model model, HttpServletRequest request) {
+//		System.out.println("컨트롤러");
+//		//마이페이지 멤버
+//		WorkShopMemberVO wsMemberDetail = workShopMemberService.selectwmember(wsMemberVO);
+//		int WORKSHOP_NUM = Integer.parseInt(request.getParameter("WORKSHOP_NUM"));
+//		wsMemberVO.setWORKSHOP_NUM(WORKSHOP_NUM);
+//		ArrayList<WorkshopVO> classList = workShopMemberService.getClassList(wsMemberVO);
+//		//멤버가 올린 강의 리스트
+//		HashMap<String, Object> map = new HashMap<String, Object>();
+//		int LIKE_MEMBER = memberVO.getMEMBER_NUM();
+//		map.put("LIKE_MEMBER", LIKE_MEMBER);
+//		//ArrayList<PicsVO> memberLikePics = communityService.getMemberLikePics(map);
+//		model.addAttribute("memberDetail",memberDetail);
+//		//model.addAttribute("memberPicsList",memberPicsList);
+//		//model.addAttribute("memberLikePics",memberLikePics);
+//		//업로드나 라이크 값이 없으면 일반 마이페이지, 있으면 more페이지
+//		if(request.getParameter("uploadOrLike")!=null) {
+//			return"Mypage/workshop_mypage_more";
+//		}
+//		return "Mypage/workshop_mypage";
+//	}
 	
 	@RequestMapping(value = "/mypage_edit.my")
 	public ModelAndView MypageEdit(MemberVO memberVO, HttpSession session) {
