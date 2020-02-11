@@ -50,7 +50,7 @@ public class MypageController {
 		return "Mypage/support";
 	}
 	
-	//공방 마이페이지
+	//공방 마이페이지s
 //	@RequestMapping(value = "/mypage_class.my")
 //	public String MypageClass(WorkShopMemberVO wsMemberVO, Model model, HttpServletRequest request) {
 //		System.out.println("컨트롤러");
