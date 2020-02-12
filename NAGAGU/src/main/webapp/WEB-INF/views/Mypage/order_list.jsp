@@ -230,51 +230,50 @@ a dl.text-center {
 		<div class="container bg-light">
 			<nav>
 				<div class="nav d-flex justify-content-between shadow p-3 mb5 bg-white rounded" id="nav-tab" role="tablist">
-			    	<a class="nav-item nav-link" id="nav-finish-tab" data-toggle="tab" href="#nav-finish" role="tab" aria-controls="nav-profile" aria-selected="false">
+			    	<a class="nav-item nav-link" status="0" id="nav-finish-tab" data-toggle="tab" href="#nav-finish" role="tab" aria-controls="nav-profile" aria-selected="false">
 			    		<dl class="text-center">
 			    			<dt>결제완료</dt>
 			    			<dd></dd>
-			    			<dd class="count_paid">0</dd>
+			    			<dd class="count_paid"></dd>
 			    		</dl>
 			    	</a>
 			    	<div class="text-center align-self-center">
 						<i class="far fa-arrow-alt-circle-right" style="font-size: 30px;"></i>
 					</div>
-			    	<a class="nav-item nav-link" id="nav-ready-tab" data-toggle="tab" href="#nav-ready" role="tab" aria-controls="nav-contact" aria-selected="false">
-			    		<dl class="text-center">
+			    	<a class="nav-item nav-link" status="1" id="nav-ready-tab" data-toggle="tab" href="#nav-ready" role="tab" aria-controls="nav-contact" aria-selected="false">
+			    		<dl class="text-center count_ready">
 			    			<dt>배송준비</dt>
 			    			<dd></dd>
-			    			<dd class="count_ready">0</dd>
 			    		</dl>
 			    	</a>
 			    	<div class="text-center align-self-center">
 						<i class="far fa-arrow-alt-circle-right" style="font-size: 30px;"></i>
 					</div>
-					<a class="nav-item nav-link" id="nav-shipping-tab" data-toggle="tab" href="#nav-shipping" role="tab" aria-controls="nav-contact" aria-selected="false">
+					<a class="nav-item nav-link" status="2" id="nav-shipping-tab" data-toggle="tab" href="#nav-shipping" role="tab" aria-controls="nav-contact" aria-selected="false">
 						<dl class="text-center">
 			    			<dt>배송중</dt>
 			    			<dd></dd>
-			    			<dd class="count_ing">0</dd>
+			    			<dd class="count_ing"></dd>
 			    		</dl>
 					</a>
 					<div class="text-center align-self-center">
 						<i class="far fa-arrow-alt-circle-right" style="font-size: 30px;"></i>
 					</div>
-					<a class="nav-item nav-link" id="nav-completed-tab" data-toggle="tab" href="#nav-completed" role="tab" aria-controls="nav-contact" aria-selected="false">
+					<a class="nav-item nav-link" status="3" id="nav-completed-tab" data-toggle="tab" href="#nav-completed" role="tab" aria-controls="nav-contact" aria-selected="false">
 						<dl class="text-center">
 			    			<dt>배송완료</dt>
 			    			<dd></dd>
-			    			<dd class="count_ok">0</dd>
+			    			<dd class="count_ok"></dd>
 			    		</dl>
 					</a>
 					<div class="text-center align-self-center">
 						<i class="far fa-arrow-alt-circle-right" style="font-size: 30px;"></i>
 					</div>
-					<a class="nav-item nav-link" id="nav-confirmation-tab" data-toggle="tab" href="#nav-confirmation" role="tab" aria-controls="nav-contact" aria-selected="false">
+					<a class="nav-item nav-link" status="4" id="nav-confirmation-tab" data-toggle="tab" href="#nav-confirmation" role="tab" aria-controls="nav-contact" aria-selected="false">
 						<dl class="text-center">
 			    			<dt>구매확정</dt>
 			    			<dd></dd>
-			    			<dd class="count_done">0</dd>
+			    			<dd class="count_done"></dd>
 			    		</dl>
 					</a>
 				</div>
@@ -308,9 +307,13 @@ a dl.text-center {
 			    }
 			   return year + "-" + month + "-" + date + " " ;
 			}
-	
+			$(document).on('click','.nav-item',function(){
+				var status = $(this).attr('status');
+				getBasket(status)
+			})
+			
 			//사진 가져오기 함수 정의
-			function getBasket(event){ 
+			function getBasket(status){ 
 				var category = 'count'
 				$.ajax({
 					  url: "/NAGAGU/getMyPaidOrder.my",
@@ -327,7 +330,13 @@ a dl.text-center {
 		        			var d_date = new Date(retVal.myPaidOrder[0].ORDER_DATE); 
 			        		var date = date_format(d_date);
 			        		var j=0;
-			        		
+/* 			        		console.log('status'+status)
+			        		if(status=!0 || status==null){
+			        			var output ='';
+			        			output += '<div>준비중인 상품이 없습니다</div>'
+			        			$('.output').append(output)
+			        			return
+			        		} */
 			        		//i=주문개수 j는 상품 수
 		        			for(var i=0; i<retVal.getCount.length; i++){
 		        				var output ='';
@@ -351,8 +360,8 @@ a dl.text-center {
 					        	}
 					        	output += '</div><hr>'   
 					        	$('.output').append(output)
-		        			}
-			        		$('.count_paid').text(retVal.getCount.length)
+			        			}
+			        			$('.count_paid').text(retVal.getCount.length)
 				        	
 						}else{ 
 							alert("update fail"); 

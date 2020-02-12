@@ -184,9 +184,11 @@ $(document).ready(function(){
 			    		output += '<div class="col-10"><div class="d-flex justify-content-between"><a href="'+url+retVal.getbasketList[j].PRODUCT_NUM+'"><div>'+retVal.getbasketList[j].PRODUCT_TITLE+'</div></a>'
 			    		output += '<div><i class="fas fa-times"></i></div></div><font size="1">무료배송|일반택배</font>'
 			    		output += '<div class="d-flex justify-content-between"><div>'+retVal.getbasketList[j].PRODUCT_BRIEF+'</div>'
-			    		output += '<div class="price" value="수량">수량&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'
+			    		output += '<div class="price" value="수량">수량'
 			    		var amount = retVal.getbasketList[j].BASKET_AMOUNT;
 			    		console.log(amount)
+			    		/* output += '<input name="BASKET_AMOUNT" type="text" style="text-align: right" value="'+retVal.getbasketList[j].BASKET_AMOUNT+'" size="1" />'
+			    		output += '<a href="JavaScript:count_change(0)" onclick="count_change(0)">▲</a><a href="JavaScript:count_change(1)">▼</a> 개' */
 			    		switch(amount){
 			    			case 1:
 			    				output += '<select class="amount forTotal"><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option></select>'
@@ -202,7 +204,6 @@ $(document).ready(function(){
 			    				break;
 			    			case 5:
 			    				output += '<select class="amount forTotal"><option>1</option><option>2</option><option>3</option><option>4</option><option selected>5</option></select>'
-			    				break;
 			    		}
 			    		output += '<div class="basic_price" value='+retVal.getbasketList[j].PRODUCT_PRICE+'>가격 :<span>'+retVal.getbasketList[j].PRODUCT_PRICE+'</span></div></div></div></div><div class="col-12 d-flex justify-content-between"><div>'
 		    			output += '<div>사이즈 :'+retVal.getbasketList[j].BASKET_SIZE+'</div>'
@@ -224,7 +225,21 @@ $(document).ready(function(){
 				alert("ajax통신 실패!!");
 			}
 		}) 
-	} 
+	}
+    /*장바구니 수량 변경*/
+/*     $(document).on('click','.count_change',function(){
+    	function count_change(temp) {
+    	       var test = $('input[name=BASKET_AMOUNT]').val();
+    	       if (temp == 0) {
+    	          test++;
+    	       } else if (temp == 1) {
+    	          if (test > 1)
+    	             test--;
+    	       }
+    	       $('input[name=BASKET_AMOUNT]').val(test);
+    	    }
+    }) */
+    
 	//수량 변경시 가격 변경(update)
 	$(document).on('change','.amount',function(){
 		var num = $(this).parent().parent().parent().parent().attr('bNum')

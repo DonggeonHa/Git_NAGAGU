@@ -129,6 +129,13 @@ img {
 	color: #ef900e !important;
 	transform: scale(1.2);
 }
+.img-wrap .profile{
+	margin-bottom:10px;
+}
+.img-wrap .profile img{
+	border-radius:100px;
+}
+
 .profile_children{
 	display:flex;
 }
@@ -261,7 +268,7 @@ img {
 										<i class="far fa-heart fa-2x" id="far"></i>
 									</span><%=pics_vo.getPICS_LIKE()%>
 								</a> 
-									<a href=""><i class="far fa-share-square fa-2x"></i>
+									<!-- <a href=""><i class="far fa-share-square fa-2x"></i> -->
 								</a>
 							</div>
 						</div>
