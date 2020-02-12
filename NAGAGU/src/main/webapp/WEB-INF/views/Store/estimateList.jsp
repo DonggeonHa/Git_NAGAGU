@@ -351,13 +351,13 @@
 					var max_page = <%=maxpage%>;
 					
 					if (page == max_page && page > 5) {
-						pagination += '<div class="pageNum pageNum pagelink" value="' + Number(page-5) + '"><i class="fas fa-angle-double-left page_num"></i></div>';
-						pagination += '<div class="pageNum pageNum pagelink" value="' + Number(page-4) + '">' + Number(page-4) + '</a></div>';
-						pagination += '<div class="pageNum pageNum pagelink" value="' + Number(page-3) + '">' + Number(page-3) + '</a></div>';
+						pagination += '<div class="pageNum pagelink" value="' + Number(page-5) + '"><i class="fas fa-angle-double-left page_num"></i></div>';
+						pagination += '<div class="pageNum pagelink" value="' + Number(page-4) + '">' + Number(page-4) + '</div>';
+						pagination += '<div class="pageNum pagelink" value="' + Number(page-3) + '">' + Number(page-3) + '</div>';
 					}
 					else if (page == max_page-1 && page > 4) {
-						pagination += '<div class="pageNum pageNum pagelink" value="' + Number(page-4) + '"><i class="fas fa-angle-double-left page_num"></i></div>';
-						pagination += '<div class="pageNum pageNum pagelink" value="' + Number(page-3) + '">' + Number(page-3) + '</a></div>';
+						pagination += '<div class="pageNum pagelink" value="' + Number(page-4) + '"><i class="fas fa-angle-double-left page_num"></i></div>';
+						pagination += '<div class="pageNum pagelink" value="' + Number(page-3) + '">' + Number(page-3) + '</div>';
 					}
 					else {
 						if (page > 3) {
@@ -366,26 +366,26 @@
 					} 
 					
 					if (page > 2) {
-						pagination += '<div class="pageNum pagelink" value="' + Number(page-2) + '">' + Number(page-2) + '</a></div>';
+						pagination += '<div class="pageNum pagelink" value="' + Number(page-2) + '">' + Number(page-2) + '</div>';
 					}
 					if (page > 1) {
-						pagination += '<div class="pageNum pagelink" value="' + Number(page-1) + '">' + Number(page-1) + '</a></div>';
+						pagination += '<div class="pageNum pagelink" value="' + Number(page-1) + '">' + Number(page-1) + '</div>';
 					}
 						pagination += '<div class="pageNum currentpage">' + page + '</div>';
 					if (max_page > page) {
-						pagination += '<div class="pageNum pagelink" value="' + Number(page+1) + '">' + Number(page+1) + '</a></div>';
+						pagination += '<div class="pageNum pagelink" value="' + Number(page+1) + '">' + Number(page+1) + '</div>';
 					}
 					if (max_page > page+1) {
-						pagination += '<div class="pageNum pagelink" value="' + Number(page+2) + '">' + Number(page+2) + '</a></div>';
+						pagination += '<div class="pageNum pagelink" value="' + Number(page+2) + '">' + Number(page+2) + '</div>';
 					}
 					
 					if (page == 1 && max_page > 5) {
-						pagination += '<div class="pageNum pagelink" value="' + Number(page+3) + '">' + Number(page+3) + '</a></div>';
-						pagination += '<div class="pageNum pagelink" value="' + Number(page+4) + '">' + Number(page+4) + '</a></div>';
+						pagination += '<div class="pageNum pagelink" value="' + Number(page+3) + '">' + Number(page+3) + '</div>';
+						pagination += '<div class="pageNum pagelink" value="' + Number(page+4) + '">' + Number(page+4) + '</div>';
 						pagination += '<div class="pageNum pagelink" value="' + Number(page+5) + '"><i class="fas fa-angle-double-right page_num"></i></div>';
 					}
 					else if (page == 2 && max_page > 6) {
-						pagination += '<div class="pageNum pagelink" value="' + Number(page+3) + '">' + Number(page+3) + '</a></div>';
+						pagination += '<div class="pageNum pagelink" value="' + Number(page+3) + '">' + Number(page+3) + '</div>';
 						pagination += '<div class="pageNum pagelink" value="' + Number(page+4) + '"><i class="fas fa-angle-double-right page_num"></i></div>';
 					}
 					else {
@@ -395,6 +395,12 @@
 					}
 				
 				$('#pagination').html(pagination);
+			});
+			
+			/* 페이지 이동 */
+			$(document).delegate('.pagelink', 'click', function(){
+				var pageNum = $(this).attr("value");
+				location.href = 'estimate.es?page=' + pageNum;
 			});
 		</script>
 		<!-- jQuery first, then Popper.js, then Bootstrap JS -->
