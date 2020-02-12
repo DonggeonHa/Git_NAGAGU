@@ -45,13 +45,15 @@ public class NoteController {
 		}
 		
 		int maxpage = (int)((double)countReceive/limit+0.95);
+		int startRow = (page-1)*10 + 1;
+		int endRow = startRow+limit-1;
 		int startpage = (((int) ((double)page/10 + 0.9)) - 1) * 10 + 1;
 		int endpage = startpage+limit-1;
 
 		if (page == maxpage)
 			endpage = countReceive;
 		
-		ArrayList<NoteVO> receiveList = noteService.receiveList(receiver, startpage, endpage);
+		ArrayList<NoteVO> receiveList = noteService.receiveList(receiver, startRow, endRow);
 		
 		model.addAttribute("page", page);
 		model.addAttribute("maxpage", maxpage);
@@ -80,13 +82,15 @@ public class NoteController {
 		}
 		
 		int maxpage = (int)((double)countSend/limit+0.95);
+		int startRow = (page-1)*10 + 1;
+		int endRow = startRow+limit-1;
 		int startpage = (((int) ((double)page/10 + 0.9)) - 1) * 10 + 1;
 		int endpage = startpage+10-1;
 		
 		if (endpage > maxpage)
 			endpage = maxpage;
 		
-		ArrayList<NoteVO> sendList = noteService.sendList(sender, startpage, endpage);
+		ArrayList<NoteVO> sendList = noteService.sendList(sender, startRow, endRow);
 		
 		model.addAttribute("page", page); 
 		model.addAttribute("maxpage", maxpage);
@@ -114,13 +118,15 @@ public class NoteController {
 		}
 		
 		int maxpage = (int)((double)countBoxed/limit+0.95);
+		int startRow = (page-1)*10 + 1;
+		int endRow = startRow+limit-1;
 		int startpage = (((int) ((double)page/10 + 0.9)) - 1) * 10 + 1;
 		int endpage = startpage+10-1;
 		
 		if (endpage > maxpage)
 			endpage = maxpage;
 		
-		ArrayList<NoteVO> boxedList = noteService.boxedList(boxer, startpage, endpage);
+		ArrayList<NoteVO> boxedList = noteService.boxedList(boxer, startRow, endRow);
 		
 		model.addAttribute("page", page); 
 		model.addAttribute("maxpage", maxpage); 
@@ -317,9 +323,6 @@ public class NoteController {
 	
 	@RequestMapping("notewrite.nt")
 	public String noteWrite(HttpServletRequest request, HttpSession session) throws Exception {
-		session.setAttribute("send_mail", "cndanrh26@naver.com");
-		session.setAttribute("send_nick", "공방공방");
-		
 		NoteVO vo = new NoteVO();
 		
 			vo.setNOTE_SENDER_MAIL((String)session.getAttribute("send_mail"));

@@ -516,13 +516,13 @@
 							/* 댓글 페이지네이션 */
 							
 							if (offer_page == max_page && offer_page > 5) {
-								pagination += '<div class="pageNum pageNum pagelink" value="' + Number(offer_page-5) + '"><i class="fas fa-angle-double-left page_num"></i></div>';
-								pagination += '<div class="pageNum pageNum pagelink" value="' + Number(offer_page-4) + '">' + Number(offer_page-4) + '</a></div>';
-								pagination += '<div class="pageNum pageNum pagelink" value="' + Number(offer_page-3) + '">' + Number(offer_page-3) + '</a></div>';
+								pagination += '<div class="pageNum pagelink" value="' + Number(offer_page-5) + '"><i class="fas fa-angle-double-left page_num"></i></div>';
+								pagination += '<div class="pageNum pagelink" value="' + Number(offer_page-4) + '">' + Number(offer_page-4) + '</div>';
+								pagination += '<div class="pageNum pagelink" value="' + Number(offer_page-3) + '">' + Number(offer_page-3) + '</div>';
 							}
 							else if (offer_page == max_page-1 && offer_page > 4) {
-								pagination += '<div class="pageNum pageNum pagelink" value="' + Number(offer_page-4) + '"><i class="fas fa-angle-double-left page_num"></i></div>';
-								pagination += '<div class="pageNum pageNum pagelink" value="' + Number(offer_page-3) + '">' + Number(offer_page-3) + '</a></div>';
+								pagination += '<div class="pageNum pagelink" value="' + Number(offer_page-4) + '"><i class="fas fa-angle-double-left page_num"></i></div>';
+								pagination += '<div class="pageNum pagelink" value="' + Number(offer_page-3) + '">' + Number(offer_page-3) + '</div>';
 							}
 							else {
 								if (offer_page > 3) {
@@ -531,26 +531,26 @@
 							} 
 							
 							if (offer_page > 2) {
-								pagination += '<div class="pageNum pagelink" value="' + Number(offer_page-2) + '">' + Number(offer_page-2) + '</a></div>';
+								pagination += '<div class="pageNum pagelink" value="' + Number(offer_page-2) + '">' + Number(offer_page-2) + '</div>';
 							}
 							if (offer_page > 1) {
-								pagination += '<div class="pageNum pagelink" value="' + Number(offer_page-1) + '">' + Number(offer_page-1) + '</a></div>';
+								pagination += '<div class="pageNum pagelink" value="' + Number(offer_page-1) + '">' + Number(offer_page-1) + '</div>';
 							}
 								pagination += '<div class="pageNum currentpage">' + offer_page + '</div>';
 							if (max_page > offer_page) {
-								pagination += '<div class="pageNum pagelink" value="' + Number(offer_page+1) + '">' + Number(offer_page+1) + '</a></div>';
+								pagination += '<div class="pageNum pagelink" value="' + Number(offer_page+1) + '">' + Number(offer_page+1) + '</div>';
 							}
 							if (max_page > offer_page+1) {
-								pagination += '<div class="pageNum pagelink" value="' + Number(offer_page+2) + '">' + Number(offer_page+2) + '</a></div>';
+								pagination += '<div class="pageNum pagelink" value="' + Number(offer_page+2) + '">' + Number(offer_page+2) + '</div>';
 							}
 							
 							if (offer_page == 1 && max_page > 5) {
-								pagination += '<div class="pageNum pagelink" value="' + Number(offer_page+3) + '">' + Number(offer_page+3) + '</a></div>';
-								pagination += '<div class="pageNum pagelink" value="' + Number(offer_page+4) + '">' + Number(offer_page+4) + '</a></div>';
+								pagination += '<div class="pageNum pagelink" value="' + Number(offer_page+3) + '">' + Number(offer_page+3) + '</div>';
+								pagination += '<div class="pageNum pagelink" value="' + Number(offer_page+4) + '">' + Number(offer_page+4) + '</div>';
 								pagination += '<div class="pageNum pagelink" value="' + Number(offer_page+5) + '"><i class="fas fa-angle-double-right page_num"></i></div>';
 							}
 							else if (offer_page == 2 && max_page > 6) {
-								pagination += '<div class="pageNum pagelink" value="' + Number(offer_page+3) + '">' + Number(offer_page+3) + '</a></div>';
+								pagination += '<div class="pageNum pagelink" value="' + Number(offer_page+3) + '">' + Number(offer_page+3) + '</div>';
 								pagination += '<div class="pageNum pagelink" value="' + Number(offer_page+4) + '"><i class="fas fa-angle-double-right page_num"></i></div>';
 							}
 							else {
@@ -568,6 +568,13 @@
 					}
 				});
 			}
+			
+			/* 페이지 이동 */
+			$(document).delegate('.pagelink', 'click', function(){
+				$('#OFFER_PAGE').val($(this).attr("value"));
+				console.log($('#OFFER_PAGE').val());
+				getOfferList();
+			});
 			
 			/* 제안글 내용 보이기, 숨기기 */
 			$(document).delegate('.item_head', 'click', function() {
@@ -587,13 +594,6 @@
 				console.log(send_workshop);
 				window.open('/NAGAGU/noteForm.nt?workshop_name=' + send_workshop, "쪽지 보내기", "width=600 height=800");
 				return false;
-			});
-			
-			/* 페이지 이동 */
-			$(document).delegate('.pagelink', 'click', function(){
-				$('#OFFER_PAGE').val($(this).attr("value"));
-				console.log($('#OFFER_PAGE').val());
-				getOfferList();
 			});
 			
 			/* 견적 제시 */

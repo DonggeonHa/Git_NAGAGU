@@ -188,15 +188,20 @@ public class EstimateServiceImpl implements EstimateService {
 		int res1 = mapper.offerDelete(OFFER_NUM);
 		
 		if (res1 == 1) {
-			int ESTIMATE_MINPRICE = mapper.estimateMinPrice(ESTIMATE_NUM);
+			HashMap <String, Object> map = new HashMap <String, Object>();
+			map.put("ESTIMATE_NUM", ESTIMATE_NUM);
+			int ESTIMATE_OFFERCOUNT = mapper.offerCount(map);
+			int ESTIMATE_MINPRICE = 0;
+			
+			if (ESTIMATE_OFFERCOUNT > 0) {
+				ESTIMATE_MINPRICE = mapper.estimateMinPrice(ESTIMATE_NUM);
+			}
+			
 			
 			EstimateVO estimatevo = new EstimateVO();
 			estimatevo.setESTIMATE_NUM(ESTIMATE_NUM);
 			estimatevo.setESTIMATE_MINPRICE(ESTIMATE_MINPRICE);
 			
-			HashMap <String, Object> map = new HashMap <String, Object>();
-			map.put("ESTIMATE_NUM", ESTIMATE_NUM);
-			int ESTIMATE_OFFERCOUNT = mapper.offerCount(map);
 			estimatevo.setESTIMATE_OFFERCOUNT(ESTIMATE_OFFERCOUNT);
 			
 			res = mapper.offerSetInfo(estimatevo);
