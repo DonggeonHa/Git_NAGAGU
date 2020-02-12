@@ -119,54 +119,61 @@ public class ProductController {
 		return "Store/productList";
 	}
 /////////////////////////////
-	@RequestMapping(value = "/getReviewList.pro", method = RequestMethod.GET)
+	@RequestMapping(value = "/getReviewList.pro", method = RequestMethod.POST)
 	public String productdetailreview(ProductVO productVO, MemberVO memberVO, Model model, HttpServletRequest request, HttpSession session) {
-		/*
-		 * int page = Integer.parseInt(request.getParameter("pg")); int perPgLine =
-		 * Integer.parseInt(request.getParameter("perPgLine")); int startRow = (page -
-		 * 1) * perPgLine; HashMap<String, Object> map = new HashMap<String, Object>();
-		 * map.put("startRow", startRow); map.put("perPgLine", perPgLine);
-		 * ArrayList<Product_reviewVO> reviewVO = null; reviewVO =
-		 * reviewService.getReviewList(map);
-		 */
-
-
-		
-		/*리뷰 리스트*/
-		int limit = 5; //한 페이지당 출력할 글의 수
-		int reviewpage = Integer.parseInt(request.getParameter("reviewpage"));
-		int PRODUCT_NUM= Integer.parseInt(request.getParameter("PRODUCT_NUM"));
-		
-		int startrow = (reviewpage - 1) * 5 + 1; // 읽기 시작할 row 번호.
-		int endrow = startrow + limit - 1; //읽을 마지막 row 번호.
-		
+		System.out.println("댓글확인");
+		int page = Integer.parseInt(request.getParameter("pg")); 
+		int perPgLine = 5; 
+		int startRow = (page - 1) * perPgLine+1; 
 		HashMap<String, Object> map = new HashMap<String, Object>();
-		map.put("startrow", startrow);
-		map.put("endrow", endrow);
-		map.put("PRODUCT_NUM", PRODUCT_NUM);
-		
-		int reviewCount;
-		int review_RE_Count;	//RE는 답글
-		ArrayList<Product_reviewVO> reviewList = null;
-		ArrayList<Product_reviewVO> review_RE_List = null;
-		reviewCount = reviewService.getReviewCount(map);
-		review_RE_Count = reviewService.getReview_RE_Count(map);
-		reviewList = reviewService.getReview_MemberList(map);
-		review_RE_List = reviewService.getReview_RE_List(map);
-	
-		
-		//리뷰 멤버
-		ArrayList<MemberVO> reviewMemberList = null;
-		reviewMemberList = reviewService.getreviewMemberList(map);
-		
-		
-		
-		//리뷰 답글 멤버
-		ArrayList<MemberVO> review_RE_MemberList = null;
-		review_RE_MemberList = reviewService.getreview_RE_MemberList(map);
+		map.put("startRow", startRow); 
+		map.put("perPgLine", perPgLine);
+		System.out.println("startRow= "+startRow);
+		System.out.println("perPgLine= "+perPgLine);
+		ArrayList<Product_reviewVO> reviewVO = null; 
+		reviewVO = reviewService.getReviewList123(map);
+		for(int i=0;i<reviewVO.size();i++) {
+			System.out.println("확인asd");
+			System.out.println(reviewVO.get(i).getREVIEW_NUM());
+		}
 
-		
-		
+
+//		
+//		/*리뷰 리스트*/
+//		int limit = 5; //한 페이지당 출력할 글의 수
+//		int reviewpage = Integer.parseInt(request.getParameter("reviewpage"));
+//		int PRODUCT_NUM= Integer.parseInt(request.getParameter("PRODUCT_NUM"));
+//		
+//		int startrow = (reviewpage - 1) * 5 + 1; // 읽기 시작할 row 번호.
+//		int endrow = startrow + limit - 1; //읽을 마지막 row 번호.
+//		
+//		HashMap<String, Object> map1 = new HashMap<String, Object>();
+//		map1.put("startrow", startrow);
+//		map1.put("endrow", endrow);
+//		map1.put("PRODUCT_NUM", PRODUCT_NUM);
+//		
+//		int reviewCount;
+//		int review_RE_Count;	//RE는 답글
+//		ArrayList<Product_reviewVO> reviewList = null;
+//		ArrayList<Product_reviewVO> review_RE_List = null;
+//		reviewCount = reviewService.getReviewCount(map1);
+//		review_RE_Count = reviewService.getReview_RE_Count(map1);
+//		reviewList = reviewService.getReview_MemberList(map1);
+//		review_RE_List = reviewService.getReview_RE_List(map1);
+//	
+//		
+//		//리뷰 멤버
+//		ArrayList<MemberVO> reviewMemberList = null;
+//		reviewMemberList = reviewService.getreviewMemberList(map1);
+//		
+//		
+//		
+//		//리뷰 답글 멤버
+//		ArrayList<MemberVO> review_RE_MemberList = null;
+//		review_RE_MemberList = reviewService.getreview_RE_MemberList(map1);
+//
+//		
+//		
 		
 		return "";
 	}
