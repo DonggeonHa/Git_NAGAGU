@@ -7,6 +7,7 @@
 		
 		response.sendRedirect("/index.ma");
 	}
+
 %>
 <!DOCTYPE html>
 <html>

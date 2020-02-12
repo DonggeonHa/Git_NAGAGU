@@ -45,9 +45,9 @@
 						if(item.class_NAME.length >= 14) {
 							title = item.class_NAME.substr(0,14)+"...";
 							
-							output += '<td><a href="classdetail.ac?CLASS_NUMBER=' + item.class_NUMBER + '">' + title + '</a></td>';
+							output += '<td><a href="classdetail.ac?CLASS_NUMBER=' + item.my_CLASS_CLASSNUM + '">' + title + '</a></td>';
 						} else {
-							output += '<td><a href="classdetail.ac?CLASS_NUMBER=' + item.class_NUMBER + '">' + item.class_NAME + '<a/></td>';
+							output += '<td><a href="classdetail.ac?CLASS_NUMBER=' + item.my_CLASS_CLASSNUM + '">' + item.class_NAME + '<a/></td>';
 						}
 						
 						output += '<td>' + item.member_NAME + '</td>';
@@ -104,9 +104,9 @@
 						if(item.class_NAME.length >= 14) {
 							title = item.class_NAME.substr(0,14)+"...";
 							
-							output += '<td><a href="classdetail.ac?CLASS_NUMBER=' + item.class_NUMBER + '">' + title + '</a></td>';
+							output += '<td><a href="classdetail.ac?CLASS_NUMBER=' + item.my_CLASS_CLASSNUM + '">' + title + '</a></td>';
 						} else {
-							output += '<td><a href="classdetail.ac?CLASS_NUMBER=' + item.class_NUMBER + '">' + item.class_NAME + '<a/></td>';
+							output += '<td><a href="classdetail.ac?CLASS_NUMBER=' + item.my_CLASS_CLASSNUM + '">' + item.class_NAME + '<a/></td>';
 						}
 						
 						output += '<td>' + item.member_NAME + '</td>';
@@ -163,9 +163,9 @@
 						if(item.class_NAME.length >= 14) {
 							title = item.class_NAME.substr(0,14)+"...";
 							
-							output += '<td><a href="classdetail.ac?CLASS_NUMBER=' + item.class_NUMBER + '">' + title + '</a></td>';
+							output += '<td><a href="classdetail.ac?CLASS_NUMBER=' + item.my_CLASS_CLASSNUM + '">' + title + '</a></td>';
 						} else {
-							output += '<td><a href="classdetail.ac?CLASS_NUMBER=' + item.class_NUMBER + '">' + item.class_NAME + '<a/></td>';
+							output += '<td><a href="classdetail.ac?CLASS_NUMBER=' + item.my_CLASS_CLASSNUM + '">' + item.class_NAME + '<a/></td>';
 						}
 						
 						output += '<td>' + item.member_NAME + '</td>';

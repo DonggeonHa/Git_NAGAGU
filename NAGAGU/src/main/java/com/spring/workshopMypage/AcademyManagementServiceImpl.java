@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 import com.spring.academy.ClassVO;
 import com.spring.mapper.AcademyManagementMapper;
+import com.spring.mapper.AcademyMapper;
 
 @Service
 public class AcademyManagementServiceImpl implements AcademyManagementService {
@@ -81,6 +82,18 @@ public class AcademyManagementServiceImpl implements AcademyManagementService {
 		
 		return result;
 	}
+
+	@Override
+	public ClassVO getclassDetail(int CLASS_NUMBER) {
+		AcademyManagementMapper managementMapper = sqlSession.getMapper(AcademyManagementMapper.class);
+		
+		ClassVO classVO = new ClassVO();
+		classVO = managementMapper.getclassDetail(CLASS_NUMBER);
+		
+		return classVO;
+		
+	}
+
 
 
 	

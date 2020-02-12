@@ -14,4 +14,5 @@ public interface AcademyManagementService {
 	List<WsMemberVO> getMemberSearch (@Param("keyword") String keyword, @Param("searchType") String searchType, @Param("WORKSHOP_NUM") int WORKSHOP_NUM);
 	int deleteManagementMember(@Param("MY_CLASS_MEMBERNUM") int MY_CLASS_MEMBERNUM);
 	int updateClassStatus(ArrayList<Integer> updateArray);
+	ClassVO getclassDetail(@Param("CLASS_NUMBER") int CLASS_NUMBER);
 }

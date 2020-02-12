@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.servlet.ModelAndView;
 
 import com.spring.academy.ClassVO;
 
@@ -15,12 +16,19 @@ public class AcademyManagementController {
 	@Autowired(required = false)
 	private AcademyManagementService academyManagementService;
 	
+	
 	@RequestMapping(value="/updateClass.mywork", method = {RequestMethod.POST, RequestMethod.GET} )
-	public String updateClass(HttpSession session, HttpServletRequest request) {
+	public ModelAndView updateClass(HttpSession session, HttpServletRequest request) {
+		
 		ClassVO classVO = new ClassVO();
-		classVO.setCLASS_NUMBER(Integer.parseInt(request.getParameter("CLASS_NUMBER")));
+		ModelAndView mav = new ModelAndView();
 		
+		int CLASS_NUMBER =  Integer.parseInt(request.getParameter("CLASS_NUMBER"));
+		classVO = academyManagementService.getclassDetail(CLASS_NUMBER);
 		
-		return null;
+		mav.addObject("ClassVO", classVO);
+		mav.setViewName("Mypage/Workshop/Academy/classUpdateForm");
+		
+		return mav;
 	}
 }
