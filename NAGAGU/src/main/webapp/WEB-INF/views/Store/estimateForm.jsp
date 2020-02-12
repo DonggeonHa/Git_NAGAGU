@@ -403,6 +403,11 @@
 
             var files = e.originalEvent.dataTransfer.files;
             
+            if (files.length + uploadCnt > 5) {
+        		alert('첨부 파일은 총 5개까지 입니다.');
+        		return false;
+            }
+            
             selectFile(files);
         });
     }
