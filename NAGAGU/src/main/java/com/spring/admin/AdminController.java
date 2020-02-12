@@ -86,6 +86,24 @@ public class AdminController {
 		return str;
 	}
 	
+	@RequestMapping(value = "/detailMember.ad", produces="application/json; charset=UTF-8", method = {RequestMethod.GET, RequestMethod.POST})
+	@ResponseBody
+	public Map<String, Object> detailMember(MemberVO vo) {
+		Map<String, Object> retVal = new HashMap<String, Object>();
+		
+		try {
+			System.out.println("MEMBER_NUM = " + vo.getMEMBER_NUM());
+			MemberVO res = adminService.detailMember(vo);
+			
+			retVal.put("res", "OK");
+		} catch(Exception e) {
+			retVal.put("res", "FAIL");
+			retVal.put("message", "삭제가 되지 않았습니다.");
+		}
+		
+		return retVal;
+	}
+	
 	@RequestMapping(value = "/deleteMember.ad", produces="application/json; charset=UTF-8", method = {RequestMethod.GET, RequestMethod.POST})
 	@ResponseBody
 	public Map<String, Object> deleteMember(MemberVO vo) {

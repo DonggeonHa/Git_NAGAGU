@@ -241,6 +241,12 @@ public class MainController {
 		return "signup";
 	}
 	
+	@RequestMapping(value = "/test.ma")
+	public String test() {
+		
+		return "Modal";
+	}
+	
 	@RequestMapping(value = "/memberInsert.ma")
 	public String memberInsert(MemberVO memberVO, RedirectAttributes redirect, HttpServletRequest request) {
 		String email  = request.getParameter("MEMBER_EMAIL");
