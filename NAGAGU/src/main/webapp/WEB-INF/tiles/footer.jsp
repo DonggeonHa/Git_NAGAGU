@@ -44,7 +44,7 @@
 	</head>
 	
 	<body class="order-body">
-		<div id="footer2">
+		<div id="footer2" style="border-top: 4px solid #ef900e !important;">
 		    <div class="copyright">
 		        <ul class="sns">
 			        <li><a href="#"><img src="${pageContext.request.contextPath}/resources/images/sns1.png"></a></li>
