@@ -21,6 +21,7 @@ public interface EstimateService {
 	public int offerModify (EstimateOfferVO vo);
 	public int offerDelete (int ESTIMATE_NUM, int OFFER_NUM);
 	public int offerBidSet (int OFFER_STATE, int OFFER_NUM);
-	public int offerCheck (int ESTIMATE_NUM);
-	public ArrayList<EstimateOrderVO> esOrderList(int ES_ORDER_BUYER);
+	public ArrayList<EstimateOrderVO> esOrderList(String ES_ORDER_BUYER);
+	public int esOrderInsert (EstimateOrderVO vo);
+	public int esOrderDelete (int ES_ORDER_NUM);
 }

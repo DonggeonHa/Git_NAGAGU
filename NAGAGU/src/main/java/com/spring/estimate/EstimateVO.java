@@ -8,6 +8,7 @@ public class EstimateVO {
 	private String ESTIMATE_NICK;
 	private String ESTIMATE_TITLE;
 	private Date ESTIMATE_DATE;
+	private String ESTIMATE_AREA;
 	private String ESTIMATE_CATEGORY;
 	private String ESTIMATE_SOURCE;
 	private String ESTIMATE_COLOR;
@@ -49,6 +50,12 @@ public class EstimateVO {
 	}
 	public void setESTIMATE_DATE(Date eSTIMATE_DATE) {
 		ESTIMATE_DATE = eSTIMATE_DATE;
+	}
+	public String getESTIMATE_AREA() {
+		return ESTIMATE_AREA;
+	}
+	public void setESTIMATE_AREA(String eSTIMATE_AREA) {
+		ESTIMATE_AREA = eSTIMATE_AREA;
 	}
 	public String getESTIMATE_CATEGORY() {
 		return ESTIMATE_CATEGORY;

@@ -294,6 +294,12 @@
 			</div>
 			<br/><br/>
 				<div class="row text-center pt-1 pb-1 ">
+					<div class="col-md-3 d-flex justify-content-end title">배송 희망 지역</div>
+					<div class="col-md-9 d-flex justify-content-start">
+						<%=vo.getESTIMATE_AREA() %>
+					</div>
+				</div>
+				<div class="row text-center pt-1 pb-1 ">
 					<div class="col-md-3 d-flex justify-content-end title">제품 종류</div>
 					<div class="col-md-9 d-flex justify-content-start">
 						<%=vo.getESTIMATE_CATEGORY() %>

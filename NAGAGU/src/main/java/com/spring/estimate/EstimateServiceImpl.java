@@ -227,14 +227,6 @@ public class EstimateServiceImpl implements EstimateService {
 	}
 	
 	@Override
-	public int offerCheck (int ESTIMATE_NUM) {
-		EstimateMapper mapper = sqlSession.getMapper(EstimateMapper.class);
-		int res = mapper.checkBid(ESTIMATE_NUM);
-		
-		return res;
-	}
-	
-	@Override
 	public int estimateBidSet (int ESTIMATE_STATE, int ESTIMATE_NUM) {
 		EstimateMapper mapper = sqlSession.getMapper(EstimateMapper.class);
 		EstimateVO vo = new EstimateVO();
@@ -247,13 +239,27 @@ public class EstimateServiceImpl implements EstimateService {
 	}
 	
 	@Override
-	public ArrayList<EstimateOrderVO> esOrderList(int ES_ORDER_BUYER) {
+	public ArrayList<EstimateOrderVO> esOrderList(String ES_ORDER_BUYER) {
 		EstimateMapper mapper = sqlSession.getMapper(EstimateMapper.class);
 		ArrayList<EstimateOrderVO> esOrderList = mapper.esOrderList(ES_ORDER_BUYER);
 		
 		return esOrderList;
 	}
 	
+	@Override
+	public int esOrderInsert (EstimateOrderVO vo) {
+		EstimateMapper mapper = sqlSession.getMapper(EstimateMapper.class);
+		int res = mapper.esOrderInsert(vo);
+		
+		return res;
+	}
 	
+	@Override
+	public int esOrderDelete (int ES_ORDER_NUM) {
+		EstimateMapper mapper = sqlSession.getMapper(EstimateMapper.class);
+		int res = mapper.esOrderDelete(ES_ORDER_NUM);
+		
+		return res;
+	}
 
 }
