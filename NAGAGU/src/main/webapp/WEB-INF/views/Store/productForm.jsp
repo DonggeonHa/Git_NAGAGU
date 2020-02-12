@@ -307,7 +307,7 @@
 			 $(document).ready(function() {
 				$('#summernote1').summernote({
 					width: 670,
-					height: 600,
+					height: 300,
 					lang: 'ko-KR',
 					callbacks: {
 						  onImageUpload: function(files) {
@@ -344,7 +344,7 @@
 			$(document).ready(function() {
 				$('#summernote2').summernote({
 					width: 670,
-					height: 600,
+					height: 300,
 					lang: 'ko-KR',
 					callbacks: {
 						  onImageUpload: function(files) {
@@ -381,7 +381,7 @@
 			$(document).ready(function() {
 				$('#summernote3').summernote({
 					width: 670,
-					height: 600,
+					height: 300,
 					lang: 'ko-KR',
 					callbacks: {
 						  onImageUpload: function(files) {
@@ -418,7 +418,7 @@
 			$(document).ready(function() {
 				$('#summernote4').summernote({
 					width: 670,
-					height: 600,
+					height: 300,
 					lang: 'ko-KR',
 					callbacks: {
 						  onImageUpload: function(files) {
@@ -455,7 +455,7 @@
 			$(document).ready(function() {
 				$('#summernote5').summernote({
 					width: 670,
-					height: 600,
+					height: 300,
 					lang: 'ko-KR',
 					callbacks: {
 						  onImageUpload: function(files) {

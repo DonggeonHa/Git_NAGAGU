@@ -97,6 +97,7 @@ public class MemberAjaxController {
 					session.setAttribute("MEMBER_STATUS", member.getMEMBER_STATUS());
 					session.setAttribute("MEMBER_NAME", member.getMEMBER_NAME());
 					session.setAttribute("MEMBER_PHONE", member.getMEMBER_PHONE());
+					session.setAttribute("MEMBER_PICTURE", member.getMEMBER_PICTURE());
 					retVal.put("res", "login_success");
 					
 				} else if(res == 0) { //아이디,비번은 맞지만 이메일 미인증일 때
@@ -128,7 +129,6 @@ public class MemberAjaxController {
 					session.setAttribute("WORKSHOP_CEO_NAME", workshopMember.getWORKSHOP_CEO_NAME());
 					session.setAttribute("WORKSHOP_NUM", workshopMember.getWORKSHOP_NUM());
 					session.setAttribute("WORKSHOP_PICTURE", workshopMember.getWORKSHOP_PICTURE());
-					System.out.println("WORKSHOP_PICTURE=="+workshopMember.getWORKSHOP_PICTURE());
 					retVal.put("res", "login_success");
 				} else if(result == 0) {
 					retVal.put("res", "workshop_loginFail_unconfirm");

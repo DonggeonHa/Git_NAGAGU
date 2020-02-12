@@ -190,8 +190,7 @@
 			<div class="row text-center pt-1 pb-1 ">
 				<div class="col-md-4 d-flex justify-content-end title">제목</div>
 				<div class="col-md-8 d-flex justify-content-start">
-					<input type="text" id="ESTIMATE_TITLE" name="ESTIMATE_TITLE" size="50" maxlength="30"
-						placeholder="제목을 입력하세요 ">
+					<input type="text" id="ESTIMATE_TITLE" name="ESTIMATE_TITLE" size="50" maxlength="30" placeholder="제목을 입력하세요 ">
 				</div>
 			</div>
 			<div class="row text-center pt-1 pb-1 ">

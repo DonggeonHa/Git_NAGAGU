@@ -145,6 +145,17 @@
 				font-size: 30px;
 			}
 			
+			.main ul {
+				list-style: none;
+				padding-left: 0px;
+				font-size: 0.9em;
+				color: #999;
+			}
+			
+			.main ul li {
+				display: none;
+			}
+			
 			/*마이페이지 버튼 css*/
 			.btn_mypage:hover {
 			    color: #ffffff !important;
@@ -222,6 +233,32 @@
 			#MEMBER_PASS {
 				font-family: '유토이미지고딕R', 'BBTreeGR', BBTreeGR;
 			}
+			
+			/* 헤더부분 드롭다운 CSS */
+			.dropdown {
+				position: relative;
+				display: inline-block;
+			}
+			
+			.dropdown-content {
+				display: none;
+				position: absolute;
+				background-color: #f1f1f1;
+				min-width: 160px;
+				box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+				z-index: 1;
+			}
+			
+			.dropdown-content a {
+				color: black;
+				padding: 12px 16px;
+				text-decoration: none;
+				display: block;
+			}
+			
+			.dropdown-content a:hover {background-color: #ddd;}
+			
+			.dropdown:hover .dropdown-content {display: block;}
 		</style>
 		<script>
 			jQuery(document).ready(function($) {
@@ -293,6 +330,26 @@
 					}	
 				});   
 			});
+			
+// 			/* 사이드 바 스크립트 */
+// 			$(function() {
+// 				$(".sidebar-nav").mouseenter(function() { // 마우스 들어갈때
+// 					$(".main").find("li").stop(300, function() { // li가 나타남
+// 						$(this).mouseover(function() {
+// 							$(this).css("font-weight", "800");
+// 							$(this).css("display", "block");
+// 						});
+// 					});
+// 				});
+// 				$(".sidebar-nav").mouseleave(function() { // 마우스 나갈때
+// 					$(".main").find("li").stop(300, function() { // li가 사라짐
+// 						$(this).mouseleave(function() {
+// 							$(this).css("font-weight", "500");
+// 							$(this).css("display", "none");
+// 						});
+// 					});
+// 				});
+// 			});
 		</script>
 	</head>
 	
@@ -329,12 +386,13 @@
 										<li class="nav-item">
 											<a class="nav-link" href="./classlist.ac">ACADEMY</a>
 										</li>
-										<li class="nav-item dropdown">
-											<a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" 
-											data-toggle="dropdown" aria-haspopup="true"	aria-expanded="false">STORE</a>
-											<div class="dropdown-menu" aria-labelledby="navbarDropdown">
-												<a class="dropdown-item" href="./productcategory.pro">수제가구</a> 
-												<a class="dropdown-item" href="./estimate.es">견적문의</a>
+										<li class="nav-item">
+											<div class="dropdown">
+												<a class="nav-link" href="#">STORE</a>
+												<div class="dropdown-content">
+													<a href="./productcategory.pro">수제가구</a>
+													<a href="./estimate.es">견적문의</a>
+												</div>
 											</div>
 										</li>
 									</ul>
@@ -375,16 +433,15 @@
 									%>
 											<li>
 												<div class="dropdown">
-													<img src="${pageContext.request.contextPath}/resources/images/Main/top_icon_mypage.png" alt=""
-														id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" />
-													<div class="dropdown-menu" aria-labelledby="dropdownMenu2">
-														<a href="./logout.ma" id="logout"><button class="dropdown-item btn btn-primary" type="button">로그아웃</button></a>
-														<button class="dropdown-item" type="button"><a href="./order_list.my">주문조회</a></button>
-														<button class="dropdown-item" type="button"><a href="./mypage_edit.my">내정보수정</a></button>
-														<button class="dropdown-item" type="button"><a href="./mypage_like.my">좋아요</a></button>
-														<button class="dropdown-item" type="button"><a href="./chatRoom.ch?ES_ORDER_NUM=1">채팅</a></button>
-														<button class="dropdown-item" type="button" onclick="window.open
-														('receiveList.nt', 'new', 'scrollbars=yes, resizable=yes, width=600, height=700, left=0, top=0');">쪽지</button>
+													<img src="${pageContext.request.contextPath}/resources/images/Main/top_icon_mypage.png"/ style="width: 20px; height: 25px;">
+													<div class="dropdown-content">
+														<a href="./logout.ma" id="logout">로그아웃</a>
+														<a href="./order_list.my">주문조회</a>
+														<a href="./mypage_edit.my">내정보수정</a>
+														<a href="./mypage_like.my">좋아요</a>
+														<a href="./chatRoom.ch?ES_ORDER_NUM=1">채팅</a>
+														<a href="#" onclick="window.open('receiveList.nt', 'new', 'scrollbars=yes, resizable=yes, width=600, height=700, left=0, top=0');">쪽지</a>
+														
 													</div>
 												</div>
 											</li>
@@ -409,9 +466,6 @@
 									<%	
 										} else {
 									%>
-<!-- 											<li> -->
-<!-- 												<a href="./chatRoom.ch?ES_ORDER_NUM=1"><i class="fas fa-comment" style="width: 20px; height: 25px;"></i></a> -->
-<!-- 											</li> -->
 											<li>
 												<a onclick="window.open('receiveList.nt', 'new', 'scrollbars=yes, resizable=yes, width=600, height=700, left=0, top=0');"><i class="fas fa-envelope" style="width: 20px; height: 25px;"></i></a>
 											</li>
@@ -492,6 +546,5 @@
 		</div>
 		
 		<script src="https://kit.fontawesome.com/b74b42490f.js" crossorigin="anonymous"></script>
-		<script src="<c:url value="/resources/js/header.js"/>"></script>
 	</body>
 </html>

@@ -234,7 +234,8 @@
             position: -webkit-sticky;
             position: sticky;
             background-color: #FFFFFF;
-            top: 20px;
+            top: 85px;
+            height: 600px;
          }
          
          .nav-item .nav-link {
@@ -550,40 +551,135 @@
 			<div class="row justify-content-between title">
                 <h6><a href="productlist.pro?PRODUCT_CATEGORY=all">STORE</a> > 상세보기 </h6>
             </div>
-			<div class="col-12 text-center" style="padding-bottom: 5%;">
-				<div id="carouselExampleFade" class="carousel slide carousel-fade" data-ride="carousel">
-					<div class="carousel-inner text-center">
-					<% for(int i = 0; i < (bannerImgCount)+1; i++) { 
-						if(vo.getPRODUCT_BANNER().equals("#")) { %>
-						<div class="carousel-item">
-						     <img src="#" class="d-block w-100" style="display: none;">
+            <div class="row" style="padding-bottom: 5%;">
+				<div class="col-7" style="border: 1px solid #1B1B27">
+					<p>사진 들어갈 곳</p>	<!-- ************************************************************************************************************ -->
+				</div>
+				<div class="col-5">
+					<form name="goodsform" action="#" method="post" id="goodsform">
+						<div class="row pt-4 pl-4">
+							<div class="col-3" >
+								<img src="${pageContext.request.contextPath}/resources/images/Community/peko.png" width="95%" >
+							</div><hr>
+							<div class="col-9">
+								<h3 name="PRODUCT_SHOPNAME"><%=vo.getPRODUCT_SHOPNAME()%></h3>
+								<p name="PRODUCT_TITLE"><font size="2"><%=vo.getPRODUCT_BRIEF()%></font></p>
+							</div>
 						</div>
-					<% } else {
-							if(i == 0) { %>
-								<div class="carousel-item active" style="width: 1300px; height: 530px;">
-									<img src="/productupload/image/<%=vo.getPRODUCT_BANNER().split(",")[i]%>" class="d-block w-100" style="max-width: 100%; height: 100%;">
-								</div>
-					<% 			continue;
-							} 
-					%>            
-						<div class="carousel-item" style="width: 1300px; height: 530px;">
-							<img src="/productupload/image/<%=vo.getPRODUCT_BANNER().split(",")[i]%>" class="d-block w-100" style="max-width: 100%; height: 100%;">
-						</div>                            
-					<%
-					   }
-					} %>
-					</div>
-					<a class="carousel-control-prev" href="#carouselExampleFade" role="button" data-slide="prev">
-						<span class="carousel-control-prev-icon" aria-hidden="true"></span>
-						<span class="sr-only">Previous</span>
-					</a>
-					<a class="carousel-control-next" href="#carouselExampleFade" role="button" data-slide="next">
-						<span class="carousel-control-next-icon" aria-hidden="true"></span>
-						<span class="sr-only">Next</span>
-					</a>
+						<div>
+							<table class="table table-borderless">
+								<thead>
+									<tr>
+										<th scope="col">가격</th>
+										<th scope="col" name="PRODUCT_PRICE"><%=vo.getPRODUCT_PRICE()%>원</th>
+									</tr>
+								</thead>
+								<tbody>
+									<tr>
+										<th scope="row">배송비</th>
+										<td name="PRODUCT_SHIP_PRICE"><%=vo.getPRODUCT_SHIP_PRICE()%></td>
+									</tr>
+									<tr>
+										<th scope="row">배송 기간</th>
+										<td name="PRODUCT_SHIP_DAYS"><%=vo.getPRODUCT_SHIP_DAYS()%>일</td>
+									</tr>
+									<tr>
+										<th scope="row">색상선택</th>
+										<td>
+											<select name="BASKET_COLOR" size="1" class="form-control">
+												<option value="">선택</option>
+												<c:forTokens var="color" items="<%=PRODUCT_COLOR %>" delims=",">
+													<option value="${fn:trim(color)}">${fn:trim(color)}</option>
+												</c:forTokens>
+											</select>
+										</td>
+									</tr>
+									<tr>
+										<th scope="row">사이즈선택</th>
+										<td>
+											<select name="BASKET_SIZE" size="1" class="form-control">
+												<option value="">선택</option>
+												<c:forTokens var="size" items="<%=PRODUCT_SIZE %>" delims=",">
+													<option value="${fn:trim(size)}">${fn:trim(size)}</option>
+												</c:forTokens>
+											</select>
+										</td>
+									</tr>
+									<tr>
+										<th scope="row">수량</th>
+										<td>
+											<div>
+												<select name="BASKET_AMOUNT" size="1" class="form-control">
+													<option value="1">1</option>
+													<option value="2">2</option>
+													<option value="3">3</option>
+													<option value="4">4</option>
+													<option value="5">5</option>
+												</select>
+											</div>
+										</td>
+									</tr>
+									<tr>
+										<th scope="row">총 합계금액</th>
+										<td></td>
+									</tr>
+									<tr>
+										<td colspan="2">
+											<div class="d-flex justify-content-between">
+												<% 
+													if(WORKSHOP_CEO_NAME == null && MEMBER_EMAIL == null) { 
+												%> <%-- 비로그인일 때 --%>
+													<div>
+														<button type="button" class="btn btn-outline-dark btn-lg" data-toggle="modal" data-target="#exampleModalCenter">
+															<input type="hidden" name = "PRODUCT_NUM" value="<%=PRODUCT_NUM %>">♥
+														</button>
+													</div>	
+													<div style="width:45%;">
+														<button type="button" class="btn btn-outline-dark btn-lg btn-block" data-toggle="modal" data-target="#exampleModalCenter" >장바구니</button>
+													</div>
+													<div style="width:45%;">
+														<button type="button" class="btn btn-outline-dark btn-lg btn-block" data-toggle="modal" data-target="#exampleModalCenter" >바로구매</button>
+													</div>
+												<% 
+													} else if(WORKSHOP_CEO_NAME != null) { 
+												%>	<%-- 공방 로그인일 때(하트 안 보임) --%>
+													<div style="width:50%;">
+														<a href="classreservation.ac" class="btn btn-outline-dark btn-lg btn-block disabled" role="button" aria-pressed="true">장바구니</a>
+													</div>
+													<div style="width:50%;">
+														<a href="#" class="btn btn-outline-dark btn-lg btn-block disabled" role="button" aria-pressed="true" >바로구매</a>
+													</div>
+												<% 
+													} else { 
+												%> <%-- 일반회원일때 --%>
+													<div>
+														<a href="#" class="btn btn-outline-dark btn-lg" role="button" aria-pressed="true" id="LikeAjax">
+															<input type="hidden" name = "PRODUCT_NUM" value="<%=PRODUCT_NUM %>">♥
+														</a>
+													</div>
+													<div style="width:45%;">
+														<a href="#" class="btn btn-outline-dark btn-lg btn-block" role="button" aria-pressed="true" id="basket_btn">장바구니</a>
+													</div>
+													<div style="width:45%;">
+														<a href="#" class="btn btn-outline-dark btn-lg btn-block" role="button" aria-pressed="true" id="order_btn">바로구매</a>
+													</div>
+												<% 
+													} 
+												%>
+											</div>
+										</td>
+									</tr>
+								</tbody>
+							</table>
+						</div>
+						<div class="btnArea text-center">
+							
+						</div>
+						<br/>
+					</form>
 				</div>
 			</div>
-			<div class="row">
+			<div class="row" style="padding: 15px 15px;">
 				<div class="col-8">
 					<div style="line-height: 0.5em;" id="t1">
 					<dl>
@@ -1211,14 +1307,6 @@
 				   </div>
 				</div>
 			   
-
-			   
-			   
-			   
- 
-                  
-                  
-                     
                <br />                  
             <%
                   } //for문 끝
@@ -1314,154 +1402,172 @@
             <h3 id="t4">배송 및 환불</h3>
             <br />
             <br />
-            <div class="ship_info" style="width: 100%; margin: 0 auto; font-size: 0.9em; color: #212529;">
-               <div class="row_ship_info">
-                  <h5>배송정보</h5>
-                  모든 제품은 메이킹퍼니처 직원이 직접 배송하며 배송비는 고객 부담입니다. 지역, 제품 수량 또는 설치 여부에 따라 주문 시
-                  배송비를 미리 안내해드립니다. 기본 배송비 외에 사다리차, 엘레베이터, 주차비 사용료 등 추가 비용이 발생 시 고객님
-                  부담입니다.
-                  <%=vo.getPRODUCT_SHIP_INFO() %>
-               </div>
-               <div class="row_ship_info">
-                  <h5>배송정보</h5>
-                  모든 제품은 메이킹퍼니처 직원이 직접 배송하며 배송비는 고객 부담입니다. 지역, 제품 수량 또는 설치 여부에 따라 주문 시
-                  배송비를 미리 안내해드립니다. 기본 배송비 외에 사다리차, 엘레베이터, 주차비 사용료 등 추가 비용이 발생 시 고객님
-                  부담입니다.
-                  반품 배송지 : <%=vo.getPRODUCT_SHIP_RETURN_PLACE()%>
-               </div>
-               <br />
-      
-      
-               <div class="row_ship_info">
-                  <h5>A/S</h5>
-                  핸드메이드 제품으로 나뭇결, 무늬, 옹이의 형태나 파임, 칠과 색상이 다를 수 있고 약간의 흠집이나 찍힘(표면의 크랙 또는
-                  뜯김)이 있을 수 있으며, 100% 원목으로 기후변화에 따른 수축, 팽창으로 인한 휘어짐(상판), 갈라짐(마구리면)이
-                  발생할 수 있습니다. 이런 자연스러운 현상들은 교체 및 교환 대상이 아니며 무상 A/S 사유가 되지 않습니다. 구매 전 꼭
-                  참고해주시기 바랍니다.
-                  <%=vo.getPRODUCT_AS_INFO() %>
-               </div>
-               <br />
-      
-      
-               <div class="row_ship_info">
-                  <h5>Wood Furniture</h5>
-                  원목가구의 수축 및 팽창은 원목만의 자연스러운 특징입니다.<br /> -지나치게 건조한 곳, 습한 곳은 피하세요. -가구의
-                  수평을 유지해주세요.(수평이 안 맞게 되면 가구가 뒤틀려버립니다.) -가구에 화학약품(신나, 메니큐어 등)이 닿지 않게
-                  해주세요. -평소에는 물걸레 청소하시면 됩니다. -뜨거운 냄비와 같은 고온의 뜨거운 물체에 직접 닿는 것은 피하시기
-                  바랍니다. -한 달에 1~2번 가구용 왁스로 닦아주세요. -원목가구는 수축기와 팽창기(계절의 변화)에 따라 갈라짐이나
-                  미세한 크랙이 발생할 수 있으며, 시간이 경과하면 원상회복이 될 수 있습니다. 이는 원목가구만의 자연스러운 현상이며 제품의
-                  하자가 아닙니다.
-                  <%=vo.getPRODUCT_STORE_INFO() %>
-               </div>
-               <br />
-      
-               <div class="row_ship_info">
-                  <h5>A/S규정[1년 무상]</h5>
-                  무상 A/S -보증기간 이내의 제품으로 정상적인 상태에서 제조상의 결함 제품 -원/부나내의 결함이 발생된 경우
-                  -메이킹퍼니처의 귀책 사유로 인한 결함 발생 제품
-                  <%=vo.getPRODUCT_RETURN_INFO() %>
-               </div>
-               <div class="row_ship_info">유상 A/S -고객의 취급 부주의 및 고의적 훼손 경우 -고객 임의 개조에 의한
-                  파손의 경우나 타 업체에서 수리해 변경된 경우 -유상 서비스 요금은 [수리비+부품비+출장비+기타실 비용] 등이 포함됩니다.
-               </div>
-            </div>
+		<div class="ship_info" style="width: 100%; margin: 0 auto; font-size: 0.9em; color: #212529;">
+			<div class="row_ship_info">
+		    	<h5>배송정보</h5>
+				모든 제품은 메이킹퍼니처 직원이 직접 배송하며 배송비는 고객 부담입니다. 지역, 제품 수량 또는 설치 여부에 따라 주문 시
+				배송비를 미리 안내해드립니다. 기본 배송비 외에 사다리차, 엘레베이터, 주차비 사용료 등 추가 비용이 발생 시 고객님
+				부담입니다.
+				<%=vo.getPRODUCT_SHIP_INFO() %>
+			</div>
+			<div class="row_ship_info">
+				<h5>배송정보</h5>
+				모든 제품은 메이킹퍼니처 직원이 직접 배송하며 배송비는 고객 부담입니다. 지역, 제품 수량 또는 설치 여부에 따라 주문 시
+				배송비를 미리 안내해드립니다. 기본 배송비 외에 사다리차, 엘레베이터, 주차비 사용료 등 추가 비용이 발생 시 고객님
+				부담입니다.
+				반품 배송지 : <%=vo.getPRODUCT_SHIP_RETURN_PLACE()%>
+			</div>
+			<br />
+			
+			<div class="row_ship_info">
+				<h5>A/S</h5>
+				핸드메이드 제품으로 나뭇결, 무늬, 옹이의 형태나 파임, 칠과 색상이 다를 수 있고 약간의 흠집이나 찍힘(표면의 크랙 또는
+				뜯김)이 있을 수 있으며, 100% 원목으로 기후변화에 따른 수축, 팽창으로 인한 휘어짐(상판), 갈라짐(마구리면)이
+				발생할 수 있습니다. 이런 자연스러운 현상들은 교체 및 교환 대상이 아니며 무상 A/S 사유가 되지 않습니다. 구매 전 꼭
+				참고해주시기 바랍니다.
+				<%=vo.getPRODUCT_AS_INFO() %>
+			</div>
+			<br />
+			
+			<div class="row_ship_info">
+				<h5>Wood Furniture</h5>
+				원목가구의 수축 및 팽창은 원목만의 자연스러운 특징입니다.<br /> -지나치게 건조한 곳, 습한 곳은 피하세요. -가구의
+				수평을 유지해주세요.(수평이 안 맞게 되면 가구가 뒤틀려버립니다.) -가구에 화학약품(신나, 메니큐어 등)이 닿지 않게
+				해주세요. -평소에는 물걸레 청소하시면 됩니다. -뜨거운 냄비와 같은 고온의 뜨거운 물체에 직접 닿는 것은 피하시기
+				바랍니다. -한 달에 1~2번 가구용 왁스로 닦아주세요. -원목가구는 수축기와 팽창기(계절의 변화)에 따라 갈라짐이나
+				미세한 크랙이 발생할 수 있으며, 시간이 경과하면 원상회복이 될 수 있습니다. 이는 원목가구만의 자연스러운 현상이며 제품의
+				하자가 아닙니다.
+				<%=vo.getPRODUCT_STORE_INFO() %>
+			</div>
+			<br />
+			
+			<div class="row_ship_info">
+				<h5>A/S규정[1년 무상]</h5>
+				무상 A/S -보증기간 이내의 제품으로 정상적인 상태에서 제조상의 결함 제품 -원/부나내의 결함이 발생된 경우
+				-메이킹퍼니처의 귀책 사유로 인한 결함 발생 제품
+				<%=vo.getPRODUCT_RETURN_INFO() %>
+			</div>
+			<div class="row_ship_info">
+				유상 A/S -고객의 취급 부주의 및 고의적 훼손 경우 -고객 임의 개조에 의한 파손의 경우나 타 업체에서 수리해 변경된 경우 -유상 서비스 요금은 [수리비+부품비+출장비+기타실 비용] 등이 포함됩니다.
+			</div>
+		</div>
                
-         </div>
-         <div class="col-4">
-            <div class="sticky2" style="border: 1px solid #EAEAEA;">
-               <form name="goodsform" action="#" method="post" id="goodsform">
-                  <div class="row pt-4 pl-4">
-                     <div class="col-3" >
-                        <img src="${pageContext.request.contextPath}/resources/images/Community/peko.png" width="95%" >
-                     </div><hr>
-                     <div class="col-9">
-                     	<%-- <input type="hidden" name="PRODUCT_NUM" value="<%=vo.getPRODUCT_NUM()%>"> --%>
-                        <h3 name="PRODUCT_SHOPNAME"><%=vo.getPRODUCT_SHOPNAME()%></h3>
-                        <p name="PRODUCT_TITLE"><font size="2"><%=vo.getPRODUCT_TITLE()%></font></p>
-                     </div>
-                  </div>
-                  <div>
-                     <table class="table table-borderless">
-                        <thead>
-                            <tr>
-                               <th scope="col">가격</th>
-                               <th scope="col" name="PRODUCT_PRICE"><%=vo.getPRODUCT_PRICE()%>원</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                               <th scope="row">배송비</th>
-                               <td name="PRODUCT_SHIP_PRICE"><%=vo.getPRODUCT_SHIP_PRICE()%></td>
-                            </tr>
-                            <tr>
-                               <th scope="row">배송 기간</th>
-                               <td name="PRODUCT_SHIP_DAYS"><%=vo.getPRODUCT_SHIP_DAYS()%>일</td>
-                            </tr>
-                            <tr>
-                               <th scope="row">색상선택</th>
-                               <td>
-                                    <select name="BASKET_COLOR" size="1">
-                                    <option value="" >선택</option>
-                                    <c:forTokens var="color" items="<%=PRODUCT_COLOR %>"
-                                       delims=",">
-                                       <option value="${fn:trim(color)}">${fn:trim(color)}</option>
-                                    </c:forTokens>
-                                 </select>
-                               </td>
-                            </tr>
-                            <tr>
-                               <th scope="row">사이즈선택</th>
-                               <td>
-                                    <select name="BASKET_SIZE" size="1">
-                                    <option value="">선택</option>
-                                    <c:forTokens var="size" items="<%=PRODUCT_SIZE %>" delims=",">
-                                       <option value="${fn:trim(size)}">${fn:trim(size)}</option>
-                                    </c:forTokens>
-                                 </select>
-                               </td>
-                            </tr>
-                            <tr>
-                               <th scope="row">수량</th>
-                               <td>
-                                    <input name="BASKET_AMOUNT" type="text" style="text-align: right" value="1" size="4" /> 
-                                 <a href="JavaScript:count_change(0)">▲</a> 
-                                 <a href="JavaScript:count_change(1)">▼</a> 개
-                               </td>
-                            </tr>
-                            <tr>
-                               <th scope="row">총 합계금액</th>
-                               <td></td>
-                            </tr>
-                        </tbody>
-                     </table>
-                  </div>
-                  <div class="btnArea text-center">
-					<% if(WORKSHOP_CEO_NAME == null && MEMBER_EMAIL == null) { %> <%-- 비로그인일 때 --%>
-						<button type="button" class="btn btn-outline-dark btn-md" data-toggle="modal" data-target="#exampleModalCenter">
-							<input type="hidden" name = "PRODUCT_NUM" value="<%=PRODUCT_NUM %>">
-	                        ♥
-						</button>	
-	                     <button type="button" class="btn btn-outline-dark btn-md" data-toggle="modal" data-target="#exampleModalCenter" >장바구니</button>
-	                     <button type="button" class="btn btn-outline-dark btn-md" data-toggle="modal" data-target="#exampleModalCenter" >바로구매</button>
-                     <% } else if(WORKSHOP_CEO_NAME != null){ %>	<%-- 공방 로그인일 때(하트 안 보임) --%>
-                     	 <a href="classreservation.ac" class="btn btn-outline-dark btn-md disabled" role="button" aria-pressed="true">장바구니</a>
-                     	 <a href="#" class="btn btn-outline-dark btn-md disabled" role="button" aria-pressed="true" >바로구매</a>
-                     <% } else { %> <%-- 일반회원일때 --%>
-                     	 <a href="#" class="btn btn-outline-dark btn-md " role="button" aria-pressed="true" id="LikeAjax">
-	                        <input type="hidden" name = "PRODUCT_NUM" value="<%=PRODUCT_NUM %>">
-	                        ♥
-	                     </a>
-	                     <a href="#" class="btn btn-outline-dark btn-md" role="button" aria-pressed="true" id="basket_btn">장바구니</a>
-	                     <a href="#" class="btn btn-outline-dark btn-md" role="button" aria-pressed="true" id="order_btn">바로구매</a>
-                     <% } %>
-                  </div>
-                  <br/>
-               </form>
-            </div>
-         </div>
-      </div>
-      <br>
-   </div>
+		</div>
+		<div class="col-4">
+        	<div class="sticky2" style="border: 1px solid #EAEAEA;">
+            	<form name="goodsform" action="#" method="post" id="goodsform">
+                	<div>
+                    	<table class="table table-borderless">
+                        	<tbody>
+	                            <tr>
+									<th scope="row">색상선택</th>
+									<td>
+										<select name="BASKET_COLOR" size="1" class="form-control">
+											<option value="">선택</option>
+											<c:forTokens var="color" items="<%=PRODUCT_COLOR %>" delims=",">
+												<option value="${fn:trim(color)}">${fn:trim(color)}</option>
+											</c:forTokens>
+										</select>
+									</td>
+								</tr>
+								<tr>
+									<th scope="row">사이즈선택</th>
+									<td>
+										<select name="BASKET_SIZE" size="1" class="form-control">
+											<option value="">선택</option>
+											<c:forTokens var="size" items="<%=PRODUCT_SIZE %>" delims=",">
+												<option value="${fn:trim(size)}">${fn:trim(size)}</option>
+											</c:forTokens>
+										</select>
+									</td>
+								</tr>
+								<tr>
+									<th scope="row">수량</th>
+									<td>
+										<div>
+											<select name="BASKET_AMOUNT" size="1" class="form-control">
+												<option value="1">1</option>
+												<option value="2">2</option>
+												<option value="3">3</option>
+												<option value="4">4</option>
+												<option value="5">5</option>
+											</select>
+										</div>
+									</td>
+								</tr>
+								<tr><td></td></tr>
+								<tr><td></td></tr>
+								<tr><td></td></tr>
+								<tr><td></td></tr>
+								<tr><td></td></tr>
+								<tr><td></td></tr>
+								<tr><td></td></tr>
+								<tr><td></td></tr>
+								<tr><td></td></tr>
+								<tr><td></td></tr>
+								<tr><td></td></tr>
+							</tbody>
+						</table>
+                  	</div>
+                  	<div>
+                  		<table class="table table-borderless">
+                  			<tbody>
+                  				<tr>
+									<th scope="row">총 합계금액</th>
+									<td></td>
+								</tr>
+                  			</tbody>
+                  		</table>
+                  	</div>
+					<div class="d-flex justify-content-between d-flex align-items-end">
+						<% 
+							if(WORKSHOP_CEO_NAME == null && MEMBER_EMAIL == null) { 
+						%> <%-- 비로그인일 때 --%>
+							<div>
+								<button type="button" class="btn btn-outline-dark btn-lg" data-toggle="modal" data-target="#exampleModalCenter">
+									<input type="hidden" name = "PRODUCT_NUM" value="<%=PRODUCT_NUM %>">♥
+								</button>
+							</div>	
+							<div style="width:45%;">
+								<button type="button" class="btn btn-outline-dark btn-lg btn-block" data-toggle="modal" data-target="#exampleModalCenter" >장바구니</button>
+							</div>
+							<div style="width:45%;">
+								<button type="button" class="btn btn-outline-dark btn-lg btn-block" data-toggle="modal" data-target="#exampleModalCenter" >바로구매</button>
+							</div>
+						<% 
+							} else if(WORKSHOP_CEO_NAME != null) { 
+						%>	<%-- 공방 로그인일 때(하트 안 보임) --%>
+								<div style="width:50%;">
+									<a href="classreservation.ac" class="btn btn-outline-dark btn-lg btn-block disabled" role="button" aria-pressed="true">장바구니</a>
+								</div>
+								<div style="width:50%;">
+									<a href="#" class="btn btn-outline-dark btn-lg btn-block disabled" role="button" aria-pressed="true" >바로구매</a>
+								</div>
+						<% 
+							} else { 
+						%> <%-- 일반회원일때 --%>
+								<div>
+									<a href="#" class="btn btn-outline-dark btn-lg" role="button" aria-pressed="true" id="LikeAjax">
+										<input type="hidden" name = "PRODUCT_NUM" value="<%=PRODUCT_NUM %>">♥
+									</a>
+								</div>
+								<div style="width:45%;">
+									<a href="#" class="btn btn-outline-dark btn-lg btn-block" role="button" aria-pressed="true" id="basket_btn">장바구니</a>
+								</div>
+								<div style="width:45%;">
+									<a href="#" class="btn btn-outline-dark btn-lg btn-block" role="button" aria-pressed="true" id="order_btn">바로구매</a>
+								</div>
+						<% 
+							} 
+						%>
+					</div>
+					<br/>
+				</form>
+			</div>
+		</div>
+	</div>
+    <br>
+	</div>
    <!-- content end -->
    <script>
    	$('#basket_btn').on('click',function(){

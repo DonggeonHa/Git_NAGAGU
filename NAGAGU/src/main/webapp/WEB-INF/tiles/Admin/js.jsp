@@ -10,7 +10,6 @@
 	<script src="https://kit.fontawesome.com/74760b5c81.js" crossorigin="anonymous"></script>
 	
 	<!-- sidebar -->
-	<script src="${pageContext.request.contextPath}/resources/js/Admin/sidebar.js"></script>
 	
 	<!-- Chart.js -->
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.bundle.js"></script>
