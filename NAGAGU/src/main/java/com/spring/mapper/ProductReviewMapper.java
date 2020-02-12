@@ -16,6 +16,7 @@ public interface ProductReviewMapper {
 	ArrayList<Product_reviewVO> getReviewList(HashMap<String, Object> map);
 	ArrayList<Product_reviewVO> getReviewList123(HashMap<String, Object> map);
 	ArrayList<Product_reviewVO> getReview_RE_List(HashMap<String, Object> map);
+	ArrayList<Product_reviewVO> getReview_RE_List123(HashMap<String, Object> map);
 
 	
 	int insertReview(Product_reviewVO reviewVO);

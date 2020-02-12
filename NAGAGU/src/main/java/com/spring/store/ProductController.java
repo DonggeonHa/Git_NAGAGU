@@ -140,33 +140,24 @@ public class ProductController {
 		map1.put("endrow", endrow);
 		map1.put("PRODUCT_NUM", PRODUCT_NUM);
 		
-		int reviewCount;
+		int reviewCount;	
 		int review_RE_Count;	//RE는 답글
 		ArrayList<Product_reviewVO> reviewList = null;
 		ArrayList<Product_reviewVO> review_RE_List = null;
 		reviewCount = reviewService.getReviewCount(map1);
-		//리뷰까지는 멤버 조인 쿼리 만들었음 //리뷰의 답글은 만들어야함
-//		review_RE_Count = reviewService.getReview_RE_Count(map1);
-	//	reviewList = reviewService.getReviewList123(map1);
-//		review_RE_List = reviewService.getReview_RE_List(map1);
-	
-		
-//		//리뷰 멤버
-//		ArrayList<MemberVO> reviewMemberList = null;
-//		reviewMemberList = reviewService.getreviewMemberList(map1);
-//		
-		
-//		
-//		//리뷰 답글 멤버
-//		ArrayList<MemberVO> review_RE_MemberList = null;
-//		review_RE_MemberList = reviewService.getreview_RE_MemberList(map1);
+		review_RE_Count = reviewService.getReview_RE_Count(map1);
+		reviewList = reviewService.getReviewList123(map1);
+		review_RE_List = reviewService.getReview_RE_List(map1);
+
 		
 		HashMap<String, Object> retVal = new HashMap<String, Object>();
 		try {
 			reviewList = reviewService.getReviewList123(map1);
 			retVal.put("res", "OK");
-			retVal.put("reviewList", reviewList);
 			retVal.put("reviewCount", reviewCount);	//allRowCnt
+			retVal.put("reviewList", reviewList);
+			retVal.put("review_RE_Count", review_RE_Count);	
+			retVal.put("review_RE_List", review_RE_List);	
 
 		} catch(Exception e) {
 			retVal.put("res", "FAIL");

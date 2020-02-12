@@ -71,18 +71,7 @@
 		System.out.println( "reviewImgCount["+i+"]="+reviewImgCount[i]);
 		*/
 	}
-	//리뷰 멤버 관련
-	ArrayList<MemberVO> reviewMemberList = (ArrayList<MemberVO>) request.getAttribute("reviewMemberList");
-	ArrayList<MemberVO> review_RE_MemberList = (ArrayList<MemberVO>) request.getAttribute("review_RE_MemberList");
-	System.out.println("reviewMemberList.size() = " + reviewMemberList.size());
-	/*
-	for(int i = 0; i < reviewMemberList.size(); i++) {      
-	   System.out.println(
-	         "reviewMemberList.get(0).getMEMBER_NICK()" +
-	         reviewMemberList.get(0).getMEMBER_NICK()
-	         );
-	}
-	*/
+
 	//qna 관련
 	ArrayList<Product_qnaVO> qnaList = (ArrayList<Product_qnaVO>) request.getAttribute("qnaList");
 	ArrayList<Product_qnaVO> qna_RE_List = (ArrayList<Product_qnaVO>) request.getAttribute("qna_RE_List");	
@@ -92,19 +81,7 @@
 	int qnamaxpage = ((Integer) request.getAttribute("qnamaxpage")).intValue();
 	int qnastartpage = ((Integer) request.getAttribute("qnastartpage")).intValue();
 	int qnaendpage = ((Integer) request.getAttribute("qnaendpage")).intValue();   
-	//qna 멤버 관련
-	ArrayList<MemberVO> qnaMemberList = (ArrayList<MemberVO>) request.getAttribute("qnaMemberList");
-	System.out.println("qnaMemberList.size() = " + qnaMemberList.size());
-	/*
-	for(int i = 0; i < qnaMemberList.size(); i++) {
-	   System.out.println(
-	         "reviewMemberList.get(0).getMEMBER_NICK()" +
-	         reviewMemberList.get(0).getMEMBER_NICK()
-	         );
-	}
-	*/
-	System.out.println("qnaCount = " + qnaCount);
-	//qna 원글 일반 멤버 관련
+
 	
 	//qna 답글 공방 멤버 관련
 	int WorkshopNum = ((Integer) request.getAttribute("WorkshopNum")).intValue();
@@ -138,346 +115,161 @@
 		<%-- <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/js/Store/pager.js">
 		  --%>
 	<style>
-         @charset "UTF-8";
-         
-         img {
-            max-width: 100%;
-            height: auto;
-         }
-         
-         table {
-            font-size: 0.98em;
-         }
-         
-         .nav_tab {
-            background-color: #FEE100;
-         }
-         
-         /*안 먹힘*/
-         @media screen and (max-width: 375px) { 
-            .nav-item {
-               font-size:0.5em !important;
-            }
-            
-         }
-         
-         .name {
-            font-weight: bold;
-         }
-         
-         .smallfont {
-            font-size: 0.7em;
-         }
-         
-         a {
-            color: gray;
-            text-decoration: none;
-         }
-         
-
-         .row_ship_info {
-            padding:3px;
-         }      
-      
-         @font-face {
-            font-family: 'KOMACON';
-            src:
-               url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_seven@1.2/KOMACON.woff')
-               format('woff');
-            font-weight: normal;
-            font-style: normal;
-         }
-         
-         .Precautions dl dd {
-            font-size: 0.7rem;
-         }
-         
-         #subject {
-            font-size: 1.0rem;
-         }
-         
-         .class-detail-container {
-            margin-top: 100px;
-            margin-bottom: 100px;
-         }
-         
-         .hr-class {
-            width: 100%;
-            color: #f6f6f6;
-            margin-top: 100px;
-            margin-bottom: 100px;
-         }
-         
-         .order-body {
-            font-family: '만화진흥원체', 'KOMACON', KOMACON;
-         }
-         
-         .sticky {
-            padding-top: 5%;
-            z-index:2;
-            position: -webkit-sticky;
-            position: sticky;
-            background-color: #FFFFFF;
-            top: 0;
-         }
-         
-         .sticky2 {
-            z-index:2;
-            position: -webkit-sticky;
-            position: sticky;
-            background-color: #FFFFFF;
-            top: 20px;
-         }
-         
-         .nav-item .nav-link {
-            color: #9d9d9d;
-         }
-         
-         .comments_table {
-            font-size: 1rem;
-         }
-         
-         @media ( max-width : 700px) {
-            .comments_table {
-               font-size: 0.7rem;
-            }
-         }
-         
-         div.col-2 img {
-            width: 100%;
-            height: 100%;
-         }
-         
-         
-         .rep_content {
-            font-size: 1.0em;
-         }
-         
-         hr {
-            background-color: #EF902E;
-         }
-      
-         /*review*/
-         .reviews_table {
-            color: #212529;
-         }
-         .review_sum {
-            width: 100%; 
-            margin: 0 auto;
-            background-color:#FAFAFA;
-            border-radius:10px;
-            /*border-top:1px solid RGBA(239, 144, 46, 0.3);*/
-            padding: 10px 0 3px 10px;
-            
-         }
-         .review_img {
-            width:100px;
-            height:100px;
-         }
-         .review_add_section {
-         /*
-            background-color: #FAFAFA;
-         */
-         }
-         .review_hidden {
-            display:none;
-            border:1px solid RGBA(35, 39, 43, 0.3);
-            border-radius:10px;
-            padding:15px 0;
-            margin:0 20px;
-         }
-         .review_file_preview {
-            width:100px;
-            height:100px;
-         }
-         .review_grade {
-            width: 80% !important; 
-            margin: 0 auto !important;         
-         }
-         .review_file_upload {
-            width: 80% !important; 
-            margin: 0 auto !important;               
-         }
-         .reviewspace {
-            display:block;
-         }
-         .review_control {
-            text-align:right;
-         }
-         .review_control a {
-            color : #343A40;
-            font-weight:bold;
-            font-size:0.7rem;
-         }
-         /*review 답글*/
-         .review_re {
-            text-align:right;
-         }
-         .review_re a {
-            color : #343A40;
-            font-weight:bold;
-            font-size:0.7rem;
-         }
-         .review_RE_control {
-            text-align:right;
-         }
-         .review_RE_control a {
-            color : #343A40;
-            font-weight:bold;
-            font-size:0.7rem;
-         }
-         .review_RE_control_hidden {
-            text-align:right;
-            display:none;
-         }
-         .review_RE_control_hidden a {
-            color : #343A40;
-            font-weight:bold;
-            font-size:0.7rem;
-         }
-         .review_re_hidden {
-            display:none;
-         }
-         .review_re_insert_hidden {
-            display:none;
-         }
-         
-         .review_re_insert {
-            text-align:right;
-         }
-         .review_re_insert a {
-            color : #343A40;
-            font-weight:bold;
-            font-size:0.7rem;         
-         }
-         
-         .review_re_sum {
-            width: 100%; 
-            margin: 0 auto;
-            padding: 3px 0;
-         }
-         .review_RE_modify_hidden {
-            display:none;
-         }
-         
-         
-         /*qna*/
-         
-         .qnas_table {
-            color: #212529;
-         }         
-         
-         .qna_sum {
-            width: 100%; 
-            margin: 0 auto;
-         }
-
-         .qna_add_section {
-	         display:none;
-            background-color: #FAFAFA;
-         }         
-         
-         .qna_mod_section {
-         	display:none;
-         }
-         
-         .qna_control {
-            text-align:right;
-         }
-         .qna_control a {
-            color : #343A40;
-            font-weight:bold;
-            font-size:0.7rem;
-         }
-         
-         .qna_control_hidden {
-         	text-align:right;
-         }
-         
-         .qna_control_hidden a {
-         	color : #343A40;
-            font-weight:bold;
-            font-size:0.7rem;
-         }
-         
-         .qna_re_form {
-         	display:none;
-         }
-
-         .qna_re_control {
-			text-align:right;         
-         }
-         .qna_re_control a {
-			color : #343A40;
-            font-weight:bold;
-            font-size:0.7rem;         
-         }
-         
-         .qna_re_control_hidden {
-			text-align:right;
-			display:none;         
-         }
-         
-         .qna_re_control_hidden a{
-			color : #343A40;
-            font-weight:bold;
-            font-size:0.7rem;  
-         }
-                  
-         
-         /*별점주기*/
-         .star-rating { 
-            width:52px; 
-         }
-         .star-rating,.star-rating span { 
-            display:inline-block; height:10px; overflow:hidden; background:url('${pageContext.request.contextPath}/resources/images/star_2.png') no-repeat; 
-         }
-         .star-rating span{ 
-            background-position:left bottom; line-height:0; vertical-align:top; 
-         }   
-         
-         
-         /*리뷰 이미지 호버*/   
-         .img {
-            width:100px;
-         }
-         .review_img_modify {
-            width:100px;
-            height:100px;         
-         }      
-         .hover-image {
-            transition: .5s ease;
-            opacity: 0;
-            position:relative;
-            top: 7%;
-            left: -8.5%;
-            transform: translate(-50%, -50%);
-            -ms-transform: translate(-50%, -50%);
-         }
-         .img:hover .img {
-            opacity: 0.3;
-         }
-         .img:hover #test {
-            opacity: 1;
-         }            
-         
-         .addlike {
-            background-color:#23272B !important;
-            color:white !important; 
-         }
-         .row h6{
-         	margin-left:30px; 
-         }
-         .row h6 a,.row h6 a:link,.row h6 a:hover{
-		  text-decoration: none !important;
-		  color: black !important;
+		@charset "UTF-8";
+		
+		img {
+		   max-width: 100%;
+		   height: auto;
 		}
 		
-		.clickable {cursor: pointer;}
-		.hover {text-decoration: underline;}
-		.odd{ background: #FFC;}
-		.even{ background: #FF9;}
-		.active{ width:10px; height:10px; background:#f60; color:white;}	 
+		table {
+		   font-size: 0.98em;
+		}
+		
+		.nav_tab {
+		   background-color: #FEE100;
+		}
+		
+		/*안 먹힘*/
+		@media screen and (max-width: 375px) { 
+		   .nav-item {
+		      font-size:0.5em !important;
+		   }
+		   
+		}
+		
+		.name {
+		   font-weight: bold;
+		}
+		
+		.smallfont {
+		   font-size: 0.7em;
+		}
+		
+		a {
+		   color: gray;
+		   text-decoration: none;
+		}
+		
+		
+		.row_ship_info {
+		   padding:3px;
+		}      
+		
+		@font-face {
+		   font-family: 'KOMACON';
+		   src:
+		      url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_seven@1.2/KOMACON.woff')
+		      format('woff');
+		   font-weight: normal;
+		   font-style: normal;
+		}
+		
+		.Precautions dl dd {
+		   font-size: 0.7rem;
+		}
+		
+		#subject {
+		   font-size: 1.0rem;
+		}
+		
+		.class-detail-container {
+		   margin-top: 100px;
+		   margin-bottom: 100px;
+		}
+		
+		.hr-class {
+		   width: 100%;
+		   color: #f6f6f6;
+		   margin-top: 100px;
+		   margin-bottom: 100px;
+		}
+		
+		.order-body {
+		   font-family: '만화진흥원체', 'KOMACON', KOMACON;
+		}
+		
+		.sticky {
+		   padding-top: 5%;
+		   z-index:2;
+		   position: -webkit-sticky;
+		   position: sticky;
+		   background-color: #FFFFFF;
+		   top: 0;
+		}
+		
+		.sticky2 {
+		   z-index:2;
+		   position: -webkit-sticky;
+		   position: sticky;
+		   background-color: #FFFFFF;
+		   top: 20px;
+		}
+		
+		.nav-item .nav-link {
+		   color: #9d9d9d;
+		}
+		
+		.comments_table {
+		   font-size: 1rem;
+		}
+		
+		@media ( max-width : 700px) {
+		   .comments_table {
+		      font-size: 0.7rem;
+		   }
+		}
+		
+		div.col-2 img {
+		   width: 100%;
+		   height: 100%;
+		}
+		
+		
+		.rep_content {
+		   font-size: 1.0em;
+		}
+		
+		hr {
+		   background-color: #EF902E;
+		}
+		
+		/*input type=file css*/
+		.file_input label {
+			position:relative;
+			cursor:pointer;
+			display:inline-block;
+			vertical-align:middle;
+			overflow:hidden;
+			width:80px;
+			height:30px;
+			background:#F1F1F1;
+			color:color:black;
+			text-align:center;
+			line-height:30px;
+			margin-bottom:0;
+			font-size:0.8rem;
+			padding:1px 1px;
+			border-radius:3px;
+		}
+		.file_input label input {
+			position:absolute;
+			width:0;
+			height:0;
+			overflow:hidden;
+		}
+		.file_input input[type=text] {
+			vertical-align:middle;
+			display:inline-block;
+			width:400px;
+			height:28px;
+			line-height:28px;
+			font-size:11px;
+			padding:0;
+			border:0;
+		}
+
+
 	</style>
 
 	<script>
@@ -560,7 +352,7 @@
 			<div class="row justify-content-between title">
 				<h6><a href="productlist.pro?PRODUCT_CATEGORY=all">STORE</a> > 상세보기 </h6>
             </div>
-			<div class="col-12 text-center" style="padding-bottom: 5%;">
+			<div class="col-12 text-center" style="padding-bottom:5%;">
 				<div id="carouselExampleFade" class="carousel slide carousel-fade" data-ride="carousel">
 					<div class="carousel-inner text-center">
 					<% for(int i = 0; i < (bannerImgCount)+1; i++) { 
@@ -652,18 +444,16 @@
 										프사
 									</div>
 									<div class="col-11">
-										<div class="row">
+										<div class="row pb-1">
 											<div class="col-2 justify-content-end name">닉네임</div>
 											<div class="col-8 justify-content-center"></div>
-											<div class="col-2 justify-content-center smallfont">날짜</div>
+											<div class="col-2 justify-content-center smallfont"></div>
 										</div>
-										<div class="row"> <!-- 파일, 평점 -->
-											<div class="col-9"></div>
-											<div class="col-1 pl-0 pr-0">
-												<img src="${pageContext.request.contextPath}/resources/images/star1.png" alt="" width="15px" height="15px">
-											</div>
-											<div class="col-2 pl-0">									
-												<select name="REVIEW_GRADE" id="REVIEW_GRADE" class="form-control input-sm" style="height:80%">
+										<div class="row pb-1"> <!-- 평점 -->
+											<div class="col-3 pr-0">
+												<img src="${pageContext.request.contextPath}/resources/images/star1.png" alt="" width="15px" height="15px" >
+												&nbsp;
+												<select name="REVIEW_GRADE" id="REVIEW_GRADE" class=" " style="width=15px;" >
 													<option value="0">0</option>
 													<option value="0.5">0.5</option>
 													<option value="1.0">1.0</option>
@@ -675,7 +465,31 @@
 													<option value="4.0">4.0</option>
 													<option value="4.5">5.5</option>
 													<option value="5.0">5.0</option>
-												</select>
+												</select>											
+											</div>
+											<div class="9"></div>
+										</div>
+										<div class="row"> <!-- 파일 -->
+											<div class="col-6">
+												<input type="file">
+											</div>
+											<div class="col-6"></div>
+											
+										</div>
+										<div class="row">
+											<div class="col-12">
+												<div class="file_input">
+												    <label>
+												        사진 업로드
+												        <input type="file" multiple="multiple" name="REVIEW_FILE" id="input_imgs">
+												    </label>
+												    <input type="text" readonly="readonly" title="File Route" value="선택된 파일이 없습니다">
+												</div>			
+											</div>
+										</div>
+										<div class="row">
+											<div class="col-12 imgs_wrap">
+												<img id="inputimg" >
 											</div>
 										</div>
 										<div class="row">	<!-- 내용 -->
@@ -684,11 +498,11 @@
 											</div>	
 										</div>
 										<div class="row"> <!-- 답글, 수정, 삭제 -->
-											<div class="col-2 justify-content-center" style="font-size:0.7em; font-weight:bold;">답글</div>
+											<div class="col-2 justify-content-center" style="font-size:0.7em; font-weight:bold;"></div>
 											<div class="col-8 justify-content-center"></div>
 											<div class="col-2 justify-content-center" style="font-size:0.7em; font-weight:bold;">
-												<a class="">수정</a> &nbsp;
-												<a class="">삭제</a>
+												<a class="">작성</a> &nbsp;
+												<a class="">취소</a>
 											</div>
 										</div>
 									</div>
@@ -728,7 +542,7 @@
 												</div>
 												<div class="row pb-2">	<!-- 수정폼 대비 -->
 													<div class="col-11 pr-0">
-														<textarea rows="2" name="REVIEW_CONTENT" class="col-12 pl-0" 
+														<textarea rows="2" name="REVIEW_CONTENT" class="col-12 pl-0 pr-0" 
 															id="qna_re_content">답글폼 만들기 답글폼 만들기 답글폼 만들기 답글폼 만들기 답글폼 만들기 답글폼 만들기 하하하하하하하하하하하하</textarea>
 													</div>	
 												</div>
@@ -994,6 +808,24 @@
 		
 	};
 	
+	
+	
+	
+	$('.file_input input[type=file]').change(function() {
+	    var fileName = $(this).val();
+	    var fileCount = $(this).get(0).files.length;
+	    if($(this).get(0).files.length == 1){
+	        $('.file_input input[type=text]').val(fileName);
+	    }
+	    else {
+	        $('.file_input input[type=text]').val('파일 '+fileCount+'개');
+	    }
+	});
+
+	
+	
+
+
 	
 	</script>	
 		
