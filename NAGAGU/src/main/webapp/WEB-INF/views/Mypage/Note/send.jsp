@@ -197,7 +197,7 @@
         width:33px;
     }
 
-    .note_list col.sender {
+    .note_list col.receiver {
         width:125px;
     }
 

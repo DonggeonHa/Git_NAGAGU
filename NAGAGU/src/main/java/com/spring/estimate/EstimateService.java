@@ -11,6 +11,7 @@ public interface EstimateService {
 	public int estimateModify (EstimateVO vo);
 	public int estimateDelete (int ESTIMATE_NUM);
 	public int estimateCount (HashMap <String, Object> map);
+	public int estimateBidSet (int ESTIMATE_STATE, int ESTIMATE_NUM);
 	public String imageUpload(String url, MultipartFile file) throws Exception;
 	public int imageDelete(String[] filesrc);
 	public EstimateVO estimateDetail(int ESTIMATE_NUM);
@@ -19,5 +20,7 @@ public interface EstimateService {
 	public int offerInsert (EstimateOfferVO vo);
 	public int offerModify (EstimateOfferVO vo);
 	public int offerDelete (int ESTIMATE_NUM, int OFFER_NUM);
+	public int offerBidSet (int OFFER_STATE, int OFFER_NUM);
+	public int offerCheck (int ESTIMATE_NUM);
 	public ArrayList<EstimateOrderVO> esOrderList(int ES_ORDER_BUYER);
 }

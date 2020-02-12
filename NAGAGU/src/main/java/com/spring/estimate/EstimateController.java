@@ -34,7 +34,7 @@ public class EstimateController {
 		}
 		
 		int maxpage = (int)((double)estimateCount/limit+0.95);
-		int startRow = (page-1)*10 + 1;
+		int startRow = (page-1)*limit + 1;
 		int endRow = startRow+limit-1;
 		map.put("startRow", startRow);
 		map.put("endRow", endRow);
@@ -321,15 +321,12 @@ public class EstimateController {
 		return map;
 	}
 	
-
+	/* 견적 제안 삭제 */
 	@RequestMapping(value = "/offer_delete.es", produces="application/json; charset=UTF-8")
 	@ResponseBody
 	public HashMap<String, Object> offerDelete (HttpServletRequest request) {
-		System.out.println(request.getParameter("ESTIMATE_NUM"));
 		int ESTIMATE_NUM = Integer.parseInt(request.getParameter("ESTIMATE_NUM"));
 		int OFFER_NUM = Integer.parseInt(request.getParameter("OFFER_NUM"));
-		System.out.println(ESTIMATE_NUM);
-		System.out.println(OFFER_NUM);
 		
 		int res = estimateService.offerDelete(ESTIMATE_NUM, OFFER_NUM);
 		HashMap<String, Object> map = new HashMap<String, Object>();
@@ -344,6 +341,20 @@ public class EstimateController {
 		return map;
 	}
 	
+	/* 견적 낙찰 */
+	@RequestMapping(value = "/offer_bid.es")
+	public String offerBid (HttpServletRequest request) {
+		int ESTIMATE_NUM = Integer.parseInt(request.getParameter("ESTIMATE_NUM"));
+		int OFFER_NUM = Integer.parseInt(request.getParameter("OFFER_NUM"));
+		int OFFER_STATE = Integer.parseInt(request.getParameter("OFFER_STATE"));
+		
+		int res1 = estimateService.offerBidSet(OFFER_STATE, OFFER_NUM);
+		if (res1 == 1) {
+			int res2 = estimateService.estimateBidSet(OFFER_STATE, ESTIMATE_NUM);
+		}
+		
+		return "redirect:/estimate_detail.es?ESTIMATE_NUM=" + ESTIMATE_NUM;
+	}
 	
 
 	/* 의뢰된 견적 리스트 */

@@ -24,7 +24,7 @@ public class NoteController {
 		
 		String member_mail = request.getParameter("MEMBER_EMAIL");
 		String workshop_name = request.getParameter("WORKSHOP_NAME");
-		String receiver = "";
+		String receiver = member_mail;
 		
 		if (member_mail == null && workshop_name != null) {
 			
@@ -45,13 +45,16 @@ public class NoteController {
 		}
 		
 		int maxpage = (int)((double)countReceive/limit+0.95);
-		int startRow = (page-1)*10 + 1;
+		int startRow = (page-1)*limit + 1;
 		int endRow = startRow+limit-1;
-		int startpage = (((int) ((double)page/10 + 0.9)) - 1) * 10 + 1;
-		int endpage = startpage+limit-1;
+		int startpage = (((int) ((double)page/10 + 0.9)) - 1) * 5 + 1;
+		int endpage = startpage+4;
 
 		if (page == maxpage)
-			endpage = countReceive;
+			endRow = countReceive;
+
+		if (endpage > maxpage)
+			endpage = maxpage;
 		
 		ArrayList<NoteVO> receiveList = noteService.receiveList(receiver, startRow, endRow);
 		
@@ -68,8 +71,17 @@ public class NoteController {
 	
 	@RequestMapping(value="sendList.nt")
 	public String noteSend(HttpServletRequest request, Model model, HttpSession session) throws Exception {
-		session.setAttribute("mem_mail", "lagls@naver.com");
-		String sender = (String)session.getAttribute("mem_mail");
+		String member_mail = request.getParameter("MEMBER_EMAIL");
+		String workshop_name = request.getParameter("WORKSHOP_NAME");
+		String sender = member_mail;
+		
+		if (member_mail == null && workshop_name != null) {
+			
+			WorkShopMemberVO workshopvo = new WorkShopMemberVO();
+			workshopvo.setWORKSHOP_NAME(workshop_name);
+			sender = noteService.getWorkshopMail(workshopvo);
+		}
+		
 		
 		int page = 1;
 		int limit = 10;
@@ -82,10 +94,13 @@ public class NoteController {
 		}
 		
 		int maxpage = (int)((double)countSend/limit+0.95);
-		int startRow = (page-1)*10 + 1;
+		int startRow = (page-1)*limit + 1;
 		int endRow = startRow+limit-1;
-		int startpage = (((int) ((double)page/10 + 0.9)) - 1) * 10 + 1;
-		int endpage = startpage+10-1;
+		int startpage = (((int) ((double)page/10 + 0.9)) - 1) * 5 + 1;
+		int endpage = startpage+4;
+
+		if (page == maxpage)
+			endRow = countSend;
 		
 		if (endpage > maxpage)
 			endpage = maxpage;
@@ -118,10 +133,13 @@ public class NoteController {
 		}
 		
 		int maxpage = (int)((double)countBoxed/limit+0.95);
-		int startRow = (page-1)*10 + 1;
+		int startRow = (page-1)*limit + 1;
 		int endRow = startRow+limit-1;
-		int startpage = (((int) ((double)page/10 + 0.9)) - 1) * 10 + 1;
-		int endpage = startpage+10-1;
+		int startpage = (((int) ((double)page/10 + 0.9)) - 1) * 5 + 1;
+		int endpage = startpage+4;
+
+		if (page == maxpage)
+			endRow = countBoxed;
 		
 		if (endpage > maxpage)
 			endpage = maxpage;

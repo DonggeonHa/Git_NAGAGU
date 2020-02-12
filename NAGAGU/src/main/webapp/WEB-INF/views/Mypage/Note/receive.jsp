@@ -14,7 +14,6 @@
 	int endpage = ((Integer)request.getAttribute("endpage")).intValue();
 	String mem_mail = (String)session.getAttribute("mem_mail");
 	String redirection = "receiveList.nt";
-	System.out.println(nowpage);
 	
 	SimpleDateFormat format = new SimpleDateFormat("yy-MM-dd");
 %>
@@ -30,265 +29,286 @@
     <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
 
 <style>
-    body {
-        min-width:520px;
-        padding:0;
-        margin:0;
-    }
-
-    div {
-        display:block;
-        padding:0;
-        margin:0;
-    }
-
-    ul {
-        list-style:none;
-    }
-
-    .pop_wrapper {
-        width:100%;
-		overflow:hidden;
-    }
-
-    .pop_header {
-        background-color: #1B1B27;
-        border-bottom: 2px solid #ef900e;
-        line-height: 26px;
-        height:48px;
-        padding:7px 25px 10px;
-    }
-
-    .pop_body {
-    	padding:0;
-    	margin:0;
-    }
-
-    .pop_title {
-        float:left;
-        color:#ffffff;
-    }
-
-    .pop_title .pop_title_txt {
-        font-size:18px;
-    }
-
-    .pop_title .pop_title_txt .icon {
-        margin-right:8px;
-    }
-
-    .pop_tabs {
-        height:36px;
-        font-size:1.1rem;
-        font-weight:700;
-        line-height:24px;
-        text-align:center;
-        border-bottom:1px solid #1B1B27;
-        background:#fafafa;
-    }
-
-    .pop_tabs .tab_list {
-        background:#fafafa;
-        border:1px solid #e6e6e6;
-        border-bottom-width:0;
-    }
-
-    .pop_tabs .tab_item {
-        width:144px;
-        height:36px;
-        float:left;
-    }
-
-    .pop_tabs .selected {
-        font-size:1.1rem;
-        height:35px;
-        position:relative;
-        border:1px solid #343434;
-        border-bottom-width: 0;
-        background:white;
-    }
-
-    .pop_tabs .tab_link {
-        display:block;
-        padding:5px 4px;
-        color:#000;
-        transition:background 0.2s, transform 0.1s, border 0.2s;
-    }
-
-    .pop_tabs .tab_link:hover {
-        transform:scale(1.05);
-        background:#d4d4d4;
-        text-decoration:none;
-        border:1px solid #343434;
-        border-bottom: 1px solid white;
-        z-index:1;
-    }
-
-    .pop_tabs .div_bar {
-        float:left;
-        width:1px;
-        height:16px;
-        background:#e6e6e6;
-        margin:9px 0 0 -1px;
-    }
-
-    .pop_tabs .selected .div_bar {
-        display:none;
-    }
-
-    .content_top {
-        font-size:0.8rem;
-        padding:5px 3px 0 3px	;
-        margin-bottom:9px;
-        height:25px;
-    }
-
-    .top_list_opt {
-        float:left;
-    }
-
-    .top_list_opt .btn_note {
-        margin-right:2px;
-    }
-
-    .btn_note {
-        font-weight:700;
-        line-height:16px;
-        padding:4px 8px 0;
-        overflow:visible;
-        height:24px;
-        display:inline-block;
-        text-decoration: none;
-        border:1px solid #b3b3b3;
-        color:#333;
-        cursor:pointer;
-    }
-
-    .top_list_info {
-        float:right;
-        color:#666;
-        line-height:24px;
-    }
-
-    .top_list_info .note_new {
-        color:#ef900e;
-    }
-
-    .content_list {
-        min-height:450px;
-     }
-
-    .note_list {
-        width:100%;
-        table-layout: fixed;
-        border-collapse: collapse;
-        border-spacing:0;
-        line-height:1.4;
-    }
-
-    .note_list col.check {
-        width:33px;
-    }
-
-    .note_list col.sender {
-        width:125px;
-    }
-
-    .note_list col.date {
-        width:96px;
-    }
-
-    .note_list col.receive {
-        width:80px;
-    }
-
-    .note_list thead {
-        text-align:center;
-        font-size:0.8rem;
-        line-height:1rem;
-    }
-
-    .note_list thead th {
-        background:#fafafa;
-        border-top:1px solid #b3b3b3;
-        padding:5px 0;
-    }
-
-    .note_list td {
-        border-top:1px solid #b3b3b3;
-        text-align:center;
-    }
-    
-    .note_list a {
-    	font-weight:600;
-    	color:#808080;
-    }
-    
-    .note_list a:hover {
-    	font-weight:600;
-    	color:#808080;
-    }
-    
-    .note_list tbody {
-    	border-bottom:1px solid #b3b3b3;
-    }
-    
-    .note_list .note_chk {
-    	margin-top:5px;
-    }
-    
-    .note_list .note_date {
-    	font-size:0.75rem;
-    }
-
-    .note_list .no_result {
-        color:#666;
-        font-size:0.8rem;
-        line-height:1rem;
-        text-align:center;
-        padding:0;
-        margin-bottom:25px;
-    }
-
-    .note_list .no_note_area {
-        padding:90px 0 88px;
-    }
-    
-    .unread {
-    	color:#ef900e;
-    }
-    
-    .read {
-    	color:#333;
-    }
-    
-    .readChk {
-    	width:20px;
-    	height:20px;
-    }
-
-    .pop_footer {
-        width:100%;
-        position:fixed;
-        bottom:0;
-        background-color: #1B1B27;
-        border-top: 1px solid #ef900e;
-        line-height: 20px;
-        height:38px;
-    }
-
-    .pop_footer #btn_close {
-        float:right;
-        color:white;
-        height:20px;
-        padding:10px;
-        transition:color 0.2s;
-    }
-    
-    .pop_footer #btn_close:hover {
-        color:grey;
-    }
-    
+	body {
+		min-width: 520px;
+		padding: 0;
+		margin: 0;
+	}
+	
+	div {
+		display: block;
+		padding: 0;
+		margin: 0;
+	}
+	
+	ul {
+		list-style: none;
+	}
+	
+	.pop_wrapper {
+		width: 100%;
+		overflow: hidden;
+	}
+	
+	.pop_header {
+		background-color: #1B1B27;
+		border-bottom: 2px solid #ef900e;
+		line-height: 26px;
+		height: 48px;
+		padding: 7px 25px 10px;
+	}
+	
+	.pop_body {
+		padding: 0;
+		margin: 0;
+	}
+	
+	.pop_title {
+		float: left;
+		color: #ffffff;
+	}
+	
+	.pop_title .pop_title_txt {
+		font-size: 18px;
+	}
+	
+	.pop_title .pop_title_txt .icon {
+		margin-right: 8px;
+	}
+	
+	.pop_tabs {
+		height: 36px;
+		font-size: 1.1rem;
+		font-weight: 700;
+		line-height: 24px;
+		text-align: center;
+		border-bottom: 1px solid #1B1B27;
+		background: #fafafa;
+	}
+	
+	.pop_tabs .tab_list {
+		background: #fafafa;
+		border: 1px solid #e6e6e6;
+		border-bottom-width: 0;
+	}
+	
+	.pop_tabs .tab_item {
+		width: 144px;
+		height: 36px;
+		float: left;
+	}
+	
+	.pop_tabs .selected {
+		font-size: 1.1rem;
+		height: 35px;
+		position: relative;
+		border: 1px solid #343434;
+		border-bottom-width: 0;
+		background: white;
+	}
+	
+	.pop_tabs .tab_link {
+		display: block;
+		padding: 5px 4px;
+		color: #000;
+		text-decoration: none;
+		transition: background 0.2s, transform 0.1s, border 0.2s;
+	}
+	
+	.pop_tabs .tab_link:hover {
+		transform: scale(1.05);
+		background: #d4d4d4;
+		text-decoration: none;
+		border: 1px solid #343434;
+		border-bottom: 1px solid white;
+		z-index: 1;
+	}
+	
+	.pop_tabs .div_bar {
+		float: left;
+		width: 1px;
+		height: 16px;
+		background: #e6e6e6;
+		margin: 9px 0 0 -1px;
+	}
+	
+	.pop_tabs .selected .div_bar {
+		display: none;
+	}
+	
+	.content_top {
+		font-size: 0.8rem;
+		padding: 5px 3px 0 3px;
+		margin-bottom: 9px;
+		height: 25px;
+	}
+	
+	.top_list_opt {
+		float: left;
+	}
+	
+	.top_list_opt .btn_note {
+		margin-right: 2px;
+	}
+	
+	.btn_note {
+		font-weight: 700;
+		line-height: 16px;
+		padding: 4px 8px 0;
+		overflow: visible;
+		height: 24px;
+		display: inline-block;
+		text-decoration: none;
+		border: 1px solid #b3b3b3;
+		color: #333;
+		cursor: pointer;
+	}
+	
+	.top_list_info {
+		float: right;
+		color: #666;
+		line-height: 24px;
+	}
+	
+	.top_list_info .note_new {
+		color: #ef900e;
+	}
+	
+	.content_list {
+		min-height: 450px;
+	}
+	
+	.note_list {
+		width: 100%;
+		table-layout: fixed;
+		border-collapse: collapse;
+		border-spacing: 0;
+		line-height: 1.4;
+	}
+	
+	.note_list col.check {
+		width: 33px;
+	}
+	
+	.note_list col.sender {
+		width: 125px;
+	}
+	
+	.note_list col.date {
+		width: 96px;
+	}
+	
+	.note_list col.receive {
+		width: 80px;
+	}
+	
+	.note_list thead {
+		text-align: center;
+		font-size: 0.8rem;
+		line-height: 1rem;
+	}
+	
+	.note_list thead th {
+		background: #fafafa;
+		border-top: 1px solid #b3b3b3;
+		padding: 5px 0;
+	}
+	
+	.note_list td {
+		border-top: 1px solid #b3b3b3;
+		text-align: center;
+	}
+	
+	.note_list a {
+		font-weight: 600;
+		color: #808080;
+	}
+	
+	.note_list a:hover {
+		font-weight: 600;
+		color: #808080;
+	}
+	
+	.note_list tbody {
+		border-bottom: 1px solid #b3b3b3;
+	}
+	
+	.note_list .note_chk {
+		margin-top: 5px;
+	}
+	
+	.note_list .note_date {
+		font-size: 0.75rem;
+	}
+	
+	.note_list .no_result {
+		color: #666;
+		font-size: 0.8rem;
+		line-height: 1rem;
+		text-align: center;
+		padding: 0;
+		margin-bottom: 25px;
+	}
+	
+	.note_list .no_note_area {
+		padding: 90px 0 88px;
+	}
+	
+	.unread {
+		color: #ef900e;
+	}
+	
+	.read {
+		color: #333;
+	}
+	
+	.readChk {
+		width: 20px;
+		height: 20px;
+	}
+	
+	.pop_footer {
+		width: 100%;
+		position: fixed;
+		bottom: 0;
+		background-color: #1B1B27;
+		border-top: 1px solid #ef900e;
+		line-height: 20px;
+		height: 38px;
+	}
+	
+	.pop_footer #btn_close {
+		float: right;
+		color: white;
+		height: 20px;
+		padding: 10px;
+		transition: color 0.2s;
+	}
+	
+	.pop_footer #btn_close:hover {
+		color: grey;
+	}
+	
+	.pagination .pageNum {
+		color: black;
+		float: left;
+		padding: 8px 16px;
+	}
+	
+	.pagination .pagelink {
+		color: #6d6d6d;
+		text-decoration: none;
+	}
+	
+	.pagination .pagelink:hover {
+		background-color: #ef902e;
+		color: black;
+		cursor: pointer;
+	}
+	
+	.pagination .currentpage {
+		font-weight: 700;
+	}
 </style>
 </head>
 <body>
@@ -405,25 +425,25 @@
 					<%
 						if(nowpage>3) {
 					%>
-					  <a href="note/receiveList.nt?page=<%=nowpage-3 %>">&laquo;</a>
+					  <div class="pagelink pageNum"><a href="note/receiveList.nt?page=<%=nowpage-3 %>"><i class="fas fa-angle-double-left page_num"></i></a></div>
 					<%
 						}
 					
 						for (int i=startpage; i<=endpage; i++) {
 							if (i==nowpage) {
 					%>	
-					  	<p class="nowpage"><%= i %>
+					  	<div class="pageNum"><p class="nowpage"><%= i %></p></div>
 					<%
 							} else {
 					%>
-						<a href="note/receiveList.nt?page<%=i %>"><%=i %></a>
+						<div class="pagelink pageNum"><a href="note/receiveList.nt?page<%=i %>"><%=i %></a></div>
 					<% 
 							} 
 						}
 						
 						if (nowpage < maxpage) {
 					%>
-					  <a href="note/receiveList.nt?page=<%=nowpage+3 %>">&raquo;</a>
+					  <div class="pagelink pageNum"><a href="note/receiveList.nt?page=<%=nowpage+3 %>"><i class="fas fa-angle-double-right page_num"></i></a></div>
 					<%
 						}
 					%>

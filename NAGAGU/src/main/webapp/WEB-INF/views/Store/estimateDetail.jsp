@@ -13,17 +13,19 @@
 	
 	if (session.getAttribute("MEMBER_EMAIL") != null) {
 		member_mail = (String)session.getAttribute("MEMBER_EMAIL");
-		System.out.println("estimateDetail 로그인 회원 : " + member_mail);
+		System.out.println("estimateDetail 일반 회원 : " + member_mail);
 		login_state = 1;
 	}
 	else {
 		if (session.getAttribute("WORKSHOP_NAME") != null) {
 			workshop_name = (String)session.getAttribute("WORKSHOP_NAME");
+			System.out.println("estimateDetail 공방 회원 : " + workshop_name);
 			login_state = 2;
 		}
 	}
 	
 	int ESTIMATE_NUM = (int)request.getAttribute("ESTIMATE_NUM");
+	int ES_STATE = vo.getESTIMATE_STATE();
 	String mailChk = vo.getESTIMATE_MEMBER();
 	
 	int nowpage = 1;
@@ -31,11 +33,7 @@
 		nowpage = Integer.parseInt((String)request.getAttribute("page"));
 	}
 	
-	
-	if ((String)session.getAttribute("WORKSHOP_NAME")!="") {
-		workshop_name = (String)session.getAttribute("WORKSHOP_NAME");
-	}
-	
+	System.out.println(login_state);
 	String images = vo.getESTIMATE_FILE();
 	String[] imgArr = images.split(",");
 
@@ -197,10 +195,8 @@
 			width:80px;
 		}
 		
-		.bt-xs {
-			width:20px;
-			height:14px;
-			font-size:12px;
+		.btn_bid_cancle {
+			color:red;
 		}
 		
 		.btn_offer_modify {
@@ -334,7 +330,7 @@
 				</div>
 	
 				<div class="row justify-content-center pt-5">
-				<% if (login_state==2) { %>
+				<% if (login_state==2 && ES_STATE == 0) { %>
 					<button class="btn btn-dark btn-md" alt="" data-toggle="modal" data-target="#offerFormModal" aria-haspopup="true" aria-expanded="false">
 					입찰하기</button>&nbsp;&nbsp;&nbsp;
 				<% }
@@ -450,20 +446,31 @@
 	<br/><br/><br/><br/>
 	
 	<script>
-	var login_state = <%=login_state%>
+	var login_state = <%=login_state%>;
+	var es_num = <%=ESTIMATE_NUM%>;
+	var es_state = <%=ES_STATE%>;
 	var checkPrice =  /^[0-9]*$/;
 	
 		$(document).ready(function (){
 			
 			function getOfferList () {
-				if (login_state != 2 && '<%=member_mail%>' != '<%=mailChk%>') {
-					var output='';
-					output += '<tr><td class="list_caution" colspan="5">제안글은 <b><font color="#f2400">작성자</font></b>만 열람 가능합니다</td></tr>';
-					
-					$('#offerList > tbody').html(output);
+				if ('<%=member_mail%>' != '<%=mailChk%>') {
+					if (login_state != 2) {
+						var output='';
+						output += '<tr><td class="list_caution" colspan="5">제안글은 <b><font color="#f2400">작성자</font></b>만 열람 가능합니다.</td></tr>';
+						
+						$('#offerList > tbody').html(output);
+					}
+					else if (es_state == 1) {
+						var output='';
+						output += '<tr><td class="list_caution" colspan="5"><b><font color="#f2400">낙찰</font></b>이 완료된 글입니다.</td></tr>';
+						
+						$('#offerList > tbody').html(output);
+					}
 					
 					return false;
 				}
+				
 				var OFFER_DATA = $('#offer_data').serialize();
 				$.ajax({
 					url:'/NAGAGU/offer_list.es', 
@@ -497,9 +504,20 @@
 								output += '<td><b>' + item.offer_WORKSHOP + '</b></td>';
 								output += '<td id="offer_price_' + item.offer_NUM + '">' + offerPrice + '</td>';
 								if (login_state == 1) {
-								output += '<td><button value="' + item.offer_WORKSHOP + '" class="btn_note btn btn-outline-dark btn-sm">쪽지보내기</button></td>';
-								output += '<td><button value="' + item.offer_NUM + '" class="btn_bid btn btn-outline-dark btn-xs">낙찰하기</button></td>';
-								} else {
+									output += '<td><button value="' + item.offer_WORKSHOP + '" class="btn_note btn btn-outline-dark btn-sm">쪽지보내기</button></td>';
+									if (es_state == 1) {
+										if (item.offer_STATE == 1) {
+											output += '<td><button value="' + item.offer_NUM + '" class="btn_bid_cancel btn btn-outline-dark btn-sm">낙찰취소</button></td>';
+										} 
+										else {
+											output += '<td> - </td>';
+										}
+									}
+									else {
+										output += '<td><button value="' + item.offer_NUM + '" class="btn_bid btn btn-outline-dark btn-sm">낙찰하기</button></td>';
+									}
+								} 
+								else {
 								output += '<td> - </td>';
 								output += '<td><button value="' + item.offer_NUM + '" class="btn_offer_modify btn-sm" alt="" data-toggle="modal" data-target="#modifyFormModal" aria-haspopup="true" aria-expanded="false">수정</button>&nbsp;';
 								output += '<button value="' + item.offer_NUM + '" class="btn_offer_delete btn-sm">삭제</button></td>';
@@ -592,8 +610,26 @@
 			$(document).delegate('.btn_note', 'click', function() {
 				var send_workshop = $(this).attr("value");
 				console.log(send_workshop);
-				window.open('/NAGAGU/noteForm.nt?workshop_name=' + send_workshop, "쪽지 보내기", "width=600 height=800");
+				window.open('/NAGAGU/noteForm.nt?workshop_name=' + send_workshop, "쪽지 보내기", "width=600 height=700");
 				return false;
+			});
+			
+			/* 낙찰하기 */
+			
+			$(document).delegate('.btn_bid', 'click', function() {
+				if (confirm("낙찰하시겠습니까?")) {
+					var OFFER_NUM = $(this).attr('value');
+					location.href='offer_bid.es?OFFER_STATE=1&ESTIMATE_NUM=' + es_num + '&OFFER_NUM=' + OFFER_NUM;
+				}
+			});
+			
+			/* 낙찰 취소하기 */
+			
+			$(document).delegate('.btn_bid_cancle', 'click', function() {
+				if (confir("정말 취소하시겠습니까?")) {
+					var OFFER_NUM = $(this).attr('value');
+					location.href='offer_bid.es?OFFER_STATE=2&ESTIMATE_NUM=' + es_num + '&OFFER_NUM=' + OFFER_NUM;
+				}
 			});
 			
 			/* 견적 제시 */
