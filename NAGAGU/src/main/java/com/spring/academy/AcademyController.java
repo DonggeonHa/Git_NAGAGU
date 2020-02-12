@@ -40,7 +40,7 @@ public class AcademyController {
 			page = Integer.parseInt(request.getParameter("page"));
 		}
 		
-		int startrow = (page - 1) * 12 + 1; // 읽기 시작할 row 번호.
+		int startrow = (page - 1) * 12 + 1; // 읽기 시작할 row 번호..
 		int endrow = startrow + limit - 1; //읽을 마지막 row 번호.
 		
 		HashMap<String, Object> map = new HashMap<String, Object>();
