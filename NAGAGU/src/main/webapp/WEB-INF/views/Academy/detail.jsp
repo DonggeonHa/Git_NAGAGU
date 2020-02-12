@@ -326,7 +326,7 @@
 				</div>
 				<div class="col-4">
 					<div class="sticky2" style="border: 1px solid #EAEAEA; padding-top: 5%;">
-						<a href="./mypage_class.my?WORKSHOP_NUM=<%=cl.getWORKSHOP_NUM()%>">
+						<a href="./workshop_page.my?WORKSHOP_NUM=<%=cl.getWORKSHOP_NUM()%>">
 						<div class="row pt-4 pl-4">
 							<div class="col-3">
 								<img src="<%=cl.getWORKSHOP_PICTURE()%>" style="width: 95%;">

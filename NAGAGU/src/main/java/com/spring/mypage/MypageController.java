@@ -54,8 +54,12 @@ public class MypageController {
 		return "Mypage/support";
 	}
 	
-	//공방 마이페이지
 	@RequestMapping(value = "/mypage_class.my")
+	public String MypageClass() {
+		return "Mypage/class";
+	}
+	//공방 마이페이지
+	@RequestMapping(value = "/workshop_page.my")
 	public String MypageClass(WorkShopMemberVO wsMemberVO, Model model, HttpServletRequest request) throws Exception {
 		System.out.println("컨트롤러");
 		//마이페이지 멤버
@@ -75,7 +79,7 @@ public class MypageController {
 		if(request.getParameter("uploadOrLike")!=null) {
 			return"Mypage/workshop_mypage_more";
 		}
-		return "Mypage/workshop_mypage";
+		return "Mypage/workshop_page";
 	}
 	
 	@RequestMapping(value = "/mypage_edit.my")
