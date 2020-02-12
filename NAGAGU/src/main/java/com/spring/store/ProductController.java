@@ -118,6 +118,7 @@ public class ProductController {
 		return "Store/productList";
 	}
 
+	//디테일-페이지네이션 에이젝스
 	@RequestMapping(value = "/getReviewList.pro", method = RequestMethod.POST, produces="application/json;charset=UTF-8")
 	@ResponseBody
 	public HashMap<String, Object> productdetailreview(ProductVO productVO, MemberVO memberVO, Model model, HttpServletRequest request, HttpSession session) {
@@ -177,7 +178,7 @@ public class ProductController {
 
 	@RequestMapping(value = "/productdetail.pro", method = RequestMethod.GET)
 	public String productdetail(ProductVO productVO, MemberVO memberVO, Model model, HttpServletRequest request, HttpSession session) {
-
+		System.out.println("detail");
 		/*로그인 멤버*/
 		if(session.getAttribute("MEMBER_NUM") != null) {
 			System.out.println("멤버넘");
@@ -347,25 +348,10 @@ public class ProductController {
 	}
 	
 
-
+//새로 만드는 댓글창
 @RequestMapping(value = "/productdetail123.pro", method = RequestMethod.GET)
 public String productdetail123(ProductVO productVO, MemberVO memberVO, Model model, HttpServletRequest request, HttpSession session) {
-
-	/*로그인 멤버*/
-	if(session.getAttribute("MEMBER_NUM") != null) {
-		System.out.println("멤버넘");
-		System.out.println("멤버넘"+session.getAttribute("MEMBER_NUM"));
-		memberVO.setMEMBER_NUM((int)session.getAttribute("MEMBER_NUM"));
-		//int index = ((Integer)(session.getAttribute("index"))).intValue();
-		MemberVO LoginMemberVO = reviewService.getLoginMemberbyNUM(memberVO);			
-		System.out.println("1"+memberVO.getMEMBER_NUM());
-		System.out.println("로그인 멤버 확인- membernum="+(int)session.getAttribute("MEMBER_NUM"));
-		System.out.println("로그인 멤버 확인- membernick="+LoginMemberVO.getMEMBER_NICK());
-		System.out.println("로그인 멤버 확인- memberpicture="+LoginMemberVO.getMEMBER_PICTURE());
-		/*로그인 멤버 관련*/
-		model.addAttribute("LoginMemberVO",LoginMemberVO);
-	
-	}
+	System.out.println("detail123");
 
 	
 	/*상품 vo 가져오기*/
@@ -380,6 +366,7 @@ public String productdetail123(ProductVO productVO, MemberVO memberVO, Model mod
 	int WorkshopNum = workshopVO.getWORKSHOP_NUM();
 	model.addAttribute("WorkshopNum",WorkshopNum);
 	model.addAttribute("WorkshopMatchingNumber",WorkshopMatchingNumber);
+	
 	/*qna 답글 출력시 워크샵 name, pic 필요함*/
 	String WorkshopName = workshopVO.getWORKSHOP_NAME();
 	String WorkshopPicture = workshopVO.getWORKSHOP_PICTURE();
@@ -518,6 +505,18 @@ public String productdetail123(ProductVO productVO, MemberVO memberVO, Model mod
 
 
 	
+//@RequestMapping(value="/getReviewList123.do",  produces="application/json;charset=UTF-8")
+//@ResponseBody
+//public String getReviewList123(MultipartHttpServletRequest request, HttpSession session) throws Exception {
+//
+//	
+//}
+	
+
+
+
+
+
 	
 	
 	//-------------------------------------------리뷰1-댓글등록
