@@ -110,17 +110,18 @@ create sequence store_review_seq
 		<![CDATA[ WHERE rnum >= #{startrow} AND rnum <= #{endrow} ]]>
 			
 	</select>
-<!--  
-	<select id="getReviewList123" parameterType="java.util.HashMap" resultMap="productReviewResultMap">
-		
 
-		SELECT * 
-		FROM PRODUCT_REVIEW
-		WHERE REVIEW_PRODUCT=#{PRODUCT_NUM} AND REVIEW_RE=0 
-		ORDER BY REVIEW_DATE DESC
-		LIMIT #{startRow}, #{perPgLine}			
+	<select id="getReviewList123" parameterType="java.util.HashMap" resultMap="productReviewResultMap">
+
+    select * from
+        (select rownum rnum, review_num, REVIEW_MEMBER, REVIEW_PRODUCT, REVIEW_DATE, REVIEW_FILE, REVIEW_CONTENT, REVIEW_GRADE, REVIEW_RE,
+            member_nick, member_picture from
+            (select R.*, N.member_nick, n.member_picture from product_review R, nagagu_member N 
+            where r.review_product=#{PRODUCT_NUM} and r.review_member=n.member_num and r.review_re=0 order by r.review_date desc)
+         )   <![CDATA[ WHERE rnum >= #{startrow} AND rnum <= #{endrow} ]]>
+           
 	</select>
--->
+
 
 <!--  
 
