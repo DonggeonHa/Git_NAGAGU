@@ -143,6 +143,7 @@
 		<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
 		<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
 		<link href="https://use.fontawesome.com/releases/v5.0.6/css/all.css" rel="stylesheet">
+		<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/js/Store/pager.js">
 		
 	<style>
          @charset "UTF-8";
@@ -480,22 +481,68 @@
 		  color: black !important;
 		}
 		
-			.clickable {cursor: pointer;}
+		.clickable {cursor: pointer;}
 		.hover {text-decoration: underline;}
 		.odd{ background: #FFC;}
 		.even{ background: #FF9;}
 		.active{ width:10px; height:10px; background:#f60; color:white;}	 
       </style>
+
 	<script>
 	$(document).ready(function() {
-		
-	});
-	
+//			getReviewList();
+//			  pageMove(1);
+	});	
+/* 
+	function pageMove(pg){
+		console.log(pg)
+		console.log(<%=PRODUCT_NUM%>)
+		alert('asdasd');
+		var perPgLine = 5;
+		$.ajax({
+			type	: "POST",
+			url: "/NAGAGU/getReviewList.pro",
+			data	: {	
+				'pg'		: pg,
+				'PRODUCT_NUM' : <%=PRODUCT_NUM%>
+			},
+				dataType: 'JSON',
+			success : function(result) {
+				alert('성공');
+				
+				page = pg;
+				//update board fromd data
+				updatePaging("pageMove", page, allRowCnt, perPgLine, 3);
+			},
+			error : function(e) {
+				alert('실패')
+				console.log(e);
+			}
+		});
+	}	
+	function updatePaging(callFunc, page, allRowCnt, perPgLine, pgGrpCnt){
+		var boardPager	= $('.board-pager');
+		var	pager		= drawPager(callFunc, page, allRowCnt, perPgLine, pgGrpCnt);
+				
+		boardPager.empty();
+		boardPager.append(pager);
+	}
+*/	
+	function drawPager(callFunc, page, allRowCnt, perPgLine, pgGrpCnt) {
+/* 
+		callFunc : 페이지 클릭 시 호출되는 함수이다. 1을 누르면 pagemove(1) 호출.
+		page  : 현재 페이지
+		allRowCnt : 전체 게시글 수
+		perPgLine : 페이지당 게시글 수
+		pgGrpCnt : 페이징을 몇개씩 묵을 것인가. ex.3인경우  (1,2,3) (4,5,6)
+
+ */	} 
 	
 
 	
+	</script>	
 	
-	</script>
+	
    </head>
 	<body class="order-body">
 		<!-- content start -->
@@ -583,6 +630,12 @@
 				<!-- 리뷰 테이블 시작 -->
 				<h3 id="review_scroll" >Review</h3>
 				<br /><br />
+				
+				
+		<div class="ReviewListSection22">				
+
+		</div>
+		<div id="ReviewListSection">				
 				<div class="reviews_table" >
 					<!-- 리뷰 작성시 Ajax로 이 자리에 insert -->
 				<div class="review_sum justify-content-center" >
@@ -822,7 +875,7 @@
                      <div class="review_hidden">
                         <div class="review_grade" >
                            <img src="${pageContext.request.contextPath}/resources/images/star1.png" alt="" width="15px" height="15px"> 
-                           &nbsp; : &nbsp; <input type="text" name="REVIEW_GRADE" size="3" style="height:90%;"> &nbsp;/5.0
+                           &nbsp; : &nbsp; <input type="text" id="gradetext" name="REVIEW_GRADE" size="3" style="height:90%;"> &nbsp;/5.0
                         
                         </div>
 
@@ -848,6 +901,8 @@
                   </form>   
                </div>         
                <!-- 리뷰 등록 끝 -->
+		</div>               
+		<!-- ReviewListSection -->               
                   
                <!-- 리뷰 pagenation -->
                <br/>
@@ -894,26 +949,40 @@
                   %>
                   </div>
                </div>   <!-- pagenation 끝 -->   
+               
             <%
             }
             %>
-               
 
-               
+			<!-- 페이지네이션 기재오빠 -->
+			<div id = "pagination123" class="pagination justify-content-center" align="center"></div>			
+			<!-- 페이지네이션 기재오빠 끝-->               
+
+			<!-- 페이지네이션 선주 -->
+			
+			<div class=".board-pager"></div>               
+			<!-- 페이지네이션 선주 끝-->               
                <br />
             </div><!-- <div class="reviews_table" > 끝 -->
             <!-- 리뷰 테이블 끝 -->
       
-<!-- 지은 리뷰 pagination -->
-
-
-			<div class="review_bottom">
+			<!-- 지은 리뷰 pagination1 -->
+			<!-- <div class="review_bottom">
 				<table class="tbl paginated" id="tbl">
 				</table>
+			</div> -->
+			<!-- 지은 리뷰 pagination1 끝 -->
+			<!-- 지은 리뷰 pagination2 -->
+			
+			
+			<div class="d-flex justify-content-center">
+				<nav aria-label="Page navigation example" class="paginated" id="user-page"></nav>
 			</div>
-
-
-<!-- 지은 리뷰 pagination 끝 -->
+			
+			
+			<!-- 지은 리뷰 pagination2 끝 -->
+			
+			
             <span id="t3"></span>
             <br />
             <br />
@@ -1869,7 +1938,8 @@
                      console.log("output:" + output);
                      $('.reviewspace').append(output);
                      $('#REVIEW_CONTENT').val('');
-                     $('#REVIEW_GRADE').val('');
+                     $('#gradetext').val('');
+                     
                      $('#input_imgs').val('');
                      $('.imgs_wrap').empty();
                      infochange();
@@ -2786,15 +2856,12 @@
 				      }
 				   });            
 				}
-				event.preventDefault();     	   
-     	   
-     	   
-     	   
-     	   
-     	   
-     	   
+				event.preventDefault();     	 
      	   
         });         
+      
+
+      
    </script>
    
    </body>

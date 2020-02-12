@@ -79,5 +79,23 @@ public class ProductManagementServiceImpl implements ProductManagementService {
 		return ProductVO;
 	}
 
+	@Override
+	public int checkQnaCount(HashMap<String, Object> map) {
+		int count = 0;
+		ProductManagementMapper managementMapper = sqlSession.getMapper(ProductManagementMapper.class);
+		count = managementMapper.checkQnaCount(map);
+		
+		return count;
+	}
+	
+	@Override
+	public int checkReviewCount(HashMap<String, Object> map) {
+		int count = 0;
+		ProductManagementMapper managementMapper = sqlSession.getMapper(ProductManagementMapper.class);
+		count = managementMapper.checkReviewCount(map);
+		
+		return count;
+	}
+
 
 }

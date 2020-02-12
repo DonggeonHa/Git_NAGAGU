@@ -190,7 +190,14 @@
 	</delete>	
 
 	<select id="getProductVoOfWorkshop" parameterType="java.util.HashMap" resultMap="productResultMap">
-		SELECT * FROM PRODUCT WHERE PRODUCT_NUM = #{PRODUCT_NUM} AND PRODUCT_WORKSHOP = #{WORKSHOP_NUM}	
-				
+		SELECT * FROM PRODUCT WHERE PRODUCT_NUM = #{PRODUCT_NUM} AND PRODUCT_WORKSHOP = #{WORKSHOP_NUM}			
+	</select>	
+
+	<select id="checkQnaCount" parameterType="java.util.HashMap" resultType="int">
+		SELECT count(*) FROM PRODUCT_QNA WHERE QNA_PRODUCT = #{PRODUCT_NUM} 		
+	</select>	
+
+	<select id="checkReviewCount" parameterType="java.util.HashMap" resultType="int">
+		SELECT count(*) FROM PRODUCT_REVIEW WHERE REVIEW_PRODUCT = #{PRODUCT_NUM} 		
 	</select>	
 </mapper>

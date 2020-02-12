@@ -94,14 +94,44 @@ create sequence store_review_seq
 		SELECT count(*) FROM PRODUCT_REVIEW WHERE REVIEW_PRODUCT=#{PRODUCT_NUM} AND REVIEW_RE != 0
 	</select>
 	
-	<select id="getReviewList" parameterType="java.util.HashMap" resultMap="productReviewResultMap">
+	<select id="getReview_MemberList" parameterType="java.util.HashMap" resultMap="productReviewResultMap">
 		SELECT * FROM
 		(SELECT rownum rnum, REVIEW_NUM, REVIEW_MEMBER, REVIEW_PRODUCT, REVIEW_DATE, 
 				REVIEW_FILE, REVIEW_CONTENT, REVIEW_GRADE, REVIEW_RE
 		 FROM (SELECT * FROM PRODUCT_REVIEW WHERE REVIEW_PRODUCT=#{PRODUCT_NUM} AND REVIEW_RE=0 ORDER BY REVIEW_DATE DESC))
 		<![CDATA[ WHERE rnum >= #{startrow} AND rnum <= #{endrow} ]]>
 	</select>
-	
+
+	<select id="getReviewList" parameterType="java.util.HashMap" resultMap="productReviewResultMap">
+		SELECT * FROM
+		(SELECT rownum rnum, REVIEW_NUM, REVIEW_MEMBER, REVIEW_PRODUCT, REVIEW_DATE, 
+				REVIEW_FILE, REVIEW_CONTENT, REVIEW_GRADE, REVIEW_RE
+		 FROM (SELECT * FROM PRODUCT_REVIEW WHERE REVIEW_PRODUCT=#{PRODUCT_NUM} AND REVIEW_RE=0 ORDER BY REVIEW_DATE DESC))
+		<![CDATA[ WHERE rnum >= #{startrow} AND rnum <= #{endrow} ]]>
+			
+	</select>
+<!--  
+	<select id="getReviewList123" parameterType="java.util.HashMap" resultMap="productReviewResultMap">
+		
+
+		SELECT * 
+		FROM PRODUCT_REVIEW
+		WHERE REVIEW_PRODUCT=#{PRODUCT_NUM} AND REVIEW_RE=0 
+		ORDER BY REVIEW_DATE DESC
+		LIMIT #{startRow}, #{perPgLine}			
+	</select>
+-->
+
+<!--  
+
+			SELECT * 
+		FROM TB_PTFOLIO_BOARDS
+		WHERE 1 = 1 
+		ORDER BY BOARD_SORT, BOARD_DATE DESC, BOARD_SEQ DESC
+		LIMIT #{startRow}, #{perPgLine}
+-->
+
+
 	<select id="getReview_RE_List" parameterType="java.util.HashMap" resultMap="productReviewResultMap">
 		SELECT * FROM
 		(SELECT rownum rnum, REVIEW_NUM, REVIEW_MEMBER, REVIEW_PRODUCT, REVIEW_DATE, 

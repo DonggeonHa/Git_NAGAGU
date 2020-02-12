@@ -156,7 +156,6 @@ public class ProductManagementAjaxController {
 				for(int i=0; i<checkBoxArr.length; i++) {
 					map.put("PRODUCT_NUM", Integer.parseInt(checkBoxArr[i]));
 					System.out.println(i+"번째 PROUDCT_NUM = " + Integer.parseInt(checkBoxArr[i]));
-					//삭제하는 sql 짜주기
 					res = productManagementService.deleteProducts(map);
 					res = -1;
 				}				
@@ -189,18 +188,23 @@ public class ProductManagementAjaxController {
 		
 		ProductVO productVO = null;
 		productVO = productManagementService.getProductVoOfWorkshop(map);
-	
-		
+		String a =productVO.getPRODUCT_CATEGORY();
+		System.out.println("dsdf"+a);
+		ModelAndView mav = new ModelAndView();
 		String url = "";
+		int count = 0;
 		if(GO.equals("QNA")) {
 			//해당 상품글에 문의가 있는지 확인(없으면 따로 알람창 띄우기)
+			count = productManagementService.checkQnaCount(map);
 			url = "Mypage/Workshop/Review/qnaStore";
 		} else if (GO.equals("REVIEW")) {
+			count = productManagementService.checkReviewCount(map);
 			url = "Mypage/Workshop/Review/reviewStore";
 		}
 
-		ModelAndView mav = new ModelAndView();
+		
 		mav.setViewName(url);
+		mav.addObject("count", count);	//count가 0이면 VO는 존재하지만 그 상품 페이지에 qna는 없음
 		mav.addObject("productVO", productVO);
 		return mav;
 	}

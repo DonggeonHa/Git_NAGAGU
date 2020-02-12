@@ -93,7 +93,7 @@ div.col-md-4.wrap:hover {
 			<div class="row content">
 				<div class="col-md-4 wrap">
 					<a href="./productlist.pro?PRODUCT_CATEGORY=bookshelf">
-						<div class="imoji"></div>
+						<div class="imoji"><img src="https://cdn1.iconfinder.com/data/icons/furniture-line-modern-classy/512/bookshelf-512.png" ></div>
 						<div class="caption">책장</div>
 					</a>
 				</div>
