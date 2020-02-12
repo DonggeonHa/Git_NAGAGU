@@ -730,7 +730,7 @@
 												<div class="row">
 													<div class="col-2 justify-content-end name">닉네임</div>
 													<div class="col-8 justify-content-center"></div>
-													<div class="col-2 justify-content-center smallfont">날짜</div>
+													<div class="col-2 justify-content-center smallfont pl-1">날짜</div>
 												</div>
 												<div class="row"> <!-- 평점 -->
 													<div class="col-12 " style="font-size:0.7em; font-weight:bold;">
