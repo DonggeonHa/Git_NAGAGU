@@ -134,4 +134,8 @@
  		update ACADEMY set CLASS_STATUS = 0 where CLASS_NUMBER = #{CLASS_NUMBER}
  	</update>
  	
+ 	<select id="getclassDetail" parameterType="int" resultMap="classResultMap"> 
+ 		SELECT * FROM academy WHERE CLASS_NUMBER = #{CLASS_NUMBER}
+ 	</select>
+ 	
 </mapper>

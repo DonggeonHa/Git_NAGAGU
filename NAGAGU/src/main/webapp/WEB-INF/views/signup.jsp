@@ -136,24 +136,7 @@
     <div class="cbody">
         <div class="signup_form">
             <h1 class="signup_title">회원가입</h1>
-            <div class="singup_sns">
-                <p class="signup_sns_title">SNS계정으로 가입</p>
-                <ol class="signup_sns_list">
-                	<li class="signup_sns_list_item">
-                        <img src="${pageContext.request.contextPath}/resources/images/Main/Google_Plus.png" id="btn_google">
-                    </li>
-                    <li class="signup_sns_list_item">
-                    	<a href="${kakao_url}" style="text-decoration: none;">
-                        <img src="${pageContext.request.contextPath}/resources/images/Main/signup_kakaoIcon.png">
-                    	</a>
-                    </li>
-                    <li class="signup_sns_list_item">
-                    	<a href="${naver_url}" style="text-decoration: none;">
-                        <img src="https://testkj.s3.ap-northeast-2.amazonaws.com/images/login_btn_naver.PNG" style="border-radius: 10px;">
-                    	</a>
-                    </li>
-                </ol>
-            </div>
+            
             <form name="signup_form" action="memberInsert.ma" method="post">
                 <div class="signup_form_email">
                     <div class="signup_form_label">이메일</div>

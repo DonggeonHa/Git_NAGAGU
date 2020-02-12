@@ -527,7 +527,7 @@
 							<a href="" style="text-decoration: none; color: black;" class="sign-in-form-action-entry">비밀번호 찾기</a>
 						</div>
 						<div class="row justify-content-center" style="margin-top:30px; font-size: 11.5px; color: #757575;">
-						 	SNS계정으로 간편 로그인
+						 	SNS계정으로 간편 로그인 / 회원가입
 						</div>
 						<div class="row justify-content-center" style="margin-top: 10px; margin-bottom: 19px;">
 							<a href="" style="text-decoration: none;">

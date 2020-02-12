@@ -16,4 +16,6 @@ public interface AcademyManagementMapper {
 	
 	int deleteManagementMember(@Param("MY_CLASS_MEMBERNUM") int MY_CLASS_MEMBERNUM);
 	int updateClassStatus(@Param("CLASS_NUMBER") int CLASS_NUMBER);
+	
+	ClassVO getclassDetail(@Param("CLASS_NUMBER") int CLASS_NUMBER);
 }
