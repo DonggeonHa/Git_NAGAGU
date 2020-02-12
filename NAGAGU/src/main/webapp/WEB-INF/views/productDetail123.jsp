@@ -680,15 +680,15 @@
 							</div>
 							<div class="row">
 								<!-- 새로 -->
-								<div class="col-12 " style="font-size:0.7em; font-weight:bold;">
-								  <%
-								  Double rate = 20 * reviewVO.getREVIEW_GRADE();
-								  %>
-								  <%=reviewVO.getREVIEW_GRADE() %> &nbsp;
-								  <span class='star-rating'>
-								  <span style ="width:<%=rate %>%"></span>
-								   </span>
-								</div>
+						<div class="col-12 " style="font-size:0.7em; font-weight:bold;">
+						  <%
+						  Double rate = 20 * reviewVO.getREVIEW_GRADE();
+						  %>
+						  <%=reviewVO.getREVIEW_GRADE() %> &nbsp;
+						  <span class='star-rating'>
+						  <span style ="width:<%=rate %>%"></span>
+						   </span>
+						</div>
 							</div>
 						 <div class="row"> <!-- 사진 -->
 						    <div class="col-12">
