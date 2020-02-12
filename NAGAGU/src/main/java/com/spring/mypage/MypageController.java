@@ -107,11 +107,6 @@ public class MypageController {
 	public String MypageReviewProduct() {		
 		return "Mypage/review";
 	}
-	@RequestMapping(value = "/mypage_estimate.my")
-	public String MypageReviewClass() {
-		
-		return "Mypage/review_class";
-	}
 	@RequestMapping(value = "/other_mypage_more.my")
 	public String OtherMypageMore() {
 		

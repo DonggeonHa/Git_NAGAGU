@@ -504,16 +504,18 @@
 								output += '<td><b>' + item.offer_WORKSHOP + '</b></td>';
 								output += '<td id="offer_price_' + item.offer_NUM + '">' + offerPrice + '</td>';
 								if (login_state == 1) {
-									output += '<td><button value="' + item.offer_WORKSHOP + '" class="btn_note btn btn-outline-dark btn-sm">쪽지보내기</button></td>';
 									if (es_state == 1) {
 										if (item.offer_STATE == 1) {
+											output += '<td><button value="' + item.offer_WORKSHOP + '" class="btn_note btn btn-outline-dark btn-sm">쪽지보내기</button></td>';
 											output += '<td><button value="' + item.offer_NUM + '" class="btn_bid_cancel btn btn-outline-dark btn-sm">낙찰취소</button></td>';
 										} 
 										else {
 											output += '<td> - </td>';
+											output += '<td> - </td>';
 										}
 									}
 									else {
+										output += '<td><button value="' + item.offer_WORKSHOP + '" class="btn_note btn btn-outline-dark btn-sm">쪽지보내기</button></td>';
 										output += '<td><button value="' + item.offer_NUM + '" class="btn_bid btn btn-outline-dark btn-sm">낙찰하기</button></td>';
 									}
 								} 
@@ -621,15 +623,17 @@
 					var OFFER_NUM = $(this).attr('value');
 					location.href='offer_bid.es?OFFER_STATE=1&ESTIMATE_NUM=' + es_num + '&OFFER_NUM=' + OFFER_NUM;
 				}
+				return false;
 			});
 			
 			/* 낙찰 취소하기 */
 			
-			$(document).delegate('.btn_bid_cancle', 'click', function() {
-				if (confir("정말 취소하시겠습니까?")) {
+			$(document).delegate('.btn_bid_cancel', 'click', function() {
+				if (confirm("정말 취소하시겠습니까?")) {
 					var OFFER_NUM = $(this).attr('value');
-					location.href='offer_bid.es?OFFER_STATE=2&ESTIMATE_NUM=' + es_num + '&OFFER_NUM=' + OFFER_NUM;
+					location.href='offer_bid.es?OFFER_STATE=0&ESTIMATE_NUM=' + es_num + '&OFFER_NUM=' + OFFER_NUM;
 				}
+				return false;
 			});
 			
 			/* 견적 제시 */
