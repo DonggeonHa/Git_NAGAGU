@@ -14,12 +14,10 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.spring.academy.AcademyService;
 import com.spring.academy.ClassVO;
-import com.spring.community.PicsVO;
 import com.spring.member.MemberService;
 import com.spring.member.MemberVO;
 import com.spring.workshop.WorkShopMemberService;
 import com.spring.workshop.WorkShopMemberVO;
-import com.spring.workshop.WorkshopVO;
 
 @Controller
 public class MypageController {
