@@ -194,7 +194,7 @@
 				</div>
 			</div>
 			<div class="row text-center pt-1 pb-1 ">
-				<div class="col-md-4 d-flex justify-content-end title">지역</div>
+				<div class="col-md-4 d-flex justify-content-end title">배송희망지역</div>
 				<div class="col-md-8 d-flex justify-content-start">
 					<input type="text" id="ESTIMATE_AREA" name="ESTIMATE_AREA" size="50" maxlength="30" placeholder="배송을 원하는 지역을 입력하세요">
 				</div>

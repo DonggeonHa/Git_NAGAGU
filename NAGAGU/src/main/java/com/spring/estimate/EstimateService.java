@@ -22,7 +22,8 @@ public interface EstimateService {
 	public int offerModify (EstimateOfferVO vo);
 	public int offerDelete (int ESTIMATE_NUM, int OFFER_NUM);
 	public int offerBidSet (int OFFER_STATE, int OFFER_NUM);
-	public ArrayList<EstimateOrderVO> esOrderList(String ES_ORDER_BUYER);
+	public ArrayList<EstimateOrderVO> esOrderList(HashMap<String, Object> map);
 	public int esOrderInsert (EstimateOrderVO vo);
 	public int esOrderDelete (int ES_ORDER_NUM);
+	public int esOrderCount (HashMap<String, Object> map);
 }

@@ -48,10 +48,19 @@ public class EstimateServiceImpl implements EstimateService {
 	public int estimateDelete (int ESTIMATE_NUM) {
 		EstimateMapper mapper = sqlSession.getMapper(EstimateMapper.class);
 		int res = 0;
-		int delOffer = mapper.offerDeleteAll(ESTIMATE_NUM);
-		if (delOffer == 1) {
-			res = mapper.estimateDelete(ESTIMATE_NUM);
+		
+		HashMap <String, Object> map = new HashMap<String, Object>();
+		map.put("ESTIMATE_NUM", ESTIMATE_NUM);
+		int offerCnt = mapper.offerCount(map);
+		if (offerCnt > 0) {
+			int delOffer = mapper.offerDeleteAll(ESTIMATE_NUM);
+			
+			if (delOffer == 0) {
+				return 0;
+			}
 		}
+		
+		res = mapper.estimateDelete(ESTIMATE_NUM);
 		
 		return res;
 	}
@@ -253,9 +262,9 @@ public class EstimateServiceImpl implements EstimateService {
 	}
 	
 	@Override
-	public ArrayList<EstimateOrderVO> esOrderList(String ES_ORDER_BUYER) {
+	public ArrayList<EstimateOrderVO> esOrderList(HashMap<String, Object> map) {
 		EstimateMapper mapper = sqlSession.getMapper(EstimateMapper.class);
-		ArrayList<EstimateOrderVO> esOrderList = mapper.esOrderList(ES_ORDER_BUYER);
+		ArrayList<EstimateOrderVO> esOrderList = mapper.esOrderList(map);
 		
 		return esOrderList;
 	}
@@ -274,6 +283,14 @@ public class EstimateServiceImpl implements EstimateService {
 		int res = mapper.esOrderDelete(ESTIMATE_NUM);
 		
 		return res;
+	}
+	
+	@Override 
+	public int esOrderCount (HashMap<String, Object> map) {
+		EstimateMapper mapper = sqlSession.getMapper(EstimateMapper.class);
+		int cnt = mapper.esOrderCount(map);
+		
+		return cnt;
 	}
 
 }

@@ -6,13 +6,16 @@
 <%@ page import ="java.text.DecimalFormat" %>
 <%
 	String MEMBER_EMAIL = (String)session.getAttribute("MEMBER_EMAIL");
-	System.out.println(MEMBER_EMAIL);
 
 	ArrayList<EstimateOrderVO> eoList = (ArrayList<EstimateOrderVO>)request.getAttribute("esOrderList");
-	System.out.println(eoList.size());
 	
 	SimpleDateFormat df = new SimpleDateFormat("yyyy.MM.dd");
 	DecimalFormat dfmp = new DecimalFormat("#,###원");
+
+	int[] esCount;
+	for (int i=0; i<7; i++) {
+		esCount[i] = (int)request.getAttribute("cnt"+i);
+	}
 %>
 <!DOCTYPE html>
 <html>
@@ -64,7 +67,14 @@
 				font-size:0.8rem;
 				margin-bottom:5px;
 			}
-            
+			
+	        .no_list {   
+	            text-align:center;
+	            font-size:1.5rem;
+	            line-height:250px;
+	            height:250px;
+	        }
+	            
 		</style>
 	</head>
 	<body class="order-body">
@@ -156,6 +166,17 @@
 				</nav>
 				
 				<%
+				if (eoList.size() == 0) {
+				%>
+				<div class="tab-content" id="nav-tabContent">
+					<div class="tab-pane fade show active shadow p-3 mb5 bg-white" id="nav-waiting" role="tabpanel" aria-labelledby="nav-waiting-tab" style="padding-top: 30%;">
+						<div class="no_list">
+						주문한 수제 가구가 없습니다.
+						</div>
+					</div>
+				</div>
+				<%
+				} else {
 					for (int i=0; i<eoList.size(); i++) {
 						EstimateOrderVO vo = eoList.get(i);
 						int eoState = vo.getES_ORDER_STATE();
@@ -218,9 +239,9 @@
 										<button class="btn btn-outline-dark btn_modify">배송정보 수정</button>
 									<% } 
 										if (eoState < 4) {%>
-									    <button class="btn btn-outline-dark btn_cancel">주문취소</button>
+									    <button class="btn btn-outline-dark btn_cancel" es_num =<%=vo.getES_ORDER_ESTIMATE() %> offer_num=<%=vo.getES_ORDER_OFFER()%>>주문취소</button>
 									<% } else if (eoState >= 4) {%>
-										<button class="btn btn-outline-dark btn_return">A/S</button>
+										<button class="btn btn-outline-dark btn_return">>A/S</button>
 										<button class="btn btn-outline-dark btn_return">반품</button>
 									<% } %>
 							    	</td>
@@ -232,14 +253,16 @@
                 
                 <%
 					}
+				}
                 %>
 
 		<script>
-		
+			
 		$(document).delegate('.btn_cancel', 'click', function() {
 			if (confirm("정말 취소하시겠습니까?")) {
-				var OFFER_NUM = $(this).attr('value');
-				location.href='offer_bid.es?OFFER_STATE=3&ESTIMATE_NUM=' + es_num + '&OFFER_NUM=' + OFFER_NUM + '&redirect="mypage_estimate.my"';
+				var OFFER_NUM = $(this).attr('offer_num');
+				var ES_NUM = $(this).attr('es_num');
+				location.href='offer_bid.es?OFFER_STATE=3&ESTIMATE_NUM=' + ES_NUM + '&OFFER_NUM=' + OFFER_NUM + '&redirect=mypage_estimate.my';
 			}
 			return false;
 		})
