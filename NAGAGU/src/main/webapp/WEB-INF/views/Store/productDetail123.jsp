@@ -22,13 +22,26 @@
 	System.out.println("MEMBER_NUM="+MEMBER_NUM);
 	System.out.println("MEMBER_PICTURE="+MEMBER_PICTURE);
 	System.out.println("MEMBER_NICK="+MEMBER_NICK);
-	
+
+	//WORKSHOP이 댓글 달 때 필요
+	String WORKSHOP_PICTURE = (String)session.getAttribute("WORKSHOP_PICTURE");
+	String WORKSHOP_NAME = (String)session.getAttribute("WORKSHOP_NAME");
+
+	System.out.println("WORKSHOP_PICTURE="+WORKSHOP_PICTURE);
+	System.out.println("WORKSHOP_NAME="+WORKSHOP_NAME);	
 
 	//로그인 상태 체크 위한
-	String WORKSHOP_CEO_NAME = (String)session.getAttribute("WORKSHOP_CEO_NAME");
-	String MEMBER_EMAIL = (String)session.getAttribute("MEMBER_EMAIL");
+	Integer MEMBER_STATUS = 100;	//비로그인시 100
+	if(MEMBER_NUM != null) {
+		MEMBER_STATUS = (Integer)session.getAttribute("MEMBER_STATUS");		
+	}
+	Integer WORKSHOP_STATUS = 100;	//비로그인시 100
+	if(WORKSHOP_NAME != null) {
+		WORKSHOP_STATUS = (Integer)session.getAttribute("WORKSHOP_STATUS");		
+	}
 
-	System.out.println("WORKSHOP_CEO_NAME="+WORKSHOP_CEO_NAME);
+	System.out.println("MEMBER_STATUS="+MEMBER_STATUS);
+	System.out.println("WORKSHOP_STATUS="+WORKSHOP_STATUS);
 	
 	//(QNA)글쓴이만 답글 버튼이 보인다. 글쓴이인지 체크하기 위해 이 글의 WORKSHOP_NUM 받아옴
 	int WorkshopMatchingNumber = (int)request.getAttribute("WorkshopMatchingNumber");
@@ -36,12 +49,6 @@
 
 	System.out.println("WotkshopMatchingNumber="+WorkshopMatchingNumber);
 
-	//WORKSHOP이 댓글 달 때 필요
-	String WORKSHOP_PICTURE = (String)session.getAttribute("WORKSHOP_PICTURE");
-	String WORKSHOP_NAME = (String)session.getAttribute("WORKSHOP_NAME");
-
-	System.out.println("WORKSHOP_PICTURE="+WORKSHOP_PICTURE);
-	System.out.println("WORKSHOP_NAME="+WORKSHOP_NAME);
 
 	
 	//상품상세 관련
@@ -109,6 +116,7 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 		<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
 		<script src="https://code.jquery.com/jquery-3.4.1.js" integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU=" crossorigin="anonymous"></script>
+<%-- 		<script src="<c:url value="/resources/js/Store/productdetail.js"/>"></script>		 --%>
 		<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
 		<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
 		<link href="https://use.fontawesome.com/releases/v5.0.6/css/all.css" rel="stylesheet">
@@ -234,6 +242,52 @@
 		   background-color: #EF902E;
 		}
 		
+		/*별점주기*/
+		.star-rating { 
+			width:52px; 
+		}
+		.star-rating,.star-rating span { 
+			display:inline-block; height:10px; overflow:hidden; background:url('${pageContext.request.contextPath}/resources/images/star_2.png') no-repeat; 
+		}
+		.star-rating span{ 
+			background-position:left bottom; line-height:0; vertical-align:top; 
+		}   		
+		
+		/*리뷰 이미지 호버*/   
+		.img {
+			width:100px;
+		}
+		.review_img_modify {
+			width:100px;
+			height:100px;         
+		}      
+		.hover-image {
+			transition: .5s ease;
+			opacity: 0;
+			position:relative;
+			top: 7%;
+			left: -8.5%;
+			transform: translate(-50%, -50%);
+			-ms-transform: translate(-50%, -50%);
+		}
+		.img:hover .img {
+			opacity: 0.3;
+		}
+		.img:hover #test {
+			opacity: 1;
+		}            
+     
+		.addlike {
+			background-color:#23272B !important;
+			color:white !important; 
+		}
+		.row h6{
+			margin-left:30px; 
+		}
+		.row h6 a,.row h6 a:link,.row h6 a:hover{
+			text-decoration: none !important;
+			color: black !important;
+		}		
 		/*input type=file css*/
 		.file_input label {
 			position:relative;
@@ -243,8 +297,8 @@
 			overflow:hidden;
 			width:80px;
 			height:30px;
-			background:#F1F1F1;
-			color:color:black;
+			background:RGBA(204, 204, 204, 0.5);
+			color:black;
 			text-align:center;
 			line-height:30px;
 			margin-bottom:0;
@@ -268,8 +322,20 @@
 			padding:0;
 			border:0;
 		}
+		
+		/*댓글달기 버튼*/
+		.ReviewformSection {
+			display:none;		
+		}
+		
+		.imgs_wrap {
+			display:none;
+		}
 
-
+		.review_img {
+			width:100px;
+			height:100px;
+		}
 	</style>
 
 	<script>
@@ -433,214 +499,291 @@
 				
 					<!-- ajax 이용해 뿌려주기 (미완성)-->		
 					<div class="ReviewListSection22"></div>
-					<br/><br/><br/><br/><br/>
+					<br/><br/><br/>
 		
 		
-					<div class="ReviewSection"> <!-- ReviewSection start (리뷰 전체 영역) -->
-						<div class="ReviewSection_wrap">
-							<div class="ReviewformSection" style="padding:8px 0; border-bottom:1px solid gray;"> <!-- 리뷰 작성 영역 -->
-								<div class="row justify-content-center">
-									<div class="col-1 justify-content-end">
-										프사
-									</div>
-									<div class="col-11">
-										<div class="row pb-1">
-											<div class="col-2 justify-content-end name">닉네임</div>
-											<div class="col-8 justify-content-center"></div>
-											<div class="col-2 justify-content-center smallfont"></div>
-										</div>
-										<div class="row pb-1"> <!-- 평점 -->
-											<div class="col-3 pr-0">
-												<img src="${pageContext.request.contextPath}/resources/images/star1.png" alt="" width="15px" height="15px" >
-												&nbsp;
-												<select name="REVIEW_GRADE" id="REVIEW_GRADE" class=" " style="width=15px;" >
-													<option value="0">0</option>
-													<option value="0.5">0.5</option>
-													<option value="1.0">1.0</option>
-													<option value="1.5">1.5</option>
-													<option value="2.0">2.0</option>
-													<option value="2.5">2.5</option>
-													<option value="3.0">3.0</option>
-													<option value="3.5">3.5</option>
-													<option value="4.0">4.0</option>
-													<option value="4.5">5.5</option>
-													<option value="5.0">5.0</option>
-												</select>											
-											</div>
-											<div class="9"></div>
-										</div>
-										<div class="row"> <!-- 파일 -->
-											<div class="col-6">
-												<input type="file">
-											</div>
-											<div class="col-6"></div>
-											
-										</div>
-										<div class="row">
-											<div class="col-12">
-												<div class="file_input">
-												    <label>
-												        사진 업로드
-												        <input type="file" multiple="multiple" name="REVIEW_FILE" id="input_imgs">
-												    </label>
-												    <input type="text" readonly="readonly" title="File Route" value="선택된 파일이 없습니다">
-												</div>			
-											</div>
-										</div>
-										<div class="row">
-											<div class="col-12 imgs_wrap">
-												<img id="inputimg" >
-											</div>
-										</div>
-										<div class="row">	<!-- 내용 -->
-											<div class="col">
-												내용 insertform
-											</div>	
-										</div>
-										<div class="row"> <!-- 답글, 수정, 삭제 -->
-											<div class="col-2 justify-content-center" style="font-size:0.7em; font-weight:bold;"></div>
-											<div class="col-8 justify-content-center"></div>
-											<div class="col-2 justify-content-center" style="font-size:0.7em; font-weight:bold;">
-												<a class="">작성</a> &nbsp;
-												<a class="">취소</a>
-											</div>
-										</div>
-									</div>
-								</div>
-							</div> <!-- 리뷰 작성영역 끝 -->
-							
-							<div class="ReviewtableSection pb-2" style="padding-top:8px; padding-bottom:8px; "> <!-- 리뷰 테이블 : insert시 삽입되는 영역 + List영역(+답글)-->
-								<div class="reviewInsertSpace pb-2" > <!-- 작성한 리뷰가 들어오는 영역 -->
-								
-								</div>
-								<div class="ReviewList_Sum"> <!-- 리뷰 리스트들(리뷰+리뷰답글) -->
-									<div class="ReviewList pb-3"> <!-- 리뷰영역 -->
-										<div class="row justify-content-center">
-											<div class="col-1 justify-content-end">
-												프사
-											</div>
-											<div class="col-11">
-												<div class="row pb-1">
-													<div class="col-2 justify-content-end name">닉네임</div>
-													<div class="col-8 justify-content-center"></div>
-													<div class="col-2 justify-content-center smallfont">날짜</div>
-												</div>
-												<div class="row pb-2"> <!-- 평점 -->
-													<div class="col-12 " style="font-size:0.7em; font-weight:bold;">
-														평점
-													</div>
-												</div>
-												<div class="row pb-2"> <!-- 평점 hidden -->
-													<div class="col-12 " style="font-size:0.7em; font-weight:bold;">
-														평점
-													</div>
-												</div>
-												<div class="row pb-2">	<!-- 내용 -->
-													<div class="col-11 pr-0">
-														얘는 답글이 없음 ㅎㅎㅎㅎ 리스트 출력-내용1 리스트 출력-내용1 리스트 출력-내용1 리스트 출력-내용1 리스트 출력-내용1 리스트 출력-내용1 리스트 출력-내용1 리스트 출력-내용1 리스트 출력-내용1 리스트 출력-내용1 리스트 출력-내용1 리스트 출력-내용1 
-													</div>	
-												</div>
-												<div class="row pb-2">	<!-- 수정폼 대비 -->
-													<div class="col-11 pr-0">
-														<textarea rows="2" name="REVIEW_CONTENT" class="col-12 pl-0 pr-0" 
-															id="qna_re_content">답글폼 만들기 답글폼 만들기 답글폼 만들기 답글폼 만들기 답글폼 만들기 답글폼 만들기 하하하하하하하하하하하하</textarea>
-													</div>	
-												</div>
-												<div class="row"> <!-- 답글, 수정, 삭제 -->
-													<div class="col-2 justify-content-center" style="font-size:0.7em; font-weight:bold;">답글</div>
-													<div class="col-8 justify-content-center"></div>
-													<div class="col-2 justify-content-center" style="font-size:0.7em; font-weight:bold;">
-														<a class="">수정</a> &nbsp;
-														<a class="">삭제</a>
-													</div>
-												</div>
-											</div>
-										</div>
-									</div>
-									<!-- 선 -->
-									<div class="ReviewList pb-2" style="border-top:1px solid gray;"> <!-- 리뷰영역 -->
-										<div class="row justify-content-center">
-											<div class="col-1 justify-content-end">
-												프사
-											</div>
-											<div class="col-11">
-												<div class="row">
-													<div class="col-2 justify-content-end name">닉네임</div>
-													<div class="col-8 justify-content-center"></div>
-													<div class="col-2 justify-content-center smallfont">날짜</div>
-												</div>
-												<div class="row"> <!-- 평점 -->
-													<div class="col-12 " style="font-size:0.7em; font-weight:bold;">
-														평점
-													</div>
-												</div>
-												<div class="row">	<!-- 내용 -->
-													<div class="col">
-														내용2
-													</div>	
-												</div>
-												<div class="row"> <!-- 답글, 수정, 삭제 -->
-													<div class="col-2 justify-content-center" style="font-size:0.7em; font-weight:bold;">답글</div>
-													<div class="col-8 justify-content-center"></div>
-													<div class="col-2 justify-content-center" style="font-size:0.7em; font-weight:bold;">
-														<a class="">수정</a> &nbsp;
-														<a class="">삭제</a>
-													</div>
-												</div>
-											</div>
-										</div>
-									</div>
-									<div class="Review_ReplyList"> <!-- 리뷰 답글 영역 -->
-										<div class="row justify-content-center">
-											<div class="col-1"></div>
-											<div class="col-1">프사</div>
-											<div class="col-10">
-												<div class="row">
-													<div class="col-2 justify-content-end name">닉네임</div>
-													<div class="col-8 justify-content-center"></div>
-													<div class="col-2 justify-content-center smallfont pl-1">날짜</div>
-												</div>
-												<div class="row"> <!-- 평점 -->
-													<div class="col-12 " style="font-size:0.7em; font-weight:bold;">
-														
-													</div>
-												</div>
-												<div class="row">	<!-- 내용 -->
-													<div class="col">
-														답글내용
-													</div>	
-												</div>
-												<div class="row"> <!-- 답글, 수정, 삭제 -->
-													<div class="col-2 justify-content-center" style="font-size:0.7em; font-weight:bold;"></div>
-													<div class="col-8 justify-content-center"></div>
-													<div class="col-2 justify-content-center pl-1" style="font-size:0.7em; font-weight:bold;">
-														<a class="">수정</a> &nbsp;
-														<a class="">삭제</a>
-													</div>
-												</div>
-													
-											</div>
-										</div>
-									</div>
-									
-									
-									
-									
-									
-									
-									
-									
-									
-									
-											
-									
-									
-									
-									
-									
-								</div>
-							</div>
+					<div class="ReviewSection"> <!-- ReviewSection start (리뷰 전체 영역) : 하나 -->
+						<div class="row justify-content-center review_btn_section pt-3 pb-3"> <!-- 리뷰 댓글달기 버튼 -->
+							<button class="btn btn-dark btn-sm review_btn">댓글 달기</button>
 						</div>
+						<div class="ReviewSection_wrap pb-1"> <!-- wrap영역(리뷰 전체 영역 wrap): 하나 -->
+							<form id="reviewForm" name="REVIEW_CONTENT" enctype="multipart/form-data"> <!-- 리뷰 작성 폼 영역 : 하나 -->
+								<div class="ReviewformSection" style="padding:8px 0; border-bottom:1px solid gray;"> 
+									<div class="row justify-content-center">
+										<div class="col-1 justify-content-end">
+											<img src="<%=MEMBER_PICTURE %>" alt="" class="rounded-circle">
+										</div>
+										<div class="col-11">
+											<div class="row pb-1">
+												<div class="col-2 justify-content-end name"><%=MEMBER_NICK %></div>
+												<div class="col-8 justify-content-center"></div>
+												<div class="col-2 justify-content-center smallfont"></div>
+											</div>
+											<div class="row pb-1"> <!-- 평점 -->
+												<div class="col-3 pr-0">
+													<img src="${pageContext.request.contextPath}/resources/images/star1.png" alt="" width="15px" height="15px" >
+													&nbsp;
+													<select name="REVIEW_GRADE" id="REVIEW_GRADE" style="width=15px;" >
+														<option value="0">0</option>
+														<option value="0.5">0.5</option>
+														<option value="1.0">1.0</option>
+														<option value="1.5">1.5</option>
+														<option value="2.0">2.0</option>
+														<option value="2.5">2.5</option>
+														<option value="3.0">3.0</option>
+														<option value="3.5">3.5</option>
+														<option value="4.0">4.0</option>
+														<option value="4.5">5.5</option>
+														<option value="5.0">5.0</option>
+													</select>											
+												</div>
+												<div class="9"></div>
+											</div>
+											<div class="row pb-1"> <!-- 파일 -->
+												<div class="col-12">
+													<div class="file_input">
+													    <label>
+													        사진 업로드
+													        <input type="file" multiple="multiple" name="REVIEW_FILE" id="input_imgs">
+													    </label>
+													    <input type="text" readonly="readonly" title="File Route" value="선택된 파일이 없습니다">
+													</div>			
+												</div>
+											</div>
+											<div class="row pb-1">
+												<div class="col-12 imgs_wrap">
+													<img id="inputimg" >
+												</div>
+											</div>
+											<div class="row pb-1">	<!-- 내용 textarea -->
+												<div class="col-11 pr-0">
+													<textarea rows="3" name="REVIEW_CONTENT" class="col-12 pl-0 pr-0" 
+														id=""></textarea>
+												</div>	
+											</div>
+											<div class="row"> <!-- 답글, 수정, 삭제 -->
+												<div class="col-2 justify-content-center" style="font-size:0.7em; font-weight:bold;"></div>
+												<div class="col-8 justify-content-center"></div>
+												<div class="col-2 justify-content-center" style="font-size:0.7em; font-weight:bold;">
+													<a class="" style="cursor: pointer;">작성</a> &nbsp;
+													<a class="formCancel" value="reviewForm" style="cursor: pointer;">취소</a>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div> 
+							</form> <!-- 리뷰 작성영역(리뷰 작성 폼) 끝 -->
+							<div class="ReviewtableSection pb-2"> <!-- 리뷰 테이블 : insert시 삽입되는 영역 + List영역(+답글) : 하나-->
+								<div class="reviewInsertSpace pb-2" > <!-- 작성한 리뷰가 들어오는 영역 : 하나 -->
+									리뷰 들어오는 곳
+								</div>
+								<div class="ReviewList_Sum_section"> <!-- 리뷰 리스트들(리뷰+리뷰답글) 영역 : 하나 -->
+									<!-- 반복 시작 -->
+									<!-- ReviewList_Sum id값 주기 -->
+									<div class="ReviewList_Sum" style="border-bottom:1px solid gray;"> <!--ReviewList_Sum: 리뷰(하나)+리뷰 답글(여러개)이 묶여서 반복되는 영역 -->
+										<!-- ReviewList id값 주기 -->
+										<div class="ReviewList pb-3" style="padding-top:8px; padding-bottom:8px;"> <!-- 반복되는 리뷰영역 : 반복 -->
+											<div class="row justify-content-center">
+												<div class="col-1 justify-content-end">
+													프사
+												</div>
+												<div class="col-11">
+													<div class="row pb-1">
+														<div class="col-2 justify-content-end name">닉네임</div>
+														<div class="col-8 justify-content-center"></div>
+														<div class="col-2 justify-content-center smallfont">날짜</div>
+													</div>
+													<div class="row pb-2" id="beforeGrade1"> <!-- 수정 전 평점(원래 평점) -->
+														<div class="col-12" style="font-size:0.7em; font-weight:bold;">
+															0.5 &nbsp;
+															<span class='star-rating'>
+																<span style ="width:10%"></span>
+															</span>
+														</div>
+													</div>					
+													<div class="row afterGrade pb-2" id="afterGrade1" style="display:none;"> <!-- 수정 후 평점 (수정할 평점) -->
+														<div class="col-3 pr-0">
+															<img src="${pageContext.request.contextPath}/resources/images/star1.png" alt="" width="15px" height="15px" >
+															&nbsp;
+															<select name="REVIEW_GRADE" id="REVIEW_GRADE1" style="width=15px;" >
+																<option value="0">0</option>
+																<option value="0.5">0.5</option>
+																<option value="1.0">1.0</option>
+																<option value="1.5">1.5</option>
+																<option value="2.0">2.0</option>
+																<option value="2.5">2.5</option>
+																<option value="3.0">3.0</option>
+																<option value="3.5">3.5</option>
+																<option value="4.0">4.0</option>
+																<option value="4.5">5.5</option>
+																<option value="5.0">5.0</option>
+															</select>											
+														</div>
+														<div class="9"></div>
+													</div>
+													<div class="row pb-2"> <!-- 사진 -->
+														<div class="col-12">														       
+															<img src="/productupload/image/2b9b8321164b4ce9aaf0f3c7cbf00ee3.jpg" class="review_img">   &nbsp;&nbsp; 
+															<img src="/productupload/image/2b9b8321164b4ce9aaf0f3c7cbf00ee3.jpg" class="review_img">   &nbsp;&nbsp; 
+															<img src="/productupload/image/2b9b8321164b4ce9aaf0f3c7cbf00ee3.jpg" class="review_img">   &nbsp;&nbsp; 
+														</div>
+													</div>     													
+													<div class="row pb-2" id="beforeContent1">	<!-- 내용 -->
+														<div class="col-11 pr-0">
+															얘는 답글이 없음 ㅎㅎㅎㅎ 리스트 출력-내용1 리스트 출력-내용1 리스트 출력-내용1 리스트 출력-내용1 리스트 출력-내용1 리스트 출력-내용1 리스트 출력-내용1 리스트 출력-내용1 리스트 출력-내용1 리스트 출력-내용1 리스트 출력-내용1 리스트 출력-내용1 
+														</div>	
+													</div>
+													<div class="row afterContent" id="afterContent1" style="display:none;">	<!-- 수정폼 대비 -->
+														<div class="col-11 pr-0">
+															<input type="hidden" name="REVIEW_NUM" value="1">
+															<textarea rows="2" name="REVIEW_CONTENT" class="col-12 pl-0 pr-0" 
+																id="qna_re_content">답글폼 만들기 답글폼 만들기 답글폼 만들기 답글폼 만들기 답글폼 만들기 답글폼 만들기 하하하하하하하하하하하하</textarea>
+														</div>	
+													</div>
+													<div class="row"> <!-- 답글, 수정, 삭제 -->
+														<div class="col-2 justify-content-center" style="font-size:0.7em; font-weight:bold;">답글</div>
+														<div class="col-8 justify-content-center"></div>
+														<div class="col-2 justify-content-center" style="font-size:0.7em; font-weight:bold;">
+															<input type="hidden" name="REVIEW_NUM" value="1">
+															<a class="modifyReview" value="" style="cursor: pointer;">수정</a> &nbsp;
+															<a class="deleteReview" value="" style="cursor: pointer;">삭제</a>
+														</div>
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>	<!-- ReviewList_Sum 1 end -->
+									<!-- 선 -->
+									
+									<div class="ReviewList_Sum" style="border-bottom:1px solid gray;"> <!--ReviewList_Sum: 리뷰(하나)+리뷰 답글(여러개)이 묶여서 반복되는 영역 -->
+										<div class="ReviewList pb-3" style="padding-top:8px; padding-bottom:8px;"> <!-- 리뷰영역 2 -->
+											<div class="row justify-content-center">
+												<div class="col-1 justify-content-end">
+													프사
+												</div>
+												<div class="col-11">
+													<div class="row pb-1">
+														<div class="col-2 justify-content-end name">닉네임</div>
+														<div class="col-8 justify-content-center"></div>
+														<div class="col-2 justify-content-center smallfont">날짜</div>
+													</div>
+													<div class="row pb-2"> <!-- 평점 -->
+														<div class="col-12 " style="font-size:0.7em; font-weight:bold;">
+															평점
+														</div>
+													</div>
+													<div class="row pb-2"> <!-- 평점 hidden -->
+														<div class="col-12 " style="font-size:0.7em; font-weight:bold;">
+															평점 수정
+														</div>
+													</div>
+													<div class="row pb-2">	<!-- 내용 -->
+														<div class="col-11 pr-0">
+															얘는 답글이 없음 ㅎㅎㅎㅎ 리스트 출력-내용1 리스트 출력-내용1 리스트 출력-내용1 리스트 출력-내용1 리스트 출력-내용1 리스트 출력-내용1 리스트 출력-내용1 리스트 출력-내용1 리스트 출력-내용1 리스트 출력-내용1 리스트 출력-내용1 리스트 출력-내용1 
+														</div>	
+													</div>
+													<div class="row">	<!-- 수정폼 대비 -->
+														<div class="col-11 pr-0">
+															<textarea rows="2" name="REVIEW_CONTENT" class="col-12 pl-0 pr-0" 
+																id="qna_re_content">답글폼 만들기 답글폼 만들기 답글폼 만들기 답글폼 만들기 답글폼 만들기 답글폼 만들기 하하하하하하하하하하하하</textarea>
+														</div>	
+													</div>
+													<div class="row"> <!-- 답글, 수정, 삭제 -->
+														<div class="col-2 justify-content-center" style="font-size:0.7em; font-weight:bold;">답글</div>
+														<div class="col-8 justify-content-center"></div>
+														<div class="col-2 justify-content-center" style="font-size:0.7em; font-weight:bold;">
+															<a class="">수정</a> &nbsp;
+															<a class="">삭제</a>
+														</div>
+													</div>
+												</div>
+											</div>
+										</div>
+										<div class="Review_ReplyList"> <!-- 리뷰 답글 영역 -->
+											<div class="Review_Reply_repeat pb-2"> <!-- 리뷰 답글이 반복되는 영역(review_re) -->
+												<div class="row justify-content-center">
+													<div class="col-1"></div>
+													<div class="col-1">프사</div>
+													<div class="col-10">
+														<div class="row">
+															<div class="col-2 justify-content-end name">닉네임</div>
+															<div class="col-8 justify-content-center"></div>
+															<div class="col-2 justify-content-center smallfont pl-1">날짜</div>
+														</div>
+														<div class="row"> <!-- 평점 -->
+															<div class="col-12 " style="font-size:0.7em; font-weight:bold;">
+																
+															</div>
+														</div>
+														<div class="row">	<!-- 내용 -->
+															<div class="col">
+																답글내용
+															</div>	
+														</div>
+														<div class="row"> <!-- 답글, 수정, 삭제 -->
+															<div class="col-2 justify-content-center" style="font-size:0.7em; font-weight:bold;"></div>
+															<div class="col-8 justify-content-center"></div>
+															<div class="col-2 justify-content-center pl-1" style="font-size:0.7em; font-weight:bold;">
+																<a class="">수정</a> &nbsp;
+																<a class="">삭제</a>
+															</div>
+														</div>
+													</div>
+												</div>
+											</div>
+											
+											<div class="Review_Reply_repeat pb-2"> <!-- 리뷰 답글이 반복되는 영역(review_re) 2-->
+												<div class="row justify-content-center">
+													<div class="col-1"></div>
+													<div class="col-1">프사</div>
+													<div class="col-10">
+														<div class="row">
+															<div class="col-2 justify-content-end name">닉네임</div>
+															<div class="col-8 justify-content-center"></div>
+															<div class="col-2 justify-content-center smallfont pl-1">날짜</div>
+														</div>
+														<div class="row"> <!-- 평점 -->
+															<div class="col-12 " style="font-size:0.7em; font-weight:bold;">
+																
+															</div>
+														</div>
+														<div class="row">	<!-- 내용 -->
+															<div class="col">
+																답글내용
+															</div>	
+														</div>
+														<div class="row"> <!-- 답글, 수정, 삭제 -->
+															<div class="col-2 justify-content-center" style="font-size:0.7em; font-weight:bold;"></div>
+															<div class="col-8 justify-content-center"></div>
+															<div class="col-2 justify-content-center pl-1" style="font-size:0.7em; font-weight:bold;">
+																<a class="">수정</a> &nbsp;
+																<a class="">삭제</a>
+															</div>
+														</div>
+													</div>
+												</div>
+											</div>												
+												
+										</div>
+									</div>
+									
+									
+									
+									
+									
+									
+									
+									
+									
+											
+									
+									
+									
+									
+									
+								</div> <!-- ReviewList_Sum_section end -->
+							</div> <!-- ReviewtableSection end -->
+						</div><!-- ReviewSection_wrap end -->
 					</div>	<!-- ReviewSection end -->
 				
 				
@@ -651,44 +794,6 @@
 				
 				
 				
-					<hr style="border:1px solid gray;"></hr>
-					<!-- 리뷰 등록하기 -->      
-					<br/>
-					<div class="review_add_section justify-content-center"  style="width: 100%; margin: 0 auto;">
-					             <div class="row justify-content-center pt-3 pb-3">
-					                <button class="btn btn-dark btn-sm review_add">댓글 달기</button>
-					             </div>
-					<form id="reviewform" enctype="multipart/form-data">
-						<input type="hidden" name="REVIEW_PRODUCT" value="<%=PRODUCT_NUM %>">
-					<div class="review_hidden">
-						<div class="review_grade" >
-							<img src="${pageContext.request.contextPath}/resources/images/star1.png" alt="" width="15px" height="15px"> 
-					&nbsp; : &nbsp; 
-					<input type="text" id="gradetext" name="REVIEW_GRADE" size="3" style="height:90%;"> &nbsp;/5.0
-					</div>
-					<div class="review_file_upload pb-2"  >
-						<div class="row pt-2 pb-2" >
-							<div class="input_wrap">
-								<input multiple="multiple" type="file" name="REVIEW_FILE" id="input_imgs">
-							</div>
-						</div>
-						<div>
-							<div class="imgs_wrap">
-								<img id="inputimg" >
-							</div>
-						</div>
-					</div>
-					<div class="row justify-content-center pb-3">
-						<textarea name="REVIEW_CONTENT" id = "REVIEW_CONTENT" placeholder="후기를 작성해주세요!" cols="90%" rows="5"></textarea>
-					</div>
-					<div class=" row justify-content-center pb-3">
-						<button class="btn btn-dark btn-sm" id="review_insert" style="cursor: pointer;">등록</button>
-								</div>
-							</div>
-						</form>   
-					</div>         
-					<!-- 리뷰 등록 끝 -->				
-	
 					<!-- 리뷰 테이블 끝 -->
 			
 					<span id="t3"></span>
@@ -774,13 +879,13 @@
 								</table>
 							</div>
 							<div class="btnArea text-center">
-							<% if(WORKSHOP_CEO_NAME == null && MEMBER_EMAIL == null) { %> <%-- 비로그인일 때 --%>
+							<% if(WORKSHOP_STATUS == null && MEMBER_STATUS == null) { %> <%-- 비로그인일 때 --%>
 								<button type="button" class="btn btn-outline-dark btn-md" data-toggle="modal" data-target="#exampleModalCenter">
 									<input type="hidden" name = "PRODUCT_NUM" value="<%=PRODUCT_NUM %>">♥
 								</button>	
 								<button type="button" class="btn btn-outline-dark btn-md" data-toggle="modal" data-target="#exampleModalCenter" >장바구니</button>
 								<button type="button" class="btn btn-outline-dark btn-md" data-toggle="modal" data-target="#exampleModalCenter" >바로구매</button>
-							<% } else if(WORKSHOP_CEO_NAME != null){ %>	<%-- 공방 로그인일 때(하트 안 보임) --%>
+							<% } else if(WORKSHOP_STATUS != null){ %>	<%-- 공방 로그인일 때(하트 안 보임) --%>
 								<a href="classreservation.ac" class="btn btn-outline-dark btn-md disabled" role="button" aria-pressed="true">장바구니</a>
 								<a href="#" class="btn btn-outline-dark btn-md disabled" role="button" aria-pressed="true" >바로구매</a>
 							<% } else { %> <%-- 일반회원일때 --%>
@@ -802,31 +907,191 @@
 		
 		
 	<script>
-	function ReviewList() {
+		function ReviewList() {
+			
+			
+			
+		};
+		
+//취소버튼들
+		$(document).on("click",".formCancel",function(event){
+			console.log(this)
+			console.log($(this).attr('value'))
+			var formType = $(this).attr('value');
+			
+			
+			if(formType=='reviewForm') {
+				$('.review_btn').html('댓글 달기');
+ 				$(".ReviewformSection").css('display','none');
+				$('#reviewForm').each(function() {  
+					this.reset();  
+				});  
+				$('.imgs_wrap').empty();
+				$(".review_btn_section").show();
+			}
+			event.preventDefault();	
+		});
+
+//Review 등록하기----------------------------------------------------------------------------------------------------	    
+
+		//Review 등록하기 버튼
+		$(document).on("click",".review_btn",function(event){
+			if(<%=MEMBER_STATUS%> == 100){
+				if(<%=WORKSHOP_STATUS%> == 100) {
+					alert('로그인 해주세요!');					
+				} else {
+					alert('리뷰는 회원만 작성 가능합니다.');
+				}
+				return;
+			}
+			
+			if($(this).html() == '댓글 달기') { //댓글달기이면 hidden구역 보이고 버튼은 닫기로 바뀜      
+				$(".ReviewformSection").css('display','block');
+				$(this).html('닫기');   
+				$(".review_btn_section").css('display','none');	//댓글달기버튼영역 숨김
+			} else { //버튼이 닫기이면 hidden 구역이 닫히고 버튼은 댓글 달기로 바뀜
+				$(this).html('댓글 달기');
+				$(".ReviewformSection").css('display','none');
+			}   
+		})
 		
 		
 		
-	};
+		
+		
+		
+		
+		$('.file_input input[type=file]').change(function() {
+			var fileName = $(this).val();
+			var fileCount = $(this).get(0).files.length;
+			if($(this).get(0).files.length == 1){
+				$('.file_input input[type=text]').val(fileName);
+			}
+			else {
+				$('.file_input input[type=text]').val('파일 '+fileCount+'개');
+			}
+		});
 	
-	
-	
-	
-	$('.file_input input[type=file]').change(function() {
-	    var fileName = $(this).val();
-	    var fileCount = $(this).get(0).files.length;
-	    if($(this).get(0).files.length == 1){
-	        $('.file_input input[type=text]').val(fileName);
-	    }
-	    else {
-	        $('.file_input input[type=text]').val('파일 '+fileCount+'개');
-	    }
-	});
+		
+		
+		//-----------------------------------review insert
+		//다중이미지 업로드
+		$('#input_imgs').on("change", handleImgFileSelect);
+		
+		
+		/*다중 이미지 업로드*/
+		//이미지 정보들을 담을 배열
+		var sel_files= [];   
+    
+		function handleImgFileSelect(e) {
+			$('.imgs_wrap').css('display','block');
+			//이미지 정보들을 초기화
+			sel_files = [];
+			$('.imgs_wrap').empty();
+			
+			var files = e.target.files;
+			var filesArr = Array.prototype.slice.call(files);
+			
+			var index = 0;
+			filesArr.forEach(function(f) {
+				if(!f.type.match("image.*")) {
+					alert("확장자는 이미지 확장자만 가능합니다.");
+					return;
+				}
+          
+				sel_files.push(f);
+				
+				var reader = new FileReader();
+				reader.onload = function(e) {
+					var html="<a href=\"javascript:void(0);\" onclick=\"deleteImageAction("+index+")\" id=\"img_id_"+index+"\"><img src=\"" + e.target.result + "\" data-file='"+f.name+"' class='selProductFile pr-1' title='Click to remove' width='100' height='100'></a>";
+					
+					$(".imgs_wrap").append(html);
+					index++;
+				}
+				reader.readAsDataURL(f);          
+			});
+		}      
 
-	
-	
+		//파일 선택 후 클릭해서 삭제 가능
+		/*특정 이미지 삭제*/
+		function deleteImageAction(index) {
+			var delete_confirm = confirm("삭제하시겠습니까?");
+			if(delete_confirm) {
+				console.log("index : " + index);
+				sel_files.splice(index, 1);
+				
+				var img_id = "#img_id_" + index;
+				console.log("img_id : " + img_id);
+				$(img_id).remove();
+				
+				console.log("sel_files : " + sel_files);            
+			} 
+		}
 
-
-	
+		
+		
+//Review 수정하기----------------------------------------------------------------------------------------------------	  		
+				
+		$(document).on("click",".modifyReview",function(event){
+			var REVIEW_NUM = $(this).prev().val();
+			console.log("REVIEW_NUM : " + REVIEW_NUM)
+			
+			$('#beforeGrade'+REVIEW_NUM).css('display', 'none');	//원래 평점은 숨김
+			$('#afterGrade'+REVIEW_NUM).css('display', 'block');	//수정할 평점 폼 보임 
+			
+			$('#beforeContent'+REVIEW_NUM).css('display', 'none');	//원래 내용은 숨김
+			$('#afterContent'+REVIEW_NUM).css('display', 'block');	//수정할 내용 폼 보임
+			
+			//원래 평점을 set해줌
+			$("#REVIEW_GRADE"+REVIEW_NUM).val("0.5").prop("selected", true); //값이 1인 option 선택(값 가져와야함)
+			
+			//이미지 가져와서 뿌려줘야함
+			
+			
+		});
+		
+		
+//Review 삭제하기----------------------------------------------------------------------------------------------------	  		
+				
+		$(document).on("click",".deleteReview",function(event){
+			var REVIEW_NUM = $(this).prev().prev().val();
+			console.log("REVIEW_NUM : " + REVIEW_NUM)		
+		});
+		
+		
+		
+		
+		
+		/*날짜 형식 변경*/
+		function date_format(format) {
+			var year = format.getFullYear();
+			var month = format.getMonth() + 1;
+			if(month<10) {
+				month = '0' + month;
+			}
+			var date = format.getDate();
+			if(date<10) {
+				date = '0' + date;
+			}
+			
+			return year + "-" + month + "-" + date + " " ;
+		}		
+		
+		/*
+		
+var review_DATE = new Date(data.review_DATE);
+                     var date = date_format(review_DATE);		
+		*/
+		
+		
+		//리뷰 이미지를 클릭하면 원본 사이즈로 커짐(기본은 100)
+		$(".review_img").click(function(){
+			if($(this).css('width') != '100px' ) {
+				$(this).css({'width':'100','height':'100'});
+			} else {
+				$(this).css({'width':'100%','height':'100%'});
+			}
+		})		
 	</script>	
 		
 		
