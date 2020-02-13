@@ -17,13 +17,16 @@ public interface EstimateMapper {
 	public int estimateBidSet (EstimateVO vo);
 	public ArrayList<EstimateOfferVO> offerList (HashMap<String, Object> map);    
 	public int offerCount (HashMap<String, Object> map);
+	public EstimateOfferVO offerDetail (int OFFER_NUM);
     public int offerInsert (EstimateOfferVO vo);
     public int offerModify (EstimateOfferVO vo);
     public int offerDelete (int OFFER_NUM);
     public int offerDeleteAll (int ESTIMATE_NUM);
     public int offerBidSet (EstimateOfferVO vo);
-    public int checkBid (int ESTIMATE_NUM);
 	public int offerSetInfo (EstimateVO vo);
 	public int estimateMinPrice (int OFFER_NUM);
-	public ArrayList<EstimateOrderVO> esOrderList (int ES_ORDER_BUYER);
+	public ArrayList<EstimateOrderVO> esOrderList (String ES_ORDER_BUYER);
+	public EstimateOrderVO esOrserDetail (int ES_ORDER_NUM);
+	public int esOrderInsert(EstimateOrderVO vo);
+	public int esOrderDelete(int ESTIMATE_NUM);
 }

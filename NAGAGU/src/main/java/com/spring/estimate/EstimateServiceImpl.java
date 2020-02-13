@@ -116,6 +116,12 @@ public class EstimateServiceImpl implements EstimateService {
 	@Override
 	public ArrayList<EstimateOfferVO> offerList(int ESTIMATE_NUM, int startpage, int endpage, String OFFER_WORKSHOP) {
 		EstimateMapper mapper = sqlSession.getMapper(EstimateMapper.class);
+		
+		System.out.println(ESTIMATE_NUM);
+		System.out.println(startpage);
+		System.out.println(endpage);
+		System.out.println(OFFER_WORKSHOP);
+		
 		HashMap <String, Object> map = new HashMap <String, Object>();
 		map.put("ESTIMATE_NUM", ESTIMATE_NUM);
 		map.put("startRow", startpage);
@@ -125,6 +131,14 @@ public class EstimateServiceImpl implements EstimateService {
 		ArrayList<EstimateOfferVO> offerList = mapper.offerList(map);
 		
 		return offerList;
+	}
+	
+	@Override
+	 public EstimateOfferVO offerDetail (int OFFER_NUM) {
+		EstimateMapper mapper = sqlSession.getMapper(EstimateMapper.class);
+		EstimateOfferVO vo = mapper.offerDetail(OFFER_NUM);
+
+		return vo;
 	}
 	
     @Override
@@ -227,14 +241,6 @@ public class EstimateServiceImpl implements EstimateService {
 	}
 	
 	@Override
-	public int offerCheck (int ESTIMATE_NUM) {
-		EstimateMapper mapper = sqlSession.getMapper(EstimateMapper.class);
-		int res = mapper.checkBid(ESTIMATE_NUM);
-		
-		return res;
-	}
-	
-	@Override
 	public int estimateBidSet (int ESTIMATE_STATE, int ESTIMATE_NUM) {
 		EstimateMapper mapper = sqlSession.getMapper(EstimateMapper.class);
 		EstimateVO vo = new EstimateVO();
@@ -247,13 +253,27 @@ public class EstimateServiceImpl implements EstimateService {
 	}
 	
 	@Override
-	public ArrayList<EstimateOrderVO> esOrderList(int ES_ORDER_BUYER) {
+	public ArrayList<EstimateOrderVO> esOrderList(String ES_ORDER_BUYER) {
 		EstimateMapper mapper = sqlSession.getMapper(EstimateMapper.class);
 		ArrayList<EstimateOrderVO> esOrderList = mapper.esOrderList(ES_ORDER_BUYER);
 		
 		return esOrderList;
 	}
 	
+	@Override
+	public int esOrderInsert (EstimateOrderVO vo) {
+		EstimateMapper mapper = sqlSession.getMapper(EstimateMapper.class);
+		int res = mapper.esOrderInsert(vo);
+		
+		return res;
+	}
 	
+	@Override
+	public int esOrderDelete (int ESTIMATE_NUM) {
+		EstimateMapper mapper = sqlSession.getMapper(EstimateMapper.class);
+		int res = mapper.esOrderDelete(ESTIMATE_NUM);
+		
+		return res;
+	}
 
 }
