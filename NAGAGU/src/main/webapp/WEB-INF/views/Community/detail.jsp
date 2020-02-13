@@ -38,198 +38,218 @@
    integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh"
    crossorigin="anonymous">
 
-	<style>
-	@font-face {
-	   font-family: 'KOMACON';
-	   src:
-	      url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_seven@1.2/KOMACON.woff')
-	      format('woff');
-	   font-weight: normal;
-	   font-style: normal;
-	}
-	body {
-	   font-family: '만화진흥원체', 'KOMACON', KOMACON !important;
-	   font-size: 15px;
-	}
-	img {
-	   width: 100%;
-	   height: 100%;
-	}
-	a, a:link, a:hover {
-	   text-decoration: none;
-	   color: black;;
-	}
-	.title>div {
-	   background-color: ;
-	   color: rgba(0, 0, 0, 0.8);
-	   font-size: 1rem !important;
-	}
-	.main>.title {
-	   margin-left: 0 !important;
-	   margin-right: 0 !important;
-	   padding: 0px auto;
-	}
-	.img-wrap {
-	   height: auto;
-	}
-	.main {
-	   width: 75%;
-	   height: auto;
-	}
-	.sidebar {
-	   width: 25%;
-	   height: 25vh;
-	}
-	.sidebar {
-	   position: -webkit-sticky;
-	   position: sticky;
-	   top: 0;
-	}
-	/* 댓글 */
-	.name {
-		font-weight: bold;
-	}
-	.smallfont {
-		font-size: 0.7em;
-	}
-	hr {
-		background-color: #EF902E;
-	}
-	.rep_content {
-		font-size: 1.0em;
-	}
-	.btn_write {
-		width:37px;
-		padding:3%;
-	    border-radius: 4px;
-	    border:1px solid orangered;
-	    color:orangered;
-	    font-size: 14px;
-	}
-	.comments_table {
-	   font-size: 1rem;
-	}
-	@media ( max-width : 700px) {
-	   .comments_table {
-	      font-size: 0.7rem;
-	   }
-	}
-	
-	.container-mypage{
-	   margin: 50px 0 100px 0 ;
-	}
-	.page-tap{
-		margin-bottom: 10px;
-	}
-	.page-tap a{
-		color: black;		 	
-	}
-	.page-tap a:hover{
-		color: #ef900e !important;
-		transform: scale(1.2);
-		text-decoration: none;
-	}
-	.profile-img img{
-		border-radius: 100px;
-	    margin-right: 10px;
-	}
-	/* follow button */
-	.follow-btn, .delete-btn, .update-btn{
-		border: none;
-		background: #ef900e;	
-		font-size: 1rem;	 
-		border-radius: 10px;
-		transition:all 0.2s; 
-		box-shadow: 0px 3px rgba(239,144,14,0.5); 	 
-		color: white;
-	}
-	.follow-btn:active, .delete-btn:active, .update-btn:active{		
-			transform: translateY(3px);
-	}
-	 *:focus { 
-	 	outline:none !important; 
-	 }
-	 /* follow button end*/
-	  .member_upload_img div img{
-	    width: 100%;
-	    height: 120px;
-	  }	
-	  .member_upload_img div{
-	    padding: 0 ;
-	  }	
-	  .member_upload_img{   
-	   
-	    padding-left: 15px;
-	  }
-	  h6{
-	  margin:0 auto !important;
-	  }
-	  textarea{
-	  	width:80%;
-	  }
-	  .comments_table input{
-	  	background-color: rgba(255,255,255,1) !important;
-	  	border: 0px;
-	  }
-	  #output img{
-	  	border-radius:100px; 
-	  }
-	  .reply_line *, .re_reply_line *{
-	  	word-wrap: break-word;
-	  }
-	  .reply_line{
-	  	border-top: 1px solid rgba(0, 0, 0, 0.1);
-	  	padding-top: 15px ;
-	  }
-	  .re_reply_line{
-	  	padding-top: 15px;
-	  	padding-bottom: 15px;
-	  } 
-	  #insert_form{
-	    height:150px;
-	  	margin-bottom: 20px;
-	  }
-	  textarea{
-	  	height: 100px;
-	  }
-	  #input_data_jsp{
-	   background-color: rgba(0, 0, 0, 0);
-	   border: 0px solid;  
-	  }
-	  .heart-wrap{
-		padding-bottom:5px;
-		padding-left:10px;	   
-	  }
-	  #fa-heart-wrap{
-	  	padding-top: 5px;
-	  }
+<style>
+@font-face {
+   font-family: 'KOMACON';
+   src:
+      url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_seven@1.2/KOMACON.woff')
+      format('woff');
+   font-weight: normal;
+   font-style: normal;
+}
+body {
+   font-family: '만화진흥원체', 'KOMACON', KOMACON !important;
+   font-size: 15px;
+}
+img {
+   width: 100%;
+   height: 100%;
+}
+a, a:link, a:hover {
+   text-decoration: none;
+   color: black;;
+}
+.title>div {
+   background-color: ;
+   color: rgba(0, 0, 0, 0.8);
+   font-size: 1rem !important;
+}
+.main>.title {
+   margin-left: 0 !important;
+   margin-right: 0 !important;
+   padding: 0px auto;
+}
+.img-wrap {
+   height: auto;
+}
+.img-wrap p{
+	display: flex;
+}
+.main {
+   width: 70%;
+   height: auto;
+   border-right:1px solid;
+   border-color:rgba(0, 0, 0, 0.1);
+}
+.container{
+	margin-bottom:50px;
+}
+.container-mypage{
+   margin: 50px 0 10px 0 ;
+}
+.sidebar {
+   width: 25%;
+   height: 25vh;
+}
+.sidebar {
+   position: -webkit-sticky;
+   position: sticky;
+   top: 0;
+}
+.sidebar div{
+	align-self: center;
+}
+/* 댓글 */
+.name {
+	font-weight: bold;
+}
+.smallfont {
+	font-size: 0.7em;
+}
+hr {
+	background-color: #EF902E;
+}
+.rep_content {
+	font-size: 1.0em;
+}
+.btn_write {
+	width:37px;
+	padding:3%;
+    border-radius: 4px;
+    border:1px solid orangered;
+    color:orangered;
+    font-size: 14px;
+}
+.comments_table {
+   font-size: 1rem;
+}
+@media ( max-width : 700px) {
+   .comments_table {
+      font-size: 0.7rem;
+   }
+}
+.page-tap{
+	margin-bottom: 10px;
+}
+.page-tap a{
+	color: black;		 	
+}
+.page-tap a:hover{
+	color: #ef900e !important;
+	transform: scale(1.2);
+	text-decoration: none;
+}
+.profile-img img{
+	border-radius: 100px;
+    margin-right: 10px;
+}
+/* follow button */
+.follow_btn{
+	border: none;
+	background: #ef900e;	
+	font-size: 1rem;	 
+	border-radius: 10px;
+	transition:all 0.2s; 
+	box-shadow: 0px 3px rgba(239,144,14,0.5); 	 
+	color: white;
+}
+.follow_btn:active, .delete-btn:active, .update-btn:active{		
+		transform: translateY(3px);
+}
+ *:focus { 
+ 	outline:none !important; 
+}
+/* follow button end*/
+ .member_upload_img div img{
+   width: 145px;
+   height: 145px;
+   border-radius: 7px;
+}	
+.member_upload_img div{
+  padding: 0 ;
+}	
+.member_upload_img{   
+ 
+  padding-left: 15px;
+}
+h6{
+margin:0 auto !important;
+}
+textarea{
+	width:80%;
+}
+.comments_table input{
+	background-color: rgba(255,255,255,1) !important;
+	border: 0px;
+}
+#output img{
+	border-radius:100px; 
+}
+.reply_line *, .re_reply_line *{
+	word-wrap: break-word;
+}
+.reply_line{
+	border-top: 1px solid rgba(0, 0, 0, 0.1);
+	padding-top: 15px ;
+}
+.re_reply_line{
+	padding-top: 15px;
+	padding-bottom: 15px;
+} 
+#insert_form{
+	height:150px;
+	margin-bottom: 20px;
+}
+textarea{
+	height: 100px;
+}
+#input_data_jsp{
+	background-color: rgba(0, 0, 0, 0);
+	border: 0px solid;  
+}
+.heart-wrap{
+	padding-bottom:5px;
+	padding-left:10px;	   
+}
+.main-content a, .main-content a:link, .main-content a:hover {
+	text-decoration: none;
+	color: black;
+}
+.page-tap{ 
+	align-self: center;
+	margin-bottom: 0px !important;
+}
 	</style>
 <title>Mypage</title>
 </head>
 <body>
-   <div class="container container-mypage category_cm">
+   <div class="container container-mypage category_cm main-content">
       <div class="wrapper row justify-content-between">
-         <div class="main pb-5">
-            <div class="row justify-content-between title">
-               <div class="col-10 page-tap d-inline-flex">
+         <div class="main">
+            <div class="row justify-content-between title"> 
+               <div class="col-9 page-tap">  
                   <div>
                   	<h6><a href="community.cm">COMMUNITY</a> > 상세보기 </h6>
                   </div>
-                  <%if(picsVO.getPICS_MEMBER()== MEMBER_NUM){
-                  %>
-                  <c:set var="num" value="<%=MEMBER_NUM%>" />
-					<c:if test="${num != 0}">
-					    <div class="btn_wrap offset-2">                  	
-		                  	<button class="update-btn">수정</button>
-		                  	<button class="delete-btn">삭제</button>
-		                </div>
-					</c:if>
-                  <%
-                  }
-                  %>
-               </div> 
+              </div> 
+              
+              <%if(picsVO.getPICS_MEMBER()== MEMBER_NUM){
+              %>
+              <c:set var="num" value="<%=MEMBER_NUM%>" />
+				<c:if test="${num != 0}">
+				    <div class="col-3 btn_wrap">
+				    	<div class="text-right">                  	
+	                	<button class="update-btn btn btn-outline-dark">수정</button>
+	                	<button class="delete-btn btn btn-outline-dark">삭제</button>
+	                	</div> 
+	              </div>
+				</c:if>
+              <%
+              }
+              %>
+               
             </div>
-            <div class="row img-wrap ">
+            <div class="d-flex img-wrap">
             <%
             		if(picsVO.getPICS_CONTENT()!=null){
             			String content = picsVO.getPICS_CONTENT();
@@ -237,14 +257,7 @@
                				content="";
             			}
             %>
-         
-               <div class="col-10 pb-5">
-                  <a href=""><img
-                     src="/communityupload/image/<%=picsVO.getPICS_CONTENT()%>"
-                     alt="" /></a>
-               </div>
-               <div class="col-10"><p><%=content%></p>
-               </div>
+            	<div class="col-12"><%=picsVO.getPICS_CONTENT()%></div>
             <%       
               		}
             %>
@@ -253,14 +266,20 @@
          <!-- main end -->
          <!-- sidebar start -->
          <div class="sidebar" id="sidebar">
-				<div class="row justify-content-around pb-2">
+				<div class="d-flex justify-content-between pb-2">
 					<div class="profile-img">
-						<img src=<%=memberVO.getMEMBER_PICTURE()%>
-							style="width: 50px; height: 50px;" class="src" /><b><%=memberVO.getMEMBER_NICK()%></b>
-						<button class="follow-btn">follow</button>
+						<a href="memberLikePics.cm?MEMBER_NUM=<%=memberVO.getMEMBER_NUM()%>">
+						<img src=<%=memberVO.getMEMBER_PICTURE()%> style="width: 50px; height: 50px;" class="src"/>
+						<b><%=memberVO.getMEMBER_NICK()%></b>
+						</a>
+						<button class="follow_btn flw_btn<%=memberVO.getMEMBER_NUM()%>" id="<%=memberVO.getMEMBER_NUM()%>">follow</button>
 					</div>
-					<div id="fa-heart-wrap">
-						<i class="far fa-heart fa-2x"></i>
+					<div>
+						<a href="#" value="<%=picsVO.getPICS_NUM()%>" class="likeBtn-wrap">
+						<span class="button likeBtn" id="heart_output<%=picsVO.getPICS_NUM()%>"  >  
+							<i class="far fa-heart fa-2x" id="far"></i>
+						</span><%=picsVO.getPICS_LIKE()%>
+						</a>
 					</div>
 				</div>
 				<div class="row member_upload_img" style="max-width:300px;">
@@ -276,7 +295,7 @@
             	%>
                <div class="col-6">
 	               <a href="${pageContext.request.contextPath}/community_detail.cm?PICS_NUM=<%=memberPicsVO.getPICS_NUM()%>&MEMBER_NUM=<%=memberVO.getMEMBER_NUM()%>&PICS_MEMBER=<%=picsVO.getPICS_MEMBER()%>">
-	                  <img src="/communityupload/image/<%=memberPicsVO.getPICS_MAIN_IMAGE()%>" alt="" class="img-responsive img-thumbnail" />
+	                  <img src="/communityupload/image/<%=memberPicsVO.getPICS_MAIN_IMAGE()%>" alt="" class="img-responsive" /> 
 	               </a> 
                </div>
                <%} %>
@@ -349,7 +368,6 @@
 		var url = '${pageContext.request.contextPath}/community_update.cm' 
 				+ '?PICS_NUM='+<%=picsVO.getPICS_NUM()%>
 				+ '&MEMBER_NUM='+<%=memberVO.getMEMBER_NUM()%>
-				<%-- '&PICS_MEMBER='+<%=pics_vo.getPICS_MEMBER()%>"> --%>
 		location.href=url;		
 	});
 	$(document).ready(function(){
@@ -370,7 +388,6 @@
 		function select(num){
 			var params = 'PICS_RE_PICS='+<%=picsVO.getPICS_NUM()%>;
 			$('#output').empty();
-			alert('리스트 ajax시작');
 			$.ajax({
 				url: '/NAGAGU/getCommentList.cm',
 				type:'POST',
@@ -588,11 +605,7 @@
 	$(document).on('click', 'a[href="#"]', function(e){
 		e.preventDefault();
 	});
-
-	
-	
 	select();
-	
 });
 	//유효성 검사
 	function insertCommentSubmit(){
@@ -615,6 +628,165 @@
 		} */
 		commentForm.submit();	
 	}
+	//팔로우
+		$(document).ready(function(){
+		//처음 로드할때 팔로우 한 멤버 팔로우 버튼 바꿔주기~
+		function follow_check(){
+			var	fromNum = '<%=MEMBER_NUM%>';
+			if(fromNum == 0){
+				return
+			}
+			$.ajax({
+				url: "/NAGAGU/getFollowMembers.cm",
+		              type: "POST",
+		              data: { 'fromNum' : fromNum},
+		              datatype: 'json',
+		              contentType:
+		  				'application/x-www-form-urlencoded; charset=utf-8',
+		              success: function (retVal) {
+		            	if(retVal.res=="OK"){ 
+		            		//내가 팔로우 한 리스트 받아와서 일치하는 항목 찾기
+		            		console.log(retVal.followMembers)
+		            		var a = retVal.followMembers
+		            		for(var j=0; j<retVal.followMembers.length; j++){
+				        		var toNum = retVal.followMembers[j].member_NUM
+		        				$('.flw_btn'+toNum).text('following');
+		      	        		$('.flw_btn'+toNum).addClass('flw_btn_active')
+		        			}
+		      			}else{
+		      				alert("update fail");
+		      			} 
+		              },
+			error:function(){
+				alert("ajax통신 실패!!");
+			}
+			})
+		}
+		follow_check()
+	
+	
+		//팔로우 버튼 누르기
+		 $(document).on("click",".follow_btn",function (){
+			 var toNum = this.id
+			 var fromNum = '<%=MEMBER_NUM%>';
+			 if(fromNum==0){ 
+				alert('로그인 하세요') 
+				return				
+			 }
+			 if(fromNum==toNum){
+				alert('본인이네요') 
+				return				
+			 } 
+				 
+			$.ajax({
+			url: "/NAGAGU/followAction.cm",
+	             type: "POST",
+	             data: { 'fromNum' : fromNum , 'toNum' : toNum},
+	             contentType:
+	 				'application/x-www-form-urlencoded; charset=utf-8',
+	             success: function (retVal) {
+			        if(retVal.res=="OK"){
+			        	if(retVal.cnt==0){
+			        		//팔로우 추가 하면 (멤버 넘버가 올리 사진들 모두 값 바꿔준다)
+			        		$('.flw_btn'+toNum).text('following');
+			        		$('.flw_btn'+toNum).addClass('flw_btn_active')
+			        	}else{
+			        		//팔로우 끊으면
+			        		$('.flw_btn'+toNum).text('follow');
+			        		$('.flw_btn'+toNum).removeClass('flw_btn_active')
+			        	}
+						alert("성공");
+					}else{
+						alert("update fail");
+					} 
+				},
+			error:function(){
+				alert("ajax통신 실패!!");
+			}
+			})
+				event.preventDefault();
+			})
+	
+		});
+	
+		//좋아요 기능
+		$(document).ready(function(){
+			//처음 로드되고 로그인 사용자가 누른글 하트는 검게 바꿔줌
+			function heart_check(){
+				var	loginNum = '<%=MEMBER_NUM%>';
+				if(loginNum == 0){
+					return
+				}
+				var category = 'like_pic'
+				$.ajax({
+					url: "/NAGAGU/loginMemberLikePics.cm",
+			              type: "POST",
+			              data: { 'category' : category},
+			              datatype: 'json',
+			              contentType:
+			  				'application/x-www-form-urlencoded; charset=utf-8',
+			              success: function (retVal) {
+					        if(retVal.res=="OK"){
+					        	for(var j=0; j<retVal.PicsNum.length; j++){
+					        		var num = retVal.PicsNum[j].pics_NUM
+			        				var target =$('#heart_output'+num) 
+			        				$(target).children().removeClass('far').addClass('fas')
+			        			}
+							}else{
+								alert("update fail");
+							} 
+						},
+				error:function(){
+					alert("ajax통신 실패!!");
+				}
+				})
+			}
+			heart_check()
+		  //좋아요 누르는 기능
+		  $(document).on("click","#far",function getLike(){
+		    var	MEMBER_NUM = '<%=MEMBER_NUM%>';
+			if(MEMBER_NUM==0){
+				alert('로그인 하세요') 
+				return				
+			} 
+			var category = 'like_pic'
+			var PICS_NUM = $(this).parent().parent().attr('value');
+			console.log(this)
+				$.ajax({
+				url: "/NAGAGU/insertPicsLike.cm",
+		              type: "POST",
+		              data: { 'category' : category , 'PICS_NUM' : PICS_NUM},
+		              contentType:
+		  				'application/x-www-form-urlencoded; charset=utf-8',
+		              success: function (retVal) {
+				        if(retVal.res=="OK"){
+				        	console.log(retVal.cnt)
+				        	var output="";
+								output += '<span class="button likeBtn" id="heart_output'+PICS_NUM+'">'
+							if(retVal.cnt=='1'){
+								output += '<i class="far fa-heart fa-2x" id="far"></i>'	
+							}else{
+								output += '<i class="fas fa-heart fa-2x" id="far"></i>'
+							}
+								output += '</span>'+retVal.picsLikeCount+''
+				        	$('#heart_output'+PICS_NUM).parent().html(output);
+						}else{
+							alert("update fail");
+						} 
+					},
+			error:function(){
+				alert("ajax통신 실패!!");
+			}
+			})
+				event.preventDefault();
+		  });
+			
+			
+			//이미지관련
+			$('.img-wrap').children().children().find('img').removeAttr("style").css('width','95%')
+			$('img').addClass('img-responsive');
+			
+		});
 	</script>
 
 

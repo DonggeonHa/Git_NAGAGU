@@ -137,9 +137,9 @@
 /* card-size end */
 .main img {
 	width: 100%;
-	max-height: 300px;
+	max-height: 250px;
 	height: auto; 
-	padding: 20px 0 !important;  
+	margin: 20px 0 !important;  
 }
 
 a, .card a:link, .card a:visited {
@@ -180,6 +180,9 @@ a, .card a:link, .card a:visited {
 	border-top: 1px solid black;
 	border-color: rgba(0, 0, 0, 0.1) 
 }
+.img-wrap img{
+	border-radius:10px; 
+}
 
 </style>
 	<body class="order-body">
@@ -196,7 +199,7 @@ a, .card a:link, .card a:visited {
 				<div class="pics-wrap">
 				<div class="row justify-content-between title mx-0 pt-2 ">
 						<div class="col-4">
-							<h2>사진 27</h2>
+							<h2>사진</h2>
 						</div>
 						<div class="col-2 text-right">
 							<a href="memberLikePics.cm?uploadOrLike=upload&MEMBER_NUM=<%=memberVO.getMEMBER_NUM()%>">more</a>
@@ -206,7 +209,7 @@ a, .card a:link, .card a:visited {
 						<c:forEach var="pics" items="${memberPicsList}" varStatus="status">
 						    <div class="col-4 img-wrap">
 							    <a href="${pageContext.request.contextPath}/community_detail.cm?PICS_NUM=${pics.PICS_NUM}&MEMBER_NUM=${pics.PICS_MEMBER}">
-								<img src="/communityupload/image/${pics.PICS_FILE_1}"></a>
+								<img src="/communityupload/image/${pics.PICS_MAIN_IMAGE}"></a>
 							</div>   
 						</c:forEach> 
 			    	</div>
@@ -214,7 +217,7 @@ a, .card a:link, .card a:visited {
 			    	<div class="like-wrap">
 					<div class="row justify-content-between title mx-0 pt-2">
 						<div class="col-4">
-							<h2>LIKE 100</h2>
+							<h2>LIKE</h2> 
 						</div>
 						<div class="col-2 text-right">
 							<a href="memberLikePics.cm?uploadOrLike=like&MEMBER_NUM=<%=memberVO.getMEMBER_NUM()%>">more</a>
@@ -224,7 +227,7 @@ a, .card a:link, .card a:visited {
 						<c:forEach var="pics" items="${memberLikePics}" varStatus="status">
 						    <div class="col-4 img-wrap">
 							    <a href="${pageContext.request.contextPath}/community_detail.cm?PICS_NUM=${pics.PICS_NUM}&MEMBER_NUM=${pics.PICS_MEMBER}">
-								<img src="/communityupload/image/${pics.PICS_FILE_1}"></a>
+								<img src="/communityupload/image/${pics.PICS_MAIN_IMAGE}"></a>
 							</div>   
 						</c:forEach> 
 					</div>
@@ -242,17 +245,13 @@ a, .card a:link, .card a:visited {
 							<c:when test="${loginMember == objectMember}">
 								<a href="mypage.my?MEMBER_NUM=<%=memberVO.getMEMBER_NUM()%>">
 							</c:when>
-							<c:otherwise> 
-								<a href="#"></a>
-							</c:otherwise>
 						</c:choose>
 							<div class="card-header"><%=memberVO.getMEMBER_NICK()%></div>
 							<div class="card-body"> 
 								<img src=<%=memberVO.getMEMBER_PICTURE()%>>
 							</div>
 							<a href="followList.cm?MEMBER_NUM=<%=memberVO.getMEMBER_NUM()%>">
-							<div class="card-footer bg-transparent ">Follow 숫자</div>
-							<div>Follower 숫자</div> 
+							<div class="card-footer bg-transparent ">Follow List</div>
 							</a>
 						</div>
 					</div>

@@ -211,7 +211,7 @@ a, .card a:link, .card a:visited {
 							<div class="col-4 img-wrap">
 								<a
 									href="${pageContext.request.contextPath}/community_detail.cm?PICS_NUM=${pics.PICS_NUM}&MEMBER_NUM=${pics.PICS_MEMBER}">
-									<img src="/communityupload/image/${pics.PICS_FILE_1}">
+									<img src="/communityupload/image/${pics.PICS_MAIN_IMAGE}">
 								</a>
 							</div>
 						</c:forEach>
@@ -224,7 +224,7 @@ a, .card a:link, .card a:visited {
 						<div class="col-4 img-wrap">
 							<a
 								href="${pageContext.request.contextPath}/community_detail.cm?PICS_NUM=${pics.PICS_NUM}&MEMBER_NUM=${pics.PICS_MEMBER}">
-								<img src="/communityupload/image/${pics.PICS_FILE_1}">
+								<img src="/communityupload/image/${pics.PICS_MAIN_IMAGE}">
 							</a>
 						</div>
 					</c:forEach>

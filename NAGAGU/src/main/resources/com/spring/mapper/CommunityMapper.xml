@@ -41,7 +41,7 @@
 		(SELECT rownum rnum, PICS_NUM, PICS_MEMBER, PICS_NICK, PICS_DATE, PICS_CATEGORY, PICS_LIKE, 
 		PICS_TAG, PICS_READ, PICS_REVIEW, PICS_MAIN_IMAGE, PICS_CONTENT
         FROM (SELECT * FROM PICS WHERE 1=1
-		  <if test="PICS_REVIEW == 1">  AND PICS_REVIEW=#{PICS_REVIEW} </if>
+		  <if test="PICS_REVIEW != 0">  AND PICS_REVIEW=#{PICS_REVIEW} </if>
 		  <if test="PICS_CATEGORY != 'all'"> AND PICS_CATEGORY=#{PICS_CATEGORY} </if>
 		  <if test="option != null"> 
 		  	<if test="option == 'tag'">
@@ -117,7 +117,6 @@
  		SELECT *
         FROM PICS, MEMBER_LIKE
         WHERE LIKE_MEMBER=#{MEMBER_NUM} AND PICS_NUM=LIKE_PICS
-        <!-- <![CDATA[ WHERE rnum >= #{startrow} AND rnum <= #{endrow} ]]> --> 
 	</select>
 
 

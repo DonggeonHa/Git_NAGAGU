@@ -127,9 +127,8 @@
 							 	<div class="row">
 							 		<div>
 										<select name="PICS_REVIEW" class="form-control">
-											<option value="">전체보기</option>
-											<option value="0">일반</option>
 											<option value="1">후기</option>
+											<option value="2">일반</option>
 										</select>
 									</div>
 							 	</div>	
@@ -224,65 +223,6 @@
 				}
 				addTags();			
 				document.writeForm.submit();
-			}
-			/* $("#category_select option:selected").val(); */
-		
-			var sel_files = [];
-			$('.input_imgs').on("change", function(e){
-				var id= $(this).attr('id');
-				alert(id);
-				var index = 1;
-				if(id=='input_imgs2'){
-					alert('2왓다');
-					index = 2
-				}
-				if(id=='input_imgs3'){
-					index = 3
-				}
-				alert(index);
-				//이미지 정보들을 담을 배열
-				
-				$('.imgs_wrap'+index).empty();
-				var files = e.target.files;
-				var filesArr = Array.prototype.slice.call(files);
-				
-				filesArr.forEach(function(f) {
-					if (!f.type.match("image.*")) {
-						alert("확장자는 이미지 확장자만 가능합니다.");
-						return;
-					}
-					sel_files.push(f);
-					var reader = new FileReader();
-					reader.onload = function(e) {
-						//	var html = "CONTENT";
-						var html = "<a href=\"javascript:void(0);\"	onclick=\"deleteImageAction("
-								+ index
-								+ ")\" id=\"img_id_"
-								+ index
-								+ "\"><img src=\"" + e.target.result + "\" data-file='"
-								+f.name+"' class='selProductFile' title='Click to remove' width='70%' height='350px;'></a>";
-						$('.imgs_wrap'+index).append(html);						
-						index++;
-					} 
-					reader.readAsDataURL(f);				
-				});			
-			});
-			function deleteImageAction(index){
-				alert("index: "+index);
-				sel_files.splice(index,1);
-				var img_id="#img_id_"+index;
-				$(img_id).remove();
-				
-			}
-			function show_form(){
-				if($('.form2').css('display')=='none'){
-					$('.form2').css('display','flex');
-					return;
-				}else if($('.form3').css('display')=='none'){
-					$('.form3').css('display','flex');
-					return;
-				}
-				
 			}
 			
 			/* 썸머노트 부분 */

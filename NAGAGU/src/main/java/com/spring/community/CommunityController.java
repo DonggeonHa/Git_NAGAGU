@@ -17,10 +17,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
+import org.springframework.web.servlet.ModelAndView;
 
 import com.spring.academy.AcademyService;
+import com.spring.member.KakaoController;
 import com.spring.member.MemberServiceImpl;
 import com.spring.member.MemberVO;
+import com.spring.member.NaverLoginBO;
 import com.spring.store.ProductReviewServiceImpl;
 import com.spring.store.ProductServiceImpl;
 import com.spring.store.ProductVO;
@@ -39,9 +42,26 @@ public class CommunityController {
 	private ProductServiceImpl productService;
 	@Autowired(required = false)
 	private AcademyService academyService;
+	/* NaverLoginBO */
+    private NaverLoginBO naverLoginBO;
+    private String apiResult = null;
+    @Autowired(required = false)
+    private void setNaverLoginBO(NaverLoginBO naverLoginBO) {
+        this.naverLoginBO = naverLoginBO;
+    }
 	@RequestMapping(value = "/community.cm")
-	public String CommunityList(PicsVO picsVO, Model model,MemberVO memberVO, HttpServletRequest request, HttpSession session) {
-		
+	public ModelAndView CommunityList(PicsVO picsVO, Model model,MemberVO memberVO, HttpServletRequest request, HttpSession session) {
+		ModelAndView mav = new ModelAndView();
+		/* 네이버아이디로 인증 URL을 생성하기 위하여 naverLoginBO클래스의 getAuthorizationUrl메소드 호출 */
+	    String naverAuthUrl = naverLoginBO.getAuthorizationUrl(session);
+	    System.out.println("네이버:" + naverAuthUrl);
+	    model.addAttribute("naver_url", naverAuthUrl);
+      
+	    //카카오 인증 url을 view로 전달
+	    String kakaoUrI = KakaoController.getAuthorizationUri(session);
+	    System.out.println("카카오: "+ kakaoUrI);
+	    model.addAttribute("kakao_url", kakaoUrI);
+	    
 		//페이지
 		int page = 1;
 		int limit = 9;
@@ -65,7 +85,7 @@ public class CommunityController {
 		
 		//초기값 설정
 		String sort= "new";
-		String PICS_REVIEW = "0";
+		String PICS_REVIEW = "0";//일반???
 		String PICS_CATEGORY = "all";
 		//jsp에서 값이 있으면 받아와서 셋팅
 		if(request.getParameter("PICS_CATEGORY") != null) {
@@ -135,12 +155,26 @@ public class CommunityController {
 		model.addAttribute("sort", sort);
 		model.addAttribute("memberList", memberList);
 		
-		return "Community/communityList"; 
+		mav.setViewName("Community/communityList");
+        
+		return mav;
 	}
 	
 	@RequestMapping(value = "/community_detail.cm")
-	public String CommunityDetail(PicsVO picsVO, Model model,MemberVO memberVO, HttpServletRequest request) {
+	public ModelAndView CommunityDetail(PicsVO picsVO, Model model,MemberVO memberVO, HttpServletRequest request,HttpSession session) {
 		
+		ModelAndView mav = new ModelAndView();
+		/* 네이버아이디로 인증 URL을 생성하기 위하여 naverLoginBO클래스의 getAuthorizationUrl메소드 호출 */
+	    String naverAuthUrl = naverLoginBO.getAuthorizationUrl(session);
+	    System.out.println("네이버:" + naverAuthUrl);
+	    model.addAttribute("naver_url", naverAuthUrl);
+      
+	    //카카오 인증 url을 view로 전달
+	    String kakaoUrI = KakaoController.getAuthorizationUri(session);
+	    System.out.println("카카오: "+ kakaoUrI);
+	    model.addAttribute("kakao_url", kakaoUrI);
+	    
+	    
 		PicsVO picsDetail = communityService.getPicsDetail(picsVO);	
 		ArrayList<PicsVO> memberPicsList = communityService.getPicsOfMemberUpload(picsVO);
 		MemberVO memberDetail = memberService.getMemberDetail(memberVO);
@@ -151,7 +185,10 @@ public class CommunityController {
 		model.addAttribute("memberDetail",memberDetail);
 		model.addAttribute("memberPicsList",memberPicsList);
 	//	model.addAttribute("commentList",commentList);
-		return "Community/detail";
+		
+		mav.setViewName("Community/detail");
+        
+		return mav;
 	}
 	@RequestMapping(value = "/community_write.cm")
 	public String CommunityWrite(PicsVO picsVO, Model model,MemberVO memberVO, HttpServletRequest request) {		
@@ -258,63 +295,42 @@ public class CommunityController {
 		model.addAttribute("picsDetail",picsDetail);
 		return "Community/update";	
 	}
-//	@RequestMapping(value = "/community_updateAction.cm")
-//	public String updatePics(MultipartHttpServletRequest request) throws Exception, IOException {	
-//	
-//		//picsVO만들어서 값 넣기
-//		PicsVO picsVO = new PicsVO();		
-//		picsVO.setPICS_NUM(Integer.parseInt(request.getParameter("PICS_NUM")));
-//		picsVO.setPICS_CATEGORY(request.getParameter("PICS_CATEGORY"));
-//		picsVO.setPICS_CONTENT_1(request.getParameter("PICS_CONTENT_1"));
-//		picsVO.setPICS_CONTENT_2(request.getParameter("PICS_CONTENT_2"));
-//		picsVO.setPICS_CONTENT_3(request.getParameter("PICS_CONTENT_3"));
-//		picsVO.setPICS_REVIEW(request.getParameter("PICS_REVIEW"));
-//		picsVO.setPICS_TAG(request.getParameter("PICS_TAG"));		
-//		//공방매퍼로 SELECT 필요		
-//		picsVO.setPICS_WORKSHOP("개인");
-//		if(request.getParameter("PICS_WORKSHOP")!=null) {
-//			picsVO.setPICS_WORKSHOP(request.getParameter("PICS_WORKSHOP"));
-//		}		
-//		
-//		//파일업로드 시작=-------------------------------------------------
-//		String uploadPath="C:\\Project138\\upload\\";
-//		
-//	    //사진 개수만큼 파일업로드 시작=-------------------------------------------------
-//		for (int i = 1; i < 4; i++) {
-//			MultipartFile mf = request.getFile("PICS_FILE_" + i);
-//			if (mf.getOriginalFilename()!= null && !mf.getOriginalFilename().equals("")) {
-//				String originalFileExtnesion = mf.getOriginalFilename().substring(mf.getOriginalFilename().lastIndexOf("."));
-//				String storedFileName = UUID.randomUUID().toString().replaceAll("-", "") + originalFileExtnesion;
-//				// 파일저장
-//				mf.transferTo(new File(uploadPath + storedFileName));
-//				if (i == 1) {
-//					System.out.println(storedFileName);
-//					picsVO.setPICS_FILE_1(storedFileName);
-//				}
-//				if (i == 2) {
-//					System.out.println(storedFileName);
-//					picsVO.setPICS_FILE_2(storedFileName);
-//				}
-//				if (i == 3) {
-//					System.out.println(storedFileName);
-//					picsVO.setPICS_FILE_3(storedFileName);
-//				}
-//			}
-//			else{
-//				if(i==1) {					
-//					picsVO.setPICS_FILE_1(request.getParameter("PICS_FILE_1"));
-//				}if(i==2) {
-//					System.out.println("else 2");
-//					picsVO.setPICS_FILE_2(request.getParameter("PICS_FILE_2"));
-//				}if(i==3) {
-//					System.out.println("else 3");
-//					picsVO.setPICS_FILE_3(request.getParameter("PICS_FILE_3"));
-//				}
-//			}
-//		}
-//		communityService.updatePics(picsVO);
-//		return "redirect:./community.cm";	
-//	}
+	@RequestMapping(value = "/community_updateAction.cm")
+	public String updatePics(MultipartHttpServletRequest request) throws Exception, IOException {	
+		//picsVO만들어서 값 넣기
+		System.out.println("write액션");
+		PicsVO picsVO = new PicsVO();
+		picsVO.setPICS_MEMBER(Integer.parseInt((request.getParameter("PICS_MEMBER"))));
+		picsVO.setPICS_NICK(request.getParameter("PICS_NICK"));
+		picsVO.setPICS_CATEGORY(request.getParameter("PICS_CATEGORY"));
+		picsVO.setPICS_REVIEW(request.getParameter("PICS_REVIEW"));
+		picsVO.setPICS_TAG(request.getParameter("PICS_TAG"));
+		picsVO.setPICS_NUM(Integer.parseInt(request.getParameter("PICS_NUM")));
+		//파일업로드 시작=-------------------------------------------------
+		String uploadPath="C:\\Project138\\upload\\";
+	    //사진 개수만큼 파일업로드 시작=-------------------------------------------------
+		if (!request.getFile("PICS_MAIN_IMAGE").isEmpty()) {
+			MultipartFile mf = request.getFile("PICS_MAIN_IMAGE");
+			String originalFileExtnesion = mf.getOriginalFilename().substring(mf.getOriginalFilename().lastIndexOf("."));
+			String storedFileName = UUID.randomUUID().toString().replaceAll("-", "") + originalFileExtnesion;
+			// 파일저장
+			if (mf.getSize() != 0) {
+				mf.transferTo(new File(uploadPath + storedFileName));
+			}
+			picsVO.setPICS_MAIN_IMAGE(storedFileName);
+		}
+		picsVO.setPICS_CONTENT(request.getParameter("PICS_CONTENT"));
+		System.out.println("mem"+picsVO.getPICS_MEMBER());
+		System.out.println("nick"+picsVO.getPICS_NICK());
+		System.out.println("cate"+picsVO.getPICS_CATEGORY());
+		System.out.println("revi"+picsVO.getPICS_REVIEW());
+		System.out.println("tag"+picsVO.getPICS_TAG());
+		System.out.println("main"+picsVO.getPICS_MAIN_IMAGE());
+		System.out.println("content"+picsVO.getPICS_CONTENT());
+		System.out.println("numn"+picsVO.getPICS_NUM());
+		communityService.updatePics(picsVO);
+		return "redirect:./community.cm";	
+	}
 	
 	@RequestMapping(value = "/deletePicsFile.cm")
 	public @ResponseBody Map<String, Object> deletePicsFile(PicsVO picsVO,HttpServletRequest request) {
@@ -326,15 +342,6 @@ public class CommunityController {
 		if(file.exists() == true){ 
 			file.delete(); 
 		}
-//		String index = request.getParameter("index");
-//		if(index =="1") {
-//			picsVO.setPICS_FILE_1("");
-//		}if(index =="2") {
-//			picsVO.setPICS_FILE_2("");
-//		}if(index =="3") {
-//			picsVO.setPICS_FILE_3("");
-//		}
-		
 		picsVO.setPICS_NUM(Integer.parseInt(request.getParameter("picNum")));
 		Map<String, Object> retVal = new HashMap<String, Object>();
 		try {
@@ -403,7 +410,7 @@ public class CommunityController {
 		//멤버가 좋아요 한 사진 리스트
 		HashMap<String, Object> map = new HashMap<String, Object>();
 		int LIKE_MEMBER = memberVO.getMEMBER_NUM();
-		map.put("LIKE_MEMBER", LIKE_MEMBER);
+		map.put("MEMBER_NUM", LIKE_MEMBER);
 		ArrayList<PicsVO> memberLikePics = communityService.getMemberLikePics(map);
 		model.addAttribute("memberDetail",memberDetail);
 		model.addAttribute("memberPicsList",memberPicsList);

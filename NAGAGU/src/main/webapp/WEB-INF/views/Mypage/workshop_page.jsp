@@ -1,4 +1,3 @@
-<%@page import="com.spring.workshop.WorkshopVO"%>
 <%@page import="com.spring.workshop.WorkShopMemberVO"%>
 <%@page import="com.spring.community.PicsVO"%>
 <%@page import="java.util.ArrayList"%>
@@ -21,7 +20,7 @@
 	//사진 올린 멤버가 올린 다른 사진리스트 받아오기 위해
 	//ArrayList<PicsVO> memberPicsList = (ArrayList<PicsVO>) request.getAttribute("memberPicsList");
 	//ArrayList<PicsVO> memberLikePics = (ArrayList<PicsVO>) request.getAttribute("memberLikePics");
-	ArrayList<WorkshopVO> classList = (ArrayList<WorkshopVO>) request.getAttribute("classList");
+	ArrayList<WorkShopMemberVO> classList = (ArrayList<WorkShopMemberVO>) request.getAttribute("classList");
 	//System.out.println(memberLikePics.get(0).getPICS_FILE_1());
 	System.out.println("니가누른  멤버는="+wsMemberVO.getWORKSHOP_NUM());
 	System.out.println("로그인 멤버는="+LOGIN_MEMBER_NUM);

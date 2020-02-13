@@ -194,7 +194,12 @@ img {
  .caption .active{
  	color: rgba(0,0,0,1) !important;
  }
-
+.img-tag a{
+	display:inline-block;
+	width: 24%;
+	text-align: center;
+	color: rgba(0,0,0,0.5) !important;
+}
 </style>
 </head>
 
@@ -224,7 +229,8 @@ img {
 							</select>
 							<select id = "sort" class="form-control" onchange="location.href=(this.value);">
 									<option value="./community.cm?PICS_CATEGORY=<%=PICS_CATEGORY%>&PICS_REVIEW=0&sort=<%=sort%>" id="all">모두보기</option>
-									<option value="./community.cm?PICS_CATEGORY=<%=PICS_CATEGORY%>&PICS_REVIEW=1&sort=<%=sort%>" id="review">후기</option>									
+									<option value="./community.cm?PICS_CATEGORY=<%=PICS_CATEGORY%>&PICS_REVIEW=1&sort=<%=sort%>" id="review">후기</option>
+									<option value="./community.cm?PICS_CATEGORY=<%=PICS_CATEGORY%>&PICS_REVIEW=2&sort=<%=sort%>" id="no_review">일반</option>
 							</select>
 							</div>
 							
@@ -547,6 +553,9 @@ img {
 		break;
 	case '1' :
 		$('#review').prop('selected', true);
+		break;
+	case '2' :
+		$('#no_review').prop('selected', true);
 		break;
 	}
 	

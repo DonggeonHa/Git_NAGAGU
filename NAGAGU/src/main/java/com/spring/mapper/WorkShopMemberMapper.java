@@ -15,6 +15,4 @@ public interface WorkShopMemberMapper {
 	WorkShopMemberVO selectwmember(WorkShopMemberVO workshopVO);
 	int name_cnt(String WORKSHOP_NAME);
 	
-	/* 경태 */
-	ArrayList<WorkshopVO> getClassList(WorkShopMemberVO workshopVO);
 }
