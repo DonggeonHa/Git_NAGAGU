@@ -1,4 +1,15 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%
+	String WORKSHOP_NAME = (String)session.getAttribute("WORKSHOP_NAME");
+	String WORKSHOP_PICTURE = (String)session.getAttribute("WORKSHOP_PICTURE");
+	
+	if(WORKSHOP_NAME == null){
+		out.println("<script>");
+		out.println("alert('로그인 해주세요!');");
+		out.println("location.href='./index.ma'");
+		out.println("</script>");
+	}
+%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -34,10 +45,10 @@
         <!-- 사이드바 프로필 -->
         <div class="sidebar_profile">
             <div class="sidebar_pic">
-                <a href="./workshop_modify.ws"><img src="https://testkj.s3.ap-northeast-2.amazonaws.com/images/20150803_1257391.png" class="img-circle profile_img"></a>
+                <a href="./workshop_modify.ws"><img src="<%=WORKSHOP_PICTURE %>" class="img-circle profile_img"></a>
             </div>
             <div class="sidebar_name">
-                <h3><a href="./workshop_modify.ws">공방 이름</a></h3>
+                <h3><%=WORKSHOP_NAME %></h3>
             </div>
         </div>
 

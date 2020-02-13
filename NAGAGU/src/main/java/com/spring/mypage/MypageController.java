@@ -132,9 +132,16 @@ public class MypageController {
 	}
 	
 	@RequestMapping(value = "/workshop_modify.ws")
-	public String WorkshopModify() {
+	public ModelAndView WorkshopModify(HttpSession session) {
+		ModelAndView mav = new ModelAndView();
+		WorkShopMemberVO workshopVO = new WorkShopMemberVO();
+		workshopVO.setWORKSHOP_NUM((int)(session.getAttribute("WORKSHOP_NUM")));
+		workshopVO = workShopMemberService.selectwmember(workshopVO);
 		
-		return "Mypage/Workshop/modify";
+		mav.addObject("WorkShopMemberVO", workshopVO);
+		mav.setViewName("Mypage/Workshop/modify");
+		
+		return mav;
 	}
 	
 	@RequestMapping(value = "/workshop_academy_Registration.ws")

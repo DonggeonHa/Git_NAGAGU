@@ -99,7 +99,7 @@
 	    	<if test="selectClassType == 'endClass'"> CLASS_STATUS=2 and WORKSHOP_NAME=#{WORKSHOP_NAME})</if>
 	    	<if test="selectClassType == 'onedayClass'"> CLASS_DIVISION='원데이클래스' and WORKSHOP_NAME=#{WORKSHOP_NAME})</if>
 	    	<if test="selectClassType == 'regularClass'"> CLASS_DIVISION='정규클래스' and WORKSHOP_NAME=#{WORKSHOP_NAME})</if>
-	    	 order by CLASS_DATE DESC)
+	    	 order by CLASS_DATE ASC)
 	</select>
 	
 	<select id="getSearchList" resultMap="classResultMap">
@@ -108,7 +108,7 @@
 	    <if test="searchType == 'className'"> CLASS_NAME LIKE '%'||#{keyword}||'%' and WORKSHOP_NAME=#{WORKSHOP_NAME}</if>
 	    <if test="searchType == 'area'"> CLASS_AREA LIKE '%'||#{keyword}||'%' and WORKSHOP_NAME=#{WORKSHOP_NAME}</if>
 	    <if test="searchType == 'category'"> CLASS_CATEGORY LIKE '%'||#{keyword}||'%' and WORKSHOP_NAME=#{WORKSHOP_NAME}</if>
-	    ) order by CLASS_DATE desc)    
+	    ) order by CLASS_DATE ASC)    
 	</select>
 	
 	<select id="getMemberList" resultMap="myclassMemberResultMap">
@@ -137,5 +137,12 @@
  	<select id="getclassDetail" parameterType="int" resultMap="classResultMap"> 
  		SELECT * FROM academy WHERE CLASS_NUMBER = #{CLASS_NUMBER}
  	</select>
+ 	
+ 	<update id="updateClass" parameterType="com.spring.academy.ClassVO">
+ 		update ACADEMY set CLASS_DIVISION=#{CLASS_DIVISION}, CLASS_NAME=#{CLASS_NAME}, CLASS_ABRIEF=#{CLASS_ABRIEF}, CLASS_AMOUNT=#{CLASS_AMOUNT}, 
+ 		CLASS_DATE_CONFIGURATION_1=#{CLASS_DATE_CONFIGURATION_1}, CLASS_DATE_CONFIGURATION_2=#{CLASS_DATE_CONFIGURATION_2}, CLASS_AREA=#{CLASS_AREA}, 
+ 		CLASS_CATEGORY=#{CLASS_CATEGORY}, CLASS_INTRODUCTION_1=#{CLASS_INTRODUCTION_1}, CLASS_INTRODUCTION_2=#{CLASS_INTRODUCTION_2}, CLASS_INTRODUCTION_3=#{CLASS_INTRODUCTION_3}, 
+ 		CLASS_ETC=#{CLASS_ETC}, CLASS_BANNER=#{CLASS_BANNER}, CLASS_IMAGE=#{CLASS_IMAGE}, CLASS_ADDRESS=#{CLASS_ADDRESS}, CLASS_DETAIL_ADDRESS=#{CLASS_DETAIL_ADDRESS} where CLASS_NUMBER=#{CLASS_NUMBER} 
+ 	</update>
  	
 </mapper>

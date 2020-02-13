@@ -25,12 +25,11 @@ public class MypageEditController {
 	public String edit_member_form(MultipartHttpServletRequest request, HttpSession session, MemberVO memberVO) throws Exception { 
 		String MEMBER_EMAIL = (String)session.getAttribute("MEMBER_EMAIL");
 		MultipartFile mf = request.getFile("img"); // 파일
-		System.out.println("123123");
 		
 		try {
 			
 			if(mf.isEmpty()) {	//이미지가 비어있을 경우 넣음
-				memberVO.getMEMBER_PICTURE();
+				memberVO.setMEMBER_PICTURE("./resources/images/Mypage/Basic_Picture.png");
 			} else {
 				//파일업로드 시작=-------------------------------------------------
 				String uploadPath="C:\\Project138\\upload\\";
@@ -58,6 +57,11 @@ public class MypageEditController {
 			
 			if(result != 0) {
 				//out객체 사용해서 null이나 아웃사용 리턴문만나기전 호출
+				session.setAttribute("MEMBER_NICK", memberVO.getMEMBER_NICK());
+				session.setAttribute("MEMBER_NAME", memberVO.getMEMBER_NAME());
+				session.setAttribute("MEMBER_PHONE", memberVO.getMEMBER_PHONE());
+				session.setAttribute("MEMBER_PICTURE", memberVO.getMEMBER_PICTURE());
+				
 				return "redirect:/index.ma";
 			}
 		} catch (Exception e) {
