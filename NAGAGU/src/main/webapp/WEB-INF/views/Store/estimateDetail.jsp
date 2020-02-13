@@ -269,7 +269,7 @@
 	
 	<body class="order-body">
 		<!-- content start -->
-		<div class="container es_body">
+		<div class="container es_body category_st">
 			<br />
 			<br />
 			<br />

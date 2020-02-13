@@ -7,6 +7,8 @@ import com.spring.community.PicsCommentDB;
 
 public interface PicsCommentMapper {
 	ArrayList<PicsCommentDB> getCommentList(int num);
+	ArrayList<PicsCommentDB> getCommentCount(int num);
+	
 	ArrayList<Map<String, Object>> getLoginMemberReply(HashMap<String, Object> map);
 	int insertComment(PicsCommentDB db);
 	int updateComment(PicsCommentDB db);

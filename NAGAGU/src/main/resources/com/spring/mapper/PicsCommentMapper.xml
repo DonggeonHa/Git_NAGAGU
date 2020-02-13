@@ -62,8 +62,14 @@
 		SELECT MAX(PICS_RE_NUM) FROM PICS_COMMENT
 	</select>
 	
-	 <select id="getCommentList" parameterType="com.spring.community.PicsCommentDB" resultMap="commentResultMap">
+	 <select id="getCommentList" parameterType="com.spring.community.PicsCommentDB" resultMap="hashmapVO">
 		SELECT * FROM PICS_COMMENT WHERE PICS_RE_PICS=#{PICS_RE_PICS} ORDER BY PICS_RE_REF DESC, PICS_RE_STEP DESC 
+	</select> 
+	
+	<select id="getCommentCount" parameterType="com.spring.community.PicsCommentDB" resultMap="hashmapVO">
+		SELECT COUNT(PICS_RE_REF) AS RE_COUNT,PICS_RE_REF
+		FROM PICS_COMMENT 
+		WHERE PICS_RE_PICS=#{PICS_RE_PICS} GROUP BY PICS_RE_REF ORDER BY PICS_RE_REF DESC
 	</select> 
 	
 	<insert id="insertComment" parameterType="com.spring.community.PicsCommentDB">
@@ -85,5 +91,7 @@
 		FROM PICS_COMMENT, PICS,NAGAGU_MEMBER 
 		WHERE PICS_RE_MEMBER=#{MEMBER_NUM} AND PICS_NUM=PICS_RE_PICS AND MEMBER_NUM=PICS_RE_MEMBER
 	</select> 
+	
+	
 
 </mapper>

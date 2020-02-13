@@ -562,7 +562,7 @@
 </head>
 	<body class="order-body">
 		<!-- content start -->
-		<div class="container class-detail-container">
+		<div class="container class-detail-container category_st">
 			<div class="row justify-content-between title">
 				<h6><a href="productlist.pro?PRODUCT_CATEGORY=all">STORE</a> > 상세보기 </h6>
             </div>

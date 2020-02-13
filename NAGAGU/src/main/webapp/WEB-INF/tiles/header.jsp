@@ -259,6 +259,10 @@
 			.dropdown-content a:hover {background-color: #ddd;}
 			
 			.dropdown:hover .dropdown-content {display: block;}
+			
+			.nav-item .active{
+				color: rgba(239,144,14,0.5) !important;  
+			}
 		</style>
 		<script>
 			jQuery(document).ready(function($) {
@@ -381,17 +385,17 @@
 								<div class="test">
 									<ul class="navbar-nav mr-auto">
 										<li class="nav-item">
-											<a class="nav-link" href="./community.cm">COMMUNITY</a>
+											<a class="nav-link header_nav" id="header_cm" href="./community.cm">COMMUNITY</a>
 										</li>
 										<li class="nav-item">
-											<a class="nav-link" href="./classlist.ac">ACADEMY</a>
+											<a class="nav-link header_nav" id="header_ac" href="./classlist.ac">ACADEMY</a>
 										</li>
 										<li class="nav-item">
 											<div class="dropdown">
-												<a class="nav-link" href="#">STORE</a>
+												<a class="nav-link" href="#" id="header_st">STORE</a>
 												<div class="dropdown-content">
-													<a href="./productcategory.pro">수제가구</a>
-													<a href="./estimate.es">견적문의</a>
+													<a href="./productcategory.pro" class="header_nav" id="header_sj">수제가구</a>
+													<a href="./estimate.es" class="header_nav" id="header_kj">견적문의</a>
 												</div>
 											</div>
 										</li>
@@ -546,5 +550,23 @@
 		</div>
 		
 		<script src="https://kit.fontawesome.com/b74b42490f.js" crossorigin="anonymous"></script>
+		<script>
+		$(document).ready(function(){
+			var a = $('.category_cm')
+			console.log(a)
+			if($('.category_cm').length==1){
+				$('.header_nav').removeClass('active');
+				$('#header_cm').addClass('active');
+			}
+			if($('.category_ac').length==1){
+				$('.header_nav').removeClass('active');
+				$('#header_ac').addClass('active');
+			}
+			if($('.category_st').length==1){
+				$('.header_nav').removeClass('active');
+				$('#header_st').addClass('active');
+			}
+		});
+		</script>
 	</body>
 </html>

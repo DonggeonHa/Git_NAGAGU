@@ -160,54 +160,88 @@ public class CommunityController {
 		return "Community/write";	
 	}
 	@RequestMapping(value = "/community_writeAction.cm")
-	public String insetPics(MultipartHttpServletRequest request) throws Exception, IOException {	
-	
+	public String insetPics(MultipartHttpServletRequest request) throws Exception, IOException {
 		//picsVO만들어서 값 넣기
+		System.out.println("write액션");
 		PicsVO picsVO = new PicsVO();
-		
 		picsVO.setPICS_MEMBER(Integer.parseInt((request.getParameter("PICS_MEMBER"))));
 		picsVO.setPICS_NICK(request.getParameter("PICS_NICK"));
 		picsVO.setPICS_CATEGORY(request.getParameter("PICS_CATEGORY"));
-		picsVO.setPICS_CONTENT_1(request.getParameter("PICS_CONTENT_1"));
-		picsVO.setPICS_CONTENT_2(request.getParameter("PICS_CONTENT_2"));
-		picsVO.setPICS_CONTENT_3(request.getParameter("PICS_CONTENT_3"));
 		picsVO.setPICS_REVIEW(request.getParameter("PICS_REVIEW"));
 		picsVO.setPICS_TAG(request.getParameter("PICS_TAG"));
-		picsVO.setPICS_REF(1);
-		//공방매퍼로 SELECT 필요		
-		picsVO.setPICS_WORKSHOP("개인");
-		if(request.getParameter("PICS_WORKSHOP")!=null) {
-			picsVO.setPICS_WORKSHOP(request.getParameter("PICS_WORKSHOP"));
-		}		
-
-		
-		
 		//파일업로드 시작=-------------------------------------------------
 		String uploadPath="C:\\Project138\\upload\\";
 	    //사진 개수만큼 파일업로드 시작=-------------------------------------------------
-		for (int i = 1; i < 4; i++) {
-			if (!request.getFile("PICS_FILE_" + i).isEmpty()) {
-				MultipartFile mf = request.getFile("PICS_FILE_" + i);
-				String originalFileExtnesion = mf.getOriginalFilename().substring(mf.getOriginalFilename().lastIndexOf("."));
-				String storedFileName = UUID.randomUUID().toString().replaceAll("-", "") + originalFileExtnesion;
-				// 파일저장
-				if (mf.getSize() != 0) {
-					mf.transferTo(new File(uploadPath + storedFileName));
-				}
-				if (i == 1) {
-					picsVO.setPICS_FILE_1(storedFileName);
-				}
-				if (i == 2) {
-					picsVO.setPICS_FILE_2(storedFileName);
-				}
-				if (i == 3) {
-					picsVO.setPICS_FILE_3(storedFileName);
-				}
+		if (!request.getFile("PICS_MAIN_IMAGE").isEmpty()) {
+			MultipartFile mf = request.getFile("PICS_MAIN_IMAGE");
+			String originalFileExtnesion = mf.getOriginalFilename().substring(mf.getOriginalFilename().lastIndexOf("."));
+			String storedFileName = UUID.randomUUID().toString().replaceAll("-", "") + originalFileExtnesion;
+			// 파일저장
+			if (mf.getSize() != 0) {
+				mf.transferTo(new File(uploadPath + storedFileName));
 			}
+			picsVO.setPICS_MAIN_IMAGE(storedFileName);
 		}
+		picsVO.setPICS_CONTENT(request.getParameter("PICS_CONTENT"));
+		
+		System.out.println("mem"+picsVO.getPICS_MEMBER());
+		System.out.println("nick"+picsVO.getPICS_NICK());
+		System.out.println("cate"+picsVO.getPICS_CATEGORY());
+		System.out.println("revi"+picsVO.getPICS_REVIEW());
+		System.out.println("tag"+picsVO.getPICS_TAG());
+		System.out.println("main"+picsVO.getPICS_MAIN_IMAGE());
+		System.out.println("content"+picsVO.getPICS_CONTENT());
+		
+		
 		communityService.insertPics(picsVO);
 		return "redirect:./community.cm";	
 	}
+	
+//	@RequestMapping(value = "/community_writeAction.cm")
+//	public String insetPics(MultipartHttpServletRequest request) throws Exception, IOException {	
+//		//picsVO만들어서 값 넣기
+//		PicsVO picsVO = new PicsVO();
+//		picsVO.setPICS_MEMBER(Integer.parseInt((request.getParameter("PICS_MEMBER"))));
+//		picsVO.setPICS_NICK(request.getParameter("PICS_NICK"));
+//		picsVO.setPICS_CATEGORY(request.getParameter("PICS_CATEGORY"));
+//		picsVO.setPICS_CONTENT_1(request.getParameter("PICS_CONTENT_1"));
+//		picsVO.setPICS_CONTENT_2(request.getParameter("PICS_CONTENT_2"));
+//		picsVO.setPICS_CONTENT_3(request.getParameter("PICS_CONTENT_3"));
+//		picsVO.setPICS_REVIEW(request.getParameter("PICS_REVIEW"));
+//		picsVO.setPICS_TAG(request.getParameter("PICS_TAG"));
+//		picsVO.setPICS_REF(1);
+//		//공방매퍼로 SELECT 필요		
+//		picsVO.setPICS_WORKSHOP("개인");
+//		if(request.getParameter("PICS_WORKSHOP")!=null) {
+//			picsVO.setPICS_WORKSHOP(request.getParameter("PICS_WORKSHOP"));
+//		}		
+//		//파일업로드 시작=-------------------------------------------------
+//		String uploadPath="C:\\Project138\\upload\\";
+//	    //사진 개수만큼 파일업로드 시작=-------------------------------------------------
+//		for (int i = 1; i < 4; i++) {
+//			if (!request.getFile("PICS_FILE_" + i).isEmpty()) {
+//				MultipartFile mf = request.getFile("PICS_FILE_" + i);
+//				String originalFileExtnesion = mf.getOriginalFilename().substring(mf.getOriginalFilename().lastIndexOf("."));
+//				String storedFileName = UUID.randomUUID().toString().replaceAll("-", "") + originalFileExtnesion;
+//				// 파일저장
+//				if (mf.getSize() != 0) {
+//					mf.transferTo(new File(uploadPath + storedFileName));
+//				}
+//				if (i == 1) {
+//					picsVO.setPICS_FILE_1(storedFileName);
+//				}
+//				if (i == 2) {
+//					picsVO.setPICS_FILE_2(storedFileName);
+//				}
+//				if (i == 3) {
+//					picsVO.setPICS_FILE_3(storedFileName);
+//				}
+//			}
+//		}
+//		communityService.insertPics(picsVO);
+//		return "redirect:./community.cm";	
+//	}
+	
 	@RequestMapping(value = "/community_delete.cm")
 	public String community_delete(PicsVO picsVO, HttpServletRequest request) {		
 		int result = communityService.deletePics(picsVO);		
@@ -224,63 +258,63 @@ public class CommunityController {
 		model.addAttribute("picsDetail",picsDetail);
 		return "Community/update";	
 	}
-	@RequestMapping(value = "/community_updateAction.cm")
-	public String updatePics(MultipartHttpServletRequest request) throws Exception, IOException {	
-	
-		//picsVO만들어서 값 넣기
-		PicsVO picsVO = new PicsVO();		
-		picsVO.setPICS_NUM(Integer.parseInt(request.getParameter("PICS_NUM")));
-		picsVO.setPICS_CATEGORY(request.getParameter("PICS_CATEGORY"));
-		picsVO.setPICS_CONTENT_1(request.getParameter("PICS_CONTENT_1"));
-		picsVO.setPICS_CONTENT_2(request.getParameter("PICS_CONTENT_2"));
-		picsVO.setPICS_CONTENT_3(request.getParameter("PICS_CONTENT_3"));
-		picsVO.setPICS_REVIEW(request.getParameter("PICS_REVIEW"));
-		picsVO.setPICS_TAG(request.getParameter("PICS_TAG"));		
-		//공방매퍼로 SELECT 필요		
-		picsVO.setPICS_WORKSHOP("개인");
-		if(request.getParameter("PICS_WORKSHOP")!=null) {
-			picsVO.setPICS_WORKSHOP(request.getParameter("PICS_WORKSHOP"));
-		}		
-		
-		//파일업로드 시작=-------------------------------------------------
-		String uploadPath="C:\\Project138\\upload\\";
-		
-	    //사진 개수만큼 파일업로드 시작=-------------------------------------------------
-		for (int i = 1; i < 4; i++) {
-			MultipartFile mf = request.getFile("PICS_FILE_" + i);
-			if (mf.getOriginalFilename()!= null && !mf.getOriginalFilename().equals("")) {
-				String originalFileExtnesion = mf.getOriginalFilename().substring(mf.getOriginalFilename().lastIndexOf("."));
-				String storedFileName = UUID.randomUUID().toString().replaceAll("-", "") + originalFileExtnesion;
-				// 파일저장
-				mf.transferTo(new File(uploadPath + storedFileName));
-				if (i == 1) {
-					System.out.println(storedFileName);
-					picsVO.setPICS_FILE_1(storedFileName);
-				}
-				if (i == 2) {
-					System.out.println(storedFileName);
-					picsVO.setPICS_FILE_2(storedFileName);
-				}
-				if (i == 3) {
-					System.out.println(storedFileName);
-					picsVO.setPICS_FILE_3(storedFileName);
-				}
-			}
-			else{
-				if(i==1) {					
-					picsVO.setPICS_FILE_1(request.getParameter("PICS_FILE_1"));
-				}if(i==2) {
-					System.out.println("else 2");
-					picsVO.setPICS_FILE_2(request.getParameter("PICS_FILE_2"));
-				}if(i==3) {
-					System.out.println("else 3");
-					picsVO.setPICS_FILE_3(request.getParameter("PICS_FILE_3"));
-				}
-			}
-		}
-		communityService.updatePics(picsVO);
-		return "redirect:./community.cm";	
-	}
+//	@RequestMapping(value = "/community_updateAction.cm")
+//	public String updatePics(MultipartHttpServletRequest request) throws Exception, IOException {	
+//	
+//		//picsVO만들어서 값 넣기
+//		PicsVO picsVO = new PicsVO();		
+//		picsVO.setPICS_NUM(Integer.parseInt(request.getParameter("PICS_NUM")));
+//		picsVO.setPICS_CATEGORY(request.getParameter("PICS_CATEGORY"));
+//		picsVO.setPICS_CONTENT_1(request.getParameter("PICS_CONTENT_1"));
+//		picsVO.setPICS_CONTENT_2(request.getParameter("PICS_CONTENT_2"));
+//		picsVO.setPICS_CONTENT_3(request.getParameter("PICS_CONTENT_3"));
+//		picsVO.setPICS_REVIEW(request.getParameter("PICS_REVIEW"));
+//		picsVO.setPICS_TAG(request.getParameter("PICS_TAG"));		
+//		//공방매퍼로 SELECT 필요		
+//		picsVO.setPICS_WORKSHOP("개인");
+//		if(request.getParameter("PICS_WORKSHOP")!=null) {
+//			picsVO.setPICS_WORKSHOP(request.getParameter("PICS_WORKSHOP"));
+//		}		
+//		
+//		//파일업로드 시작=-------------------------------------------------
+//		String uploadPath="C:\\Project138\\upload\\";
+//		
+//	    //사진 개수만큼 파일업로드 시작=-------------------------------------------------
+//		for (int i = 1; i < 4; i++) {
+//			MultipartFile mf = request.getFile("PICS_FILE_" + i);
+//			if (mf.getOriginalFilename()!= null && !mf.getOriginalFilename().equals("")) {
+//				String originalFileExtnesion = mf.getOriginalFilename().substring(mf.getOriginalFilename().lastIndexOf("."));
+//				String storedFileName = UUID.randomUUID().toString().replaceAll("-", "") + originalFileExtnesion;
+//				// 파일저장
+//				mf.transferTo(new File(uploadPath + storedFileName));
+//				if (i == 1) {
+//					System.out.println(storedFileName);
+//					picsVO.setPICS_FILE_1(storedFileName);
+//				}
+//				if (i == 2) {
+//					System.out.println(storedFileName);
+//					picsVO.setPICS_FILE_2(storedFileName);
+//				}
+//				if (i == 3) {
+//					System.out.println(storedFileName);
+//					picsVO.setPICS_FILE_3(storedFileName);
+//				}
+//			}
+//			else{
+//				if(i==1) {					
+//					picsVO.setPICS_FILE_1(request.getParameter("PICS_FILE_1"));
+//				}if(i==2) {
+//					System.out.println("else 2");
+//					picsVO.setPICS_FILE_2(request.getParameter("PICS_FILE_2"));
+//				}if(i==3) {
+//					System.out.println("else 3");
+//					picsVO.setPICS_FILE_3(request.getParameter("PICS_FILE_3"));
+//				}
+//			}
+//		}
+//		communityService.updatePics(picsVO);
+//		return "redirect:./community.cm";	
+//	}
 	
 	@RequestMapping(value = "/deletePicsFile.cm")
 	public @ResponseBody Map<String, Object> deletePicsFile(PicsVO picsVO,HttpServletRequest request) {
@@ -292,14 +326,14 @@ public class CommunityController {
 		if(file.exists() == true){ 
 			file.delete(); 
 		}
-		String index = request.getParameter("index");
-		if(index =="1") {
-			picsVO.setPICS_FILE_1("");
-		}if(index =="2") {
-			picsVO.setPICS_FILE_2("");
-		}if(index =="3") {
-			picsVO.setPICS_FILE_3("");
-		}
+//		String index = request.getParameter("index");
+//		if(index =="1") {
+//			picsVO.setPICS_FILE_1("");
+//		}if(index =="2") {
+//			picsVO.setPICS_FILE_2("");
+//		}if(index =="3") {
+//			picsVO.setPICS_FILE_3("");
+//		}
 		
 		picsVO.setPICS_NUM(Integer.parseInt(request.getParameter("picNum")));
 		Map<String, Object> retVal = new HashMap<String, Object>();

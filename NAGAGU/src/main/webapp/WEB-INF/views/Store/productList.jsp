@@ -68,6 +68,7 @@
 		}
 		
 		.search-tap {
+			font-size: 20px;
 			border-bottom: 1px solid #EAEAEA;
 		}
 		.search-tap a:hover{
@@ -224,7 +225,7 @@
 <body class="order-body">
 	<div class="site-wrap">
 		<!-- content start -->
-		<div class="container">
+		<div class="container category_st">
 			<div class="content">
 				<div class="search-tap">
 					<div class="caption py-5">

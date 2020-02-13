@@ -958,7 +958,6 @@ public String productdetail123(ProductVO productVO, MemberVO memberVO, Model mod
 		//값이 여러개일 수 있는 size, color, option String으로 값 받기
 		String PRODUCT_SIZE = "";
 		String PRODUCT_COLOR = "";
-		String PRODUCT_OPTION = "";
 		String[] SizeStr = request.getParameterValues("PRODUCT_SIZE");
 		String[] ColorStr = request.getParameterValues("PRODUCT_COLOR");
 		

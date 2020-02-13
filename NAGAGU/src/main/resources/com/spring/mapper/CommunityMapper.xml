@@ -1,24 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<!-- 
-PICS_NUM
-PICS_MEMBER
-PICS_NICK
-PICS_DATE
-PICS_CATEGORY
-PICS_LIKE
-PICS_WORKSHOP
-PICS_TAG
-PICS_READ
-PICS_REVIEW
-PICS_CONTENT_1
-PICS_CONTENT_2
-PICS_CONTENT_3
-PICS_FILE_1
-PICS_FILE_2
-PICS_FILE_3
-PICS_REF-->
-
 <!-- 이 xml문서와 맵핑할 인터페이스 경로, 이름 -->
 <mapper namespace="com.spring.mapper.CommunityMapper">
 	<resultMap type="java.util.HashMap" id="hashmapVO">
@@ -28,17 +9,11 @@ PICS_REF-->
 		<result property="PICS_DATE" column="PICS_DATE" />	
 		<result property="PICS_CATEGORY" column="PICS_CATEGORY" />		
 		<result property="PICS_LIKE" column="PICS_LIKE" />	
-		<result property="PICS_WORKSHOP" column="PICS_WORKSHOP" />			
 		<result property="PICS_TAG" column="PICS_TAG" />	
 		<result property="PICS_READ" column="PICS_READ" />
 		<result property="PICS_REVIEW" column="PICS_REVIEW" />		
-		<result property="PICS_CONTENT_1" column="PICS_CONTENT_1" />	
-		<result property="PICS_CONTENT_2" column="PICS_CONTENT_2" />
-		<result property="PICS_CONTENT_3" column="PICS_CONTENT_3" />	
-		<result property="PICS_FILE_1" column="PICS_FILE_1" />
-		<result property="PICS_FILE_2" column="PICS_FILE_2" />
-		<result property="PICS_FILE_3" column="PICS_FILE_3" />
-		<result property="PICS_REF" column="PICS_REF" />				
+		<result property="PICS_MAIN_IMAGE" column="PICS_MAIN_IMAGE" />	
+		<result property="PICS_CONTENT" column="PICS_CONTENT" />
 	</resultMap>
 
 	<resultMap type="com.spring.community.PicsVO" id="picsResultMap">
@@ -48,25 +23,12 @@ PICS_REF-->
 		<result property="PICS_DATE" column="PICS_DATE" />	
 		<result property="PICS_CATEGORY" column="PICS_CATEGORY" />		
 		<result property="PICS_LIKE" column="PICS_LIKE" />	
-		<result property="PICS_WORKSHOP" column="PICS_WORKSHOP" />			
 		<result property="PICS_TAG" column="PICS_TAG" />	
 		<result property="PICS_READ" column="PICS_READ" />
 		<result property="PICS_REVIEW" column="PICS_REVIEW" />		
-		<result property="PICS_CONTENT_1" column="PICS_CONTENT_1" />	
-		<result property="PICS_CONTENT_2" column="PICS_CONTENT_2" />
-		<result property="PICS_CONTENT_3" column="PICS_CONTENT_3" />	
-		<result property="PICS_FILE_1" column="PICS_FILE_1" />
-		<result property="PICS_FILE_2" column="PICS_FILE_2" />
-		<result property="PICS_FILE_3" column="PICS_FILE_3" />
-		<result property="PICS_REF" column="PICS_REF" />		
+		<result property="PICS_MAIN_IMAGE" column="PICS_MAIN_IMAGE" />	
+		<result property="PICS_CONTENT" column="PICS_CONTENT" />
 	</resultMap>
-	
-<!-- 	<select id="getPicsCountAll" resultType="int">
-		SELECT count(*) FROM PICS  WHERE 1=1
-		  <if test="PICS_REVIEW == 1">  AND PICS_REVIEW=#{PICS_REVIEW} </if>
-		  <if test="PICS_CATEGORY != 'all'"> AND PICS_CATEGORY=#{PICS_CATEGORY} </if>
-	</select> -->
-
 	
 	<select id="getPicsCount" parameterType="java.util.HashMap" resultType="int">
 			SELECT count(*) FROM PICS  WHERE 1=1
@@ -76,12 +38,11 @@ PICS_REF-->
 	
 	<select id="getPicsAll" parameterType="java.util.HashMap" resultMap="picsResultMap">	
  		SELECT * FROM
-		(SELECT rownum rnum, PICS_NUM, PICS_MEMBER, PICS_NICK, PICS_DATE, PICS_CATEGORY, PICS_LIKE, PICS_WORKSHOP, PICS_TAG, PICS_READ, PICS_REVIEW,  
-		PICS_CONTENT_1, PICS_CONTENT_2, PICS_CONTENT_3, PICS_FILE_1, PICS_FILE_2, PICS_FILE_3, PICS_REF
+		(SELECT rownum rnum, PICS_NUM, PICS_MEMBER, PICS_NICK, PICS_DATE, PICS_CATEGORY, PICS_LIKE, 
+		PICS_TAG, PICS_READ, PICS_REVIEW, PICS_MAIN_IMAGE, PICS_CONTENT
         FROM (SELECT * FROM PICS WHERE 1=1
 		  <if test="PICS_REVIEW == 1">  AND PICS_REVIEW=#{PICS_REVIEW} </if>
 		  <if test="PICS_CATEGORY != 'all'"> AND PICS_CATEGORY=#{PICS_CATEGORY} </if>
-		  <!-- <if test="keyword != null"> AND PICS_TAG LIKE '%'||#{keyword}||'%'</if> -->
 		  <if test="option != null"> 
 		  	<if test="option == 'tag'">
 				AND PICS_TAG LIKE '%'||#{keyword}||'%'
@@ -90,9 +51,7 @@ PICS_REF-->
 				AND PICS_NICK LIKE '%'||#{keyword}||'%'
 			</if>
 			<if test="option == 'content'">
-				AND (PICS_CONTENT_1 LIKE '%'||#{keyword}||'%'
-				OR PICS_CONTENT_2 LIKE '%'||#{keyword}||'%'
-				OR PICS_CONTENT_3 LIKE '%'||#{keyword}||'%')
+				AND (PICS_CONTENT LIKE '%'||#{keyword}||'%')
 			</if>
 		  </if>
            ORDER BY
@@ -115,27 +74,11 @@ PICS_REF-->
 	<update id="updatePicsReadCount" parameterType="com.spring.community.PicsVO">
 	UPDATE PICS SET PICS_READ=PICS_READ+1 WHERE PICS_NUM =#{PICS_NUM}
 	</update>
-
-<!-- SELECTKEY
-	<insert id="insertStudents">
-		<selectKey keyProperty="id" resultType="int" order="BEFORE">
-			select SEQ_ID.nextval FROM DUAL
-		</selectKey>
-		insert into Students
-		(id, name , email)
-		values
-		(#{id}, #{name}, #{email})
-	</insert> -->
-
+	
  	<insert id="insertPics"	parameterType="com.spring.community.PicsVO">
 		INSERT INTO PICS
-	(PICS_NUM, PICS_MEMBER, PICS_NICK, PICS_DATE, PICS_CATEGORY, PICS_LIKE, PICS_WORKSHOP, PICS_TAG, PICS_READ, PICS_REVIEW,  
-		PICS_CONTENT_1, PICS_CONTENT_2, PICS_CONTENT_3, PICS_FILE_1, PICS_FILE_2, PICS_FILE_3, PICS_REF)
-	VALUES(SEQ_PICS.NEXTVAL, #{PICS_MEMBER}, #{PICS_NICK}, SYSDATE, #{PICS_CATEGORY}, #{PICS_LIKE}, #{PICS_WORKSHOP}, #{PICS_TAG}, 0, #{PICS_REVIEW},  
-	 #{PICS_CONTENT_1}, #{PICS_CONTENT_2}, #{PICS_CONTENT_3}, #{PICS_FILE_1, jdbcType=VARCHAR}, #{PICS_FILE_2, jdbcType=VARCHAR}, #{PICS_FILE_3, jdbcType=VARCHAR}, SEQ_PICS_REF.NEXTVAL)
-		<selectKey keyProperty="PICS_REF" resultType="Integer"	order="AFTER">
-			SELECT SEQ_PICS_REF.CURRVAL FROM DUAL
-		</selectKey>
+	VALUES(SEQ_PICS.NEXTVAL, #{PICS_MEMBER}, #{PICS_NICK}, SYSDATE, #{PICS_CATEGORY}, #{PICS_LIKE, jdbcType=INTEGER}, 
+	#{PICS_TAG}, 0, #{PICS_REVIEW}, #{PICS_MAIN_IMAGE, jdbcType=VARCHAR}, #{PICS_CONTENT, jdbcType=VARCHAR})
 	</insert> 
 	
 	<delete id="deletePics" parameterType="com.spring.community.PicsVO">	
@@ -144,38 +87,16 @@ PICS_REF-->
 	
 	<update id="updatePics" parameterType="com.spring.community.PicsVO">
 	UPDATE PICS SET 
-	PICS_CATEGORY=#{PICS_CATEGORY}, PICS_WORKSHOP=#{PICS_WORKSHOP}, PICS_TAG=#{PICS_TAG}, PICS_REVIEW=#{PICS_REVIEW},  
-		PICS_CONTENT_1=#{PICS_CONTENT_1}, PICS_CONTENT_2=#{PICS_CONTENT_2}, PICS_CONTENT_3=#{PICS_CONTENT_3}	
-<!-- 		<if test="PICS_FILE_1 == null">
-			, PICS_FILE_1='noImage'
-		</if> -->
-		<if test="PICS_FILE_1 !=null">
-			, PICS_FILE_1=#{PICS_FILE_1, jdbcType=VARCHAR} 
-		</if>
-<!-- 		<if test="PICS_FILE_2 == null">
-			, PICS_FILE_2='noImage'
-		</if> -->
-		<if test="PICS_FILE_2 !=null">
-			, PICS_FILE_2=#{PICS_FILE_2, jdbcType=VARCHAR} 
-		</if>
-<!-- 		<if test="PICS_FILE_3 == null">
-			, PICS_FILE_3='noImage'
-		</if> -->
-		<if test="PICS_FILE_3 !=null">
-			, PICS_FILE_3=#{PICS_FILE_3, jdbcType=VARCHAR} 
-		</if>
-		<!-- <if test="PICS_FILE_1 !=null">, PICS_FILE_1=#{PICS_FILE_1, jdbcType=VARCHAR} </if>
-		<if test="PICS_FILE_2 !=null">, PICS_FILE_2=#{PICS_FILE_2, jdbcType=VARCHAR} </if>
-		<if test="PICS_FILE_3 !=null">, PICS_FILE_3=#{PICS_FILE_3, jdbcType=VARCHAR} </if> -->
-	 WHERE PICS_NUM=#{PICS_NUM}	
+	PICS_CATEGORY=#{PICS_CATEGORY}, PICS_TAG=#{PICS_TAG}, 
+	PICS_REVIEW=#{PICS_REVIEW},  PICS_MAIN_IMAGE=#{PICS_MAIN_IMAGE}, PICS_CONTENT=#{PICS_CONTENT}	
+	WHERE PICS_NUM=#{PICS_NUM}	
 	</update>
 	
 	<update id="deletePicsFile" parameterType="com.spring.community.PicsVO">	
 		UPDATE PICS 
 		<set> 
-			PICS_FILE_1=#{PICS_FILE_1, jdbcType=VARCHAR}
-			, PICS_FILE_2=#{PICS_FILE_2, jdbcType=VARCHAR}
-			, PICS_FILE_3=#{PICS_FILE_3, jdbcType=VARCHAR} 
+			PICS_MAIN_IMAGE=#{PICS_MAIN_IMAGE, jdbcType=VARCHAR}
+			, PICS_CONTENT=#{PICS_CONTENT, jdbcType=VARCHAR}
 		</set>
 		WHERE PICS_NUM=#{PICS_NUM}
 	</update>

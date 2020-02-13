@@ -76,6 +76,13 @@ public class PicsCommentServiceImpl implements PicsCommentService{
 		System.out.println("getLoginMemberReply Impl결과="+commentList);
 		return commentList;
 	}
+	@Override
+	public ArrayList<PicsCommentDB> getCommentCount(int num) {
+		ArrayList<PicsCommentDB> getCommentCount =null;
+		PicsCommentMapper commentmapper = sqlSession.getMapper(PicsCommentMapper.class);
+		getCommentCount= commentmapper.getCommentCount(num);
+		return getCommentCount;
+	}
 
 	
 }

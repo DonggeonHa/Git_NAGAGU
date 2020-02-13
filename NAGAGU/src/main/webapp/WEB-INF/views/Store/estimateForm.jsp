@@ -172,7 +172,7 @@
 
 <body class="order-body">
 	<!-- content start -->
-	<div class="container">
+	<div class="container category_st">
 		<form id="estimate" name="store_estimateform" class="store_estimateform"
 			action="./estimate_input.es" method="post"
 			enctype="multipart/form-data">
