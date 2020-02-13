@@ -158,7 +158,6 @@
 				$('.listnum_num').text(data.length+"건");
 				console.log(data);
 				$.each(data, function(index, item) {
-					
 					var output = ' ';
 					output += '<tr>';
 					output += '<td><input type="checkbox" name="chk_status" value="'+ item.class_NUMBER + '"></td>';

@@ -123,6 +123,15 @@ public class AdminServiceImpl implements AdminService {
 		
 		return res;
 	}
+	
+	@Override
+	public WorkShopMemberVO detailWMember(WorkShopMemberVO vo) {
+		WorkShopMemberVO getMember = null;
+		AdminMapper adminMapper = sqlSession.getMapper(AdminMapper.class);
+		getMember = adminMapper.detailWMember(vo);
+		
+		return getMember;
+	}
 
 	/* ================================= 커뮤니티관리 ======================================*/
 	@Override
@@ -160,6 +169,15 @@ public class AdminServiceImpl implements AdminService {
 		return res;
 	}
 	
+	@Override
+	public ClassVO detailAcademy(ClassVO vo) {
+		ClassVO getClass = null;
+		AdminMapper adminMapper = sqlSession.getMapper(AdminMapper.class);
+		getClass = adminMapper.detailAcademy(vo);
+		
+		return getClass;
+	}
+	
 	/* ================================= 상품관리 ======================================*/
 	@Override
 	public List<ProductVO> getProduct() {
@@ -195,4 +213,6 @@ public class AdminServiceImpl implements AdminService {
 		
 		return res;
 	}
+
+	
 }

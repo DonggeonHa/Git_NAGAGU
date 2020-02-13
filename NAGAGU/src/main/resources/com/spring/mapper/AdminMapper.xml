@@ -207,6 +207,10 @@
  		UPDATE NAGAGU_WORKSHOP_MEMBER SET WORKSHOP_STATUS = 2 WHERE WORKSHOP_NUM = #{WORKSHOP_NUM}
  	</update>
  	
+ 	<select id="detailWMember" parameterType="com.spring.workshop.WorkShopMemberVO" resultMap="workshopMemberResultMap">
+ 		select * from NAGAGU_WORKSHOP_MEMBER where WORKSHOP_NUM = #{WORKSHOP_NUM}
+ 	</select>
+ 	
  	<!-- 커뮤니티관리 -->
  	<select id="getPICS" parameterType="int" resultMap="picsResultMap"> <!-- 이거 처리한 결과물을 list 타입으로 만들어주면 된다. select id은 내용을 호출 함. -->
 		select *
@@ -233,6 +237,10 @@
  	<delete id="deleteAcademy" parameterType="com.spring.academy.ClassVO">
  		delete from ACADEMY where CLASS_NUMBER = #{CLASS_NUMBER}
  	</delete>
+ 	
+ 	<select id="detailAcademy" parameterType="com.spring.academy.ClassVO" resultMap="classResultMap">
+ 		select * from ACADEMY where CLASS_NUMBER = #{CLASS_NUMBER}
+ 	</select>
  	
  	<!-- 상품관리 -->
  	<select id="getProduct" parameterType="int" resultMap="productResultMap"> <!-- 이거 처리한 결과물을 list 타입으로 만들어주면 된다. select id은 내용을 호출 함. -->

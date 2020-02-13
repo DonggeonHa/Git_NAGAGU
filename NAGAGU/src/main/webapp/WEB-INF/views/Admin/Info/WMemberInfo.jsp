@@ -1,9 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<%@ page import="com.spring.member.MemberVO" %>
+<%@ page import="com.spring.workshop.WorkShopMemberVO" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
 <%
-	MemberVO memberVO = (MemberVO)request.getAttribute("MemberVO");
+	WorkShopMemberVO memberVO = (WorkShopMemberVO)request.getAttribute("WMemberVO");
 %>
 <!DOCTYPE html>
 <html>
@@ -22,77 +22,41 @@
 				<tr>
 					<th scope="row">프로필사진</th>
 					<td>
-						<img src="<%=memberVO.getMEMBER_PICTURE()%>" style="width: 200px; height: 200px;">
+						<img src="<%=memberVO.getWORKSHOP_PICTURE()%>" style="width: 200px; height: 200px;">
 					</td>
 				</tr>
 				<tr>
-					<th scope="row">이름</th>
-					<td><%=memberVO.getMEMBER_NAME()%></td>
+					<th scope="row">공방명</th>
+					<td><%=memberVO.getWORKSHOP_NAME()%></td>
 				</tr>
 				<tr>
-					<th scope="row">닉네임</th>
-					<td><%=memberVO.getMEMBER_NICK()%></td>
+					<th scope="row">대표자</th>
+					<td><%=memberVO.getWORKSHOP_CEO_NAME()%></td>
 				</tr>
 				<tr>
 					<th scope="row">핸드폰</th>
-					<td>
-						<%
-							if(memberVO.getMEMBER_PHONE() == null) {
-						%>
-								<font color="gray">아직 입력되지 않았습니다.</font>
-						<%
-							} else {
-						%>
-								<%=memberVO.getMEMBER_PHONE()%>
-						<%
-							}
-						%>
-					</td>
+					<td><%=memberVO.getWORKSHOP_PHONE()%></td>
 				</tr>
 				<tr>
 					<th scope="row">이메일</th>
-					<td><%=memberVO.getMEMBER_EMAIL()%></td>
+					<td><%=memberVO.getWORKSHOP_EMAIL()%></td>
 				</tr>
 				<tr>
 					<th scope="row">주소</th>
-					<td>
-						<%
-							if(memberVO.getADDRESS_ADDRESS1() == null) {
-						%>
-								<font color="gray">아직 입력되지 않았습니다.</font>
-						<%
-							} else {
-						%>
-								<%=memberVO.getADDRESS_ADDRESS1()%>
-						<%
-							}
-						%>
-					</td>
+					<td><%=memberVO.getWORKSHOP_ADDRESS1()%></td>
 				</tr>
 				<tr>
 					<th scope="row">상세주소</th>
-					<td>
-						<%
-							if(memberVO.getADDRESS_ADDRESS2() == null) {
-						%>
-								<font color="gray">아직 입력되지 않았습니다.</font>
-						<%
-							} else {
-						%>
-								<%=memberVO.getADDRESS_ADDRESS2()%>
-						<%
-							}
-						%>
-					</td>
+					<td><%=memberVO.getWORKSHOP_ADDRESS2()%></td>
 				</tr>
 				<tr>
 					<th scope="row">가입날짜</th>
-					<td><%=memberVO.getMEMBER_DATE()%></td>
+					<td><%=memberVO.getWORKSHOP_DATE()%></td>
 				</tr>
-			</table>	
+			</table>
 			<div class="d-flex justify-content-center">
 				<button type="button" class="btn btn-outline-dark btn-lg" onclick="window.close();">닫기</button>
-			</div>
+			</div>	
 		</div>					
 		
 		<script src="https://code.jquery.com/jquery-3.4.1.js" integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU=" crossorigin="anonymous"></script>

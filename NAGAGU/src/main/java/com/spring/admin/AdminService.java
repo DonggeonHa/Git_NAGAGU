@@ -22,6 +22,7 @@ public interface AdminService {
 	public List<WorkShopMemberVO> getWMembers();
 	public int deleteWMember(WorkShopMemberVO vo);
 	public int updateWMember(WorkShopMemberVO vo);
+	public WorkShopMemberVO detailWMember(WorkShopMemberVO vo);
 	
 	/* 커뮤니티관리 */
 	public List<PicsVO> getPICS();
@@ -30,6 +31,7 @@ public interface AdminService {
 	/* 아카데미관리 */
 	public List<ClassVO> getAcademy();
 	public int deleteAcademy(ClassVO vo);
+	public ClassVO detailAcademy(ClassVO vo);
 	
 	/* 상품관리 */
 	public List<ProductVO> getProduct();

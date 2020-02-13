@@ -93,9 +93,7 @@ public class AdminController {
 		Map<String, Object> retVal = new HashMap<String, Object>();
 		
 		try {
-			System.out.println("MEMBER_NUM222 = " + vo.getMEMBER_NUM());
 			MemberVO res = adminService.detailMember(vo);
-			System.out.println("상세보기 : " + res.getMEMBER_NUM());
 			
 			retVal.put("res", "OK");
 			retVal.put("MemberVO", res);
@@ -109,7 +107,6 @@ public class AdminController {
 	
 	@RequestMapping(value = "/memberInfo.ad", method = {RequestMethod.GET, RequestMethod.POST})
 	public String MemberInfo(MemberVO vo, Model model) {
-		System.out.println("들어왔니 : " + vo.getMEMBER_NUM());
 		try {
 			MemberVO res = adminService.detailMember(vo);
 			
@@ -127,7 +124,6 @@ public class AdminController {
 		Map<String, Object> retVal = new HashMap<String, Object>();
 		
 		try {
-			System.out.println("MEMBER_NUM = " + vo.getMEMBER_NUM());
 			int res = adminService.deleteMember(vo);
 			
 			retVal.put("res", "OK");
@@ -199,6 +195,38 @@ public class AdminController {
 		
 		return retVal;
 	}
+	
+	@RequestMapping(value = "/detailWMember.ad", produces="application/json; charset=UTF-8", method = {RequestMethod.GET, RequestMethod.POST})
+	@ResponseBody
+	public Map<String, Object> detailWMember(WorkShopMemberVO vo) {
+		Map<String, Object> retVal = new HashMap<String, Object>();
+		
+		try {
+			WorkShopMemberVO res = adminService.detailWMember(vo);
+			
+			retVal.put("res", "OK");
+			retVal.put("WMemberVO", res);
+		} catch(Exception e) {
+			retVal.put("res", "FAIL");
+			retVal.put("message", "상세보기가 되지 않았습니다.");
+		}
+		
+		return retVal;
+	}
+	
+	@RequestMapping(value = "/WmemberInfo.ad", method = {RequestMethod.GET, RequestMethod.POST})
+	public String WMemberInfo(WorkShopMemberVO vo, Model model) {
+		try {
+			WorkShopMemberVO res = adminService.detailWMember(vo);
+			
+			model.addAttribute("WMemberVO", res);
+			
+		} catch(Exception e) {
+			System.out.println("MemberInfo : " + e.getMessage());
+		}		
+		return "Admin/Info/WMemberInfo";
+	}
+	
 	
 	/*=========================== 커뮤니티관리 ==============================*/
 	@RequestMapping(value = "/picsList.ad")
@@ -281,6 +309,24 @@ public class AdminController {
 		} catch(Exception e) {
 			retVal.put("res", "FAIL");
 			retVal.put("message", "삭제가 되지 않았습니다.");
+		}
+		
+		return retVal;
+	}
+	
+	@RequestMapping(value = "/detailAcademy.ad", produces="application/json; charset=UTF-8", method = {RequestMethod.GET, RequestMethod.POST})
+	@ResponseBody
+	public Map<String, Object> detailAcademy(ClassVO vo) {
+		Map<String, Object> retVal = new HashMap<String, Object>();
+		
+		try {
+			ClassVO res = adminService.detailAcademy(vo);
+			
+			retVal.put("res", "OK");
+			retVal.put("ClassVO", res);
+		} catch(Exception e) {
+			retVal.put("res", "FAIL");
+			retVal.put("message", "상세보기가 되지 않았습니다.");
 		}
 		
 		return retVal;

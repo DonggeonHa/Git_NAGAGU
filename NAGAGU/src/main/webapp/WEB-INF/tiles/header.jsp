@@ -455,7 +455,7 @@
 										if(MEMBER_EMAIL == null && WORKSHOP_NAME == null) { 
 									%>
 											<li>
-												<img src="${pageContext.request.contextPath}/resources/images/Main/top_icon_cart.png" alt="" data-toggle="modal" data-target="#exampleModalCenter"/>
+												<img src="${pageContext.request.contextPath}/resources/images/Main/top_icon_cart.png" alt="" data-toggle="modal" data-target="#exampleModalCenter" style="cursor: pointer;"/>
 											</li>
 									<%
 										} else if(MEMBER_EMAIL != null){ 
