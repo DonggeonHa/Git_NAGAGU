@@ -481,14 +481,6 @@
 		  text-decoration: none !important;
 		  color: black !important;
 		}
-		
-		.clickable {cursor: pointer;}
-		.hover {text-decoration: underline;}
-		.odd{ background: #FFC;}
-		.even{ background: #FF9;}
-		.active{ width:10px; height:10px; background:#f60; color:white;}	
-		
-
       </style>
 
 	<script>

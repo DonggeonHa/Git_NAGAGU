@@ -394,8 +394,8 @@
 											<div class="dropdown">
 												<a class="nav-link" href="#" id="header_st">STORE</a>
 												<div class="dropdown-content">
-													<a href="./productcategory.pro" class="header_nav" id="header_sj">수제가구</a>
-													<a href="./estimate.es" class="header_nav" id="header_kj">견적문의</a>
+													<a href="./productcategory.pro" class="header_nav" id="header_sj" style="text-decoration: none;">수제가구</a>
+													<a href="./estimate.es" class="header_nav" id="header_kj" style="text-decoration: none;">견적문의</a>
 												</div>
 											</div>
 										</li>
@@ -408,7 +408,7 @@
 								<%	
 									if(MEMBER_EMAIL == null && WORKSHOP_NAME == null) { 
 								%>
-										<li style="color: white">로그인을 해주세요</li>
+										<li style="color: white"><p data-toggle="modal" data-target="#exampleModalCenter" style="cursor: pointer;">Sign in</p></li>
 								<%
 									} else if(MEMBER_EMAIL != null){ 
 								%>
@@ -430,22 +430,21 @@
 									%>
 											<li>
 												<img src="${pageContext.request.contextPath}/resources/images/Main/top_icon_mypage.png" alt=""
-													data-toggle="modal" data-target="#exampleModalCenter" aria-haspopup="true" aria-expanded="false" />
+													data-toggle="modal" data-target="#exampleModalCenter" aria-haspopup="true" aria-expanded="false" style="cursor: pointer;"/>
 											</li>
 									<%
 										} else if(MEMBER_EMAIL != null){
 									%>
 											<li>
 												<div class="dropdown">
-													<img src="${pageContext.request.contextPath}/resources/images/Main/top_icon_mypage.png"/ style="width: 20px; height: 25px;">
+													<img src="${pageContext.request.contextPath}/resources/images/Main/top_icon_mypage.png"/ style="width: 20px; height: 25px; cursor: pointer;">
 													<div class="dropdown-content">
-														<a href="./logout.ma" id="logout">로그아웃</a>
-														<a href="./order_list.my">주문조회</a>
-														<a href="./mypage_edit.my">내정보수정</a>
-														<a href="./mypage_like.my">좋아요</a>
-														<a href="./chatRoom.ch?ES_ORDER_NUM=1">채팅</a>
-														<a href="#" onclick="window.open('receiveList.nt', 'new', 'scrollbars=yes, resizable=yes, width=600, height=700, left=0, top=0');">쪽지</a>
-														
+														<a href="./logout.ma" style="text-decoration: none;">로그아웃</a>
+														<a href="./order_list.my" style="text-decoration: none;">주문조회</a>
+														<a href="./mypage_edit.my" style="text-decoration: none;">내정보수정</a>
+														<a href="./mypage_like.my" style="text-decoration: none;">좋아요</a>
+														<a href="./chatRoom.ch?ES_ORDER_NUM=1" style="text-decoration: none;">채팅</a>
+														<a href="#" onclick="window.open('receiveList.nt', 'new', 'scrollbars=yes, resizable=yes, width=600, height=700, left=0, top=0');" style="text-decoration: none;">쪽지</a>
 													</div>
 												</div>
 											</li>
@@ -456,8 +455,7 @@
 										if(MEMBER_EMAIL == null && WORKSHOP_NAME == null) { 
 									%>
 											<li>
-												<img src="${pageContext.request.contextPath}/resources/images/Main/top_icon_cart.png" 
-												alt="" data-toggle="modal" data-target="#exampleModalCenter"/>
+												<img src="${pageContext.request.contextPath}/resources/images/Main/top_icon_cart.png" alt="" data-toggle="modal" data-target="#exampleModalCenter"/>
 											</li>
 									<%
 										} else if(MEMBER_EMAIL != null){ 
@@ -484,19 +482,19 @@
 										if(MEMBER_EMAIL == null && WORKSHOP_NAME == null) { 
 									%>
 											<li>
-												<a data-toggle="modal" data-target="#exampleModalCenter" class="btn_mypage">MYPAGE</a>
+												<a data-toggle="modal" data-target="#exampleModalCenter" class="btn_mypage" style="cursor: pointer;">MYPAGE</a>
 											</li>
 									<%
 										} else if(MEMBER_EMAIL != null) { 
 									%>
 											<li>
-												<a href="./mypage.my">MYPAGE</a>
+												<a href="./mypage.my" style="cursor: pointer;">MYPAGE</a>
 											</li>
 									<%
 										} else { 
 									%>
 											<li>
-												<a href="./workshop.ws">MYPAGE</a>
+												<a href="./workshop.ws" style="cursor: pointer;">MYPAGE</a>
 											</li>
 									<%
 										} 

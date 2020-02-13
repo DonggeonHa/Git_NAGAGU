@@ -22,6 +22,7 @@
 		<div class="d-flex justify-content-center">
 			<nav aria-label="Page navigation example" class="paginated" id="user-page"></nav>
 		</div>
+		<div id="modal-test"></div>
 	</div>
 </div>
 <!-- /본문 -->
@@ -64,7 +65,8 @@ function selectData() {
 				output += '<tbody class="text-center">'
 				output += '<tr>';
 				output += '<td>' + item.member_NUM + '</td>'; // undefined ㅗ
-				output += '<td>' + item.member_EMAIL + '</td>';
+				output += '<td><a href="./detailMember.ad" class="detail_data" '
+				output += 'MEMBER_NUM=' + item.member_NUM + '>' + item.member_EMAIL + '</a></td>';
 				output += '<td>' + item.member_NAME + '</td>';
 				output += '<td>' + item.member_NICK + '</td>';
 				
@@ -93,7 +95,7 @@ function selectData() {
 				}
 				
 				output += '<td><a href="./deleteMember.ad" class="del_data" ';
-				output += 'MEMBER_NUM=' + item.member_NUM +  '><i class="fas fa-trash-alt" ></i></a></td>';
+				output += 'MEMBER_NUM=' + item.member_NUM + '><i class="fas fa-trash-alt" ></i></a></td>';
 				output += '</tr>';
 				output += '</tbody>'
 				console.dir("output : " + output);
@@ -128,6 +130,29 @@ $(document).on('click', '.del_data', function(event) {
 		},
 		error : function() {
 			alert("ajax 삭제 통신 실패!");
+		}
+	});
+	
+	// 기본 이벤트 제거
+	event.preventDefault();
+});
+
+$(document).on('click', '.detail_data', function(event) {
+	var pop = window.open('about:blank', 'Info', 'scrollbars=yes, resizable=yes, width=500, height=600, left=0, top=0');
+	jQuery.ajax({
+		url : $(this).attr("href"), //$(this) : //항목을 눌렀을때 그 걸 가르킴 .attr("href") 속성된 이름값중에 "href"을 통해서? 읽어온다??
+		type : 'GET',
+		data : {'MEMBER_NUM' : $(this).attr("member_NUM")},
+		contentType : 'application/x-www-form-urlencoded; charset=UTF-8',
+		dataType : 'json',
+		success : function (retVal) {
+			if (retVal.res == "OK") {
+				pop.location.href="memberInfo.ad?MEMBER_NUM=" + retVal.MemberVO.member_NUM;	
+	 		}
+		},
+		error: function(request,status,error) {
+			alert("ajax detailmember 통신 실패!");
+			alert("code:"+request.status+"\n"+"error:"+error);
 		}
 	});
 	

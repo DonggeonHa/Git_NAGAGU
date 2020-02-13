@@ -16,6 +16,7 @@ public interface AdminService {
 	/* 일반회원관리 */
 	public List<MemberVO> getMembers();
 	public int deleteMember(MemberVO vo);
+	public MemberVO detailMember(MemberVO vo);
 	
 	/* 공방회원관리 */
 	public List<WorkShopMemberVO> getWMembers();

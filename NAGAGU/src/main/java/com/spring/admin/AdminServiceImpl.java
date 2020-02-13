@@ -89,6 +89,15 @@ public class AdminServiceImpl implements AdminService {
 		
 	}
 	
+	@Override
+	public MemberVO detailMember(MemberVO vo) {
+		MemberVO getMember = null;
+		AdminMapper adminMapper = sqlSession.getMapper(AdminMapper.class);
+		getMember = adminMapper.detailMember(vo);
+		
+		return getMember;
+	}
+	
 	/* ================================= 공방회원관리 ======================================*/
 	@Override
 	public List<WorkShopMemberVO> getWMembers() {
@@ -186,6 +195,4 @@ public class AdminServiceImpl implements AdminService {
 		
 		return res;
 	}
-
-	
 }

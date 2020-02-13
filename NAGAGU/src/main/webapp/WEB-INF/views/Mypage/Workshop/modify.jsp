@@ -4,40 +4,17 @@
 	WorkShopMemberVO workshopVO = new WorkShopMemberVO();
 	workshopVO = (WorkShopMemberVO)request.getAttribute("WorkShopMemberVO");
 	String WORKSHOP_CEO_NAME = workshopVO.getWORKSHOP_CEO_NAME();
+	String WORKSHOP_NAME = workshopVO.getWORKSHOP_NAME();
 	String WORKSHOP_PHONE = workshopVO.getWORKSHOP_PHONE();
+	String WORKSHOP_PICTURE = workshopVO.getWORKSHOP_PICTURE();
 	String WORKSHOP_LICENSE = workshopVO.getWORKSHOP_LICENSE();
 	String WORKSHOP_INTRO = workshopVO.getWORKSHOP_INTRO();
 	String WORKSHOP_ZIP = workshopVO.getWORKSHOP_ZIP();
 	String WORKSHOP_ADDRESS1 = workshopVO.getWORKSHOP_ADDRESS1();
 	String WORKSHOP_ADDRESS2 = workshopVO.getWORKSHOP_ADDRESS2();
 %>
-<!DOCTYPE html>
-<html>
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Document</title>
 
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
-    <script src="https://kit.fontawesome.com/b74b42490f.js" crossorigin="anonymous"></script>
-    <!-- 사이드 바 스타일 -->
-    <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/css/Mypage/Workshop/sidebar_kt.css">
-    <!-- 공방관리 기본 스타일 -->
-    <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/css/Mypage/Workshop/workshop_my.css">
-    <!-- 페이지 고유 스타일 -->
-    <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/css/Mypage/Workshop/workshop_my_info.css">
-
-   	
-   	<script src="https://code.jquery.com/jquery-3.4.1.js" integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU=" crossorigin="anonymous"></script>	
-    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
-</head>
-<body>
 <div class="work_container">
-	<%@ include file="./sidebar.jsp" %>
-
-
     <!-- 작업 구역 -->
     <div class="work_main">
         <div class="work_info_box">
@@ -54,7 +31,7 @@
                     <div class="row info_list">
                         <div class="col-4 info_label">공방 이름</div>
                         <div class="col-8 info_input">
-                            <h3><%=WORKSHOP_NAME %></h3>
+                            <h3><%=WORKSHOP_NAME%></h3>
                         </div>
                     </div>
                     <div class="row info_list">
@@ -139,8 +116,6 @@
 
 <!-- 우편번호 API -->
 <script src="https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
 <script>
 $(document).ready(function() {
 	
@@ -158,5 +133,3 @@ function openZipSearch() {
    }).open();
 }
 </script>
-</body>
-</html>

@@ -21,9 +21,6 @@
 </head>
 <body>
 <div class="work_container">
-	<%@ include file="../sidebar.jsp" %>
-
-
     <!-- 작업 구역 -->
     <div class="work_main">
         <div class="work_store_body">

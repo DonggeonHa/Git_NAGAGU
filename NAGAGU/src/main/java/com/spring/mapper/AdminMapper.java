@@ -17,6 +17,7 @@ public interface AdminMapper {
 	/* 일반회원관리 */
 	List<MemberVO> getMembers();
 	int deleteMember(MemberVO vo);
+	MemberVO detailMember(MemberVO vo);
 	
 	/* 공방회원관리 */
 	List<WorkShopMemberVO> getWMembers();
