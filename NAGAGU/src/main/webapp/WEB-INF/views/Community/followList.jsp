@@ -150,7 +150,6 @@ a, .card a:link, .card a:visited {
 	width: 75%;
 	height: 850px; 
 }
-
 .sidebar {
 	width: 25%;
 	height: 25vh;
@@ -159,7 +158,12 @@ a, .card a:link, .card a:visited {
 .container-mypage{
 	margin: 50px 0;
 }
-
+.img_wrap img{
+	border-radius: 100%;
+}
+.img_wrap{
+	font-size:1.5rem; 
+}
 @font-face {
 	font-family: 'KOMACON';
 	src:
@@ -193,20 +197,20 @@ a, .card a:link, .card a:visited {
 				<div class="pics-wrap">
 					<div class="row justify-content-around title mx-0 pt-2 ">
 						<div class="col-4 text-center">
-							<h2>Follow 목록</h2>
+							<h2>Following List</h2>
 						</div>
 						<div class="col-4 text-center">
-							<h2>Followed 목록</h2>
+							<h2>Followed List</h2>
 						</div>
 					</div>
 					
-					<div class="row justify-content-center title pt-2 ">
+					<div class="row justify-content-center title pt-2 img_wrap">
 						<div class="col-6 text-center">
 							<c:forEach var="list" items="${followMembers}" varStatus="status">
 								<div>
 									<a href="memberLikePics.cm?MEMBER_NUM=${list.MEMBER_NUM}">
 										<img src="${list.MEMBER_PICTURE}"
-										style="width: 50px; height: auto;">${list.MEMBER_NICK}
+										style="width: 50px; height: auto;">&nbsp;&nbsp;&nbsp;${list.MEMBER_NICK}
 									</a>
 								</div> 
 							</c:forEach> 
@@ -217,32 +221,23 @@ a, .card a:link, .card a:visited {
 								<div>
 									<a href="memberLikePics.cm?MEMBER_NUM=${list.MEMBER_NUM}">
 										<img src="${list.MEMBER_PICTURE}"
-										style="width: 50px; height: auto;">${list.MEMBER_NICK}
+										style="width: 50px; height: auto;">&nbsp;&nbsp;&nbsp;${list.MEMBER_NICK}
 									</a>
 								</div>
 							</c:forEach>
 						</div>
 					</div>
-					
-					
-						
-						
-					
-
-
 				</div>
 			</div>
 			<div class="sidebar">
 				<div class="row justify-content-center mb-2">
 					<div class="card-group text-center">
 						<div class="card text-white bg-secondary" style="width: 10rem;">
-							<a href="#" class="href">
-								<div class="card-header"><%=memberVO.getMEMBER_NICK()%></div>
-								<div class="card-body">
-									<img src=<%=memberVO.getMEMBER_PICTURE()%>>
-								</div>
-								<div class="card-footer bg-transparent ">Follow</div>
-							</a>
+							<div class="card-header"><%=memberVO.getMEMBER_NICK()%></div>
+							<div class="card-body">
+								<img src=<%=memberVO.getMEMBER_PICTURE()%>>
+							</div>
+							<div class="card-footer bg-transparent ">Follow List</div> 
 						</div>
 					</div>
 				</div>

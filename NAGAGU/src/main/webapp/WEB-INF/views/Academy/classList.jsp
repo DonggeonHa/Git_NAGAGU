@@ -94,6 +94,7 @@
 			.title {line-height:26px; color:#645fab; font-size:18px; overflow: hidden; height:1.2em; text-overflow: ellipsis; white-space:nowrap;}
 			 .caption a{ 
 			 	color: rgba(0,0,0,0.3) !important;
+			 	font-weight: 600;
 			 }
 			 .caption .active{
 			 	color: rgba(0,0,0,1) !important;
