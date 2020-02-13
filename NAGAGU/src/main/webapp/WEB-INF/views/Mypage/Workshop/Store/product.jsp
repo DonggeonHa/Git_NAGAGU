@@ -8,20 +8,20 @@ if (session.getAttribute("WORKSHOP_NUM") == null) {
 } 
 %>
 
-<div id="page-content-wrapper" style="padding-top: 2%;">
+<div id="page-content-wrapper" style="padding-top: 5%;">
 	<div class="container-fluid">
-		<div class="d-flex justify-content-between">
+		<div class="d-flex justify-content-between pb-5">
 			<div class="justify-content-start">
            		<h1>등록된 상품 관리</h1>
            	</div>
             <div class="justify-content-end">
-            	<div class="row justify-content-end">
-                	<button class="btn mx-2 btn_enroll" onclick="location.href='./product_write.pro'">상품 등록</button>
+            	<div class="justify-content-end">
+            		<a href="./product_write.pro" class="btn mx-2 btn-outline-dark" role="button" aria-pressed="true">상품등록</a>
                 </div>
             </div>
            </div>
             
-		<div class="d-flex justify-content-start">
+		<div class="d-flex justify-content-start pb-2">
 		    <button type="button" id="listall" class="btn btn-sm btn-outline-dark mr-2">전체표시</button>
 		    <button type="button" id="to_ingSale" class="btn btn-sm btn-outline-dark mr-2">선택 판매중</button>  
 		    <button type="button" id="to_pauseSale" class="btn btn-sm btn-outline-dark mr-2">선택 품절</button>  
@@ -32,11 +32,11 @@ if (session.getAttribute("WORKSHOP_NUM") == null) {
 		</div>
                 
                 
-		<div class="d-flex justify-content-between" style="display: flex;">
+		<div class="d-flex justify-content-between pb-2">
 			<div class="justify-content-start" style="padding: 0;">
 				<div class="d-flex justify-content-start">
 					<div class="select1">
-						<select class="search_hidden_state justify-content-start" id="selectClassType" name="selectClassType" onchange="btn_select1()" style="height: 33px;">
+						<select class="search_hidden_state justify-content-start form-control" id="selectClassType" name="selectClassType" onchange="btn_select1()" style="height: 33px;">
 							<option value="allProducts">전체</option>
 							<option value="ingSale">판매중</option>
 							<option value="pauseSale">품절</option>
@@ -44,7 +44,7 @@ if (session.getAttribute("WORKSHOP_NUM") == null) {
 						</select>
 					</div>
 					<div class="select2" style="padding-left:5px">
-						<select class="search_hidden_state justify-content-start"  id="selectCategory" name="selectCategory" onchange="btn_select2()" style="height: 33px;">
+						<select class="search_hidden_state justify-content-start form-control"  id="selectCategory" name="selectCategory" onchange="btn_select2()" style="height: 33px;">
 							<option value="all">전체</option>
 							<option value="table">책상</option>
 							<option value="chair">의자</option>

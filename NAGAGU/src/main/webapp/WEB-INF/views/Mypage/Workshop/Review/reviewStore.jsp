@@ -44,7 +44,7 @@
 				<div class="justify-content-start" style="padding: 0;">
 					<div class="d-flex justify-content-start">
 						<div class="select2">
-							<select class="search_hidden_state justify-content-start"  id="selectCategory" name="selectCategory" onchange="btn_select2()" style="height: 33px;">
+							<select class="search_hidden_state justify-content-start form-control"  id="selectCategory" name="selectCategory" onchange="btn_select2()" style="height: 33px;">
 								<option value="all">전체</option>
 								<option value="table">책상</option>
 								<option value="chair">의자</option>
@@ -57,7 +57,7 @@
 							</select>
 						</div>	
 						<div class="select3" style="padding-left:5px">	<!-- 보기 정렬 -->
-							<select class="search_hidden_state justify-content-start" id="selectListAlign" name="selectListAlign" onchange="btn_select3()" style="height: 33px;">
+							<select class="search_hidden_state justify-content-start form-control" id="selectListAlign" name="selectListAlign" onchange="btn_select3()" style="height: 33px;">
 								<option value="review_date">최근 등록순</option>
 							</select>
 						</div>								

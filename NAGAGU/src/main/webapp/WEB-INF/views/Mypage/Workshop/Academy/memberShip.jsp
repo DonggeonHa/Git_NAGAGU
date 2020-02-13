@@ -1,42 +1,40 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 
 <!-- 작업 구역 -->
-<div id="page-content-wrapper" style="padding-top: 2%;">
+<div id="page-content-wrapper" style="padding-top: 5%;">
 	<div class="container-fluid">
-		<div class="work_title">
-		    <div class="p-2">
-		        <h1 class="">아카데미 회원 관리</h1>
-		    </div>
-		    <div class="d-flex justify-content-between">
-		        <div class="d-flex flex-row bd-highlight mb-3">
-		            <button type="button" id="all_select" class="btn btn-sm btn-outline-dark mr-2">전체표시</button> 
-		            <button type="button" id="all_select" class="btn btn-sm btn-outline-dark mr-2">선택 삭제</button> 
-		            <button type="button" id="all_select" class="btn btn-sm btn-outline-dark mr-2">선택 쪽지</button>                        
-		            <span class="listnum_txt pt-2 bd-highlight">전체 회원 수</span>
-		            <span class="listnum_num pt-2 bd-highlight">194명</span>
-		        </div>
-		
-		        <div class="d-flex justify-content-end">
-		            <div class="dropdown">
-		                <button class="btn dropbtn btn-sm dropdown-toggle btn-search-mode" type="button" id="searchType" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-		                    	선택
-		                </button>
-		                <div class="dropdown-menu" aria-labelledby="searchType">
-		                    <a class="dropdown-item" onclick="class_name()">강의명</a>
-							<a class="dropdown-item" onclick="member_name()">회원 이름</a>
-							<a class="dropdown-item" onclick="member_phone()">전화번호</a>
-		               </div>
-		           </div>
-		           <!-- search -->
-		           <nav class="navbar-light bg-light">
-		             <form class="form-inline" onsubmit="return false">
-		               <input class="form-control mr-sm-2" id="keyword" type="search" aria-label="Search" style="height:90%">
-		                <button class="btn btn_search btn-sm my-2 my-sm-0" type="button" id="btn_search">검색</button>
-		              </form>
-		            </nav>
-		        </div>
-		    </div>
-		</div>
+	    <div class="pb-5">
+	        <h1 class="">아카데미 회원 관리</h1>
+	    </div>
+	    <div class="d-flex justify-content-between pb-2">
+	        <div class="d-flex flex-row bd-highlight mb-3">
+	            <button type="button" id="all_select" class="btn btn-sm btn-outline-dark mr-2">전체표시</button> 
+	            <button type="button" id="all_select" class="btn btn-sm btn-outline-dark mr-2">선택 삭제</button> 
+	            <button type="button" id="all_select" class="btn btn-sm btn-outline-dark mr-2">선택 쪽지</button>                        
+	            <span class="listnum_txt pt-2 bd-highlight">전체 회원 수</span>
+	            <span class="listnum_num pt-2 bd-highlight">194명</span>
+	        </div>
+	
+	        <div class="d-flex justify-content-end">
+	            <div class="dropdown">
+	                <button class="btn dropbtn btn-sm dropdown-toggle btn-search-mode" type="button" id="searchType" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+	                    	선택
+	                </button>
+	                <div class="dropdown-menu" aria-labelledby="searchType">
+	                    <a class="dropdown-item" onclick="class_name()">강의명</a>
+						<a class="dropdown-item" onclick="member_name()">회원 이름</a>
+						<a class="dropdown-item" onclick="member_phone()">전화번호</a>
+	               </div>
+	           </div>
+	           <!-- search -->
+	           <nav class="navbar-light bg-light">
+	             <form class="form-inline" onsubmit="return false">
+	               <input class="form-control mr-sm-2" id="keyword" type="search" aria-label="Search" style="height:90%">
+	                <button class="btn btn_search btn-sm my-2 my-sm-0" type="button" id="btn_search">검색</button>
+	              </form>
+	            </nav>
+	        </div>
+	    </div>
 		<div style="height: 600px; overflow-y: auto;">
 			<table class="table table-hover" id="work_store">
 				<thead>
@@ -65,12 +63,12 @@
 	
 	    $("#all_select").click(function() {
 	        if (all_check == false) {
-	                $("input[type=checkbox]").prop("checked",true);
-	                all_check = true;
+                $("input[type=checkbox]").prop("checked",true);
+                all_check = true;
 	        }
 	        else {
-	                $("input[type=checkbox]").prop("checked",false);
-	                all_check = false;
+                $("input[type=checkbox]").prop("checked",false);
+                all_check = false;
 	        }
 	        
 	    });
@@ -100,7 +98,6 @@
 	});
 	
 	$(document).ready(function() {
-		alert("회원문서준비");
 		memberList();
 		
 	});

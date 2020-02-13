@@ -1,21 +1,17 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 
-<div id="page-content-wrapper" style="padding-top: 2%;">
+<div id="page-content-wrapper" style="padding-top: 5%;">
 	<div class="container-fluid">
 		<div class="work_title">
-		    <div class="header row justify-content-end p-2">
-		        &nbsp;
-		    </div>
-		
-		    <div class="header2 row p-2">
+		    <div class="pb-5">
 		        <h1 class="header2_adj">강의 후기</h1>
 		    </div>
-	        <div class="d-flex justify-content-start">
+	        <div class="d-flex justify-content-start pb-2">
 	            <button type="button" id="all_select" class="btn btn-sm btn-outline-dark mr-2">전체표시</button>                        
 	            <span class="listnum_txt pt-2">전체 문의내역</span>
 	            <span class="listnum_num pt-2">194건</span>
 	        </div>
-	        <div class="d-flex justify-content-between">
+	        <div class="d-flex justify-content-between pb-2">
 	        	<div class="justify-content-start">
 		        	<select class="search_hidden_state form-control">
 					    <option>전체</option>

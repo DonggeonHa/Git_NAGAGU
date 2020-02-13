@@ -41,8 +41,6 @@ ALTER TABLE PICS_COMMENT
 		PRIMARY KEY (
 			PICS_RE_NUM
 		);
-        
-        select * from pics;
 
 CREATE SEQUENCE SEQ_MEMBER_LIKE
     START WITH 1

@@ -10,92 +10,88 @@
 
 %>
 
-<div id="page-content-wrapper" style="padding-top: 2%;">
+<div id="page-content-wrapper" style="padding-top: 5%;">
 	<div class="container-fluid">
-    	<div class="work_store_body">
-        	<div class="work_title">
-            	<div class="d-flex justify-content-between">
-                	<div class="justify-content-start">
-                    	<h1>등록된 강의 관리</h1>
-                    </div>
-                    <div class="px-0">
-                        <div class="justify-content-end">
-                            <a href="./classform.ac" class="btn mx-2 btn-outline-dark" role="button" aria-pressed="true">강의등록</a>
-                        </div>
-                    </div>
-                </div>
-
-				<div class="d-flex justify-content-start">
-				    <button type="button" id="selectall" class="btn btn-sm btn-outline-dark mr-2">전체표시</button>        
-				    <button type="button" id="selectClass" class="btn btn-sm btn-outline-dark mr-2">선택 강의종료</button>                
-				    <span class="listnum_txt pt-2">전체 문의내역</span>
-				    <span class="listnum_num pt-2"></span>
-				</div>
-				
-				
-				<div class="d-flex justify-content-between">
-					<div class="justify-content-start" style="padding: 0;">
-						<div class="">
-							<select class="search_hidden_state form-control" id="selectClassType" name="selectClassType" onchange="btn_select()" style="height: 100%;">
-								<option value="allClass">전체</option>
-								<option value="inClass">강의중</option>
-								<option value="endClass">강의종료</option>
-								<option value="onedayClass">원데이클래스</option>
-								<option value="regularClass">정규클래스</option>
-					    	</select>
-						</div>
-					</div>
-					<div class="justify-content-end" style="padding: 0;">
-						<div class="d-flex justify-content-end">
-							<!-- Example split danger button -->
-							<div class="dropdown">
-							    <button class="btn dropbtn btn-sm dropdown-toggle btn-search-mode" type="button" id="searchType" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-							    	선택
-							    </button>
-							    <div class="dropdown-menu" aria-labelledby="searchType">
-							        <button class="dropdown-item" id="dropdown-item-1" onclick="class_name()">강의명</button>
-									<button class="dropdown-item" id="dropdown-item-2" onclick="area()">지역</button>
-									<button class="dropdown-item" id="dropdown-item-3" onclick="category()">카테고리</button>
-							    </div>
-							</div>
-							<!-- search -->
-							<nav class="navbar-light bg-light">
-								<!-- input에 enter키 누르면 자동으로 submit -->
-								<form class="form-inline" onsubmit="return false">
-									<input class="form-control mr-sm-2" type="search" id="keyword" aria-label="Search" style="height:90%">
-								    <button class="btn btn_search btn-sm my-2 my-sm-0" type="button" id="btn_search">검색</button>
-								</form>
-							</nav>
-						</div>
-					</div>
-				</div>
-            </div>
-            <div style="height: 600px; overflow-y: auto;">
-	            <table class="table table-hover" id="work_store">
-	                <thead>
-		                <tr>
-		                    <th scope="col" class="th1"><input id="all_select" type="checkbox"></th>
-		                    <th scope="col" class="th3">상태</th>
-		                    <th scope="col" class="th4">지역</th>
-		                    <th scope="col" class="th5">가격</th>
-							<th scope="col" class="th11">클래스</th>
-		                    <th scope="col" class="th6">강의명</th>
-		                    <th scope="col" class="th7">카테고리</th>
-		                    <th scope="col" class="th8">일시</th>
-		                    <th scope="col" class="th9">회원수</th>
-		                    <th scope="col" class="th10">관리</th>                    
-		                </tr>
-	                </thead>
-	                <tbody id="academyList">
-	                	
-	                </tbody>
-	            </table>
-            </div>
-			<div class="d-flex justify-content-center">
-				<nav aria-label="Page navigation example" class="paginated" id="user-page"></nav>
+		<div class="d-flex justify-content-between pb-5">
+		   	<div class="justify-content-start">
+		       	<h1>등록된 강의 관리</h1>
+		    </div>
+			<div class="px-0">
+				<div class="justify-content-end">
+		        	<a href="./classform.ac" class="btn mx-2 btn-outline-dark" role="button" aria-pressed="true">강의등록</a>
+		    	</div>
 			</div>
-        </div>
-    </div>
+		</div>
+
+		<div class="d-flex justify-content-start pb-2">
+		    <button type="button" id="selectall" class="btn btn-sm btn-outline-dark mr-2">전체표시</button>        
+		    <button type="button" id="selectClass" class="btn btn-sm btn-outline-dark mr-2">선택 강의종료</button>                
+		    <span class="listnum_txt pt-2">전체 문의내역</span>
+		    <span class="listnum_num pt-2"></span>
+		</div>
+		
+		
+		<div class="d-flex justify-content-between pb-2">
+			<div class="justify-content-start" style="padding: 0;">
+				<div class="">
+					<select class="search_hidden_state form-control" id="selectClassType" name="selectClassType" onchange="btn_select()" style="height: 100%;">
+						<option value="allClass">전체</option>
+						<option value="inClass">강의중</option>
+						<option value="endClass">강의종료</option>
+						<option value="onedayClass">원데이클래스</option>
+						<option value="regularClass">정규클래스</option>
+			    	</select>
+				</div>
+			</div>
+			<div class="justify-content-end" style="padding: 0;">
+				<div class="d-flex justify-content-end">
+					<!-- Example split danger button -->
+					<div class="dropdown">
+					    <button class="btn dropbtn btn-sm dropdown-toggle btn-search-mode" type="button" id="searchType" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+					    	선택
+					    </button>
+					    <div class="dropdown-menu" aria-labelledby="searchType">
+					        <button class="dropdown-item" id="dropdown-item-1" onclick="class_name()">강의명</button>
+							<button class="dropdown-item" id="dropdown-item-2" onclick="area()">지역</button>
+							<button class="dropdown-item" id="dropdown-item-3" onclick="category()">카테고리</button>
+					    </div>
+					</div>
+					<!-- search -->
+					<nav class="navbar-light bg-light">
+						<!-- input에 enter키 누르면 자동으로 submit -->
+						<form class="form-inline" onsubmit="return false">
+							<input class="form-control mr-sm-2" type="search" id="keyword" aria-label="Search" style="height:90%">
+						    <button class="btn btn_search btn-sm my-2 my-sm-0" type="button" id="btn_search">검색</button>
+						</form>
+					</nav>
+				</div>
+			</div>
+		</div>
+           <div style="height: 600px; overflow-y: auto;">
+            <table class="table table-hover" id="work_store">
+                <thead>
+	                <tr>
+	                    <th scope="col" class="th1"><input id="all_select" type="checkbox"></th>
+	                    <th scope="col" class="th3">상태</th>
+	                    <th scope="col" class="th4">지역</th>
+	                    <th scope="col" class="th5">가격</th>
+						<th scope="col" class="th11">클래스</th>
+	                    <th scope="col" class="th6">강의명</th>
+	                    <th scope="col" class="th7">카테고리</th>
+	                    <th scope="col" class="th8">일시</th>
+	                    <th scope="col" class="th9">회원수</th>
+	                    <th scope="col" class="th10">관리</th>                    
+	                </tr>
+                </thead>
+                <tbody id="academyList">
+                	
+                </tbody>
+            </table>
+           </div>
+		<div class="d-flex justify-content-center">
+			<nav aria-label="Page navigation example" class="paginated" id="user-page"></nav>
+		</div>
+	</div>
 </div>
 
 <script>
@@ -144,7 +140,6 @@
 	}
 	
 	$(document).ready(function() {
-		alert("문서준비");
 		classList();
 	});
 	
