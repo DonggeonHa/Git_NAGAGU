@@ -111,17 +111,17 @@
            <div>
 	           <input type="file" name="PICS_FILE_1" class="input_imgs custom-file-input" id="input_imgs1"> 
 	           <label class="input_imgs custom-file-label" for="customFile">사진올리기</label> 
-	           <input type="hidden" name="PICS_FILE_1" value="<%=picsVO.getPICS_FILE_1()%>" />
+<%-- 	           <input type="hidden" name="PICS_FILE_1" value="<%=picsVO.getPICS_FILE_1()%>" /> --%>
            </div>          
 			<div class="imgs_wrap1">
-			 	<c:set var="isEmpty" value="<%=picsVO.getPICS_FILE_1()%>" />
+<%-- 			 	<c:set var="isEmpty" value="<%=picsVO.getPICS_FILE_1()%>" /> --%>
 				 <c:choose>
 				 <c:when test="${isEmpty== null}">		
 				  null		   
 				  </c:when>
 				  <c:otherwise>
 					<a href="javascript:void(0);" onclick="deleteImageAction(1)" id="img_id_1">
-		            <img src="/communityupload/image/<%=picsVO.getPICS_FILE_1()%>" class='selProductFile' width='70%' height='350px;'></a>
+<%-- 		            <img src="/communityupload/image/<%=picsVO.getPICS_FILE_1()%>" class='selProductFile' width='70%' height='350px;'></a> --%>
 					<img id="img1" src=""/>
  				  </c:otherwise>
 				</c:choose>
@@ -129,13 +129,13 @@
 			   
          </div>
          <div class="img-text col-6">
-          	<c:set var="isEmpty" value="<%=picsVO.getPICS_CONTENT_1()%>" />
+<%--           	<c:set var="isEmpty" value="<%=picsVO.getPICS_CONTENT_1()%>" /> --%>
          	<c:choose>
 		        <c:when test="${isEmpty == null}">
 	            <textarea name="PICS_CONTENT_1" value="blank" cols="70" rows="10" placeholder="설명을 입력해주세요"></textarea> 
 	            </c:when> 
 	            <c:otherwise>
-	            <textarea name="PICS_CONTENT_1" value="" cols="70" rows="10" placeholder=""><%=picsVO.getPICS_CONTENT_1()%></textarea>
+<%-- 	            <textarea name="PICS_CONTENT_1" value="" cols="70" rows="10" placeholder=""><%=picsVO.getPICS_CONTENT_1()%></textarea> --%>
 	            </c:otherwise>
 	        </c:choose> 
            <input type="hidden" name="PICS_TAG" id="pics_tags"  value=""/>
@@ -159,18 +159,18 @@
            <div>
            		<input type="file" name="PICS_FILE_2" class="input_imgs custom-file-input" id="input_imgs2"> 
 	           <label class="input_imgs custom-file-label" for="customFile">사진올리기</label>	
-	            <input type="hidden" name="PICS_FILE_2" value="<%=picsVO.getPICS_FILE_2()%>" />
+<%-- 	            <input type="hidden" name="PICS_FILE_2" value="<%=picsVO.getPICS_FILE_2()%>" /> --%>
            </div>
           
 			<div class="imgs_wrap2">
-				<c:set var="isEmpty" value="<%=picsVO.getPICS_FILE_2()%>" />
+<%-- 				<c:set var="isEmpty" value="<%=picsVO.getPICS_FILE_2()%>" /> --%>
 				 <c:choose>
 				  <c:when test="${isEmpty== null}">		
 				  null		  
 				  </c:when>
 				  <c:otherwise>
 					<a href="javascript:void(0);" onclick="deleteImageAction(2)" id="img_id_2">
-		            <img src="/communityupload/image/<%=picsVO.getPICS_FILE_2()%>" class='selProductFile' width='70%' height='350px;'></a>
+<%-- 		            <img src="/communityupload/image/<%=picsVO.getPICS_FILE_2()%>" class='selProductFile' width='70%' height='350px;'></a> --%>
 					<img id="img2" src=""/>
  				  </c:otherwise>
 				</c:choose>
@@ -178,13 +178,13 @@
 			   
          </div>
          <div class="img-text col-6">
-           	<c:set var="isEmpty" value="<%=picsVO.getPICS_CONTENT_2()%>" />
+<%--            	<c:set var="isEmpty" value="<%=picsVO.getPICS_CONTENT_2()%>" /> --%>
          	<c:choose>
 		        <c:when test="${isEmpty == null}">
 	            <textarea name="PICS_CONTENT_2" value="blank" cols="70" rows="10" placeholder="설명을 입력해주세요"></textarea> 
 	            </c:when> 
 	            <c:otherwise>
-	            <textarea name="PICS_CONTENT_2" value="" cols="70" rows="10" placeholder=""><%=picsVO.getPICS_CONTENT_2()%></textarea>
+<%-- 	            <textarea name="PICS_CONTENT_2" value="" cols="70" rows="10" placeholder=""><%=picsVO.getPICS_CONTENT_2()%></textarea> --%>
 	            </c:otherwise>
 	        </c:choose>
          </div>
@@ -201,17 +201,17 @@
            <div>
            		<input type="file" name="PICS_FILE_3" class="input_imgs custom-file-input" id="input_imgs3"> 
 	           <label class="input_imgs custom-file-label" for="customFile">사진올리기</label>
-	            <input type="hidden" name="PICS_FILE_3" value="<%=picsVO.getPICS_FILE_3()%>" />
+<%-- 	            <input type="hidden" name="PICS_FILE_3" value="<%=picsVO.getPICS_FILE_3()%>" /> --%>
            </div>
           
 			<div class="imgs_wrap3">
-				<c:set var="imgSrc" value="<%=picsVO.getPICS_FILE_2()%>" />
+<%-- 				<c:set var="imgSrc" value="<%=picsVO.getPICS_FILE_2()%>" /> --%>
 				 <c:choose>
 				  <c:when test="${empty imgSrc}">				  
 				  </c:when>
 				  <c:otherwise>
 					 <a href="javascript:void(0);" onclick="deleteImageAction(3)" id="img_id_3">
-		            <img src="/communityupload/image/<%=picsVO.getPICS_FILE_3()%>" class='selProductFile' width='70%' height='350px;'></a>
+<%-- 		            <img src="/communityupload/image/<%=picsVO.getPICS_FILE_3()%>" class='selProductFile' width='70%' height='350px;'></a> --%>
 					<img id="img3" src=""/>
  				  </c:otherwise> 
 				</c:choose>
@@ -219,13 +219,13 @@
 			   
          </div>
          <div class="img-text col-6">
-         	<c:set var="isEmpty" value="<%=picsVO.getPICS_CONTENT_3()%>" />
+<%--          	<c:set var="isEmpty" value="<%=picsVO.getPICS_CONTENT_3()%>" /> --%>
          	<c:choose>
 		        <c:when test="${isEmpty == null}">
 	            <textarea name="PICS_CONTENT_3" value="blank" cols="70" rows="10" placeholder="설명을 입력해주세요"></textarea> 
 	            </c:when> 
 	            <c:otherwise>
-	            <textarea name="PICS_CONTENT_3" value="" cols="70" rows="10" placeholder=""><%=picsVO.getPICS_CONTENT_3()%></textarea>
+<%-- 	            <textarea name="PICS_CONTENT_3" value="" cols="70" rows="10" placeholder=""><%=picsVO.getPICS_CONTENT_3()%></textarea> --%>
 	            </c:otherwise>
 	        </c:choose>
          </div>
@@ -353,10 +353,10 @@
 	//로드할때 사진이 있으면 폼 보여주기
 	$(document).ready(function(){
 		function check_show_form(){
-			if(<%=picsVO.getPICS_FILE_2()!=null%>){
+<%-- 			if(<%=picsVO.getPICS_FILE_2()!=null%>){ --%>
 				$('.form2').css('display','flex');
 			}
-			if(<%=picsVO.getPICS_FILE_3()!=null%>){
+<%-- 			if(<%=picsVO.getPICS_FILE_3()!=null%>){ --%>
 				$('.form3').css('display','flex');
 			}
 			return
