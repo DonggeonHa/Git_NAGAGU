@@ -341,7 +341,7 @@
 				<% }
 					if (member_mail.equals(mailChk)) { %>
 					<button id="btn_modify" class="btn btn-dark btn-md" onclick="location.href='estimate_modify.es?ESTIMATE_NUM=<%=ESTIMATE_NUM%>&page=<%=nowpage%>'">수정</button>  &nbsp;
-					<button id="btn_delete" class="btn btn-dark btn-md" onclick="location.href='estimate_delete.es?ESIMATE_NUM=<%=ESTIMATE_NUM%>&ESTIMATE_NUM=<%=ESTIMATE_NUM%>'">삭제</button>  &nbsp;
+					<button id="btn_delete" class="btn btn-dark btn-md" onclick="location.href='estimate_delete.es?ESTIMATE_NUM=<%=ESTIMATE_NUM%>'">삭제</button>  &nbsp;
 				<% } %>
 					<button class="btn btn-dark btn-md" onclick="location.href='estimate.es?page=<%=nowpage%>'">목록보기</button>
 				</div>
@@ -629,7 +629,7 @@
 			$(document).delegate('.btn_bid', 'click', function() {
 				if (confirm("낙찰하시겠습니까?")) {
 					var OFFER_NUM = $(this).attr('value');
-					location.href='offer_bid.es?OFFER_STATE=1&ESTIMATE_NUM=' + es_num + '&OFFER_NUM=' + OFFER_NUM + '&redirect=estimate_detail.es?ESTIMATE_NUM=' + es_num';
+					location.href='offer_bid.es?OFFER_STATE=1&ESTIMATE_NUM=' + es_num + '&OFFER_NUM=' + OFFER_NUM + '&redirect=estimate_detail.es?ESTIMATE_NUM=' + es_num;
 				}
 				return false;
 			});
@@ -639,7 +639,7 @@
 			$(document).delegate('.btn_bid_cancel', 'click', function() {
 				if (confirm("정말 취소하시겠습니까?")) {
 					var OFFER_NUM = $(this).attr('value');
-					location.href='offer_bid.es?OFFER_STATE=3&ESTIMATE_NUM=' + es_num + '&OFFER_NUM=' + OFFER_NUM + '&redirect=estimate_detail.es?ESTIMATE_NUM=' + es_num';
+					location.href='offer_bid.es?OFFER_STATE=3&ESTIMATE_NUM=' + es_num + '&OFFER_NUM=' + OFFER_NUM + '&redirect=estimate_detail.es?ESTIMATE_NUM=' + es_num;
 				}
 				return false;
 			});
@@ -749,28 +749,31 @@
 			
 			/* 견적 제안 삭제 */
 			$(document).delegate('.btn_offer_delete', 'click', function() {
-				var of_num = $(this).attr('value');
-				var es_num = <%=ESTIMATE_NUM%>;
-				console.log(of_num);
-				console.log(es_num);
-				var params = {"OFFER_NUM" : of_num, "ESTIMATE_NUM" : es_num };
-				console.log(params);
-				$.ajax({
-					url:'/NAGAGU/offer_delete.es',
-					type:'POST',
-					data:params,
-					aync:false,
-					contentType: 'application/x-www-form-urlencoded; charset=utf-8',
-					success : function(data) {
-						alert("제안글이 성공적으로 삭제되었습니다.");
-						$('#modifyFormModal').modal("hide");
-						getOfferList();
-					},
-				     error:function(request,status,error){
-				         alert("code = "+ request.status + " message = " + request.responseText + " error = " + error);
-					}
-					
-				});
+				if (confirm("정말로 삭제하시겠습니까?")) {
+					var of_num = $(this).attr('value');
+					var es_num = <%=ESTIMATE_NUM%>;
+					console.log(of_num);
+					console.log(es_num);
+					var params = {"OFFER_NUM" : of_num, "ESTIMATE_NUM" : es_num };
+					console.log(params);
+					$.ajax({
+						url:'/NAGAGU/offer_delete.es',
+						type:'POST',
+						data:params,
+						aync:false,
+						contentType: 'application/x-www-form-urlencoded; charset=utf-8',
+						success : function(data) {
+							alert("제안글이 성공적으로 삭제되었습니다.");
+							$('#modifyFormModal').modal("hide");
+							getOfferList();
+						},
+					     error:function(request,status,error){
+					         alert("code = "+ request.status + " message = " + request.responseText + " error = " + error);
+						}
+						
+					});
+				
+				}
 
 				return false;
 			});

@@ -131,6 +131,10 @@
 	
 	*/
 	
+	//상품 이미지 관련
+	String images = vo.getPRODUCT_IMAGE();
+	String[] imgArr = images.split(",");
+	
 %>  
 
 <!DOCTYPE html>
@@ -481,6 +485,51 @@
 		  text-decoration: none !important;
 		  color: black !important;
 		}
+		
+		/* 상품 이미지 관련*/
+		
+		
+		.thumbMain {
+			width:400px;
+			height:400px;
+			overflow:hidden;
+			display:block;
+			margin-right:10px;
+		}
+		
+		.thumbMain img {
+			display:block;
+			min-height:100%;
+			min-width:100%;
+			-ms-interpolation-mode: bicubic;
+		}
+		
+		.thumbItem {
+			width:76px;
+			height:76px;
+			overflow:hidden;
+			display:block;
+			margin:6px;
+		}
+		
+		.thumbCheck {
+			border:2px solid #ef902e;
+			border-radius:4px;
+		}
+		
+		.thumbItem img {
+			display:block;
+			min-height:100%;
+			min-width:100%;
+			-ms-interpolation-mode: bicubic;
+			transition:transform 0.2s;
+		}
+		
+		.thumbItem img:hover {
+			transform:scale(1.05);
+			cursor:pointer;
+		}
+		
       </style>
 
 	<script>
@@ -558,138 +607,175 @@
 	<body class="order-body">
 		<!-- content start -->
 		<div class="container class-detail-container">
-			<div class="row justify-content-between title">
-                <h6><a href="productlist.pro?PRODUCT_CATEGORY=all">STORE</a> > 상세보기 </h6>
-            </div>
-            <div class="row" style="padding-bottom: 5%;">
-				<div class="col-7" style="border: 1px solid #1B1B27">
-					<p>사진 들어갈 곳</p>	<!-- ************************************************************************************************************ -->
-				</div>
-				<div class="col-5">
-					<form name="goodsform" action="#" method="post" id="goodsform">
-						<div class="row pt-4 pl-4">
-							<div class="col-3" >
-								<img src="${pageContext.request.contextPath}/resources/images/Community/peko.png" width="95%" >
-							</div><hr>
-							<div class="col-9">
-								<h3 name="PRODUCT_SHOPNAME"><%=vo.getPRODUCT_SHOPNAME()%></h3>
-								<p name="PRODUCT_TITLE"><font size="2"><%=vo.getPRODUCT_BRIEF()%></font></p>
-							</div>
+		<div class="row justify-content-between title">
+			<h6>
+				<a href="productlist.pro?PRODUCT_CATEGORY=all">STORE</a> > 상세보기
+			</h6>
+		</div>
+		<div class="row" style="padding-bottom: 5%;">
+			<div class="col-7" style="border: 1px solid #1B1B27">
+				<div class="row justify-content-center">
+					<div class="thumbMain">
+						<a href=<%=imgArr[0]%> target="_blank"><img
+							src=<%=imgArr[0]%>></a>
+					</div>
+					<div class="thumnList">
+						<%
+							for (int i = 0; i < imgArr.length; i++) {
+						%>
+						<div class="thumbItem<%if (i == 0) {%> thumbCheck <%}%>"
+							thumb-idx=<%=i%>>
+							<img src=<%=imgArr[i]%>>
 						</div>
-						<div>
-							<table class="table table-borderless">
-								<thead>
-									<tr>
-										<th scope="col">가격</th>
-										<th scope="col" name="PRODUCT_PRICE"><%=vo.getPRODUCT_PRICE()%>원</th>
-									</tr>
-								</thead>
-								<tbody>
-									<tr>
-										<th scope="row">배송비</th>
-										<td name="PRODUCT_SHIP_PRICE"><%=vo.getPRODUCT_SHIP_PRICE()%></td>
-									</tr>
-									<tr>
-										<th scope="row">배송 기간</th>
-										<td name="PRODUCT_SHIP_DAYS"><%=vo.getPRODUCT_SHIP_DAYS()%>일</td>
-									</tr>
-									<tr>
-										<th scope="row">색상선택</th>
-										<td>
-											<select name="BASKET_COLOR" size="1" class="form-control">
-												<option value="">선택</option>
-												<c:forTokens var="color" items="<%=PRODUCT_COLOR %>" delims=",">
-													<option value="${fn:trim(color)}">${fn:trim(color)}</option>
-												</c:forTokens>
-											</select>
-										</td>
-									</tr>
-									<tr>
-										<th scope="row">사이즈선택</th>
-										<td>
-											<select name="BASKET_SIZE" size="1" class="form-control">
-												<option value="">선택</option>
-												<c:forTokens var="size" items="<%=PRODUCT_SIZE %>" delims=",">
-													<option value="${fn:trim(size)}">${fn:trim(size)}</option>
-												</c:forTokens>
-											</select>
-										</td>
-									</tr>
-									<tr>
-										<th scope="row">수량</th>
-										<td>
-											<div>
-												<select name="BASKET_AMOUNT" size="1" class="form-control">
-													<option value="1">1</option>
-													<option value="2">2</option>
-													<option value="3">3</option>
-													<option value="4">4</option>
-													<option value="5">5</option>
-												</select>
-											</div>
-										</td>
-									</tr>
-									<tr>
-										<th scope="row">총 합계금액</th>
-										<td></td>
-									</tr>
-									<tr>
-										<td colspan="2">
-											<div class="d-flex justify-content-between">
-												<% 
-													if(WORKSHOP_CEO_NAME == null && MEMBER_EMAIL == null) { 
-												%> <%-- 비로그인일 때 --%>
-													<div>
-														<button type="button" class="btn btn-outline-dark btn-lg" data-toggle="modal" data-target="#exampleModalCenter">
-															<input type="hidden" name = "PRODUCT_NUM" value="<%=PRODUCT_NUM %>">♥
-														</button>
-													</div>	
-													<div style="width:45%;">
-														<button type="button" class="btn btn-outline-dark btn-lg btn-block" data-toggle="modal" data-target="#exampleModalCenter" >장바구니</button>
-													</div>
-													<div style="width:45%;">
-														<button type="button" class="btn btn-outline-dark btn-lg btn-block" data-toggle="modal" data-target="#exampleModalCenter" >바로구매</button>
-													</div>
-												<% 
-													} else if(WORKSHOP_CEO_NAME != null) { 
-												%>	<%-- 공방 로그인일 때(하트 안 보임) --%>
-													<div style="width:50%;">
-														<a href="classreservation.ac" class="btn btn-outline-dark btn-lg btn-block disabled" role="button" aria-pressed="true">장바구니</a>
-													</div>
-													<div style="width:50%;">
-														<a href="#" class="btn btn-outline-dark btn-lg btn-block disabled" role="button" aria-pressed="true" >바로구매</a>
-													</div>
-												<% 
-													} else { 
-												%> <%-- 일반회원일때 --%>
-													<div>
-														<a href="#" class="btn btn-outline-dark btn-lg" role="button" aria-pressed="true" id="LikeAjax">
-															<input type="hidden" name = "PRODUCT_NUM" value="<%=PRODUCT_NUM %>">♥
-														</a>
-													</div>
-													<div style="width:45%;">
-														<a href="#" class="btn btn-outline-dark btn-lg btn-block" role="button" aria-pressed="true" id="basket_btn">장바구니</a>
-													</div>
-													<div style="width:45%;">
-														<a href="#" class="btn btn-outline-dark btn-lg btn-block" role="button" aria-pressed="true" id="order_btn">바로구매</a>
-													</div>
-												<% 
-													} 
-												%>
-											</div>
-										</td>
-									</tr>
-								</tbody>
-							</table>
-						</div>
-						<div class="btnArea text-center">
-							
-						</div>
-						<br/>
-					</form>
+						<%
+							}
+						%>
+					</div>
 				</div>
 			</div>
-			<div class="row" style="padding: 15px 15px;">
+			<div class="col-5">
+				<form name="goodsform" action="#" method="post" id="goodsform">
+					<div class="row pt-4 pl-4">
+						<div class="col-3">
+							<img
+								src="${pageContext.request.contextPath}/resources/images/Community/peko.png"
+								width="95%">
+						</div>
+						<hr>
+						<div class="col-9">
+							<h3 name="PRODUCT_SHOPNAME"><%=vo.getPRODUCT_SHOPNAME()%></h3>
+							<p name="PRODUCT_TITLE">
+								<font size="2"><%=vo.getPRODUCT_BRIEF()%></font>
+							</p>
+						</div>
+					</div>
+					<div>
+						<table class="table table-borderless">
+							<thead>
+								<tr>
+									<th scope="col">가격</th>
+									<th scope="col" name="PRODUCT_PRICE"><%=vo.getPRODUCT_PRICE()%>원</th>
+								</tr>
+							</thead>
+							<tbody>
+								<tr>
+									<th scope="row">배송비</th>
+									<td name="PRODUCT_SHIP_PRICE"><%=vo.getPRODUCT_SHIP_PRICE()%></td>
+								</tr>
+								<tr>
+									<th scope="row">배송 기간</th>
+									<td name="PRODUCT_SHIP_DAYS"><%=vo.getPRODUCT_SHIP_DAYS()%>일</td>
+								</tr>
+								<tr>
+									<th scope="row">색상선택</th>
+									<td><select name="BASKET_COLOR" size="1"
+										class="form-control">
+											<option value="">선택</option>
+											<c:forTokens var="color" items="<%=PRODUCT_COLOR %>"
+												delims=",">
+												<option value="${fn:trim(color)}">${fn:trim(color)}</option>
+											</c:forTokens>
+									</select></td>
+								</tr>
+								<tr>
+									<th scope="row">사이즈선택</th>
+									<td><select name="BASKET_SIZE" size="1"
+										class="form-control">
+											<option value="">선택</option>
+											<c:forTokens var="size" items="<%=PRODUCT_SIZE %>" delims=",">
+												<option value="${fn:trim(size)}">${fn:trim(size)}</option>
+											</c:forTokens>
+									</select></td>
+								</tr>
+								<tr>
+									<th scope="row">수량</th>
+									<td>
+										<div>
+											<select name="BASKET_AMOUNT" size="1" class="form-control">
+												<option value="1">1</option>
+												<option value="2">2</option>
+												<option value="3">3</option>
+												<option value="4">4</option>
+												<option value="5">5</option>
+											</select>
+										</div>
+									</td>
+								</tr>
+								<tr>
+									<th scope="row">총 합계금액</th>
+									<td></td>
+								</tr>
+								<tr>
+									<td colspan="2">
+										<div class="d-flex justify-content-between">
+											<% 
+													if(WORKSHOP_CEO_NAME == null && MEMBER_EMAIL == null) { 
+												%>
+											<%-- 비로그인일 때 --%>
+											<div>
+												<button type="button" class="btn btn-outline-dark btn-lg"
+													data-toggle="modal" data-target="#exampleModalCenter">
+													<input type="hidden" name="PRODUCT_NUM"
+														value="<%=PRODUCT_NUM %>">♥
+												</button>
+											</div>
+											<div style="width: 45%;">
+												<button type="button"
+													class="btn btn-outline-dark btn-lg btn-block"
+													data-toggle="modal" data-target="#exampleModalCenter">장바구니</button>
+											</div>
+											<div style="width: 45%;">
+												<button type="button"
+													class="btn btn-outline-dark btn-lg btn-block"
+													data-toggle="modal" data-target="#exampleModalCenter">바로구매</button>
+											</div>
+											<% 
+													} else if(WORKSHOP_CEO_NAME != null) { 
+												%>
+											<%-- 공방 로그인일 때(하트 안 보임) --%>
+											<div style="width: 50%;">
+												<a href="classreservation.ac"
+													class="btn btn-outline-dark btn-lg btn-block disabled"
+													role="button" aria-pressed="true">장바구니</a>
+											</div>
+											<div style="width: 50%;">
+												<a href="#"
+													class="btn btn-outline-dark btn-lg btn-block disabled"
+													role="button" aria-pressed="true">바로구매</a>
+											</div>
+											<% 
+													} else { 
+												%>
+											<%-- 일반회원일때 --%>
+											<div>
+												<a href="#" class="btn btn-outline-dark btn-lg"
+													role="button" aria-pressed="true" id="LikeAjax"> <input
+													type="hidden" name="PRODUCT_NUM" value="<%=PRODUCT_NUM %>">♥
+												</a>
+											</div>
+											<div style="width: 45%;">
+												<a href="#" class="btn btn-outline-dark btn-lg btn-block"
+													role="button" aria-pressed="true" id="basket_btn">장바구니</a>
+											</div>
+											<div style="width: 45%;">
+												<a href="#" class="btn btn-outline-dark btn-lg btn-block"
+													role="button" aria-pressed="true" id="order_btn">바로구매</a>
+											</div>
+											<% 
+													} 
+												%>
+										</div>
+									</td>
+								</tr>
+							</tbody>
+						</table>
+					</div>
+					<div class="btnArea text-center"></div>
+					<br />
+				</form>
+			</div>
+		</div>
+		<div class="row" style="padding: 15px 15px;">
 				<div class="col-8">
 					<div style="line-height: 0.5em;" id="t1">
 					<dl>
@@ -2956,8 +3042,24 @@
 				event.preventDefault();     	 
      	   
         });         
-      
 
+	 //------------------------------------------- 상품 이미지 관련
+
+			$(document).delegate('.thumbItem', 'click', function() {
+				var idx = $(this).attr('thumb-idx');
+				$('.thumbItem').removeClass('thumbCheck');
+				$(this).addClass('thumbCheck');
+				if (idx == 0) {
+					$('.thumbMain').html('<a href="' + '<%=imgArr[0]%>' + '" target="_blank"><img src="' + '<%=imgArr[0]%>' + '"></a>');
+				} <% if (imgArr.length > 1) { %> else if (idx == 1) {
+					$('.thumbMain').html('<a href="' + '<%=imgArr[1]%>' + '" target="_blank"><img src="' + '<%=imgArr[1]%>' + '"></a>');
+				} <% } if (imgArr.length > 2) { %> else if (idx == 2) {
+					$('.thumbMain').html('<a href="' + '<%=imgArr[2]%>' + '" target="_blank"><img src="' + '<%=imgArr[2]%>' + '"></a>');
+				} <% } if (imgArr.length > 3) { %> else if (idx == 3) {
+					$('.thumbMain').html('<a href="' + '<%=imgArr[3]%>' + '" target="_blank"><img src="' + '<%=imgArr[3]%>' + '"></a>');
+				} <% } %>
+			});
+	 
       
    </script>
    

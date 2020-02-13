@@ -5,6 +5,7 @@ import java.util.Date;
 public class EstimateOrderVO {
 	private int ES_ORDER_NUM;
 	private int ES_ORDER_ESTIMATE;
+	private int ES_ORDER_OFFER;
 	private String ES_ORDER_TITLE;
 	private String ES_ORDER_BUYER;
 	private String ES_ORDER_WORKSHOP;
@@ -29,6 +30,12 @@ public class EstimateOrderVO {
 	}
 	public void setES_ORDER_ESTIMATE(int eS_ORDER_ESTIMATE) {
 		ES_ORDER_ESTIMATE = eS_ORDER_ESTIMATE;
+	}
+	public int getES_ORDER_OFFER() {
+		return ES_ORDER_OFFER;
+	}
+	public void setES_ORDER_OFFER(int eS_ORDER_OFFER) {
+		ES_ORDER_OFFER = eS_ORDER_OFFER;
 	}
 	public String getES_ORDER_TITLE() {
 		return ES_ORDER_TITLE;

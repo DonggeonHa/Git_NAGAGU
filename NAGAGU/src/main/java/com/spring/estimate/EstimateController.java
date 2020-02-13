@@ -361,12 +361,11 @@ public class EstimateController {
 					EstimateVO esvo = estimateService.estimateDetail(ESTIMATE_NUM);
 					EstimateOfferVO offervo = estimateService.offerDetail(OFFER_NUM);
 					EstimateOrderVO vo = new EstimateOrderVO();
-					System.out.println(OFFER_NUM);
-					System.out.println(offervo.getOFFER_WORKSHOP());
 					
 					String thumbPic = (esvo.getESTIMATE_FILE().split(","))[0];
 					
 					vo.setES_ORDER_ESTIMATE(ESTIMATE_NUM);
+					vo.setES_ORDER_OFFER(OFFER_NUM);
 					vo.setES_ORDER_TITLE(esvo.getESTIMATE_TITLE());
 					vo.setES_ORDER_BUYER(esvo.getESTIMATE_MEMBER());
 					vo.setES_ORDER_WORKSHOP(offervo.getOFFER_WORKSHOP());
@@ -389,8 +388,18 @@ public class EstimateController {
 	@RequestMapping(value = "/mypage_estimate.my")
 	public String MypageEsOrderDetail(HttpSession session, HttpServletRequest request, Model model) {
 		String ES_ORDER_BUYER = (String)session.getAttribute("MEMBER_EMAIL");
+
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		map.put("ES_ORDER_BUYER", ES_ORDER_BUYER);
 		
-		ArrayList<EstimateOrderVO> esOrderList = estimateService.esOrderList(ES_ORDER_BUYER);
+		ArrayList<EstimateOrderVO> esOrderList = estimateService.esOrderList(map);
+		
+		for (int i=0; i<7; i++) {
+			HashMap<String, Object> cntmap = new HashMap<String, Object>();
+			map.put("ES_ORDER_STATE", i);
+			int cnt = estimateService.esOrderCount(cntmap);
+			model.addAttribute("esCount" + i, cnt);
+		}
 		
 		model.addAttribute("esOrderList", esOrderList);
 		
