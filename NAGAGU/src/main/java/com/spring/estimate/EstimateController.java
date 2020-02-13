@@ -349,33 +349,46 @@ public class EstimateController {
 		int ESTIMATE_NUM = Integer.parseInt(request.getParameter("ESTIMATE_NUM"));
 		int OFFER_NUM = Integer.parseInt(request.getParameter("OFFER_NUM"));
 		int OFFER_STATE = Integer.parseInt(request.getParameter("OFFER_STATE"));
+		String redirect = "redirect:/";
+		redirect += request.getParameter("redirect");
 		
 		int res1 = estimateService.offerBidSet(OFFER_STATE, OFFER_NUM);
 		if (res1 == 1) {
 			int res2 = estimateService.estimateBidSet(OFFER_STATE, ESTIMATE_NUM);
 			
-			if (res2 == 1 ) {
-				EstimateVO esvo = estimateService.estimateDetail(ESTIMATE_NUM);
-				EstimateOfferVO offervo = estimateService.
-				EstimateOrderVO vo = new EstimateOrderVO();
-				
-				vo.setES_ORDER_ESTIMATE(ESTIMATE_NUM);
-				vo.setES_ORDER_TITLE(esvo.getESTIMATE_TITLE());
-				vo.setES_ORDER_BUYER(esvo.getESTIMATE_MEMBER());
-				vo.setES_ORDER_WORKSHOP(eS_ORDER_WORKSHOP);
-				
-				int res3 = estimateService.esOrderInsert(vo);
+			if (res2 == 1) {
+				if (OFFER_STATE == 1) {
+					EstimateVO esvo = estimateService.estimateDetail(ESTIMATE_NUM);
+					EstimateOfferVO offervo = estimateService.offerDetail(OFFER_NUM);
+					EstimateOrderVO vo = new EstimateOrderVO();
+					System.out.println(OFFER_NUM);
+					System.out.println(offervo.getOFFER_WORKSHOP());
+					
+					String thumbPic = (esvo.getESTIMATE_FILE().split(","))[0];
+					
+					vo.setES_ORDER_ESTIMATE(ESTIMATE_NUM);
+					vo.setES_ORDER_TITLE(esvo.getESTIMATE_TITLE());
+					vo.setES_ORDER_BUYER(esvo.getESTIMATE_MEMBER());
+					vo.setES_ORDER_WORKSHOP(offervo.getOFFER_WORKSHOP());
+					vo.setES_ORDER_PIC(thumbPic);
+					vo.setES_ORDER_PRICE(offervo.getOFFER_PRICE());
+					
+					int res3 = estimateService.esOrderInsert(vo);
+				}
+				else {
+					int res3 = estimateService.esOrderDelete(ESTIMATE_NUM);
+				}
 			}
 		}
 		
-		return "redirect:/estimate_detail.es?ESTIMATE_NUM=" + ESTIMATE_NUM;
+		return redirect;
 	}
 	
 
 	/* 의뢰된 견적 리스트 */
 	@RequestMapping(value = "/mypage_estimate.my")
 	public String MypageEsOrderDetail(HttpSession session, HttpServletRequest request, Model model) {
-		String ES_ORDER_BUYER = (String)session.getAttribute("ES_ORDER_BUYER");
+		String ES_ORDER_BUYER = (String)session.getAttribute("MEMBER_EMAIL");
 		
 		ArrayList<EstimateOrderVO> esOrderList = estimateService.esOrderList(ES_ORDER_BUYER);
 		

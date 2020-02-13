@@ -16,7 +16,8 @@ public interface EstimateService {
 	public int imageDelete(String[] filesrc);
 	public EstimateVO estimateDetail(int ESTIMATE_NUM);
 	public ArrayList<EstimateOfferVO> offerList(int ESTIMATE_NUM, int startpage, int endpage, String OFFER_WORKSHOP);
-    public int offerCount (int ESTIMATE_NUM, String OFFER_WORKSHOP);
+    public EstimateOfferVO offerDetail (int OFFER_NUM);
+	public int offerCount (int ESTIMATE_NUM, String OFFER_WORKSHOP);
 	public int offerInsert (EstimateOfferVO vo);
 	public int offerModify (EstimateOfferVO vo);
 	public int offerDelete (int ESTIMATE_NUM, int OFFER_NUM);

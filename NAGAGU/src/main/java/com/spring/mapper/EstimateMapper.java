@@ -26,6 +26,7 @@ public interface EstimateMapper {
 	public int offerSetInfo (EstimateVO vo);
 	public int estimateMinPrice (int OFFER_NUM);
 	public ArrayList<EstimateOrderVO> esOrderList (String ES_ORDER_BUYER);
+	public EstimateOrderVO esOrserDetail (int ES_ORDER_NUM);
 	public int esOrderInsert(EstimateOrderVO vo);
-	public int esOrderDelete(int ES_ORDER_NUM);
+	public int esOrderDelete(int ESTIMATE_NUM);
 }

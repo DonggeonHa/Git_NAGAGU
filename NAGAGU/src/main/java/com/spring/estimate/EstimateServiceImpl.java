@@ -116,6 +116,12 @@ public class EstimateServiceImpl implements EstimateService {
 	@Override
 	public ArrayList<EstimateOfferVO> offerList(int ESTIMATE_NUM, int startpage, int endpage, String OFFER_WORKSHOP) {
 		EstimateMapper mapper = sqlSession.getMapper(EstimateMapper.class);
+		
+		System.out.println(ESTIMATE_NUM);
+		System.out.println(startpage);
+		System.out.println(endpage);
+		System.out.println(OFFER_WORKSHOP);
+		
 		HashMap <String, Object> map = new HashMap <String, Object>();
 		map.put("ESTIMATE_NUM", ESTIMATE_NUM);
 		map.put("startRow", startpage);
@@ -125,6 +131,14 @@ public class EstimateServiceImpl implements EstimateService {
 		ArrayList<EstimateOfferVO> offerList = mapper.offerList(map);
 		
 		return offerList;
+	}
+	
+	@Override
+	 public EstimateOfferVO offerDetail (int OFFER_NUM) {
+		EstimateMapper mapper = sqlSession.getMapper(EstimateMapper.class);
+		EstimateOfferVO vo = mapper.offerDetail(OFFER_NUM);
+
+		return vo;
 	}
 	
     @Override
@@ -255,9 +269,9 @@ public class EstimateServiceImpl implements EstimateService {
 	}
 	
 	@Override
-	public int esOrderDelete (int ES_ORDER_NUM) {
+	public int esOrderDelete (int ESTIMATE_NUM) {
 		EstimateMapper mapper = sqlSession.getMapper(EstimateMapper.class);
-		int res = mapper.esOrderDelete(ES_ORDER_NUM);
+		int res = mapper.esOrderDelete(ESTIMATE_NUM);
 		
 		return res;
 	}

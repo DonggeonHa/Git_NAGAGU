@@ -15,6 +15,7 @@
 	String MEMBER_EMAIL = (String)session.getAttribute("MEMBER_EMAIL");
 	
 	SimpleDateFormat df = new SimpleDateFormat("yyyy.MM.dd hh:mm");
+	DecimalFormat dfmp = new DecimalFormat("#,###");
 %>
 
 <!DOCTYPE html>
@@ -88,6 +89,12 @@
 			.pagination .currentpage {
 				font-weight:700;
 			}		
+			
+			.bid {
+				background:#d3d3d3;
+				color:#808080;
+				user-select:none;
+			}
 			
 		</style>
 	</head>
@@ -238,11 +245,16 @@
 						System.out.println(eList.size());
 						for (int i=0; i<eList.size(); i++) {
 							EstimateVO el = eList.get(i);
-							DecimalFormat dfmp = new DecimalFormat("#,###");
 							String minprice = dfmp.format(el.getESTIMATE_MINPRICE());
+							
+							if (el.getESTIMATE_STATE() != 0 && MEMBER_EMAIL != el.getESTIMATE_MEMBER()) {
 				%>
-						<tr onClick="location.href='./estimate_detail.es?ESTIMATE_NUM=<%=el.getESTIMATE_NUM()%>&page=<%=nowpage %>'"
-							style="cursor: pointer;">
+								<tr class="bid">
+				<%
+							} else {
+				%>
+						<tr onClick="location.href='./estimate_detail.es?ESTIMATE_NUM=<%=el.getESTIMATE_NUM()%>&page=<%=nowpage %>'" style="cursor: pointer;">
+				<% } %>
 							<td><%=rnum %></td>
 							<td><%=el.getESTIMATE_NICK() %></td>
 							<td class="es_title"><%=el.getESTIMATE_TITLE() %></td>
@@ -293,11 +305,9 @@
 			<input type="hidden" name="page" value=<%=nowpage %>>
 			<div class="search" align="center">
 				<select id="category" name="category" size="1">
-					<option value="">선택</option>
-					<option value="">-----------------</option>
 					<option value="title">제목</option>
 					<option value="content">본문</option>
-					<option value="nick">별명</option>
+					<option value="nick">신청인</option>
 					<option value="TandC">제목+본문</option>
 				</select> 
 				<input type="text" size="12" id="search_text" name="search_text"> 

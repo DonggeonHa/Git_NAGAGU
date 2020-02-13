@@ -32,8 +32,7 @@
 	if (request.getAttribute("page")!=null) {
 		nowpage = Integer.parseInt((String)request.getAttribute("page"));
 	}
-	
-	System.out.println(login_state);
+			
 	String images = vo.getESTIMATE_FILE();
 	String[] imgArr = images.split(",");
 
@@ -466,15 +465,16 @@
 						output += '<tr><td class="list_caution" colspan="5">제안글은 <b><font color="#f2400">작성자</font></b>만 열람 가능합니다.</td></tr>';
 						
 						$('#offerList > tbody').html(output);
+						return false;
 					}
 					else if (es_state == 1) {
 						var output='';
 						output += '<tr><td class="list_caution" colspan="5"><b><font color="#f2400">낙찰</font></b>이 완료된 글입니다.</td></tr>';
 						
 						$('#offerList > tbody').html(output);
+						return false;
 					}
 					
-					return false;
 				}
 				
 				var OFFER_DATA = $('#offer_data').serialize();
@@ -487,6 +487,7 @@
 					contentType:'application/x-www-form-urlencoded; charset=utf-8',
 					success:function(data) {
 						console.log(data.offerCount);
+						console.log(data.offerList);
 						
 						var output = '';
 						var pagination = '';
@@ -501,6 +502,7 @@
 						}
 						
 						else {
+							
 							/* 댓글 리스트 작성*/
 							$.each(ol, function(index, item) {
 								var offerPrice = addComma(item.offer_PRICE);
@@ -627,7 +629,7 @@
 			$(document).delegate('.btn_bid', 'click', function() {
 				if (confirm("낙찰하시겠습니까?")) {
 					var OFFER_NUM = $(this).attr('value');
-					location.href='offer_bid.es?OFFER_STATE=1&ESTIMATE_NUM=' + es_num + '&OFFER_NUM=' + OFFER_NUM;
+					location.href='offer_bid.es?OFFER_STATE=1&ESTIMATE_NUM=' + es_num + '&OFFER_NUM=' + OFFER_NUM + '&redirect=estimate_detail.es?ESTIMATE_NUM=' + es_num';
 				}
 				return false;
 			});
@@ -637,7 +639,7 @@
 			$(document).delegate('.btn_bid_cancel', 'click', function() {
 				if (confirm("정말 취소하시겠습니까?")) {
 					var OFFER_NUM = $(this).attr('value');
-					location.href='offer_bid.es?OFFER_STATE=0&ESTIMATE_NUM=' + es_num + '&OFFER_NUM=' + OFFER_NUM;
+					location.href='offer_bid.es?OFFER_STATE=3&ESTIMATE_NUM=' + es_num + '&OFFER_NUM=' + OFFER_NUM + '&redirect=estimate_detail.es?ESTIMATE_NUM=' + es_num';
 				}
 				return false;
 			});
