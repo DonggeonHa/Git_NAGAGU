@@ -69,6 +69,7 @@
 		
 		.search-tap {
 			border-bottom: 1px solid #EAEAEA;
+			font-size:20px;
 		}
 		.search-tap a:hover{
 			color: #ef900e !important;
@@ -218,25 +219,32 @@
 			border:1px solid #EAEAEA;
 			*/
 		}
+		.caption a{ 
+			color: rgba(0,0,0,0.3) !important;
+			font-weight: 600;
+		}
+		.caption .active{
+			color: rgba(0,0,0,1) !important;
+		}		
 </style>
 
 </head>
 <body class="order-body">
 	<div class="site-wrap">
 		<!-- content start -->
-		<div class="container">
+		<div class="container category_st">
 			<div class="content">
 				<div class="search-tap">
 					<div class="caption py-5">
-						<a href='./productlist.pro?PRODUCT_CATEGORY=all&sort=new'>전체</a> <a
-							href='./productlist.pro?PRODUCT_CATEGORY=table&sort=new'>책상</a> <a
-							href='./productlist.pro?PRODUCT_CATEGORY=chair&sort=new'>의자</a> <a
-							href='./productlist.pro?PRODUCT_CATEGORY=bookshelf&sort=new'>책장</a> <a
-							href='./productlist.pro?PRODUCT_CATEGORY=bed&sort=new'>침대</a> <a
-							href='./productlist.pro?PRODUCT_CATEGORY=drawer&sort=new'>서랍장</a> <a
-							href='./productlist.pro?PRODUCT_CATEGORY=sidetable&sort=new'>협탁</a> <a
-							href='./productlist.pro?PRODUCT_CATEGORY=dressing_table&sort=new'>화장대</a> <a
-							href='./productlist.pro?PRODUCT_CATEGORY=others&sort=new'>기타</a>
+						<a id="all_tab" href='./productlist.pro?PRODUCT_CATEGORY=all&sort=new'>전체</a> 
+						<a id="table_tab" href='./productlist.pro?PRODUCT_CATEGORY=table&sort=new'>책상</a> 
+						<a id="chair_tab" href='./productlist.pro?PRODUCT_CATEGORY=chair&sort=new'>의자</a> 
+						<a id="bookshelf_tab" href='./productlist.pro?PRODUCT_CATEGORY=bookshelf&sort=new'>책장</a> 
+						<a id="bed_tab" href='./productlist.pro?PRODUCT_CATEGORY=bed&sort=new'>침대</a> 
+						<a id="drawer_tab" href='./productlist.pro?PRODUCT_CATEGORY=drawer&sort=new'>서랍장</a> 
+						<a id="sidetable_tab" href='./productlist.pro?PRODUCT_CATEGORY=sidetable&sort=new'>협탁</a> 
+						<a id="dressing_table_tab" href='./productlist.pro?PRODUCT_CATEGORY=dressing_table&sort=new'>화장대</a> 
+						<a id="others_tab" href='./productlist.pro?PRODUCT_CATEGORY=others&sort=new'>기타</a>
 					</div>
 					<div class="row nav-tag">
 						<table>
@@ -461,15 +469,15 @@ $(document).ready(function(){
                alert("ajax통신 실패!!!");
             }
          });
-        
-        
     });
-    
-    
-
 });
 
-
+//카테고리 카테고리 css활성화
+$(document).ready(function(){
+	var category = '<%=PRODUCT_CATEGORY%>';  
+	$('.caption').children().removeClass('active');
+	$('#'+category+'_tab').addClass('active');
+});
 
 </script>
 
