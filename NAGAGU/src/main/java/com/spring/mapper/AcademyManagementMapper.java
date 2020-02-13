@@ -18,4 +18,5 @@ public interface AcademyManagementMapper {
 	int updateClassStatus(@Param("CLASS_NUMBER") int CLASS_NUMBER);
 	
 	ClassVO getclassDetail(@Param("CLASS_NUMBER") int CLASS_NUMBER);
+	int updateClass(ClassVO classVO);
 }

@@ -56,7 +56,8 @@
 			<h3>클래스등록</h3>
 			<p>클래스를 등록하실 수 있습니다. 해당 항목에 내용을 입력해주세요</p>
 			<p>주의: 반드시 저작권 및 상표권에 문제가 없는 이미지를 사용해 주세요.</p>
-			<form action="./addclass.ac" method="post" enctype="multipart/form-data">
+			<form action="./updateClass.mywork" method="post" enctype="multipart/form-data">
+			<input type="hidden" name="CLASS_NUMBER" id="CLASS_NUMBER" value="<%=CLASS_NUMBER%>">
 				<table class="table">
 					<colgroup>
 						<col style="width:20%">
@@ -327,7 +328,7 @@
 							</div>
 							<div>
 								<div class="preview"></div>
-		                    	<p class="noti">* 가로가 긴 이미지 추천</p>
+		                    	<p class="noti">* 새로운 이미지를 등록하세요.</p>
 		                    </div>
 						</td>
 					</tr>
@@ -340,7 +341,7 @@
 								</div>
 							</div>
 							<div>
-								<p class="noti">* 정사각형 이미지 추천</p>
+								<p class="noti">* 새로운 이미지를 등록하세요.</p>
 							</div>
 						</td>
 					</tr>

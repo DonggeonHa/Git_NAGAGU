@@ -94,6 +94,14 @@ public class AcademyManagementServiceImpl implements AcademyManagementService {
 		
 	}
 
+	@Override
+	public int updateClass(ClassVO classVO) {
+		AcademyManagementMapper managementMapper = sqlSession.getMapper(AcademyManagementMapper.class);
+		int result = managementMapper.updateClass(classVO);
+		
+		return result;
+	}
+
 
 
 	

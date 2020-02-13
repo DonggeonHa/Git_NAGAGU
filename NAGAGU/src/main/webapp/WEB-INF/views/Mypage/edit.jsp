@@ -481,11 +481,18 @@ a, .card a:link, .card a:visited {
 			
 			function nickname_chk(){
 				
+	            var checkLength = /^[가-힣A-Za-z0-9]{2,12}$/;
 	    		var str2 = $("#MEMBER_NICK").val();
 	    	      if(str2==""){
 	    	    	  alert("최소 2자 이상 입력하세요.");
 	    	    	  return false;
 	    	      }
+
+		          if (!checkLength.test(str2)) {
+		        	  alert("입력한 정보를 다시 확인하고 누르세요.")
+		              return false;
+		          }
+	    	      
 	    	      
 	    	      jQuery.ajax({
 	    	         url : '/NAGAGU/nicknameChk.su',
@@ -629,7 +636,7 @@ a, .card a:link, .card a:visited {
 								<%} else { %>
 								<input type="text" id="MEMBER_NICK" name="MEMBER_NICK" placeholder="별명" value="<%=MEMBER_NICK %>">
 								<%} %>
-								<input type="hidden" id="nick_chk" name="member_chk" >
+								<input type="hidden" id="nick_chk" name="member_chk" value="<%=MEMBER_NICK %>">
 							</div>
 							<div class="col">
 								<button type="button" id="nick_chk_btn" onclick="nickname_chk()" value="N">중복체크</button>
@@ -716,109 +723,125 @@ a, .card a:link, .card a:visited {
 		<script>
 		var nick_submit = false;
 		var phone_chk = false;
-		
-		function showErrorMsg(obj, msg) {
-	        obj.attr("class", "col-12 error_next_box");
-	        obj.html(msg);
-	        obj.show();
-        }
-		
-		function setFocusToInputObject(obj) {
-			nick_submit = false;
-            obj.focus();
-        }
-		
-		$("#MEMBER_NICK").blur(function(){
-			checkNick();
-        });
-		
-		function checkNick() {
-            var nick = $("#MEMBER_NICK").val();
-            var oMsg = $("#nickMsg");
-            var oInput = $("#MEMBER_NICK");
-            var checkLength = /^[가-힣A-Za-z0-9]{2,12}$/;
-            
-            if (nick=="") {
-            	$('#li_name').css('margin-top','58px');
-                showErrorMsg(oMsg, '필수 정보입니다.');
-                oInput.focus();
-                return false;
-            } else {
-                oMsg.hide();
-                nick_submit = true;
-            }
-            if (!checkLength.test(nick)) {
-                showErrorMsg(oMsg, "별명은 최소 2자, 최대 12자 까지 입력가능 합니다.[특수문자 불가]");
-                setFocusToInputObject(oInput);
-                return false;
-            } else {
-           		oMsg.hide();
-            	return true;
-            }
-            nick_submit = false;
-            return false;
-        }
-		
-		
-		
-		$("#MEMBER_PHONE").blur(function(){
-			checkPhone();
-        });
-		
-		function checkPhone() {
-			
-			var phone = $("#MEMBER_PHONE").val();
-			var oMsg = $("#phoneMsg");
-            var oInput = $("#MEMBER_PHONE");
-            var checkLength = /^[0-9]{11}$/;
-            
-            if (phone==""){
-            	oMsg.hide();
-            	phone_chk = true;
-            	
-            	return true;
-            }
-            if (!checkLength.test(phone)) {
-            	showErrorMsg(oMsg, "숫자만 입력가능[특수문자 불가]");
-            	$('#li_profile').css('margin-top','69px');
-            	oInput.focus();
-            	phone_chk = false;
-            	
-            	return false;
-            } else{
-            	oMsg.hide();
-            	phone_chk = true;
-            	
-            	return true;
-            }
-		}
-		
-		$('#btn_submit').click(function(){
-			var nicknamecheckBtn = $("#nick_chk_btn").val();
+		var nicknamecheckBtn = $("#nick_chk_btn").val();
+		$(document).ready(function() {
 			var nick = $("#MEMBER_NICK").val();
 			var nick_chk = $("#nick_chk").val();
-			var zip_code = $('.zipcode').val();
-			var address1 = $('[name=ADDRESS_ADDRESS1]').val();
-			var address2 = $('[name=ADDRESS_ADDRESS2]').val();
+			var phone = $("#MEMBER_PHONE").val();
 			
-			if(nicknamecheckBtn == "N" || nick_submit == false){
-				alert("입력한 정보를 다시 한번 확인해주세요.");
-			} else if(nicknamecheckBtn =="Y" && nick != nick_chk) {
-				alert("중복체크 버튼을 다시 한번 눌러주세요.");
-			} else if(phone_chk == false){
-				alert("전화번호를 다시 확인하고 입력해주세요.");
-			} else if(zip_code==0){
-				alert("주소를 입력해주세요.");
-			} else {
-				document.edit_member_form.submit();
+			if(nick==nick_chk) {
+				nick_submit = true;
+				nicknamecheckBtn = "Y";
+				
+			}
+			if(phone == phone) {
+				phone_chk = true;
+				
 			}
 			
+			function showErrorMsg(obj, msg) {
+		        obj.attr("class", "col-12 error_next_box");
+		        obj.html(msg);
+		        obj.show();
+	        }
+			
+			function setFocusToInputObject(obj) {
+				nick_submit = false;
+	            obj.focus();
+	        }
+			
+			$("#MEMBER_NICK").blur(function(){
+				checkNick();
+	        });
+			
+			function checkNick() {
+	            var nick = $("#MEMBER_NICK").val();
+	            var oMsg = $("#nickMsg");
+	            var oInput = $("#MEMBER_NICK");
+	            var checkLength = /^[가-힣A-Za-z0-9]{2,12}$/;
+	            
+	            if (nick=="") {
+	            	$('#li_name').css('margin-top','58px');
+	                showErrorMsg(oMsg, '필수 정보입니다.');
+	                oInput.focus();
+	                return false;
+	            } else {
+	                oMsg.hide();
+	                nick_submit = true;
+	            }
+	            if (!checkLength.test(nick)) {
+	                showErrorMsg(oMsg, "별명은 최소 2자, 최대 12자 까지 입력가능 합니다.[특수문자 불가]");
+	                setFocusToInputObject(oInput);
+	                return false;
+	            } else {
+	           		oMsg.hide();
+	            	return true;
+	            }
+	            nick_submit = false;
+	            return false;
+	        }
+			
+			
+			
+			$("#MEMBER_PHONE").blur(function(){
+				checkPhone();
+	        });
+			
+			function checkPhone() {
+				
+				var phone = $("#MEMBER_PHONE").val();
+				var oMsg = $("#phoneMsg");
+	            var oInput = $("#MEMBER_PHONE");
+	            var checkLength = /^[0-9]{11}$/;
+	            
+	            if (phone==""){
+	            	oMsg.hide();
+	            	phone_chk = true;
+	            	
+	            	return true;
+	            }
+	            if (!checkLength.test(phone)) {
+	            	showErrorMsg(oMsg, "숫자만 입력가능[특수문자 불가]");
+	            	$('#li_profile').css('margin-top','69px');
+	            	oInput.focus();
+	            	phone_chk = false;
+	            	
+	            	return false;
+	            } else{
+	            	oMsg.hide();
+	            	phone_chk = true;
+	            	
+	            	return true;
+	            }
+			}
+			
+			$('#btn_submit').click(function(){
+				var nick = $("#MEMBER_NICK").val();
+				var nick_chk = $("#nick_chk").val();
+				var zip_code = $('.zipcode').val();
+				var address1 = $('[name=ADDRESS_ADDRESS1]').val();
+				var address2 = $('[name=ADDRESS_ADDRESS2]').val();
+				
+				if(nicknamecheckBtn == "N" || nick_submit == false){
+					alert("별명을 다시 확인하세요.");
+				} else if(nicknamecheckBtn =="Y" && nick != nick_chk) {
+					alert("중복체크 버튼을 다시 한번 눌러주세요.");
+				} else if(phone_chk == false){
+					alert("전화번호를 다시 확인하고 입력해주세요.");
+				} else if(zip_code==0){
+					alert("주소를 입력해주세요.");
+				} else {
+					document.edit_member_form.submit();
+				}
+				
+			});
+			
+			function cancel() {
+				location.href = './mypage.my';
+			}
 		});
 		
-		function cancel() {
-			location.href = './mypage.my';
-		}
-			
+		
 		</script>
 	</body>
 </html>

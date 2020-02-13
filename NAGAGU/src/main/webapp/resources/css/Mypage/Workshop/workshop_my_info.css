@@ -27,7 +27,7 @@
 }
 
 .info_intro_list {
-    margin-top:20px;
+    margin-top:45px;
     height:280px;
 
 }
@@ -62,7 +62,7 @@
     padding: 0px 10px 0px 10px;
     display: flex;
     flex: 1 0 auto;
-    height:200px;
+    height:249px;
 }
 
 .form_input {
@@ -113,7 +113,7 @@
 
 .info_img_input {
     max-height:200px;
-    margin: 10px 0 0;
+    margin: 35px 0 0;
     display: flex;
     flex: 1 0 auto;
 }
@@ -131,8 +131,8 @@
   .circle {
       border-radius: 1000px !important;
       overflow: hidden;
-      width: 128px;
-      height: 128px;
+      width: 150px;
+      height: 150px;
       border: 8px solid rgba(255, 255, 255, 0.7);
       position: absolute;
       margin:0 auto;
