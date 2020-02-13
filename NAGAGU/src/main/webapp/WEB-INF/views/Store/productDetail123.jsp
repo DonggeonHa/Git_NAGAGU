@@ -700,7 +700,7 @@
 											</div>
 										</div>
 										<div class="Review_ReplyList"> <!-- 리뷰 답글 영역 -->
-											<div class="Review_Reply_repeat pb-2"> <!-- 리뷰 답글이 반복되는 영역(review_re) -->
+											<div class="Review_ReplyList pb-2"> <!-- 리뷰 답글이 반복되는 영역(review_re) -->
 												<div class="row justify-content-center">
 													<div class="col-1"></div>
 													<div class="col-1">프사</div>
@@ -732,7 +732,7 @@
 												</div>
 											</div>
 											
-											<div class="Review_Reply_repeat pb-2"> <!-- 리뷰 답글이 반복되는 영역(review_re) 2-->
+											<div class="Review_ReplyList pb-2"> <!-- 리뷰 답글이 반복되는 영역(review_re) 2-->
 												<div class="row justify-content-center">
 													<div class="col-1"></div>
 													<div class="col-1">프사</div>
