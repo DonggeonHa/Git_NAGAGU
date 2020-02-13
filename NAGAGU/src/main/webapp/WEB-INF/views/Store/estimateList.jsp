@@ -96,7 +96,7 @@
 			<h1>견적 문의시 이용가이드</h1>
 		</div>
 		<!-- content start -->
-		<div class="container">
+		<div class="container category_st">
 			<div>
 				<nav>
 					<div class="nav d-flex justify-content-between shadow p-3 mb5 bg-white rounded" id="nav-tab" role="tablist">

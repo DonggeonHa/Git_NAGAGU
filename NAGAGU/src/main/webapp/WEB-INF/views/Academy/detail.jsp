@@ -167,9 +167,9 @@
 				text-align: center !important;
 			}
 			
-			.nav-link.active {
+/* 			.nav-link.active {
 				background-color: #EAEAEA !important;
-			}
+			} */
 			
 			.mbody {
 				padding: 2rem !important;
@@ -185,7 +185,7 @@
 		</style>
 	</head>
 	<body class="order-body">
-		<div class="container class-detail-container">
+		<div class="container class-detail-container category_ac">
 			<div class="col-12 text-center" style="padding-bottom: 5%;">
 				<div id="carouselExampleFade" class="carousel slide carousel-fade" data-ride="carousel">
  					<div class="carousel-inner text-center">

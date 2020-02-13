@@ -9,6 +9,7 @@ import java.util.Map;
 public interface PicsCommentService {
 
 	ArrayList<PicsCommentDB> getCommentList(int num);
+	ArrayList<PicsCommentDB> getCommentCount(int num);
 	int insertComment(PicsCommentDB db);
 	int deleteComment(int num);
 	int updateComment(PicsCommentDB db);

@@ -87,13 +87,13 @@
 	<body>
 		<!-- SECTION: content -->
 		<!-- content start -->
-		<div class="container">
+		<div class="container category_cm">
 			<div class="content">
 				<div class="row mb-5">
 					<h3>사진 올리기</h3>
 				</div>
 				
-				<form action="community_writeAction.cm" method="post" class="form-wrap"	name="writeForm" enctype="multipart/form-data">
+				<form action="./community_writeAction.cm" method="post" class="form-wrap"	name="writeForm" enctype="multipart/form-data">
 					<table class="table">
 						<colgroup>
 							<col style="width:20%">
@@ -101,6 +101,8 @@
 						</colgroup>
 						<tr>
 							<th>카테고리</th>
+							<input type="hidden" value="<%=memberVO.getMEMBER_NICK()%>" name="PICS_NICK">
+							<input type="hidden" value="<%=memberVO.getMEMBER_NUM()%>" name="PICS_MEMBER">
 							<td>
 								<div class="row">
 									<div>
@@ -126,8 +128,8 @@
 							 		<div>
 										<select name="PICS_REVIEW" class="form-control">
 											<option value="">전체보기</option>
-											<option value="일반">일반</option>
-											<option value="후기">후기</option>
+											<option value="0">일반</option>
+											<option value="1">후기</option>
 										</select>
 									</div>
 							 	</div>	
@@ -158,7 +160,7 @@
 							<td>
 								<div class="row">
 									<div class="custom-file">
-										<input type="file" name="썸네일용 컬럼 생성" id="uploadFile"> 
+										<input type="file" name="PICS_MAIN_IMAGE" id="uploadFile"> 
 									</div>
 								</div>
 								<div>
@@ -169,7 +171,7 @@
 					</table>
 					<div class="text-center">
 						<input class="btn btn-outline-dark btn-lg" type="reset" value="취소하기">&nbsp;&nbsp;&nbsp;
-						<input class="btn btn-outline-dark btn-lg" type="submit" value="등록하기">
+						<input class="btn btn-outline-dark btn-lg" type="button" onclick="addboard()" value="등록하기">
 					</div>
 				</form>
 			</div>
@@ -206,7 +208,7 @@
 			});
 			
 			function addboard(){
-				//go_val수정 예정 ,
+				alert('hi')
 				function addTags(){				
 					var	tags_value= '';
 					var tags_children = $('div.tags').children();
@@ -296,7 +298,6 @@
 						  }
 					  }
 				});
-				
 				function sendFile(file) {
 					  var form_data = new FormData();
 					  form_data.append('file', file);

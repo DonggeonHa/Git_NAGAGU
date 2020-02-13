@@ -63,12 +63,14 @@ img {
 div.col-md-4.wrap:hover {
 	box-shadow: 0 1rem 3rem rgba(0,0,0,.175) !important;
 }
-
+.imoji img{
+	width:70px; 
+}
 </style>
 
 <body class="order-body">
 	<!-- content start -->
-	<div class="container main-content">
+	<div class="container main-content category_st">
 		<div class="fur_contents text-center">
 			<div class="row content">
 				<div class="col-md-4 wrap">

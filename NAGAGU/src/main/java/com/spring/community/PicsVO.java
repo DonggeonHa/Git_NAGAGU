@@ -8,62 +8,12 @@ public class PicsVO {
 	private String PICS_NICK;
 	private Date PICS_DATE;
 	private String PICS_CATEGORY;
-	private String PICS_CONTENT_1;
-	private String PICS_CONTENT_2;
-	private String PICS_CONTENT_3;
 	private int PICS_LIKE;
-	private String PICS_WORKSHOP;	
 	private String PICS_TAG;
 	private String PICS_READ;	
 	private String PICS_REVIEW;
-	private String PICS_FILE_1;
-	private String PICS_FILE_2;
-	private String PICS_FILE_3;
-	private int PICS_REF;
-	
-	
-	public int getPICS_REF() {
-		return PICS_REF;
-	}
-	public void setPICS_REF(int pICS_REF) {
-		PICS_REF = pICS_REF;
-	}
-	public String getPICS_CONTENT_1() {
-		return PICS_CONTENT_1;
-	}
-	public void setPICS_CONTENT_1(String pICS_CONTENT_1) {
-		PICS_CONTENT_1 = pICS_CONTENT_1;
-	}
-	public String getPICS_CONTENT_2() {
-		return PICS_CONTENT_2;
-	}
-	public void setPICS_CONTENT_2(String pICS_CONTENT_2) {
-		PICS_CONTENT_2 = pICS_CONTENT_2;
-	}
-	public String getPICS_CONTENT_3() {
-		return PICS_CONTENT_3;
-	}
-	public void setPICS_CONTENT_3(String pICS_CONTENT_3) {
-		PICS_CONTENT_3 = pICS_CONTENT_3;
-	}
-	public String getPICS_FILE_1() {
-		return PICS_FILE_1;
-	}
-	public void setPICS_FILE_1(String pICS_FILE_1) {
-		PICS_FILE_1 = pICS_FILE_1;
-	}
-	public String getPICS_FILE_2() {
-		return PICS_FILE_2;
-	}
-	public void setPICS_FILE_2(String pICS_FILE_2) {
-		PICS_FILE_2 = pICS_FILE_2;
-	}
-	public String getPICS_FILE_3() {
-		return PICS_FILE_3;
-	}
-	public void setPICS_FILE_3(String pICS_FILE_3) {
-		PICS_FILE_3 = pICS_FILE_3;
-	}
+	private String PICS_MAIN_IMAGE;
+	private String PICS_CONTENT;
 	public int getPICS_NUM() {
 		return PICS_NUM;
 	}
@@ -94,18 +44,11 @@ public class PicsVO {
 	public void setPICS_CATEGORY(String pICS_CATEGORY) {
 		PICS_CATEGORY = pICS_CATEGORY;
 	}
-
 	public int getPICS_LIKE() {
 		return PICS_LIKE;
 	}
 	public void setPICS_LIKE(int pICS_LIKE) {
 		PICS_LIKE = pICS_LIKE;
-	}
-	public String getPICS_WORKSHOP() {
-		return PICS_WORKSHOP;
-	}
-	public void setPICS_WORKSHOP(String pICS_WORKSHOP) {
-		PICS_WORKSHOP = pICS_WORKSHOP;
 	}
 	public String getPICS_TAG() {
 		return PICS_TAG;
@@ -125,4 +68,17 @@ public class PicsVO {
 	public void setPICS_REVIEW(String pICS_REVIEW) {
 		PICS_REVIEW = pICS_REVIEW;
 	}
+	public String getPICS_MAIN_IMAGE() {
+		return PICS_MAIN_IMAGE;
+	}
+	public void setPICS_MAIN_IMAGE(String pICS_MAIN_IMAGE) {
+		PICS_MAIN_IMAGE = pICS_MAIN_IMAGE;
+	}
+	public String getPICS_CONTENT() {
+		return PICS_CONTENT;
+	}
+	public void setPICS_CONTENT(String pICS_CONTENT) {
+		PICS_CONTENT = pICS_CONTENT;
+	}
+	
 }

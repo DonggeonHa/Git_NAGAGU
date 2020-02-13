@@ -27,11 +27,25 @@ public class PicsCommentController {
 		@Autowired
 		private PicsCommentService picsCommentService;
 		
-		@PostMapping(value="/getCommentList.cm", produces="application/json;charset=UTF-8")
-		public ArrayList<PicsCommentDB> getCommentList(PicsCommentDB db){
-			System.out.println("사진번호="+db.getPICS_RE_PICS());
-			ArrayList<PicsCommentDB> list = picsCommentService.getCommentList(db.getPICS_RE_PICS());
-			return list;
+//		@PostMapping(value="/getCommentList.cm", produces="application/json;charset=UTF-8")
+//		public ArrayList<PicsCommentDB> getCommentList(PicsCommentDB db){
+//			System.out.println("사진번호="+db.getPICS_RE_PICS());
+//			return list;
+//		}
+		@PostMapping(value="/getCommentList.cm",produces="application/json;charset=UTF-8")
+		public Map<String, Object> getCommentList(PicsCommentDB db){
+			Map<String, Object> retVal = new HashMap<String, Object>();
+			try {
+				ArrayList<PicsCommentDB> list = picsCommentService.getCommentList(db.getPICS_RE_PICS());
+				ArrayList<PicsCommentDB> countList=picsCommentService.getCommentCount(db.getPICS_RE_PICS());
+				retVal.put("list", list);
+				retVal.put("countList", countList);
+				retVal.put("res", "OK");
+			}catch(Exception e) {
+				retVal.put("res", "FAIL");
+				retVal.put("message", "Failure");
+			}
+			return retVal;
 		}
 		@PostMapping(value="/insertComment.cm",produces="application/json;charset=UTF-8")
 		public Map<String, Object> insertComment(PicsCommentDB db){

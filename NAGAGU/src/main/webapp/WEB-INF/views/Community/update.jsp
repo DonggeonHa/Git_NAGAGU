@@ -76,7 +76,7 @@
 <body>
   <!-- SECTION: content -->
   <!-- content start -->
-  <div class="container">
+  <div class="container category_cm">
     <div class="content">
       <div class="row mb-5">
         <h3>사진 수정하기</h3>

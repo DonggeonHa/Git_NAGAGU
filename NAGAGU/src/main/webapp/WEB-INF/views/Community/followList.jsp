@@ -180,7 +180,7 @@ a, .card a:link, .card a:visited {
 
 </style>
 	<body class="order-body">
-	<div class="container container-mypage">
+	<div class="container container-mypage category_cm">
 		<div class="wrapper row justify-content-between">
 			<div class="col-10 nickNameTap">
 				<div>

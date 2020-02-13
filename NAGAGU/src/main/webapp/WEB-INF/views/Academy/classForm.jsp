@@ -24,7 +24,7 @@
 		</style>
 	</head>
 	<body>
-		<div class="container" style="padding: 3% 0;">
+		<div class="container category_ac" style="padding: 3% 0;">
 			<h3>클래스등록</h3>
 			<p>클래스를 등록하실 수 있습니다. 해당 항목에 내용을 입력해주세요</p>
 			<p>주의: 반드시 저작권 및 상표권에 문제가 없는 이미지를 사용해 주세요.</p>

@@ -68,6 +68,7 @@
 		}
 		
 		.search-tap {
+			font-size: 20px;
 			border-bottom: 1px solid #EAEAEA;
 			font-size:20px;
 		}

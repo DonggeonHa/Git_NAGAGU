@@ -130,8 +130,7 @@
 		text-decoration: none;
 	}
 	.profile-img img{
-	  	width: 30px;
-	    height: auto;
+		border-radius: 100px;
 	    margin-right: 10px;
 	}
 	/* follow button */
@@ -172,11 +171,43 @@
 	  	background-color: rgba(255,255,255,1) !important;
 	  	border: 0px;
 	  }
+	  #output img{
+	  	border-radius:100px; 
+	  }
+	  .reply_line *, .re_reply_line *{
+	  	word-wrap: break-word;
+	  }
+	  .reply_line{
+	  	border-top: 1px solid rgba(0, 0, 0, 0.1);
+	  	padding-top: 15px ;
+	  }
+	  .re_reply_line{
+	  	padding-top: 15px;
+	  	padding-bottom: 15px;
+	  } 
+	  #insert_form{
+	    height:150px;
+	  	margin-bottom: 20px;
+	  }
+	  textarea{
+	  	height: 100px;
+	  }
+	  #input_data_jsp{
+	   background-color: rgba(0, 0, 0, 0);
+	   border: 0px solid;  
+	  }
+	  .heart-wrap{
+		padding-bottom:5px;
+		padding-left:10px;	   
+	  }
+	  #fa-heart-wrap{
+	  	padding-top: 5px;
+	  }
 	</style>
 <title>Mypage</title>
 </head>
 <body>
-   <div class="container container-mypage">
+   <div class="container container-mypage category_cm">
       <div class="wrapper row justify-content-between">
          <div class="main pb-5">
             <div class="row justify-content-between title">
@@ -200,70 +231,39 @@
             </div>
             <div class="row img-wrap ">
             <%
-            		if(picsVO.getPICS_FILE_1()!=null){
-            			String content = picsVO.getPICS_CONTENT_1();
-            			if(picsVO.getPICS_CONTENT_1()==null){               				
+            		if(picsVO.getPICS_CONTENT()!=null){
+            			String content = picsVO.getPICS_CONTENT();
+            			if(picsVO.getPICS_CONTENT()==null){               				
                				content="";
             			}
             %>
          
                <div class="col-10 pb-5">
                   <a href=""><img
-                     src="/communityupload/image/<%=picsVO.getPICS_FILE_1()%>"
+                     src="/communityupload/image/<%=picsVO.getPICS_CONTENT()%>"
                      alt="" /></a>
                </div>
                <div class="col-10"><p><%=content%></p>
                </div>
             <%       
-            			
-              		}if(picsVO.getPICS_FILE_2()!=null){
-              			String content = picsVO.getPICS_CONTENT_2();
-            			if(picsVO.getPICS_CONTENT_2()==null){               				
-               				content="";
-            			}
-               			
-    		%>
-         
-               <div class="col-10 pb-5">
-                  <a href=""><img
-                     src="/communityupload/image/<%=picsVO.getPICS_FILE_2()%>"
-                     alt="" /></a>
-               </div>
-               <div class="col-10"><p><%=content%></p>
-               </div>
-            <%       
-               		}if(picsVO.getPICS_FILE_3()!=null){
-               			String content = picsVO.getPICS_CONTENT_3();
-            			if(picsVO.getPICS_CONTENT_3()==null){               				
-               				content="";
-            			}
+              		}
             %>
-                        
-                        <div class="col-10 pb-5">
-                           <a href=""><img
-                              src="/communityupload/image/<%=picsVO.getPICS_FILE_3()%>"
-                              alt="" /></a>
-                        </div>
-                        <div class="col-10"><p><%=content %></p>
-                        </div>
-            <%       
-		       			 
-		      		}
-            %>  
             </div>
          </div>
          <!-- main end -->
          <!-- sidebar start -->
          <div class="sidebar" id="sidebar">
-            <div class="row justify-content-around pb-2">
-               <div class="profile-img">
-                  <img src=<%=memberVO.getMEMBER_PICTURE()%> width=1rem; alt="" class="src"/><%=memberVO.getMEMBER_NICK() %>
-               </div>
-               <div class="follow-btn-wrap">                  
-                  <button class="follow-btn">follow</button>
-               </div>
-            </div>
-            <div class="row member_upload_img" style="max-width:300px;">
+				<div class="row justify-content-around pb-2">
+					<div class="profile-img">
+						<img src=<%=memberVO.getMEMBER_PICTURE()%>
+							style="width: 50px; height: 50px;" class="src" /><b><%=memberVO.getMEMBER_NICK()%></b>
+						<button class="follow-btn">follow</button>
+					</div>
+					<div id="fa-heart-wrap">
+						<i class="far fa-heart fa-2x"></i>
+					</div>
+				</div>
+				<div class="row member_upload_img" style="max-width:300px;">
             	<%
             	/* 사진이 4장 이상이면 4로 제한, 4장보다 작으면 size까지 for문 돌리기 */
             	int memberPicsListSize = 4;            	
@@ -276,87 +276,52 @@
             	%>
                <div class="col-6">
 	               <a href="${pageContext.request.contextPath}/community_detail.cm?PICS_NUM=<%=memberPicsVO.getPICS_NUM()%>&MEMBER_NUM=<%=memberVO.getMEMBER_NUM()%>&PICS_MEMBER=<%=picsVO.getPICS_MEMBER()%>">
-	                  <img src="/communityupload/image/<%=memberPicsVO.getPICS_FILE_1()%>" alt="" class="img-responsive img-thumbnail" />
+	                  <img src="/communityupload/image/<%=memberPicsVO.getPICS_MAIN_IMAGE()%>" alt="" class="img-responsive img-thumbnail" />
 	               </a> 
                </div>
                <%} %>
             </div>
             
             
-            <div class="d-flex justify-content-center pt-2">
-               <div>
-                  <i class="far fa-heart fa-2x"></i>15 
-                  <i class="fas fa-share-alt-square fa-2x">   
-                  </i>     
-                  <span class="sociallink ml-1"> 
-					  <a href="javascript:sendLinkFacebook()" title="페이스북으로 공유">
-					    <i class="fab fa-facebook fa-2x"></i>
-					  </a>
-					</span>
-					<span class="sociallink ml-1">
-					  <a href="javascript:sendLinkTwitter()" title="트위터로 공유">
-					    
-					  </a>
-					</span>
-					<span class="sociallink ml-1">
-					  <a href="javascript:sendLinkNaver()" title="네이버로 공유">
-					    
-					  </a>
-					</span>
-					<span class="sociallink ml-1">
-					  <a href="javascript:sendLinkKakao()" id="kakao-link-btn" title="카카오톡으로 공유">
-					    
-					  </a>
-					</span>
-					
-					 <div id="fb-root"></div>
-					 
-                  <div class="fb-share-button" 
-                  data-href="http://192.168.0.37:8000/NAGAGU/community_detail.cm" 
-                  data-layout="button_count" data-size="small">
-                  	<a target="_blank" href="http://192.168.0.37:8000/NAGAGU/community_detail.cm" class="fb-xfbml-parse-ignore">
-                  		<i class="fab fa-facebook fa-2x"></i>
-                  	</a>
-                  </div>          
-               </div>
+          	  
             </div>
          </div>
          <!-- side bar end -->
       </div>
+      <div class="container">
       <!-- wrapper end -->
       <!-- 댓글 테이블 시작 -->
 		<br />
 		<br />
 		<hr />
-		<h3 >Review</h3>
-		<br /><br />
-		<div class="comments_table" id="output" style="color: #212529;">
-			<div class="comments_reply" id="outputReply">
-				
-			</div>
-		</div>
-<!-- 로그인 해야 댓글 창 보임 -->
+		<h3 >REPLY</h3>
+		<!-- 로그인 해야 댓글 창 보임 -->
 		<c:set var="num" value="<%=MEMBER_NUM%>" />
 		<c:if test="${num != 0}">
 			<form id="insert_form" class="row justify-content-between"
 				name="commentForm" action="/NAGAGU/insertComment.cm" method="post">
 				<%-- 			<input type="hidden" name="PICS_RE_REF" value="<c:out value=<%=picsVO.getp %>/>"> --%>
 				<div class="col-1"></div>
-				<div class="col-9">
-					<div class="btn_wrap offset-2">
+				<div class="col-10">
+					<div class="btn_wrap">
 						<textarea name="PICS_RE_CONTENT" id="text"
 							placeholder="칭찬과 격려의 댓글은 작성자에게 큰 힘이 됩니다:)" style="width: 100%"
 							cols="80" rows="2"></textarea>
 					</div>
-
 				</div>
-				<div class="col-2 px-0">
-					<button type="button" value="등록" id="input_data">등록</button>
+				<div class="col-1 text-right">
+					<button type="button" value="등록" id="input_data_jsp">등록</button>
 				</div>
 			</form>
 		</c:if>
 		<!-- 댓글 테이블 끝 -->
-   </div>
+		
+		<div class="comments_table" id="output" style="color: #212529;">
+			<div class="comments_reply" id="outputReply">
+				
+			</div>
+		</div>
+	</div>
    <!-- container end -->
    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
 	<!-- jquery -->
@@ -387,40 +352,22 @@
 				<%-- '&PICS_MEMBER='+<%=pics_vo.getPICS_MEMBER()%>"> --%>
 		location.href=url;		
 	});
-/* 	$('.writeReply').on('click',function(){
-		document.replyForm.submit();
-	}); */
-<%-- 	<c:forEach var="commentList" items="${commentList}"
-		varStatus="status">
-		<div class="row">
-			<div class="col-1">
-				<img
-					src="${pageContext.request.contextPath}/resources/images/Community/peko.png"
-					alt="" class="img-circle"
-					style="width: 60%; height: 60%; margin: 0 0 0 25px;">
-			</div>
-			<div class="col-11">
-				<div class="row">
-					<div class="col-10">아아디:<c:out value="${commentList.PICS_RE_MEMBER}" /></div>
-						<%=memberVO.getMEMBER_NICK() %></div>
-					<div class="col-2 smallfont px-0">날짜:<c:out value="${commentList.PICS_RE_DATE}" /></div>
-					<div class="row">
-						<div class="col-12 comm_content">내용:
-							<c:out value="${commentList.PICS_RE_CONTENT}" />
-						</div>
-					</div>
-					<div class="row">
-						<div class="col">
-							<a href="#" class="smallfont">답글달기</a> <a href="#"
-								class="smallfont">신고하기</a>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
-	</c:forEach> --%>
 	$(document).ready(function(){
-		function select(){
+		  /*날짜 형식 변경*/
+	      function date_format(format) {
+	          var year = format.getFullYear();
+	          var month = format.getMonth() + 1;
+	          if(month<10) {
+	             month = '0' + month;
+	          }
+	          var date = format.getDate();
+	          if(date<10) {
+	             date = '0' + date;
+	          }
+	         return year + "-" + month + "-" + date + " " ;
+	      }
+		
+		function select(num){
 			var params = 'PICS_RE_PICS='+<%=picsVO.getPICS_NUM()%>;
 			$('#output').empty();
 			alert('리스트 ajax시작');
@@ -430,75 +377,88 @@
 				data: params,
 				dataType: "json",
 				contentType:'application/x-www-form-urlencoded; charset=utf-8',
-				success:function(data){
-					//폼 통해 받은 값들은 여기에 
-  
-					$.each(data, function(index,item){
+				success:function(item){
+					//폼 통해 받은 값들은 여기에
+					console.log(item.list.length) 
+					console.log(item.countList)
+					var j =0;
+					for(var i=0; i<item.list.length; i++){
 						var output='';
-						//원글이면 들여쓰기 없음
-						if(item.pics_RE_REF==item.pics_RE_NUM){
-							output += '<div class="row mb-3"><div class="col-1"><img src='
+		        		var d_date = new Date(item.list[i].PICS_RE_DATE);
+		        		var date = date_format(d_date);
+		        		console.log(item.list)
+		        		console.log('i'+i)
+		        		
+		        		if(item.list[i].PICS_RE_REF==item.list[i].PICS_RE_NUM){
+		        			console.log('원글')
+		        			var re_count = item.countList[j].RE_COUNT - 1;
+		        			console.log(item.countList[j].RE_COUNT)
+							output += '<div class="row mb-3 reply_line"><div class="col-1"><img src='
 							output += '<%=memberVO.getMEMBER_PICTURE()%> '; 
 							output += 'class="img-circle" style="width: 50px; height: 50px; margin: 0 20% auto;"></div>'
-							output += '<div class="col-11"><div class="row reply'+item.pics_RE_NUM+'"><div class="col-10">별명:<%=memberVO.getMEMBER_NICK()%></div>'
-							output += '<div class="col-2 smallfont px-0">날짜:'+item.pics_RE_DATE+'</div>	';
-							output += '<div class="col-12" id="commentNum'+item.pics_RE_NUM+'">내용:'+item.pics_RE_CONTENT+'</div>';
+							output += '<div class="col-11"><div class="row reply'+item.list[i].PICS_RE_NUM+'"><div class="col-10"><b><%=memberVO.getMEMBER_NICK()%></b></div>'
+							output += '<div class="col-2 smallfont px-0 text-right">'+date+'</div>	';
+							output += '<div class="col-12" id="commentNum'+item.list[i].PICS_RE_NUM+'">'+item.list[i].PICS_RE_CONTENT+'</div>';
 							output += '<div class="col-12"><div class="row justify-content-between"><div>';
-							output += '<a href="#" class="smallfont re_reply ml-3" num='+item.pics_RE_NUM+'>답글달기  </a> <a href="#" class="smallfont">'
-							output += '신고하기</a></div>' 
+							output += '<a href="#" class="smallfont re_reply ml-3 show_re_reply" num='+item.list[i].PICS_RE_NUM+'>답글달기  </a>'
+							output += '<a href="#" class="smallfont show_re_reply" num='+item.list[i].PICS_RE_NUM+'>답글'+re_count+'개</a></div>'
+							j++;
 						}else{
-							output += '<div class="row mb-4 ml-3"><div class="col-1"><img src='
+							console.log('댓글')
+							output += '<div class="row ml-5 re_reply_line re_num'+item.list[i].PICS_RE_REF+'"><div class="col-1"><img src='
 							output += '<%=memberVO.getMEMBER_PICTURE()%> '; 
 							output += 'class="img-circle" style="width: 50px; height: 50px; margin: 0 20% auto;"></div>'
-							output += '<div class="col-11"><div class="row reply'+item.pics_RE_NUM+'"><div class="col-10">별명:<%=memberVO.getMEMBER_NICK()%></div>'
-							output += '<div class="col-2 smallfont px-0">날짜:'+item.pics_RE_DATE+'</div>	';
-							output += '<div class="col-12" id="commentNum'+item.pics_RE_NUM+'">내용:'+item.pics_RE_CONTENT+'</div>'; 
+							output += '<div class="col-11"><div class="row reply'+item.list[i].PICS_RE_NUM+'"><div class="col-10"><b><%=memberVO.getMEMBER_NICK()%></b></div>'
+							output += '<div class="col-2 smallfont px-0 text-right">'+date+'</div>';
+							output += '<div class="col-12" id="commentNum'+item.list[i].PICS_RE_NUM+'">'+item.list[i].PICS_RE_CONTENT+'</div>'; 
 							output += '<div class="col-12"><div class="row justify-content-end"><div>';
 						}
-						//output += '<div id="commentNum'+item.pics_RE_NUM+'"><tr>';
-						//output += '<td>num=' + item.pics_RE_NUM + '</td>'; 
-						if(item.pics_RE_MEMBER==<%=MEMBER_NUM%>){
-							output+='<div><input type="button" id="deleteForm" class="delete_form smallfont" value="삭제" num='+item.pics_RE_NUM+'/>';
-							output+='<input type="button" class="update_form smallfont" value="수정" num='+item.pics_RE_NUM+' text='+item.pics_RE_CONTENT+' ref='+item.pics_RE_REF+'></input>';
+						if(item.list[i].PICS_RE_MEMBER==<%=MEMBER_NUM%>){
+							output+='<div><input type="button" id="deleteForm" class="delete_form smallfont" value="삭제" num='+item.list[i].PICS_RE_NUM+'>';
+							output+='<input type="button" class="update_form smallfont" value="수정" num='+item.list[i].PICS_RE_NUM+' text='+item.list[i].PICS_RE_CONTENT+' ref='+item.list[i].PICS_RE_REF+'></input>';
 							output +='</div>';
 						}
 						output += '</div></div></div></div></div>';
-						console.log("output:" + output); 
-						$('#output').append(output);	
-					});
-					//$("#commentList").html(output);
+						$('#output').append(output);
+						$('.re_reply_line').css('display','none') 
+					}
+					$('.re_num'+num).css('display','flex');//입력받은 대댓글은 보이게
 				},
 				error:function(){
 					alert("ajax통신 실패!!");
 				}
 			});
 		}
+		//클릭하면  대댓글 보이기
+		$(document).on('click','.show_re_reply',function(event){
+			var num = $(this).attr('num')
+			console.log(num)
+			$('.re_num'+num).toggle('slow')
+		})
+		
+		//답글 달기 누르기
 		$(document).on('click','.re_reply',function(event){
-			alert('hi')			
 			var num= $(this).attr("num");
-			//var id= $(this).attr("id");
-			alert(num)
 			var output="";
-			output += '<form class="insert_form" id="insert_form">';
+			output += '<form class="re_insert_form" id="re_insert_form">';
+			output += '<div><textarea name="PICS_RE_CONTENT" id="text">';
+			output += '</textarea></div>';
 			output += '<span style="font-size: 9pt">';
 			output += '<td><a href="#" class="#" id="input_data" num='+num+'>저장&nbsp';	//입력 받지 않는 값
 			output += '<input type="hidden" name="PICS_RE_NUM" value="'+num+'"></a>';
 			output += '<input type="hidden" name="PICS_RE_REF" value="'+num+'"></a>';
-			//output += '<input type="hidden" name="PICS_RE_STEP" value="1"></a>';
-			//output += '<input type="hidden" name="id" value="'+id+'">';
 			output += '<td><a href="#" class="update_cancle">취소</a></td>';
 			output += '</span>';		
-			output += '<div><textarea name="PICS_RE_CONTENT" id="text">';
-			output += '</textarea></div>';
 			output += '</form>';
 			$('.reply'+num).after(output);
 		}) 
  
-		//댓글 입력
+	//대댓글 입력
 	$(document).on('click','#input_data',function(event){
-		var params=$("#insert_form").serialize();
+		var params=$("#re_insert_form").serialize();
 		params += '&PICS_RE_PICS='+<%=picsVO.getPICS_NUM()%>;
 		params += '&PICS_RE_MEMBER='+<%=MEMBER_NUM%>
+		console.log(params)
 		jQuery.ajax({
 			url: '/NAGAGU/insertComment.cm',
 			type: 'POST',
@@ -519,6 +479,33 @@
 			
 		});
 		event.preventDefault();
+		select($(this).attr('num'));
+	});
+	//댓글 입력
+	$(document).on('click','#input_data_jsp',function(event){
+		var params=$("#insert_form").serialize();
+		params += '&PICS_RE_PICS='+<%=picsVO.getPICS_NUM()%>;
+		params += '&PICS_RE_MEMBER='+<%=MEMBER_NUM%>
+		console.log(params)
+		jQuery.ajax({
+			url: '/NAGAGU/insertComment.cm',
+			type: 'POST',
+			data: params,
+			contentType:
+				'application/x-www-form-urlencoded; charset=utf-8',
+			datatype: 'json', 
+			success: function(retVal){
+				if(retVal.res=="OK"){
+					$('#text').val('');
+				}else{
+					alert("insert fail");
+				}
+			},
+			error:function(){
+				alert("ajax통신 실패!!");
+			}
+		});
+		event.preventDefault();
 		select();
 	});
 
@@ -528,7 +515,7 @@
 			return;
 		} 
 		var delNum = $(event.target).attr('num')
-		alert(delNum);
+		console.log(delNum);
 		jQuery.ajax({
 			url: '/NAGAGU/deleteComment.cm',
 			type: 'POST',
@@ -553,28 +540,25 @@
 	//수정 버튼 누르면 입력창으로 바뀜
 	$(document).on('click','.update_form',function(event){
 			var num= $(this).attr("num");
-			//var id= $(this).attr("id");
 			var text= $(this).attr("text");
 			var output="";
 			output += '<form class="update_form" id="update_form'+num+'">';
-			output += '<span style="font-size: 9pt">';
-			output += '<td><a href="#" class="update_apply" num='+num+'>저장&nbsp';	//입력 받지 않는 값
-			output += '<input type="hidden" name="PICS_RE_NUM" value="'+num+'"></a>';
-			//output += '<input type="hidden" name="id" value="'+id+'">';
-			output += '<td><a href="#" class="update_cancle">취소</a></td>';
-			output += '</span>';		
 			output += '<div><textarea name="PICS_RE_CONTENT" id="text">';
 			output += text;
 			output += '</textarea></div>';
+			output += '<span style="font-size: 9pt">';
+			output += '<td><a href="#" class="update_apply" num='+num+'>저장&nbsp';	//입력 받지 않는 값
+			output += '<input type="hidden" name="PICS_RE_NUM" value="'+num+'"></a>';
+			output += '<td><a href="#" class="update_cancle">취소</a></td>';
+			output += '</span>';		
 			output += '</form>';
 			$('#commentNum'+num).html(output);
-			//event.preventDefault();
 		});
 	//취소
 	$(document).on('click','.update_cancle',function(){
 		select();
 	})
-		//수정 적용
+	//수정 적용
 	$(document).on('click','.update_apply',function(event){
 		var num= $(this).attr("num"); 
 		var params=$("#update_form"+num).serialize();
@@ -604,7 +588,7 @@
 	$(document).on('click', 'a[href="#"]', function(e){
 		e.preventDefault();
 	});
-	
+
 	
 	
 	select();
@@ -631,8 +615,6 @@
 		} */
 		commentForm.submit();	
 	}
-	
-	
 	</script>
 
 

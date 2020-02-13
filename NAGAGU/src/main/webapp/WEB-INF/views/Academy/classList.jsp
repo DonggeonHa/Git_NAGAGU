@@ -21,6 +21,9 @@
 	} else {
 		WORKSHOP_STATUS = (Integer)session.getAttribute("WORKSHOP_STATUS");
 	}
+	
+	String CLASS_CATEGORY = request.getParameter("CLASS_CATEGORY");
+	
 %>
 
 <!DOCTYPE html>
@@ -44,10 +47,10 @@
 				font-size: 15px;
 			}
 			
-			a.nav-link.active {
+/* 			a.nav-link.active {
 				background-color: #1B1B27 !important;
 				color: white !important;
-			}
+			} */
 			
 			.pagination {
 			  display: inline-block;
@@ -74,6 +77,7 @@
 			}
 			.search-tap {
 			   border-bottom: 1px solid #EAEAEA;
+			   font-size: 20px;
 			}
 			.search-tap a:hover{
 				color: #ef900e !important;
@@ -88,23 +92,29 @@
 				height: 100%;
 			}
 			.title {line-height:26px; color:#645fab; font-size:18px; overflow: hidden; height:1.2em; text-overflow: ellipsis; white-space:nowrap;}
+			 .caption a{ 
+			 	color: rgba(0,0,0,0.3) !important;
+			 }
+			 .caption .active{
+			 	color: rgba(0,0,0,1) !important;
+			 }
 		</style>
 	</head>
 	<body class="order-body">	
-		<div class="container">
+		<div class="container category_ac">
 			<!-- 클래스 nav -->
 			<div class="content">
 				<div class="search-tap">
 					<div class="caption py-5">
-						<a href='./classlist.ac?CLASS_CATEGORY=all&sort=new'>ALL</a> 
-						<a href='./classlist.ac?CLASS_CATEGORY=table&sort=new'>책상</a> 
-						<a href='./classlist.ac?CLASS_CATEGORY=chair&sort=new'>의자</a> 
-						<a href='./classlist.ac?CLASS_CATEGORY=bookshelf&sort=new'>책장</a> 
-						<a href='./classlist.ac?CLASS_CATEGORY=bed&sort=new'>침대</a> 
-						<a href='./classlist.ac?CLASS_CATEGORY=drawer&sort=new'>서랍장</a> 
-						<a href='./classlist.ac?CLASS_CATEGORY=sidetable&sort=new'>협탁</a> 
-						<a href='./classlist.ac?CLASS_CATEGORY=dressing_table&sort=new'>화장대</a> 
-						<a href='./classlist.ac?CLASS_CATEGORY=others&sort=new'>기타</a>
+						<a id="all_tab" href='./classlist.ac?CLASS_CATEGORY=all&sort=new'>ALL</a> 
+						<a id="table_tab" href='./classlist.ac?CLASS_CATEGORY=table&sort=new'>책상</a> 
+						<a id="chair_tab"  href='./classlist.ac?CLASS_CATEGORY=chair&sort=new'>의자</a> 
+						<a id="bookshelf_tab" href='./classlist.ac?CLASS_CATEGORY=bookshelf&sort=new'>책장</a> 
+						<a id="bed_tab" href='./classlist.ac?CLASS_CATEGORY=bed&sort=new'>침대</a> 
+						<a id="drawer_tab" href='./classlist.ac?CLASS_CATEGORY=drawer&sort=new'>서랍장</a> 
+						<a id="sidetable_tab" href='./classlist.ac?CLASS_CATEGORY=sidetable&sort=new'>협탁</a> 
+						<a id="dressing_table_tab" href='./classlist.ac?CLASS_CATEGORY=dressing_table&sort=new'>화장대</a> 
+						<a id="others_tab" href='./classlist.ac?CLASS_CATEGORY=others&sort=new'>기타</a>
 					</div>
 					<div class="d-flex bd-highlight nav-tag" style="padding: 1% 0;">
 						<div class="mr-auto bd-highlight">
@@ -279,6 +289,13 @@
 			    }
 			  });
 			});
+		//카테고리 카테고리 css활성화
+		$(document).ready(function(){
+			var category = '<%=CLASS_CATEGORY%>';  
+			console.log(category)
+			$('.caption').children().removeClass('active');
+			$('#'+category+'_tab').addClass('active');
+		});
 		</script>
 	
 	</body>
