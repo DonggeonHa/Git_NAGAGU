@@ -24,7 +24,9 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.view.json.MappingJackson2JsonView;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.spring.member.KakaoController;
 import com.spring.member.MemberVO;
+import com.spring.member.NaverLoginBO;
 import com.spring.workshop.WorkShopMemberVO;
 
 @Controller
@@ -39,6 +41,17 @@ public class ProductController {
 
 	@Autowired
 	MappingJackson2JsonView jsonView;	
+
+	/* NaverLoginBO */
+    private NaverLoginBO naverLoginBO;
+    private String apiResult = null;
+    
+    @Autowired(required = false)
+    private void setNaverLoginBO(NaverLoginBO naverLoginBO) {
+        this.naverLoginBO = naverLoginBO;
+    }	
+	
+	
 	
 	@RequestMapping(value = "/productcategory.pro")
 	public String productcategory(Model model) {
@@ -47,8 +60,24 @@ public class ProductController {
 	}
 	
 	@RequestMapping(value = "/productlist.pro", method = RequestMethod.GET)
-	public String productlist(ProductVO productVO, MemberVO memberVO, Model model, HttpServletRequest request, HttpSession session) {
+	public ModelAndView productlist(ProductVO productVO, MemberVO memberVO, Model model, HttpServletRequest request, HttpSession session) {
 		System.out.println("/productlist.pro------------------------------");
+		
+		ModelAndView mav = new ModelAndView();
+		/* 네이버아이디로 인증 URL을 생성하기 위하여 naverLoginBO클래스의 getAuthorizationUrl메소드 호출 */
+	    String naverAuthUrl = naverLoginBO.getAuthorizationUrl(session);
+	    System.out.println("네이버:" + naverAuthUrl);
+	    model.addAttribute("naver_url", naverAuthUrl);
+      
+	    //카카오 인증 url을 view로 전달
+	    String kakaoUrI = KakaoController.getAuthorizationUri(session);
+	    System.out.println("카카오: "+ kakaoUrI);
+	    model.addAttribute("kakao_url", kakaoUrI);
+
+        //네이버 
+        mav.setViewName("Store/productList");
+        
+
 		
 		/*로그인 멤버*/
 		if(session.getAttribute("MEMBER_NUM") != null) {
@@ -115,7 +144,7 @@ public class ProductController {
 		model.addAttribute("productcount", productcount);
 		model.addAttribute("productList", productList);
 		
-		return "Store/productList";
+		return mav;
 	}
 
 	//디테일-페이지네이션 에이젝스
@@ -338,174 +367,6 @@ public class ProductController {
 		return "Store/productDetail";
 	}
 	
-
-//새로 만드는 댓글창
-@RequestMapping(value = "/productdetail123.pro", method = RequestMethod.GET)
-public String productdetail123(ProductVO productVO, MemberVO memberVO, Model model, HttpServletRequest request, HttpSession session) {
-	System.out.println("detail123");
-
-	
-	/*상품 vo 가져오기*/
-	String PRODUCT_CATEGORY = request.getParameter("PRODUCT_CATEGORY");
-	int PRODUCT_NUM = Integer.parseInt(request.getParameter("PRODUCT_NUM"));
-	ProductVO vo = null;
-//	vo.setPRODUCT_NUM(PRODUCT_NUM);
-	vo = productService.getproductVO(PRODUCT_NUM);
-	/*이 product의 워크샵 넘버 필요함*/	
-	WorkShopMemberVO workshopVO = productService.selectWorkshop(vo);
-	int WorkshopMatchingNumber = workshopVO.getWORKSHOP_NUM();
-	int WorkshopNum = workshopVO.getWORKSHOP_NUM();
-	model.addAttribute("WorkshopNum",WorkshopNum);
-	model.addAttribute("WorkshopMatchingNumber",WorkshopMatchingNumber);
-	
-	/*qna 답글 출력시 워크샵 name, pic 필요함*/
-	String WorkshopName = workshopVO.getWORKSHOP_NAME();
-	String WorkshopPicture = workshopVO.getWORKSHOP_PICTURE();
-	model.addAttribute("WorkshopName",WorkshopName);
-	model.addAttribute("WorkshopPicture",WorkshopPicture);
-
-	
-	/*리뷰 리스트*/
-	int reviewpage = 1; //초기값 1
-	int limit = 5; //한 페이지당 출력할 글의 수
-	
-	if(request.getParameter("reviewpage") != null) {
-		reviewpage = Integer.parseInt(request.getParameter("reviewpage"));
-	}
-	
-	int startrow = (reviewpage - 1) * 5 + 1; // 읽기 시작할 row 번호.
-	int endrow = startrow + limit - 1; //읽을 마지막 row 번호.
-	
-	HashMap<String, Object> map = new HashMap<String, Object>();
-	map.put("startrow", startrow);
-	map.put("endrow", endrow);
-	map.put("PRODUCT_NUM", PRODUCT_NUM);
-	
-	int reviewCount;
-	int review_RE_Count;	//RE는 답글
-	ArrayList<Product_reviewVO> reviewList = null;
-	ArrayList<Product_reviewVO> review_RE_List = null;
-	reviewCount = reviewService.getReviewCount(map);
-	review_RE_Count = reviewService.getReview_RE_Count(map);
-	reviewList = reviewService.getReviewList(map);
-	review_RE_List = reviewService.getReview_RE_List(map);
-
-	//리스트 총 페이지 수
-	int maxpage = (int)((double)reviewCount / limit + 0.95); // 0.95를 더해서 올림 처리
-	int startpage = (((int) ((double)reviewpage / 10 + 0.9)) - 1) * 10 + 1; // 현재 페이지에 보여줄 시작 페이지 수 (1, 11, 21 등...)
-	int endpage =startpage + 10 - 1; // 현재 페이지에 보여줄 마지막 페이지 수 (10, 20, 30 등..)
-	
-	if (endpage > maxpage)
-		endpage = maxpage;		
-	
-	//리뷰 멤버
-	ArrayList<MemberVO> reviewMemberList = null;
-	reviewMemberList = reviewService.getreviewMemberList(map);
-	
-	//리뷰 답글 멤버
-	ArrayList<MemberVO> review_RE_MemberList = null;
-	review_RE_MemberList = reviewService.getreview_RE_MemberList(map);
-
-	
-	/*qna 리스트*/
-	//qna 원글 리스트
-	int qnapage = 1; //초기값 1
-	int qnalimit = 5; //한 페이지당 출력할 글의 수
-	
-	if(request.getParameter("qnapage") != null) {
-		qnapage = Integer.parseInt(request.getParameter("qnapage"));
-	}
-	
-	int qnastartrow = (qnapage - 1) * 5 + 1; // 읽기 시작할 row 번호.
-	int qnaendrow = qnastartrow + qnalimit - 1; //읽을 마지막 row 번호.
-	
-	HashMap<String, Object> qnamap = new HashMap<String, Object>();
-	qnamap.put("qnastartrow", qnastartrow);
-	qnamap.put("qnaendrow", qnaendrow);
-	qnamap.put("PRODUCT_NUM", PRODUCT_NUM);
-	System.out.println("qnastartrow="+qnastartrow);
-	System.out.println("qnaendrow="+qnaendrow);
-	int qnaCount;
-	int qna_RE_Count;
-	ArrayList<Product_qnaVO> qnaList = null;
-	ArrayList<Product_qnaVO> qna_RE_List = null;
-	qnaCount = qnaService.getQnaCount(qnamap);	//원글이 존재하면, qna리스트 출력
-	qna_RE_Count = qnaService.getQna_RE_Count(qnamap);	//원글이 존재하면, qna리스트 출력
-	qnaList = qnaService.getQnaList(qnamap);	//원글 리스트
-	qna_RE_List = qnaService.getQna_RE_List(qnamap);	//원글 리스트
-
-
-	
-	//qna 총 페이지 수
-	int qnamaxpage = (int)((double)qnaCount / qnalimit + 0.95); // 0.95를 더해서 올림 처리
-	int qnastartpage = (((int) ((double)qnapage / 10 + 0.9)) - 1) * 10 + 1; // 현재 페이지에 보여줄 시작 페이지 수 (1, 11, 21 등...)
-	int qnaendpage =startpage + 10 - 1; // 현재 페이지에 보여줄 마지막 페이지 수 (10, 20, 30 등..)
-	
-	if (qnaendpage > qnamaxpage)
-		qnaendpage = qnamaxpage;		
-	
-	
-	//qna 멤버
-	ArrayList<MemberVO> qnaMemberList = null;
-	qnaMemberList = qnaService.getqnaMemberList(map);
-	
-	if(qnaMemberList == null) {
-		System.out.println("qnaMemberList는 null");
-	} else {
-		System.out.println("qnaMemberList는 null이 아님");
-	}		
-	
-	
-	//상세페이지 들어가기 전에 조회수 1 증가
-	productService.updateReadCount(PRODUCT_NUM);
-	
-	/*상품 상세 관련 */
-	model.addAttribute("productVO", vo);
-	model.addAttribute("PRODUCT_CATEGORY", PRODUCT_CATEGORY);
-	model.addAttribute("PRODUCT_NUM", PRODUCT_NUM);
-
-	/*리뷰 댓글 관련 */
-	model.addAttribute("reviewpage", reviewpage);
-	model.addAttribute("maxpage", maxpage);
-	model.addAttribute("startpage", startpage);
-	model.addAttribute("endpage", endpage);
-	model.addAttribute("reviewCount", reviewCount);
-	model.addAttribute("review_RE_Count", review_RE_Count);
-	model.addAttribute("reviewList", reviewList);
-	model.addAttribute("review_RE_List", review_RE_List);
-	
-	/*리뷰 멤버 관련*/
-	model.addAttribute("reviewMemberList", reviewMemberList);
-	model.addAttribute("review_RE_MemberList", review_RE_MemberList);
-	
-	/*qna 댓글 관련 */
-	model.addAttribute("qnapage", qnapage);
-	model.addAttribute("qnamaxpage", qnamaxpage);
-	model.addAttribute("qnastartpage", qnastartpage);
-	model.addAttribute("qnaendpage", qnaendpage);
-	model.addAttribute("qnaCount", qnaCount);
-	model.addAttribute("qna_RE_Count", qna_RE_Count);
-	model.addAttribute("qnaList", qnaList);
-	model.addAttribute("qna_RE_List", qna_RE_List);
-	
-	/*qna 멤버 관련*/
-	model.addAttribute("qnaMemberList", qnaMemberList);		
-	
-	return "Store/productDetail123";
-}
-
-
-	
-//@RequestMapping(value="/getReviewList123.do",  produces="application/json;charset=UTF-8")
-//@ResponseBody
-//public String getReviewList123(MultipartHttpServletRequest request, HttpSession session) throws Exception {
-//
-//	
-//}
-	
-
-
-
 
 
 	

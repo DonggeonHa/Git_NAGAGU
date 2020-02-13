@@ -2109,7 +2109,7 @@
                mod_form += '<div class="col-12 review_grade pb-1" >';
                mod_form += '<img src="${pageContext.request.contextPath}/resources/images/star1.png" alt="" width="15px" height="15px">';
                mod_form += '&nbsp; : &nbsp;<input type="text" name="REVIEW_GRADE" value="'+getREVIEW_GRADE+'" size="2" style="height:90%;"> &nbsp;/5.0';
-               mod_form += '</div></div><div class="row "><div class="col-12 pb-1" id="imgReload">'; 
+               mod_form += '</div></div>	<div class="row "><div class="col-12 pb-1" id="imgReload">'; 
                if(getREVIEW_FILE == '#') {
                   mod_form += '<img src="#" class="review_img"  style="display:none;">   &nbsp;&nbsp;';            
                } else {
@@ -2311,7 +2311,7 @@
             $('#review_re_insert'+REVIEW_NUM).css('display','block');      //리뷰의 답글달기 버튼은block
          });
          
-         
+
          //-------------------------------------------리뷰re1-2.-답글등록process(review_re)
          //답글 insert
          /*review의 답글 등록시 insert ajax*/
