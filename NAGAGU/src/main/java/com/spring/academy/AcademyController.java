@@ -13,6 +13,7 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -20,6 +21,8 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.spring.member.KakaoController;
+import com.spring.member.NaverLoginBO;
 import com.spring.workshop.WorkShopMemberVO;
 
 @Controller
@@ -28,10 +31,29 @@ public class AcademyController {
 	@Autowired(required = false)
 	private AcademyService academyService;
 	
+	/* NaverLoginBO */
+    private NaverLoginBO naverLoginBO;
+    private String apiResult = null;
+    
+    @Autowired(required = false)
+    private void setNaverLoginBO(NaverLoginBO naverLoginBO) {
+        this.naverLoginBO = naverLoginBO;
+    }
+	
 	@RequestMapping(value = "/classlist.ac")
-	public ModelAndView ClassList(ClassVO classVO, ModelAndView mav, HttpServletRequest request) throws Exception  {
+	public ModelAndView ClassList(ClassVO classVO, Model model, HttpServletRequest request, HttpSession session) throws Exception  {
 		ArrayList<ClassVO> classList = new ArrayList<ClassVO>();
+		ModelAndView mav = new ModelAndView();
 		
+		/* 네이버아이디로 인증 URL을 생성하기 위하여 naverLoginBO클래스의 getAuthorizationUrl메소드 호출 */
+	    String naverAuthUrl = naverLoginBO.getAuthorizationUrl(session);
+	    System.out.println("네이버:" + naverAuthUrl);
+	    model.addAttribute("naver_url", naverAuthUrl);
+      
+	    //카카오 인증 url을 view로 전달
+	    String kakaoUrI = KakaoController.getAuthorizationUri(session);
+	    System.out.println("카카오: "+ kakaoUrI);
+	    model.addAttribute("kakao_url", kakaoUrI);
 		
 		int page = 1; // 초기값 1
 		int limit = 12; // 한 페이지당 출력할 글의 수
@@ -87,7 +109,17 @@ public class AcademyController {
 	}
 	
 	@RequestMapping(value = "/classdetail.ac")
-	public ModelAndView ClassDetail(ClassVO academy, HttpSession session) throws Exception {
+	public ModelAndView ClassDetail(ClassVO academy, HttpSession session, Model model) throws Exception {
+		/* 네이버아이디로 인증 URL을 생성하기 위하여 naverLoginBO클래스의 getAuthorizationUrl메소드 호출 */
+	    String naverAuthUrl = naverLoginBO.getAuthorizationUrl(session);
+	    System.out.println("네이버:" + naverAuthUrl);
+	    model.addAttribute("naver_url", naverAuthUrl);
+      
+	    //카카오 인증 url을 view로 전달
+	    String kakaoUrI = KakaoController.getAuthorizationUri(session);
+	    System.out.println("카카오: "+ kakaoUrI);
+	    model.addAttribute("kakao_url", kakaoUrI);
+		
 		ClassVO vo = academyService.getDetail(academy);
 		WorkShopMemberVO vo2 = academyService.selectWMember(vo);
 		

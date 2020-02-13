@@ -1,22 +1,28 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-
+<% 
+	String WORKSHOP_PICTURE = (String)session.getAttribute("WORKSHOP_PICTURE");
+	String WORKSHOP_NAME = (String)session.getAttribute("WORKSHOP_NAME");
+%>
 <!-- 사이드바 -->
 <div id="sidebar-wrapper">
 	<nav>
-		<ul class="sidebar-image">
-			<li class="sidebar-brand" style="margin: 15px 0;">
+		<ul class="sidebar-image" style="margin-left: -36px;">
+			<li class="sidebar-brand" style="margin: 15px 0 0 0;">
 				<a href="./workshop.ws">
 					<div class="sidebar_title">
 						<i class="fas fa-store"></i> 공방관리센터
 					</div>
 				</a>
 			</li>
-			<li class="sidebar-brand" style="margin: 15px 0;">
-				<a href="./index.ma" id="index">
-					메인페이지로
-				</a>
-			</li>
 		</ul>
+		<div class="sidebar_profile">
+            <div class="sidebar_pic">
+                <a href="./workshop_modify.ws"><img src="<%=WORKSHOP_PICTURE %>" class="img-circle profile_img"></a>
+            </div>
+            <div class="sidebar_name">
+                <h4 style="color: white;"><%=WORKSHOP_NAME %></h4>
+            </div>
+        </div>
 		<ul class="sidebar-nav">
 			<li class="main text-white">
 				공방정보
@@ -49,6 +55,9 @@
 					<li><a href="./workshop_academy_Management.ws">등록된 강의 관리</a></li>
 					<li><a href="./workshop_academy_Membership.ws">회원 관리</a></li>
 				</ul>
+			</li>
+			<li class="sidebar-brand" style="margin: 11px 0 0px 69px;">
+				<a href="./index.ma" id="index">메인페이지로<i class="fas fa-sign-out-alt"></i></a>
 			</li>
 		</ul>
 	</nav>

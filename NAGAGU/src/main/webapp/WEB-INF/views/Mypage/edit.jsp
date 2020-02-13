@@ -148,6 +148,8 @@ a, .card a:link, .card a:visited {
 	margin: 0 auto;
 	width: 40%;
 	min-width: 400px !important;
+	margin-top: 136px;
+    margin-bottom: 136px;
 }
 
 .error_next_box {
@@ -716,7 +718,7 @@ a, .card a:link, .card a:visited {
 			<hr>
 			<div class="row justify-content-center" style="margin-bottom: 100px;">
 				<button id="btn_submit" class="btn btn-outline-dark" type="button">수정</button>
-				<button id="btn_cancel" class="btn btn-outline-dark" type="button" onclick="cancel()">취소</button>
+				<button id="btn_cancel" class="btn btn-outline-dark" type="button" onclick="cancel();">취소</button>
 			</div>
 			</form>
 		</div>
@@ -836,12 +838,12 @@ a, .card a:link, .card a:visited {
 				
 			});
 			
-			function cancel() {
-				location.href = './mypage.my';
-			}
+			
 		});
 		
-		
+		function cancel() {
+			location.href = './mypage.my';
+		}
 		</script>
 	</body>
 </html>

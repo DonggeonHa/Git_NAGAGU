@@ -52,7 +52,7 @@
 }
 
 .sidebar-nav>.sidebar-brand {
-	font-size: 1.3em;
+	font-size: 1em;
 	line-height: 3em;
 }
 
@@ -112,4 +112,31 @@ tr.pageing:hover {
 #list_none {
 	text-align: center;
 	padding-top: 50px;
+}
+
+.sidebar_pic {
+    margin:0 auto;
+}
+
+.profile_img  {
+    width:70px;
+    height:70px;
+    background:#fff;
+    margin-left:80px;
+    z-index:1000;
+    position:inherit;
+    margin-top:20px;
+    margin-bottom:10px;
+    border:1px solid rgba(52,73,94,0.44);
+    padding:4px;
+}
+
+.img-circle {
+    border:1px solid #E6E9ED;
+    border-radius:50%;
+    padding:2px;
+}
+
+.sidebar_profile {
+	margin: -14px 0 0 0;
 }

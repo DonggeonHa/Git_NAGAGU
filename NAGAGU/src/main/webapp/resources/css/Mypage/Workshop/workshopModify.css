@@ -1,0 +1,198 @@
+@charset "UTF-8";
+
+.info_box_title {
+    font-size:18px;
+    font-weight:700;
+    color:orange;
+    padding-bottom:5px;
+    border-bottom:1px solid #d3d3d3;
+}
+
+.info_list {
+    margin-top:27px;
+    height:52px;
+}
+
+.info_img_list {
+    margin-top:20px;
+    height:40%;
+}
+
+.info_sm_list {
+    margin-top:1px;
+}
+
+.info_intro_list {
+    margin-top:45px;
+    height:280px;
+
+}
+
+.info_label {
+    display: block;
+    font-size: 15px;
+    font-weight: 700;
+    color: #292929;
+    line-height: 21px;
+    word-break: keep-all;
+    padding:18px 0 0 15px;
+    margin-bottom: 10px;
+}
+
+.sm_label {
+    font-size: 13px;
+}
+.intro_label {
+    width:100%;
+    height:42px;
+}
+
+.info_input {
+    height: 42px;
+    margin: 10px 0 0;
+    display: flex;
+    flex: 1 0 auto;
+}
+.intro_form {
+    width:100%;
+    padding: 0px 10px 0px 10px;
+    display: flex;
+    flex: 1 0 auto;
+    height:249px;
+}
+
+.form_input {
+    width: 100%;
+    border-radius: 4px;
+    transition: border 0.2s, background 0.2s;
+    display: block;
+    padding: 0 15px;
+    line-height: 40px;
+    border: 1px solid #bdbdbd;
+    background-color: #ffffff;
+    color: #424242;
+    font-size:14px;
+}
+
+.zipcode_button {
+    width:80px;
+    border-radius: 4px;
+    display:block;
+    margin-left:15px;
+    border:1px solid #ef902e;
+    background:#feeddd;
+    font-size:12px;
+    font-weight: 400;
+    transition:background 0.2s;
+}
+
+.zipcode_button:hover {
+    background:#feebbb;
+
+}
+
+/*프로필 관련 시작*/
+/*************************/
+.image-upload, .image-upload {
+	display: inline-block;
+	position: relative;
+	max-width: 205px;
+}
+
+.image-upload .image-edit, .image-upload .image-edit {
+	position: absolute;
+	z-index: 1;
+}
+
+.image-upload .image-edit {
+	right: 12px;
+ 			top: 10px;
+}
+
+.image-upload .image-edit input, .image-upload .image-edit input {
+	display: none;
+}
+
+.image-upload .image-edit input+label, .image-upload .image-edit input+label
+	{
+	display: inline-block;
+	width: 34px;
+	height: 34px;
+	margin-bottom: 0;
+	border-radius: 100%;
+	background: #ffffff;
+	border: 1px solid transparent;
+	/* box-shadow: 0px 2px 4px 0px rgba(0, 0, 0, 0.12); */
+	cursor: pointer;
+	font-weight: normal;
+	transition: all 0.2s ease-in-out;
+}
+
+.image-upload .image-edit input+label:hover, .image-upload .image-edit input+label:hover
+	{
+	background: #f1f1f1;
+	border-color: #d6d6d6;
+}
+
+.image-upload .image-edit input+label:after, .image-upload .image-edit input+label:after
+	{
+	content: "\f040";
+	font-family: "FontAwesome";
+	color: #757575;
+	position: absolute;
+	top: 10px;
+	left: 0;
+	right: 0;
+	text-align: center;
+	margin: auto;
+}
+
+.image-upload .preview, .image-upload .preview {
+	width: 192px;
+	height: 192px;
+	position: relative;
+	border: 6px solid white;
+	/* box-shadow: 0px 2px 4px 0px rgba(0, 0, 0, 0.1); */
+}
+
+
+.image-upload .preview>div, .image-upload .preview>div {
+	width: 100%;
+	height: 100%;
+	background-size: cover;
+	background-repeat: no-repeat;
+	background-position: center;
+}
+
+.image-upload .image-edit input+label:after, .image-upload .image-edit input+label:after {
+	top: 7px;
+}
+/*프로필 편집 끝*/
+.edit_member_form_wrap > hr {
+	border-top: 4px solid rgb(27, 27, 39);
+}
+#edit_member_form > hr {
+	border-top: 4px solid rgb(27, 27, 39);
+	margin: -37px 0 25px 0;
+}
+
+#profile_preview, #imagePreview {
+	height: 170px;
+    width: 170px;
+    border-radius: 100px;
+}
+
+.image-upload {
+	margin-top: 29px;
+}
+
+#imagePreview {
+	background-image: url('http://localhost:8000/NAGAGU/resources/images/Mypage/Basic_Picture.png');
+}
+
+.container-fluid {
+	padding: 20px;
+	margin-top: 30px;
+	margin-left: 50px;
+}
+

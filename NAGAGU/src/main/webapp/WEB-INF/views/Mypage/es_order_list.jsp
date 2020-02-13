@@ -14,7 +14,7 @@
 
 	int[] esCount;
 	for (int i=0; i<7; i++) {
-		esCount[i] = (int)request.getAttribute("cnt"+i);
+// 		esCount[i] = (int)request.getAttribute("cnt"+i);
 	}
 %>
 <!DOCTYPE html>
