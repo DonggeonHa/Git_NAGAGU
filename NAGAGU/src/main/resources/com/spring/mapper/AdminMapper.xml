@@ -181,9 +181,9 @@
  		delete from NAGAGU_MEMBER where MEMBER_NUM = #{MEMBER_NUM}
  	</delete>
  	
- 	<delete id="detailMember" parameterType="com.spring.member.MemberVO">
+ 	<select id="detailMember" parameterType="com.spring.member.MemberVO" resultMap="memberResultMap">
  		select * from NAGAGU_MEMBER where MEMBER_NUM = #{MEMBER_NUM}
- 	</delete>
+ 	</select>
 	
 	<!-- 공방회원관리  -->
 	<select id="WmemberListCount" resultType="int"> 

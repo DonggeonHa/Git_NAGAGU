@@ -53,11 +53,10 @@ function selectData() {
 			title += '<th style="width: 11%;">이름</th>';
 			title += '<th style="width: 11%;">닉네임</th>';
 			title += '<th style="width: 11%;">핸드폰</th>';
-			title += '<th style="width: 13%;"">주소</th>';
+			title += '<th style="width: 18%;"">주소</th>';
 			title += '<th style="width: 12%;">상세주소</th>';
 			title += '<th style="width: 11%;">상태</th>';
 			title += '<th style="width: 5%;">관리</th>';
-			title += '<th style="width: 5%;">상세</th>';
 			title += '</tr>';
 			title += '</thead>';
 			$('#user-table').append(title);
@@ -66,7 +65,8 @@ function selectData() {
 				output += '<tbody class="text-center">'
 				output += '<tr>';
 				output += '<td>' + item.member_NUM + '</td>'; // undefined ㅗ
-				output += '<td>' + item.member_EMAIL + '</td>';
+				output += '<td><a href="./detailMember.ad" class="detail_data" '
+				output += 'MEMBER_NUM=' + item.member_NUM + '>' + item.member_EMAIL + '</a></td>';
 				output += '<td>' + item.member_NAME + '</td>';
 				output += '<td>' + item.member_NICK + '</td>';
 				
@@ -95,9 +95,7 @@ function selectData() {
 				}
 				
 				output += '<td><a href="./deleteMember.ad" class="del_data" ';
-				output += 'MEMBER_NUM=' + item.member_NUM +  '><i class="fas fa-trash-alt" ></i></a></td>';
-				output += '<td><a href="./detailMember.ad" class="detail_data" data-toggle="modal" data-target="#ModalCenter" ';
-				output += 'MEMBER_NUM=' + item.member_NUM +  '>모달</a></td>';
+				output += 'MEMBER_NUM=' + item.member_NUM + '><i class="fas fa-trash-alt" ></i></a></td>';
 				output += '</tr>';
 				output += '</tbody>'
 				console.dir("output : " + output);
@@ -140,8 +138,7 @@ $(document).on('click', '.del_data', function(event) {
 });
 
 $(document).on('click', '.detail_data', function(event) {
-	$('#remo').remove();
-	$('#modal-test').empty();
+	var pop = window.open('about:blank', 'Info', 'scrollbars=yes, resizable=yes, width=500, height=600, left=0, top=0');
 	jQuery.ajax({
 		url : $(this).attr("href"), //$(this) : //항목을 눌렀을때 그 걸 가르킴 .attr("href") 속성된 이름값중에 "href"을 통해서? 읽어온다??
 		type : 'GET',
@@ -149,79 +146,18 @@ $(document).on('click', '.detail_data', function(event) {
 		contentType : 'application/x-www-form-urlencoded; charset=UTF-8',
 		dataType : 'json',
 		success : function (retVal) {
-			alert("상세보기 성공");
-			$.each(data, function(index, item) {
-				var output = '';
-				output += '<div class="modal fade" id="ModalCenter" tabindex="-1" role="dialog" aria-labelledby="ModalCenterTitle" aria-hidden="true">';
-					output += '<div class="modal-dialog modal-dialog-centered" role="document">';
-						output += '<div class="modal-content">';
-							output += '<div class="modal-header">';
-								output += '<h5 class="modal-title" id="ModalCenterTitle">개인정보</h5>';
-								output += '<button type="button" class="close" data-dismiss="modal" aria-label="Close">';
-									output += '<span aria-hidden="true">&times;</span>';
-								output += '</button>';	
-							output += '</div>';
-							output += '<div class="modal-body">';
-								output += '<table class="table table-striped">';
-									output += '<tr>';
-										output += '<th>프로필사진</th>';
-										output += '<td><img src="' + item.member_PICTURE + '" style="width: 95%;"></td>';
-									output += '</tr>';
-									output += '<tr>';
-										output += '<th>이름</th>';
-										output += '<td>' + item.member_NAME + '</td>';
-									output += '</tr>';
-									output += '<tr>';
-										output += '<th>닉네임</th>';
-										output += '<td>' + item.member_NICK + '</td>';
-									output += '</tr>';
-									output += '<tr>';
-										output += '<th>핸드폰</th>';
-										if (item.member_PHONE == null) {
-											output += '<td>미입력</td>';
-										} else {
-											output += '<td>' + item.member_PHONE + '</td>';	
-										}
-									output += '</tr>';
-									output += '<tr>';
-										output += '<th>이메일</th>';
-										output += '<td>' + item.member_EMAIL + '</td>';
-									output += '</tr>';
-									output += '<tr>';
-										output += '<th>주소</th>';
-										if (item.address_ADDRESS1 == null) {
-											output += '<td>미입력</td>';
-										} else {
-											output += '<td>' + item.address_ADDRESS1 + '</td>';	
-										}
-									output += '</tr>';
-									output += '<tr>';
-										output += '<th>상세주소</th>';
-										if (item.address_ADDRESS2 == null) {
-											output += '<td>미입력</td>';
-										} else {
-											output += '<td>' + item.address_ADDRESS2 + '</td>';	
-										}
-									output += '</tr>';
-									output += '<tr>';
-										output += '<th>가입날짜</th>';
-										output += '<td>' + item.member_DATE + '</td>';
-									output += '</tr>';
-								output += '</table>';
-							output += '</div>';
-						output += '</div>';
-					output += '</div>';
-				output += '</div>';
-				console.dir("output : " + output);
-				$('#modal-test').append(output);
-			});
-			page();
+			if (retVal.res == "OK") {
+				pop.location.href="memberInfo.ad?MEMBER_NUM=" + retVal.MemberVO.member_NUM;	
+	 		}
 		},
 		error: function(request,status,error) {
 			alert("ajax detailmember 통신 실패!");
 			alert("code:"+request.status+"\n"+"error:"+error);
 		}
 	});
+	
+	// 기본 이벤트 제거
+	event.preventDefault();
 });
 
 // 만들어진 테이블에 페이지 처리

@@ -244,7 +244,7 @@ public class MainController {
 	@RequestMapping(value = "/test.ma")
 	public String test() {
 		
-		return "Modal";
+		return "Admin/Info/MemberInfo";
 	}
 	
 	@RequestMapping(value = "/memberInsert.ma")

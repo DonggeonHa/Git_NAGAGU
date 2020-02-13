@@ -8,6 +8,7 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -92,16 +93,32 @@ public class AdminController {
 		Map<String, Object> retVal = new HashMap<String, Object>();
 		
 		try {
-			System.out.println("MEMBER_NUM = " + vo.getMEMBER_NUM());
+			System.out.println("MEMBER_NUM222 = " + vo.getMEMBER_NUM());
 			MemberVO res = adminService.detailMember(vo);
+			System.out.println("상세보기 : " + res.getMEMBER_NUM());
 			
 			retVal.put("res", "OK");
+			retVal.put("MemberVO", res);
 		} catch(Exception e) {
 			retVal.put("res", "FAIL");
-			retVal.put("message", "삭제가 되지 않았습니다.");
+			retVal.put("message", "상세보기가 되지 않았습니다.");
 		}
 		
 		return retVal;
+	}
+	
+	@RequestMapping(value = "/memberInfo.ad", method = {RequestMethod.GET, RequestMethod.POST})
+	public String MemberInfo(MemberVO vo, Model model) {
+		System.out.println("들어왔니 : " + vo.getMEMBER_NUM());
+		try {
+			MemberVO res = adminService.detailMember(vo);
+			
+			model.addAttribute("MemberVO", res);
+			
+		} catch(Exception e) {
+			System.out.println("MemberInfo : " + e.getMessage());
+		}		
+		return "Admin/Info/MemberInfo";
 	}
 	
 	@RequestMapping(value = "/deleteMember.ad", produces="application/json; charset=UTF-8", method = {RequestMethod.GET, RequestMethod.POST})
