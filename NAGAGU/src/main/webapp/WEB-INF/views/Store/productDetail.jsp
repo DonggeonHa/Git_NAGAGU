@@ -132,7 +132,7 @@
 	*/
 	
 	//상품 이미지 관련
-	String images = vo.getPRODUCT_IMAGE();
+	String images = vo.getPRODUCT_BANNER();
 	String[] imgArr = images.split(",");
 	
 %>  
@@ -238,8 +238,9 @@
             position: -webkit-sticky;
             position: sticky;
             background-color: #FFFFFF;
+            border-radius: 10px;
             top: 85px;
-            height: 600px;
+            height: 573px;
          }
          
          .nav-item .nav-link {
@@ -487,11 +488,9 @@
 		}
 		
 		/* 상품 이미지 관련*/
-		
-		
 		.thumbMain {
-			width:400px;
-			height:400px;
+			width:510px;
+			height:510px;
 			overflow:hidden;
 			display:block;
 			margin-right:10px;
@@ -505,8 +504,8 @@
 		}
 		
 		.thumbItem {
-			width:76px;
-			height:76px;
+			width:95px;
+			height:95px;
 			overflow:hidden;
 			display:block;
 			margin:6px;
@@ -613,13 +612,9 @@
 			</h6>
 		</div>
 		<div class="row" style="padding-bottom: 5%;">
-			<div class="col-7" style="border: 1px solid #1B1B27">
-				<div class="row justify-content-center">
-					<div class="thumbMain">
-						<a href=<%=imgArr[0]%> target="_blank"><img
-							src=<%=imgArr[0]%>></a>
-					</div>
-					<div class="thumnList">
+			<div class="col-7">
+				<div class="row justify-content-center pt-4">
+					<div class="thumbList">
 						<%
 							for (int i = 0; i < imgArr.length; i++) {
 						%>
@@ -630,6 +625,10 @@
 						<%
 							}
 						%>
+					</div>
+					<div class="thumbMain">
+						<a href=<%=imgArr[0]%> target="_blank"><img
+							src=<%=imgArr[0]%>></a>
 					</div>
 				</div>
 			</div>
@@ -3057,6 +3056,8 @@
 					$('.thumbMain').html('<a href="' + '<%=imgArr[2]%>' + '" target="_blank"><img src="' + '<%=imgArr[2]%>' + '"></a>');
 				} <% } if (imgArr.length > 3) { %> else if (idx == 3) {
 					$('.thumbMain').html('<a href="' + '<%=imgArr[3]%>' + '" target="_blank"><img src="' + '<%=imgArr[3]%>' + '"></a>');
+				} <% } if (imgArr.length > 4) { %> else if (idx == 4) {
+					$('.thumbMain').html('<a href="' + '<%=imgArr[4]%>' + '" target="_blank"><img src="' + '<%=imgArr[4]%>' + '"></a>');
 				} <% } %>
 			});
 	 

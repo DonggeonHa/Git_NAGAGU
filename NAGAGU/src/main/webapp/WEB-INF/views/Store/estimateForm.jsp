@@ -308,7 +308,7 @@
 							class="nav-link" id="pills-kakao-tab" data-toggle="pill"
 							href="#pills-kakao" role="tab" aria-controls="pills-home"
 							aria-selected="true"> <label> <img width="64"
-									src="https://scontent-icn1-1.xx.fbcdn.net/v/t1.0-9/p960x960/52775098_2282365115374551_3623666965651914752_o.png?_nc_cat=109&_nc_ohc=l2DGRIBJakYAX-7EhT8&_nc_ht=scontent-icn1-1.xx&oh=a98e852e8cfa475f79014246688b9965&oe=5E97B88B"
+									src="${pageContext.request.contextPath}/resources/images/Mypage/kakao.png"
 									alt="Kakao">
 									<div class="text-center">
 										<font color="black">카카오페이</font>

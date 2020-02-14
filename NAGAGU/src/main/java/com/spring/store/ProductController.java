@@ -852,7 +852,7 @@ public class ProductController {
 	
 	 try { // 파일생성
 	    mf.transferTo(new File(path, saveFileName)); 
-	    str += saveFileName + ",";
+	    str += "/productupload/image/"+ saveFileName + ",";
 	    System.out.println("str="+str);
 	     } catch (Exception e) { 
 	        e.printStackTrace(); 

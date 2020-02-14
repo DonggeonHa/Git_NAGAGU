@@ -151,6 +151,25 @@ public class AdminServiceImpl implements AdminService {
 		return res;
 	}
 	
+	@Override
+	public PicsVO detailPICS(PicsVO vo) {
+		PicsVO getpics = null;
+		AdminMapper adminMapper = sqlSession.getMapper(AdminMapper.class);
+		getpics = adminMapper.detailPICS(vo);
+		
+		return getpics;
+	}
+	
+	@Override
+	public MemberVO memberPICS(PicsVO vo) {
+		MemberVO memberpics = null;
+		AdminMapper adminMapper = sqlSession.getMapper(AdminMapper.class);
+		memberpics = adminMapper.memberPICS(vo);
+		
+		return memberpics;
+	}
+
+	
 	/* ================================= 아카데미관리 ======================================*/
 	@Override
 	public List<ClassVO> getAcademy() {
@@ -195,6 +214,15 @@ public class AdminServiceImpl implements AdminService {
 		
 		return res;
 	}
+	
+	@Override
+	public ProductVO detailProduct(ProductVO vo) {
+		ProductVO getProduct = null;
+		AdminMapper adminMapper = sqlSession.getMapper(AdminMapper.class);
+		getProduct = adminMapper.detailProduct(vo);
+		
+		return getProduct;
+	}
 
 	/* ================================= 견적관리 ======================================*/
 	@Override
@@ -214,5 +242,12 @@ public class AdminServiceImpl implements AdminService {
 		return res;
 	}
 
-	
+	@Override
+	public EstimateVO detailEstimate(EstimateVO vo) {
+		EstimateVO getEstimate = null;
+		AdminMapper adminMapper = sqlSession.getMapper(AdminMapper.class);
+		getEstimate = adminMapper.detailEstimate(vo);
+		
+		return getEstimate;
+	}
 }

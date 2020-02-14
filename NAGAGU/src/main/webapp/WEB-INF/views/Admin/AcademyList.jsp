@@ -26,12 +26,11 @@
 </div>
 <!-- /본문 -->
 
-<!-- MemberList -->
+<!-- AcademyList -->
 <script>
 	$(document).ready(function() {
 		selectData();
 	});
-  
 
 	// 목록
 	function selectData() {
@@ -153,7 +152,7 @@
 	});
 	
 	$(document).on('click', '.detail_data', function(event) {
-		var pop = window.open('_blank');
+		
 		jQuery.ajax({
 			url : $(this).attr("href"), //$(this) : //항목을 눌렀을때 그 걸 가르킴 .attr("href") 속성된 이름값중에 "href"을 통해서? 읽어온다??
 			type : 'GET',
@@ -162,7 +161,8 @@
 			dataType : 'json',
 			success : function (retVal) {
 				if (retVal.res == "OK") {
-					pop.location.href="classdetail.ac?CLASS_NUMBER=" + retVal.ClassVO.class_NUMBER;	
+					var pop = window.open('classdetail.ac?CLASS_NUMBER=' + retVal.ClassVO.class_NUMBER,'_blank');
+					// pop.location.href="classdetail.ac?CLASS_NUMBER=" + retVal.ClassVO.class_NUMBER;	
 		 		}
 			},
 			error: function(request,status,error) {

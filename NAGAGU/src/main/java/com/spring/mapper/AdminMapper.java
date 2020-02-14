@@ -25,10 +25,12 @@ public interface AdminMapper {
 	int updateWMember(WorkShopMemberVO vo);
 	WorkShopMemberVO detailWMember(WorkShopMemberVO vo);
 	
-	/* 커뮤니티관리*/
+	/* 커뮤니티관리 */
 	List<PicsVO> getPICS();
 	int deletePICS(PicsVO vo);
-
+	PicsVO detailPICS(PicsVO vo);
+	MemberVO memberPICS(PicsVO vo);
+	
 	/* 아카데미관리 */
 	List<ClassVO> getAcademy();
 	int deleteAcademy(ClassVO vo);
@@ -37,8 +39,10 @@ public interface AdminMapper {
 	/* 상품관리 */
 	List<ProductVO> getProduct();
 	int deleteProduct(ProductVO vo);
+	ProductVO detailProduct(ProductVO vo);
 	
 	/* 견적관리 */
 	List<EstimateVO> getEstimate();
 	int deleteEstimate(EstimateVO vo);
+	EstimateVO detailEstimate(EstimateVO vo);
 }

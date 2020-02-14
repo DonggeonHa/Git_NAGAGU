@@ -51,7 +51,7 @@ function selectData() {
 			title += '<th scope="col">분류</th>';
 			title += '<th scope="col">카테고리</th>';
 			title += '<th scope="col">글쓴이</th>';
-			title += '<th scope="col">제작공방</th>';
+			title += '<th scope="col">태그</th>';
 			title += '<th scope="col">좋아요</th>';
 			title += '<th scope="col">조회수</th>';
 			title += '<th scope="col">관리</th>';
@@ -98,7 +98,8 @@ function selectData() {
      			}
 				
 				output += '<td>' + item.pics_NICK + '</td>';
-				output += '<td>' + item.pics_WORKSHOP + '</td>';
+				output += '<td><a href="./detailPICS.ad" class="detail_data" '
+				output += 'PICS_NUM=' + item.pics_NUM + '>' + item.pics_TAG + '</a></td>';
 				output += '<td>' + item.pics_LIKE + '</td>';
 				output += '<td>' + item.pics_READ + '</td>';
 				output += '<td><a href="./deletePICS.ad" class="del_data" ';
@@ -137,6 +138,29 @@ $(document).on('click', '.del_data', function(event) {
 		},
 		error : function() {
 			alert("ajax 삭제 통신 실패!");
+		}
+	});
+	
+	// 기본 이벤트 제거
+	event.preventDefault();
+});
+
+$(document).on('click', '.detail_data', function(event) {
+	
+	jQuery.ajax({
+		url : $(this).attr("href"), //$(this) : //항목을 눌렀을때 그 걸 가르킴 .attr("href") 속성된 이름값중에 "href"을 통해서? 읽어온다??
+		type : 'GET',
+		data : {'PICS_NUM' : $(this).attr("pics_NUM")},
+		contentType : 'application/x-www-form-urlencoded; charset=UTF-8',
+		dataType : 'json',
+		success : function (retVal) {
+			if (retVal.res == "OK") {
+				var pop = window.open('community_detail.cm?PICS_NUM=' + retVal.PicsVO.pics_NUM + '&MEMBER_NUM=' + retVal.MemberVO.member_NUM + '&PICS_MEMBER=' + retVal.PicsVO.pics_MEMBER,'_blank');
+	 		}
+		},
+		error: function(request,status,error) {
+			alert("ajax detailmember 통신 실패!");
+			alert("code:"+request.status+"\n"+"error:"+error);
 		}
 	});
 	

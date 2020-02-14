@@ -271,6 +271,27 @@ public class AdminController {
 		return retVal;
 	}
 	
+	@RequestMapping(value = "/detailPICS.ad", produces="application/json; charset=UTF-8", method = {RequestMethod.GET, RequestMethod.POST})
+	@ResponseBody
+	public Map<String, Object> detailPICS(PicsVO vo) {
+		Map<String, Object> retVal = new HashMap<String, Object>();
+		
+		try {
+			PicsVO res = adminService.detailPICS(vo);
+			MemberVO member = adminService.memberPICS(res);
+			System.out.println("member" + member.getMEMBER_NUM());
+			
+			retVal.put("res", "OK");
+			retVal.put("PicsVO", res);
+			retVal.put("MemberVO", member);
+		} catch(Exception e) {
+			retVal.put("res", "FAIL");
+			retVal.put("message", "상세보기가 되지 않았습니다.");
+		}
+		
+		return retVal;
+	}
+	
 	/*=========================== 아카데미 관리 ==============================*/
 	@RequestMapping(value = "/academyList.ad")
 	public String academyList() {
@@ -375,6 +396,24 @@ public class AdminController {
 		return retVal;
 	}
 	
+	@RequestMapping(value = "/detailProduct.ad", produces="application/json; charset=UTF-8", method = {RequestMethod.GET, RequestMethod.POST})
+	@ResponseBody
+	public Map<String, Object> detailProduct(ProductVO vo) {
+		Map<String, Object> retVal = new HashMap<String, Object>();
+		
+		try {
+			ProductVO res = adminService.detailProduct(vo);
+			
+			retVal.put("res", "OK");
+			retVal.put("ProductVO", res);
+		} catch(Exception e) {
+			retVal.put("res", "FAIL");
+			retVal.put("message", "상세보기가 되지 않았습니다.");
+		}
+		
+		return retVal;
+	}
+	
 	/*=========================== 견적 관리 ==============================*/
 	@RequestMapping(value = "/estimateList.ad")
 	public String estimateList() {
@@ -413,6 +452,24 @@ public class AdminController {
 		} catch(Exception e) {
 			retVal.put("res", "FAIL");
 			retVal.put("message", "삭제가 되지 않았습니다.");
+		}
+		
+		return retVal;
+	}
+	
+	@RequestMapping(value = "/detailEstimate.ad", produces="application/json; charset=UTF-8", method = {RequestMethod.GET, RequestMethod.POST})
+	@ResponseBody
+	public Map<String, Object> detailEstimate(EstimateVO vo) {
+		Map<String, Object> retVal = new HashMap<String, Object>();
+		
+		try {
+			EstimateVO res = adminService.detailEstimate(vo);
+			
+			retVal.put("res", "OK");
+			retVal.put("EstimateVO", res);
+		} catch(Exception e) {
+			retVal.put("res", "FAIL");
+			retVal.put("message", "상세보기가 되지 않았습니다.");
 		}
 		
 		return retVal;
