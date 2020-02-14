@@ -141,6 +141,8 @@ public class MypageController {
 		WorkShopMemberVO workshopVO = new WorkShopMemberVO();
 		workshopVO.setWORKSHOP_NUM((int)(session.getAttribute("WORKSHOP_NUM")));
 		workshopVO = workShopMemberService.selectwmember(workshopVO);
+		System.out.println("이건폼이다" + workshopVO.getWORKSHOP_ADDRESS1());
+		System.out.println(workshopVO.getWORKSHOP_ADDRESS2());
 		
 		mav.addObject("WorkShopMemberVO", workshopVO);
 		mav.setViewName("Mypage/Workshop/modify");

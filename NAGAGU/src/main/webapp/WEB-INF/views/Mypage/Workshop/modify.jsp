@@ -19,11 +19,14 @@
 	<div class="container-fluid">
         <div class="work_info_box">
             <div class="row work_title">
-                <h1>공방 정보수정</h1>
+                <h1 id="edit-title">공방 정보수정</h1>
+            </div>
+            <div class="row" id="second_title">
+            	<span id="span_text">공방 고객님께서 가입하신 공방 정보입니다.<br>공방가입시 기본정보를 정확하게 입력하여 주시면 서비스 이용시 편리하게 이용하실 수 있습니다.</span>
             </div>
             <br/>
             <!-- work_info 폼 시작-->
-            <form id="work_info" name="work_info" method="post">
+            <form id="work_info" name="work_info" action="/wsModify.mywork" method="post" enctype="multipart/form-data">
             <div class="row work_info_box">
                 <!-- 첫번째 블럭 -->
                 <div class="col-5 work_info_first">
@@ -31,7 +34,7 @@
                     <div class="row info_list">
                         <div class="col-4 info_label">공방 이름</div>
                         <div class="col-8 info_input">
-                            <h3><%=WORKSHOP_NAME%></h3>
+                            <h4><%=WORKSHOP_NAME%></h4>
                         </div>
                     </div>
                     <div class="row info_list">
@@ -49,7 +52,7 @@
                     <div class="row info_list">
                         <div class="col-4 info_label">사업자 번호</div>
                         <div class="col-8 info_input">
-                            <input type="text" class="form_input" id="workshop_license" name="WORKSHOP_LICENSE" value="<%=WORKSHOP_LICENSE%>">
+                            <input type="text" class="form_input" id="workshop_license" name="WORKSHOP_LICENSE" value="<%=WORKSHOP_LICENSE%>" placeholder="(-)하이픈까지 입력">
                         </div>
                     </div>
                     <br>
@@ -57,7 +60,7 @@
 						<div class="col-2 info_label">우편번호</div>
 						<div class="col-10 info_input">
 							<input type="text" id="WORKSHOP_ZIP" name="WORKSHOP_ZIP"
-								readonly="readonly" value="" class="form_input">
+								readonly="readonly" value="<%=WORKSHOP_ZIP %>" class="form_input">
 							<button type="button" id="zipcode_btn" onclick="openZipSearch()"
 								class="zipcode_button">주소찾기</button>
 						</div>
@@ -66,7 +69,7 @@
 						<div class="col-2 info_label">주소</div>
 						<div class="col-10 info_input">
 							<input type="text" id="WORKSHOP_ADDRESS1"
-								name="WORKSHOP_ADDRESS1" value="" placeholder="기본주소"
+								name="WORKSHOP_ADDRESS1" value="<%=WORKSHOP_ADDRESS1 %>" placeholder="기본주소"
 								class="form_input" readonly>
 						</div>
 					</div>
@@ -74,7 +77,7 @@
 						<div class="col-2 info_label">상세주소</div>
 						<div class="col-10 info_input">
 							<input type="text" id="WORKSHOP_ADDRESS2"
-								name="WORKSHOP_ADDRESS2" value="" placeholder="상세주소"
+								name="WORKSHOP_ADDRESS2" value="<%=WORKSHOP_ADDRESS2 %>" placeholder="상세주소"
 								class="form_input">
 						</div>
 					</div>
@@ -87,6 +90,7 @@
                         <div class="col-8 info_img_input">
                             <div class="image-upload">
 							<div class="image-edit">
+								<input type="hidden" name="WORKSHOP_PICTURE" value="<%=WORKSHOP_PICTURE %>">
 								<input type="file" name="img" id="imageUpload"
 									class="imageUpload" data-preview="imagePreview"
 									accept=".png, .jpg, .jpeg" /> <label for="imageUpload"></label>
@@ -104,6 +108,10 @@
 						</div>
                     </div>
                 </div>
+            </div>
+            <div class="row justify-content-center in">
+            		<button type="submit" id="btn_submit" onclick="click_sub();">수정</button>
+            		<input type='reset' id="btn_cancel" value="취소">
             </div>
         </form>
         </div>
@@ -181,5 +189,22 @@ function openZipSearch() {
          console.log(data);
       }
    }).open();
+}
+
+function click_sub() {
+	var ceoName = $('#WORKSHOP_CEO_NAME').val();
+	var phone = $('#WORKSHOP_PHONE').val();
+	var license = $('#WORKSHOP_LICENSE').val();
+	var zip = $('#WORKSHOP_ZIP').val();
+	var address1 = $('#WORKSHOP_ADDRESS1').val();
+	var address2 = $('#WORKSHOP_ADDRESS2').val();
+	
+	if(ceoName=="" || phone=="" || license=="" || zip=="" || address1=="" || address2==""){
+		alert("정보 중 빈칸이 있습니다.");
+		
+		return false;
+	}else {
+		document.work_info.submit();
+	}
 }
 </script>

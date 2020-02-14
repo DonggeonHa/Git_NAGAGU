@@ -5,6 +5,7 @@ import java.util.List;
 import org.apache.ibatis.annotations.Param;
 
 import com.spring.academy.ClassVO;
+import com.spring.workshop.WorkShopMemberVO;
 import com.spring.workshopMypage.WsMemberVO;
 
 public interface AcademyManagementMapper {
@@ -19,4 +20,6 @@ public interface AcademyManagementMapper {
 	
 	ClassVO getclassDetail(@Param("CLASS_NUMBER") int CLASS_NUMBER);
 	int updateClass(ClassVO classVO);
+	
+	int modifyWorkshop(WorkShopMemberVO workshopVO);
 }
