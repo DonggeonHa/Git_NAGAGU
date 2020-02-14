@@ -596,7 +596,7 @@
 									<tr>
 										<th scope="row">색상선택</th>
 										<td>
-											<select name="BASKET_COLOR" size="1" class="form-control">
+											<select name="BASKET_COLOR" size="1" class="form-control BASKET_COLOR">
 												<option value="">선택</option>
 												<c:forTokens var="color" items="<%=PRODUCT_COLOR %>" delims=",">
 													<option value="${fn:trim(color)}">${fn:trim(color)}</option>
@@ -607,7 +607,7 @@
 									<tr>
 										<th scope="row">사이즈선택</th>
 										<td>
-											<select name="BASKET_SIZE" size="1" class="form-control">
+											<select name="BASKET_SIZE" size="1" class="form-control BASKET_SIZE">
 												<option value="">선택</option>
 												<c:forTokens var="size" items="<%=PRODUCT_SIZE %>" delims=",">
 													<option value="${fn:trim(size)}">${fn:trim(size)}</option>
@@ -619,7 +619,7 @@
 										<th scope="row">수량</th>
 										<td>
 											<div>
-												<select name="BASKET_AMOUNT" size="1" class="form-control">
+												<select name="BASKET_AMOUNT" size="1" class="form-control BASKET_AMOUNT">
 													<option value="1">1</option>
 													<option value="2">2</option>
 													<option value="3">3</option>
@@ -668,10 +668,10 @@
 														</a>
 													</div>
 													<div style="width:45%;">
-														<a href="#" class="btn btn-outline-dark btn-lg btn-block" role="button" aria-pressed="true" id="basket_btn">장바구니</a>
+														<a href="#" class="btn btn-outline-dark btn-lg btn-block basket_btn" role="button" aria-pressed="true">장바구니</a>
 													</div>
 													<div style="width:45%;">
-														<a href="#" class="btn btn-outline-dark btn-lg btn-block" role="button" aria-pressed="true" id="order_btn">바로구매</a>
+														<a href="#" class="btn btn-outline-dark btn-lg btn-block order_btn" role="button" aria-pressed="true">바로구매</a>
 													</div>
 												<% 
 													} 
@@ -1453,7 +1453,7 @@
 	                            <tr>
 									<th scope="row">색상선택</th>
 									<td>
-										<select name="BASKET_COLOR" size="1" class="form-control">
+										<select name="BASKET_COLOR" size="1" class="form-control BASKET_COLOR">
 											<option value="">선택</option>
 											<c:forTokens var="color" items="<%=PRODUCT_COLOR %>" delims=",">
 												<option value="${fn:trim(color)}">${fn:trim(color)}</option>
@@ -1464,7 +1464,7 @@
 								<tr>
 									<th scope="row">사이즈선택</th>
 									<td>
-										<select name="BASKET_SIZE" size="1" class="form-control">
+										<select name="BASKET_SIZE" size="1" class="form-control BASKET_SIZE">
 											<option value="">선택</option>
 											<c:forTokens var="size" items="<%=PRODUCT_SIZE %>" delims=",">
 												<option value="${fn:trim(size)}">${fn:trim(size)}</option>
@@ -1476,7 +1476,7 @@
 									<th scope="row">수량</th>
 									<td>
 										<div>
-											<select name="BASKET_AMOUNT" size="1" class="form-control">
+											<select name="BASKET_AMOUNT" size="1" class="form-control BASKET_AMOUNT">
 												<option value="1">1</option>
 												<option value="2">2</option>
 												<option value="3">3</option>
@@ -1543,10 +1543,10 @@
 									</a>
 								</div>
 								<div style="width:45%;">
-									<a href="#" class="btn btn-outline-dark btn-lg btn-block" role="button" aria-pressed="true" id="basket_btn">장바구니</a>
+									<a href="#" class="btn btn-outline-dark btn-lg btn-block basket_btn" role="button" aria-pressed="true">장바구니</a>
 								</div>
 								<div style="width:45%;">
-									<a href="#" class="btn btn-outline-dark btn-lg btn-block" role="button" aria-pressed="true" id="order_btn">바로구매</a>
+									<a href="#" class="btn btn-outline-dark btn-lg btn-block order_btn" role="button" aria-pressed="true">바로구매</a>
 								</div>
 						<% 
 							} 
@@ -1561,7 +1561,21 @@
 	</div>
    <!-- content end -->
    <script>
-   	$('#basket_btn').on('click',function(){
+ 	//장바구니 2개 밸류 일치시키기
+	$('select[name=BASKET_COLOR]').on('change',function(){
+	   var value = $(this).val()
+	   $('.BASKET_COLOR').val(value)
+	})
+	$('select[name=BASKET_SIZE]').on('change',function(){
+	   var value = $(this).val()
+	   $('.BASKET_SIZE').val(value)
+	})
+	$('select[name=BASKET_AMOUNT]').on('change',function(){
+	   var value = $(this).val()
+	   $('.BASKET_AMOUNT').val(value)
+	})
+	//장바구니
+   	$('.basket_btn').on('click',function(){
 		var params=$("#goodsform").serialize();
 		$.ajax({
 			  url: "/NAGAGU/insertBasket.my",

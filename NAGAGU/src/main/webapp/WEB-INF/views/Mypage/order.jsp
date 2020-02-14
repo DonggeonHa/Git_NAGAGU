@@ -36,7 +36,7 @@ String[] array = new String[orderList.size()];
 }
 
 .order-container {
-	margin-top: 100px;
+	margin-top: 30px;
 	margin-bottom: 100px;
 }
 
