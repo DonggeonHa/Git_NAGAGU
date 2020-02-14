@@ -1,23 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ page import="java.util.*" %>
-<%@ page import ="java.text.SimpleDateFormat" %>
-<%@ page import ="java.text.DecimalFormat" %>
 <%
-	String WORKSHOP_NAME = (String)session.getAttribute("WORKSHOP_NAME");
-	ArrayList<HashMap <String, Object>> woList = (ArrayList<HashMap <String, Object>>)request.getAttribute("woList");
-
-	int nowpage = ((Integer) request.getAttribute("page")).intValue();
-	int maxpage = ((Integer) request.getAttribute("maxpage")).intValue();
-	int startpage = ((Integer) request.getAttribute("startpage")).intValue();
-	int endpage = ((Integer) request.getAttribute("endpage")).intValue();
-	int rnum = ((Integer) request.getAttribute("rnum")).intValue();
-	int offerCount = ((Integer) request.getAttribute("offerCount")).intValue();
-	
 	String MEMBER_EMAIL = (String)session.getAttribute("MEMBER_EMAIL");
-
-	SimpleDateFormat df = new SimpleDateFormat("yyyy.MM.dd");
-	DecimalFormat dfmp = new DecimalFormat("#,###원");
-	System.out.println(woList.size());
 %>
 <style>
 	#work_store th, td {
@@ -31,10 +15,10 @@
         </div>
         <div class="d-flex justify-content-between pb-2">
 	        <div class="justify-content-start">
-	            <button type="button" id="all_select" class="btn btn-sm btn-outline-dark mr-2">전체표시</button>
-	            <button type="button" id="all_select" class="btn btn-sm btn-outline-dark mr-2">선택 삭제</button>                         
+	            <button type="button" class="btn btn-sm btn-outline-dark mr-2">전체표시</button>
+	            <button type="button" class="btn btn-sm btn-outline-dark mr-2">선택 삭제</button>                         
 	            <span class="listnum_txt pt-2">전체 제안내역</span>
-	            <span class="listnum_num pt-2"><%=offerCount %>건</span>
+	            <span class="listnum_num pt-2">건</span>
 	        </div>
 	        <div class="justify-content-end">
 	        	<div class="d-flex justify-content-end">
@@ -44,7 +28,7 @@
 		                   	 선택
 		                </button>
 		                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-		                    <a class="dropdown-item" href="#">식별제목</a>
+		                    <a class="dropdown-item" href="#">제목</a>
 		                    <a class="dropdown-item" href="#">작성자</a>
 		                    <a class="dropdown-item" href="#">상태</a>
 		                </div>
@@ -76,42 +60,6 @@
 	            </tr>
 	        </thead>
 	        <tbody>
-	        <%
-	        	for (int i=0; i<woList.size(); i++) {
-	        		HashMap<String, Object> wo = woList.get(i);
-	        %>
-	            <tr>
-	                <td scope="col" ><input type="checkbox"></td>      
-	                <th scope="col" ><%=rnum %></th>
-	                <td scope="col" ><%=wo.get("ESTIMATE_NICK") %></td>
-	                <td scope="col" ><%=wo.get("ESTIMATE_TITLE") %></td>
-	                <td scope="col" >
-	                <% 
-	                String category = (String)wo.get("ESTIMATE_CATEGORY");
-	                
-	                if (category == "table") { %>책상 
-	                <% } else if (category == "chair") {%>의자 
-	                <% } else if (category == "bookshelf") {%>책장
-	                <% } else if (category == "bed") {%>침대
-	                <% } else if (category == "drawer") {%>서랍장
-	                <% } else if (category == "sidetable") {%>협탁
-	                <% } else if (category == "dressing_table") {%>화장대
-	                <% } else {%>기타
-	                <% } %>
-	                </td>
-	                <td scope="col" ><%=dfmp.format(wo.get("OFFER_PRICE")) %></td>
-	                <td scope="col" ><%=df.format(wo.get("OFFER_DATE")) %></td>
-	                <td scope="col" ><%=wo.get("ESTIMATE_STATE") %></td>
-	                <td scope="col">
-	                    <button class="btn_detail" onclick="location.href='estimate_detail.es?ESTIMATE_NUM=<%=wo.get("ESTIMATE_NUM")%>'">보기</button>
-	                    <button class="btn_modify" value=<%=wo.get("OFFER_NUM") %>>수정</button>
-	                    <button class="btn_delete" value=<%=wo.get("OFFER_NUM") %>>삭제</button>
-	                </td>
-	                <td scope="col">
-	                    <button class="btn_note" onclick="window.open('/NAGAGU/noteForm.nt?receive_mail=<%=wo.get("ESTIMATE_MEMBER") %>', '쪽지 보내기', 'width=600 height=700')">쪽지</button>
-	                </td>
-	            </tr>
-	           <% } %>
 	         </tbody>
 	    </table>
 	    <div class="table_bottom">
@@ -129,18 +77,138 @@
 
 <script>
 	$(document).ready(function() {
-		var all_check = false;
+		getList();
+		
+		function getList() {
+			
+			var params = $('#listinfo').serialize();
+			
+			$.ajax({
+				url:'/NAGAGU/workshop_offer_list.ws', 
+				type:'POST', 
+				data: params,
+				dataType:"json", //서버에서 보내줄 데이터 타입
+				async:false,
+				contentType:'application/x-www-form-urlencoded; charset=utf-8',
+				success:function(data) {
+					console.log(data.offerCount);
+					console.log(data.woList);
+					
+					var output = '';
+					var pagination = '';
+					
+					var nowpage = data.page;
+					var maxpage = data.maxpage;
+					var startpage = data.startpage;
+					var endpage = data.endpage;
+					var woList = data.woList;
+					var rnum = data.rnum;
+					
+					if (data.offerCount == 0) {
+						output += '<tr><td colspan="5" class="list_caution">등록된 제안이 없습니다</td><tr>';
+					}
+					
+					else {
+						/* 리스트 작성*/
+						$.each(woList, function(index, item) {
 
-		$("#all_select").click(function() {
-			if (all_check == false) {
-				$("input[type=checkbox]").prop("checked", true);
-				all_check = true;
-			} else {
-				$("input[type=checkbox]").prop("checked", false);
-				all_check = false;
-			}
-
-		});
+				            output += '<tr>';
+				            output += '<td scope="col" ><input type="checkbox" class="chk"></td>';  
+				            output += '<th scope="col" >' + rnum + '</th>';
+				            output += '<td scope="col" >' + item.ESTIMATE_NICK + '</td>';
+				            output += '<td scope="col" >' + item.ESTIMATE_TITLE + '</td>';
+				            output += '<td scope="col" >';
+				            
+				            var category = item.ESTIMATE_CATEGORY;
+				            
+				            switch (category) {
+				            case 'desk':
+				            	output += '책상';
+				            	break;
+				            case 'chair':
+				            	output += '의자';
+				            	break;
+				            case 'bookshelf':
+				            	output += '책장';
+				            	break;
+				            case 'bed':
+				            	output += '침대';
+				            	break;
+				            case 'drawer':
+				            	output += '서랍장';
+				            	break;
+				            case 'sidetable':
+				            	output += '협탁';
+				            	break;
+				            case 'dressing_table':
+				            	output += '화장대';
+				            	break;
+				            case 'misc':
+				            	output += '기타';
+				            	break;	
+				            }
+				            
+				            output += '</td>';
+				            output += '<td scope="col" >' + addComma(item.OFFER_PRICE) + '</td>';
+				            output += '<td scope="col" >' + datepicker.formatDate('yy-mm-dd', item.OFFER_DATE) + '</td>';
+				            output += '<td scope="col" >' + item.ESTIMATE_STATE + '</td>';
+				            output += '<td scope="col">';
+				            
+				            output += '<button class="btn_detail" value=' + item.ESTIMATE_NUM + '>보기</button>';
+				            output += '<button class="btn_modify" value=' + item.OFFER_NUM + '>수정</button>';
+				           	output += '<button class="btn_delete" of_num=' + item.OFFER_NUM + ' es_num=' + item.ESTIMATE_NUM + '>삭제</button>';
+				            output += '</td>';
+				            output += '<td scope="col">';
+				            output += '<button class="btn_note" value=' + item.ESTIMATE_NUM + '>쪽지</button>';
+				            output += '</td>';
+				            output += '</tr>';
+				           	
+				            rnum--; 
+						});
+						
+						/* 페이지네이션 */
+						
+					}
+					
+					$('#work_store > tbody').html(output);
+					$('#pagination').html(pagination);
+					
+				},
+				error:function(request, status, error){
+				    alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+				}
+			});
+		}
+	    function setSelect() {
+	        if ($("#all_select").is(":checked")) {
+	               $("input[type=checkbox]").prop("checked", true);
+	        } else {
+	                $("input[type=checkbox]").prop("checked", false);
+	        }
+		}
+	
+	    function checkSelect() {
+	        
+	        if ($("input[class='chk']:checked").length == $("input[class='chk']").length) {
+	            $("#all_select").prop("checked",true);
+	        }
+	        else {
+	            $("#all_select").prop("checked",false);
+	        }
+	        
+	        return true;
+	   	}
+            
+        $("#all_select").click(function() {
+             setSelect();
+        });
+        
+        $("input[class='chk']").click(function() {
+             checkSelect();
+        });
+		            
+	    $("#all_select").prop("checked",false);
+        setSelect();
 
 		$("#modform4").click(function() {
 			var data = $("mod3").val();
@@ -153,5 +221,48 @@
 			alert(data);
 		}
 
+		function addComma(inputNumber) {
+			   return inputNumber.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+		}
+
 	});
+	
+	/* 쪽지 보내기 */
+	$(document).delegate('.btn_note', 'click', function() {
+		var send_address = $(this).attr("value");
+		console.log(send_workshop);
+		window.open('/NAGAGU/noteForm.nt?receive_mail=' + send_address, "쪽지 보내기", "width=600 height=700");
+		return false;
+	});
+	
+	/* 견적 제안 삭제 */
+	$(document).delegate('.btn_delete', 'click', function() {
+		if (confirm("정말로 삭제하시겠습니까?")) {
+			var of_num = $(this).attr('of_num');
+			var es_num =  $(this).attr('es_num');
+			console.log(of_num);
+			console.log(es_num);
+			var params = {"OFFER_NUM" : of_num, "ESTIMATE_NUM" : es_num };
+			console.log(params);
+			$.ajax({
+				url:'/NAGAGU/offer_delete.es',
+				type:'POST',
+				data:params,
+				aync:false,
+				contentType: 'application/x-www-form-urlencoded; charset=utf-8',
+				success : function(data) {
+					alert("제안글이 성공적으로 삭제되었습니다.");
+					getList();
+				},
+			     error:function(request,status,error){
+			         alert("code = "+ request.status + " message = " + request.responseText + " error = " + error);
+				}
+				
+			});
+		
+		}
+
+		return false;
+	});
+	
 </script>

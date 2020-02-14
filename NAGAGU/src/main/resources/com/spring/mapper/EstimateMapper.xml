@@ -19,7 +19,7 @@
 		<result property="ESTIMATE_CONTENT" column="ESTIMATE_CONTENT"/> 
 		<result property="ESTIMATE_PAY" column="ESTIMATE_PAY"/> 
 		<result property="ESTIMATE_STATE" column="ESTIMATE_STATE"/>
-		<result property="ESTIMATE_MINPRICE" column="ESTIMATE_MINPRICE"/>
+		<result property="ESTIMATE_AVG" column="ESTIMATE_AVG"/>
 		<result property="ESTIMATE_OFFERCOUNT" column="ESTIMATE_OFFERCOUNT"/>
 	</resultMap>
 	
@@ -85,7 +85,7 @@
 	
 	<select id="estimateList" parameterType="java.util.HashMap" resultMap="estimateMap">
 		select * from (select ROW_NUMBER() OVER (order by ESTIMATE_DATE desc) as RNUM, ESTIMATE_NUM, ESTIMATE_MEMBER, ESTIMATE_NICK, ESTIMATE_TITLE, 
-		ESTIMATE_DATE, ESTIMATE_CATEGORY, ESTIMATE_PAY, ESTIMATE_STATE, ESTIMATE_MINPRICE, ESTIMATE_OFFERCOUNT from ESTIMATE)
+		ESTIMATE_DATE, ESTIMATE_CATEGORY, ESTIMATE_PAY, ESTIMATE_STATE, ESTIMATE_AVG, ESTIMATE_OFFERCOUNT from ESTIMATE)
 		<![CDATA[where RNUM >= #{startRow} and RNUM <= #{endRow}]]>
 		<if test="ES_CATEGORY == 'title'"> and ESTIMATE_TITLE like '%'||#{ES_SEARCH}||'%'</if>
 		<if test="ES_CATEGORY == 'content'"> and ESTIMATE_CONTENT like '%'||#{ES_SEARCH}||'%'</if>
@@ -125,8 +125,8 @@
     <select id="offerCount" parameterType="java.util.HashMap" resultType="int">
         select count(*) from (select * from ESTIMATE_OFFER
         <if test="OFFER_WORKSHOP!=null">where OFFER_WORKSHOP = #{OFFER_WORKSHOP}</if> ) B
-        <if test="OFFER_WORKSHOP!=null">, (select * from ESTIMATE 
-        <if test="ESTIMATE_NUM!=null">where ESTIMATE_NUM = #{ESTIMATE_NUM}</if>)A</if>
+        <if test="ESTIMATE_NUM!=null or OFFER_WORKSHOP!=null">, (select * from ESTIMATE
+        <if test="ESTIMATE_NUM!=null">where ESTIMATE_NUM = #{ESTIMATE_NUM}</if>  ) A </if>
         where A.ESTIMATE_NUM = B.OFFER_ESTIMATE 
         <if test="ESTIMATE_STATE != null">and A.ESTIMATE_STATE = #{ESTIMATE_STATE}</if>
     </select>
@@ -157,13 +157,13 @@
 	</update>
 	
 	<update id="offerSetInfo" parameterType="com.spring.estimate.EstimateVO">
-		update ESTIMATE set ESTIMATE_MINPRICE = #{ESTIMATE_MINPRICE}
+		update ESTIMATE set ESTIMATE_AVG = #{ESTIMATE_AVG}
 		<if test="ESTIMATE_OFFERCOUNT != null">, ESTIMATE_OFFERCOUNT = #{ESTIMATE_OFFERCOUNT}</if> 
 		where ESTIMATE_NUM = #{ESTIMATE_NUM}
 	</update>
 	
-	<select id="estimateMinPrice" parameterType="int" resultType="int">
-		select min(OFFER_PRICE) from estimate_offer where OFFER_ESTIMATE = #{ESTIMATE_NUM}
+	<select id="estimateAvgPrice" parameterType="int" resultType="int">
+		select avg(OFFER_PRICE) from estimate_offer where OFFER_ESTIMATE = #{ESTIMATE_NUM}
 	</select>
 	
 	
@@ -217,10 +217,10 @@
     	<if test="ESTIMATE_STATE!=null">and A.ESTIMATE_STATE = #{ESTIMATE_STATE}</if>
    		)
         <![CDATA[where RNUM >= #{startRow} and RNUM <= #{endRow}]]>
-		<if test="ES_CATEGORY == 'title'"> and ESTIMATE_TITLE like '%'||#{ES_SEARCH}||'%'</if>
-		<if test="ES_CATEGORY == 'category'"> and ESTIMATE_CATEGORY like '%'||#{ES_SEARCH}||'%'</if>
-		<if test="ES_CATEGORY == 'nick'"> and ESTIMATE_NICK like '%'||#{ES_SEARCH}||'%'</if>
-		<if test="ES_CATEGORY == 'TandC'"> and (ESTIMATE_TITLE like '%'||#{ES_SEARCH}||'%'
+		<if test="WO_CATEGORY == 'title'"> and ESTIMATE_TITLE like '%'||#{ES_SEARCH}||'%'</if>
+		<if test="WO_CATEGORY == 'category'"> and ESTIMATE_CATEGORY like '%'||#{ES_SEARCH}||'%'</if>
+		<if test="WO_CATEGORY == 'nick'"> and ESTIMATE_NICK like '%'||#{ES_SEARCH}||'%'</if>
+		<if test="WO_CATEGORY == 'TandC'"> and (ESTIMATE_TITLE like '%'||#{ES_SEARCH}||'%'
 		or ESTIMATE_CONTENT like '%'||#{ES_SEARCH}||'%')</if>
     </select>
     

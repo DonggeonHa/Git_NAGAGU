@@ -764,7 +764,6 @@
 						contentType: 'application/x-www-form-urlencoded; charset=utf-8',
 						success : function(data) {
 							alert("제안글이 성공적으로 삭제되었습니다.");
-							$('#modifyFormModal').modal("hide");
 							getOfferList();
 						},
 					     error:function(request,status,error){

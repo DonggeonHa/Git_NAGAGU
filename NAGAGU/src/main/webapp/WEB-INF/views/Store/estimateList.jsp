@@ -258,7 +258,7 @@
 							<td><%=el.getESTIMATE_NICK() %></td>
 							<td class="es_title"><%=el.getESTIMATE_TITLE() %></td>
 							<td><%=el.getESTIMATE_CATEGORY() %>
-							<td class="addComma"><%=dfmp.format(el.getESTIMATE_MINPRICE())%></td>
+							<td class="addComma"><%=dfmp.format(el.getESTIMATE_AVG())%></td>
 							<td><%=el.getESTIMATE_OFFERCOUNT()%></td>
 							<td><%=df.format(el.getESTIMATE_DATE()) %></td>
 							<td>

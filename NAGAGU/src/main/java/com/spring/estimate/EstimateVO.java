@@ -18,7 +18,7 @@ public class EstimateVO {
 	private String ESTIMATE_CONTENT;
 	private String ESTIMATE_PAY;
 	private int ESTIMATE_STATE;
-	private int ESTIMATE_MINPRICE;
+	private int ESTIMATE_AVG;
 	private int ESTIMATE_OFFERCOUNT;
 
 	public int getESTIMATE_NUM() {
@@ -111,11 +111,11 @@ public class EstimateVO {
 	public void setESTIMATE_STATE(int eSTIMATE_STATE) {
 		ESTIMATE_STATE = eSTIMATE_STATE;
 	}
-	public int getESTIMATE_MINPRICE() {
-		return ESTIMATE_MINPRICE;
+	public int getESTIMATE_AVG() {
+		return ESTIMATE_AVG;
 	}
-	public void setESTIMATE_MINPRICE(int eSTIMATE_MINPRICE) {
-		ESTIMATE_MINPRICE = eSTIMATE_MINPRICE;
+	public void setESTIMATE_AVG(int eSTIMATE_AVG) {
+		ESTIMATE_AVG = eSTIMATE_AVG;
 	}
 	public int getESTIMATE_OFFERCOUNT() {
 		return ESTIMATE_OFFERCOUNT;
