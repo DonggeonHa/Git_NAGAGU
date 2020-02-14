@@ -22,7 +22,6 @@ public class EstimateController {
 	
 	/* NaverLoginBO */
     private NaverLoginBO naverLoginBO;
-    private String apiResult = null;
     
     @Autowired(required = false)
     private void setNaverLoginBO(NaverLoginBO naverLoginBO) {
@@ -282,6 +281,7 @@ public class EstimateController {
 		
 		int offer_page = 1;
 		int offer_limit = 10;
+		System.out.println("test!!!!!");
         int offerCount = estimateService.offerCount(countMap);
 		
 		if (request.getParameter("OFFER_PAGE") != null) {
@@ -447,4 +447,5 @@ public class EstimateController {
 		
 		return "Mypage/es_order_list";
 	}
+	
 }
