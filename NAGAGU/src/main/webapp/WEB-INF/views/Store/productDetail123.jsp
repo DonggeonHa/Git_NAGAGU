@@ -320,18 +320,46 @@
 			height:100px;
 		}
 
+		.replytext {	
+			font-size:0.7em; font-weight:bold;	/*답글 버튼*/
+		}
+		
+		
+		
+		
+
 		/*답글*/
 		
-		.Review_replyformSection {
-			display:none;	
+		.ReviewReplyformSection {
+			padding:8px 0;	
 		}
 		.afterModifyReviewReply {
 			display:none;		
 		}
 
-		.afterControl {
-			display:none;		
+		.beforeControl {
+			font-size:0.7em; 
+			font-weight:bold;
 		}
+		.afterControl {
+			display:none;	
+			font-size:0.7em; 
+			font-weight:bold;	
+		}
+		
+		.insertReviewReply {
+			cursor: pointer;	/*리뷰답글 작성*/
+		}
+		.gomodifyReviewReplyform, modifyReviewReply {
+			cursor: pointer;	/*ReviewReply 수정폼 버튼, ReviewReply 수정버튼*/
+		}
+		.deleteReview {
+			cursor: pointer;	/*Review, ReviewReply 삭제*/
+		}
+		.formCancel {
+			cursor: pointer;	/*Review, ReviewReply 입력취소, 수정 취소버튼*/
+		}
+		
 		
 		
 		.ReviewList {
@@ -559,78 +587,77 @@
 						</div>	
 						<div id="ReviewWrapSection" class="pb-1"> <!-- wrap영역(리뷰 전체 영역 wrap): 하나 -->
 							<div id="ReviewformSection" class="pb-2">
-								<form id="reviewForm" name="REVIEW_CONTENT" enctype="multipart/form-data"> <!-- 리뷰 작성 폼 영역 : 하나 -->
+								<form id="ReviewForm" name="REVIEW_CONTENT" enctype="multipart/form-data"> <!-- 리뷰 작성 폼 영역 : 하나 -->
 									<input type="hidden" name="MEMBER_NUM" value="<%=MEMBER_NUM%>">
 									<input type="hidden" name="REVIEW_PRODUCT" value="<%=PRODUCT_NUM%>">
-									 
-										<div class="row justify-content-center">
-											<div class="col-1 justify-content-end">
-												<img src="<%=MEMBER_PICTURE %>" alt="" class="rounded-circle">
+									<div class="row justify-content-center">
+										<div class="col-1 justify-content-end">
+											<img src="<%=MEMBER_PICTURE %>" alt="" class="rounded-circle">
+										</div>
+										<div class="col-11">
+											<div class="row pb-1">
+												<div class="col-2 justify-content-end name"><%=MEMBER_NICK %></div>
+												<div class="col-8 justify-content-center"></div>
+												<div class="col-2 justify-content-center smallfont"></div>
 											</div>
-											<div class="col-11">
-												<div class="row pb-1">
-													<div class="col-2 justify-content-end name"><%=MEMBER_NICK %></div>
-													<div class="col-8 justify-content-center"></div>
-													<div class="col-2 justify-content-center smallfont"></div>
+											<div class="row pb-1"> <!-- 평점 -->
+												<div class="col-3 pr-0">
+													<img src="${pageContext.request.contextPath}/resources/images/star1.png" alt="" width="15px" height="15px" >
+													&nbsp;
+													<select name="REVIEW_GRADE" id="REVIEW_GRADE" style="width=15px;" >
+														<option value="0">0</option>
+														<option value="0.5">0.5</option>
+														<option value="1.0">1.0</option>
+														<option value="1.5">1.5</option>
+														<option value="2.0">2.0</option>
+														<option value="2.5">2.5</option>
+														<option value="3.0">3.0</option>
+														<option value="3.5">3.5</option>
+														<option value="4.0">4.0</option>
+														<option value="4.5">5.5</option>
+														<option value="5.0">5.0</option>
+													</select>											
 												</div>
-												<div class="row pb-1"> <!-- 평점 -->
-													<div class="col-3 pr-0">
-														<img src="${pageContext.request.contextPath}/resources/images/star1.png" alt="" width="15px" height="15px" >
-														&nbsp;
-														<select name="REVIEW_GRADE" id="REVIEW_GRADE" style="width=15px;" >
-															<option value="0">0</option>
-															<option value="0.5">0.5</option>
-															<option value="1.0">1.0</option>
-															<option value="1.5">1.5</option>
-															<option value="2.0">2.0</option>
-															<option value="2.5">2.5</option>
-															<option value="3.0">3.0</option>
-															<option value="3.5">3.5</option>
-															<option value="4.0">4.0</option>
-															<option value="4.5">5.5</option>
-															<option value="5.0">5.0</option>
-														</select>											
-													</div>
-													<div class="9"></div>
+												<div class="9"></div>
+											</div>
+											
+											<div class="row pb-2"> <!-- 파일 -->
+												<div class="col-12">
+													<div class="file_input">
+													    <label>
+													        사진 업로드
+													        <input type="file" multiple="multiple" name="REVIEW_FILE" id="input_imgs">
+													    </label>
+													    <input type="text" readonly="readonly" title="File Route" value="선택된 파일이 없습니다">
+													</div>			
 												</div>
-												
-												<div class="row pb-2"> <!-- 파일 -->
-													<div class="col-12">
-														<div class="file_input">
-														    <label>
-														        사진 업로드
-														        <input type="file" multiple="multiple" name="REVIEW_FILE" id="input_imgs">
-														    </label>
-														    <input type="text" readonly="readonly" title="File Route" value="선택된 파일이 없습니다">
-														</div>			
-													</div>
+											</div>
+											<div class="row pb-2">
+												<div class="col-12 imgs_wrap">
+													<img id="inputimg" >
 												</div>
-												<div class="row pb-2">
-													<div class="col-12 imgs_wrap">
-														<img id="inputimg" >
-													</div>
-												</div>
-												<div class="row pb-1">	<!-- 내용 textarea -->
-													<div class="col-11 pr-0">
-														<textarea rows="3" name="REVIEW_CONTENT" class="col-12 pl-0 pr-0" 
-															id=""></textarea>
-													</div>	
-												</div>
-												<div class="row"> <!-- 수정, 삭제 -->
-													<div class="col-2 justify-content-center" style="font-size:0.7em; font-weight:bold;"></div>
-													<div class="col-8 justify-content-center"></div>
-													<div class="col-2 justify-content-center" style="font-size:0.7em; font-weight:bold;">
-														<a class="insertReview" style="cursor: pointer;">작성</a> &nbsp;
-														<a class="formCancel" value="reviewForm" style="cursor: pointer;">취소</a>
-													</div>
+											</div>
+											<div class="row pb-1">	<!-- 내용 textarea -->
+												<div class="col-11 pr-0">
+													<textarea rows="3" name="REVIEW_CONTENT" class="col-12 pl-0 pr-0" 
+														id=""></textarea>
+												</div>	
+											</div>
+											<div class="row"> <!-- 수정, 삭제 -->
+												<div class="col-2 justify-content-center" style="font-size:0.7em; font-weight:bold;"></div>
+												<div class="col-8 justify-content-center"></div>
+												<div class="col-2 justify-content-center" style="font-size:0.7em; font-weight:bold;">
+													<a class="insertReview" style="cursor: pointer;">작성</a> &nbsp;
+													<a class="formCancel" value="reviewForm" style="cursor: pointer;">취소</a>
 												</div>
 											</div>
 										</div>
+									</div>
 								</form> <!-- 리뷰 작성영역(리뷰 작성 폼) 끝 -->
 							</div>	
 							<div id="ReviewtableSection" class="pb-2"> <!-- 리뷰 테이블 : insert시 삽입되는 영역 + List영역(+답글) : 하나-->
-								<div class="ReviewAndReplySum pb-3" id="ReviewAndReplySum1"> <!--ReviewAndReply_Sum: 리뷰(하나)+리뷰 답글(여러개)이 묶여서 반복되는 영역 (1)-->								
-									<div class="ReviewSumSection">
+								<div class="ReviewAndReplySum pb-3" id="ReviewAndReplySum1"> <!--ReviewAndReply_Sum: 리뷰(하나)+리뷰 답글(여러개)이 묶여서 반복되는 영역 (i)-->								
+									<div class="ReviewSum">
 										<div class="ReviewInsertSpace" id="reviewInsertSpace51" ></div>	<!-- ajax로 insert될 코드 : $('#reviewInsertSpace'); -->	 <!-- 작성한 리뷰가 들어오는 영역 : 하나 -->
 										<div class="ReviewList pb-3" id="ReviewList00"><!-- ReviewList id값 주기 --> <!-- 반복되는 리뷰영역 : 반복 -->
 											<div class="beforeModifyReview" id="beforeModifyReview00">	
@@ -644,7 +671,7 @@
 															<div class="col-8 justify-content-center"></div>
 															<div class="col-2 justify-content-center smallfont">날짜</div>
 														</div>
-														<div class="row pb-2"> <!-- 수정 전 평점(원래 평점) -->
+														<div class="row pb-2"> 
 															<div class="col-12" style="font-size:0.7em; font-weight:bold;">
 																0.5 &nbsp;
 																<span class='star-rating'>
@@ -652,7 +679,7 @@
 																</span>
 															</div>
 														</div>
-														<div class="row pb-2"> <!-- 수정버튼 누르면 ajax로 뿌려질 부분 -->
+														<div class="row pb-2">
 															<div class="col-12">														       
 																<img src="/productupload/image/99079bcbf4a24e5f8cddde3ca7457f1f.jpg" class="review_img"> 
 																<img src="/productupload/image/99079bcbf4a24e5f8cddde3ca7457f1f.jpg" class="review_img">  
@@ -680,8 +707,8 @@
 												</div>
 											</div>
 											<div class="afterModifyReview" id="afterModifyReview00"><!-- ajax로 수정폼 추가 --> <!-- $('#afterModifyReview00') 에 review 수정할 수정폼 뿌려줌 -->
-												
-												<form class="modifyReviewForm" id="modifyReviewForm00">
+												<!-- 수정폼 예제 -->
+												<form class="modifyReviewForm" id="modifyReviewForm00"> 
 													<div class="row justify-content-center">
 														<div class="col-1 justify-content-end">
 															프사
@@ -766,7 +793,7 @@
 											</div>	<!-- 수정폼 끝 -->
 										</div> <!-- 리뷰 출력 끝, 답글은 있을시 달린다(답글 작성 폼은 hidden으로 숨겨져 있음) -->
 									</div>
-									<div class="ReviewReplySumSection" > <!--Review_ReplyList_Sum: 리뷰 답글 묶는 영역 (하나)-->									
+									<div class="ReviewReplySum" > <!--Review_ReplyList_Sum: 리뷰 답글 묶는 영역 (하나)-->									
 										<div class="ReviewReplyformSection" id="ReviewReplyformSection00"style="padding:8px 0;"> <!-- 리뷰 답글 작성 폼 영역 : 하나 --> <!-- 답글 누르면 답글폼 나타남--> <!-- 원글번호(review_re) --> <!-- hidden --> 
 											<form id="review_replyForm00" name="REVIEW_CONTENT" enctype="multipart/form-data"> 
 												<div class="row justify-content-center">
@@ -895,8 +922,10 @@
 										</div>											
 									</div>
 								</div>
-									
-									
+								<div class="ReviewAndReplySum pb-3" id="ReviewAndReplySum2">
+									<div class="ReviewSum"></div>	
+									<div class="ReviewReplySum"></div>
+								</div>	
 									
 									<br/><br/><br/><br/><br/><br/><br/>
 									<!-- productdetailnote -->
