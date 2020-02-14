@@ -62,7 +62,7 @@ public class MypageEditController {
 				session.setAttribute("MEMBER_PHONE", memberVO.getMEMBER_PHONE());
 				session.setAttribute("MEMBER_PICTURE", memberVO.getMEMBER_PICTURE());
 				
-				return "redirect:/index.ma";
+				return "redirect:/workshop.ws";
 			}
 		} catch (Exception e) {
 			System.out.println("회원정보 수정 실패!");

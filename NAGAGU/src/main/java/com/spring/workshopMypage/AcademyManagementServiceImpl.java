@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 import com.spring.academy.ClassVO;
 import com.spring.mapper.AcademyManagementMapper;
 import com.spring.mapper.AcademyMapper;
+import com.spring.workshop.WorkShopMemberVO;
 
 @Service
 public class AcademyManagementServiceImpl implements AcademyManagementService {
@@ -98,6 +99,14 @@ public class AcademyManagementServiceImpl implements AcademyManagementService {
 	public int updateClass(ClassVO classVO) {
 		AcademyManagementMapper managementMapper = sqlSession.getMapper(AcademyManagementMapper.class);
 		int result = managementMapper.updateClass(classVO);
+		
+		return result;
+	}
+
+	@Override
+	public int modifyWorkshop(WorkShopMemberVO workshopVO) {
+		AcademyManagementMapper managementMapper = sqlSession.getMapper(AcademyManagementMapper.class);
+		int result = managementMapper.modifyWorkshop(workshopVO);
 		
 		return result;
 	}

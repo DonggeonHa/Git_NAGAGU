@@ -7,6 +7,7 @@
 	String MEMBER_EMAIL = (String)session.getAttribute("MEMBER_EMAIL");
 	String MEMBER_NICK  = (String)session.getAttribute("MEMBER_NICK");
 	String MEMBER_NAME = (String)session.getAttribute("MEMBER_NAME");
+	String MEMBER_PICTURE = (String)session.getAttribute("MEMBER_PICTURE");
 %>
 <!DOCTYPE html>
 <html>
@@ -289,7 +290,7 @@ a, .card a:link, .card a:visited {
 }
 
 #imagePreview {
-	background-image: url('./resources/images/Mypage/Basic_Picture.png');
+	background-image: url('<%=MEMBER_PICTURE%>');
 }
 
 .image-upload .image-edit input+label:after, .image-upload .image-edit input+label:after {

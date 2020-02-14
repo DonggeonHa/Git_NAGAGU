@@ -6,6 +6,7 @@ import java.util.List;
 import org.apache.ibatis.annotations.Param;
 
 import com.spring.academy.ClassVO;
+import com.spring.workshop.WorkShopMemberVO;
 
 public interface AcademyManagementService {
 	List<ClassVO> getManagementClassList(@Param("selectClassType") String selectClassType, @Param("WORKSHOP_NAME") String WORKSHOP_NAME);
@@ -16,4 +17,5 @@ public interface AcademyManagementService {
 	int updateClassStatus(ArrayList<Integer> updateArray);
 	ClassVO getclassDetail(@Param("CLASS_NUMBER") int CLASS_NUMBER);
 	int updateClass(ClassVO classVO);
+	int modifyWorkshop(WorkShopMemberVO workshopVO);
 }

@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.apache.http.HttpRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -19,6 +20,7 @@ import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.spring.academy.ClassVO;
+import com.spring.workshop.WorkShopMemberVO;
 
 @Controller
 public class AcademyManagementController {
@@ -135,5 +137,52 @@ public class AcademyManagementController {
 		System.out.println("클래스 수정 완료!");
 		
 		return mav;
+	}
+	
+	@RequestMapping(value="/wsModify.mywork", method=RequestMethod.POST)
+	public String wsModify(WorkShopMemberVO workshopVO, MultipartHttpServletRequest request, HttpSession session) throws Exception {
+		String WORKSHOP_NAME = (String)session.getAttribute("WORKSHOP_NAME");
+		MultipartFile mf = request.getFile("img");
+		
+		try {
+			if(mf.isEmpty()) {	//이미지가 비어있을 경우 넣음
+				workshopVO.setWORKSHOP_PICTURE(request.getParameter("WORKSHOP_PICTURE"));
+			} else {
+				//파일업로드 시작=-------------------------------------------------
+				String uploadPath="C:\\Project138\\upload\\";
+				String originalFileExtension = mf.getOriginalFilename().substring(mf.getOriginalFilename().lastIndexOf("."));
+	            //중복없이 저장
+				String storedFileName = UUID.randomUUID().toString().replaceAll("-", "") + originalFileExtension;
+				
+				if(mf.getSize() != 0) {
+					// getSize()메소드는 파일 용량을 구해줌 / 첨부할 파일이 존재할 때 실행
+					mf.transferTo(new File(uploadPath + storedFileName));	//원하는 위치에 저장해줌
+					workshopVO.setWORKSHOP_PICTURE("/communityupload/image/" + storedFileName);
+				}
+
+			}
+			
+			workshopVO.setWORKSHOP_CEO_NAME(request.getParameter("WORKSHOP_CEO_NAME"));
+			workshopVO.setWORKSHOP_PHONE(request.getParameter("WORKSHOP_PHONE"));
+			workshopVO.setWORKSHOP_LICENSE(request.getParameter("WORKSHOP_LICENSE"));
+			workshopVO.setWORKSHOP_ZIP(request.getParameter("WORKSHOP_ZIP"));
+			workshopVO.setWORKSHOP_ADDRESS1(request.getParameter("WORKSHOP_ADDRESS1"));
+			workshopVO.setWORKSHOP_ADDRESS2(request.getParameter("WORKSHOP_ADDRESS2"));
+			workshopVO.setWORKSHOP_NAME(WORKSHOP_NAME);
+			
+			int result = academyManagementService.modifyWorkshop(workshopVO);
+			
+			if(result != 0) {
+				session.setAttribute("WORKSHOP_CEO_NAME", workshopVO.getWORKSHOP_CEO_NAME());
+				session.setAttribute("WORKSHOP_PICTURE", workshopVO.getWORKSHOP_PICTURE());
+				
+				return "redirect:/workshop.ws";
+			}
+			
+		} catch (Exception e) {
+			System.out.println("회원정보 수정 실패!");
+		}
+		
+		return "redirect:/workshop_modify.ws";
 	}
 }

@@ -3,7 +3,6 @@
 .info_box_title {
     font-size:18px;
     font-weight:700;
-    color:orange;
     padding-bottom:5px;
     border-bottom:1px solid #d3d3d3;
 }
@@ -75,19 +74,19 @@
 }
 
 .zipcode_button {
-    width:80px;
+    width:165px;
     border-radius: 4px;
     display:block;
     margin-left:15px;
-    border:1px solid #ef902e;
-    background:#feeddd;
+    border:1px solid #3a3a6c;
+    background:#ffffff;
     font-size:12px;
     font-weight: 400;
     transition:background 0.2s;
 }
 
 .zipcode_button:hover {
-    background:#feebbb;
+    background:#e5e7e8;
 
 }
 
@@ -196,3 +195,56 @@
 	margin-left: 50px;
 }
 
+#btn_submit, #btn_cancel {
+	border-radius: 4px;
+    display: block;
+    margin-left: 15px;
+    border: 1px solid #3a3a6c;
+    background:#ffffff;
+    font-size: 12px;
+    font-weight: 400;
+    transition: background 0.2s;
+    width: 250px;
+    height: 45px;
+}
+#btn_cancel {
+	border-radius: 4px;
+    display: block;
+    border: 1px solid #3a3a6c;
+    background:#ffffff;
+    font-size: 12px;
+    font-weight: 400;
+    transition: background 0.2s;
+    width: 250px;
+    height: 45px;
+    margin-right: 500px;
+}/* 
+.out {
+	width: 100%;
+	text-align: center;
+    margin-top: 44px;
+ }
+.in {
+ display: inline-block;
+ margin:0 auto;
+ } */
+ 
+#edit-title {
+	color: #3a3a6c;
+	font-weight: bold;
+}
+
+#span_text {
+	font-size: 14px;
+    font-weight: 500;
+}     
+
+#second_title{
+	margin-top: 10px;
+	margin-bottom: 16px;
+}
+
+.in{
+	margin-top: 40px;
+	margin-left: 300px;
+}
