@@ -134,7 +134,7 @@
 								</div>
 							</div>
 							<div class="ReviewReplySum" id="ReviewReplySum51"> <!-- ReviewAndReplySum에 묶인 id넘버는 같다(원글번호) -->
-								<div class="ReviewReplyformSection" id="ReviewReplyformSection51"> <!-- ajax -->
+								<div class="ReviewReplyformSection" id="ReviewReplyformSection51"> <!-- ajax --> <!-- 상품번호,멤버넘? 원글넘버 넘겨줘야함(그래야 답글 입력시 re_num입력 가능, 컨트롤러에서 답글인 것 구별 가능 -->
 									<form id="ReviewReplyform" name="REVIEW_CONTENT" enctype="multipart/form-data">
 										<div class="row justify-content-center">
 											<div class="col-1"></div>
@@ -151,21 +151,23 @@
 															></textarea>
 													</div>	
 												</div>
-												<div class="row"> <!-- 답글, 수정, 삭제 -->
-													<div class="col-2 justify-content-center" style="font-size:0.7em; font-weight:bold;"></div>
+												<div class="row"> <!-- 리뷰답글 작성, 삭제 -->
+													<div class="col-2 replytext justify-content-center"></div>
 													<div class="col-8 justify-content-center"></div>
-													<div class="col-2 beforeControl justify-content-center pl-1" style="font-size:0.7em; font-weight:bold;">
-														<input type="hidden" name="REVIEW_NUM" value="00"> <!-- 원래 review의 번호 전달해줌 -->
-														<a class="insertReviewReply" style="cursor: pointer;">작성</a> &nbsp;
-														<a class="formCancel" value="reviewReply" style="cursor: pointer;">취소</a>
+													<div class="col-2 beforeControl justify-content-center pl-1">
+														<input type="hidden" name="REVIEW_NUM" value="51"> <!-- 원래 review의 번호 전달해줌 -->
+														<input type="hidden" name="REVIEW_NUM" value="51"> <!-- 원래 review의 번호 전달해줌 -->
+														<input type="hidden" name="REVIEW_NUM" value="51"> <!-- 원래 review의 번호 전달해줌 -->
+														<a class="insertReviewReply">작성</a> &nbsp;
+														<a class="formCancel" value="reviewReply">취소</a>
 													</div>
 												</div>
 											</div>
 										</div>
 									</form>
 								</div>
-								<div class="ReviewReplyInsertSpace"></div>
-								<div class="ReviewReplyList pb-2" id="ReviewReplyList61">
+								<div class="ReviewReplyInsertSpace" id="ReviewReplyInsertSpace51"></div>
+								<div class="ReviewReplyList pb-2" id="ReviewReplyList61"> <!-- reply 출력의 넘버는 reply의 review_num -->
 									<div class="row justify-content-center">
 										<div class="col-1"></div>
 										<div class="col-1">프사</div>
@@ -182,7 +184,7 @@
 													</div>	
 												</div>
 											</div>
-											<div class="afterModifyReviewReply" id="afterModifyReviewReply61">
+											<div class="afterModifyReviewReply" id="afterModifyReviewReply61">	<!-- hidden -->
 												<form class="modifyReviewReplyForm" id="modifyReviewFormReply61">
 													<div class="row">	<!-- 수정폼 대비 -->
 														<div class="col-11 pr-0">
@@ -194,18 +196,18 @@
 													</div>
 												</form>	
 											</div>		
-											<div class="row"> <!-- 답글, 수정, 삭제 -->
-												<div class="col-2 justify-content-center" style="font-size:0.7em; font-weight:bold;"></div>
+											<div class="row"> <!-- ReviewReply 수정, 삭제 -->
+												<div class="col-2 replytext justify-content-center"></div>
 												<div class="col-8 justify-content-center"></div>
-												<div class="col-2 beforeControl justify-content-center pl-1" id="beforeControl61" style="font-size:0.7em; font-weight:bold;">
+												<div class="col-2 beforeControl justify-content-center pl-1" id="beforeControl61">
 													<input type="hidden" name="REVIEW_NUM" value="61">
-													<a class="gomodifyReviewReplyform" style="cursor: pointer;">수정</a> &nbsp;
-													<a class="deleteReview" style="cursor: pointer;">삭제</a>
+													<a class="gomodifyReviewReplyform">수정</a> &nbsp;
+													<a class="deleteReview">삭제</a>
 												</div>
-												<div class="col-2 afterControl justify-content-center pl-1" id="afterControl61" style="font-size:0.7em; font-weight:bold;">
+												<div class="col-2 afterControl justify-content-center pl-1" id="afterControl61">
 													<input type="hidden" name="REVIEW_NUM" value="61">
-													<a class="modifyReviewReply" style="cursor: pointer;">수정</a> &nbsp;
-													<a class="formCancel" value="reviewReplyModify" style="cursor: pointer;">취소</a>
+													<a class="modifyReviewReply">수정</a> &nbsp;
+													<a class="formCancel" value="reviewReplyModify">취소</a>
 												</div>
 											</div>
 										</div>

@@ -320,6 +320,14 @@
 			height:100px;
 		}
 
+		.replytext {	
+			font-size:0.7em; font-weight:bold;	/*답글 버튼*/
+		}
+		
+		
+		
+		
+
 		/*답글*/
 		
 		.ReviewReplyformSection {
@@ -329,9 +337,29 @@
 			display:none;		
 		}
 
-		.afterControl {
-			display:none;		
+		.beforeControl {
+			font-size:0.7em; 
+			font-weight:bold;
 		}
+		.afterControl {
+			display:none;	
+			font-size:0.7em; 
+			font-weight:bold;	
+		}
+		
+		.insertReviewReply {
+			cursor: pointer;	/*리뷰답글 작성*/
+		}
+		.gomodifyReviewReplyform, modifyReviewReply {
+			cursor: pointer;	/*ReviewReply 수정폼 버튼, ReviewReply 수정버튼*/
+		}
+		.deleteReview {
+			cursor: pointer;	/*Review, ReviewReply 삭제*/
+		}
+		.formCancel {
+			cursor: pointer;	/*Review, ReviewReply 입력취소, 수정 취소버튼*/
+		}
+		
 		
 		
 		.ReviewList {
