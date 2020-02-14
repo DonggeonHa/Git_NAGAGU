@@ -124,6 +124,7 @@ public class MemberAjaxController {
 				System.out.println(" result : " + result);
 				
 				if(result == 1) {
+					session.setAttribute("WORKSHOP_EMAIL", workshopMember.getWORKSHOP_EMAIL());
 					session.setAttribute("WORKSHOP_STATUS", workshopMember.getWORKSHOP_STATUS());
 					session.setAttribute("WORKSHOP_NAME", workshopMember.getWORKSHOP_NAME());
 					session.setAttribute("WORKSHOP_CEO_NAME", workshopMember.getWORKSHOP_CEO_NAME());
