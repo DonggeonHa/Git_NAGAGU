@@ -69,26 +69,29 @@
 			        <li>E-mail : email@mail.com</li>
 			        <li class="line">/</li>
 			     	<%
-			     	if(WORKSHOP_EMAIL==null && MEMBER_EMAIL==null){
+			     		if(WORKSHOP_EMAIL==null && MEMBER_EMAIL==null) {
 			     	%>
 			        <li><a href="./mypage_support.my">고객센터</a></li>
 			        <li class="line">/</li>
 			        <li class="copy">Copyright &copy; Design Bitcamp All rights reserved.</li>
 			        <%
-			        } else if(WORKSHOP_EMAIL != null){
+			        	} else if(WORKSHOP_EMAIL != null) {
 			        %>
 			        <li><a href="./mypage_support.my">고객센터</a></li>
 			        <li class="line">/</li>
 			        <li><a data-toggle="modal" data-target="#deleteMemberModal" class="btn_mypage" style="cursor: pointer;">탈퇴하기</a></li>
-			        <%
-			        } else{
-			        %>
-			        <li><a href="./mypage_support.my">고객센터</a></li>
-			        <li class="line">/</li>
-			        <li><a data-toggle="modal" data-target="#deleteMemberModal" class="btn_mypage" style="cursor: pointer;">탈퇴하기</a></li>
-			        <%
-			        }%>
 			        <li class="copy">Copyright &copy; Design Bitcamp All rights reserved.</li>
+			        <%
+			        	} else {
+			        %>
+			        <li><a href="./mypage_support.my">고객센터</a></li>
+			        <li class="line">/</li>
+			        <li><a data-toggle="modal" data-target="#deleteMemberModal" class="btn_mypage" style="cursor: pointer;">탈퇴하기</a></li>
+			        <li class="copy">Copyright &copy; Design Bitcamp All rights reserved.</li>
+			        <%
+			        	}
+			        %>
+			        
 		        </ul>
 		    </div>
 		</div>
