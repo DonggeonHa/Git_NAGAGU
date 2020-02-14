@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%
+	
 %>
 <!DOCTYPE html>
 <html>
@@ -13,22 +14,21 @@
 	crossorigin="anonymous">
 </head>
 <style>
-.main img{
-  max-width: 100px;
-} 
 .main {
-  width: 75%;
-  height: auto;
+	width: 75%;
+	height: auto;
 }
+
 .sidebar {
-  width: 25%;
-  height: 25vh;
+	width: 25%;
 }
+
 .sidebar {
-  position: -webkit-sticky;
-  position: sticky ;
-  top: 10;
+	position: -webkit-sticky;
+	position: sticky;
+	top: 10;
 }
+
 @font-face {
 	font-family: 'KOMACON';
 	src:
@@ -37,60 +37,141 @@
 	font-weight: normal;
 	font-style: normal;
 }
+
 body {
 	font-family: '만화진흥원체', 'KOMACON', KOMACON !important;
 	font-size: 15px;
 }
-.main, .sidebar{   
-	margin-top:30px;
-	min-height: 65vh; 
-} 
-.main-output{
-margin-top:15px; }
-.each-row{
+
+.main {
+	margin-top: 30px;
+	min-height: 65vh;
+}
+
+.main-output {
+	margin-top: 15px;
+}
+
+.each-row {
 	margin-bottom: 15px;
 	border-bottom: 1px solid black;
-	border-color: rgba(0,0,0,0.2);
+	border-color: rgba(0, 0, 0, 0.2);
 }
-.each-row a,.each-row a:link,.each-row a:hover{
-  text-decoration: none !important;
-  color: black !important;
-} 
-.sidebarOutput{
-	font-size:1.5rem;
+
+.each-row img {
+	width: 100px;
+	height: 100px;
+}
+
+.each-row a, .each-row a:link, .each-row a:hover {
+	text-decoration: none !important;
+	color: black !important;
+}
+
+.sidebarOutput {
+	margin-top: 25px;
+	font-size: 1.5rem;
 	min-height: 25vh;
 }
+
+.btn_check_all {
+	margin-right: 40px;
+}
+
+.option span {
+	color: rgba(0, 0, 0, 0.5);
+}
+
+.sidebar {
+	margin-top: 30px;
+	background-color: rgba(0, 0, 0, 0.1);
+	height: 30vh;
+}
+
+.category *{
+	color: rgb(0, 0, 0, 0.6);  
+}
+
+ .basic_price, .shipPrice, .chongprice {
+	margin-bottom: 0;
+	margin-top: 10px;
+}
+
+.category{
+	border-bottom: 1px solid #ef900e;
+	padding-bottom: 10px;  
+	/* background-color: rgba(0, 0, 0, 0.1); */
+}.category *{
+	align-items: baseline;
+	text-align: center;
+}
+.values *{
+	margin-top: 10px;
+	text-align: center;
+}
+.amount,.basic_price{
+	margin-top: 0;
+}
+.totalShipPrice,.totalPayPrice,.totalPrice{
+	padding-right:25px !important;
+}
+/*
+.category p{
+	margin-top: 10px; 
+}.category div{
+	margin: 0 auto;
+	padding: 10px 0px !important;  
+} */
 </style>
 <body>
-<div class="container">
-	<div class="wrapper row justify-content-between">
-		<div class="main">
-			<div class="d-flex">
-				<input type="checkbox" id="check_all" style="align-self:center;">
-				<span></span>
-			</div>
-			<div class="row img-wrap main-output">
-				<div class="col-12">배송업체</div>
-				<hr>
-				<div class="col-1">
-					<input type="checkbox" checked >
-				</div>
-				<div class="col-11 row">
-					<div class="col-2">
-						<img src="">
+	<div class="container">
+		<div class="wrapper row justify-content-between">
+			<div class="main">
+				<div class="d-flex">
+					<div class="btn-group-toggle" data-toggle="buttons">
+						<label
+							class="btn btn-sm btn-outline-warning text-white radius btn_check_all">
+							<i class="fas fa-check"></i> <input type="checkbox"
+							id="check_all" style="align-self: center;">
+						</label>
 					</div>
-					<div class="col-10">
-						<div class="d-flex justify-content-between">
-							<div>title</div>
-							<div>
-								<i class="fas fa-times"></i>
+					<span><i>전체선택</i></span> <span></span>
+				</div>
+				<div class="row img-wrap main-output">
+					<div class="col-12">배송업체</div>
+					<hr>
+					<div class="col-1"></div>
+					<div class="col-11 row">
+						<div class="col-2">
+							<img src="">
+						</div>
+						<div class="col-10">
+							<div class="d-flex justify-content-between">
+								<div>title</div>
+								<div>
+									<i class="fas fa-times"></i>
+								</div>
+							</div>
+							<font size="1">일반택배</font>
+							<div class="d-flex justify-content-between">
+								<div>brief</div>
+								<div>
+									수량 <select>
+										<option selected>1</option>
+										<option>2</option>
+										<option>3</option>
+										<option>4</option>
+										<option>5</option>
+										<option>6</option>
+										<option>7</option>
+										<option>8</option>
+									</select> 23000
+								</div>
 							</div>
 						</div>
-						<font size="1">일반택배</font> 
-						<div class="d-flex justify-content-between">
-							<div>brief</div>
+						<div class="col-12 d-flex justify-content-between">
 							<div>
-								수량 <select>
+								옵션 <select>
 									<option selected>1</option>
 									<option>2</option>
 									<option>3</option>
@@ -99,50 +180,36 @@ margin-top:15px; }
 									<option>6</option>
 									<option>7</option>
 									<option>8</option>
-								</select> 23000
+								</select>
 							</div>
+							<div>총가격 55555</div>
 						</div>
-					</div>
-					<div class="col-12 d-flex justify-content-between">
-						<div>
-							옵션 <select>
-								<option selected>1</option>
-								<option>2</option>
-								<option>3</option>
-								<option>4</option>
-								<option>5</option>
-								<option>6</option>
-								<option>7</option>
-								<option>8</option>
-							</select>
-						</div>
-						<div>총가격 55555</div>
 					</div>
 				</div>
 			</div>
-		</div>
-		<!-- main end -->
+			<!-- main end -->
 
 
-		<!-- sidebar start -->
-		<div class="sidebar" id="sidebar">
-			<div class="row justify-content-around text-center sidebarOutput">
-				<div class="col-6">상품금액</div>
-				<div class="col-6 totalPrice"></div>
-				<div class="col-6">+배송비</div>
-				<div class="col-6 totalShipPrice">+</div>
-				<div class="col-6">결제금액</div>
-				<div class="col-6 totalPayPrice"></div>
-				<div class="">
-					<a href="#" class="btn btn-warning text-white">구매하기</a>
+			<!-- sidebar start -->
+			<div class="sidebar" id="sidebar">
+				<div class="row justify-content-around text-right sidebarOutput">
+					<div class="col-6">상품금액</div>
+					<div class="col-6 totalPrice"></div>
+					<div class="col-6">+배송비</div>
+					<div class="col-6 totalShipPrice">+</div>
+					<div class="col-6">결제금액</div>
+					<div class="col-6 totalPayPrice"></div>
+					<div class="">
+						<a href="#" class="btn btn-warning text-white btn_commit">구매하기</a>
+					</div>
 				</div>
+				<!-- side bar end -->
 			</div>
-			<!-- side bar end -->
+			<!-- wrapper end -->
 		</div>
-		<!-- wrapper end -->
 	</div>
-	</div><!-- container end -->
-<script src="https://kit.fontawesome.com/b74b42490f.js"
+	<!-- container end -->
+	<script src="https://kit.fontawesome.com/b74b42490f.js"
 		crossorigin="anonymous"></script>
 	<script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
 		integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n"
@@ -178,39 +245,59 @@ $(document).ready(function(){
         			var countOutput= '전체선택 '+retVal.countBasket+'개';
         			var url = './productdetail.pro?PRODUCT_NUM='
 		        	for(var j=0; j<retVal.getbasketList.length; j++){
-			    		output += '<div class="col-1"><input class="checkbox" type="checkbox" bNum="'+retVal.getbasketList[j].BASKET_NUM+'"></div>'
-			    		output += '<div class="col-11 row each-row" id="'+retVal.getbasketList[j].PRODUCT_NUM+'" bNum='+retVal.getbasketList[j].BASKET_NUM+'><div class="col-2"><a href="'+url+retVal.getbasketList[j].PRODUCT_NUM+'">'
-			    		output += '<img src="/productupload/image/'+retVal.getbasketList[j].PRODUCT_IMAGE+'"></a></div>'
-			    		output += '<div class="col-10"><div class="d-flex justify-content-between"><a href="'+url+retVal.getbasketList[j].PRODUCT_NUM+'"><div>'+retVal.getbasketList[j].PRODUCT_TITLE+'</div></a>'
-			    		output += '<div><i class="fas fa-times"></i></div></div><font size="1">무료배송|일반택배</font>'
-			    		output += '<div class="d-flex justify-content-between"><div>'+retVal.getbasketList[j].PRODUCT_BRIEF+'</div>'
-			    		output += '<div class="price" value="수량">수량'
-			    		var amount = retVal.getbasketList[j].BASKET_AMOUNT;
-			    		console.log(amount)
-			    		/* output += '<input name="BASKET_AMOUNT" type="text" style="text-align: right" value="'+retVal.getbasketList[j].BASKET_AMOUNT+'" size="1" />'
-			    		output += '<a href="JavaScript:count_change(0)" onclick="count_change(0)">▲</a><a href="JavaScript:count_change(1)">▼</a> 개' */
-			    		switch(amount){
-			    			case 1:
-			    				output += '<select class="amount forTotal"><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option></select>'
-			    				break;
-			    			case 2:
-			    				output += '<select class="amount forTotal"><option>1</option><option selected>2</option><option>3</option><option>4</option><option>5</option></select>'
-			    				break;
-			    			case 3:
-			    				output += '<select class="amount forTotal"><option>1</option><option>2</option><option selected>3</option><option>4</option><option>5</option></select>'
-			    				break;
-			    			case 4:
-			    				output += '<select class="amount forTotal"><option>1</option><option>2</option><option>3</option><option selected>4</option><option>5</option></select>'
-			    				break;
-			    			case 5:
-			    				output += '<select class="amount forTotal"><option>1</option><option>2</option><option>3</option><option>4</option><option selected>5</option></select>'
-			    		}
-			    		output += '<div class="basic_price" value='+retVal.getbasketList[j].PRODUCT_PRICE+'>가격 :<span>'+retVal.getbasketList[j].PRODUCT_PRICE+'</span></div></div></div></div><div class="col-12 d-flex justify-content-between"><div>'
-		    			output += '<div>사이즈 :'+retVal.getbasketList[j].BASKET_SIZE+'</div>'
-	    				output += '<div>컬러 :'+retVal.getbasketList[j].BASKET_COLOR+'</div>'
-	    				output += '<div>배송업체 :'+retVal.getbasketList[j].PRODUCT_SHIP_COMPANY+'</div>'
-			    		output += '</div><div style="align-self: flex-end;"><div class="shipPrice">+배송비 :<span>'+retVal.getbasketList[j].PRODUCT_SHIP_PRICE+'</span></div>'
-			    		output += '<span class="chongprice"></span></div></div></div>'
+		        		var amount = retVal.getbasketList[j].BASKET_AMOUNT;
+		        		output += '<div class="col-1 btn-group-toggle" data-toggle="buttons">'
+						output +=	'<label class="btn btn-sm btn-outline-warning text-white radius btn_check">' 
+							output += '<i class="fas fa-check"></i>'
+							output += '<input class="checkbox" type="checkbox" bNum="'+retVal.getbasketList[j].BASKET_NUM+'">'							
+						output +=	'</label></div>'		
+			    		output += '<div class="col-11 row each-row" id="'+retVal.getbasketList[j].PRODUCT_NUM+'" bNum='+retVal.getbasketList[j].BASKET_NUM+'>'
+			    			output += '<div class="col-2"><a href="'+url+retVal.getbasketList[j].PRODUCT_NUM+'">'
+			    			output += '<img src="/productupload/image/'+retVal.getbasketList[j].PRODUCT_IMAGE+'"></a></div>'
+			    			output += '<div class="col-10">'
+			    				output += '<div class="row category">'
+			    					output += '<div class="col-2">상품명</div>'
+		    						output += '<div class="col-2">배송</div>'
+			    					output += '<div class="col-2">사이즈</div>'
+		    						output += '<div class="col-2">컬러</div>'
+	    							output += '<div class="col-2">수량</div>'  
+				    				output += '<div class="col-2">삭제&nbsp;&nbsp;<i class="fas fa-times"></i></div></div>' 
+				    				
+				    				output += '<div class="row values">' 
+			    					output += '<a href="'+url+retVal.getbasketList[j].PRODUCT_NUM+'">'
+			    					output += '<div class="col-2"><b>'+retVal.getbasketList[j].PRODUCT_TITLE+'</b></p>'
+				    					 output += '<p>'+retVal.getbasketList[j].PRODUCT_BRIEF+'</a></div>'
+				    					 
+				    				output += '<div class="col-2">'+retVal.getbasketList[j].PRODUCT_SHIP_COMPANY+'</div>'
+				    				output += '<div class="col-2">'+retVal.getbasketList[j].BASKET_SIZE+'</div>'
+				    				output += '<div class="col-2">'+retVal.getbasketList[j].BASKET_COLOR+'</div>'
+				    				output += '<div class="price col-2" value="수량">'
+					    				switch(amount){
+						    			case 1:
+						    				output += '<select class="amount forTotal"><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option></select></div>'
+						    				break;
+						    			case 2:
+						    				output += '<select class="amount forTotal"><option>1</option><option selected>2</option><option>3</option><option>4</option><option>5</option></select></div>'
+						    				break;
+						    			case 3:
+						    				output += '<select class="amount forTotal"><option>1</option><option>2</option><option selected>3</option><option>4</option><option>5</option></select></div>'
+						    				break;
+						    			case 4:
+						    				output += '<select class="amount forTotal"><option>1</option><option>2</option><option>3</option><option selected>4</option><option>5</option></select></div>'
+						    				break;
+						    			case 5:
+						    				output += '<select class="amount forTotal"><option>1</option><option>2</option><option>3</option><option>4</option><option selected>5</option></select></div>'
+						    		}
+				    				output += '<div class="price_wrap text-right col-2">'
+						    			output += '<div class="basic_price text-right" value='+retVal.getbasketList[j].PRODUCT_PRICE+'>가격</div><span>'+retVal.getbasketList[j].PRODUCT_PRICE+'</span>'
+						    			output += '<div class="shipPrice text-right" value='+retVal.getbasketList[j].PRODUCT_SHIP_PRICE+'>+배송비</div><span>'+retVal.getbasketList[j].PRODUCT_SHIP_PRICE+'</span>'
+					    				output += '<div class="chongprice text-right"><b>총가격</div><span></span></b>' 
+					    			output += '</div>'
+					    				
+				    				output += '</div></div></div>' 
+			    		
+				    				//output += '<p>배송업체 : <span>'+retVal.getbasketList[j].PRODUCT_SHIP_COMPANY+'</span></p>'
+				    			//</div></div>'
 		        	}  
         			console.log(output)
         			$('#check_all').next().text(countOutput).css('margin-left','15px')
@@ -226,23 +313,11 @@ $(document).ready(function(){
 			}
 		}) 
 	}
-    /*장바구니 수량 변경*/
-/*     $(document).on('click','.count_change',function(){
-    	function count_change(temp) {
-    	       var test = $('input[name=BASKET_AMOUNT]').val();
-    	       if (temp == 0) {
-    	          test++;
-    	       } else if (temp == 1) {
-    	          if (test > 1)
-    	             test--;
-    	       }
-    	       $('input[name=BASKET_AMOUNT]').val(test);
-    	    }
-    }) */
     
 	//수량 변경시 가격 변경(update)
 	$(document).on('change','.amount',function(){
 		var num = $(this).parent().parent().parent().parent().attr('bNum')
+		console.log(num)
 		var amount = $(this).val()
 		var category = 'updateAmount'
  		$.ajax({
@@ -265,72 +340,74 @@ $(document).ready(function(){
 		changePrice(this);
 	}) 
 	//가격변화
-	function changePrice(amount){
-		if(amount!=null){
-			var changeValue =  $(amount).val() 
-			var price =  $(amount).next().attr('value')
+	function changePrice(data){
+		if(data!=null){
+			var amount =  $(data).val() 
+			var price =  $(data).parent().next().find('.basic_price').attr('value')
+			var shipPrice = $(data).parent().next().find('.shipPrice').attr('value')
 			//선택 수량 x 가격
-			var changePrice= changeValue*price
-			$(amount).next().children('span').text(changePrice)
-		}else{
+			var changedPrice= amount*(price*1+shipPrice*1)
+			$(data).parent().next().find('.chongprice').next().text(changedPrice)
+		}
+		//처음에?
+		else{
 			$('.amount').each(function (index,item){
-				var changeValue =  $(this).val() 
-				var price =  $(this).next().attr('value')
+				var amount =  $(this).val() 
+				var price =  $(this).parent().next().find('.basic_price').attr('value')
+				var shipPrice = $(this).parent().next().find('.shipPrice').attr('value')
 				//선택 수량 x 가격 
-				var changePrice= changeValue*price
-				$(this).next().children('span').text(changePrice)
+				var changedPrice= amount*(price*1+shipPrice*1)
+				$(this).parent().next().find('.chongprice').next().text(changedPrice)
 			}) 
 		}  
 		//가격+배송비 구해서 총가격에 뿌리기
-		$('.amount').each(function (index,item){
-			var price = $(item).next().text().substr(4)*1
-			var ship = $('.shipPrice');
-			ship = $(ship)[index].textContent.substr(6)*1
-			var target = $('.chongprice')[index]
-			$(target).text('총가격 '+(price+ship))
-		}) 
 		getTotalPrice()
 	};
+ 	function getTotalPrice(){
+		var sum_price=0;
+		var sum_shipPrice=0;
+		var sum_PayPrice=0;
+		$('.forTotal').each(function (index,item){
+			var amount =  $(item).val()
+			var price = $(item).parent().next().find('.basic_price').attr('value')
+			var shipPrice = $(item).parent().next().find('.shipPrice').attr('value')
+			sum_price     += price*1*amount;
+			sum_shipPrice += shipPrice*1*amount;
+		}) 
+		sum_PayPrice= sum_price*1+sum_shipPrice*1;
+		$('.totalPrice').text(sum_price)
+		$('.totalShipPrice').text(sum_shipPrice)
+		$('.totalPayPrice').text(sum_PayPrice)
+ 	}
 	//전체선택
 	$(document).on('click','#check_all',function(){
 		var chk = $(this).is(":checked");//.attr('checked');
+		console.log('sdf'+chk)
         if(chk){
         	$(".checkbox").prop('checked', true);
-        	$('.checkbox').parent().next().find('select').addClass('forTotal')
+        	$('.checkbox').parent().parent().next().find('select').addClass('forTotal')
+        	$('.checkbox').parent().addClass('active')
         }else{
         	$(".checkbox").prop('checked', false);
-        	$('.checkbox').parent().next().find('select').removeClass('forTotal')
+        	$('.checkbox').parent().parent().next().find('select').removeClass('forTotal')
+        	$('.checkbox').parent().removeClass('active')
         }
         getTotalPrice()
 	});
 	//부분선택
  	$(document).on('click','.checkbox',function(){
-		//체크하면 나머지 체크박스에서 클래스 지우고 셀렉트한 것만 클래스 추가
+ 		//체크하면 나머지 체크박스에서 클래스 지우고 셀렉트한 것만 클래스 추가
 		$('.checkbox').each(function (index,item){
 			var chk = $(item).is(":checked");
 			if(chk){
-				$(item).parent().next().find('select').addClass('forTotal')
+				console.log(item)
+				$(item).parent().parent().next().find('select').addClass('forTotal')
 			}else{
-				$(item).parent().next().find('select').removeClass('forTotal')				
+				$(item).parent().parent().next().find('select').removeClass('forTotal')
 			}
 		})
 		getTotalPrice()
 	}); 
- 	function getTotalPrice(){
- 		//오른쪽 상품금액 + 배송비 + 결제금액 구해서 뿌리기
-		var totalPrice=0;
-		var totalShipPrice=0;
-		var totalPayPrice=0;
-		$('.forTotal').each(function (index,item){
-			totalPrice += $(item).next().text().substr(4)*1
-			var ship = $('.shipPrice');
-			totalShipPrice += $(ship)[index].textContent.substr(6)*1
-		})
-		$('.totalPrice').text(totalPrice)
-		$('.totalShipPrice').text(totalShipPrice)
-		$('.totalPayPrice').text(totalPrice+totalShipPrice)
- 	}
-	
 	//누르면 장바구니에서 삭제
 	$(document).on('click','.fa-times',function(){
 		var num = $(this).parent().parent().parent().parent().attr('bnum')
@@ -354,17 +431,12 @@ $(document).ready(function(){
 			}
 		})
 	});
-	
-	
 	//셀렉트 한 값만 넘기기(구매하기 버튼)
-	
- 	$(document).on('click','.btn',function(){
+ 	$(document).on('click','.btn_commit',function(){
  		if(!$('.checkbox').is(":checked")){
  			alert('하나 이상 선택해주세요')
  			return
  		}
- 		
- 		
 		var arrChecked = new Array();
 		$('.checkbox').each(function (index,item){
 			var chk = $(item).is(":checked")
