@@ -15,7 +15,7 @@
 	String MEMBER_EMAIL = (String)session.getAttribute("MEMBER_EMAIL");
 	
 	SimpleDateFormat df = new SimpleDateFormat("yyyy.MM.dd hh:mm");
-	DecimalFormat dfmp = new DecimalFormat("#,###");
+	DecimalFormat dfmp = new DecimalFormat("#,###원");
 %>
 
 <!DOCTYPE html>
@@ -235,7 +235,7 @@
 							<th width="60" style="text-align: center;">신청인</th>
 							<th width="370" style="text-align: center;">제목</th>
 							<th width="80" style="text-align: center;">카테고리</th>
-							<th width="60" style="text-align: center;">최저가</th>
+							<th width="60" style="text-align: center;">평균 가격</th>
 							<th width="55" style="text-align: center;">업체수</th>
 							<th width="60" style="text-align: center;">신청 시간</th>
 							<th width="60" style="text-align: center;">진행상황</th>
@@ -245,7 +245,6 @@
 						System.out.println(eList.size());
 						for (int i=0; i<eList.size(); i++) {
 							EstimateVO el = eList.get(i);
-							String minprice = dfmp.format(el.getESTIMATE_MINPRICE());
 							
 							if (el.getESTIMATE_STATE() != 0 && MEMBER_EMAIL != el.getESTIMATE_MEMBER()) {
 				%>
@@ -259,7 +258,7 @@
 							<td><%=el.getESTIMATE_NICK() %></td>
 							<td class="es_title"><%=el.getESTIMATE_TITLE() %></td>
 							<td><%=el.getESTIMATE_CATEGORY() %>
-							<td class="addComma"><%=minprice%></td>
+							<td class="addComma"><%=dfmp.format(el.getESTIMATE_MINPRICE())%></td>
 							<td><%=el.getESTIMATE_OFFERCOUNT()%></td>
 							<td><%=df.format(el.getESTIMATE_DATE()) %></td>
 							<td>

@@ -1,5 +1,29 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ page import="java.util.*" %>
+<%@ page import ="java.text.SimpleDateFormat" %>
+<%@ page import ="java.text.DecimalFormat" %>
+<%
+	String WORKSHOP_NAME = (String)session.getAttribute("WORKSHOP_NAME");
+	ArrayList<HashMap <String, Object>> woList = (ArrayList<HashMap <String, Object>>)request.getAttribute("woList");
 
+	int nowpage = ((Integer) request.getAttribute("page")).intValue();
+	int maxpage = ((Integer) request.getAttribute("maxpage")).intValue();
+	int startpage = ((Integer) request.getAttribute("startpage")).intValue();
+	int endpage = ((Integer) request.getAttribute("endpage")).intValue();
+	int rnum = ((Integer) request.getAttribute("rnum")).intValue();
+	int offerCount = ((Integer) request.getAttribute("offerCount")).intValue();
+	
+	String MEMBER_EMAIL = (String)session.getAttribute("MEMBER_EMAIL");
+
+	SimpleDateFormat df = new SimpleDateFormat("yyyy.MM.dd");
+	DecimalFormat dfmp = new DecimalFormat("#,###원");
+	System.out.println(woList.size());
+%>
+<style>
+	#work_store th, td {
+		text-align:center;
+	}
+</style>
 <div id="page-content-wrapper" style="padding-top: 5%;">
 	<div class="container-fluid">
         <div class="pb-5">
@@ -10,7 +34,7 @@
 	            <button type="button" id="all_select" class="btn btn-sm btn-outline-dark mr-2">전체표시</button>
 	            <button type="button" id="all_select" class="btn btn-sm btn-outline-dark mr-2">선택 삭제</button>                         
 	            <span class="listnum_txt pt-2">전체 제안내역</span>
-	            <span class="listnum_num pt-2">194건</span>
+	            <span class="listnum_num pt-2"><%=offerCount %>건</span>
 	        </div>
 	        <div class="justify-content-end">
 	        	<div class="d-flex justify-content-end">
@@ -39,37 +63,55 @@
 	    <table class="table" id="work_store">
 	        <thead>
 	            <tr>
-	                <th scope="col" class="th1" ><input id="all_select" type="checkbox"></th>
-	                <th scope="col" class="th2">분류</th>                        
+	                <th scope="col" class="th1" ><input id="all_select" type="checkbox"></th>      
+	                <th scope="col" class="th2">번호</th>            
 	                <th scope="col" class="th3">작성자</th>
 	                <th scope="col" class="th4">게시물 제목</th>
-	                <th scope="col" class="th5">식별 제목</th>
 	                <th scope="col" class="th6">카테고리</th>
 	                <th scope="col" class="th7">제안가격</th>
+	                <th scope="col" class="th5">제안날짜</th>
 	                <th scope="col" class="th8">상태</th>
 	                <th scope="col" class="th9">관리</th>
-	                <th scope="col" class="th10">채팅</th>
+	                <th scope="col" class="th10">문의</th>
 	            </tr>
 	        </thead>
 	        <tbody>
+	        <%
+	        	for (int i=0; i<woList.size(); i++) {
+	        		HashMap<String, Object> wo = woList.get(i);
+	        %>
 	            <tr>
-	                <td scope="col" ><input type="checkbox"></td>
-	                <td scope="col">4</td>
-	                <td scope="col" >abc123</td>
-	                <td scope="col" >견적 문의드립니다!테이블</td>
-	                <td scope="col" >테이블 상+하부 40</td>
-	                <td scope="col" >테이블</td>
-	                <td scope="col" >400,000</td>
-	                <td scope="col" >경매진행중</td>
-	                <td rowspan="2" scope="col">
-	                    <button class="btn_modify" >보기</button>
-	                    <button class="btn_modify" id="modform4" >수정</button>
-	                    <button class="btn_modify">삭제</button>
+	                <td scope="col" ><input type="checkbox"></td>      
+	                <th scope="col" ><%=rnum %></th>
+	                <td scope="col" ><%=wo.get("ESTIMATE_NICK") %></td>
+	                <td scope="col" ><%=wo.get("ESTIMATE_TITLE") %></td>
+	                <td scope="col" >
+	                <% 
+	                String category = (String)wo.get("ESTIMATE_CATEGORY");
+	                
+	                if (category == "table") { %>책상 
+	                <% } else if (category == "chair") {%>의자 
+	                <% } else if (category == "bookshelf") {%>책장
+	                <% } else if (category == "bed") {%>침대
+	                <% } else if (category == "drawer") {%>서랍장
+	                <% } else if (category == "sidetable") {%>협탁
+	                <% } else if (category == "dressing_table") {%>화장대
+	                <% } else {%>기타
+	                <% } %>
 	                </td>
-	                <td rowspan="2" scope="col">
-	                    <button class="btn_modify">채팅</button>
+	                <td scope="col" ><%=dfmp.format(wo.get("OFFER_PRICE")) %></td>
+	                <td scope="col" ><%=df.format(wo.get("OFFER_DATE")) %></td>
+	                <td scope="col" ><%=wo.get("ESTIMATE_STATE") %></td>
+	                <td scope="col">
+	                    <button class="btn_detail" onclick="location.href='estimate_detail.es?ESTIMATE_NUM=<%=wo.get("ESTIMATE_NUM")%>'">보기</button>
+	                    <button class="btn_modify" value=<%=wo.get("OFFER_NUM") %>>수정</button>
+	                    <button class="btn_delete" value=<%=wo.get("OFFER_NUM") %>>삭제</button>
+	                </td>
+	                <td scope="col">
+	                    <button class="btn_note" onclick="window.open('/NAGAGU/noteForm.nt?receive_mail=<%=wo.get("ESTIMATE_MEMBER") %>', '쪽지 보내기', 'width=600 height=700')">쪽지</button>
 	                </td>
 	            </tr>
+	           <% } %>
 	         </tbody>
 	    </table>
 	    <div class="table_bottom">

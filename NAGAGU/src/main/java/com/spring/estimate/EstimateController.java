@@ -14,8 +14,20 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
+import com.spring.member.KakaoController;
+import com.spring.member.NaverLoginBO;
+
 @Controller
 public class EstimateController {
+	
+	/* NaverLoginBO */
+    private NaverLoginBO naverLoginBO;
+    private String apiResult = null;
+    
+    @Autowired(required = false)
+    private void setNaverLoginBO(NaverLoginBO naverLoginBO) {
+        this.naverLoginBO = naverLoginBO;
+    }
 
 	@Autowired
 	EstimateService estimateService;
@@ -53,6 +65,15 @@ public class EstimateController {
 		model.addAttribute("estimateCount", estimateCount);
 		model.addAttribute("rnum", rnum);
 		model.addAttribute("eList", eList);
+		
+		String naverAuthUrl = naverLoginBO.getAuthorizationUrl(session);
+	    System.out.println("네이버:" + naverAuthUrl);
+	    model.addAttribute("naver_url", naverAuthUrl);
+      
+	    //카카오 인증 url을 view로 전달
+	    String kakaoUrI = KakaoController.getAuthorizationUri(session);
+	    System.out.println("카카오: "+ kakaoUrI);
+	    model.addAttribute("kakao_url", kakaoUrI);
 		
 		return "Store/estimateList";
 	}
@@ -170,9 +191,19 @@ public class EstimateController {
 	
 	
 	@RequestMapping(value = "/estimate_detail.es")
-	public String estimateDetail(HttpServletRequest request, Model model) {
+	public String estimateDetail(HttpServletRequest request, HttpSession session, Model model) {
 		int ESTIMATE_NUM = Integer.parseInt(request.getParameter("ESTIMATE_NUM"));
 		EstimateVO vo = estimateService.estimateDetail(ESTIMATE_NUM);
+		
+		/* 네이버아이디로 인증 URL을 생성하기 위하여 naverLoginBO클래스의 getAuthorizationUrl메소드 호출 */
+	    String naverAuthUrl = naverLoginBO.getAuthorizationUrl(session);
+	    System.out.println("네이버:" + naverAuthUrl);
+	    model.addAttribute("naver_url", naverAuthUrl);
+      
+	    //카카오 인증 url을 view로 전달
+	    String kakaoUrI = KakaoController.getAuthorizationUri(session);
+	    System.out.println("카카오: "+ kakaoUrI);
+	    model.addAttribute("kakao_url", kakaoUrI);
 		
 		model.addAttribute("estimatevo", vo);
 		model.addAttribute("page", request.getParameter("page"));
@@ -235,6 +266,7 @@ public class EstimateController {
 		}
 	}
 	
+	/* 견적글 제안 댓글 */
 	@RequestMapping(value = "/offer_list.es")
     @ResponseBody
 	public HashMap<String, Object> offerList (HttpServletRequest request) {
@@ -242,10 +274,15 @@ public class EstimateController {
         HashMap<String, Object> map = new HashMap<String, Object>();
 		int ESTIMATE_NUM = Integer.parseInt(request.getParameter("ESTIMATE_NUM"));
 		String OFFER_WORKSHOP = request.getParameter("OFFER_WORKSHOP");
+
+		HashMap <String, Object> countMap = new HashMap <String, Object>();
+		countMap.put("ESTIMATE_NUM", ESTIMATE_NUM);
+		countMap.put("OFFER_WORKSHOP", OFFER_WORKSHOP);
+		
 		
 		int offer_page = 1;
 		int offer_limit = 10;
-        int offerCount = estimateService.offerCount(ESTIMATE_NUM, OFFER_WORKSHOP);
+        int offerCount = estimateService.offerCount(countMap);
 		
 		if (request.getParameter("OFFER_PAGE") != null) {
 			offer_page = Integer.parseInt(request.getParameter("OFFER_PAGE"));
@@ -384,19 +421,24 @@ public class EstimateController {
 	}
 	
 
-	/* 의뢰된 견적 리스트 */
+	/* 일반회원 : 의뢰한 견적 리스트 */
 	@RequestMapping(value = "/mypage_estimate.my")
 	public String MypageEsOrderDetail(HttpSession session, HttpServletRequest request, Model model) {
 		String ES_ORDER_BUYER = (String)session.getAttribute("MEMBER_EMAIL");
 
 		HashMap<String, Object> map = new HashMap<String, Object>();
 		map.put("ES_ORDER_BUYER", ES_ORDER_BUYER);
+		if (request.getParameter("ES_ORDER_STATE") != null) {
+			int ES_ORDER_STATE = Integer.parseInt(request.getParameter("ES_ORDER_STATE"));
+			map.put("ES_ORDER_STATE", ES_ORDER_STATE);
+		}
 		
 		ArrayList<EstimateOrderVO> esOrderList = estimateService.esOrderList(map);
 		
 		for (int i=0; i<7; i++) {
 			HashMap<String, Object> cntmap = new HashMap<String, Object>();
-			map.put("ES_ORDER_STATE", i);
+			cntmap.put("ES_ORDER_STATE", i);
+			cntmap.put("ES_ORDER_BUYER", ES_ORDER_BUYER);
 			int cnt = estimateService.esOrderCount(cntmap);
 			model.addAttribute("esCount" + i, cnt);
 		}

@@ -281,7 +281,7 @@
 				<div class="thumbMain">
 					<a href=<%=imgArr[0] %> target="_blank"><img src=<%=imgArr[0] %>></a>
 				</div>
-				<div class="thumnList">
+				<div class="thumbList">
 				<%
 					for (int i=0; i<imgArr.length; i++) {
 				%>

@@ -30,4 +30,5 @@ public interface EstimateMapper {
 	public int esOrderInsert(EstimateOrderVO vo);
 	public int esOrderDelete(int ESTIMATE_NUM);
 	public int esOrderCount(HashMap<String, Object> map);
+	public ArrayList<HashMap <String, Object>> workOfferList (HashMap<String, Object> map);
 }
