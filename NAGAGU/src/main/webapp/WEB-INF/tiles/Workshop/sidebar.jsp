@@ -19,7 +19,7 @@
             <div class="sidebar_pic">
                 <a href="./workshop_modify.ws"><img src="<%=WORKSHOP_PICTURE %>" class="img-circle profile_img"></a>
             </div>
-            <div class="sidebar_name">
+            <div class="sidebar_name" style="padding: 5% 0 5% 29%;">
                 <h4 style="color: white;"><%=WORKSHOP_NAME %></h4>
             </div>
         </div>
@@ -57,7 +57,7 @@
 				</ul>
 			</li>
 			<li class="sidebar-brand" style="margin: 11px 0 0px 69px;">
-				<a href="./index.ma" id="index">메인페이지로<i class="fas fa-sign-out-alt"></i></a>
+				<a href="./index.ma" id="index">메인페이지로&nbsp;&nbsp;<i class="fas fa-sign-out-alt"></i></a>
 			</li>
 		</ul>
 	</nav>

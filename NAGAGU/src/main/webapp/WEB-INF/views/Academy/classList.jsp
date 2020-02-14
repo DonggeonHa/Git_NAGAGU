@@ -107,7 +107,7 @@
 			<div class="content">
 				<div class="search-tap">
 					<div class="caption py-5">
-						<a id="all_tab" href='./classlist.ac?CLASS_CATEGORY=all&sort=new'>ALL</a> 
+						<a id="all_tab" href='./classlist.ac?CLASS_CATEGORY=all&sort=new'>전체</a> 
 						<a id="table_tab" href='./classlist.ac?CLASS_CATEGORY=table&sort=new'>책상</a> 
 						<a id="chair_tab"  href='./classlist.ac?CLASS_CATEGORY=chair&sort=new'>의자</a> 
 						<a id="bookshelf_tab" href='./classlist.ac?CLASS_CATEGORY=bookshelf&sort=new'>책장</a> 

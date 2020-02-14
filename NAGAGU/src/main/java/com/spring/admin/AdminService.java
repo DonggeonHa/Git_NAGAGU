@@ -27,6 +27,8 @@ public interface AdminService {
 	/* 커뮤니티관리 */
 	public List<PicsVO> getPICS();
 	public int deletePICS(PicsVO vo);
+	public PicsVO detailPICS(PicsVO vo);
+	public MemberVO memberPICS(PicsVO vo);
 	
 	/* 아카데미관리 */
 	public List<ClassVO> getAcademy();
@@ -36,8 +38,10 @@ public interface AdminService {
 	/* 상품관리 */
 	public List<ProductVO> getProduct();
 	public int deleteProduct(ProductVO vo);
+	public ProductVO detailProduct(ProductVO vo);
 	
 	/* 견적관리 */
 	public List<EstimateVO> getEstimate();
 	public int deleteEstimate(EstimateVO vo);
+	public EstimateVO detailEstimate(EstimateVO vo);
 }

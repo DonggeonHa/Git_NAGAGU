@@ -289,7 +289,7 @@ String[] array = new String[orderList.size()];
 							<li class="nav-item">
 								<a class="nav-link pay_method" value="kakao" id="pills-naver-tab" data-toggle="pill" href="#pills-naver" role="tab" aria-controls="pills-home" aria-selected="true">
 									<label>
-										<img width="64" src="https://bucketplace-v2-development.s3.amazonaws.com/pg/naver.png" alt="Toss">
+										<img width="64" src="${pageContext.request.contextPath}/resources/images/Mypage/kakao.png" alt="Toss">
 										<div class="text-center"><font color="black">카카오페이</font></div>
 									</label>
 								</a>

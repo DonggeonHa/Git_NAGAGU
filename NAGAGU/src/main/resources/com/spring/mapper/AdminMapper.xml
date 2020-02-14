@@ -57,17 +57,12 @@
 		<result property="PICS_DATE" column="PICS_DATE" />	
 		<result property="PICS_CATEGORY" column="PICS_CATEGORY" />		
 		<result property="PICS_LIKE" column="PICS_LIKE" />	
-		<result property="PICS_WORKSHOP" column="PICS_WORKSHOP" />			
 		<result property="PICS_TAG" column="PICS_TAG" />	
 		<result property="PICS_READ" column="PICS_READ" />
 		<result property="PICS_REVIEW" column="PICS_REVIEW" />		
-		<result property="PICS_CONTENT_1" column="PICS_CONTENT_1" />	
-		<result property="PICS_CONTENT_2" column="PICS_CONTENT_2" />
-		<result property="PICS_CONTENT_3" column="PICS_CONTENT_3" />	
-		<result property="PICS_FILE_1" column="PICS_FILE_1" />
-		<result property="PICS_FILE_2" column="PICS_FILE_2" />
-		<result property="PICS_FILE_3" column="PICS_FILE_3" />
-		<result property="PICS_REF" column="PICS_REF" />		
+		<result property="PICS_MAIN_IMAGE" column="PICS_MAIN_IMAGE" />	
+		<result property="PICS_CONTENT" column="PICS_CONTENT" />
+		<result property="MEMBER_NUM" column="MEMBER_NUM" />
 	</resultMap>
 	
 	<!-- 아카데미관리 -->
@@ -214,7 +209,7 @@
  	<!-- 커뮤니티관리 -->
  	<select id="getPICS" parameterType="int" resultMap="picsResultMap"> <!-- 이거 처리한 결과물을 list 타입으로 만들어주면 된다. select id은 내용을 호출 함. -->
 		select *
-		from (select rownum rnum, PICS_NUM, PICS_NICK, PICS_CATEGORY, PICS_LIKE, PICS_WORKSHOP, PICS_READ
+		from (select rownum rnum, PICS_NUM, PICS_NICK, PICS_CATEGORY, PICS_LIKE, PICS_READ, PICS_TAG
 			  from(select * 
 			  	   from PICS 
 			  	   order by PICS_DATE ASC , PICS_NUM ASC))
@@ -223,6 +218,14 @@
  	<delete id="deletePICS" parameterType="com.spring.community.PicsVO">
  		delete from PICS where PICS_NUM = #{PICS_NUM}
  	</delete>
+ 	
+ 	<select id="detailPICS" parameterType="com.spring.community.PicsVO" resultMap="picsResultMap">
+ 		select * from PICS where PICS_NUM = #{PICS_NUM}
+ 	</select>
+ 	
+ 	<select id="memberPICS" parameterType="com.spring.community.PicsVO" resultMap="memberResultMap">
+ 		select * from NAGAGU_MEMBER where MEMBER_NUM = #{PICS_MEMBER}
+ 	</select>
  	
  	<!-- 아카데미 관리 -->
  	<select id="getAcademy" parameterType="int" resultMap="classResultMap"> <!-- 이거 처리한 결과물을 list 타입으로 만들어주면 된다. select id은 내용을 호출 함. -->
@@ -255,6 +258,10 @@
  		delete from PRODUCT where PRODUCT_NUM = #{PRODUCT_NUM}
  	</delete>
  	
+ 	<select id="detailProduct" parameterType="com.spring.store.ProductVO" resultMap="productResultMap">
+ 		select * from PRODUCT where PRODUCT_NUM = #{PRODUCT_NUM}
+ 	</select>
+ 	
  	<!-- 견적관리 -->
  	<select id="getEstimate" parameterType="int" resultMap="estimateMap"> <!-- 이거 처리한 결과물을 list 타입으로 만들어주면 된다. select id은 내용을 호출 함. -->
 		select *
@@ -267,4 +274,8 @@
  	<delete id="deleteEstimate" parameterType="com.spring.estimate.EstimateVO">
  		delete from ESTIMATE where ESTIMATE_NUM = #{ESTIMATE_NUM}
  	</delete>
+ 	
+ 	<select id="detailEstimate" parameterType="com.spring.estimate.EstimateVO" resultMap="estimateMap">
+ 		select * from ESTIMATE where ESTIMATE_NUM = #{ESTIMATE_NUM}
+ 	</select>
 </mapper>

@@ -92,6 +92,7 @@
 				position: -webkit-sticky;
 				position: sticky;
 				background-color: #FFFFFF;
+				border-radius: 10px;
 				top: 0;
 			}
 			
@@ -100,6 +101,7 @@
 				position: -webkit-sticky;
 				position: sticky;
 				background-color: #FFFFFF;
+				border-radius: 10px;
 				top: 20px;
 			}
 			
@@ -186,7 +188,7 @@
 	</head>
 	<body class="order-body">
 		<div class="container class-detail-container category_ac">
-			<div class="col-12 text-center" style="padding-bottom: 5%;">
+			<div class="text-center" style="padding-bottom: 5%;">
 				<div id="carouselExampleFade" class="carousel slide carousel-fade" data-ride="carousel">
  					<div class="carousel-inner text-center">
     					<%
@@ -573,7 +575,7 @@
 								<li class="nav-item">
 									<a class="nav-link"	id="pills-kakao-tab" data-toggle="pill" href="#pills-kakao"	role="tab" aria-controls="pills-home" aria-selected="true">
 										<label> 
-											<img width="64"	src="https://scontent-icn1-1.xx.fbcdn.net/v/t1.0-9/p960x960/52775098_2282365115374551_3623666965651914752_o.png?_nc_cat=109&_nc_ohc=l2DGRIBJakYAX-7EhT8&_nc_ht=scontent-icn1-1.xx&oh=a98e852e8cfa475f79014246688b9965&oe=5E97B88B" alt="Kakao">
+											<img width="64"	src="${pageContext.request.contextPath}/resources/images/Mypage/kakao.png" alt="Kakao">
 											<div class="text-center">
 												<font color="black">카카오페이</font>
 											</div>

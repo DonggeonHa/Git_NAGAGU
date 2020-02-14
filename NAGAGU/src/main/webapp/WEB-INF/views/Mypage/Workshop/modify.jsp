@@ -26,7 +26,7 @@
             </div>
             <br/>
             <!-- work_info 폼 시작-->
-            <form id="work_info" name="work_info" action="/wsModify.mywork" method="post" enctype="multipart/form-data">
+            <form id="work_info" name="work_info" action="./wsModify.mywork" method="post" enctype="multipart/form-data">
             <div class="row work_info_box">
                 <!-- 첫번째 블럭 -->
                 <div class="col-5 work_info_first">
