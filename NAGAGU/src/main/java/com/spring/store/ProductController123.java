@@ -262,14 +262,6 @@ public class ProductController123 {
 		public Map<String, Object> insert_review123(MultipartHttpServletRequest request, HttpSession session) throws Exception {
 			System.out.println("review_insert123 컨트롤러 start!");
 			
-			
-			
-			
-			Map<String, Object> retVal = new HashMap<String, Object>(); //리턴값 저장
-			
-			
-			
-			
 			Product_reviewVO reviewVO = new Product_reviewVO();
 			
 			System.out.println("REVIEW_CONTENT=" + request.getParameter("REVIEW_CONTENT"));
@@ -346,14 +338,20 @@ public class ProductController123 {
 				reviewVO.setREVIEW_RE(0);
 			}
 			
-			int res = reviewService.insertReview(reviewVO);
+			Map<String, Object> retVal = new HashMap<String, Object>(); //리턴값 저장
+			try {
+				int res = reviewService.insertReview(reviewVO);
+				retVal.put("insertres", "OK");
+				retVal.put("reviewVO", reviewVO);
+			} catch(Exception e) {
+				retVal.put("insertres", "Fail");
+			}
 			
 			
-			//답글
-			//댓글(review) 입력시 grade update(답글 입력시는  grade 상관 없다)
+			
+			//댓글(review) 입력시 product grade update(답글 입력시는  grade 상관 없다)
 			//update해야하는 상품의 vo 가져옴
 			if(request.getParameter("REVIEW_RE") == null) {
-				System.out.println("왔나?");
 				ProductVO productVO = null;
 				productVO = productService.getproductVO(Integer.parseInt(request.getParameter("REVIEW_PRODUCT")));
 			
@@ -369,19 +367,7 @@ public class ProductController123 {
 				productVO.setPRODUCT_GRADE(newGrade);
 				productService.updateGrade(productVO);
 				
-				
 			} 	
-			
-			
-			System.out.println("res="+res);		
-		
-			ObjectMapper mapper = new ObjectMapper();
-			try {
-				str = mapper.writeValueAsString(reviewVO);
-				System.out.println(str);
-			}catch(Exception e) {
-				System.out.println("first() mapper : " + e.getMessage());
-			}
 			
 			return retVal;
 			
