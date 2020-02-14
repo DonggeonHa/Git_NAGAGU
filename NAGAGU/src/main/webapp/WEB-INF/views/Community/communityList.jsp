@@ -210,7 +210,7 @@ img {
 		<div class="content">
 			<div class="search-tap">
 				<div class="caption py-5">
-					<a id="all_tab" href="./community.cm?PICS_CATEGORY=all&PICS_REVIEW=<%=PICS_REVIEW%>&sort=<%=sort%>">ALL</a> 
+					<a id="all_tab" href="./community.cm?PICS_CATEGORY=all&PICS_REVIEW=<%=PICS_REVIEW%>&sort=<%=sort%>">전체</a> 
 					<a id="table_tab" href="./community.cm?PICS_CATEGORY=table&PICS_REVIEW=<%=PICS_REVIEW%>&sort=<%=sort%>">책상</a> 
 					<a id="chair_tab" href="./community.cm?PICS_CATEGORY=chair&PICS_REVIEW=<%=PICS_REVIEW%>&sort=<%=sort%>">의자</a> 
 					<a id="bookshelf_tab" href="./community.cm?PICS_CATEGORY=bookshelf&PICS_REVIEW=<%=PICS_REVIEW%>&sort=<%=sort%>">책장</a>

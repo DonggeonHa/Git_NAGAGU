@@ -92,6 +92,7 @@
 				position: -webkit-sticky;
 				position: sticky;
 				background-color: #FFFFFF;
+				border-radius: 10px;
 				top: 0;
 			}
 			
@@ -100,6 +101,7 @@
 				position: -webkit-sticky;
 				position: sticky;
 				background-color: #FFFFFF;
+				border-radius: 10px;
 				top: 20px;
 			}
 			
@@ -186,7 +188,7 @@
 	</head>
 	<body class="order-body">
 		<div class="container class-detail-container category_ac">
-			<div class="col-12 text-center" style="padding-bottom: 5%;">
+			<div class="text-center" style="padding-bottom: 5%;">
 				<div id="carouselExampleFade" class="carousel slide carousel-fade" data-ride="carousel">
  					<div class="carousel-inner text-center">
     					<%

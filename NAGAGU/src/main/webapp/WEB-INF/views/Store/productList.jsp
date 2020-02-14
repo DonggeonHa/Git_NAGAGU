@@ -247,23 +247,25 @@
 						<a id="dressing_table_tab" href='./productlist.pro?PRODUCT_CATEGORY=dressing_table&sort=new'>화장대</a> 
 						<a id="others_tab" href='./productlist.pro?PRODUCT_CATEGORY=others&sort=new'>기타</a>
 					</div>
-					<div class="row nav-tag">
-						<table>
-							<tr>
-								<td>
-									<select id = "sort" class="form-control mr-2" onchange="if(this.value) location.href=(this.value);">
-										<option id = "new" value='./productlist.pro?PRODUCT_CATEGORY=<%=category %>&sort=new'>최신순</option>
-										<option id = "sales"  value='./productlist.pro?PRODUCT_CATEGORY=<%=category %>&sort=sales'>판매량순</option>
-										<option id = "grade"  value='./productlist.pro?PRODUCT_CATEGORY=<%=category %>&sort=grade'>평점순</option>
-										<option id = "read"  value='./productlist.pro?PRODUCT_CATEGORY=<%=category %>&sort=read'>조회순</option>
-										<option id = "like"  value='./productlist.pro?PRODUCT_CATEGORY=<%=category %>&sort=like'>좋아요순</option>
-										<option id = "price"  value='./productlist.pro?PRODUCT_CATEGORY=<%=category %>&sort=price'>가격순</option>
-									</select>
-								</td>
-								<td>&nbsp;</td>
-							</tr>
-						</table>
-						<div class="col-lg-3 col-sm-4 ml-auto">
+					<div class="d-flex bd-highlight nav-tag">
+						<div class="mr-auto bd-highlight">
+							<table>
+								<tr>
+									<td>
+										<select id = "sort" class="form-control mr-2" onchange="if(this.value) location.href=(this.value);">
+											<option id = "new" value='./productlist.pro?PRODUCT_CATEGORY=<%=category %>&sort=new'>최신순</option>
+											<option id = "sales"  value='./productlist.pro?PRODUCT_CATEGORY=<%=category %>&sort=sales'>판매량순</option>
+											<option id = "grade"  value='./productlist.pro?PRODUCT_CATEGORY=<%=category %>&sort=grade'>평점순</option>
+											<option id = "read"  value='./productlist.pro?PRODUCT_CATEGORY=<%=category %>&sort=read'>조회순</option>
+											<option id = "like"  value='./productlist.pro?PRODUCT_CATEGORY=<%=category %>&sort=like'>좋아요순</option>
+											<option id = "price"  value='./productlist.pro?PRODUCT_CATEGORY=<%=category %>&sort=price'>가격순</option>
+										</select>
+									</td>
+									<td>&nbsp;</td>
+								</tr>
+							</table>
+						</div>
+						<div class="col-lg-3 col-sm-4 bd-highlight" style="padding-right:0 !important; padding-left:0 !important;">
 							<div class="input-group">
 								<input type="text" class="form-control"	placeholder="Search for...">
 								<span class="input-group-btn">
