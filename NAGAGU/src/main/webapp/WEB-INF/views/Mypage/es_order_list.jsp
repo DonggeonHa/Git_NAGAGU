@@ -12,15 +12,18 @@
 	SimpleDateFormat df = new SimpleDateFormat("yyyy.MM.dd");
 	DecimalFormat dfmp = new DecimalFormat("#,###원");
 
-	int[] esCount;
+	/* 상태별 상품 개수 */
+	
+	int[] esCount = new int[7];
 	for (int i=0; i<7; i++) {
-// 		esCount[i] = (int)request.getAttribute("cnt"+i);
+ 		esCount[i] = (int)request.getAttribute("esCount"+i);
 	}
 %>
 <!DOCTYPE html>
 <html>
 	<head>
 		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 		<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.2/animate.css">
         <link rel="stylesheet" href="../css/order_list.css">
@@ -37,10 +40,119 @@
             img {
             	max-width:100%;
             }
-			
+            
 			.order-body {
 				font-family: '만화진흥원체', 'KOMACON', KOMACON;
 				font-size: 15px;
+            }
+            
+            /* ----------------------------------------------------------- */
+            
+			.container-mypage{
+				margin-top: 50px ;
+				margin-bottom: 50px ;				 
+			}			
+			.container-mypage a,.container-mypage  a:link,.container-mypage  a:hover {
+				text-decoration: none;
+				color: white !important;
+			} 
+			
+            .card-hover:hover {
+				transition: 1s;
+				transform: scale(1.2);
+				z-index: 1;
+				box-shadow: 10px 15px 7px 0px #333333;
+			}
+			
+			.card {
+				background-color: #1b1b27 !important;
+				margin: 15px 15px 15px 15px;
+				color: white;
+			}
+			.my {
+				background-color: #ef900e !important;
+			}
+			
+			.card-wrap{
+				justify-content: center;
+				padding-left:50px; 
+			}
+			
+			@media screen and (max-width: 600px) {
+				.card {
+					width: 2.5rem;
+					font-size: 0.1rem;
+					margin: 2px 2px 2px 2px;
+				}
+				.card-header, .card-body, .card-footer {
+					padding: 1px !important; 
+				}
+				.card-wrap{
+					justify-content: start;
+					padding-left: 20px; 
+				} 
+			}
+			@media screen and (min-width: 600px) {
+				.card {
+					width: 4rem;
+					font-size: 0.3rem;
+					margin: 2px 2px 2px 2px;
+				}
+				.card-header, .card-body, .card-footer {
+					padding: 4px !important; 
+				}
+			}
+			@media screen and (min-width: 992px) {
+				.card {
+					width: 6rem;
+					font-size: 0.6rem;
+					margin: 2px 2px 2px 2px;
+				}
+				.card-header, .card-body, .card-footer {
+					padding: 10px !important; 
+				}
+			}
+			@media ( min-width : 1200px) {
+				.card {
+					width: 8rem !important;  
+					font-size: 0.7rem; 
+				}
+				.card-header, .card-body, .card-footer {
+					padding: 18px !important;  
+				}
+			} 
+			
+			.tab-pane .col-4 {
+				padding-bottom: 50px;
+			}
+			li>.active {
+				background-color: #1b1b27 !important;
+				color: white !important;
+			}
+			.tab-content .tab-pane.active {
+				display: flex;
+			}
+			.nav-item a {
+				color: black;
+			}
+			img {
+			width: 100%;
+			height: auto;
+			}
+			.picOutput{
+				padding-left: 0px !important;
+			}
+			.tab-content{
+				min-height:38vh;
+			}
+			.tab-content img{
+				max-height:200px;
+			}
+            
+            /* ----------------------------------------------------------- */
+            
+            .container {
+            	margin-top:30px;
             }
             
 			.thumbImg {
@@ -72,36 +184,92 @@
 	            text-align:center;
 	            font-size:1.5rem;
 	            line-height:250px;
+	            width:100%;
 	            height:250px;
 	        }
 	            
 		</style>
 	</head>
 	<body class="order-body">
-		<div class="container container-mypage bg-light">
-			<div class="row justify-content-center pb-3">
-				<div class="card-group text-center d-inline-flex">
-					<div class="card my" style="width: 10rem;">
-						<a href="mypage.my">
-							<div class="card-header">MY</div>
+			
+			<div class="container-mypage " role="main">
+				<div class="row card-wrap  text-center">
+					<div class="card card-hover">
+						<a href="mypage_like.my" class="href">
+							<div class="card-header">Like</div>
 							<div class="card-body">
-								<i class="far fa-user-circle fa-4x"></i>
+								<i class="fab fa-gratipay fa-4x"></i>
 							</div>
-						<div class="card-footer bg-transparent ">Follow</div>
 						</a>
 					</div>
 	
-					<div class="card">
-						<div class="card-header">ORDER</div>
+					<div class="card card-hover">
+						<a href="mypage_pic.my" class="href">
+							<div class="card-header">COMMUNITY</div>
+							<div class="card-body">
+								<i class="fas fa-images fa-4x"></i>
+							</div>
+						</a>
+					</div>
+	
+					<div class=" card card-hover">
+						<a href="mypage_edit.my" class="href">
+							<div class="card-header">EDIT</div>
+							<div class="card-body">
+								<i class="fas fa-user-edit fa-4x"></i>
+							</div>
+						</a>
+					</div>
+					<div class="card card-hover">
+						<a href="mypage_class.my" class="href">
+							<div class="card-header">CLASS</div>
+							<div class="card-body">
+								<i class="fas fa-school fa-4x"></i>
+							</div>
+						</a>
+					</div>
+	
+					<div class="card my">
+						<div class="card-header">MY</div>
 						<div class="card-body">
-							<i class="fas fa-truck-pickup fa-4x"></i>
+							<i class="far fa-user-circle fa-4x"></i>
 						</div>
-						<div class="card-footer bg-transparent ">주문 글</div>
+					</div>
+					<div class="card card-hover">
+						<a href="order_list.my" class="href">
+							<div class="card-header">ORDER</div>
+							<div class="card-body">
+								<i class="fas fa-truck-pickup fa-4x"></i>
+							</div>
+						</a>
+					</div>
+					<div class="card card-hover ">
+						<a href="mypage_reply.my" class="href">
+							<div class="card-header">REPLY</div>
+							<div class="card-body">
+								<i class="fab fa-replyd fa-4x"></i>
+							</div>
+						</a>
+					</div>
+					<div class="card card-hover ">
+						<a href="mypage_review.my" class="href">
+							<div class="card-header">REVIEW</div>
+							<div class="card-body">
+								<i class="fas fa-keyboard fa-4x"></i>
+							</div>
+						</a>  
+					</div>
+					<div class="card card-hover ">
+						<a href="mypage_estimate.my" class="href">
+							<div class="card-header">견적</div>
+							<div class="card-body">
+								<i class="fas fa-keyboard fa-4x"></i>
+							</div>
 						</a>
 					</div>
 				</div>
 			</div>
-		
+		<div class="container bg-light">
 			<div>
 				<nav>
 					<div class="nav d-flex justify-content-between shadow p-3 mb5 bg-white rounded" id="nav-tab" role="tablist">
@@ -109,7 +277,7 @@
 				    		<dl class="text-center">
 				    			<dt>입금대기</dt>
 				    			<dd></dd>
-				    			<dd>2</dd>
+				    			<dd><%=esCount[0] %></dd>
 				    		</dl>
 				    	</a>
 						<div class="text-center align-self-center">
@@ -119,9 +287,19 @@
 				    		<dl class="text-center">
 				    			<dt>결제완료</dt>
 				    			<dd></dd>
-				    			<dd>0</dd>
+				    			<dd><%=esCount[1] %></dd>
 				    		</dl>
 				    	</a>
+				    	<div class="text-center align-self-center">
+							<i class="far fa-arrow-alt-circle-right" style="font-size: 30px;"></i>
+						</div>
+						<a class="nav-item nav-link" id="nav-shipping-tab" data-toggle="tab" href="#nav-shipping" role="tab" aria-controls="nav-contact" aria-selected="false">
+							<dl class="text-center">
+				    			<dt>제작중</dt>
+				    			<dd></dd>
+				    			<dd><%=esCount[2] %></dd>
+				    		</dl>
+						</a>
 				    	<div class="text-center align-self-center">
 							<i class="far fa-arrow-alt-circle-right" style="font-size: 30px;"></i>
 						</div>
@@ -129,7 +307,7 @@
 				    		<dl class="text-center">
 				    			<dt>배송준비</dt>
 				    			<dd></dd>
-				    			<dd>0</dd>
+				    			<dd><%=esCount[3] %></dd>
 				    		</dl>
 				    	</a>
 				    	<div class="text-center align-self-center">
@@ -139,7 +317,7 @@
 							<dl class="text-center">
 				    			<dt>배송중</dt>
 				    			<dd></dd>
-				    			<dd>0</dd>
+				    			<dd><%=esCount[4] %></dd>
 				    		</dl>
 						</a>
 						<div class="text-center align-self-center">
@@ -149,7 +327,7 @@
 							<dl class="text-center">
 				    			<dt>배송완료</dt>
 				    			<dd></dd>
-				    			<dd>0</dd>
+				    			<dd><%=esCount[5] %></dd>
 				    		</dl>
 						</a>
 						<div class="text-center align-self-center">
@@ -159,7 +337,7 @@
 							<dl class="text-center">
 				    			<dt>구매확정</dt>
 				    			<dd></dd>
-				    			<dd>0</dd>
+				    			<dd><%=esCount[6] %></dd>
 				    		</dl>
 						</a>
 					</div>
@@ -250,6 +428,7 @@
 						</div>
 					</div>
                 </div>
+               </div>
                 
                 <%
 					}

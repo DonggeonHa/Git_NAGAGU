@@ -14,6 +14,8 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.spring.academy.AcademyService;
 import com.spring.academy.ClassVO;
+import com.spring.estimate.EstimateService;
+import com.spring.estimate.EstimateVO;
 import com.spring.member.MemberService;
 import com.spring.member.MemberVO;
 import com.spring.workshop.WorkShopMemberService;
@@ -23,6 +25,8 @@ import com.spring.workshop.WorkShopMemberVO;
 public class MypageController {
 	@Autowired
 	private MemberService memberService;
+	@Autowired
+	private EstimateService estimateService;
 
 	@Autowired
 	private WorkShopMemberService workShopMemberService;
@@ -185,9 +189,57 @@ public class MypageController {
 		
 		return "Mypage/Workshop/Review/reviewStore";
 	}
+	
 	//견적 제안 관리
 	@RequestMapping(value = "/workshop_estimate_offers.ws")
-	public String WorkshopStoreestOffers() {
+	public String WorkshopStoreestOffers(HttpServletRequest request, HttpSession session, Model model) {
+		String OFFER_WORKSHOP = (String)session.getAttribute("WORKSHOP_NAME");
+		
+		HashMap <String, Object> listmap = new HashMap <String, Object>();
+		listmap.put("WO_CATEGORY", request.getParameter("category"));
+		listmap.put("WO_SEARCH", request.getParameter("search_text"));
+		
+		HashMap <String, Object> countMap = new HashMap <String, Object>();
+		countMap.put("OFFER_WORKSHOP", OFFER_WORKSHOP);
+		if (request.getParameter("ESTIMATE_STATE") != null) {
+			int ESTIMATE_STATE = Integer.parseInt(request.getParameter("ESTIMATE_STATE"));
+			countMap.put("ESTIMATE_STATE", ESTIMATE_STATE);
+		}
+		
+		int page = 1;
+		int limit = 20;
+		int offerCount = estimateService.offerCount(countMap);
+		
+		if (request.getParameter("page") != null) {
+			page = Integer.parseInt(request.getParameter("page"));
+		}
+		
+		int maxpage = (int)((double)offerCount/limit+0.95);
+		int startRow = (page-1)*limit + 1;
+		int endRow = startRow+limit-1;
+		int startpage = (((int) ((double)page/10 + 0.9)) - 1) * 10 + 1;
+		int endpage = startpage+9;
+		
+		listmap.put("OFFER_WORKSHOP", OFFER_WORKSHOP);
+		listmap.put("startRow", startRow);
+		listmap.put("endRow", endRow);
+		
+		if (page == maxpage)
+			endRow = offerCount;
+		
+		int rnum = offerCount - (page-1)*limit;
+
+		ArrayList<HashMap <String, Object>> woList = estimateService.workOfferList(listmap);
+		
+		model.addAttribute("page", page);
+		model.addAttribute("maxpage", maxpage);
+		model.addAttribute("startpage", startpage);
+		model.addAttribute("endpage", endpage);
+		model.addAttribute("offerCount", offerCount);
+		model.addAttribute("rnum", rnum);
+		model.addAttribute("woList", woList);
+		
+		
 		
 		return "Mypage/Workshop/Store/estOffers";
 	}

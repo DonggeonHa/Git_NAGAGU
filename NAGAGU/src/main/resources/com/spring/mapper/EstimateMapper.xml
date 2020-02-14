@@ -50,6 +50,19 @@
         <result property="ES_ORDER_TRANSFER" column="ES_ORDER_TRANSFER"/>
         <result property="ES_ORDER_STATE" column="ES_ORDER_STATE"/>
     </resultMap>
+    
+    <resultMap type="java.util.HashMap" id="customMap">
+    	<result property="ESTIMATE_NICK" column="ESTIMATE_NICK"/>
+    	<result property="ESTIMATE_MEMBER" column="ESTIMATE_MEMBER"/>
+    	<result property="ESTIMATE_TITLE" column="ESTIMATE_TITLE"/>
+    	<result property="ESTIMATE_CATEGORY" column="ESTIMATE_CATEGORY"/>
+    	<result property="OFFER_PRICE" column="OFFER_PRICE"/>
+    	<result property="OFFER_DATE" column="OFFER_DATE"/>
+    	<result property="ESTIMATE_STATE" column="ESTIMATE_STATE"/>
+    	<result property="OFFER_STATE" column="OFFER_STATE"/>
+    	<result property="ESTIMATE_NUM" column="ESTIMATE_NUM"/>
+    	<result property="OFFER_NUM" column="OFFER_NUM"/>
+    </resultMap>
 	
 	<!-- ///////////////// 견적글 관련 ///////////////// -->
 	
@@ -110,8 +123,12 @@
     </select>
     
     <select id="offerCount" parameterType="java.util.HashMap" resultType="int">
-        select count(*) from ESTIMATE_OFFER where OFFER_ESTIMATE = #{ESTIMATE_NUM}
-        <if test="OFFER_WORKSHOP != null"> and OFFER_WORKSHOP = #{OFFER_WORKSHOP}</if>
+        select count(*) from (select * from ESTIMATE_OFFER
+        <if test="OFFER_WORKSHOP!=null">where OFFER_WORKSHOP = #{OFFER_WORKSHOP}</if> ) B
+        <if test="OFFER_WORKSHOP!=null">, (select * from ESTIMATE 
+        <if test="ESTIMATE_NUM!=null">where ESTIMATE_NUM = #{ESTIMATE_NUM}</if>)A</if>
+        where A.ESTIMATE_NUM = B.OFFER_ESTIMATE 
+        <if test="ESTIMATE_STATE != null">and A.ESTIMATE_STATE = #{ESTIMATE_STATE}</if>
     </select>
     
     <select id="offerDetail" parameterType="int" resultMap="offerMap">
@@ -156,7 +173,16 @@
 	<select id="esOrderList" parameterType="java.util.HashMap" resultMap="orderMap">
 		select * from ESTIMATE_ORDER 
 		<if test="ES_ORDER_BUYER!=null">where ES_ORDER_BUYER = #{ES_ORDER_BUYER}</if>
-		<if test="ES_ORDER_WORKSHOP!=null">where ES_ORDER_WORKSHOP = #{ES_ORDER_WORKSHOP}</if>
+		<if test="ES_ORDER_STATE!=null">and ES_ORDER_STATE = #{ES_ORDER_STATE}</if>
+	</select>
+	
+	<select id="esOrderTable" parameterType="java.util.HashMap" resultMap="orderMap">
+		select * from (select ROW_NUMBER() OVER (ORDER BY ES_ORDER_DATE desc) AS RNUM, ES_ORDER_NUM, ES_ORDER_ESTIMATE, ES_ORDER_OFFER, ES_ORDER_TITLE, 
+        ES_ORDER_BUYER, ES_ORDER_WORKSHOP, ES_ORDER_PIC, ES_ORDER_DATE, ES_ORDER_PRICE, ES_ORDER_ZIP, ES_ORDER_ADDRESS, ES_ORDER_TRANSFER, ES_ORDER_RECEIVER, 
+        ES_ORDER_STATE from ESTIMATE_ORDER 
+        <if test="ES_ORDER_WORKSHOP != null"> where ES_ORDER_WORKSHOP = #{ES_ORDER_WORKSHOP}</if>
+        <if test="ES_ORDER_STATE != null"> where ES_ORDER_STATE = #{ES_ORDER_STATE}</if>)
+        <![CDATA[where RNUM >= #{startRow} and RNUM <= #{endRow}]]>
 	</select>
 	
 	<select id="esOrderDetail" parameterType="int" resultMap="orderMap">
@@ -176,9 +202,26 @@
 	
 	<select id="esOrderCount" parameterType="java.util.HashMap" resultType="int">
 		select count(*) from ESTIMATE_ORDER where
-		<if test="ES_ORDER_BUYER!=null">and ES_ORDER_BUYER = #{ES_ORDER_BUYER}</if>
-		<if test="ES_ORDER_WORKSHOP!=null">and ES_ORDER_WORKSHOP = #{ES_ORDER_WORKSHOP}</if>
-		<if test="ES_ORDER_STATE!=null">and ES_ORDER_STATE == #{ES_ORDER_STATE}</if>		
+		<if test="ES_ORDER_BUYER!=null">ES_ORDER_BUYER = #{ES_ORDER_BUYER}</if>
+		<if test="ES_ORDER_WORKSHOP!=null">ES_ORDER_WORKSHOP = #{ES_ORDER_WORKSHOP}</if>
+		<if test="ES_ORDER_STATE!=null">and ES_ORDER_STATE = #{ES_ORDER_STATE}</if>		
 	</select>
+    
+    <!--  ///////////////////////  공방 견적 관리 ///////////////////////  -->
+    
+    <select id="workOfferList" parameterType="java.util.HashMap" resultMap="customMap">
+    	select * from (select ROW_NUMBER() OVER (ORDER BY B.OFFER_DATE desc) as RNUM , A.ESTIMATE_NICK, A.ESTIMATE_MEMBER, 
+    	A.ESTIMATE_TITLE, A.ESTIMATE_CATEGORY, B.OFFER_PRICE, B.OFFER_DATE, A.ESTIMATE_STATE, B.OFFER_STATE, A.ESTIMATE_NUM, B.OFFER_NUM 
+    	from ESTIMATE A, (select * from ESTIMATE_OFFER where OFFER_WORKSHOP = #{OFFER_WORKSHOP}) B
+    	where A.ESTIMATE_NUM = B.OFFER_ESTIMATE
+    	<if test="ESTIMATE_STATE!=null">and A.ESTIMATE_STATE = #{ESTIMATE_STATE}</if>
+   		)
+        <![CDATA[where RNUM >= #{startRow} and RNUM <= #{endRow}]]>
+		<if test="ES_CATEGORY == 'title'"> and ESTIMATE_TITLE like '%'||#{ES_SEARCH}||'%'</if>
+		<if test="ES_CATEGORY == 'category'"> and ESTIMATE_CATEGORY like '%'||#{ES_SEARCH}||'%'</if>
+		<if test="ES_CATEGORY == 'nick'"> and ESTIMATE_NICK like '%'||#{ES_SEARCH}||'%'</if>
+		<if test="ES_CATEGORY == 'TandC'"> and (ESTIMATE_TITLE like '%'||#{ES_SEARCH}||'%'
+		or ESTIMATE_CONTENT like '%'||#{ES_SEARCH}||'%')</if>
+    </select>
     
 </mapper>

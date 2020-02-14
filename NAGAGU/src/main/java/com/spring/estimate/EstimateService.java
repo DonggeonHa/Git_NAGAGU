@@ -17,7 +17,7 @@ public interface EstimateService {
 	public EstimateVO estimateDetail(int ESTIMATE_NUM);
 	public ArrayList<EstimateOfferVO> offerList(int ESTIMATE_NUM, int startpage, int endpage, String OFFER_WORKSHOP);
     public EstimateOfferVO offerDetail (int OFFER_NUM);
-	public int offerCount (int ESTIMATE_NUM, String OFFER_WORKSHOP);
+	public int offerCount (HashMap <String, Object> map);
 	public int offerInsert (EstimateOfferVO vo);
 	public int offerModify (EstimateOfferVO vo);
 	public int offerDelete (int ESTIMATE_NUM, int OFFER_NUM);
@@ -26,4 +26,5 @@ public interface EstimateService {
 	public int esOrderInsert (EstimateOrderVO vo);
 	public int esOrderDelete (int ES_ORDER_NUM);
 	public int esOrderCount (HashMap<String, Object> map);
+	public ArrayList<HashMap <String, Object>> workOfferList (HashMap<String, Object> map);
 }

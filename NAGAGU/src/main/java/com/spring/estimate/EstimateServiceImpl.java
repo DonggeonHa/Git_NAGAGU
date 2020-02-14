@@ -13,7 +13,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.spring.mapper.EstimateMapper;
 
-@Service
+@Service("estimateServce")
 public class EstimateServiceImpl implements EstimateService {
 	
 	@Autowired
@@ -151,12 +151,10 @@ public class EstimateServiceImpl implements EstimateService {
 	}
 	
     @Override
-    public int offerCount (int ESTIMATE_NUM, String OFFER_WORKSHOP) {
+    public int offerCount (HashMap <String, Object> map) {
         EstimateMapper mapper = sqlSession.getMapper(EstimateMapper.class);
-		HashMap <String, Object> map = new HashMap <String, Object>();
-		map.put("ESTIMATE_NUM", ESTIMATE_NUM);
-		map.put("OFFER_WORKSHOP", OFFER_WORKSHOP);
-		
+		System.out.println("OFFER_WORKSHOP :: " + map.get("OFFER_WORKSHOP"));
+        
         int cnt = mapper.offerCount(map);
         
         return cnt;
@@ -261,6 +259,8 @@ public class EstimateServiceImpl implements EstimateService {
 		return res;
 	}
 	
+	/* !----- 개인 회원 : 견적 주문 리스트 -----! */
+	
 	@Override
 	public ArrayList<EstimateOrderVO> esOrderList(HashMap<String, Object> map) {
 		EstimateMapper mapper = sqlSession.getMapper(EstimateMapper.class);
@@ -293,4 +293,15 @@ public class EstimateServiceImpl implements EstimateService {
 		return cnt;
 	}
 
+	/* !----- 공방 회원 : 견적 제안 댓글 리스트 -----! */
+	
+	@Override
+	public ArrayList<HashMap <String, Object>> workOfferList (HashMap<String, Object> map) {
+		EstimateMapper mapper = sqlSession.getMapper(EstimateMapper.class);
+		
+		ArrayList<HashMap <String, Object>> woList = mapper.workOfferList(map);
+		System.out.println("woList size : " + woList.size());
+		
+		return woList;
+	}
 }
