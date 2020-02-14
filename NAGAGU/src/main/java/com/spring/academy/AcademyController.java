@@ -44,7 +44,10 @@ public class AcademyController {
 	public ModelAndView ClassList(ClassVO classVO, Model model, HttpServletRequest request, HttpSession session) throws Exception  {
 		ArrayList<ClassVO> classList = new ArrayList<ClassVO>();
 		ModelAndView mav = new ModelAndView();
-		
+		System.out.println("classVO ㅇㅔ서 AREA " + request.getParameter("CLASS_AREA"));
+		System.out.println("classVO ㅇㅔ서 CLASS_CATEGORY " + request.getParameter("CLASS_CATEGORY"));
+		classVO.setCLASS_AREA(request.getParameter("CLASS_AREA"));
+		classVO.setCLASS_CATEGORY(request.getParameter("CLASS_CATEGORY"));
 		/* 네이버아이디로 인증 URL을 생성하기 위하여 naverLoginBO클래스의 getAuthorizationUrl메소드 호출 */
 	    String naverAuthUrl = naverLoginBO.getAuthorizationUrl(session);
 	    System.out.println("네이버:" + naverAuthUrl);
@@ -71,16 +74,18 @@ public class AcademyController {
 		
 
 		String CLASS_CATEGORY = classVO.getCLASS_CATEGORY();
-		String sort = "new";
-		if(request.getParameter("sort") != null) {
-			sort = request.getParameter("sort");
+		String CLASS_AREA = classVO.getCLASS_AREA();
+		
+		if (CLASS_CATEGORY == null) {
+			CLASS_CATEGORY = "all";
+		}
+		if (CLASS_AREA == null) {
+			CLASS_AREA = "지역";
 		}
 		
-		if (CLASS_CATEGORY == null)
-			CLASS_CATEGORY = "all";
 		
+		map.put("CLASS_AREA", CLASS_AREA);
 		map.put("CLASS_CATEGORY", CLASS_CATEGORY);
-		map.put("sort", sort);
 		
 		// addObject view에 넘어가는 데이터
 		classList = academyService.getClassList(map);
@@ -103,7 +108,7 @@ public class AcademyController {
 		mav.addObject("listcount", listcount);
 		mav.addObject("CLASS_CATEGORY", CLASS_CATEGORY);
 		mav.setViewName("Academy/classList");
-		System.out.println(map + "갯수 : " + listcount);
+		System.out.println(map + " 갯수 : " + listcount);
 		
 		return mav;
 	}

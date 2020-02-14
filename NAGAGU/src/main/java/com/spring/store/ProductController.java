@@ -51,8 +51,6 @@ public class ProductController {
         this.naverLoginBO = naverLoginBO;
     }	
 	
-	
-	
 	@RequestMapping(value = "/productcategory.pro")
 	public String productcategory(Model model) {
 		
@@ -118,7 +116,7 @@ public class ProductController {
 		System.out.println(startrow);
 		System.out.println(endrow);
 	
-		int productcount;		
+		int productcount;
 		ArrayList<ProductVO> productList = null;
 		
 		productList = productService.getproductlist(map);			
