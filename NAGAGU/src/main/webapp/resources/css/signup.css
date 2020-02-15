@@ -5,10 +5,6 @@
         }
     }
     
-    .cbody {
-        padding-top: 40px;
-    }
-    
     @media (min-width: 768px) {
         .cbody {
             margin-right: auto;
@@ -28,7 +24,7 @@
             width: calc(100% - 120px);
             max-width: 100%;
             box-sizing: border-box;
-            min-height: 1px
+            min-height: 1px;
         }
     }
     
@@ -39,7 +35,7 @@
             width: 1136px;
             max-width: 100%;
             box-sizing: border-box;
-            min-height: 1px
+            min-height: 1px;
         }
     }
     

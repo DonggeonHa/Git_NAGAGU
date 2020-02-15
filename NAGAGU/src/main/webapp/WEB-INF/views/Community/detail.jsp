@@ -1,10 +1,10 @@
-<%@page import="com.spring.community.PicsCommentDB"%>
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-   pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ page import="java.util.*"%>
 <%@ page import="com.spring.member.MemberVO"%>
 <%@ page import="com.spring.community.PicsVO"%>
+<%@ page import="com.spring.community.PicsCommentDB"%>
+
 <%
 	System.out.println("detail_jsp start");
 	//ArrayList<PicsVO> picsList = (ArrayList<PicsVO>) request.getAttribute("picsList");
@@ -25,207 +25,180 @@
 	}
 %> 
 
-<!DOCTYPE html>
-<html>
-<head>
-<!-- Required meta tags -->
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<meta name="viewport"
-   content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<!-- Bootstrap CSS -->
-<link rel="stylesheet"
-   href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
-   integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh"
-   crossorigin="anonymous">
-
 <style>
-@font-face {
-   font-family: 'KOMACON';
-   src:
-      url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_seven@1.2/KOMACON.woff')
-      format('woff');
-   font-weight: normal;
-   font-style: normal;
-}
-body {
-   font-family: '만화진흥원체', 'KOMACON', KOMACON !important;
-   font-size: 15px;
-}
-img {
-   width: 100%;
-   height: 100%;
-}
-a, a:link, a:hover {
-   text-decoration: none;
-   color: black;;
-}
-.title>div {
-   background-color: ;
-   color: rgba(0, 0, 0, 0.8);
-   font-size: 1rem !important;
-}
-.main>.title {
-   margin-left: 0 !important;
-   margin-right: 0 !important;
-   padding: 0px auto;
-}
-.img-wrap {
-   height: auto;
-}
-.img-wrap p{
-	display: flex;
-}
-.main {
-   width: 70%;
-   height: auto;
-   border-right:1px solid;
-   border-color:rgba(0, 0, 0, 0.1);
-}
-.container{
-	margin-bottom:50px;
-}
-.container-mypage{
-   margin: 50px 0 10px 0 ;
-}
-.sidebar {
-   width: 25%;
-   height: 25vh;
-}
-.sidebar {
-   position: -webkit-sticky;
-   position: sticky;
-   top: 0;
-}
-.sidebar div{
-	align-self: center;
-}
-/* 댓글 */
-.name {
-	font-weight: bold;
-}
-.smallfont {
-	font-size: 0.7em;
-}
-hr {
-	background-color: #EF902E;
-}
-.rep_content {
-	font-size: 1.0em;
-}
-.btn_write {
-	width:37px;
-	padding:3%;
-    border-radius: 4px;
-    border:1px solid orangered;
-    color:orangered;
-    font-size: 14px;
-}
-.comments_table {
-   font-size: 1rem;
-}
-@media ( max-width : 700px) {
-   .comments_table {
-      font-size: 0.7rem;
-   }
-}
-.page-tap{
-	margin-bottom: 10px;
-}
-.page-tap a{
-	color: black;		 	
-}
-.page-tap a:hover{
-	color: #ef900e !important;
-	transform: scale(1.2);
-	text-decoration: none;
-}
-.profile-img img{
-	border-radius: 100px;
-    margin-right: 10px;
-}
-/* follow button */
-.follow_btn{
-	border: none;
-	background: #ef900e;	
-	font-size: 1rem;	 
-	border-radius: 10px;
-	transition:all 0.2s; 
-	box-shadow: 0px 3px rgba(239,144,14,0.5); 	 
-	color: white;
-}
-.follow_btn:active, .delete-btn:active, .update-btn:active{		
-		transform: translateY(3px);
-}
- *:focus { 
- 	outline:none !important; 
-}
-/* follow button end*/
- .member_upload_img div img{
-   width: 145px;
-   height: 145px;
-   border-radius: 7px;
-}	
-.member_upload_img div{
-  padding: 0 ;
-}	
-.member_upload_img{   
- 
-  padding-left: 15px;
-}
-h6{
-margin:0 auto !important;
-}
-textarea{
-	width:80%;
-}
-.comments_table input{
-	background-color: rgba(255,255,255,1) !important;
-	border: 0px;
-}
-#output img{
-	border-radius:100px; 
-}
-.reply_line *, .re_reply_line *{
-	word-wrap: break-word;
-}
-.reply_line{
-	border-top: 1px solid rgba(0, 0, 0, 0.1);
-	padding-top: 15px ;
-}
-.re_reply_line{
-	padding-top: 15px;
-	padding-bottom: 15px;
-} 
-#insert_form{
-	height:150px;
-	margin-bottom: 20px;
-}
-textarea{
-	height: 100px;
-}
-#input_data_jsp{
-	background-color: rgba(0, 0, 0, 0);
-	border: 0px solid;  
-}
-.heart-wrap{
-	padding-bottom:5px;
-	padding-left:10px;	   
-}
-.main-content a, .main-content a:link, .main-content a:hover {
-	text-decoration: none;
-	color: black;
-}
-.page-tap{ 
-	align-self: center;
-	margin-bottom: 0px !important;
-}
-	</style>
-<title>Mypage</title>
-</head>
-<body>
-   <div class="container container-mypage category_cm main-content">
+	img {
+	   width: 100%;
+	   height: 100%;
+	}
+	a, a:link, a:hover {
+	   text-decoration: none;
+	   color: black;;
+	}
+	.title>div {
+	   background-color: ;
+	   color: rgba(0, 0, 0, 0.8);
+	   font-size: 1rem !important;
+	}
+	.main>.title {
+	   margin-left: 0 !important;
+	   margin-right: 0 !important;
+	   padding: 0px auto;
+	}
+	.img-wrap {
+	   height: auto;
+	}
+	.img-wrap p{
+		display: flex;
+	}
+ 	.detailmain { 
+  	   width: 70%;  
+  	   height: auto;  
+ 	   border-right:1px solid; 
+ 	   border-color:rgba(0, 0, 0, 0.1); 
+ 	} 
+/* 	.container{ */
+/* 		margin-bottom:50px; */
+/* 	} */
+	.container-mypage{
+	   margin: 50px 0 10px 0 ;
+	}
+	.sidebar {
+	   width: 25%;
+	   height: 25vh;
+	}
+	.sidebar {
+	   position: -webkit-sticky;
+	   position: sticky;
+	   top: 0;
+	}
+	.sidebar div{
+		align-self: center;
+	}
+	/* 댓글 */
+	.name {
+		font-weight: bold;
+	}
+	.smallfont {
+		font-size: 0.7em;
+	}
+	hr {
+		background-color: #EF902E;
+	}
+	.rep_content {
+		font-size: 1.0em;
+	}
+	.btn_write {
+		width:37px;
+		padding:3%;
+	    border-radius: 4px;
+	    border:1px solid orangered;
+	    color:orangered;
+	    font-size: 14px;
+	}
+	.comments_table {
+	   font-size: 1rem;
+	}
+	@media ( max-width : 700px) {
+	   .comments_table {
+	      font-size: 0.7rem;
+	   }
+	}
+	.page-tap{
+		margin-bottom: 10px;
+	}
+	.page-tap a{
+		color: black;		 	
+	}
+	.page-tap a:hover{
+		color: #ef900e !important;
+		transform: scale(1.2);
+		text-decoration: none;
+	}
+	.profile-img img{
+		border-radius: 100px;
+	    margin-right: 10px;
+	}
+	/* follow button */
+	.follow_btn{
+		border: none;
+		background: #ef900e;	
+		font-size: 1rem;	 
+		border-radius: 10px;
+		transition:all 0.2s; 
+		box-shadow: 0px 3px rgba(239,144,14,0.5); 	 
+		color: white;
+	}
+	.follow_btn:active, .delete-btn:active, .update-btn:active{		
+			transform: translateY(3px);
+	}
+	 *:focus { 
+	 	outline:none !important; 
+	}
+	/* follow button end*/
+	 .member_upload_img div img{
+	   width: 145px;
+	   height: 145px;
+	   border-radius: 7px;
+	}	
+	.member_upload_img div{
+	  padding: 0 ;
+	}	
+	.member_upload_img{   
+	 
+	  padding-left: 15px;
+	}
+	h6{
+	margin:0 auto !important;
+	}
+	textarea{
+		width:80%;
+	}
+	.comments_table input{
+		background-color: rgba(255,255,255,1) !important;
+		border: 0px;
+	}
+	#output img{
+		border-radius:100px; 
+	}
+	.reply_line *, .re_reply_line *{
+		word-wrap: break-word;
+	}
+	.reply_line{
+		border-top: 1px solid rgba(0, 0, 0, 0.1);
+		padding-top: 15px ;
+	}
+	.re_reply_line{
+		padding-top: 15px;
+		padding-bottom: 15px;
+	} 
+	#insert_form{
+		height:150px;
+		margin-bottom: 20px;
+	}
+	textarea{
+		height: 100px;
+	}
+	#input_data_jsp{
+		background-color: rgba(0, 0, 0, 0);
+		border: 0px solid;  
+	}
+	.heart-wrap{
+		padding-bottom:5px;
+		padding-left:10px;	   
+	}
+	.main-content a, .main-content a:link, .main-content a:hover {
+		text-decoration: none;
+		color: black;
+	}
+	.page-tap{ 
+		align-self: center;
+		margin-bottom: 0px !important;
+	}
+</style>
+
+   <div class="container">
       <div class="wrapper row justify-content-between">
-         <div class="main">
+         <div class="detailmain">
             <div class="row justify-content-between title"> 
                <div class="col-9 page-tap">  
                   <div>
@@ -342,21 +315,8 @@ textarea{
 		</div>
 	</div>
    <!-- container end -->
-   <!-- jQuery first, then Popper.js, then Bootstrap JS -->
-	<!-- jquery -->
-	<script src="https://code.jquery.com/jquery-3.4.1.js"
-		integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU="
-		crossorigin="anonymous"></script>
-   <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
-      integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
-      crossorigin="anonymous"></script>
-   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
-      integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
-      crossorigin="anonymous"></script>
-      <!-- fontawesome kit -->
-	<script src="https://kit.fontawesome.com/97dbc99ea1.js" crossorigin="anonymous"></script>
-	<script type="text/javascript" charset="utf-8">
-	
+   
+<script type="text/javascript" charset="utf-8">
 	$('.delete-btn').on('click',function(){
 		if(confirm('정말 삭제하시겠습니까?')){
 			var url = '${pageContext.request.contextPath}/community_delete.cm'
@@ -446,6 +406,7 @@ textarea{
 				}
 			});
 		}
+		
 		//클릭하면  대댓글 보이기
 		$(document).on('click','.show_re_reply',function(event){
 			var num = $(this).attr('num')
@@ -470,143 +431,143 @@ textarea{
 			$('.reply'+num).after(output);
 		}) 
  
-	//대댓글 입력
-	$(document).on('click','#input_data',function(event){
-		var params=$("#re_insert_form").serialize();
-		params += '&PICS_RE_PICS='+<%=picsVO.getPICS_NUM()%>;
-		params += '&PICS_RE_MEMBER='+<%=MEMBER_NUM%>
-		console.log(params)
-		jQuery.ajax({
-			url: '/NAGAGU/insertComment.cm',
-			type: 'POST',
-			data: params,
-			contentType:
-				'application/x-www-form-urlencoded; charset=utf-8',
-			datatype: 'json', 
-			success: function(retVal){
-				if(retVal.res=="OK"){
-					$('#text').val('');
-				}else{
-					alert("insert fail");
+		//대댓글 입력
+		$(document).on('click','#input_data',function(event){
+			var params=$("#re_insert_form").serialize();
+			params += '&PICS_RE_PICS='+<%=picsVO.getPICS_NUM()%>;
+			params += '&PICS_RE_MEMBER='+<%=MEMBER_NUM%>
+			console.log(params)
+			jQuery.ajax({
+				url: '/NAGAGU/insertComment.cm',
+				type: 'POST',
+				data: params,
+				contentType:
+					'application/x-www-form-urlencoded; charset=utf-8',
+				datatype: 'json', 
+				success: function(retVal){
+					if(retVal.res=="OK"){
+						$('#text').val('');
+					}else{
+						alert("insert fail");
+					}
+				},
+				error:function(){
+					alert("ajax통신 실패!!");
 				}
-			},
-			error:function(){
-				alert("ajax통신 실패!!");
-			}
-			
+				
+			});
+			event.preventDefault();
+			select($(this).attr('num'));
 		});
-		event.preventDefault();
-		select($(this).attr('num'));
-	});
-	//댓글 입력
-	$(document).on('click','#input_data_jsp',function(event){
-		var params=$("#insert_form").serialize();
-		params += '&PICS_RE_PICS='+<%=picsVO.getPICS_NUM()%>;
-		params += '&PICS_RE_MEMBER='+<%=MEMBER_NUM%>
-		console.log(params)
-		jQuery.ajax({
-			url: '/NAGAGU/insertComment.cm',
-			type: 'POST',
-			data: params,
-			contentType:
-				'application/x-www-form-urlencoded; charset=utf-8',
-			datatype: 'json', 
-			success: function(retVal){
-				if(retVal.res=="OK"){
-					$('#text').val('');
-				}else{
-					alert("insert fail");
+		//댓글 입력
+		$(document).on('click','#input_data_jsp',function(event){
+			var params=$("#insert_form").serialize();
+			params += '&PICS_RE_PICS='+<%=picsVO.getPICS_NUM()%>;
+			params += '&PICS_RE_MEMBER='+<%=MEMBER_NUM%>
+			console.log(params)
+			jQuery.ajax({
+				url: '/NAGAGU/insertComment.cm',
+				type: 'POST',
+				data: params,
+				contentType:
+					'application/x-www-form-urlencoded; charset=utf-8',
+				datatype: 'json', 
+				success: function(retVal){
+					if(retVal.res=="OK"){
+						$('#text').val('');
+					}else{
+						alert("insert fail");
+					}
+				},
+				error:function(){
+					alert("ajax통신 실패!!");
 				}
-			},
-			error:function(){
-				alert("ajax통신 실패!!");
-			}
+			});
+			event.preventDefault();
+			select();
 		});
-		event.preventDefault();
+	
+		//삭제
+		$(document).on('click','#deleteForm',function(event){
+			if (!confirm("삭제하시겠습니까?")) {
+				return;
+			} 
+			var delNum = $(event.target).attr('num')
+			console.log(delNum);
+			jQuery.ajax({
+				url: '/NAGAGU/deleteComment.cm',
+				type: 'POST',
+				data: {'delNum': delNum},
+				contentType: 'application/x-www-form-urlencoded; charset=utf-8',
+				dataType: 'json',
+				success: function(retVal){
+					alert("AAAAA");
+					if(retVal.res == "OK"){
+						select();
+					}
+					else{
+						alert("Delete Fail!!!");
+					}
+				},
+				error:function(){
+					alert("ajax통신 실패!!");
+				}
+			});
+			event.preventDefault();
+		}); 
+		//수정 버튼 누르면 입력창으로 바뀜
+		$(document).on('click','.update_form',function(event){
+				var num= $(this).attr("num");
+				var text= $(this).attr("text");
+				var output="";
+				output += '<form class="update_form" id="update_form'+num+'">';
+				output += '<div><textarea name="PICS_RE_CONTENT" id="text">';
+				output += text;
+				output += '</textarea></div>';
+				output += '<span style="font-size: 9pt">';
+				output += '<td><a href="#" class="update_apply" num='+num+'>저장&nbsp';	//입력 받지 않는 값
+				output += '<input type="hidden" name="PICS_RE_NUM" value="'+num+'"></a>';
+				output += '<td><a href="#" class="update_cancle">취소</a></td>';
+				output += '</span>';		
+				output += '</form>';
+				$('#commentNum'+num).html(output);
+			});
+		//취소
+		$(document).on('click','.update_cancle',function(){
+			select();
+		})
+		//수정 적용
+		$(document).on('click','.update_apply',function(event){
+			var num= $(this).attr("num"); 
+			var params=$("#update_form"+num).serialize();
+			alert(params);
+			jQuery.ajax({
+				url: '/NAGAGU/updateComment.cm',
+				type: 'POST',
+				data: params,
+				contentType:
+					'application/x-www-form-urlencoded; charset=utf-8',
+				success: function(retVal){
+					if(retVal.res=="OK"){
+						select();
+						$('#text').val('');
+					}else{
+						alert("update fail");
+					}
+				},
+				error:function(){
+					alert("ajax통신 실패!!");
+				}
+				
+			});
+			event.preventDefault();
+		})
+		//a태그 이동방지()
+		$(document).on('click', 'a[href="#"]', function(e){
+			e.preventDefault();
+		});
 		select();
 	});
-
-	//삭제
-	$(document).on('click','#deleteForm',function(event){
-		if (!confirm("삭제하시겠습니까?")) {
-			return;
-		} 
-		var delNum = $(event.target).attr('num')
-		console.log(delNum);
-		jQuery.ajax({
-			url: '/NAGAGU/deleteComment.cm',
-			type: 'POST',
-			data: {'delNum': delNum},
-			contentType: 'application/x-www-form-urlencoded; charset=utf-8',
-			dataType: 'json',
-			success: function(retVal){
-				alert("AAAAA");
-				if(retVal.res == "OK"){
-					select();
-				}
-				else{
-					alert("Delete Fail!!!");
-				}
-			},
-			error:function(){
-				alert("ajax통신 실패!!");
-			}
-		});
-		event.preventDefault();
-	}); 
-	//수정 버튼 누르면 입력창으로 바뀜
-	$(document).on('click','.update_form',function(event){
-			var num= $(this).attr("num");
-			var text= $(this).attr("text");
-			var output="";
-			output += '<form class="update_form" id="update_form'+num+'">';
-			output += '<div><textarea name="PICS_RE_CONTENT" id="text">';
-			output += text;
-			output += '</textarea></div>';
-			output += '<span style="font-size: 9pt">';
-			output += '<td><a href="#" class="update_apply" num='+num+'>저장&nbsp';	//입력 받지 않는 값
-			output += '<input type="hidden" name="PICS_RE_NUM" value="'+num+'"></a>';
-			output += '<td><a href="#" class="update_cancle">취소</a></td>';
-			output += '</span>';		
-			output += '</form>';
-			$('#commentNum'+num).html(output);
-		});
-	//취소
-	$(document).on('click','.update_cancle',function(){
-		select();
-	})
-	//수정 적용
-	$(document).on('click','.update_apply',function(event){
-		var num= $(this).attr("num"); 
-		var params=$("#update_form"+num).serialize();
-		alert(params);
-		jQuery.ajax({
-			url: '/NAGAGU/updateComment.cm',
-			type: 'POST',
-			data: params,
-			contentType:
-				'application/x-www-form-urlencoded; charset=utf-8',
-			success: function(retVal){
-				if(retVal.res=="OK"){
-					select();
-					$('#text').val('');
-				}else{
-					alert("update fail");
-				}
-			},
-			error:function(){
-				alert("ajax통신 실패!!");
-			}
-			
-		});
-		event.preventDefault();
-	})
-	//a태그 이동방지()
-	$(document).on('click', 'a[href="#"]', function(e){
-		e.preventDefault();
-	});
-	select();
-});
 	//유효성 검사
 	function insertCommentSubmit(){
 		var commentForm = document.commentForm;
@@ -629,147 +590,109 @@ textarea{
 		commentForm.submit();	
 	}
 	//팔로우
-		$(document).ready(function(){
-		//처음 로드할때 팔로우 한 멤버 팔로우 버튼 바꿔주기~
-		function follow_check(){
-			var	fromNum = '<%=MEMBER_NUM%>';
-			if(fromNum == 0){
+	$(document).ready(function(){
+	//처음 로드할때 팔로우 한 멤버 팔로우 버튼 바꿔주기~
+	function follow_check(){
+		var	fromNum = '<%=MEMBER_NUM%>';
+		if(fromNum == 0){
+			return
+		}
+		$.ajax({
+			url: "/NAGAGU/getFollowMembers.cm",
+	              type: "POST",
+	              data: { 'fromNum' : fromNum},
+	              datatype: 'json',
+	              contentType:
+	  				'application/x-www-form-urlencoded; charset=utf-8',
+	              success: function (retVal) {
+	            	if(retVal.res=="OK"){ 
+	            		//내가 팔로우 한 리스트 받아와서 일치하는 항목 찾기
+	            		console.log(retVal.followMembers)
+	            		var a = retVal.followMembers
+	            		for(var j=0; j<retVal.followMembers.length; j++){
+			        		var toNum = retVal.followMembers[j].member_NUM
+	        				$('.flw_btn'+toNum).text('following');
+	      	        		$('.flw_btn'+toNum).addClass('flw_btn_active')
+	        			}
+	      			}else{
+	      				alert("update fail");
+	      			} 
+	              },
+		error:function(){
+			alert("ajax통신 실패!!");
+		}
+		})
+	}
+	follow_check()
+
+
+	//팔로우 버튼 누르기
+	 $(document).on("click",".follow_btn",function (){
+		 var toNum = this.id
+		 var fromNum = '<%=MEMBER_NUM%>';
+		 if(fromNum==0){ 
+			alert('로그인 하세요') 
+			return				
+		 }
+		 if(fromNum==toNum){
+			alert('본인이네요') 
+			return				
+		 } 
+			 
+		$.ajax({
+		url: "/NAGAGU/followAction.cm",
+             type: "POST",
+             data: { 'fromNum' : fromNum , 'toNum' : toNum},
+             contentType:
+ 				'application/x-www-form-urlencoded; charset=utf-8',
+             success: function (retVal) {
+		        if(retVal.res=="OK"){
+		        	if(retVal.cnt==0){
+		        		//팔로우 추가 하면 (멤버 넘버가 올리 사진들 모두 값 바꿔준다)
+		        		$('.flw_btn'+toNum).text('following');
+		        		$('.flw_btn'+toNum).addClass('flw_btn_active')
+		        	}else{
+		        		//팔로우 끊으면
+		        		$('.flw_btn'+toNum).text('follow');
+		        		$('.flw_btn'+toNum).removeClass('flw_btn_active')
+		        	}
+					alert("성공");
+				}else{
+					alert("update fail");
+				} 
+			},
+		error:function(){
+			alert("ajax통신 실패!!");
+		}
+		})
+			event.preventDefault();
+		})
+
+	});
+
+	//좋아요 기능
+	$(document).ready(function(){
+		//처음 로드되고 로그인 사용자가 누른글 하트는 검게 바꿔줌
+		function heart_check(){
+			var	loginNum = '<%=MEMBER_NUM%>';
+			if(loginNum == 0){
 				return
 			}
+			var category = 'like_pic'
 			$.ajax({
-				url: "/NAGAGU/getFollowMembers.cm",
+				url: "/NAGAGU/loginMemberLikePics.cm",
 		              type: "POST",
-		              data: { 'fromNum' : fromNum},
+		              data: { 'category' : category},
 		              datatype: 'json',
 		              contentType:
 		  				'application/x-www-form-urlencoded; charset=utf-8',
 		              success: function (retVal) {
-		            	if(retVal.res=="OK"){ 
-		            		//내가 팔로우 한 리스트 받아와서 일치하는 항목 찾기
-		            		console.log(retVal.followMembers)
-		            		var a = retVal.followMembers
-		            		for(var j=0; j<retVal.followMembers.length; j++){
-				        		var toNum = retVal.followMembers[j].member_NUM
-		        				$('.flw_btn'+toNum).text('following');
-		      	        		$('.flw_btn'+toNum).addClass('flw_btn_active')
-		        			}
-		      			}else{
-		      				alert("update fail");
-		      			} 
-		              },
-			error:function(){
-				alert("ajax통신 실패!!");
-			}
-			})
-		}
-		follow_check()
-	
-	
-		//팔로우 버튼 누르기
-		 $(document).on("click",".follow_btn",function (){
-			 var toNum = this.id
-			 var fromNum = '<%=MEMBER_NUM%>';
-			 if(fromNum==0){ 
-				alert('로그인 하세요') 
-				return				
-			 }
-			 if(fromNum==toNum){
-				alert('본인이네요') 
-				return				
-			 } 
-				 
-			$.ajax({
-			url: "/NAGAGU/followAction.cm",
-	             type: "POST",
-	             data: { 'fromNum' : fromNum , 'toNum' : toNum},
-	             contentType:
-	 				'application/x-www-form-urlencoded; charset=utf-8',
-	             success: function (retVal) {
-			        if(retVal.res=="OK"){
-			        	if(retVal.cnt==0){
-			        		//팔로우 추가 하면 (멤버 넘버가 올리 사진들 모두 값 바꿔준다)
-			        		$('.flw_btn'+toNum).text('following');
-			        		$('.flw_btn'+toNum).addClass('flw_btn_active')
-			        	}else{
-			        		//팔로우 끊으면
-			        		$('.flw_btn'+toNum).text('follow');
-			        		$('.flw_btn'+toNum).removeClass('flw_btn_active')
-			        	}
-						alert("성공");
-					}else{
-						alert("update fail");
-					} 
-				},
-			error:function(){
-				alert("ajax통신 실패!!");
-			}
-			})
-				event.preventDefault();
-			})
-	
-		});
-	
-		//좋아요 기능
-		$(document).ready(function(){
-			//처음 로드되고 로그인 사용자가 누른글 하트는 검게 바꿔줌
-			function heart_check(){
-				var	loginNum = '<%=MEMBER_NUM%>';
-				if(loginNum == 0){
-					return
-				}
-				var category = 'like_pic'
-				$.ajax({
-					url: "/NAGAGU/loginMemberLikePics.cm",
-			              type: "POST",
-			              data: { 'category' : category},
-			              datatype: 'json',
-			              contentType:
-			  				'application/x-www-form-urlencoded; charset=utf-8',
-			              success: function (retVal) {
-					        if(retVal.res=="OK"){
-					        	for(var j=0; j<retVal.PicsNum.length; j++){
-					        		var num = retVal.PicsNum[j].pics_NUM
-			        				var target =$('#heart_output'+num) 
-			        				$(target).children().removeClass('far').addClass('fas')
-			        			}
-							}else{
-								alert("update fail");
-							} 
-						},
-				error:function(){
-					alert("ajax통신 실패!!");
-				}
-				})
-			}
-			heart_check()
-		  //좋아요 누르는 기능
-		  $(document).on("click","#far",function getLike(){
-		    var	MEMBER_NUM = '<%=MEMBER_NUM%>';
-			if(MEMBER_NUM==0){
-				alert('로그인 하세요') 
-				return				
-			} 
-			var category = 'like_pic'
-			var PICS_NUM = $(this).parent().parent().attr('value');
-			console.log(this)
-				$.ajax({
-				url: "/NAGAGU/insertPicsLike.cm",
-		              type: "POST",
-		              data: { 'category' : category , 'PICS_NUM' : PICS_NUM},
-		              contentType:
-		  				'application/x-www-form-urlencoded; charset=utf-8',
-		              success: function (retVal) {
 				        if(retVal.res=="OK"){
-				        	console.log(retVal.cnt)
-				        	var output="";
-								output += '<span class="button likeBtn" id="heart_output'+PICS_NUM+'">'
-							if(retVal.cnt=='1'){
-								output += '<i class="far fa-heart fa-2x" id="far"></i>'	
-							}else{
-								output += '<i class="fas fa-heart fa-2x" id="far"></i>'
-							}
-								output += '</span>'+retVal.picsLikeCount+''
-				        	$('#heart_output'+PICS_NUM).parent().html(output);
+				        	for(var j=0; j<retVal.PicsNum.length; j++){
+				        		var num = retVal.PicsNum[j].pics_NUM
+		        				var target =$('#heart_output'+num) 
+		        				$(target).children().removeClass('far').addClass('fas')
+		        			}
 						}else{
 							alert("update fail");
 						} 
@@ -778,18 +701,51 @@ textarea{
 				alert("ajax통신 실패!!");
 			}
 			})
-				event.preventDefault();
-		  });
-			
-			
-			//이미지관련
-			$('.img-wrap').children().children().find('img').removeAttr("style").css('width','95%')
-			$('img').addClass('img-responsive');
-			
-		});
-	</script>
-
-
-	
-</body>
-</html>
+		}
+		heart_check()
+	  //좋아요 누르는 기능
+	  $(document).on("click","#far",function getLike(){
+	    var	MEMBER_NUM = '<%=MEMBER_NUM%>';
+		if(MEMBER_NUM==0){
+			alert('로그인 하세요') 
+			return				
+		} 
+		var category = 'like_pic'
+		var PICS_NUM = $(this).parent().parent().attr('value');
+		console.log(this)
+			$.ajax({
+			url: "/NAGAGU/insertPicsLike.cm",
+	              type: "POST",
+	              data: { 'category' : category , 'PICS_NUM' : PICS_NUM},
+	              contentType:
+	  				'application/x-www-form-urlencoded; charset=utf-8',
+	              success: function (retVal) {
+			        if(retVal.res=="OK"){
+			        	console.log(retVal.cnt)
+			        	var output="";
+							output += '<span class="button likeBtn" id="heart_output'+PICS_NUM+'">'
+						if(retVal.cnt=='1'){
+							output += '<i class="far fa-heart fa-2x" id="far"></i>'	
+						}else{
+							output += '<i class="fas fa-heart fa-2x" id="far"></i>'
+						}
+							output += '</span>'+retVal.picsLikeCount+''
+			        	$('#heart_output'+PICS_NUM).parent().html(output);
+					}else{
+						alert("update fail");
+					} 
+				},
+		error:function(){
+			alert("ajax통신 실패!!");
+		}
+		})
+			event.preventDefault();
+	  });
+		
+		
+		//이미지관련
+		$('.img-wrap').children().children().find('img').removeAttr("style").css('width','95%')
+		$('img').addClass('img-responsive');
+		
+	});
+</script>

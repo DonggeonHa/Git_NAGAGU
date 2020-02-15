@@ -265,7 +265,7 @@
  	<!-- 견적관리 -->
  	<select id="getEstimate" parameterType="int" resultMap="estimateMap"> <!-- 이거 처리한 결과물을 list 타입으로 만들어주면 된다. select id은 내용을 호출 함. -->
 		select *
-		from (select rownum rnum, ESTIMATE_NUM, ESTIMATE_MEMBER, ESTIMATE_NICK, ESTIMATE_TITLE, ESTIMATE_CATEGORY, ESTIMATE_MINPRICE, ESTIMATE_OFFERCOUNT, ESTIMATE_STATE
+		from (select rownum rnum, ESTIMATE_NUM, ESTIMATE_MEMBER, ESTIMATE_NICK, ESTIMATE_TITLE, ESTIMATE_CATEGORY, ESTIMATE_AVG, ESTIMATE_OFFERCOUNT, ESTIMATE_STATE
 			  from(select * 
 			  	   from ESTIMATE
 			  	   order by ESTIMATE_DATE ASC , ESTIMATE_NUM ASC))

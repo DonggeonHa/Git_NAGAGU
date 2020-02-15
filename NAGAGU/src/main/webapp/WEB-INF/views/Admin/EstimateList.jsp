@@ -51,7 +51,7 @@
 				title += '<th style="width: 22%;">글쓴이(이메일)</th>';
 				title += '<th style="width: 24%;">제목</th>';
 				title += '<th style="width: 10%;">카테고리</th>';
-				title += '<th style="width: 10%;">최저입찰가</th>';
+				title += '<th style="width: 10%;">평균입찰가</th>';
 				title += '<th style="width: 12%;">입찰한 업체수</th>';
 				title += '<th style="width: 12%;">상태</th>';
 				title += '<th style="width: 5%;">관리</th>';
@@ -94,7 +94,7 @@
 	        	        break;  
 	 				}
 					
-					output += '<td>' + item.estimate_MINPRICE + '</td>';
+					output += '<td>' + item.estimate_AVG + '</td>';
 					output += '<td>' + item.estimate_OFFERCOUNT + '</td>';
 					
 					if (item.estimate_STATE == 0) {

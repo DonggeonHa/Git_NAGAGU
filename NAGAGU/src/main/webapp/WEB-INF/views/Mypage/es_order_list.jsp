@@ -1,5 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ page import="java.util.*" %>
 <%@ page import="com.spring.estimate.EstimateOrderVO" %>
 <%@ page import ="java.text.SimpleDateFormat" %>
@@ -19,348 +18,330 @@
  		esCount[i] = (int)request.getAttribute("esCount"+i);
 	}
 %>
-<!DOCTYPE html>
-<html>
-	<head>
-		<meta charset="UTF-8">
-		<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-		<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.2/animate.css">
-        <link rel="stylesheet" href="../css/order_list.css">
-		<style>
-			@font-face {
-				font-family: 'KOMACON';
-				src:
-					url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_seven@1.2/KOMACON.woff')
-					format('woff');
-				font-weight: normal;
-				font-style: normal;
-			}
-            
-            img {
-            	max-width:100%;
-            }
-            
-			.order-body {
-				font-family: '만화진흥원체', 'KOMACON', KOMACON;
-				font-size: 15px;
-            }
-            
-            /* ----------------------------------------------------------- */
-            
-			.container-mypage{
-				margin-top: 50px ;
-				margin-bottom: 50px ;				 
-			}			
-			.container-mypage a,.container-mypage  a:link,.container-mypage  a:hover {
-				text-decoration: none;
-				color: white !important;
-			} 
-			
-            .card-hover:hover {
-				transition: 1s;
-				transform: scale(1.2);
-				z-index: 1;
-				box-shadow: 10px 15px 7px 0px #333333;
-			}
-			
-			.card {
-				background-color: #1b1b27 !important;
-				margin: 15px 15px 15px 15px;
-				color: white;
-			}
-			.my {
-				background-color: #ef900e !important;
-			}
-			
-			.card-wrap{
-				justify-content: center;
-				padding-left:50px; 
-			}
-			
-			@media screen and (max-width: 600px) {
-				.card {
-					width: 2.5rem;
-					font-size: 0.1rem;
-					margin: 2px 2px 2px 2px;
-				}
-				.card-header, .card-body, .card-footer {
-					padding: 1px !important; 
-				}
-				.card-wrap{
-					justify-content: start;
-					padding-left: 20px; 
-				} 
-			}
-			@media screen and (min-width: 600px) {
-				.card {
-					width: 4rem;
-					font-size: 0.3rem;
-					margin: 2px 2px 2px 2px;
-				}
-				.card-header, .card-body, .card-footer {
-					padding: 4px !important; 
-				}
-			}
-			@media screen and (min-width: 992px) {
-				.card {
-					width: 6rem;
-					font-size: 0.6rem;
-					margin: 2px 2px 2px 2px;
-				}
-				.card-header, .card-body, .card-footer {
-					padding: 10px !important; 
-				}
-			}
-			@media ( min-width : 1200px) {
-				.card {
-					width: 8rem !important;  
-					font-size: 0.7rem; 
-				}
-				.card-header, .card-body, .card-footer {
-					padding: 18px !important;  
-				}
-			} 
-			
-			.tab-pane .col-4 {
-				padding-bottom: 50px;
-			}
-			li>.active {
-				background-color: #1b1b27 !important;
-				color: white !important;
-			}
-			.tab-content .tab-pane.active {
-				display: flex;
-			}
-			.nav-item a {
-				color: black;
-			}
-			img {
-			width: 100%;
-			height: auto;
-			}
-			.picOutput{
-				padding-left: 0px !important;
-			}
-			.tab-content{
-				min-height:38vh;
-			}
-			.tab-content img{
-				max-height:200px;
-			}
-            
-            /* ----------------------------------------------------------- */
-            
-            .container {
-            	margin-top:30px;
-            }
-            
-			.thumbImg {
-				width:256px;
-				height:256px;
-				overflow:hidden;
-				display:block;
-				margin-right:10px;
-			}
-			
-			.thumbImg img {
-				display:block;
-				min-height:100%;
-				min-width:100%;
-				-ms-interpolation-mode: bicubic;
-			}
-			
-			.eo_tab {
-				width:100px;
-			}
-			
-			.eo_tab .btn {
-				width:100%;
-				font-size:0.8rem;
-				margin-bottom:5px;
-			}
-			
-	        .no_list {   
-	            text-align:center;
-	            font-size:1.5rem;
-	            line-height:250px;
-	            width:100%;
-	            height:250px;
-	        }
-	            
-		</style>
-	</head>
-	<body class="order-body">
-			
-			<div class="container-mypage " role="main">
-				<div class="row card-wrap  text-center">
-					<div class="card card-hover">
-						<a href="mypage_like.my" class="href">
-							<div class="card-header">Like</div>
-							<div class="card-body">
-								<i class="fab fa-gratipay fa-4x"></i>
-							</div>
-						</a>
-					</div>
+      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.2/animate.css">
+      <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/order_list.css">
+<style>
+          img {
+          	max-width:100%;
+          }
+          
+	.order-body {
+		font-family: '만화진흥원체', 'KOMACON', KOMACON;
+		font-size: 15px;
+          }
+          
+          /* ----------------------------------------------------------- */
+          
+	.container-mypage{
+		margin-top: 50px ;
+		margin-bottom: 50px ;				 
+	}			
+	.container-mypage a,.container-mypage  a:link,.container-mypage  a:hover {
+		text-decoration: none;
+		color: white !important;
+	} 
 	
-					<div class="card card-hover">
-						<a href="mypage_pic.my" class="href">
-							<div class="card-header">COMMUNITY</div>
-							<div class="card-body">
-								<i class="fas fa-images fa-4x"></i>
-							</div>
-						</a>
-					</div>
+          .card-hover:hover {
+		transition: 1s;
+		transform: scale(1.2);
+		z-index: 1;
+		box-shadow: 10px 15px 7px 0px #333333;
+	}
 	
-					<div class=" card card-hover">
-						<a href="mypage_edit.my" class="href">
-							<div class="card-header">EDIT</div>
-							<div class="card-body">
-								<i class="fas fa-user-edit fa-4x"></i>
-							</div>
-						</a>
-					</div>
-					<div class="card card-hover">
-						<a href="mypage_class.my" class="href">
-							<div class="card-header">CLASS</div>
-							<div class="card-body">
-								<i class="fas fa-school fa-4x"></i>
-							</div>
-						</a>
-					</div>
+	.card {
+		background-color: #1b1b27 !important;
+		margin: 15px 15px 15px 15px;
+		color: white;
+	}
+	.my {
+		background-color: #ef900e !important;
+	}
 	
-					<div class="card my">
-						<div class="card-header">MY</div>
-						<div class="card-body">
-							<i class="far fa-user-circle fa-4x"></i>
-						</div>
+	.card-wrap{
+		justify-content: center;
+		padding-left:50px; 
+	}
+	
+	@media screen and (max-width: 600px) {
+		.card {
+			width: 2.5rem;
+			font-size: 0.1rem;
+			margin: 2px 2px 2px 2px;
+		}
+		.card-header, .card-body, .card-footer {
+			padding: 1px !important; 
+		}
+		.card-wrap{
+			justify-content: start;
+			padding-left: 20px; 
+		} 
+	}
+	@media screen and (min-width: 600px) {
+		.card {
+			width: 4rem;
+			font-size: 0.3rem;
+			margin: 2px 2px 2px 2px;
+		}
+		.card-header, .card-body, .card-footer {
+			padding: 4px !important; 
+		}
+	}
+	@media screen and (min-width: 992px) {
+		.card {
+			width: 6rem;
+			font-size: 0.6rem;
+			margin: 2px 2px 2px 2px;
+		}
+		.card-header, .card-body, .card-footer {
+			padding: 10px !important; 
+		}
+	}
+	@media ( min-width : 1200px) {
+		.card {
+			width: 8rem !important;  
+			font-size: 0.7rem; 
+		}
+		.card-header, .card-body, .card-footer {
+			padding: 18px !important;  
+		}
+	} 
+	
+	.tab-pane .col-4 {
+		padding-bottom: 50px;
+	}
+	li>.active {
+		background-color: #1b1b27 !important;
+		color: white !important;
+	}
+	.tab-content .tab-pane.active {
+		display: flex;
+	}
+	.nav-item a {
+		color: black;
+	}
+	img {
+	width: 100%;
+	height: auto;
+	}
+	.picOutput{
+		padding-left: 0px !important;
+	}
+	.tab-content{
+		min-height:38vh;
+	}
+	.tab-content img{
+		max-height:200px;
+	}
+          
+          /* ----------------------------------------------------------- */
+          
+          .container {
+          	margin-top:30px;
+          }
+          
+	.thumbImg {
+		width:256px;
+		height:256px;
+		overflow:hidden;
+		display:block;
+		margin-right:10px;
+	}
+	
+	.thumbImg img {
+		display:block;
+		min-height:100%;
+		min-width:100%;
+		-ms-interpolation-mode: bicubic;
+	}
+	
+	.eo_tab {
+		width:100px;
+	}
+	
+	.eo_tab .btn {
+		width:100%;
+		font-size:0.8rem;
+		margin-bottom:5px;
+	}
+	
+       .no_list {   
+           text-align:center;
+           font-size:1.5rem;
+           line-height:250px;
+           width:100%;
+           height:250px;
+       }
+           
+</style>
+	<div class="container-mypage " role="main">
+		<div class="row card-wrap  text-center">
+			<div class="card card-hover">
+				<a href="mypage_like.my" class="href">
+					<div class="card-header">Like</div>
+					<div class="card-body">
+						<i class="fab fa-gratipay fa-4x"></i>
 					</div>
-					<div class="card card-hover">
-						<a href="order_list.my" class="href">
-							<div class="card-header">ORDER</div>
-							<div class="card-body">
-								<i class="fas fa-truck-pickup fa-4x"></i>
-							</div>
-						</a>
+				</a>
+			</div>
+
+			<div class="card card-hover">
+				<a href="mypage_pic.my" class="href">
+					<div class="card-header">COMMUNITY</div>
+					<div class="card-body">
+						<i class="fas fa-images fa-4x"></i>
 					</div>
-					<div class="card card-hover ">
-						<a href="mypage_reply.my" class="href">
-							<div class="card-header">REPLY</div>
-							<div class="card-body">
-								<i class="fab fa-replyd fa-4x"></i>
-							</div>
-						</a>
+				</a>
+			</div>
+
+			<div class=" card card-hover">
+				<a href="mypage_edit.my" class="href">
+					<div class="card-header">EDIT</div>
+					<div class="card-body">
+						<i class="fas fa-user-edit fa-4x"></i>
 					</div>
-					<div class="card card-hover ">
-						<a href="mypage_review.my" class="href">
-							<div class="card-header">REVIEW</div>
-							<div class="card-body">
-								<i class="fas fa-keyboard fa-4x"></i>
-							</div>
-						</a>  
+				</a>
+			</div>
+			<div class="card card-hover">
+				<a href="mypage_class.my" class="href">
+					<div class="card-header">CLASS</div>
+					<div class="card-body">
+						<i class="fas fa-school fa-4x"></i>
 					</div>
-					<div class="card card-hover ">
-						<a href="mypage_estimate.my" class="href">
-							<div class="card-header">견적</div>
-							<div class="card-body">
-								<i class="fas fa-keyboard fa-4x"></i>
-							</div>
-						</a>
+				</a>
+			</div>
+
+			<div class="card my">
+				<div class="card-header">MY</div>
+				<div class="card-body">
+					<i class="far fa-user-circle fa-4x"></i>
+				</div>
+			</div>
+			<div class="card card-hover">
+				<a href="order_list.my" class="href">
+					<div class="card-header">ORDER</div>
+					<div class="card-body">
+						<i class="fas fa-truck-pickup fa-4x"></i>
+					</div>
+				</a>
+			</div>
+			<div class="card card-hover ">
+				<a href="mypage_reply.my" class="href">
+					<div class="card-header">REPLY</div>
+					<div class="card-body">
+						<i class="fab fa-replyd fa-4x"></i>
+					</div>
+				</a>
+			</div>
+			<div class="card card-hover ">
+				<a href="mypage_review.my" class="href">
+					<div class="card-header">REVIEW</div>
+					<div class="card-body">
+						<i class="fas fa-keyboard fa-4x"></i>
+					</div>
+				</a>  
+			</div>
+			<div class="card card-hover ">
+				<a href="mypage_estimate.my" class="href">
+					<div class="card-header">견적</div>
+					<div class="card-body">
+						<i class="fas fa-keyboard fa-4x"></i>
+					</div>
+				</a>
+			</div>
+		</div>
+	</div>
+<div class="container bg-light">
+	<div>
+		<nav>
+			<div class="nav d-flex justify-content-between shadow p-3 mb5 bg-white rounded" id="nav-tab" role="tablist">
+		    	<a class="nav-item nav-link active" id="nav-waiting-tab" data-toggle="tab" href="#nav-waiting" role="tab" aria-controls="nav-home" aria-selected="true">
+		    		<dl class="text-center">
+		    			<dt>입금대기</dt>
+		    			<dd></dd>
+		    			<dd><%=esCount[0] %></dd>
+	    		</dl>
+	    		</a>
+				<div class="text-center align-self-center">
+					<i class="far fa-arrow-alt-circle-right" style="font-size: 30px;"></i>
+				</div>
+		    	<a class="nav-item nav-link" id="nav-finish-tab" data-toggle="tab" href="#nav-finish" role="tab" aria-controls="nav-profile" aria-selected="false">
+		    		<dl class="text-center">
+		    			<dt>결제완료</dt>
+		    			<dd></dd>
+		    			<dd><%=esCount[1] %></dd>
+		    		</dl>
+		    	</a>
+		    	<div class="text-center align-self-center">
+					<i class="far fa-arrow-alt-circle-right" style="font-size: 30px;"></i>
+				</div>
+				<a class="nav-item nav-link" id="nav-shipping-tab" data-toggle="tab" href="#nav-shipping" role="tab" aria-controls="nav-contact" aria-selected="false">
+					<dl class="text-center">
+		    			<dt>제작중</dt>
+		    			<dd></dd>
+		    			<dd><%=esCount[2] %></dd>
+		    		</dl>
+				</a>
+		    	<div class="text-center align-self-center">
+					<i class="far fa-arrow-alt-circle-right" style="font-size: 30px;"></i>
+				</div>
+		    	<a class="nav-item nav-link" id="nav-ready-tab" data-toggle="tab" href="#nav-ready" role="tab" aria-controls="nav-contact" aria-selected="false">
+		    		<dl class="text-center">
+		    			<dt>배송준비</dt>
+		    			<dd></dd>
+		    			<dd><%=esCount[3] %></dd>
+		    		</dl>
+		    	</a>
+		    	<div class="text-center align-self-center">
+					<i class="far fa-arrow-alt-circle-right" style="font-size: 30px;"></i>
+				</div>
+				<a class="nav-item nav-link" id="nav-shipping-tab" data-toggle="tab" href="#nav-shipping" role="tab" aria-controls="nav-contact" aria-selected="false">
+					<dl class="text-center">
+		    			<dt>배송중</dt>
+		    			<dd></dd>
+		    			<dd><%=esCount[4] %></dd>
+		    		</dl>
+				</a>
+				<div class="text-center align-self-center">
+					<i class="far fa-arrow-alt-circle-right" style="font-size: 30px;"></i>
+				</div>
+				<a class="nav-item nav-link" id="nav-completed-tab" data-toggle="tab" href="#nav-completed" role="tab" aria-controls="nav-contact" aria-selected="false">
+					<dl class="text-center">
+		    			<dt>배송완료</dt>
+		    			<dd></dd>
+		    			<dd><%=esCount[5] %></dd>
+		    		</dl>
+				</a>
+				<div class="text-center align-self-center">
+					<i class="far fa-arrow-alt-circle-right" style="font-size: 30px;"></i>
+				</div>
+				<a class="nav-item nav-link" id="nav-confirmation-tab" data-toggle="tab" href="#nav-confirmation" role="tab" aria-controls="nav-contact" aria-selected="false">
+					<dl class="text-center">
+		    			<dt>구매확정</dt>
+		    			<dd></dd>
+		    			<dd><%=esCount[6] %></dd>
+		    		</dl>
+				</a>
+			</div>
+		</nav>
+				
+	<%
+		if (eoList.size() == 0) {
+	%>
+			<div class="tab-content" id="nav-tabContent">
+				<div class="tab-pane fade show active shadow p-3 mb5 bg-white" id="nav-waiting" role="tabpanel" aria-labelledby="nav-waiting-tab" style="padding-top: 30%;">
+					<div class="no_list">
+					주문한 수제 가구가 없습니다.
 					</div>
 				</div>
 			</div>
-		<div class="container bg-light">
-			<div>
-				<nav>
-					<div class="nav d-flex justify-content-between shadow p-3 mb5 bg-white rounded" id="nav-tab" role="tablist">
-				    	<a class="nav-item nav-link active" id="nav-waiting-tab" data-toggle="tab" href="#nav-waiting" role="tab" aria-controls="nav-home" aria-selected="true">
-				    		<dl class="text-center">
-				    			<dt>입금대기</dt>
-				    			<dd></dd>
-				    			<dd><%=esCount[0] %></dd>
-				    		</dl>
-				    	</a>
-						<div class="text-center align-self-center">
-							<i class="far fa-arrow-alt-circle-right" style="font-size: 30px;"></i>
-						</div>
-				    	<a class="nav-item nav-link" id="nav-finish-tab" data-toggle="tab" href="#nav-finish" role="tab" aria-controls="nav-profile" aria-selected="false">
-				    		<dl class="text-center">
-				    			<dt>결제완료</dt>
-				    			<dd></dd>
-				    			<dd><%=esCount[1] %></dd>
-				    		</dl>
-				    	</a>
-				    	<div class="text-center align-self-center">
-							<i class="far fa-arrow-alt-circle-right" style="font-size: 30px;"></i>
-						</div>
-						<a class="nav-item nav-link" id="nav-shipping-tab" data-toggle="tab" href="#nav-shipping" role="tab" aria-controls="nav-contact" aria-selected="false">
-							<dl class="text-center">
-				    			<dt>제작중</dt>
-				    			<dd></dd>
-				    			<dd><%=esCount[2] %></dd>
-				    		</dl>
-						</a>
-				    	<div class="text-center align-self-center">
-							<i class="far fa-arrow-alt-circle-right" style="font-size: 30px;"></i>
-						</div>
-				    	<a class="nav-item nav-link" id="nav-ready-tab" data-toggle="tab" href="#nav-ready" role="tab" aria-controls="nav-contact" aria-selected="false">
-				    		<dl class="text-center">
-				    			<dt>배송준비</dt>
-				    			<dd></dd>
-				    			<dd><%=esCount[3] %></dd>
-				    		</dl>
-				    	</a>
-				    	<div class="text-center align-self-center">
-							<i class="far fa-arrow-alt-circle-right" style="font-size: 30px;"></i>
-						</div>
-						<a class="nav-item nav-link" id="nav-shipping-tab" data-toggle="tab" href="#nav-shipping" role="tab" aria-controls="nav-contact" aria-selected="false">
-							<dl class="text-center">
-				    			<dt>배송중</dt>
-				    			<dd></dd>
-				    			<dd><%=esCount[4] %></dd>
-				    		</dl>
-						</a>
-						<div class="text-center align-self-center">
-							<i class="far fa-arrow-alt-circle-right" style="font-size: 30px;"></i>
-						</div>
-						<a class="nav-item nav-link" id="nav-completed-tab" data-toggle="tab" href="#nav-completed" role="tab" aria-controls="nav-contact" aria-selected="false">
-							<dl class="text-center">
-				    			<dt>배송완료</dt>
-				    			<dd></dd>
-				    			<dd><%=esCount[5] %></dd>
-				    		</dl>
-						</a>
-						<div class="text-center align-self-center">
-							<i class="far fa-arrow-alt-circle-right" style="font-size: 30px;"></i>
-						</div>
-						<a class="nav-item nav-link" id="nav-confirmation-tab" data-toggle="tab" href="#nav-confirmation" role="tab" aria-controls="nav-contact" aria-selected="false">
-							<dl class="text-center">
-				    			<dt>구매확정</dt>
-				    			<dd></dd>
-				    			<dd><%=esCount[6] %></dd>
-				    		</dl>
-						</a>
-					</div>
-				</nav>
-				
-				<%
-				if (eoList.size() == 0) {
-				%>
-				<div class="tab-content" id="nav-tabContent">
-					<div class="tab-pane fade show active shadow p-3 mb5 bg-white" id="nav-waiting" role="tabpanel" aria-labelledby="nav-waiting-tab" style="padding-top: 30%;">
-						<div class="no_list">
-						주문한 수제 가구가 없습니다.
-						</div>
-					</div>
-				</div>
-				<%
-				} else {
-					for (int i=0; i<eoList.size(); i++) {
-						EstimateOrderVO vo = eoList.get(i);
-						int eoState = vo.getES_ORDER_STATE();
-						System.out.println("eoState : " + eoState);
-				%>
-				
+	<%
+		} else {
+			for (int i=0; i<eoList.size(); i++) {
+				EstimateOrderVO vo = eoList.get(i);
+				int eoState = vo.getES_ORDER_STATE();
+				System.out.println("eoState : " + eoState);
+	%>
+	
 				<div class="tab-content" id="nav-tabContent">
 					<div class="tab-pane fade show active shadow p-3 mb5 bg-white" id="nav-waiting" role="tabpanel" aria-labelledby="nav-waiting-tab" style="padding-top: 30%;">
 						<div class="row" style="padding: 0 0 0 5%;">
@@ -383,75 +364,73 @@
 							    			<dl>	
 							    				<dt><%=vo.getES_ORDER_TITLE() %></dt>
 												<dd><a href=""><%=vo.getES_ORDER_WORKSHOP() %></dd>
-							    			
 							    			</dl>
 							    		</div>
-							      		
 							  		</td>
 							    	<td>
 										<dl>
 											<dd><%=dfmp.format(vo.getES_ORDER_PRICE()) %></dd>
 											<dd>
 												<% if (eoState == 0) { %>
-												입금대기
+													입금대기
 												<% } else if (eoState == 1) { %>
-												결제완료
+													결제완료
 												<% } else if (eoState == 2) { %>
-												제작중
+													제작중
 												<% } else if (eoState == 3) { %>
-												배송준비
+													배송준비
 												<% } else if (eoState == 4) { %>
-												배송중
+													배송중
 												<% } else if (eoState == 5) { %>
-												배송완료
+													배송완료
 												<% } else if (eoState == 6) { %>
-												구매확정
+													구매확정
 												<% } %>
 											</dd>
 										</dl>
 							    	</td>
 							    	<td class="align-self-center eo_tab">
-									<%  if (eoState == 0) { %>
-									    <button class="btn btn-outline-dark btn_pay">결제</button>
-									<%} else if (eoState < 4) { %>
-										<button class="btn btn-outline-dark btn_modify">배송정보 수정</button>
-									<% } 
-										if (eoState < 4) {%>
-									    <button class="btn btn-outline-dark btn_cancel" es_num =<%=vo.getES_ORDER_ESTIMATE() %> offer_num=<%=vo.getES_ORDER_OFFER()%>>주문취소</button>
-									<% } else if (eoState >= 4) {%>
-										<button class="btn btn-outline-dark btn_return">>A/S</button>
-										<button class="btn btn-outline-dark btn_return">반품</button>
-									<% } %>
+									<%  
+										if (eoState == 0) { 
+									%>
+									    	<button class="btn btn-outline-dark btn_pay">결제</button>
+									<% 	
+										} else if (eoState < 4) { 
+									%>
+											<button class="btn btn-outline-dark btn_modify">배송정보 수정</button>
+									<% 	
+										} 
+										if (eoState < 4) {
+									%>
+									   		<button class="btn btn-outline-dark btn_cancel" es_num =<%=vo.getES_ORDER_ESTIMATE() %> offer_num=<%=vo.getES_ORDER_OFFER()%>>주문취소</button>
+									<% 	
+										} else if (eoState >= 4) {
+									%>
+											<button class="btn btn-outline-dark btn_return">>A/S</button>
+											<button class="btn btn-outline-dark btn_return">반품</button>
+									<% 	
+										} 
+									%>
 							    	</td>
 							    </tr>
 							</table>
 						</div>
 					</div>
-                </div>
-               </div>
-                
-                <%
-					}
-				}
-                %>
-
-		<script>
-			
-		$(document).delegate('.btn_cancel', 'click', function() {
-			if (confirm("정말 취소하시겠습니까?")) {
-				var OFFER_NUM = $(this).attr('offer_num');
-				var ES_NUM = $(this).attr('es_num');
-				location.href='offer_bid.es?OFFER_STATE=3&ESTIMATE_NUM=' + ES_NUM + '&OFFER_NUM=' + OFFER_NUM + '&redirect=mypage_estimate.my';
+				</div>
+	<%
 			}
-			return false;
-		})
+		}
+	%>
+	</div>
+</div>
 		
-		</script>
-		
-		<script src="https://kit.fontawesome.com/97dbc99ea1.js" crossorigin="anonymous"></script>
-		<script src="https://kit.fontawesome.com/b74b42490f.js" crossorigin="anonymous"></script>
-		<script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
-		<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
-		<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
-	</body>
-</html>
+<script>	
+	$(document).delegate('.btn_cancel', 'click', function() {
+		if (confirm("정말 취소하시겠습니까?")) {
+			var OFFER_NUM = $(this).attr('offer_num');
+			var ES_NUM = $(this).attr('es_num');
+			location.href='offer_bid.es?OFFER_STATE=3&ESTIMATE_NUM=' + ES_NUM + '&OFFER_NUM=' + OFFER_NUM + '&redirect=mypage_estimate.my';
+		}
+		return false;
+	})
+</script>

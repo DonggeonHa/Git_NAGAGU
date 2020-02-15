@@ -238,8 +238,8 @@ public class AcademyController {
 		vo.setCLASS_ABRIEF(request.getParameter("CLASS_ABRIEF"));
 		vo.setCLASS_AMOUNT(Integer.parseInt(request.getParameter("CLASS_AMOUNT")));
 		vo.setCLASS_DATE(new Timestamp(System.currentTimeMillis()));
-		vo.setCLASS_DATE_CONFIGURATION_1(request.getParameter("CLASS_DATE_CONFIGURATION_1").substring(0,11));
-		vo.setCLASS_DATE_CONFIGURATION_2(request.getParameter("CLASS_DATE_CONFIGURATION_2").substring(0,11));
+		vo.setCLASS_DATE_CONFIGURATION_1(request.getParameter("CLASS_DATE_CONFIGURATION_1"));
+		vo.setCLASS_DATE_CONFIGURATION_2(request.getParameter("CLASS_DATE_CONFIGURATION_2"));
 		vo.setCLASS_AREA(request.getParameter("CLASS_AREA"));
 		vo.setCLASS_CATEGORY(request.getParameter("CLASS_CATEGORY"));
 		vo.setCLASS_INTRODUCTION_1(request.getParameter("CLASS_INTRODUCTION_1"));

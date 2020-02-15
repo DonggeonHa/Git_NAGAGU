@@ -1,5 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ page import = "java.util.*" %>
 <%@ page import = "com.spring.chat.MessageVO" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
@@ -13,159 +12,180 @@
 	ArrayList<MessageVO> msgList = (ArrayList<MessageVO>)request.getAttribute("MSGLIST");
 %>
 
-<!DOCTYPE html>
-<html>
-<head>
-<meta charset="UTF-8">
-<title>1:1 채팅방</title>
-<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
 <style>
-* {
-	box-sizing:border-box;
-}
-
-div {
-	display:block;
-	margin:0;
-	padding:0;
-}
-
-body {
-	font-size:12px;
-	color:#72777a;
-	letter-spacing:.2px;
-	margin:0;
-	padding:0;
-}
-
-#main-container{
-	width:300px;
-	height:400px;
-	display: inline-block;
-}
-
-#output{
-	min-height:200px;
-	max-height:800px;
-	display: inline-block;
-	width:100%;
-	overflow: hidden;
-	vertical-align: bottom;
-	min-height: 400px;
-	overflow: scroll;
-	overflow-x:hidden;
-	overflow-y:auto;
-	background: #f2f3f5;
-}
-
-.input_area {
-	line-height:1.5;
-	position:relative;
-	border:1px solid #eeeeee;
-}
-
-#input {
-	width:100%;
-	padding:0.4rem 0.75rem;
-	font-size:0.9rem;
-	line-height:1.5;
-	color:#495057;
-	background:white;
-	border:1px solid #ced4da;
-	border-radius:10em;
-}
-
-#btn_submit {
-	display:inline-block;
-	font-weight:400;
-	text-align:center;
-	vertical-align:middle;
-	user-select:none;
-	border:1px solid transparent;
-	font-size:0.9rem;
-	line-height:1.5;
-	border-radius:50%;
-	width:2.1rem;
-	height:2.1rem;
-	right:1px;
-	top:1px;
-	padding:0 !important;
-	position:absolute;
-	overflow:visible;
-	color:white;
-	background:#2196f3;
-	border-color:#2196f3;
-}
-
-.msg_header {
-	height:30px;
-}
-
-.profile_img {
-	width:30px;
-	height:30px;
-	display:inline-block;
-}
-
-.profile_nick {
-	display:inline-block;
-	font-size:14px;
-	font-weight:600;
-	margin:0 5px;
-	bottom:0;
-}
-
-.mem_pic {
-	width:30px;
-	height:30px;
-	display:inline-block;
-}
-
-p {
-	margin:0;
-	padding:0;
-}
-
-.chat-box {
-	width:100%;
-	margin:5px;
-}
-
-.my-chat-box {
-	width:29
-	0px;
-	text-align:right;
-	margin:5px;
-}
-
-.chat{
-		font-size:14px;
-		color:black;
-		margin: 5px 10px;
-		min-height: 20px;
-		padding: 8px;
-		min-width: 50px;
-		text-align: left;
-        height:auto;
-        width:auto;
-        word-break : break-all;
-        background: #ffffff;
-        border-radius: 10px 10px 10px 10px;
+	* {
+		box-sizing:border-box;
 	}
-
-
-.my-chat{
-	background: #F7E600;
-	border-radius: 10px 10px 10px 10px;
-}
-
-.chat-info {
-	font-size:0.75rem;
-	margin: 0 15px;
-}
+	
+	div {
+		display:block;
+		margin:0;
+		padding:0;
+	}
+	
+	body {
+		font-size:12px;
+		color:#72777a;
+		letter-spacing:.2px;
+		margin:0;
+		padding:0;
+	}
+	
+	#main-container{
+		width:300px;
+		height:400px;
+		display: inline-block;
+	}
+	
+	#output{
+		min-height:200px;
+		max-height:800px;
+		display: inline-block;
+		width:100%;
+		overflow: hidden;
+		vertical-align: bottom;
+		min-height: 400px;
+		overflow: scroll;
+		overflow-x:hidden;
+		overflow-y:auto;
+		background: #f2f3f5;
+	}
+	
+	.input_area {
+		line-height:1.5;
+		position:relative;
+		border:1px solid #eeeeee;
+	}
+	
+	#input {
+		width:100%;
+		padding:0.4rem 0.75rem;
+		font-size:0.9rem;
+		line-height:1.5;
+		color:#495057;
+		background:white;
+		border:1px solid #ced4da;
+		border-radius:10em;
+	}
+	
+	#btn_submit {
+		display:inline-block;
+		font-weight:400;
+		text-align:center;
+		vertical-align:middle;
+		user-select:none;
+		border:1px solid transparent;
+		font-size:0.9rem;
+		line-height:1.5;
+		border-radius:50%;
+		width:2.1rem;
+		height:2.1rem;
+		right:1px;
+		top:1px;
+		padding:0 !important;
+		position:absolute;
+		overflow:visible;
+		color:white;
+		background:#2196f3;
+		border-color:#2196f3;
+	}
+	
+	.msg_header {
+		height:30px;
+	}
+	
+	.profile_img {
+		width:30px;
+		height:30px;
+		display:inline-block;
+	}
+	
+	.profile_nick {
+		display:inline-block;
+		font-size:14px;
+		font-weight:600;
+		margin:0 5px;
+		bottom:0;
+	}
+	
+	.mem_pic {
+		width:30px;
+		height:30px;
+		display:inline-block;
+	}
+	
+	p {
+		margin:0;
+		padding:0;
+	}
+	
+	.chat-box {
+		width:100%;
+		margin:5px;
+	}
+	
+	.my-chat-box {
+		width:29
+		0px;
+		text-align:right;
+		margin:5px;
+	}
+	
+	.chat{
+			font-size:14px;
+			color:black;
+			margin: 5px 10px;
+			min-height: 20px;
+			padding: 8px;
+			min-width: 50px;
+			text-align: left;
+	        height:auto;
+	        width:auto;
+	        word-break : break-all;
+	        background: #ffffff;
+	        border-radius: 10px 10px 10px 10px;
+		}
+	
+	
+	.my-chat{
+		background: #F7E600;
+		border-radius: 10px 10px 10px 10px;
+	}
+	
+	.chat-info {
+		font-size:0.75rem;
+		margin: 0 15px;
+	}
 </style>
-<script src="https://kit.fontawesome.com/b74b42490f.js" crossorigin="anonymous"></script>
-<script>
+
+<div class="container d-flex justify-content-center">
+	<div id="main-container">
+		<div id="chat-container">
+			<div id="output"></div>
+		</div>
+		<div class="input_area">
+			<input type="text" id="input" placeholder="input message..." size="55">
+			<button id="btn_submit"><i class="far fa-paper-plane"></i></button>
+		</div>
+	</div>
+</div>
+	
+	
+<script type="text/javascript">
+	$(function(){
+		$('#input').keydown(function(key){
+			if(key.keyCode == 13){
+				$('#input').focus();
+				send();
+			}
+		});
+		
+		$('#btn_submit').click(function(){
+			send();
+			$('#input').focus();
+		});
+		
+	})
 	
 	var chatarea = $("#output");
 	
@@ -308,39 +328,3 @@ p {
 		%>
 	});
 </script>
-</head>
-<body>
-	<div id="main-container">
-		<div id="chat-container">
-			<div id="output"></div>
-		</div>
-		<div class="input_area">
-			<input type="text" id="input" placeholder="input message..." size="55">
-			<button id="btn_submit"><i class="far fa-paper-plane"></i></button>
-		</div>
-	</div>
-	
-	
-<script type="text/javascript">
-	$(function(){
-		$('#input').keydown(function(key){
-			if(key.keyCode == 13){
-				$('#input').focus();
-				send();
-			}
-		});
-		
-		$('#btn_submit').click(function(){
-			send();
-			$('#input').focus();
-		});
-		
-	})
-</script>
-
-		<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
-		<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
-		<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
-
-</body>
-</html>

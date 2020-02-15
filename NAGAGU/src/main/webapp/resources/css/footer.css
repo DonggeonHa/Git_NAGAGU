@@ -1,15 +1,17 @@
 @charset "UTF-8";
 
 #footer2 {
-	position:relative;
-	clear:both;
+	position:static;
+	bottom: 0;
+	left: 0;
+	right: 0;
 	width:100%;
-	z-index:1; 
+/* 	z-index:1;  */
 	text-align:center; 
 	font-size:14px; 
-	font-weight:300; 
+	font-weight:300;
 	background: #1B1B27;
-	
+	height: auto;
 }
 .copyright {
 	max-width:1200px; 
@@ -44,4 +46,8 @@
     #footer{font-size:12px;}
     .copyright{padding:15px 0;}
     .copyright .sns{display:none;}
+}
+
+li a {
+	color: #d3d3d3;
 }

@@ -31,6 +31,8 @@
 
 	<!-- Main 쪽 --> 
 	<definition name="Main" template="/WEB-INF/tiles/layouts.jsp"> 
+		<put-attribute name="css" value="/WEB-INF/tiles/css.jsp" />
+		<put-attribute name="js" value="/WEB-INF/tiles/js.jsp" />
 		<put-attribute name="header" value="/WEB-INF/tiles/header.jsp" /> 
 		<put-attribute name="body" value="" /> 
 		<put-attribute name="footer" value="/WEB-INF/tiles/footer.jsp" /> 

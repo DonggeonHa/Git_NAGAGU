@@ -1,12 +1,9 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"	
-pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ page import="java.util.*"%>
 <%@ page import="com.spring.community.PicsVO"%>
 <%@ page import="com.spring.member.MemberVO"%>
 <%
-	System.out.println("pics_jsp start");
-	
 	ArrayList<PicsVO> picsList = (ArrayList<PicsVO>) request.getAttribute("picsList");
 	ArrayList<MemberVO> memberList = (ArrayList<MemberVO>) request.getAttribute("memberList"); 
 	
@@ -26,362 +23,312 @@ pageEncoding="UTF-8"%>
 	String PICS_CATEGORY = (String)request.getAttribute("pics_category");
 	String PICS_REVIEW= (String)request.getAttribute("pics_review");
 	String sort = (String)request.getAttribute("sort");
-	
 %> 
-<!DOCTYPE html>
-<html>
-<head>
-<meta charset="utf-8">
-<meta name="viewport"
-	content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<link rel="stylesheet"	href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"	integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh"	crossorigin="anonymous">
+
 <style>
-@font-face {
-	font-family: 'KOMACON';
-	src:
-		url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_seven@1.2/KOMACON.woff')
-		format('woff');
-	font-weight: normal;
-	font-style: normal;
-}
-
-body {
-	font-family: '만화진흥원체', 'KOMACON', KOMACON !important;
-	font-size: 15px;
-}
-
-.search-tap {
-	font-size: 20px;
-	border-bottom: 1px solid #EAEAEA;
-}
-
-.caption {
-	border-bottom: 1px solid #EAEAEA;
-}
-
-.main-content {
-	margin: 0 0 100px 0;
-}
-
-.main-content a, .main-content a:link, .main-content a:hover {
-	text-decoration: none;
-	color: black;
-}
-
-img {
-	width: 100%;
-	height: 100%;
-}
-
-.img {
-	height: 30vh;
-}
-
-.img-wrap {
-	padding-top: 10px;
-	padding-bottom: 15px;
-}
-
-.profile {
-	display: flex;
-	justify-content: space-between;
-}
-
-.caption {
-	display: flex;
-	justify-content: space-around;
-}
-
-.img-wrap .profile{
-	margin-bottom:10px;
-}
-.img-wrap .profile img{
-	border-radius:100px;
-}
-.hover-image {
-	transition: .5s ease;
-	opacity: 0;
-	position: absolute;
-	top: 60%;
-	left: 50%;
-	transform: translate(-50%, -50%);
-	-ms-transform: translate(-50%, -50%);
-}
-.img{
-	overflow: hidden; 
-}
-.img img{
-	border-top-left-radius:10px; 
-	border-top-right-radius:10px;
-}
-.img-tag{
-	border-bottom-left-radius:10px; 
-	border-bottom-right-radius:10px;
-}
-.img:hover .img {
-	opacity: 0.3;
-	transition: all 0.3s ease-in-out;
-	transform: scale(1.2);
-}
-
-.img:hover .heart_output {
-	opacity: 1;
-}
-
-.pagination {
-	display: inline-block;
-	margin-bottom: 30px;
-}
-
-.pagination a {
-	color: black;
-	float: left;
-	padding: 8px 16px;
-	text-decoration: none;
-}
-
-.pagination a:hover {
-	background-color: #ef902e;
-	color: black;
-}
-
-.search-tap a:hover {
-	color: #ef900e !important;
-	transform: scale(1.2);
-}
-#search_btn, #search_btn{
-	width:150px;
-}
-.img-tag{
-	background: rgba(0,0,0,0.1);
-}
-
-.profile_children{
-	display:flex;
-}
- .follow_btn_wrap, .follow_readcount{
-    align-self: center;
- }
-.follow_readcount{
-	flex-direction:row
-}
-/* follow button */
-.follow_btn {
-	border: none;
-	background: rgba(0,0,0,0.3);  	
-	font-size: 1rem;	 
-	border-radius: 10px;
-	transition:all 0.2s; 
-	box-shadow: 0px 3px rgba(0,0,0,0.1); 
-	color: white;
-	margin-left: 5px;
-}
-.follow_btn:hover, .follow_btn:active, .flw_btn_active{
-	background: #ef900e; 
-	box-shadow: 0px 3px rgba(239,144,14,0.5);
-}
-.follow_btn:active{		
-	transform: translateY(3px);
-}
- *:focus { 
- 	outline:none !important; 
- }
- /* follow button end*/
- .caption a{ 
- 	color: rgba(0,0,0,0.3) !important;
- 	font-weight: 600;
- }
- .caption .active{
- 	color: rgba(0,0,0,1) !important;
- }
-.img-tag a{
-	display:inline-block;
-	width: 24%;
-	text-align: center;
-	color: rgba(0,0,0,0.5) !important;
-}
+	.search-tap {
+		font-size: 20px;
+		border-bottom: 1px solid #EAEAEA;
+	}
+	
+	.caption {
+		border-bottom: 1px solid #EAEAEA;
+	}
+	
+	/* .main-content { */
+	/* 	margin: 0 0 100px 0; */
+	/* } */
+	
+	/* .main-content a, .main-content a:link, .main-content a:hover { */
+	/* 	text-decoration: none; */
+	/* 	color: black; */
+	/* } */
+	
+	img {
+		width: 100%;
+		height: 100%;
+	}
+	
+	.profile {
+		display: flex;
+		justify-content: space-between;
+	}
+	
+	.caption {
+		display: flex;
+		justify-content: space-around;
+	}
+	
+	.img-wrap .profile{
+		margin-bottom:10px;
+	}
+	.img-wrap .profile img{
+		border-radius:100px;
+	}
+	.hover-image {
+		transition: .5s ease;
+		opacity: 0;
+		position: absolute;
+		top: 60%;
+		left: 50%;
+		transform: translate(-50%, -50%);
+		-ms-transform: translate(-50%, -50%);
+	}
+	.img{
+		overflow: hidden; 
+		height: 30vh;
+	}
+	.img-wrap {
+		padding-top: 10px;
+		padding-bottom: 15px;
+	}
+	.img img{
+		border-top-left-radius:10px; 
+		border-top-right-radius:10px;
+	}
+	.img-tag{
+		border-bottom-left-radius:10px; 
+		border-bottom-right-radius:10px;
+	}
+	.img:hover .img {
+		opacity: 0.3;
+		transition: all 0.3s ease-in-out;
+		transform: scale(1.2);
+	}
+	
+	.img:hover .heart_output {
+		opacity: 1;
+	}
+	
+	.pagination {
+		display: inline-block;
+		margin-bottom: 30px;
+	}
+	
+	.pagination a {
+		color: black;
+		float: left;
+		padding: 8px 16px;
+		text-decoration: none;
+	}
+	
+	.pagination a:hover {
+		background-color: #ef902e;
+		color: black;
+	}
+	
+	.search-tap a:hover {
+		color: #ef900e !important;
+		transform: scale(1.2);
+	}
+	#search_btn, #search_btn{
+		width:150px;
+	}
+	.img-tag{
+		background: rgba(0,0,0,0.1);
+	}
+	
+	.profile_children{
+		display:flex;
+	}
+	 .follow_btn_wrap, .follow_readcount{
+	    align-self: center;
+	 }
+	.follow_readcount{
+		flex-direction:row
+	}
+	/* follow button */
+	.follow_btn {
+		border: none;
+		background: rgba(0,0,0,0.3);  	
+		font-size: 1rem;	 
+		border-radius: 10px;
+		transition:all 0.2s; 
+		box-shadow: 0px 3px rgba(0,0,0,0.1); 
+		color: white;
+		margin-left: 5px;
+	}
+	.follow_btn:hover, .follow_btn:active, .flw_btn_active{
+		background: #ef900e; 
+		box-shadow: 0px 3px rgba(239,144,14,0.5);
+	}
+	.follow_btn:active{		
+		transform: translateY(3px);
+	}
+	 *:focus { 
+	 	outline:none !important; 
+	 }
+	 /* follow button end*/
+	 .caption a{ 
+	 	color: rgba(0,0,0,0.3) !important;
+	 	font-weight: 600;
+	 }
+	 .caption .active{
+	 	color: rgba(0,0,0,1) !important;
+	 }
+	.img-tag a{
+		display:inline-block;
+		width: 24%;
+		text-align: center;
+		color: rgba(0,0,0,0.5) !important;
+	}
 </style>
-</head>
 
-<body>
-	<!-- SECTION: content -->
-	<!-- content start -->
-	<div class="container main-content category_cm">
-		<div class="content">
-			<div class="search-tap">
-				<div class="caption py-5">
-					<a id="all_tab" href="./community.cm?PICS_CATEGORY=all&PICS_REVIEW=<%=PICS_REVIEW%>&sort=<%=sort%>">전체</a> 
-					<a id="table_tab" href="./community.cm?PICS_CATEGORY=table&PICS_REVIEW=<%=PICS_REVIEW%>&sort=<%=sort%>">책상</a> 
-					<a id="chair_tab" href="./community.cm?PICS_CATEGORY=chair&PICS_REVIEW=<%=PICS_REVIEW%>&sort=<%=sort%>">의자</a> 
-					<a id="bookshelf_tab" href="./community.cm?PICS_CATEGORY=bookshelf&PICS_REVIEW=<%=PICS_REVIEW%>&sort=<%=sort%>">책장</a>
-					<a id="bed_tab" href="./community.cm?PICS_CATEGORY=bed&PICS_REVIEW=<%=PICS_REVIEW%>&sort=<%=sort%>">침대</a> 
-					<a id="drawer_tab" href="./community.cm?PICS_CATEGORY=drawer&PICS_REVIEW=<%=PICS_REVIEW%>&sort=<%=sort%>">서랍장</a> 
-					<a id="sidetable_tab" href="./community.cm?PICS_CATEGORY=sidetable&PICS_REVIEW=<%=PICS_REVIEW%>&sort=<%=sort%>">협탁</a> 
-					<a id="dressing_table_tab" href="./community.cm?PICS_CATEGORY=dressing_table&PICS_REVIEW=<%=PICS_REVIEW%>&sort=<%=sort%>">화장대</a>
-					<a id="others_tab" href="./community.cm?PICS_CATEGORY=others&PICS_REVIEW=<%=PICS_REVIEW%>&sort=<%=sort%>">기타</a>					
-				</div>
-				<div class="row m-0 my-2 justify-content-between">
-						<div class="col-3 d-flex">
-							<select id = "sort" class="form-control mr-2" onchange="location.href=(this.value);">									
-									<option value="./community.cm?PICS_CATEGORY=<%=PICS_CATEGORY%>&PICS_REVIEW=<%=PICS_REVIEW%>&sort=new" id="new">최신순</option>
-									<option value="./community.cm?PICS_CATEGORY=<%=PICS_CATEGORY%>&PICS_REVIEW=<%=PICS_REVIEW%>&sort=read" id="read">조회순</option>
-									<option value="./community.cm?PICS_CATEGORY=<%=PICS_CATEGORY%>&PICS_REVIEW=<%=PICS_REVIEW%>&sort=like" id="like">인기순</option>
+<div class="container main-content category_cm">
+	<div class="content">
+		<div class="search-tap">
+			<div class="caption py-5">
+				<a id="all_tab" href="./community.cm?PICS_CATEGORY=all&PICS_REVIEW=<%=PICS_REVIEW%>&sort=<%=sort%>">전체</a> 
+				<a id="table_tab" href="./community.cm?PICS_CATEGORY=table&PICS_REVIEW=<%=PICS_REVIEW%>&sort=<%=sort%>">책상</a> 
+				<a id="chair_tab" href="./community.cm?PICS_CATEGORY=chair&PICS_REVIEW=<%=PICS_REVIEW%>&sort=<%=sort%>">의자</a> 
+				<a id="bookshelf_tab" href="./community.cm?PICS_CATEGORY=bookshelf&PICS_REVIEW=<%=PICS_REVIEW%>&sort=<%=sort%>">책장</a>
+				<a id="bed_tab" href="./community.cm?PICS_CATEGORY=bed&PICS_REVIEW=<%=PICS_REVIEW%>&sort=<%=sort%>">침대</a> 
+				<a id="drawer_tab" href="./community.cm?PICS_CATEGORY=drawer&PICS_REVIEW=<%=PICS_REVIEW%>&sort=<%=sort%>">서랍장</a> 
+				<a id="sidetable_tab" href="./community.cm?PICS_CATEGORY=sidetable&PICS_REVIEW=<%=PICS_REVIEW%>&sort=<%=sort%>">협탁</a> 
+				<a id="dressing_table_tab" href="./community.cm?PICS_CATEGORY=dressing_table&PICS_REVIEW=<%=PICS_REVIEW%>&sort=<%=sort%>">화장대</a>
+				<a id="others_tab" href="./community.cm?PICS_CATEGORY=others&PICS_REVIEW=<%=PICS_REVIEW%>&sort=<%=sort%>">기타</a>					
+			</div>
+			<div class="row m-0 my-2 justify-content-between">
+					<div class="col-3 d-flex">
+						<select id = "sort" class="form-control mr-2" onchange="location.href=(this.value);">									
+							<option value="./community.cm?PICS_CATEGORY=<%=PICS_CATEGORY%>&PICS_REVIEW=<%=PICS_REVIEW%>&sort=new" id="new">최신순</option>
+							<option value="./community.cm?PICS_CATEGORY=<%=PICS_CATEGORY%>&PICS_REVIEW=<%=PICS_REVIEW%>&sort=read" id="read">조회순</option>
+							<option value="./community.cm?PICS_CATEGORY=<%=PICS_CATEGORY%>&PICS_REVIEW=<%=PICS_REVIEW%>&sort=like" id="like">인기순</option>
+						</select>
+						<select id = "sort" class="form-control" onchange="location.href=(this.value);">
+							<option value="./community.cm?PICS_CATEGORY=<%=PICS_CATEGORY%>&PICS_REVIEW=0&sort=<%=sort%>" id="all">모두보기</option>
+							<option value="./community.cm?PICS_CATEGORY=<%=PICS_CATEGORY%>&PICS_REVIEW=1&sort=<%=sort%>" id="review">후기</option>
+							<option value="./community.cm?PICS_CATEGORY=<%=PICS_CATEGORY%>&PICS_REVIEW=2&sort=<%=sort%>" id="no_review">일반</option>
+						</select>
+					</div>
+						<div class="col-4 d-flex px-0">
+							<select id = "search_option" class="form-control" onchange="">									
+								<option value="tag" id="tag">태그</option>
+								<option value="write" id="write">글쓴이</option>
+								<option value="content" id="content">내용</option>
 							</select>
-							<select id = "sort" class="form-control" onchange="location.href=(this.value);">
-									<option value="./community.cm?PICS_CATEGORY=<%=PICS_CATEGORY%>&PICS_REVIEW=0&sort=<%=sort%>" id="all">모두보기</option>
-									<option value="./community.cm?PICS_CATEGORY=<%=PICS_CATEGORY%>&PICS_REVIEW=1&sort=<%=sort%>" id="review">후기</option>
-									<option value="./community.cm?PICS_CATEGORY=<%=PICS_CATEGORY%>&PICS_REVIEW=2&sort=<%=sort%>" id="no_review">일반</option>
-							</select>
+							<input type="text" class="form-control mx-2" id="keyword" >  
+							<!-- /input-group -->
+							<button class="btn btn-outline-secondary" type="submit" id="search_btn">검색</button>
+						</div> 
+			</div>
+				<!-- /.col-lg-6 -->
+		</div>
+			<!-- div.row -->
+	</div>
+	<div class="row justify-content-end mx-0 pt-2">
+		<c:set var="name" value="<%=LOGIN_MEMBER_NUM%>" />
+		<c:if test="${name != 0}">
+		    <button class="btn btn-outline-dark btn-md my-2 my-sm-0" type="submit" onclick="location.href='community_write.cm?MEMBER_NUM=<%=LOGIN_MEMBER_NUM%>'">글쓰기</button>
+		</c:if>
+		<c:if test="${name == 0}">
+		    <button class="btn btn-outline-dark btn-md my-2 my-sm-0" type="submit" onclick="alert('로그인 해주세요')">글쓰기</button>
+		</c:if>
+	</div>
+	<!-- images start -->
+	<%
+		if (listcount > 0) {							
+			for (int i = 0; i < picsList.size(); i++) {								
+				PicsVO pics_vo = picsList.get(i);								
+				MemberVO member_vo=memberList.get(i);
+	%>
+				<div class="row pt-2 mt-4">
+					<div class="col-md-4 img-wrap">
+						<div class="profile">
+							<div class="profile_children" >
+								<div>
+									<a href="memberLikePics.cm?MEMBER_NUM=<%=member_vo.getMEMBER_NUM()%>"> 
+										<img src=<%=member_vo.getMEMBER_PICTURE()%>	style="width:50px; height:50px;"><b><%=member_vo.getMEMBER_NICK()%></b> 
+									</a>
+								</div >
+									<div id="output<%=member_vo.getMEMBER_NUM()%>" class="follow_btn_wrap">
+										<button type="button" class="follow_btn flw_btn<%=member_vo.getMEMBER_NUM()%>" id="<%=member_vo.getMEMBER_NUM()%>">follow</button>
+									</div>
 							</div>
-							
-							<div class="col-4 d-flex px-0">
-								<select id = "search_option" class="form-control" onchange="">									
-											<option value="tag" id="tag">태그</option>
-											<option value="write" id="write">글쓴이</option>
-											<option value="content" id="content">내용</option>
-								</select>
-								<input type="text" class="form-control mx-2" id="keyword" >  
-								<!-- /input-group -->
-								<button class="btn btn-outline-secondary" type="submit" id="search_btn">검색</button>
+							<div class="follow_readcount">
+								<div>조회수<%=pics_vo.getPICS_READ()%></div>
 							</div> 
 						</div>
-						
-					
-					
-					<!-- /.col-lg-6 -->
-				</div>
-				<!-- div.row -->
-			</div>
-			<div class="row justify-content-end mx-0 pt-2">
-				<c:set var="name" value="<%=LOGIN_MEMBER_NUM%>" />
-				<c:if test="${name != 0}">
-				    <button class="btn btn-outline-dark btn-md my-2 my-sm-0"
-					type="submit" onclick="location.href='community_write.cm?MEMBER_NUM=<%=LOGIN_MEMBER_NUM%>'">글쓰기</button>
-				</c:if>
-				<c:if test="${name == 0}">
-				    <button class="btn btn-outline-dark btn-md my-2 my-sm-0"
-					type="submit" onclick="alert('로그인 해주세요')">글쓰기</button>
-				</c:if>
-			</div>
-			<!-- images start -->
-			<div class="row pt-2 mt-4">
-					<%
-						
-						if (listcount > 0) {							
-							for (int i = 0; i < picsList.size(); i++) {								
-								PicsVO pics_vo = picsList.get(i);								
-								MemberVO member_vo=memberList.get(i);
-					%>
-				<div class="col-md-4 img-wrap">
-					<div class="profile">
-						<div class="profile_children" >
-							<div>
-							<a href="memberLikePics.cm?MEMBER_NUM=<%=member_vo.getMEMBER_NUM()%>"> 
-								<img src=<%=member_vo.getMEMBER_PICTURE()%>	style="width:50px; height:50px;"><b><%=member_vo.getMEMBER_NICK()%></b> 
-							</a>
-							</div >
-							<div id="output<%=member_vo.getMEMBER_NUM()%>" class="follow_btn_wrap">
-								<button type="button" class="follow_btn flw_btn<%=member_vo.getMEMBER_NUM()%>" id="<%=member_vo.getMEMBER_NUM()%>">follow</button>
+						<a href="${pageContext.request.contextPath}/community_detail.cm?PICS_NUM=<%=pics_vo.getPICS_NUM()%>&MEMBER_NUM=<%=member_vo.getMEMBER_NUM()%>&PICS_MEMBER=<%=pics_vo.getPICS_MEMBER()%>">
+							<div class="img">
+								<img src="/communityupload/image/<%=pics_vo.getPICS_MAIN_IMAGE()%>" class="img" />
+								<div class="hover-image heart_output" id="<%=pics_vo.getPICS_NUM()%>" name="picnum<%=pics_vo.getPICS_NUM()%>">
+									<a href="#"> 
+										<span class="button likeBtn" id="heart_output<%=pics_vo.getPICS_NUM()%>"  >  
+											<i class="far fa-heart fa-2x" id="far"></i>
+										</span><%=pics_vo.getPICS_LIKE()%>
+									</a> 
+										<!-- <a href=""><i class="far fa-share-square fa-2x"></i> -->
+								</div>
 							</div>
-						</div>
-						<div class="follow_readcount">
-							<div>조회수<%=pics_vo.getPICS_READ()%></div>
-						</div> 
-					</div>
-					<a href="${pageContext.request.contextPath}/community_detail.cm?PICS_NUM=<%=pics_vo.getPICS_NUM()%>&MEMBER_NUM=<%=member_vo.getMEMBER_NUM()%>&PICS_MEMBER=<%=pics_vo.getPICS_MEMBER()%>">
-						<div class="img">
-							<img src="/communityupload/image/<%=pics_vo.getPICS_MAIN_IMAGE()%>" class="img" />
-							<div class="hover-image heart_output" id="<%=pics_vo.getPICS_NUM()%>" name="picnum<%=pics_vo.getPICS_NUM()%>">
-								<a href="#"> 
-									<span class="button likeBtn" id="heart_output<%=pics_vo.getPICS_NUM()%>"  >  
-										<i class="far fa-heart fa-2x" id="far"></i>
-									</span><%=pics_vo.getPICS_LIKE()%>
-								</a> 
-									<!-- <a href=""><i class="far fa-share-square fa-2x"></i> -->
-								</a>
-							</div>
-						</div>
-					</a>
-					<div class="img-tag">
-						<%	if(pics_vo.getPICS_TAG().length()>0){
-							String tags[]  = pics_vo.getPICS_TAG().split(",");
-							for(int j=0; j<tags.length; j++){
-						%>
-							<a href="#"><span class=img-tags>#<%=tags[j]%></span></a>
-							<%
-							} 
+						</a>
+						<div class="img-tag">
+							<%	if(pics_vo.getPICS_TAG().length()>0){
+									String tags[]  = pics_vo.getPICS_TAG().split(",");
+									for(int j=0; j<tags.length; j++){
 							%>
-						<%
-							}
-						%>
+										<a href="#"><span class=img-tags>#<%=tags[j]%></span></a>
+							<%
+									} 
+								}
+							%>
 							<br />
+						</div>
 					</div>
 				</div>
 				<!-- images end -->
+	<%
+			} 
+	%>
+			<!-- pagenation -->
+			<div class="row justify-content-center">
+				<div class="pagination">
 				<%
-					} 
+					if (nowpage <= 1) {
 				%>
-			</div>
-		</div>
-		<!-- pagenation -->
-		<div class="row justify-content-center">
-			<div class="pagination">
-				<%
-				if (nowpage <= 1) {
-			%>
-				&laquo;
-				<%
-				} else {
-			%>
-				<a href="./community.cm?page=<%=nowpage - 1%>&PICS_CATEGORY=<%=PICS_CATEGORY%>">&laquo;</a>
-				<%
-				}
-			%>
-				<%
-				for (int a = startpage; a <= endpage; a++) {
-					if (a == nowpage) {
-			%><!-- 현재 보고있는 페이지에는 링크를 걸지 않겠다. -->
-				<%=a%>
+						&laquo;
 				<%
 					} else {
-			%>
-				<a href="./community.cm?page=<%=a%>&PICS_CATEGORY=<%=PICS_CATEGORY%>&sort=<%=sort%>"><%=a%></a>
+				%>
+						<a href="./community.cm?page=<%=nowpage - 1%>&PICS_CATEGORY=<%=PICS_CATEGORY%>">&laquo;</a>
 				<%
 					}
-				}
-			%><!-- 현재 보는 페이지가 마지막 페이지 이면 -->
+					for (int a = startpage; a <= endpage; a++) {
+						if (a == nowpage) {
+				%><!-- 현재 보고있는 페이지에는 링크를 걸지 않겠다. -->
+							<%=a%>
 				<%
-				if (nowpage >= maxpage) {
-			%>
-				&raquo;
+						} else {
+				%>
+							<a href="./community.cm?page=<%=a%>&PICS_CATEGORY=<%=PICS_CATEGORY%>&sort=<%=sort%>"><%=a%></a>
 				<%
-				} else {
-			%>
-				<a href="./community.cm?page=<%=nowpage + 1%>&PICS_CATEGORY=<%=PICS_CATEGORY%>">&raquo;</a>
+						}
+					}
+				%><!-- 현재 보는 페이지가 마지막 페이지 이면 -->
 				<%
-				}
-			%>
+					if (nowpage >= maxpage) {
+				%>
+						&raquo;
+				<%
+					} else {
+				%>
+						<a href="./community.cm?page=<%=nowpage + 1%>&PICS_CATEGORY=<%=PICS_CATEGORY%>">&raquo;</a>
+				<%
+					}
+				%>
+				</div>
 			</div>
-		</div>
-		<!-- pagenation 끝 -->
-		<!-- SECTION: content  -->
-		<% 
-				}else{
-			%>
-		<div class="col-md-4">등록된 상품이 없습니다.</div>
-		<%
-				}
-			%>
-	</div>
-	<!-- jquery -->
-	<script src="https://code.jquery.com/jquery-3.4.1.js" integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU="	crossorigin="anonymous"></script>
-	<script	src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"	integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"	crossorigin="anonymous"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"  integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"   crossorigin="anonymous"></script>
-	<script src="https://kit.fontawesome.com/97dbc99ea1.js"	crossorigin="anonymous"></script>
-	<script>
-
- 	
-
+			<!-- pagenation 끝 -->
+			<!-- SECTION: content  -->
+	<% 
+		} else {
+	%>
+			<div class="text-center">등록된 상품이 없습니다.</div>
+	<%
+		}
+	%>
+</div>
+<script>
 	//좋아요 기능
 	$(document).ready(function(){
 		//처음 로드되고 로그인 사용자가 누른글 하트는 검게 바꿔줌
@@ -598,6 +545,4 @@ img {
 		$('#'+category+'_tab').addClass('active');
 	});
 	
-	</script>
-</body>
-</html>
+</script>

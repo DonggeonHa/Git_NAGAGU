@@ -1,5 +1,5 @@
-<%@page import="com.spring.order.BasketVO"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"   pageEncoding="UTF-8"%>
+<%@page import="com.spring.order.BasketVO"%>
 <%@ page import="com.spring.store.ProductVO" %>
 <%@ page import="com.spring.store.Product_reviewVO" %>
 <%@ page import="com.spring.store.Product_qnaVO" %>
@@ -134,477 +134,405 @@
 	//상품 이미지 관련
 	String images = vo.getPRODUCT_BANNER();
 	String[] imgArr = images.split(",");
-	
 %>  
 
-<!DOCTYPE html>
-<html>
-	<head>
-		<meta charset="utf-8">
-		<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-		<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
-		<script src="https://code.jquery.com/jquery-3.4.1.js" integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU=" crossorigin="anonymous"></script>
-		<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
-		<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
-		<link href="https://use.fontawesome.com/releases/v5.0.6/css/all.css" rel="stylesheet">
-		<%-- <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/js/Store/pager.js">
-		 --%>
-	<style>
-         @charset "UTF-8";
-         
-         img {
-            max-width: 100%;
-            height: auto;
-         }
-         
-         table {
-            font-size: 0.98em;
-         }
-         
-         .nav_tab {
-            background-color: #FEE100;
-         }
-         
-         /*안 먹힘*/
-         @media screen and (max-width: 375px) { 
-            .nav-item {
-               font-size:0.5em !important;
-            }
-            
-         }
-         
-         .name {
-            font-weight: bold;
-         }
-         
-         .smallfont {
-            font-size: 0.7em;
-         }
-         
-         a {
-            color: gray;
-            text-decoration: none;
-         }
-         
-
-         .row_ship_info {
-            padding:3px;
-         }      
-      
-         @font-face {
-            font-family: 'KOMACON';
-            src:
-               url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_seven@1.2/KOMACON.woff')
-               format('woff');
-            font-weight: normal;
-            font-style: normal;
-         }
-         
-         .Precautions dl dd {
-            font-size: 0.7rem;
-         }
-         
-         #subject {
-            font-size: 1.0rem;
-         }
-         
-         .class-detail-container {
-            margin-top: 100px;
-            margin-bottom: 100px;
-         }
-         
-         .hr-class {
-            width: 100%;
-            color: #f6f6f6;
-            margin-top: 100px;
-            margin-bottom: 100px;
-         }
-         
-         .order-body {
-            font-family: '만화진흥원체', 'KOMACON', KOMACON;
-         }
-         
-         .sticky {
-            padding-top: 5%;
-            z-index:2;
-            position: -webkit-sticky;
-            position: sticky;
-            background-color: #FFFFFF;
-            top: 0;
-         }
-         
-         .sticky2 {
-            z-index:2;
-            position: -webkit-sticky;
-            position: sticky;
-            background-color: #FFFFFF;
-            border-radius: 10px;
-            top: 85px;
-            height: 573px;
-         }
-         
-         .nav-item .nav-link {
-            color: #9d9d9d;
-         }
-         
-         .comments_table {
-            font-size: 1rem;
-         }
-         
-         @media ( max-width : 700px) {
-            .comments_table {
-               font-size: 0.7rem;
-            }
-         }
-         
-         div.col-2 img {
-            width: 100%;
-            height: 100%;
-         }
-         
-         
-         .rep_content {
-            font-size: 1.0em;
-         }
-         
-         hr {
-            background-color: #EF902E;
-         }
-      
-         /*review*/
-         .reviews_table {
-            color: #212529;
-         }
-         .review_sum {
-            width: 100%; 
-            margin: 0 auto;
-            background-color:#FAFAFA;
-            border-radius:10px;
-            /*border-top:1px solid RGBA(239, 144, 46, 0.3);*/
-            padding: 10px 0 3px 10px;
-            
-         }
-         .review_img {
-            width:100px;
-            height:100px;
-         }
-         .review_add_section {
-         /*
-            background-color: #FAFAFA;
-         */
-         }
-         .review_hidden {
-            display:none;
-            border:1px solid RGBA(35, 39, 43, 0.3);
-            border-radius:10px;
-            padding:15px 0;
-            margin:0 20px;
-         }
-         .review_file_preview {
-            width:100px;
-            height:100px;
-         }
-         .review_grade {
-            width: 80% !important; 
-            margin: 0 auto !important;         
-         }
-         .review_file_upload {
-            width: 80% !important; 
-            margin: 0 auto !important;               
-         }
-         .reviewspace {
-            display:block;
-         }
-         .review_control {
-            text-align:right;
-         }
-         .review_control a {
-            color : #343A40;
-            font-weight:bold;
-            font-size:0.7rem;
-         }
-         /*review 답글*/
-         .review_re {
-            text-align:right;
-         }
-         .review_re a {
-            color : #343A40;
-            font-weight:bold;
-            font-size:0.7rem;
-         }
-         .review_RE_control {
-            text-align:right;
-         }
-         .review_RE_control a {
-            color : #343A40;
-            font-weight:bold;
-            font-size:0.7rem;
-         }
-         .review_RE_control_hidden {
-            text-align:right;
-            display:none;
-         }
-         .review_RE_control_hidden a {
-            color : #343A40;
-            font-weight:bold;
-            font-size:0.7rem;
-         }
-         .review_re_hidden {
-            display:none;
-         }
-         .review_re_insert_hidden {
-            display:none;
-         }
-         
-         .review_re_insert {
-            text-align:right;
-         }
-         .review_re_insert a {
-            color : #343A40;
-            font-weight:bold;
-            font-size:0.7rem;         
-         }
-         
-         .review_re_sum {
-            width: 100%; 
-            margin: 0 auto;
-            padding: 3px 0;
-         }
-         .review_RE_modify_hidden {
-            display:none;
-         }
-         
-         
-         /*qna*/
-         
-         .qnas_table {
-            color: #212529;
-         }         
-         
-         .qna_sum {
-            width: 100%; 
-            margin: 0 auto;
-         }
-
-         .qna_add_section {
-	         display:none;
-            background-color: #FAFAFA;
-         }         
-         
-         .qna_mod_section {
-         	display:none;
-         }
-         
-         .qna_control {
-            text-align:right;
-         }
-         .qna_control a {
-            color : #343A40;
-            font-weight:bold;
-            font-size:0.7rem;
-         }
-         
-         .qna_control_hidden {
-         	text-align:right;
-         }
-         
-         .qna_control_hidden a {
-         	color : #343A40;
-            font-weight:bold;
-            font-size:0.7rem;
-         }
-         
-         .qna_re_form {
-         	display:none;
-         }
-
-         .qna_re_control {
-			text-align:right;         
-         }
-         .qna_re_control a {
-			color : #343A40;
-            font-weight:bold;
-            font-size:0.7rem;         
-         }
-         
-         .qna_re_control_hidden {
-			text-align:right;
-			display:none;         
-         }
-         
-         .qna_re_control_hidden a{
-			color : #343A40;
-            font-weight:bold;
-            font-size:0.7rem;  
-         }
-                  
-         
-         /*별점주기*/
-         .star-rating { 
-            width:52px; 
-         }
-         .star-rating,.star-rating span { 
-            display:inline-block; height:10px; overflow:hidden; background:url('${pageContext.request.contextPath}/resources/images/star_2.png') no-repeat; 
-         }
-         .star-rating span{ 
-            background-position:left bottom; line-height:0; vertical-align:top; 
-         }   
-         
-         
-         /*리뷰 이미지 호버*/   
-         .img {
-            width:100px;
-         }
-         .review_img_modify {
-            width:100px;
-            height:100px;         
-         }      
-         .hover-image {
-            transition: .5s ease;
-            opacity: 0;
-            position:relative;
-            top: 7%;
-            left: -8.5%;
-            transform: translate(-50%, -50%);
-            -ms-transform: translate(-50%, -50%);
-         }
-         .img:hover .img {
-            opacity: 0.3;
-         }
-         .img:hover #test {
-            opacity: 1;
-         }            
-         
-         .addlike {
-            background-color:#23272B !important;
-            color:white !important; 
-         }
-         .row h6{
-         	margin-left:30px; 
-         }
-         .row h6 a,.row h6 a:link,.row h6 a:hover{
-		  text-decoration: none !important;
-		  color: black !important;
-		}
-		
-		/* 상품 이미지 관련*/
-		.thumbMain {
-			width:510px;
-			height:510px;
-			overflow:hidden;
-			display:block;
-			margin-right:10px;
-		}
-		
-		.thumbMain img {
-			display:block;
-			min-height:100%;
-			min-width:100%;
-			-ms-interpolation-mode: bicubic;
-		}
-		
-		.thumbItem {
-			width:95px;
-			height:95px;
-			overflow:hidden;
-			display:block;
-			margin:6px;
-		}
-		
-		.thumbCheck {
-			border:2px solid #ef902e;
-			border-radius:4px;
-		}
-		
-		.thumbItem img {
-			display:block;
-			min-height:100%;
-			min-width:100%;
-			-ms-interpolation-mode: bicubic;
-			transition:transform 0.2s;
-		}
-		
-		.thumbItem img:hover {
-			transform:scale(1.05);
-			cursor:pointer;
-		}
-		
-      </style>
-
-	<script>
-	$(document).ready(function() {
-//			getReviewList();
-			  pageMove(1);	//페이지에 처음 들어올 경우 고려
-	});	
- 
-	//https://www.podo-dev.com/blogs/15
-	function pageMove(pg){
-		console.log(pg)
-		console.log(<%=PRODUCT_NUM%>)
-		var perPgLine = 5;
-		$.ajax({
-			type : "POST",
-			url : "/NAGAGU/getReviewList.pro",
-            dataType : 'json',
-            contentType : 'application/x-www-form-urlencoded; charset=UTF-8',
-			data : { 'pg' : pg, 'PRODUCT_NUM' : <%=PRODUCT_NUM%> },	//pg:선택한 페이지, perPgLine : 페이지당 게시글 개수
-			dataType: 'JSON',
-			success : function(retVal) {
-				console.log(retVal)
-				if(retVal.res == "OK") {
-					var arr = retVal.reviewList;
-					var reviewCount = retVal.reviewCount;
-					var page = pg;
-					//update board from data	//게시글을 다시 그려줌
-					//페이징을 다시 그려줌
-					updatePaging("pageMove", page, reviewCount, 5, 3); 
-					
-				} else if (retVal.res == "FAIL") {
-					alert("FAIL");
-				}
-				 
-				
-			},
-			error : function(e) {
-				alert('실패')
-				console.log(e);
-			}
-		});
-	}	
-	//페이징 다시 그려줌
-	//callFunc : 페이지 클릭 시 호출되는 함수이다. 1을 누르면 pagemove(1) 호출.
-	//page  : 현재 페이지
-	//allRowCnt : 전체 게시글 수
-	//perPgLine : 페이지당 게시글 수
-	//pgGrpCnt : 페이징을 몇개씩 묵을 것인가. ex.3인경우  (1,2,3) (4,5,6)
-	function updatePaging(callFunc, page, allRowCnt, perPgLine, pgGrpCnt){
-		console.log("callFunc = "+callFunc)
-		console.log("page = "+page)
-		console.log("allRowCnt = "+allRowCnt)
-		console.log("perPgLine = "+perPgLine)
-		console.log("pgGrpCnt = "+pgGrpCnt)
-		var boardPager	= $('.ReviewListSection22');	//페이징을 담을 곳
-		var	pager		= drawPager(callFunc, page, allRowCnt, perPgLine, pgGrpCnt);
-				
-		boardPager.empty();
-		boardPager.append(pager);
+<style>
+	@charset "UTF-8";
+	
+	img {
+		max-width: 100%;
+		height: auto;
 	}
-	// drawPager() 함수를 호출하여, 그려진 페이징을 가져오자.
-	function drawPager(callFunc, page, allRowCnt, perPgLine, pgGrpCnt) {
-		var output='';
-		output += '<div class="ReviewListSection22_div">안녕</div>'		
+	
+	table {
+		font-size: 0.98em;
+	}
+	
+	.nav_tab {
+		background-color: #FEE100;
+	}
+	
+	/*안 먹힘*/
+	@media screen and (max-width: 375px) {
+		.nav-item {
+			font-size: 0.5em !important;
+		}
+	}
+	
+	.name {
+		font-weight: bold;
+	}
+	
+	.smallfont {
+		font-size: 0.7em;
+	}
+	
+	a {
+		color: gray;
+		text-decoration: none;
+	}
+	
+	.row_ship_info {
+		padding: 3px;
+	}
+	
+	.Precautions dl dd {
+		font-size: 0.7rem;
+	}
+	
+	#subject {
+		font-size: 1.0rem;
+	}
+	
+	.class-detail-container {
+		margin-top: 100px;
+		margin-bottom: 100px;
+	}
+	
+	.hr-class {
+		width: 100%;
+		color: #f6f6f6;
+		margin-top: 100px;
+		margin-bottom: 100px;
+	}
+	
+	.sticky {
+		padding-top: 5%;
+		z-index: 2;
+		position: -webkit-sticky;
+		position: sticky;
+		background-color: #FFFFFF;
+		top: 0;
+	}
+	
+	.sticky2 {
+		z-index: 2;
+		position: -webkit-sticky;
+		position: sticky;
+		background-color: #FFFFFF;
+		border-radius: 10px;
+		top: 85px;
+		height: 573px;
+	}
+	
+	.nav-item .nav-link {
+		color: #9d9d9d;
+	}
+	
+	.comments_table {
+		font-size: 1rem;
+	}
+	
+	@media ( max-width : 700px) {
+		.comments_table {
+			font-size: 0.7rem;
+		}
+	}
+	
+	div.col-2 img {
+		width: 100%;
+		height: 100%;
+	}
+	
+	.rep_content {
+		font-size: 1.0em;
+	}
+	
+	hr {
+		background-color: #EF902E;
+	}
+	
+	/*review*/
+	.reviews_table {
+		color: #212529;
+	}
+	
+	.review_sum {
+		width: 100%;
+		margin: 0 auto;
+		background-color: #FAFAFA;
+		border-radius: 10px;
+		/*border-top:1px solid RGBA(239, 144, 46, 0.3);*/
+		padding: 10px 0 3px 10px;
+	}
+	
+	.review_img {
+		width: 100px;
+		height: 100px;
+	}
+	
+	.review_add_section {
+		/*
+	          background-color: #FAFAFA;
+	       */
 		
-		return output;
-	} 
+	}
 	
+	.review_hidden {
+		display: none;
+		border: 1px solid RGBA(35, 39, 43, 0.3);
+		border-radius: 10px;
+		padding: 15px 0;
+		margin: 0 20px;
+	}
+	
+	.review_file_preview {
+		width: 100px;
+		height: 100px;
+	}
+	
+	.review_grade {
+		width: 80% !important;
+		margin: 0 auto !important;
+	}
+	
+	.review_file_upload {
+		width: 80% !important;
+		margin: 0 auto !important;
+	}
+	
+	.reviewspace {
+		display: block;
+	}
+	
+	.review_control {
+		text-align: right;
+	}
+	
+	.review_control a {
+		color: #343A40;
+		font-weight: bold;
+		font-size: 0.7rem;
+	}
+	/*review 답글*/
+	.review_re {
+		text-align: right;
+	}
+	
+	.review_re a {
+		color: #343A40;
+		font-weight: bold;
+		font-size: 0.7rem;
+	}
+	
+	.review_RE_control {
+		text-align: right;
+	}
+	
+	.review_RE_control a {
+		color: #343A40;
+		font-weight: bold;
+		font-size: 0.7rem;
+	}
+	
+	.review_RE_control_hidden {
+		text-align: right;
+		display: none;
+	}
+	
+	.review_RE_control_hidden a {
+		color: #343A40;
+		font-weight: bold;
+		font-size: 0.7rem;
+	}
+	
+	.review_re_hidden {
+		display: none;
+	}
+	
+	.review_re_insert_hidden {
+		display: none;
+	}
+	
+	.review_re_insert {
+		text-align: right;
+	}
+	
+	.review_re_insert a {
+		color: #343A40;
+		font-weight: bold;
+		font-size: 0.7rem;
+	}
+	
+	.review_re_sum {
+		width: 100%;
+		margin: 0 auto;
+		padding: 3px 0;
+	}
+	
+	.review_RE_modify_hidden {
+		display: none;
+	}
+	
+	/*qna*/
+	.qnas_table {
+		color: #212529;
+	}
+	
+	.qna_sum {
+		width: 100%;
+		margin: 0 auto;
+	}
+	
+	.qna_add_section {
+		display: none;
+		background-color: #FAFAFA;
+	}
+	
+	.qna_mod_section {
+		display: none;
+	}
+	
+	.qna_control {
+		text-align: right;
+	}
+	
+	.qna_control a {
+		color: #343A40;
+		font-weight: bold;
+		font-size: 0.7rem;
+	}
+	
+	.qna_control_hidden {
+		text-align: right;
+	}
+	
+	.qna_control_hidden a {
+		color: #343A40;
+		font-weight: bold;
+		font-size: 0.7rem;
+	}
+	
+	.qna_re_form {
+		display: none;
+	}
+	
+	.qna_re_control {
+		text-align: right;
+	}
+	
+	.qna_re_control a {
+		color: #343A40;
+		font-weight: bold;
+		font-size: 0.7rem;
+	}
+	
+	.qna_re_control_hidden {
+		text-align: right;
+		display: none;
+	}
+	
+	.qna_re_control_hidden a {
+		color: #343A40;
+		font-weight: bold;
+		font-size: 0.7rem;
+	}
+	
+	/*별점주기*/
+	.star-rating {
+		width: 52px;
+	}
+	
+	.star-rating, .star-rating span {
+		display: inline-block;
+		height: 10px;
+		overflow: hidden;
+		background:
+			url('${pageContext.request.contextPath}/resources/images/star_2.png')
+			no-repeat;
+	}
+	
+	.star-rating span {
+		background-position: left bottom;
+		line-height: 0;
+		vertical-align: top;
+	}
+	
+	/*리뷰 이미지 호버*/
+	.img {
+		width: 100px;
+	}
+	
+	.review_img_modify {
+		width: 100px;
+		height: 100px;
+	}
+	
+	.hover-image {
+		transition: .5s ease;
+		opacity: 0;
+		position: relative;
+		top: 7%;
+		left: -8.5%;
+		transform: translate(-50%, -50%);
+		-ms-transform: translate(-50%, -50%);
+	}
+	
+	.img:hover .img {
+		opacity: 0.3;
+	}
+	
+	.img:hover #test {
+		opacity: 1;
+	}
+	
+	.addlike {
+		background-color: #23272B !important;
+		color: white !important;
+	}
+	
+	.row h6 {
+		margin-left: 30px;
+	}
+	
+	.row h6 a, .row h6 a:link, .row h6 a:hover {
+		text-decoration: none !important;
+		color: black !important;
+	}
+	
+	/* 상품 이미지 관련*/
+	.thumbMain {
+		width: 510px;
+		height: 510px;
+		overflow: hidden;
+		display: block;
+		margin-right: 10px;
+	}
+	
+	.thumbMain img {
+		display: block;
+		min-height: 100%;
+		min-width: 100%;
+		-ms-interpolation-mode: bicubic;
+	}
+	
+	.thumbItem {
+		width: 95px;
+		height: 95px;
+		overflow: hidden;
+		display: block;
+		margin: 6px;
+	}
+	
+	.thumbCheck {
+		border: 2px solid #ef902e;
+		border-radius: 4px;
+	}
+	
+	.thumbItem img {
+		display: block;
+		min-height: 100%;
+		min-width: 100%;
+		-ms-interpolation-mode: bicubic;
+		transition: transform 0.2s;
+	}
+	
+	.thumbItem img:hover {
+		transform: scale(1.05);
+		cursor: pointer;
+	}
+</style>
 
-	
-	</script>	
-	
-	
-   </head>
-	<body class="order-body">
-		<!-- content start -->
 		<div class="container class-detail-container">
 		<div class="row justify-content-between title">
 			<h6>
@@ -1645,7 +1573,73 @@
     <br>
 	</div>
    <!-- content end -->
-   <script>
+<script>
+	$(document).ready(function() {
+		// getReviewList();
+		  pageMove(1);	//페이지에 처음 들어올 경우 고려
+	});	
+	
+	//https://www.podo-dev.com/blogs/15
+	function pageMove(pg) {
+		console.log(pg)
+		console.log(<%=PRODUCT_NUM%>)
+		var perPgLine = 5;
+		$.ajax({
+			type : "POST",
+			url : "/NAGAGU/getReviewList.pro",
+		    dataType : 'json',
+		    contentType : 'application/x-www-form-urlencoded; charset=UTF-8',
+			data : { 'pg' : pg, 'PRODUCT_NUM' : <%=PRODUCT_NUM%> },	//pg:선택한 페이지, perPgLine : 페이지당 게시글 개수
+			dataType: 'JSON',
+			success : function(retVal) {
+				console.log(retVal)
+				if(retVal.res == "OK") {
+					var arr = retVal.reviewList;
+					var reviewCount = retVal.reviewCount;
+					var page = pg;
+					//update board from data	//게시글을 다시 그려줌
+					//페이징을 다시 그려줌
+					updatePaging("pageMove", page, reviewCount, 5, 3); 
+					
+				} else if (retVal.res == "FAIL") {
+					alert("FAIL");
+				}
+				 
+				
+			},
+			error : function(e) {
+				alert('실패')
+				console.log(e);
+			}
+		});
+	}	
+	//페이징 다시 그려줌
+	//callFunc : 페이지 클릭 시 호출되는 함수이다. 1을 누르면 pagemove(1) 호출.
+	//page  : 현재 페이지
+	//allRowCnt : 전체 게시글 수
+	//perPgLine : 페이지당 게시글 수
+	//pgGrpCnt : 페이징을 몇개씩 묵을 것인가. ex.3인경우  (1,2,3) (4,5,6)
+	function updatePaging(callFunc, page, allRowCnt, perPgLine, pgGrpCnt){
+		console.log("callFunc = "+callFunc)
+		console.log("page = "+page)
+		console.log("allRowCnt = "+allRowCnt)
+		console.log("perPgLine = "+perPgLine)
+		console.log("pgGrpCnt = "+pgGrpCnt)
+		var boardPager	= $('.ReviewListSection22');	//페이징을 담을 곳
+		var	pager		= drawPager(callFunc, page, allRowCnt, perPgLine, pgGrpCnt);
+				
+		boardPager.empty();
+		boardPager.append(pager);
+	}
+	// drawPager() 함수를 호출하여, 그려진 페이징을 가져오자.
+	function drawPager(callFunc, page, allRowCnt, perPgLine, pgGrpCnt) {
+		var output='';
+		output += '<div class="ReviewListSection22_div">안녕</div>'		
+		
+		return output;
+	} 
+
+
    	$('#basket_btn').on('click',function(){
 		var params=$("#goodsform").serialize();
 		$.ajax({
@@ -1681,8 +1675,7 @@
 			//location.href=url;			
 		}	
    	})
-   </script>
-   <script type="text/javascript">
+
    var loginmember_pic = '<%=MEMBER_PICTURE%>';
    var loginmember_nick = '<%=MEMBER_NICK%>';
       /*장바구니 수량 변경*/
@@ -1897,11 +1890,6 @@
             console.log("sel_files : " + sel_files);            
          } 
       }
-      
-      
-      
-    
-      
       
       //댓글 수정시 이미지 추가 가능(삭제는 deleteImageAction(index) 가능)
       $(document).on("change","#modify_input_imgs",function(e){ 
@@ -3044,24 +3032,20 @@
 
 	 //------------------------------------------- 상품 이미지 관련
 
-			$(document).delegate('.thumbItem', 'click', function() {
-				var idx = $(this).attr('thumb-idx');
-				$('.thumbItem').removeClass('thumbCheck');
-				$(this).addClass('thumbCheck');
-				if (idx == 0) {
-					$('.thumbMain').html('<a href="' + '<%=imgArr[0]%>' + '" target="_blank"><img src="' + '<%=imgArr[0]%>' + '"></a>');
-				} <% if (imgArr.length > 1) { %> else if (idx == 1) {
-					$('.thumbMain').html('<a href="' + '<%=imgArr[1]%>' + '" target="_blank"><img src="' + '<%=imgArr[1]%>' + '"></a>');
-				} <% } if (imgArr.length > 2) { %> else if (idx == 2) {
-					$('.thumbMain').html('<a href="' + '<%=imgArr[2]%>' + '" target="_blank"><img src="' + '<%=imgArr[2]%>' + '"></a>');
-				} <% } if (imgArr.length > 3) { %> else if (idx == 3) {
-					$('.thumbMain').html('<a href="' + '<%=imgArr[3]%>' + '" target="_blank"><img src="' + '<%=imgArr[3]%>' + '"></a>');
-				} <% } if (imgArr.length > 4) { %> else if (idx == 4) {
-					$('.thumbMain').html('<a href="' + '<%=imgArr[4]%>' + '" target="_blank"><img src="' + '<%=imgArr[4]%>' + '"></a>');
-				} <% } %>
-			});
-	 
-      
-   </script>
-   </body>
-</html>
+		$(document).delegate('.thumbItem', 'click', function() {
+			var idx = $(this).attr('thumb-idx');
+			$('.thumbItem').removeClass('thumbCheck');
+			$(this).addClass('thumbCheck');
+			if (idx == 0) {
+				$('.thumbMain').html('<a href="' + '<%=imgArr[0]%>' + '" target="_blank"><img src="' + '<%=imgArr[0]%>' + '"></a>');
+			} <% if (imgArr.length > 1) { %> else if (idx == 1) {
+				$('.thumbMain').html('<a href="' + '<%=imgArr[1]%>' + '" target="_blank"><img src="' + '<%=imgArr[1]%>' + '"></a>');
+			} <% } if (imgArr.length > 2) { %> else if (idx == 2) {
+				$('.thumbMain').html('<a href="' + '<%=imgArr[2]%>' + '" target="_blank"><img src="' + '<%=imgArr[2]%>' + '"></a>');
+			} <% } if (imgArr.length > 3) { %> else if (idx == 3) {
+				$('.thumbMain').html('<a href="' + '<%=imgArr[3]%>' + '" target="_blank"><img src="' + '<%=imgArr[3]%>' + '"></a>');
+			} <% } if (imgArr.length > 4) { %> else if (idx == 4) {
+				$('.thumbMain').html('<a href="' + '<%=imgArr[4]%>' + '" target="_blank"><img src="' + '<%=imgArr[4]%>' + '"></a>');
+			} <% } %>
+		});
+</script>
