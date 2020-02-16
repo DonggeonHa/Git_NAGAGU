@@ -212,7 +212,7 @@
     <select id="workOfferList" parameterType="java.util.HashMap" resultMap="customMap">
     	select * from (select ROW_NUMBER() OVER (ORDER BY B.OFFER_DATE desc) as RNUM , A.ESTIMATE_NICK, A.ESTIMATE_MEMBER, 
     	A.ESTIMATE_TITLE, A.ESTIMATE_CATEGORY, B.OFFER_PRICE, B.OFFER_DATE, A.ESTIMATE_STATE, B.OFFER_STATE, A.ESTIMATE_NUM, B.OFFER_NUM 
-    	from ESTIMATE A, (select * from ESTIMATE_OFFER where OFFER_WORKSHOP = #{OFFER_WORKSHOP}) B
+    	, B.OFFER_CONTENT from ESTIMATE A, (select * from ESTIMATE_OFFER where OFFER_WORKSHOP = #{OFFER_WORKSHOP}) B
     	where A.ESTIMATE_NUM = B.OFFER_ESTIMATE
     	<if test="ESTIMATE_STATE!=null">and A.ESTIMATE_STATE = #{ESTIMATE_STATE}</if>
    		)

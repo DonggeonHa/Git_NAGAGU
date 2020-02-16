@@ -8,8 +8,8 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.spring.estimate.EstimateService;
 
@@ -27,6 +27,7 @@ public class EstimateManagementController {
 	}
 	
 	@RequestMapping(value = "/workshop_offer_list.ws")
+	@ResponseBody
 	public HashMap <String, Object> WorkshopOfferList(HttpServletRequest request, HttpSession session) {
 		String OFFER_WORKSHOP = (String)session.getAttribute("WORKSHOP_NAME");
 		

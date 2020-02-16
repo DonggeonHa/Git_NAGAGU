@@ -341,6 +341,12 @@ public class EstimateController {
 	@RequestMapping(value = "/offer_modify.es", produces="application/json; charset=UTF-8")
 	@ResponseBody
 	public HashMap<String, Object> offerModify (HttpServletRequest request) {
+		System.out.println("modify start");
+		System.out.println(request.getParameter("OFFER_NUM"));
+		System.out.println(request.getParameter("OFFER_ESTIMATE"));
+		System.out.println(request.getParameter("OFFER_PRICE"));
+		System.out.println(request.getParameter("OFFER_CONTENT"));
+		
 		EstimateOfferVO vo = new EstimateOfferVO();
 		vo.setOFFER_NUM(Integer.parseInt(request.getParameter("OFFER_NUM")));
 		vo.setOFFER_ESTIMATE(Integer.parseInt(request.getParameter("OFFER_ESTIMATE")));
