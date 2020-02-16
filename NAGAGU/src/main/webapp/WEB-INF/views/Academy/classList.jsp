@@ -21,58 +21,78 @@
 		WORKSHOP_STATUS = (Integer)session.getAttribute("WORKSHOP_STATUS");
 	}
 	
-	String CLASS_CATEGORY = (String)request.getParameter("CLASS_CATEGORY");
-	String CLASS_AREA = (String)request.getParameter("CLASS_AREA");
+	String CLASS_CATEGORY = (String)request.getAttribute("CLASS_CATEGORY");
+	String CLASS_AREA = (String)request.getAttribute("CLASS_AREA");
 %>
 
-<style>	
+<style>
 	.pagination {
-	  display: inline-block;
-	  margin-bottom:30px;
+		display: inline-block;
+		margin-bottom: 30px;
 	}
+	
 	.pagination a {
-	  color: black;
-	  float: left;
-	  padding: 8px 16px;
-	  text-decoration: none;
+		color: black;
+		float: left;
+		padding: 8px 16px;
+		text-decoration: none;
 	}
+	
 	.pagination a:hover {
-	  background-color: #ef902e;
-	  color:black;
+		background-color: #ef902e;
+		color: black;
 	}
+	
 	.content a, .content a:link, .content a:visited {
 		color: black;
 		text-decoration: none;
 	}
+	
 	.caption {
-	   display: flex;
-	   justify-content: space-around;
-	   border-bottom: 1px solid #EAEAEA;
+		display: flex;
+		justify-content: space-around;
+		border-bottom: 1px solid #EAEAEA;
+		
 	}
+	
 	.search-tap {
-	   border-bottom: 1px solid #EAEAEA;
-	   font-size: 20px;
+		border-bottom: 1px solid #EAEAEA;
+		font-size: 20px;
 	}
-	.search-tap a:hover{
+	
+	.search-tap a:hover {
 		color: #ef900e !important;
 		transform: scale(1.2);
 	}
+	
 	.content a, .content a:link, .content a:hover {
-	   text-decoration: none;
-	   color: black;
+		text-decoration: none;
+		color: black;
 	}
+	
 	.pic {
 		width: 100%;
 		height: 100%;
 	}
-	.title {line-height:26px; color:#645fab; font-size:18px; overflow: hidden; height:1.2em; text-overflow: ellipsis; white-space:nowrap;}
-	 .caption a{ 
-	 	color: rgba(0,0,0,0.3) !important;
-	 	font-weight: 600;
-	 }
-	 .caption .active{
-	 	color: rgba(0,0,0,1) !important;
-	 }
+	
+	.title {
+		line-height: 26px;
+		color: #645fab;
+		font-size: 18px;
+		overflow: hidden;
+		height: 1.2em;
+		text-overflow: ellipsis;
+		white-space: nowrap;
+	}
+	
+	.caption a {
+		color: rgba(0, 0, 0, 0.3) !important;
+		font-weight: 600;
+	}
+	
+	.caption .active {
+		color: rgba(0, 0, 0, 1) !important;
+	}
 </style>
 
 	
@@ -81,15 +101,15 @@
 	<div class="content">
 		<div class="search-tap">
 			<div class="caption py-5">
-				<a id="all_tab" href='./classlist.ac?CLASS_CATEGORY=all&CLASS_AREA=지역'>전체</a> 
-				<a id="table_tab" href='./classlist.ac?CLASS_CATEGORY=table&CLASS_AREA=지역'>책상</a> 
-				<a id="chair_tab"  href='./classlist.ac?CLASS_CATEGORY=chair&CLASS_AREA=지역'>의자</a> 
-				<a id="bookshelf_tab" href='./classlist.ac?CLASS_CATEGORY=bookshelf&CLASS_AREA=지역'>책장</a> 
-				<a id="bed_tab" href='./classlist.ac?CLASS_CATEGORY=bed&CLASS_AREA=지역'>침대</a> 
-				<a id="drawer_tab" href='./classlist.ac?CLASS_CATEGORY=drawer&CLASS_AREA=지역'>서랍장</a> 
-				<a id="sidetable_tab" href='./classlist.ac?CLASS_CATEGORY=sidetable&CLASS_AREA=지역'>협탁</a> 
-				<a id="dressing_table_tab" href='./classlist.ac?CLASS_CATEGORY=dressing_table&CLASS_AREA=지역'>화장대</a> 
-				<a id="others_tab" href='./classlist.ac?CLASS_CATEGORY=others&CLASS_AREA=지역'>기타</a>
+				<a id="all_tab" href='./classlist.ac?CLASS_CATEGORY=all&CLASS_AREA=<%=CLASS_AREA%>'>전체</a> 
+				<a id="table_tab" href='./classlist.ac?CLASS_CATEGORY=table&CLASS_AREA=<%=CLASS_AREA%>'>책상</a> 
+				<a id="chair_tab"  href='./classlist.ac?CLASS_CATEGORY=chair&CLASS_AREA=<%=CLASS_AREA%>'>의자</a> 
+				<a id="bookshelf_tab" href='./classlist.ac?CLASS_CATEGORY=bookshelf&CLASS_AREA=<%=CLASS_AREA%>'>책장</a> 
+				<a id="bed_tab" href='./classlist.ac?CLASS_CATEGORY=bed&CLASS_AREA=<%=CLASS_AREA%>'>침대</a> 
+				<a id="drawer_tab" href='./classlist.ac?CLASS_CATEGORY=drawer&CLASS_AREA=<%=CLASS_AREA%>'>서랍장</a> 
+				<a id="sidetable_tab" href='./classlist.ac?CLASS_CATEGORY=sidetable&CLASS_AREA=<%=CLASS_AREA%>'>협탁</a> 
+				<a id="dressing_table_tab" href='./classlist.ac?CLASS_CATEGORY=dressing_table&CLASS_AREA=<%=CLASS_AREA%>'>화장대</a> 
+				<a id="others_tab" href='./classlist.ac?CLASS_CATEGORY=others&CLASS_AREA=<%=CLASS_AREA%>'>기타</a>
 			</div>
 			<div class="d-flex bd-highlight nav-tag" style="padding: 1% 0;">
 				<div class="mr-auto bd-highlight">
@@ -97,32 +117,32 @@
 						<tr>
 							<td>
 								<select id ="CLASS_AREA" name="CLASS_AREA" class="form-control mr-2" onchange="if(this.value) location.href=(this.value);">
-									<option name="지역" value='./classlist.ac?CLASS_CATEGORY=<%=CLASS_CATEGORY%>&CLASS_AREA=지역'>지역</option>
-									<option name="종로구" value='./classlist.ac?CLASS_CATEGORY=<%=CLASS_CATEGORY%>&CLASS_AREA=종로구'>종로구</option>
-									<option name="중구" value='./classlist.ac?CLASS_CATEGORY=<%=CLASS_CATEGORY%>&CLASS_AREA=중구'>중구</option>
-									<option name="용산구" value='./classlist.ac?CLASS_CATEGORY=<%=CLASS_CATEGORY%>&CLASS_AREA=용산구'>용산구</option>
-									<option name="성동구" value='./classlist.ac?CLASS_CATEGORY=<%=CLASS_CATEGORY%>&CLASS_AREA=성동구'>성동구</option>
-									<option name="광진구" value='./classlist.ac?CLASS_CATEGORY=<%=CLASS_CATEGORY%>&CLASS_AREA=광진구'>광진구</option>
-									<option name="동대문구" value='./classlist.ac?CLASS_CATEGORY=<%=CLASS_CATEGORY%>&CLASS_AREA=동대문구'>동대문구</option>
-									<option name="중랑구" value='./classlist.ac?CLASS_CATEGORY=<%=CLASS_CATEGORY%>&CLASS_AREA=중랑구'>중랑구</option>
-									<option name="성북구" value='./classlist.ac?CLASS_CATEGORY=<%=CLASS_CATEGORY%>&CLASS_AREA=성북구'>성북구</option>
-									<option name="강북구" value='./classlist.ac?CLASS_CATEGORY=<%=CLASS_CATEGORY%>&CLASS_AREA=강북구'>강북구</option>
-									<option name="도봉구" value='./classlist.ac?CLASS_CATEGORY=<%=CLASS_CATEGORY%>&CLASS_AREA=도봉구'>도봉구</option>
-									<option name="노원구" value='./classlist.ac?CLASS_CATEGORY=<%=CLASS_CATEGORY%>&CLASS_AREA=노원구'>노원구</option>
-									<option name="은평구" value='./classlist.ac?CLASS_CATEGORY=<%=CLASS_CATEGORY%>&CLASS_AREA=은평구'>은평구</option>
-									<option name="서대문구" value='./classlist.ac?CLASS_CATEGORY=<%=CLASS_CATEGORY%>&CLASS_AREA=서대문구'>서대문구</option>
-									<option name="마포구" value='./classlist.ac?CLASS_CATEGORY=<%=CLASS_CATEGORY%>&CLASS_AREA=마포구'>마포구</option>
-									<option name="양천구" value='./classlist.ac?CLASS_CATEGORY=<%=CLASS_CATEGORY%>&CLASS_AREA=양천구'>양천구</option>
-									<option name="강서구" value='./classlist.ac?CLASS_CATEGORY=<%=CLASS_CATEGORY%>&CLASS_AREA=강서구'>강서구</option>
-									<option name="구로구" value='./classlist.ac?CLASS_CATEGORY=<%=CLASS_CATEGORY%>&CLASS_AREA=구로구'>구로구</option>
-									<option name="금천구" value='./classlist.ac?CLASS_CATEGORY=<%=CLASS_CATEGORY%>&CLASS_AREA=금천구'>금천구</option>
-									<option name="영등포구" value='./classlist.ac?CLASS_CATEGORY=<%=CLASS_CATEGORY%>&CLASS_AREA=영등포구'>영등포구</option>
-									<option name="동작구" value='./classlist.ac?CLASS_CATEGORY=<%=CLASS_CATEGORY%>&CLASS_AREA=동작구'>동작구</option>
-									<option name="관악구" value='./classlist.ac?CLASS_CATEGORY=<%=CLASS_CATEGORY%>&CLASS_AREA=관악구'>관악구</option>
-									<option name="서초구" value='./classlist.ac?CLASS_CATEGORY=<%=CLASS_CATEGORY%>&CLASS_AREA=서초구'>서초구</option>
-									<option name="강남구" value='./classlist.ac?CLASS_CATEGORY=<%=CLASS_CATEGORY%>&CLASS_AREA=강남구'>강남구</option>
-									<option name="송파구" value='./classlist.ac?CLASS_CATEGORY=<%=CLASS_CATEGORY%>&CLASS_AREA=송파구'>송파구</option>
-									<option name="강동구" value='./classlist.ac?CLASS_CATEGORY=<%=CLASS_CATEGORY%>&CLASS_AREA=강동구'>강동구</option>
+									<option name="지역" value='./classlist.ac?CLASS_CATEGORY=<%=CLASS_CATEGORY%>&CLASS_AREA=<%=CLASS_AREA%>'>지역</option>
+									<option name="종로구" value='./classlist.ac?CLASS_CATEGORY=<%=CLASS_CATEGORY%>&CLASS_AREA=<%=CLASS_AREA%>'>종로구</option>
+									<option name="중구" value='./classlist.ac?CLASS_CATEGORY=<%=CLASS_CATEGORY%>&CLASS_AREA=<%=CLASS_AREA%>'>중구</option>
+									<option name="용산구" value='./classlist.ac?CLASS_CATEGORY=<%=CLASS_CATEGORY%>&CLASS_AREA=<%=CLASS_AREA%>'>용산구</option>
+									<option name="성동구" value='./classlist.ac?CLASS_CATEGORY=<%=CLASS_CATEGORY%>&CLASS_AREA=<%=CLASS_AREA%>'>성동구</option>
+									<option name="광진구" value='./classlist.ac?CLASS_CATEGORY=<%=CLASS_CATEGORY%>&CLASS_AREA=<%=CLASS_AREA%>'>광진구</option>
+									<option name="동대문구" value='./classlist.ac?CLASS_CATEGORY=<%=CLASS_CATEGORY%>&CLASS_AREA=<%=CLASS_AREA%>'>동대문구</option>
+									<option name="중랑구" value='./classlist.ac?CLASS_CATEGORY=<%=CLASS_CATEGORY%>&CLASS_AREA=<%=CLASS_AREA%>'>중랑구</option>
+									<option name="성북구" value='./classlist.ac?CLASS_CATEGORY=<%=CLASS_CATEGORY%>&CLASS_AREA=<%=CLASS_AREA%>'>성북구</option>
+									<option name="강북구" value='./classlist.ac?CLASS_CATEGORY=<%=CLASS_CATEGORY%>&CLASS_AREA=<%=CLASS_AREA%>'>강북구</option>
+									<option name="도봉구" value='./classlist.ac?CLASS_CATEGORY=<%=CLASS_CATEGORY%>&CLASS_AREA=<%=CLASS_AREA%>'>도봉구</option>
+									<option name="노원구" value='./classlist.ac?CLASS_CATEGORY=<%=CLASS_CATEGORY%>&CLASS_AREA=<%=CLASS_AREA%>'>노원구</option>
+									<option name="은평구" value='./classlist.ac?CLASS_CATEGORY=<%=CLASS_CATEGORY%>&CLASS_AREA=<%=CLASS_AREA%>'>은평구</option>
+									<option name="서대문구" value='./classlist.ac?CLASS_CATEGORY=<%=CLASS_CATEGORY%>&CLASS_AREA=<%=CLASS_AREA%>'>서대문구</option>
+									<option name="마포구" value='./classlist.ac?CLASS_CATEGORY=<%=CLASS_CATEGORY%>&CLASS_AREA=<%=CLASS_AREA%>'>마포구</option>
+									<option name="양천구" value='./classlist.ac?CLASS_CATEGORY=<%=CLASS_CATEGORY%>&CLASS_AREA=<%=CLASS_AREA%>'>양천구</option>
+									<option name="강서구" value='./classlist.ac?CLASS_CATEGORY=<%=CLASS_CATEGORY%>&CLASS_AREA=<%=CLASS_AREA%>'>강서구</option>
+									<option name="구로구" value='./classlist.ac?CLASS_CATEGORY=<%=CLASS_CATEGORY%>&CLASS_AREA=<%=CLASS_AREA%>'>구로구</option>
+									<option name="금천구" value='./classlist.ac?CLASS_CATEGORY=<%=CLASS_CATEGORY%>&CLASS_AREA=<%=CLASS_AREA%>'>금천구</option>
+									<option name="영등포구" value='./classlist.ac?CLASS_CATEGORY=<%=CLASS_CATEGORY%>&CLASS_AREA=<%=CLASS_AREA%>'>영등포구</option>
+									<option name="동작구" value='./classlist.ac?CLASS_CATEGORY=<%=CLASS_CATEGORY%>&CLASS_AREA=<%=CLASS_AREA%>'>동작구</option>
+									<option name="관악구" value='./classlist.ac?CLASS_CATEGORY=<%=CLASS_CATEGORY%>&CLASS_AREA=<%=CLASS_AREA%>'>관악구</option>
+									<option name="서초구" value='./classlist.ac?CLASS_CATEGORY=<%=CLASS_CATEGORY%>&CLASS_AREA=<%=CLASS_AREA%>'>서초구</option>
+									<option name="강남구" value='./classlist.ac?CLASS_CATEGORY=<%=CLASS_CATEGORY%>&CLASS_AREA=<%=CLASS_AREA%>'>강남구</option>
+									<option name="송파구" value='./classlist.ac?CLASS_CATEGORY=<%=CLASS_CATEGORY%>&CLASS_AREA=<%=CLASS_AREA%>'>송파구</option>
+									<option name="강동구" value='./classlist.ac?CLASS_CATEGORY=<%=CLASS_CATEGORY%>&CLASS_AREA=<%=CLASS_AREA%>'>강동구</option>
 								</select>
 							</td>
 							<td>&nbsp;</td>
@@ -191,58 +211,57 @@
 					}
 			%>
 					</div>
+					<!-- pagenation -->
+					<div class="row justify-content-center">
+						<% 
+							if(nowpage <= 1) { 
+						%>
+								&laquo;&nbsp;
+						<% 
+							} 
+							else { 
+						%>
+								<a href ="./classlist.ac?page=<%=nowpage-1%>">&laquo;</a>
+						<%	
+							} 
+						%>
+							
+						<%
+							for(int a = startpage; a <= endpage; a++) {
+									if(a == nowpage) { 
+						%>
+										<%=a%> <!-- 현재 보고있는 페이지에는 링크를 걸지 않겠다. -->
+						<% 
+									} else { 
+						%>
+										<a href="./classlist.ac?page=<%=a%>">&nbsp;<%=a%>&nbsp;</a>
+						<% 
+									}
+							}
+						%>	
+		
+						<!-- 현재 보는 페이지가 마지막 페이지 이면 -->
+						<%
+							if(nowpage >= maxpage) {  
+						%> 
+								&nbsp;&raquo;
+						<%	
+							} else { 
+						%>
+								<a href="./classlist.ac?page=<%=nowpage+1%>">&raquo;</a>
+						<%
+							} 
+						%>
+					</div>
 			<%
 				} else {
 			%>
-				<div class="text-center">
-					<p> 현재 진행중인 강의가 없습니다. </p>
-				</div>
+					<div class="text-center">
+						<p> 현재 진행중인 강의가 없습니다. </p>
+					</div>
 			<%
 				}
 			%>
-			
-			<!-- pagenation -->
-			<div class="row justify-content-center">
-				<% 
-					if(nowpage <= 1) { 
-				%>
-						&laquo;&nbsp;
-				<% 
-					} 
-					else { 
-				%>
-						<a href ="./classlist.ac?page=<%=nowpage-1%>">&laquo;</a>
-				<%	
-					} 
-				%>
-					
-				<%
-					for(int a = startpage; a <= endpage; a++) {
-							if(a == nowpage) { 
-				%>
-								<%=a%> <!-- 현재 보고있는 페이지에는 링크를 걸지 않겠다. -->
-				<% 
-							} else { 
-				%>
-								<a href="./classlist.ac?page=<%=a%>">&nbsp;<%=a%>&nbsp;</a>
-				<% 
-							}
-					}
-				%>	
-
-				<!-- 현재 보는 페이지가 마지막 페이지 이면 -->
-				<%
-					if(nowpage >= maxpage) {  
-				%> 
-						&nbsp;&raquo;
-				<%	
-					} else { 
-				%>
-						<a href="./classlist.ac?page=<%=nowpage+1%>">&raquo;</a>
-				<%
-					} 
-				%>
-			</div>
 		</div>
 	</div>
 </div>

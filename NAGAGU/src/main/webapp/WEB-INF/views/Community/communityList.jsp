@@ -31,10 +31,6 @@
 		border-bottom: 1px solid #EAEAEA;
 	}
 	
-	.caption {
-		border-bottom: 1px solid #EAEAEA;
-	}
-	
 	/* .main-content { */
 	/* 	margin: 0 0 100px 0; */
 	/* } */
@@ -538,6 +534,7 @@
 	$(document).on('click', 'a[href="#"]', function(e){
 		e.preventDefault();
 	});
+	
 	//카테고리 카테고리 css활성화
 	$(document).ready(function(){
 		var category = '<%=PICS_CATEGORY%>';  

@@ -27,7 +27,7 @@
 				<col style="width:80%">
 			</colgroup>
 			<tr>
-				<th>클래스 구분</th>
+				<th style="vertical-align:middle">클래스 구분</th>
 				<td>
 					<div class="row">
 						<div class="custom-control custom-radio" style="margin-right: 2%">
@@ -43,7 +43,7 @@
 				
 			</tr>
 			<tr>
-				<th>클래스 이름</th>
+				<th style="vertical-align:middle">클래스 이름</th>
 				<td>
 				 	<div class="row">
 				 		<div class="input_box" style="width:670px">
@@ -53,7 +53,7 @@
 				</td>
 			</tr>
 			<tr>
-				<th>클래스 간단소개</th>
+				<th style="vertical-align:middle">클래스 간단소개</th>
 				<td>
 				 	<div class="row">
 				 		<div class="input_box" style="width:670px">
@@ -63,7 +63,7 @@
 				</td>
 			</tr>
 			<tr>
-				<th>클래스 금액</th>
+				<th style="vertical-align:middle">클래스 금액</th>
 				<td>
 				 	<div class="row">
 				 		<div class="input_box" style="margin-right: 10px;">
@@ -76,7 +76,7 @@
 				</td>
 			</tr>
 			<tr>      
-                   <th>클래스 날짜구성</th>
+                   <th style="vertical-align:middle">클래스 날짜구성</th>
                    <td>
                    	<div class="row" id="Default" style="color: #EF900E">
                    		클래스를 선택해주세요
@@ -84,78 +84,78 @@
                   		<!-- 정규클래스 -->
                   		<div id="Regular" style="display: none;">
                   			<div class="row">
-	                    	<div style="margin: 0 1% 0 0;">
-								<div class="form-group" style="margin-bottom: 0;">
-									<div class="input-group date" id="datetimepicker1" data-target-input="nearest">
-										<input type="text" class="form-control datetimepicker-input" data-target="#datetimepicker1" name="CLASS_DATE_CONFIGURATION_1"/>
-										<div class="input-group-append" data-target="#datetimepicker1" data-toggle="datetimepicker">
-											<div class="input-group-text">
-												<i class="fa fa-calendar"></i>
+		                    	<div style="margin: 0 1% 0 0;">
+									<div class="form-group" style="margin-bottom: 0;">
+										<div class="input-group date" id="datetimepicker1" data-target-input="nearest">
+											<input type="text" class="form-control datetimepicker-input" data-target="#datetimepicker1" name="CLASS_DATE_CONFIGURATION_1"/>
+											<div class="input-group-append" data-target="#datetimepicker1" data-toggle="datetimepicker">
+												<div class="input-group-text">
+													<i class="fa fa-calendar"></i>
+												</div>
 											</div>
 										</div>
 									</div>
 								</div>
-							</div>
-							<div class="d-flex align-items-center">
-                   				&nbsp;부터&nbsp;
-                   			</div>
-                   			<div style="margin: 0 1% 0 1%;">
-								<div class="form-group" style="margin-bottom: 0;">
-									<div class="input-group date" id="datetimepicker2" data-target-input="nearest">
-										<input type="text" class="form-control datetimepicker-input" data-target="#datetimepicker2" name="CLASS_DATE_CONFIGURATION_2"/>
-										<div class="input-group-append" data-target="#datetimepicker2" data-toggle="datetimepicker">
-											<div class="input-group-text">
-												<i class="fa fa-calendar"></i>
+								<div class="d-flex align-items-center">
+	                   				&nbsp;부터&nbsp;
+	                   			</div>
+	                   			<div style="margin: 0 1% 0 1%;">
+									<div class="form-group" style="margin-bottom: 0;">
+										<div class="input-group date" id="datetimepicker2" data-target-input="nearest">
+											<input type="text" class="form-control datetimepicker-input" data-target="#datetimepicker2" name="CLASS_DATE_CONFIGURATION_2"/>
+											<div class="input-group-append" data-target="#datetimepicker2" data-toggle="datetimepicker">
+												<div class="input-group-text">
+													<i class="fa fa-calendar"></i>
+												</div>
 											</div>
 										</div>
 									</div>
 								</div>
-							</div>
-							<div class="d-flex align-items-center">
-                   				&nbsp;까지&nbsp;
-                   			</div>
+								<div class="d-flex align-items-center">
+	                   				&nbsp;까지&nbsp;
+	                   			</div>
                   			</div>
-                 			</div>
+                 		</div>
                   			
                  			<!-- 원데이 클래스 -->
-                 			<div id="Oneday" style="display: none;">
-                 				<div class="row">
-	                    	<div style="margin: 0 1% 0 0;">
-								<div class="form-group" style="margin-bottom: 0;">
-									<div class="input-group date" id="datetimepicker3" data-target-input="nearest">
-										<input type="text" class="form-control datetimepicker-input" data-target="#datetimepicker3" name="CLASS_DATE_CONFIGURATION_1"/>
-										<div class="input-group-append" data-target="#datetimepicker3" data-toggle="datetimepicker">
-											<div class="input-group-text">
-												<i class="fa fa-calendar"></i>
+                 		<div id="Oneday" style="display: none;">
+                 			<div class="row">
+		                    	<div style="margin: 0 1% 0 0;">
+									<div class="form-group" style="margin-bottom: 0;">
+										<div class="input-group date" id="datetimepicker3" data-target-input="nearest">
+											<input type="text" class="form-control datetimepicker-input" data-target="#datetimepicker3" name="CLASS_DATE_CONFIGURATION_1"/>
+											<div class="input-group-append" data-target="#datetimepicker3" data-toggle="datetimepicker">
+												<div class="input-group-text">
+													<i class="fa fa-calendar"></i>
+												</div>
 											</div>
 										</div>
 									</div>
 								</div>
-							</div>
-							<div class="d-flex align-items-center">
-                   				&nbsp;부터&nbsp;
-                   			</div>
-                   			<div style="margin: 0 1% 0 1%;">
-								<div class="form-group" style="margin-bottom: 0;">
-									<div class="input-group date" id="datetimepicker4" data-target-input="nearest">
-										<input type="text" class="form-control datetimepicker-input" data-target="#datetimepicker4" name="CLASS_DATE_CONFIGURATION_2"/>
-										<div class="input-group-append" data-target="#datetimepicker4" data-toggle="datetimepicker">
-											<div class="input-group-text">
-												<i class="fa fa-calendar"></i>
+								<div class="d-flex align-items-center">
+	                   				&nbsp;부터&nbsp;
+	                   			</div>
+	                   			<div style="margin: 0 1% 0 1%;">
+									<div class="form-group" style="margin-bottom: 0;">
+										<div class="input-group date" id="datetimepicker4" data-target-input="nearest">
+											<input type="text" class="form-control datetimepicker-input" data-target="#datetimepicker4" name="CLASS_DATE_CONFIGURATION_2"/>
+											<div class="input-group-append" data-target="#datetimepicker4" data-toggle="datetimepicker">
+												<div class="input-group-text">
+													<i class="fa fa-calendar"></i>
+												</div>
 											</div>
 										</div>
 									</div>
 								</div>
-							</div>
-							<div class="d-flex align-items-center">
-                   				&nbsp;까지&nbsp; 입니다
-                   			</div>
-                  			</div>
-                 			</div>
-                   </td>
-               </tr>
-               <tr>
-               	<th>지역정보</th>
+								<div class="d-flex align-items-center">
+	                   				&nbsp;까지&nbsp; 입니다
+	                   			</div>
+               				</div>
+						</div>
+					</td>
+				</tr>
+				<tr>
+               	<th style="vertical-align:middle">지역정보</th>
 				<td>
 					<div class="row">
 						<div>
@@ -192,7 +192,7 @@
 				</td>
 			</tr>
 			<tr>
-				<th>카테고리</th>
+				<th style="vertical-align:middle">카테고리</th>
 				<td>
 					<div class="row">
 						<div>
@@ -212,7 +212,7 @@
 				</td>
 			</tr>
 			<tr>      
-                   <th>공방을 소개해요</th>
+                   <th style="vertical-align:middle">공방을 소개해요</th>
                    <td>
 					<div class="row">
 						<textarea id="summernote1" name="CLASS_INTRODUCTION_1"></textarea>
@@ -220,7 +220,7 @@
                    </td>
                </tr>
                <tr>      
-                   <th>이렇게 진행해요</th>
+                   <th style="vertical-align:middle">이렇게 진행해요</th>
                    <td>
 					<div class="row">
 						<textarea id="summernote2" name="CLASS_INTRODUCTION_2"></textarea>
@@ -228,7 +228,7 @@
                    </td>
                </tr>
                <tr>      
-                   <th>함께하고 싶어요</th>
+                   <th style="vertical-align:middle">함께하고 싶어요</th>
                    <td>
 					<div class="row">
 						<textarea id="summernote3" name="CLASS_INTRODUCTION_3"></textarea>
@@ -236,7 +236,7 @@
                    </td>
                </tr>
                <tr>      
-               	<th>환불규정</th>
+               	<th style="vertical-align:middle">환불규정</th>
                	<td style="min-height:330px">
                		<div class="row" style="width:690px; font-size:12pt;line-height:16pt;">
                			<p>NAGAGU의 결제 취소 및 환불 규정은 관련 법령인 &lt;학원의 설립ㆍ운영 및 과외교습에 관한 법률 시행령 [별표4] [시행 2017.3.21.]&gt;의 &lt;교습비 등 반환기준(제18조 제3항 관련)&gt;을 준수합니다.</p>
@@ -263,7 +263,7 @@
                	</td>
                </tr>
                <tr>
-				<th>기타사항</th>
+				<th style="vertical-align:middle">기타사항</th>
 				<td>
 					<div class="row">
 				 		<div class="input_box" style="width:670px">
@@ -273,7 +273,7 @@
 				</td>
                </tr>
                <tr>
-               	<th>상단배너 등록</th>
+               	<th style="vertical-align:middle">상단배너 등록</th>
                	<td>
                		<div class="row" style="width:670px">
 						<div class="custom-file">
@@ -287,7 +287,7 @@
 				</td>
 			</tr>
 			<tr>
-				<th>대표이미지 등록</th>
+				<th style="vertical-align:middle">대표이미지 등록</th>
 				<td>
 					<div class="row">
 						<div class="custom-file">
@@ -300,7 +300,7 @@
 				</td>
 			</tr>
 			<tr>
-				<th>클래스 장소</th>
+				<th style="vertical-align:middle">클래스 장소</th>
 				<td>
 					<div class="row">
 						<div class="d-flex bd-highlight">
@@ -308,9 +308,9 @@
                             <input type = "button" onclick="execDaumPostcode()" value = "주소검색" class="flex-fill bd-highlight">
                             <input id= "detailAddress" class = "txtInp form-control flex-fill bd-highlight" type = "text" name = "CLASS_DETAIL_ADDRESS" placeholder = "상세 주소를 입력해주세요." style = "width: 250px;"/>
                             <input id="extraAddress" type="hidden" placeholder="참고항목">
-                           </div>
-                          </div>
-                      </td>
+                    	</div>
+                	</div>
+				</td>
 			</tr>
 		</table>
 		<div class="text-center">

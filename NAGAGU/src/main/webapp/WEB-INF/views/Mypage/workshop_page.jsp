@@ -150,9 +150,7 @@
 		height: 25vh;
 	}
 	
-	.container-mypage{
-		margin: 50px 0;
-	}
+
 	
 	.like-wrap, .pics-wrap{
 		border-top: 1px solid black;
@@ -161,7 +159,7 @@
 
 </style>
 
-<div class="container container-mypage">
+<div class="container">
 	<div class="wrapper row justify-content-between">
 		<div class="col-10 nickNameTap">
 			<div>

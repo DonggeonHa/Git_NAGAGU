@@ -5,8 +5,7 @@
 	String ESTIMATE_NICK = (String)session.getAttribute("MEMBER_NICK");
 %>
 
-<!-- GOOGLE FONT -->
-
+<link href="https://cdn.jsdelivr.net/npm/summernote@0.8.15/dist/summernote.min.css" rel="stylesheet">
 <style>
 	.store_estimateform {
 		width:100%;
@@ -32,7 +31,6 @@
 		height:120px;
 		border:2px solid #808080;
 		border-radius:4px;
-		margin:0 auto;
 		overflow-y:hidden;
 		overflow-x:auto;
 		white-space:nowrap;
@@ -138,170 +136,212 @@
 	}
 </style>
 
-<div class="container category_st">
-	<form id="estimate" name="store_estimateform" class="store_estimateform" action="./estimate_input.es" method="post"	enctype="multipart/form-data">
-	<input type="hidden" name="ESTIMATE_MEMBER" value=<%=ESTIMATE_MEMBER%>>
-	<input type="hidden" name="ESTIMATE_NICK" value=<%=ESTIMATE_NICK%>>
-	<input type="hidden" id="ESTIMATE_FILE" NAME="ESTIMATE_FILE">
-	<br />
-	<br />
-	<br />
-	<input type="file" id="input_file" multiple="multiple" name="ESTIMATE_FILE" style="display:none">
-	<br/><br/>
-	<div id="dropZone" class="row">
-		<div id="fileDragDesc">클릭 또는 파일을 드래그 해주세요.</div>
+<div class="container" style="margin-top: 30px; margin-bottom: 30px;">
+	<div class="text-center">
+		<h1>견적 등록</h1>
+		<hr style="width:800px;">
 	</div>
-		<div class="row text-center pt-1 pb-1 ">
-			<div class="col-md-4 d-flex justify-content-end title">제목</div>
-			<div class="col-md-8 d-flex justify-content-start">
-				<input type="text" id="ESTIMATE_TITLE" name="ESTIMATE_TITLE" size="50" maxlength="30" placeholder="제목을 입력하세요 ">
-			</div>
-		</div>
-		<div class="row text-center pt-1 pb-1 ">
-			<div class="col-md-4 d-flex justify-content-end title">배송희망지역</div>
-			<div class="col-md-8 d-flex justify-content-start">
-				<input type="text" id="ESTIMATE_AREA" name="ESTIMATE_AREA" size="50" maxlength="30" placeholder="배송을 원하는 지역을 입력하세요">
-			</div>
-		</div>
-		<div class="row text-center pt-1 pb-1 ">
-			<div class="col-md-4 d-flex justify-content-end title">카테고리</div>
-			<div class="col-md-8 d-flex justify-content-start">
-				<select name="ESTIMATE_CATEGORY" id="ESTIMATE_CATEGORY">
-					<option value="all" selected>전체</option>
-					<option value="table">책상</option>
-					<option value="chair">의자</option>
-					<option value="bookshelf">책장</option>
-					<option value="bed">침대</option>
-					<option value="drawer">서랍장</option>
-					<option value="sidetable">협탁</option>
-					<option value="dressing_table">화장대</option>
-					<option value="others">기타</option>
-				</select>
-			</div>
-		</div>
-		<div class="row text-center">
-			<div class="col-md-4 d-flex justify-content-end title">소재</div>
-			<div class="col-md-8 d-flex justify-content-start">
-				<input type="text" id="ESTIMATE_SOURCE" name="ESTIMATE_SOURCE" size="50" maxlength="20"
-					placeholder="ex)편백나무 원목(상판), 소나무 (하부)">
-			</div>
-		</div>
-		<div class="row text-center">
-			<div class="col-md-4 d-flex justify-content-end title">색상(염색)</div>
-			<div class="col-md-8 d-flex justify-content-start">
-				<input type="text" id="ESTIMATE_COLOR" name="ESTIMATE_COLOR" size="50" maxlength="20"
-					placeholder="ex)투명, 블루..">
-			</div>
-		</div>
-		<div class="row text-center pt-1 pb-1">
-			<div class="col-md-4 d-flex justify-content-end title">코팅</div>
-			<div class="col-md-8 d-flex justify-content-start">
-				<label id="coat_yes" class="coat_label coat_uncheck" for="check_yes"><input type="radio" id="check_yes" class="coat_radio" name="ESTIMATE_COAT" value="코팅"> 원함</label> &nbsp;&nbsp; 
-				<label id="coat_no" class="coat_label coat_uncheck" for="check_no"><input type="radio" id="check_no" class="coat_radio" name="ESTIMATE_COAT" value="코팅 안함"> 원하지 않음</label>
-			</div>
-		</div>
-		<div class="row text-center">
-			<div class="col-md-4 d-flex justify-content-end title">규격</div>
-			<div class="col-md-8 d-flex justify-content-start">
-				<input type="text" id="ESTIMATE_SIZE" name="ESTIMATE_SIZE" size="50" maxlength="50"
-					placeholder="ex)가로100*세로150*높이200 ">
-			</div>
-		</div>
-		<div class="row text-center">
-			<div class="col-md-4 d-flex justify-content-end title">결제 방법</div>
-			<div class="col-md-8 d-flex justify-content-start">
-				<input type="hidden" id="ESTIMATE_PAY" name="ESTIMATE_PAY">
-				<ul class="nav nav-pills mb-3 table table-bordered" id="pills-tab"
-					role="tablist">
-					<li class="nav-item payment" value="card"><a
-						class="nav-link bt active" id="pills-card-tab" data-toggle="pill"
-						href="#pills-card" role="tab" aria-controls="pills-home"
-						aria-selected="true"> <label> <img width="64"
-								src="https://bucketplace-v2-development.s3.amazonaws.com/pg/card.png"
-								alt="Card">
-								<div class="text-center">
-									<font color="black">카드</font>
-								</div>
+	<form id="estimate" name="store_estimateform" class="store_estimateform" action="./estimate_input.es" method="post"	enctype="multipart/form-data">
+		<input type="hidden" name="ESTIMATE_MEMBER" value=<%=ESTIMATE_MEMBER%>>
+		<input type="hidden" name="ESTIMATE_NICK" value=<%=ESTIMATE_NICK%>>
+		<input type="hidden" id="ESTIMATE_FILE" NAME="ESTIMATE_FILE">
+		<table class="table table-borderless d-flex justify-content-center">
+			<tbody>
+				<tr>
+					<th style="vertical-align:middle">견적사진</th>
+					<td>
+						<input type="file" id="input_file" multiple="multiple" name="ESTIMATE_FILE" style="display:none">
+						<div id="dropZone" class="">
+							<div id="fileDragDesc" class="text-center">클릭 또는 파일을 드래그 해주세요.</div>
+						</div>
+					</td>
+				</tr>
+				<tr>
+					<th style="vertical-align:middle">제목</th>
+					<td>
+						<input type="text" class="form-control" id="ESTIMATE_TITLE" name="ESTIMATE_TITLE" size="50" maxlength="30" placeholder="제목을 입력하세요">
+					</td>
+				</tr>
+				<tr>
+					<th style="vertical-align:middle">배송희망지역</th>
+					<td>
+						<input type="text" class="form-control" id="ESTIMATE_AREA" name="ESTIMATE_AREA" size="50" maxlength="30" placeholder="배송을 원하는 지역을 입력하세요">
+					</td>
+				</tr>
+				<tr>
+					<th style="vertical-align:middle">카테고리</th>
+					<td>
+						<select name="ESTIMATE_CATEGORY" id="ESTIMATE_CATEGORY" class="form-control">
+							<option value="all" selected>전체</option>
+							<option value="table">책상</option>
+							<option value="chair">의자</option>
+							<option value="bookshelf">책장</option>
+							<option value="bed">침대</option>
+							<option value="drawer">서랍장</option>
+							<option value="sidetable">협탁</option>
+							<option value="dressing_table">화장대</option>
+							<option value="others">기타</option>
+						</select>
+					</td>
+				</tr>
+				<tr>
+					<th style="vertical-align:middle">소재</th>
+					<td>
+						<input type="text" id="ESTIMATE_SOURCE" name="ESTIMATE_SOURCE" class="form-control" size="50" maxlength="20" placeholder="ex)편백나무 원목(상판), 소나무 (하부)">
+					</td>
+				</tr>
+				<tr>
+					<th style="vertical-align:middle">색상(염색)</th>
+					<td>
+						<input type="text" id="ESTIMATE_COLOR" name="ESTIMATE_COLOR" class="form-control" size="50" maxlength="20" placeholder="ex)투명, 블루..">
+					</td>
+				</tr>
+				<tr>
+					<th style="vertical-align:middle">코팅</th>
+					<td>
+						<label id="coat_yes" class="coat_label coat_uncheck" for="check_yes">
+							<input type="radio" id="check_yes" class="coat_radio" name="ESTIMATE_COAT" value="코팅"> 
+							원함
+						</label> &nbsp;&nbsp; 
+						<label id="coat_no" class="coat_label coat_uncheck" for="check_no">
+							<input type="radio" id="check_no" class="coat_radio" name="ESTIMATE_COAT" value="코팅 안함"> 
+							원하지 않음
 						</label>
-					</a></li>
-					<li class="nav-item payment" value="nobook"><a
-						class="nav-link bt" id="pills-vbank-tab" data-toggle="pill"
-						href="#pills-vbank" role="tab" aria-controls="pills-home"
-						aria-selected="true"> <label> <img width="64"
-								src="https://bucketplace-v2-development.s3.amazonaws.com/pg/vbank.png"
-								alt="Vbank">
-								<div class="text-center">
-									<font color="black">무통장입금</font>
-								</div>
-						</label>
-					</a></li>
-					<li class="nav-item payment" value="phone"><a
-						class="nav-link bt" id="pills-phone-tab" data-toggle="pill"
-						href="#pills-phone" role="tab" aria-controls="pills-home"
-						aria-selected="true"> <label> <img width="64"
-								src="https://bucketplace-v2-development.s3.amazonaws.com/pg/phone.png"
-								alt="Phone">
-								<div class="text-center">
-									<font color="black">핸드폰</font>
-								</div>
-						</label>
-					</a></li>
-					<li class="nav-item payment" value="toss"><a class="nav-link bt"
-						id="pills-toss-tab" data-toggle="pill" href="#pills-toss"
-						role="tab" aria-controls="pills-home" aria-selected="true"> <label>
-								<img width="64"
-								src="https://bucketplace-v2-development.s3.amazonaws.com/pg/toss.png"
-								alt="Toss">
-								<div class="text-center">
-									<font color="black">토스</font>
-								</div>
-						</label>
-					</a></li>
-					<li class="nav-item payment" value="naver"><a
-						class="nav-link bt" id="pills-naver-tab" data-toggle="pill"
-						href="#pills-naver" role="tab" aria-controls="pills-home"
-						aria-selected="true"> <label> <img width="64"
-								src="https://bucketplace-v2-development.s3.amazonaws.com/pg/naver.png"
-								alt="Naver">
-								<div class="text-center">
-									<font color="black">네이버페이</font>
-								</div>
-						</label>
-					</a></li>
-					<li class="nav-item payment" value="kakao"><a
-						class="nav-link bt" id="pills-kakao-tab" data-toggle="pill"
-						href="#pills-kakao" role="tab" aria-controls="pills-home"
-						aria-selected="true"> <label> <img width="64"
-								src="${pageContext.request.contextPath}/resources/images/Mypage/kakao.png"
-								alt="Kakao">
-								<div class="text-center">
-									<font color="black">카카오페이</font>
-								</div>
-						</label>
-					</a></li>
-				</ul>
-			</div>
-		</div>
-		<div class="row text-center pt-1 pb-1">
-			<div class="col-md-4 d-flex justify-content-end title">기타</div>
-			<div class="col-md-8 d-flex justify-content-start">
-				<textarea name="ESTIMATE_CONTENT" placeholder="기타 설명 (500자 까지)" cols="54" maxlength="500"
-					rows="15"></textarea>
-			</div>
-		</div>
-
-		<div class="row justify-content-center pt-5">
+					</td>
+				</tr>
+				<tr>
+					<th style="vertical-align:middle">규격</th>
+					<td>
+						<input type="text" id="ESTIMATE_SIZE" name="ESTIMATE_SIZE" class="form-control" size="50" maxlength="50" placeholder="ex)가로100*세로150*높이200 ">
+					</td>
+				</tr>
+				<tr>
+					<th style="vertical-align:middle">결제 방법</th>
+					<td>
+						<input type="hidden" id="ESTIMATE_PAY" name="ESTIMATE_PAY">
+						<ul class="nav nav-pills mb-3 table table-bordered" id="pills-tab" role="tablist">
+							<li class="nav-item payment" value="card">
+								<a class="nav-link bt active" id="pills-card-tab" data-toggle="pill" href="#pills-card" role="tab" aria-controls="pills-home" aria-selected="true"> 
+									<label> 
+										<img width="64" src="https://bucketplace-v2-development.s3.amazonaws.com/pg/card.png" alt="Card">
+										<div class="text-center">
+											<font color="black">카드</font>
+										</div>
+									</label>
+								</a>
+							</li>
+							<li class="nav-item payment" value="nobook">
+								<a class="nav-link bt" id="pills-vbank-tab" data-toggle="pill" href="#pills-vbank" role="tab" aria-controls="pills-home" aria-selected="true"> 
+									<label> 
+										<img width="64" src="https://bucketplace-v2-development.s3.amazonaws.com/pg/vbank.png" alt="Vbank">
+										<div class="text-center">
+											<font color="black">무통장입금</font>
+										</div>
+									</label>
+								</a>
+							</li>
+							<li class="nav-item payment" value="phone">
+								<a class="nav-link bt" id="pills-phone-tab" data-toggle="pill" href="#pills-phone" role="tab" aria-controls="pills-home" aria-selected="true"> 
+									<label> 
+										<img width="64"	src="https://bucketplace-v2-development.s3.amazonaws.com/pg/phone.png" alt="Phone">
+										<div class="text-center">
+											<font color="black">핸드폰</font>
+										</div>
+									</label>
+								</a>
+							</li>
+							<li class="nav-item payment" value="toss">
+								<a class="nav-link bt" id="pills-toss-tab" data-toggle="pill" href="#pills-toss" role="tab" aria-controls="pills-home" aria-selected="true"> 
+									<label> 
+										<img width="64"	src="https://bucketplace-v2-development.s3.amazonaws.com/pg/toss.png" alt="Toss">
+										<div class="text-center">
+											<font color="black">토스</font>
+										</div>
+									</label>
+								</a>
+							</li>
+							<li class="nav-item payment" value="naver">
+								<a class="nav-link bt" id="pills-naver-tab" data-toggle="pill" href="#pills-naver" role="tab" aria-controls="pills-home" aria-selected="true"> 
+									<label> 
+										<img width="64"	src="https://bucketplace-v2-development.s3.amazonaws.com/pg/naver.png" alt="Naver">
+										<div class="text-center">
+											<font color="black">네이버페이</font>
+										</div>
+									</label>
+								</a>
+							</li>
+							<li class="nav-item payment" value="kakao">
+								<a class="nav-link bt" id="pills-kakao-tab" data-toggle="pill" href="#pills-kakao" role="tab" aria-controls="pills-home" aria-selected="true"> 
+									<label> 
+										<img width="64"	src="${pageContext.request.contextPath}/resources/images/Mypage/kakao.png" alt="Kakao">
+										<div class="text-center">
+											<font color="black">카카오페이</font>
+										</div>
+									</label>
+								</a>
+							</li>
+						</ul>
+					</td>
+				</tr>
+				<tr>
+					<th style="vertical-align:middle">기타</th>
+					<td>
+						<textarea id="ESTIMATE_CONTENT" name="ESTIMATE_CONTENT" placeholder="기타 설명 (500자 까지)" maxlength="500"></textarea>
+					</td>
+				</tr>
+			</tbody>
+		</table>
+		<div class="row justify-content-center pt-3">
 			<button type="button" id="btn_estimate" class="btn btn-outline-dark btn-md">신청하기</button>&nbsp;&nbsp;
 			<button type="button" class="btn btn-outline-dark btn-md" onclick="history.go(-1)">취소</button>
 		</div>
-
-		
 	</form>
-	<br/><br/>
 </div>
 	
 	
+	
+<!-- include summernote css/js -->
+<script src="https://cdn.jsdelivr.net/npm/summernote@0.8.15/dist/summernote.min.js"></script>	
 <script>
+	/* 썸머노트 부분 */
+	$(document).ready(function() {
+		$('#ESTIMATE_CONTENT').summernote({
+			width: 600,
+			height: 300,
+			lang: 'ko-KR',
+			callbacks: {
+				  onImageUpload: function(files) {
+					  console.log(files);
+					  sendFile(files[0]);
+				  }
+			  }
+		});
+		
+		function sendFile(file) {
+			  var form_data = new FormData();
+			  form_data.append('file', file);
+			  $.ajax({
+				 data:form_data,
+				 type:"POST",
+				 url:'./summernote.ma',
+				 cache: false,
+				 contentType: false,
+				 enctype: 'multitype/form-data',
+				 processData: false,
+				 success: function(url) {
+					 console.log("Success");
+					 console.log(url);
+					 $('#ESTIMATE_CONTENT').summernote('editor.insertImage', url);
+					 
+				 },
+			 	 error: function() {
+					 console.log("Fail");
+			 	 }
+			  });
+		  }
+	});
+
+
     // 파일 리스트
     var fileList = new Array();
     var fileUrlList = new Array();

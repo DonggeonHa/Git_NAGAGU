@@ -64,7 +64,6 @@
 	}
 	
 	.es_content {
-		width:65%;
 		margin:0 auto;
 		background:#d3d3d3;
 		border-radius:8px;
@@ -77,47 +76,47 @@
 	}
 	
 	#offerTable {
-           width:800px;
-       }
+		width:800px;
+    }
        
-       #offerList {
-           width:100%;
-       }
-       
-       #offerList thead {
-           background:#575b69;
-           color:#ffffff;
-           font-weight:700;
-           line-height:32px;
-           text-align:center;
-       }
-       
-       .list_caution {
-           background:#fafafa;    
-           text-align:center;
-           height:32px;
-       }
-       
-       .item_head {
-           text-align:center;
-           transition:border 0.2s;
-           box-sizing:border-box;
-       }
-       
-       .item_head:hover {
-           cursor:pointer;
-           border:1px solid #ef900e;
-           z-index:1;
-       }
-       
-       .item_content {
-           display:none;
-           text-align:left;
-       }
-       
-       .item_content .item_content_body {
-           padding:10px;
-       }
+    #offerList {
+        width:100%;
+    }
+    
+    #offerList thead {
+        background:#575b69;
+        color:#ffffff;
+        font-weight:700;
+        line-height:32px;
+        text-align:center;
+    }
+    
+    .list_caution {
+        background:#fafafa;    
+        text-align:center;
+        height:32px;
+    }
+    
+    .item_head {
+        text-align:center;
+        transition:border 0.2s;
+        box-sizing:border-box;
+    }
+    
+    .item_head:hover {
+        cursor:pointer;
+        border:1px solid #ef900e;
+        z-index:1;
+    }
+    
+    .item_content {
+        display:none;
+        text-align:left;
+    }
+    
+    .item_content .item_content_body {
+        padding:10px;
+    }
 	
 	.pagination {
 	  display: inline-block;
@@ -196,11 +195,11 @@
 	}
 	
 	.thumbMain {
-		width:400px;
-		height:400px;
+		width:800px;
+		height:600px;
 		overflow:hidden;
 		display:block;
-		margin-right:10px;
+		clear: both;
 	}
 	
 	.thumbMain img {
@@ -211,11 +210,11 @@
 	}
 	
 	.thumbItem {
-		width:76px;
-		height:76px;
+		width:153px;
+		height:120px;
 		overflow:hidden;
 		display:block;
-		margin:6px;
+		margin:6px 3px 0 3px;
 	}
 	
 	.thumbCheck {
@@ -237,180 +236,205 @@
 	}
 </style>
 <!-- content start -->
-<div class="container es_body category_st">
-	<br />
-	<br />
-	<br />
-	<div class="row justify-content-between title">
+<div class="container" style="margin-top: 30px; margin-bottom: 30px;">
+	<div class="justify-content-between title">
 		<div class="col-10 page-tap">
 			<h6><a href="estimate.es">STORE 견적 문의</a> > 상세보기 </h6>
 		</div>
-	</div>			
-	<div class="row justify-content-center pb-3">
-		<div class="thumbMain">
-			<a href=<%=imgArr[0] %> target="_blank"><img src=<%=imgArr[0] %>></a>
-		</div>
-		<div class="thumbList">
-		<%
-			for (int i=0; i<imgArr.length; i++) {
-		%>
-			<div class="thumbItem<% if (i==0) { %> thumbCheck <% } %>" thumb-idx=<%=i %>><img src=<%=imgArr[i] %>></div>
-		<% 
-			}
-		%>
+	</div>
+	<br><br>
+	<div class="d-flex justify-content-center">			
+		<div class="d-flex flex-column bd-highlight pb-3">
+			<div class="thumbMain d-flex justify-content-center">
+				<a href=<%=imgArr[0] %> target="_blank"><img src=<%=imgArr[0] %>></a>
+			</div>
+			<div class="thumbList d-flex justify-content-center">
+			<%
+				for (int i=0; i<imgArr.length; i++) {
+			%>
+				<div class="thumbItem<% if (i==0) { %> thumbCheck <% } %>" thumb-idx=<%=i %>><img src=<%=imgArr[i] %>></div>
+			<% 
+				}
+			%>
+			</div>
 		</div>
 	</div>
 	<br/><br/>
-		<div class="row text-center pt-1 pb-1 ">
-			<div class="col-md-3 d-flex justify-content-end title">배송 희망 지역</div>
-			<div class="col-md-9 d-flex justify-content-start">
-				<%=vo.getESTIMATE_AREA() %>
-			</div>
-		</div>
-		<div class="row text-center pt-1 pb-1 ">
-			<div class="col-md-3 d-flex justify-content-end title">제품 종류</div>
-			<div class="col-md-9 d-flex justify-content-start">
-				<%=vo.getESTIMATE_CATEGORY() %>
-			</div>
-		</div>
-		<div class="row text-center">
-			<div class="col-md-3 d-flex justify-content-end title">소재</div>
-			<div class="col-md-9 d-flex justify-content-start">
-				<%=vo.getESTIMATE_SOURCE() %>
-			</div>
-		</div>
-		<div class="row text-center">
-			<div class="col-md-3 d-flex justify-content-end title">색상(염색)</div>
-			<div class="col-md-9 d-flex justify-content-start">
-				<%=vo.getESTIMATE_COLOR() %>
-			</div>
-		</div>
-		<div class="row text-center pt-1 pb-1">
-			<div class="col-md-3 d-flex justify-content-end title">코팅</div>
-			<div class="col-md-9 d-flex justify-content-start">
-				<%=vo.getESTIMATE_COAT() %>
-			</div>
-		</div>
-		<div class="row text-center">
-			<div class="col-md-3 d-flex justify-content-end title">규격</div>
-			<div class="col-md-9 d-flex justify-content-start">
-				<%=vo.getESTIMATE_SIZE() %>
-			</div>
-		</div>
-		<div class="row text-center pt-1 pb-1">
-			<div class="es_content justify-content-center">
-				<%=vo.getESTIMATE_CONTENT() %>
-			</div>
-		</div>
-
-		<div class="row justify-content-center pt-5">
-		<% if (login_state==2 && ES_STATE == 0) { %>
-			<button class="btn btn-dark btn-md" alt="" data-toggle="modal" data-target="#offerFormModal" aria-haspopup="true" aria-expanded="false">
-			입찰하기</button>&nbsp;&nbsp;&nbsp;
-		<% }
-			if (member_mail.equals(mailChk)) { %>
-			<button id="btn_modify" class="btn btn-dark btn-md" onclick="location.href='estimate_modify.es?ESTIMATE_NUM=<%=ESTIMATE_NUM%>&page=<%=nowpage%>'">수정</button>  &nbsp;
-			<button id="btn_delete" class="btn btn-dark btn-md" onclick="location.href='estimate_delete.es?ESTIMATE_NUM=<%=ESTIMATE_NUM%>'">삭제</button>  &nbsp;
-		<% } %>
-			<button class="btn btn-dark btn-md" onclick="location.href='estimate.es?page=<%=nowpage%>'">목록보기</button>
-		</div>
-	<br/><br/>
-
-<br/><br/>
-<form id="offer_data">
-	<input type="hidden" name="ESTIMATE_NUM" value=<%=ESTIMATE_NUM%>>
-	<input type="hidden" id="OFFER_PAGE" name="OFFER_PAGE" value=1>
-	<% if (login_state == 2) { %>
-	<input type="hidden" name="OFFER_WORKSHOP" value=<%=workshop_name%>>
-	<% } %>
-</form>
-<div id="offerWrap" class ="offer_wrap row justify-content-center">
-	<div id="offerTable">
-		<table id="offerList">
-			<thead>
-				<tr>
-					<th width="10%">번호</th>
-					<th width="25%">공방 이름</th>
-					<th width="25%">제시 가격</th>
-					<th width="20%">문의</th>		
-					<th width="20%">처리</th>
-				<tr>
-			</thead>
-			<tbody>
-			</tbody>
+	<div class="d-flex justify-content-center">
+		<table class="table table-borderless" style="width:800px;">
+			<colgroup>
+				<col style="width:40%">
+				<col style="width:60%">
+			</colgroup>
+			<tr>
+				<th style="vertical-align:middle">배송희망지역</th>
+				<td>
+					<%=vo.getESTIMATE_AREA() %>
+				</td>
+			</tr>
+			<tr>
+				<th style="vertical-align:middle">제품 종류</th>
+				<td>
+					<%=vo.getESTIMATE_CATEGORY() %>
+				</td>
+			</tr>
+			<tr>
+				<th style="vertical-align:middle">소재</th>
+				<td>
+					<%=vo.getESTIMATE_SOURCE() %>
+				</td>
+			</tr>
+			<tr>
+				<th style="vertical-align:middle">색상(염색)</th>
+				<td>
+					<%=vo.getESTIMATE_COLOR() %>
+				</td>
+			</tr>
+			<tr>
+				<th style="vertical-align:middle">코팅</th>
+				<td>
+					<%=vo.getESTIMATE_COAT() %>
+				</td>
+			</tr>
+			<tr>
+				<th style="vertical-align:middle">규격</th>
+				<td>
+					<%=vo.getESTIMATE_SIZE() %>
+				</td>
+			</tr>
+			<tr>
+				<th colspan="2">
+					기타사항
+				</th>
+			</tr>
+			<tr>
+				<td colspan="2">
+					<div class="es_content justify-content-center">
+						<%=vo.getESTIMATE_CONTENT() %>
+					</div>
+				</td>
+			</tr>
 		</table>
 	</div>
-</div>
+		
 
-<!--  견적 제시 modal -->
-<div class="modal fade" id="offerFormModal" tabindex="-1" role="dialog"
-	aria-labelledby="offerFormLabel" aria-hidden="true">
-	<div class="modal-dialog modal-dialog-centered" role="document">
-		<div class="modal-content">
-			<div class="modal-header">
-				<h5 class="modal-title" id="offerFormLabel">견적 제안</h5>
-				<button type="button" class="close" data-dismiss="modal"
-					aria-label="Close">
-					<span aria-hidden="true">&times;</span>
-				</button>
-			</div>
-			<div class="modal-body">
-				<form id="offerForm" method="POST">
-				<input type="hidden" id="offer_price" name="OFFER_ESTIMATE" value="<%=vo.getESTIMATE_NUM() %>">
-				<input type="hidden" name="OFFER_WORKSHOP" value="<%=workshop_name %>">
-					<label class="modalLabel" for="OFFER_PRICE">제시 가격</label>
-					<input class="modalInput" type="text" name="OFFER_PRICE"><br>
-					<label class="modalLabel" for="OFFER_CONTENT">내용</label>
-					<textarea class="modalInput" id="offer_content" name="OFFER_CONTENT"></textarea>
-				</form>
-			</div>
-			<div class="modal-footer">
-				<button type="button" class="btn btn-secondary"
-					data-dismiss="modal">닫기</button>
-				<button type="button" id="btn_offer" class="btn btn-primary">제시하기</button>
+	<div class="row justify-content-center p-5">
+	<% 
+		if (login_state==2 && ES_STATE == 0) { 
+	%>
+		<button class="btn btn-dark btn-md" alt="" data-toggle="modal" data-target="#offerFormModal" aria-haspopup="true" aria-expanded="false">
+			입찰하기
+		</button>&nbsp;&nbsp;&nbsp;
+	<% 
+		}
+		if (member_mail.equals(mailChk)) { 
+	%>
+			<button id="btn_modify" class="btn btn-dark btn-md" onclick="location.href='estimate_modify.es?ESTIMATE_NUM=<%=ESTIMATE_NUM%>&page=<%=nowpage%>'">수정</button>  &nbsp;
+			<button id="btn_delete" class="btn btn-dark btn-md" onclick="location.href='estimate_delete.es?ESTIMATE_NUM=<%=ESTIMATE_NUM%>'">삭제</button>  &nbsp;
+	<% 
+		} 
+	%>
+		<button class="btn btn-dark btn-md" onclick="location.href='estimate.es?page=<%=nowpage%>'">목록보기</button>
+	</div>
+	
+	<form id="offer_data">
+		<input type="hidden" name="ESTIMATE_NUM" value=<%=ESTIMATE_NUM%>>
+		<input type="hidden" id="OFFER_PAGE" name="OFFER_PAGE" value=1>
+		<% 
+			if (login_state == 2) {
+		%>
+				<input type="hidden" name="OFFER_WORKSHOP" value=<%=workshop_name%>>
+		<% 
+			} 
+		%>
+	</form>
+	
+	<div id="offerWrap" class ="offer_wrap d-flex justify-content-center">
+		<div id="offerTable">
+			<table id="offerList">
+				<thead>
+					<tr>
+						<th width="10%">번호</th>
+						<th width="25%">공방 이름</th>
+						<th width="25%">제시 가격</th>
+						<th width="20%">문의</th>		
+						<th width="20%">처리</th>
+					<tr>
+				</thead>
+				<tbody></tbody>
+			</table>
+		</div>
+	</div>
+
+	<!--  견적 제시 modal -->
+	<div class="modal fade" id="offerFormModal" tabindex="-1" role="dialog"
+		aria-labelledby="offerFormLabel" aria-hidden="true">
+		<div class="modal-dialog modal-dialog-centered" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title" id="offerFormLabel">견적 제안</h5>
+					<button type="button" class="close" data-dismiss="modal"
+						aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+				<div class="modal-body">
+					<form id="offerForm" method="POST">
+					<input type="hidden" id="offer_price" name="OFFER_ESTIMATE" value="<%=vo.getESTIMATE_NUM() %>">
+					<input type="hidden" name="OFFER_WORKSHOP" value="<%=workshop_name %>">
+						<label class="modalLabel" for="OFFER_PRICE">제시 가격</label>
+						<input class="modalInput" type="text" name="OFFER_PRICE"><br>
+						<label class="modalLabel" for="OFFER_CONTENT">내용</label>
+						<textarea class="modalInput" id="offer_content" name="OFFER_CONTENT"></textarea>
+					</form>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-secondary"
+						data-dismiss="modal">닫기</button>
+					<button type="button" id="btn_offer" class="btn btn-primary">제시하기</button>
+				</div>
 			</div>
 		</div>
 	</div>
-</div>
-
-<!--  견적 수정 modal -->
-<div class="modal fade" id="modifyFormModal" tabindex="-1" role="dialog"
-	aria-labelledby="offerFormLabel" aria-hidden="true">
-	<div class="modal-dialog modal-dialog-centered" role="document">
-		<div class="modal-content">
-			<div class="modal-header">
-				<h5 class="modal-title" id="offerFormLabel">견적 수정</h5>
-				<button type="button" class="close" data-dismiss="modal"
-					aria-label="Close">
-					<span aria-hidden="true">&times;</span>
-				</button>
-			</div>
-			<div class="modal-body">
-				<form id="modifyForm" method="POST">
-				<input type="hidden" name="OFFER_ESTIMATE" value="<%=vo.getESTIMATE_NUM() %>">
-				<input type="hidden" id="modify_offer_num" name="OFFER_NUM">
-					<label class="modalLabel" for="OFFER_PRICE">제시 가격</label>
-					<input class="modalInput" id="modify_offer_price" type="text" name="OFFER_PRICE"><br>
-					<label class="modalLabel" for="OFFER_CONTENT">내용</label>
-					<textarea class="modalInput" id="modify_offer_content" name="OFFER_CONTENT" maxlength="200"></textarea>
-				</form>
-			</div>
-			<div class="modal-footer">
-				<button type="button" class="btn btn-secondary"
-					data-dismiss="modal">닫기</button>
-				<button type="button" id="btn_modify_submit" class="btn btn-primary">수정하기</button>
+	
+	<!--  견적 수정 modal -->
+	<div class="modal fade" id="modifyFormModal" tabindex="-1" role="dialog"
+		aria-labelledby="offerFormLabel" aria-hidden="true">
+		<div class="modal-dialog modal-dialog-centered" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title" id="offerFormLabel">견적 수정</h5>
+					<button type="button" class="close" data-dismiss="modal"
+						aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+				<div class="modal-body">
+					<form id="modifyForm" method="POST">
+					<input type="hidden" name="OFFER_ESTIMATE" value="<%=vo.getESTIMATE_NUM() %>">
+					<input type="hidden" id="modify_offer_num" name="OFFER_NUM">
+						<label class="modalLabel" for="OFFER_PRICE">제시 가격</label>
+						<input class="modalInput" id="modify_offer_price" type="text" name="OFFER_PRICE"><br>
+						<label class="modalLabel" for="OFFER_CONTENT">내용</label>
+						<textarea class="modalInput" id="modify_offer_content" name="OFFER_CONTENT" maxlength="200"></textarea>
+					</form>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-secondary"
+						data-dismiss="modal">닫기</button>
+					<button type="button" id="btn_modify_submit" class="btn btn-primary">수정하기</button>
+				</div>
 			</div>
 		</div>
 	</div>
-</div>
-
-<br/><br/><br/>
-
-<!-- 댓글 페이지네이션 -->
-<div class="row justify-content-center">
-	<div id="pagination" class="pagination justify-content-center">
+	
+	<br/><br/><br/>
+	
+	<!-- 댓글 페이지네이션 -->
+	<div class="row justify-content-center">
+		<div id="pagination" class="pagination justify-content-center">
+		</div>
 	</div>
-</div>
 
 </div>
 <!-- content 끝 -->			
