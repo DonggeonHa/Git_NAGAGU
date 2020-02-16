@@ -33,6 +33,23 @@
 	            <span class="listnum_txt pt-2">전체 제안내역</span>
 	            <span class="listnum_num pt-2" id="offer_count"></span>
 	        </div>
+	    </div>
+	    <div class="d-flex justify-content-between pb-2">
+	    	<div class="justify-content-start" style="padding: 0;">
+				<div class="">
+					<select class="search_hidden_state form-control" id="selectClassType" name="selectClassType" onchange="btn_select()" style="height: 100%;">
+						<option value="allClass">전체</option>
+						<option value="table">책상</option>
+						<option value="chair">의자</option>
+						<option value="bookshelf">책장</option>
+						<option value="bed">침대</option>
+						<option value="drawer">서랍장</option>
+						<option value="sidetable">협탁</option>
+						<option value="dressing_table">화장대</option>
+						<option value="misc">기타</option>
+					</select>
+				</div>
+			</div>
 	        <div class="justify-content-end">
 	        	<div class="d-flex justify-content-end">
 		            <!-- Example split danger button -->
@@ -43,7 +60,6 @@
 		                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
 		                    <a class="dropdown-item" onclick="select_category()">제목</a>
 		                    <a class="dropdown-item" onclick="select_category()">작성자</a>
-		                    <a class="dropdown-item" onclick="select_category()">상태</a>
 		                </div>
 		            </div>
 		
@@ -124,6 +140,7 @@
 
 	$(document).ready(function() {
 		
+		/* 제안 댓글 리스트 불러오기 */
 		function getList() {
 			console.log("get list start");
 			
@@ -133,7 +150,7 @@
 				url:'/NAGAGU/workshop_offer_list.ws', 
 				type:'POST', 
 				data: params,
-				dataType:"json", //서버에서 보내줄 데이터 타입
+				dataType:"json", 
 				async:false,
 				contentType:'application/x-www-form-urlencoded; charset=utf-8',
 				success:function(data) {
@@ -141,12 +158,7 @@
 					console.log(data.woList);
 					
 					var output = '';
-					var pagination = '';
 					
-					var nowpage = data.page;
-					var maxpage = data.maxpage;
-					var startpage = data.startpage;
-					var endpage = data.endpage;
 					var woList = data.woList;
 					var rnum = data.rnum;
 
@@ -212,12 +224,11 @@
 				            output += '<button class="btn_note" value=' + item.ESTIMATE_NUM + '>쪽지</button>';
 				            output += '</td>';
 				            output += '</tr>';
-				           	
+				            
 				            rnum--; 
 						});
 						
 						/* 페이지네이션 */
-						
 					}
 					
 					$('#work_store > tbody').html(output);
@@ -229,6 +240,8 @@
 				}
 			});
 		}
+		
+		
 	    function setSelect() {
 	        if ($("#all_select").is(":checked")) {
 	               $("input[type=checkbox]").prop("checked", true);
