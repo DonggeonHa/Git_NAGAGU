@@ -20,7 +20,7 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.view.json.MappingJackson2JsonView;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
+
 import com.spring.member.MemberVO;
 import com.spring.workshop.WorkShopMemberVO;
 
@@ -63,27 +63,22 @@ public class ProductController123 {
 		
 		int reviewCount;	
 		int review_RE_Count;	//RE는 답글
-		ArrayList<Product_reviewVO> reviewList = null;
-		ArrayList<Product_reviewVO> review_RE_List = null;
+		ArrayList<HashMap<String, Object>> reviewList = null;
+		ArrayList<HashMap<String, Object>> review_RE_List = null;
 
 		reviewCount = reviewService.getReviewCount(map1);
 		review_RE_Count = reviewService.getReview_RE_Count(map1);
 		reviewList = reviewService.getReviewList123(map1);
-		review_RE_List = reviewService.getReview_RE_List(map1);
-
+		review_RE_List = reviewService.getReview_RE_List123(map1);
 		
 		HashMap<String, Object> retVal = new HashMap<String, Object>();
-		try {
-			reviewList = reviewService.getReviewList123(map1);
-			retVal.put("res", "OK");
-			retVal.put("reviewCount", reviewCount);	//allRowCnt
-			retVal.put("reviewList", reviewList);
-			retVal.put("review_RE_Count", review_RE_Count);	
-			retVal.put("review_RE_List", review_RE_List);	
 
-		} catch(Exception e) {
-			retVal.put("res", "FAIL");
-		}
+		retVal.put("reviewCount", reviewCount);	//allRowCnt
+		retVal.put("reviewList", reviewList);
+		retVal.put("review_RE_Count", review_RE_Count);	
+		retVal.put("review_RE_List", review_RE_List);	
+
+		
 		
 		return retVal;
 	}
@@ -329,10 +324,12 @@ public class ProductController123 {
 		
 			//넘겨받은 REVIEW_RE가 존재하면 답글이고(원글의 REVIEW_NUM을 전달해줌), null이면 원글이다.
 			if(request.getParameter("REVIEW_RE") != null) {	
+				System.out.println("답글");
 				//답글 - GRADE=10, RE=NUM
 				reviewVO.setREVIEW_GRADE(7);
 				reviewVO.setREVIEW_RE(Integer.parseInt(request.getParameter("REVIEW_RE")));
 			} else {	
+				System.out.println("원글");
 				//원글 - GRADE=GRADE, RE=0
 				reviewVO.setREVIEW_GRADE(Double.parseDouble(request.getParameter("REVIEW_GRADE")));
 				reviewVO.setREVIEW_RE(0);

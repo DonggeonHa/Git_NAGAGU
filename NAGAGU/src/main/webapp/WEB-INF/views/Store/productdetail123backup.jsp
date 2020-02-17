@@ -19,16 +19,16 @@
 	String MEMBER_NICK = (String)session.getAttribute("MEMBER_NICK"); 
 	Integer MEMBER_NUM = (Integer)session.getAttribute("MEMBER_NUM"); 
 
-//	System.out.println("MEMBER_NUM="+MEMBER_NUM);
-//	System.out.println("MEMBER_PICTURE="+MEMBER_PICTURE);
-//	System.out.println("MEMBER_NICK="+MEMBER_NICK);
+	System.out.println("MEMBER_NUM="+MEMBER_NUM);
+	System.out.println("MEMBER_PICTURE="+MEMBER_PICTURE);
+	System.out.println("MEMBER_NICK="+MEMBER_NICK);
 
 	//WORKSHOP이 댓글 달 때 필요
 	String WORKSHOP_PICTURE = (String)session.getAttribute("WORKSHOP_PICTURE");
 	String WORKSHOP_NAME = (String)session.getAttribute("WORKSHOP_NAME");
 
-//	System.out.println("WORKSHOP_PICTURE="+WORKSHOP_PICTURE);
-//	System.out.println("WORKSHOP_NAME="+WORKSHOP_NAME);	
+	System.out.println("WORKSHOP_PICTURE="+WORKSHOP_PICTURE);
+	System.out.println("WORKSHOP_NAME="+WORKSHOP_NAME);	
 
 	//로그인 상태 체크 위한
 	Integer MEMBER_STATUS = 100;	//비로그인시 100
@@ -40,14 +40,14 @@
 		WORKSHOP_STATUS = (Integer)session.getAttribute("WORKSHOP_STATUS");		
 	}
 
-//	System.out.println("MEMBER_STATUS="+MEMBER_STATUS);
-//	System.out.println("WORKSHOP_STATUS="+WORKSHOP_STATUS);
+	System.out.println("MEMBER_STATUS="+MEMBER_STATUS);
+	System.out.println("WORKSHOP_STATUS="+WORKSHOP_STATUS);
 	
 	//(QNA)글쓴이만 답글 버튼이 보인다. 글쓴이인지 체크하기 위해 이 글의 WORKSHOP_NUM 받아옴
 	int WorkshopMatchingNumber = (int)request.getAttribute("WorkshopMatchingNumber");
 	Integer WORKSHOP_NUM = (Integer)session.getAttribute("WORKSHOP_NUM");
 
-//	System.out.println("WotkshopMatchingNumber="+WorkshopMatchingNumber);
+	System.out.println("WotkshopMatchingNumber="+WorkshopMatchingNumber);
 
 
 	
@@ -60,8 +60,8 @@
 	int bannerImgCount = StringUtils.countOccurrencesOf(vo.getPRODUCT_BANNER(), ",");
 	
 	//리뷰 관련
-	ArrayList<HashMap<String, Object>> reviewList = (ArrayList<HashMap<String, Object>>) request.getAttribute("reviewList");
-	ArrayList<HashMap<String, Object>> review_RE_List = (ArrayList<HashMap<String, Object>>) request.getAttribute("review_RE_List");
+	ArrayList<Product_reviewVO> reviewList = (ArrayList<Product_reviewVO>) request.getAttribute("reviewList");
+	ArrayList<Product_reviewVO> review_RE_List = (ArrayList<Product_reviewVO>) request.getAttribute("review_RE_List");
 	int reviewCount = ((Integer) request.getAttribute("reviewCount")).intValue(); // (전체/카테고리)글 개수
 	int review_RE_Count = ((Integer) request.getAttribute("review_RE_Count")).intValue(); // (전체/카테고리)글 개수
 	int nowpage = ((Integer) request.getAttribute("reviewpage")).intValue();
@@ -71,7 +71,7 @@
 	//리뷰 이미지 수 구하기
 	int[] reviewImgCount = new int[reviewList.size()];	
 	for(int i=0; i<reviewImgCount.length; i++) {
-		reviewImgCount[i] = StringUtils.countOccurrencesOf((String)reviewList.get(i).get("REVIEW_FILE"), ",");
+		reviewImgCount[i] = StringUtils.countOccurrencesOf(reviewList.get(i).getREVIEW_FILE(), ",");
 		/*
 		System.out.println("--------------------------");
 		System.out.println( i + "번째 reviewImgCount = " +  reviewImgCount[i]);
@@ -94,14 +94,18 @@
 	int WorkshopNum = ((Integer) request.getAttribute("WorkshopNum")).intValue();
 	String WorkshopName = (String)request.getAttribute("WorkshopName");
 	String WorkshopPicture = (String)request.getAttribute("WorkshopPicture");
-//	System.out.println("WorkshopName="+WorkshopName);
-//	System.out.println("WorkshopPicture="+WorkshopPicture);
+	System.out.println("WorkshopName="+WorkshopName);
+	System.out.println("WorkshopPicture="+WorkshopPicture);
 	
 	//날짜 포맷 형식
 	SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 	
 	BasketVO basketVO = new BasketVO();
 
+	/*
+      if(MEMBER_EMAIL != null && MEMBER_NUM != 0) {}
+	
+	*/
 	
 %>  
 
@@ -116,7 +120,8 @@
 		<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
 		<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
 		<link href="https://use.fontawesome.com/releases/v5.0.6/css/all.css" rel="stylesheet">
-
+		<%-- <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/js/Store/pager.js">
+		  --%>
 	<style>
 		@charset "UTF-8";
 		
@@ -327,7 +332,7 @@
 		
 		
 
-		/*REVIEW*/
+		/*답글*/
 		#REVIEW_GRADE{
 			width=15px;			/*리뷰 입력폼에서 별점 선택창*/
 		}
@@ -339,8 +344,7 @@
 		}		
 		
 
-		/*REVIEW_REPLY*/
-
+		
 		.review_replybtn {
 			cursor: pointer;	/*리뷰 리스트에서 답글달기 폼 버튼*/
 		}
@@ -380,7 +384,123 @@
 		
 	</style>
 
+	<script>
+	$(document).ready(function() {
+		getReviewList();
+//		pageMove(1);	//페이지에 처음 들어올 경우 고려
+	});	
+ 
+	
+	function getReviewList() {
+		//table 내부 내용을 제거(초기화)
+	//	$('#ajaxReviewList').empty();
+		$.ajax({
+			url:'/NAGAGU/getReviewList123.pro',
+			type:'POST',
+			data : { 'PRODUCT_NUM' : <%=PRODUCT_NUM%> },
+			dataType : "json", // 서버에서 보내줄 데이터 타입
+			contentType : 'application/x-www-form-urlencoded; charset=UTF-8',
+			success:function(retVal) {
+				var reviewCount = retVal.reviewCount;
+				console.log(retVal.reviewCount)
+				console.log(retVal.reviewList)
+				console.log(retVal.review_RE_Count)
+				console.log(retVal.review_RE_List)
 
+				
+				if(retVal.res == "OK") {
+					
+				} else {
+					alert('ReviewList를 불러오지 못했습니다.');
+				}
+				
+				/*
+				$.each(data, function(index, item) {
+					var output = '';
+					output += '<tr>';
+					output += '<td>' + item.id + '</td>';
+					output += '<td>' + item.name + '</td>';
+					output += '<td>' + item.job + '</td>';
+					output += '<td>' + item.address + '</td>';
+					output += '<td>' + item.bloodtype + '</td>';
+					output += '</tr>';
+					console.log("output:" + output);
+					$('#output').append(output);
+				});
+				*/
+          },
+          error:function() {
+             alert("ajax통신 실패!!!");
+          }
+       });
+	}
+	
+	
+	//https://www.podo-dev.com/blogs/15
+<%-- 	function pageMove(pg){
+		console.log(pg)
+		console.log(<%=PRODUCT_NUM%>)
+		var perPgLine = 5;
+		$.ajax({
+			type : "POST",
+			url : "/NAGAGU/getReviewList.pro",
+            dataType : 'json',
+            contentType : 'application/x-www-form-urlencoded; charset=UTF-8',
+			data : { 'pg' : pg, 'PRODUCT_NUM' : <%=PRODUCT_NUM%> },	//pg:선택한 페이지, perPgLine : 페이지당 게시글 개수
+			dataType: 'JSON',
+			success : function(retVal) {
+				console.log(retVal)
+				if(retVal.res == "OK") {
+					var arr = retVal.reviewList;
+					var reviewCount = retVal.reviewCount;
+					var page = pg;
+					//update board from data	//게시글을 다시 그려줌
+					//페이징을 다시 그려줌
+					updatePaging("pageMove", page, reviewCount, 5, 3); 
+					
+				} else if (retVal.res == "FAIL") {
+					alert("FAIL");
+				}
+				 
+				
+			},
+			error : function(e) {
+				alert('실패')
+				console.log(e);
+			}
+		});
+	}	
+	//페이징 다시 그려줌
+	//callFunc : 페이지 클릭 시 호출되는 함수이다. 1을 누르면 pagemove(1) 호출.
+	//page  : 현재 페이지
+	//allRowCnt : 전체 게시글 수
+	//perPgLine : 페이지당 게시글 수
+	//pgGrpCnt : 페이징을 몇개씩 묵을 것인가. ex.3인경우  (1,2,3) (4,5,6)
+	function updatePaging(callFunc, page, allRowCnt, perPgLine, pgGrpCnt){
+		console.log("callFunc = "+callFunc)
+		console.log("page = "+page)
+		console.log("allRowCnt = "+allRowCnt)
+		console.log("perPgLine = "+perPgLine)
+		console.log("pgGrpCnt = "+pgGrpCnt)
+//		var boardPager	= $('.ReviewListSection22');	//페이징을 담을 곳
+		var boardPager	= $('.ReviewList_Sum');	//페이징을 담을 곳
+		var	pager		= drawPager(callFunc, page, allRowCnt, perPgLine, pgGrpCnt);
+				
+		boardPager.empty();
+		boardPager.append(pager);
+	}
+	// drawPager() 함수를 호출하여, 그려진 페이징을 가져오자.
+	function drawPager(callFunc, page, allRowCnt, perPgLine, pgGrpCnt) {
+		var output='';
+		output += '<div class="ReviewList">'		
+		output += '<div class="col-1 justify-content-end">'		
+		
+		return output;
+	} 
+	 --%>
+
+	
+	</script>	
 	
 	
 </head>
@@ -399,13 +519,13 @@
 					<% 	} else {
 							if(i == 0) { %>
 								<div class="carousel-item active" style="width: 1300px; height: 530px;">
-									<img src="<%=vo.getPRODUCT_BANNER().split(",")[i]%>" class="d-block w-100" style="max-width: 100%; height: 100%;">
+									<img src="/productupload/image/<%=vo.getPRODUCT_BANNER().split(",")[i]%>" class="d-block w-100" style="max-width: 100%; height: 100%;">
 								</div>
 					<% 			continue;
 							} 
 					%>            
 						<div class="carousel-item" style="width: 1300px; height: 530px;">
-							<img src="<%=vo.getPRODUCT_BANNER().split(",")[i]%>" class="d-block w-100" style="max-width: 100%; height: 100%;">
+							<img src="/productupload/image/<%=vo.getPRODUCT_BANNER().split(",")[i]%>" class="d-block w-100" style="max-width: 100%; height: 100%;">
 						</div>                            
 					<%
 						}
@@ -468,27 +588,30 @@
 					<!-- 리뷰 테이블 시작 -->
 					<h3 id="review_scroll" >Review</h3>
 					<br /><br />
-
+				
+					<!-- ajax 이용해 뿌려주기 (미완성)-->		
+					<div class="ReviewSection22"></div>
+					<br/><br/><br/>
 		
 		
-					<div id="ReviewSection">
+					<div id="ReviewSection"> <!-- ReviewSection start (리뷰 전체 영역) : 하나 -->
 						<div id="ReviewButtonSection">	
 							<div class="row justify-content-center pt-3 pb-3"> <!-- 리뷰 댓글달기 버튼 -->
 								<button class="btn btn-dark btn-sm review_btn">댓글 달기</button>
 							</div>
-						</div>
-						<div id="ReviewWrapSection" class="pb-1">
+						</div>	
+						<div id="ReviewWrapSection" class="pb-1"> <!-- wrap영역(리뷰 전체 영역 wrap): 하나 -->
 							<div id="ReviewformSection" class="pb-2">
 								<form id="ReviewForm" name="REVIEW_CONTENT" enctype="multipart/form-data"> <!-- 리뷰 작성 폼 영역 : 하나 -->
-									<input type="hidden" name="MEMBER_NUM" value="MEMBER_NUM">
-									<input type="hidden" name="REVIEW_PRODUCT" value="<%=PRODUCT_NUM %>">
+									<input type="hidden" name="MEMBER_NUM" value="<%=MEMBER_NUM%>">
+									<input type="hidden" name="REVIEW_PRODUCT" value="<%=PRODUCT_NUM%>">
 									<div class="row justify-content-center">
 										<div class="col-1 justify-content-end">
-											<img src="<%=MEMBER_PICTURE%>" alt="" class="rounded-circle">
+											<img src="<%=MEMBER_PICTURE %>" alt="" class="rounded-circle">
 										</div>
 										<div class="col-11">
 											<div class="row pb-1">
-												<div class="col-2 justify-content-end name"><%=MEMBER_NICK%> </div>
+												<div class="col-2 justify-content-end name"><%=MEMBER_NICK %></div>
 												<div class="col-8 justify-content-center"></div>
 												<div class="col-2 justify-content-center smallfont"></div>
 											</div>
@@ -496,7 +619,7 @@
 												<div class="col-3 pr-0">
 													<img src="${pageContext.request.contextPath}/resources/images/star1.png" alt="" width="15px" height="15px" >
 													&nbsp;
-													<select name="REVIEW_GRADE" id="REVIEW_GRADE" style="">
+													<select name="REVIEW_GRADE" id="REVIEW_GRADE" style="width=15px;" >
 														<option value="0">0</option>
 														<option value="0.5">0.5</option>
 														<option value="1.0">1.0</option>
@@ -536,71 +659,158 @@
 												</div>	
 											</div>
 											<div class="row"> <!-- 수정, 삭제 -->
-												<div class="col-2 justify-content-center"></div>
+												<div class="col-2 justify-content-center" style="font-size:0.7em; font-weight:bold;"></div>
 												<div class="col-8 justify-content-center"></div>
 												<div class="col-2 justify-content-center" style="font-size:0.7em; font-weight:bold;">
-													<a class="insertReview">작성</a> &nbsp;
-													<a class="formCancel" value="ReviewForm">취소</a>
+													<a class="insertReview" style="cursor: pointer;">작성</a> &nbsp;
+													<a class="formCancel" value="reviewForm" style="cursor: pointer;">취소</a>
 												</div>
 											</div>
 										</div>
 									</div>
-								</form>		
-							</div>
-							<div id="ReviewtableSection" class="pb-2">
-								<div class="ReviewAndReplySum pb-3" id="ReviewAndReplySum0"></div> <!-- jsp로 출력해놓음: insert될 시 여기로 들어옴 -->
-								<div class="ReviewAndReplySum pb-3" id="ReviewAndReplySum51"> <!-- ajax, 51번째 댓글에 대한 리뷰+리플라이 묶음 -->
-									<div class="ReviewSum" id="ReviewSum51">
-										<div class="ReviewList pb-3" id="ReviewList51">
-											<div class="beforeModifyReview" id="beforeModifyReview51">
+								</form> <!-- 리뷰 작성영역(리뷰 작성 폼) 끝 -->
+							</div>	
+							<div id="ReviewtableSection" class="pb-2"> <!-- 리뷰 테이블 : insert시 삽입되는 영역 + List영역(+답글) : 하나-->
+								<div class="ReviewAndReplySum pb-3" id="ReviewAndReplySum1"> <!--ReviewAndReply_Sum: 리뷰(하나)+리뷰 답글(여러개)이 묶여서 반복되는 영역 (i)-->								
+									<div class="ReviewSum">
+										<div class="ReviewInsertSpace" id="reviewInsertSpace51" ></div>	<!-- ajax로 insert될 코드 : $('#reviewInsertSpace'); -->	 <!-- 작성한 리뷰가 들어오는 영역 : 하나 -->
+										<div class="ReviewList pb-3" id="ReviewList00"><!-- ReviewList id값 주기 --> <!-- 반복되는 리뷰영역 : 반복 -->
+											<div class="beforeModifyReview" id="beforeModifyReview00">	
 												<div class="row justify-content-center">
-													<div class="col-1 justify-content-end">프사</div>
+													<div class="col-1 justify-content-end">
+														프사
+													</div>
 													<div class="col-11">
 														<div class="row pb-1">
 															<div class="col-2 justify-content-end name">닉네임</div>
 															<div class="col-8 justify-content-center"></div>
 															<div class="col-2 justify-content-center smallfont">날짜</div>
 														</div>
-														<div class="row pb-2">
+														<div class="row pb-2"> 
 															<div class="col-12" style="font-size:0.7em; font-weight:bold;">
 																0.5 &nbsp;
 																<span class='star-rating'>
 																	<span style ="width:10%"></span>
 																</span>
 															</div>
-														</div>			
-														<div class="row pb-2">	
-															<div class="col-12">
-																<img src="/productupload/image/99079bcbf4a24e5f8cddde3ca7457f1f.jpg" class="review_img">
-																<img src="/productupload/image/99079bcbf4a24e5f8cddde3ca7457f1f.jpg" class="review_img">
-																<img src="/productupload/image/99079bcbf4a24e5f8cddde3ca7457f1f.jpg" class="review_img">
-															</div>
-														</div>												
+														</div>
 														<div class="row pb-2">
+															<div class="col-12">														       
+																<img src="/productupload/image/99079bcbf4a24e5f8cddde3ca7457f1f.jpg" class="review_img"> 
+																<img src="/productupload/image/99079bcbf4a24e5f8cddde3ca7457f1f.jpg" class="review_img">  
+																<img src="/productupload/image/99079bcbf4a24e5f8cddde3ca7457f1f.jpg" class="review_img"> 
+															</div>
+														</div>
+																							
+														<div class="row pb-2">	<!-- 내용 -->
 															<div class="col-11 pr-0">
 																ajax로 insert될 리뷰 리스트 출력-내용1 리스트 출력-내용1 리스트 출력-내용1 리스트 출력-내용1 리스트 출력-내용1 리스트 출력-내용1 리스트 출력-내용1 리스트 출력-내용1 리스트 출력-내용1 리스트 출력-내용1 리스트 출력-내용1 리스트 출력-내용1 
 															</div>	
-														</div>	
+														</div>
 														<div class="row"> <!-- 답글, 수정, 삭제 -->
 															<div class="col-2 justify-content-center" style="font-size:0.7em; font-weight:bold; cursor: pointer;">
-																<a class="review_replybtn" id="review_replybtn51" value="51">답글</a>
+																<a class="review_replybtn" id="review_replybtn00" value="00" style="cursor: pointer;">답글</a>
 															</div>
 															<div class="col-8 justify-content-center"></div>
-															<div class="col-2 beforeControl justify-content-center" id="beforeControl51" style="font-size:0.7em; font-weight:bold;">
-																<input type="hidden" name="REVIEW_NUM" value="51">
-																<a class="gomodifyReviewform">수정</a> &nbsp;
-																<a class="deleteReview">삭제</a>
+															<div class="col-2 beforeControl justify-content-center" id="beforeControl00" style="font-size:0.7em; font-weight:bold;">
+																<input type="hidden" name="REVIEW_NUM" value="00">
+																<a class="gomodifyReviewform" style="cursor: pointer;">수정</a> &nbsp;
+																<a class="deleteReview" style="cursor: pointer;">삭제</a>
 															</div>
 														</div>
 													</div>
-												</div>		
+												</div>
 											</div>
-											<div class="afterModifyReview" id="afterModifyReview51"></div> <!-- ajax -->
-										</div>
+											<div class="afterModifyReview" id="afterModifyReview00"><!-- ajax로 수정폼 추가 --> <!-- $('#afterModifyReview00') 에 review 수정할 수정폼 뿌려줌 -->
+												<!-- 수정폼 예제 -->
+												<form class="modifyReviewForm" id="modifyReviewForm00"> 
+													<div class="row justify-content-center">
+														<div class="col-1 justify-content-end">
+															프사
+														</div>
+														<div class="col-11">
+															<div class="row pb-1">
+																<div class="col-2 justify-content-end name">닉네임</div>
+																<div class="col-8 justify-content-center"></div>
+																<div class="col-2 justify-content-center smallfont">날짜</div>
+															</div>		
+															<div class="row pb-2"> <!-- 수정 후 평점 (수정할 평점) -->
+																<div class="col-3 pr-0">
+																	<img src="${pageContext.request.contextPath}/resources/images/star1.png" alt="" width="15px" height="15px" >
+																	&nbsp;
+																	<select name="REVIEW_GRADE"  style="width=15px;" >
+																		<option value="0">0</option>
+																		<option value="0.5">0.5</option>
+																		<option value="1.0">1.0</option>
+																		<option value="1.5">1.5</option>
+																		<option value="2.0">2.0</option>
+																		<option value="2.5">2.5</option>
+																		<option value="3.0">3.0</option>
+																		<option value="3.5">3.5</option>
+																		<option value="4.0">4.0</option>
+																		<option value="4.5">5.5</option>
+																		<option value="5.0">5.0</option>
+																	</select>											
+																</div>
+																<div class="9"></div>
+															</div>
+															<div class="row "> <!-- 수정시 사진 추가 가능-->
+																<div class="col-12 pb-2">
+																	<!--  <img src="#" class="review_img"  style="display:none;"> &nbsp;&nbsp; -->
+																	
+
+																	<div class="before_imgs_wrap">										       
+																		<a onclick="deleteBeforeImageAction(1)" id="beforeimg_id_1">
+																        	<img src="/productupload/image/99079bcbf4a24e5f8cddde3ca7457f1f.jpg" class='review_img' title='Click to remove' width='100' height='100'>
+																        </a> 																		
+																		<a onclick="deleteBeforeImageAction(2)" id="beforeimg_id_2">
+																        	<img src="/productupload/image/99079bcbf4a24e5f8cddde3ca7457f1f.jpg" class='review_img' title='Click to remove' width='100' height='100'>
+																        </a> 																				
+																		<a href="javascript:void(0);" onclick="deleteBeforeImageAction(3)" id="beforeimg_id_3">
+																        	<img src="/productupload/image/99079bcbf4a24e5f8cddde3ca7457f1f.jpg" class= 'review_img'title='Click to remove' width='100' height='100'>
+																        </a> 																		
+																	</div>
+																	
+																	<div class="modify_imgs_wrap">
+																		<img id="modify_inputimg" >
+																	</div>	
+																</div>
+																<div class="col-12 pb-2">
+																	<div class="file_input">
+																		<label>
+																	        추가 업로드
+																	        <input type="file" multiple="multiple" name="REVIEW_FILE" id="modify_input_imgs">
+																	    </label>
+																	    <input type="text" readonly="readonly" title="File Route" value="기존 파일n개">
+																		
+																	</div>
+																</div>
+															</div>
+															
+															<div class="row" >
+																<div class="col-11 pr-0">
+																	<textarea rows="3" name="REVIEW_CONTENT" id="REVIEW_CONTENT00" class="col-12 pl-0 pr-0" 
+																		>답글폼 만들기 불러옴 불러옴 불러옵 답글폼 만들기 답글폼 만들기 답글폼 만들기 답글폼 만들기 답글폼 만들기 하하하하하하하하하하하하</textarea>
+																</div>	
+															</div>
+															<div class="row"> <!-- 수정, 삭제 -->
+																<div class="col-2 justify-content-center"></div>
+																<div class="col-8 justify-content-center"></div>
+																<div class="col-2 justify-content-center" id="review_control" style="font-size:0.7em; font-weight:bold;">
+																	<input type="hidden" name="REVIEW_NUM" value="00">
+																	<a class="modifyReview" style="cursor: pointer;">수정</a> &nbsp;
+																	<a class="formCancel" value="reviewModify" style="cursor: pointer;">취소</a>
+																</div>
+															</div>
+														</div>
+													</div>		
+												</form>
+											</div>	<!-- 수정폼 끝 -->
+										</div> <!-- 리뷰 출력 끝, 답글은 있을시 달린다(답글 작성 폼은 hidden으로 숨겨져 있음) -->
 									</div>
-									<div class="ReviewReplySum" id="ReviewReplySum51"> <!-- ReviewAndReplySum에 묶인 id넘버는 같다(원글번호) -->
-										<div class="ReviewReplyformSection" id="ReviewReplyformSection51"> <!-- ajax --> <!-- 상품번호,멤버넘? 원글넘버 넘겨줘야함(그래야 답글 입력시 re_num입력 가능, 컨트롤러에서 답글인 것 구별 가능 -->
-											<form id="ReviewReplyform" name="REVIEW_CONTENT" enctype="multipart/form-data">
+									<div class="ReviewReplySum" > <!--Review_ReplyList_Sum: 리뷰 답글 묶는 영역 (하나)-->									
+										<div class="ReviewReplyformSection" id="ReviewReplyformSection00"style="padding:8px 0;"> <!-- 리뷰 답글 작성 폼 영역 : 하나 --> <!-- 답글 누르면 답글폼 나타남--> <!-- 원글번호(review_re) --> <!-- hidden --> 
+											<form id="review_replyForm00" name="REVIEW_CONTENT" enctype="multipart/form-data"> 
 												<div class="row justify-content-center">
 													<div class="col-1"></div>
 													<div class="col-1"><img src="<%=MEMBER_PICTURE %>" alt="" class="rounded-circle"></div>
@@ -616,22 +826,22 @@
 																	></textarea>
 															</div>	
 														</div>
-														<div class="row"> <!-- 리뷰답글 작성, 삭제 -->
-															<div class="col-2 replytext justify-content-center"></div>
+														<div class="row"> <!-- 답글, 수정, 삭제 -->
+															<div class="col-2 justify-content-center" style="font-size:0.7em; font-weight:bold;"></div>
 															<div class="col-8 justify-content-center"></div>
-															<div class="col-2 beforeControl justify-content-center pl-1">
-																<input type="hidden" name="PRODUCT_NUM" value="51"> <!-- PRODUCT_NUM 전달해줌 -->
-																<input type="hidden" name="REVIEW_NUM" value="51"> <!-- 원래 review의 번호 전달해줌 -->
-																<a class="insertReviewReply">작성</a> &nbsp;
-																<a class="formCancel" value="reviewReply">취소</a>
+															<div class="col-2 beforeControl justify-content-center pl-1" style="font-size:0.7em; font-weight:bold;">
+																<input type="hidden" name="REVIEW_NUM" value="00"> <!-- 원래 review의 번호 전달해줌 -->
+																<a class="insertReviewReply" style="cursor: pointer;">작성</a> &nbsp;
+																<a class="formCancel" value="reviewReply" style="cursor: pointer;">취소</a>
 															</div>
 														</div>
 													</div>
 												</div>
-											</form>
+											</form>														
 										</div>
-										<div class="ReviewReplyInsertSpace" id="ReviewReplyInsertSpace51"></div>
-										<div class="ReviewReplyList pb-2" id="ReviewReplyList61"> <!-- reply 출력의 넘버는 reply의 review_num -->
+										<div class="ReviewReplyInsertSpace"></div> <!-- 리뷰 답글 들어오는 영역(review_reply) (없을시 출력 pass)-->
+										
+										<div class="ReviewReplyList pb-2" id="ReviewReplyList61"><!-- ajax로 insert될 코드 --> <!-- 원글 00의 답글로 51이 되어 들어올 것임 -->
 											<div class="row justify-content-center">
 												<div class="col-1"></div>
 												<div class="col-1">프사</div>
@@ -648,7 +858,7 @@
 															</div>	
 														</div>
 													</div>
-													<div class="afterModifyReviewReply" id="afterModifyReviewReply61">	<!-- hidden -->
+													<div class="afterModifyReviewReply" id="afterModifyReviewReply61">
 														<form class="modifyReviewReplyForm" id="modifyReviewFormReply61">
 															<div class="row">	<!-- 수정폼 대비 -->
 																<div class="col-11 pr-0">
@@ -660,36 +870,87 @@
 															</div>
 														</form>	
 													</div>		
-													<div class="row"> <!-- ReviewReply 수정, 삭제 -->
-														<div class="col-2 replytext justify-content-center"></div>
+													<div class="row"> <!-- 답글, 수정, 삭제 -->
+														<div class="col-2 justify-content-center" style="font-size:0.7em; font-weight:bold;"></div>
 														<div class="col-8 justify-content-center"></div>
-														<div class="col-2 beforeControl justify-content-center pl-1" id="beforeControl61">
+														<div class="col-2 beforeControl justify-content-center pl-1" id="beforeControl61" style="font-size:0.7em; font-weight:bold;">
 															<input type="hidden" name="REVIEW_NUM" value="61">
-															<a class="gomodifyReviewReplyform">수정</a> &nbsp;
-															<a class="deleteReview">삭제</a>
+															<a class="gomodifyReviewReplyform" style="cursor: pointer;">수정</a> &nbsp;
+															<a class="deleteReview" style="cursor: pointer;">삭제</a>
 														</div>
-														<div class="col-2 afterControl justify-content-center pl-1" id="afterControl61">
+														<div class="col-2 afterControl justify-content-center pl-1" id="afterControl61" style="font-size:0.7em; font-weight:bold;">
 															<input type="hidden" name="REVIEW_NUM" value="61">
-															<a class="modifyReviewReply">수정</a> &nbsp;
-															<a class="formCancel" value="reviewReplyModify">취소</a>
+															<a class="modifyReviewReply" style="cursor: pointer;">수정</a> &nbsp;
+															<a class="formCancel" value="reviewReplyModify" style="cursor: pointer;">취소</a>
 														</div>
 													</div>
 												</div>
 											</div>
-										</div>
-										<div class="ReviewReplyList pb-2" id="ReviewReplyList62"></div>
+										<!-- ajax로 insert될 코드 끝-->	
+										</div>										
+										
+										<div class="ReviewReplyList pb-2" id="ReviewReplyList61"> <!-- 리뷰 답글이 반복되는 영역(review_reply) --> <!-- reply번호 사용 --> <!-- 반복 -->
+											<div class="row justify-content-center">
+												<div class="col-1"></div>
+												<div class="col-1">프사</div>
+												<div class="col-10">
+													<div class="row">
+														<div class="col-2 justify-content-end name">닉네임</div>
+														<div class="col-8 justify-content-center"></div>
+														<div class="col-2 justify-content-center smallfont pl-1">날짜</div>
+													</div>
+													<div class="beforeModifyReviewReply" id="beforeModifyReviewReply51">	
+														<div class="row">	<!-- 내용 -->
+															<div class="col-11 pr-0">
+																원래 답글내용 원래 답글내용 원래 답글내용 원래 답글내용 원래 답글내용 원래 답글내용 원래 답글내용 원래 답글내용 원래 답글내용 원래 답글내용 원래 답글내용 
+															</div>	
+														</div>
+													</div>	
+													<div class="afterModifyReviewReply" id="afterModifyReviewReply51">
+														<form class="modifyReviewReplyForm" id="modifyReviewFormReply51">	
+															<div class="row">	<!-- 수정폼 대비 -->
+																<div class="col-11 pr-0">
+																	<input type="hidden" name="REVIEW_NUM" value="51">
+																	<textarea rows="2" name="REVIEW_CONTENT" id="REVIEW_CONTENT51" class="col-12 pl-0 pr-0" 
+																		>답글폼 만들기 답글폼 만들기 답글폼 만들기 답글폼 만들기 답글폼 만들기 답글폼 만들기 하하하하하하하하하하하하</textarea>
+																</div>	
+															</div>
+														</form>
+													</div>	
+														
+													<div class="row"> <!-- 답글, 수정, 삭제 -->
+														<div class="col-2 justify-content-center" style="font-size:0.7em; font-weight:bold;"></div>
+														<div class="col-8 justify-content-center"></div>
+														<div class="col-2 beforeControl justify-content-center pl-1" id="beforeControl51" style="font-size:0.7em; font-weight:bold;">
+															<input type="hidden" name="REVIEW_NUM" value="51">
+															<a class="gomodifyReviewReplyform" value="" style="cursor: pointer;">수정</a> &nbsp;
+															<a class="deleteReview" value="" style="cursor: pointer;">삭제</a>
+														</div>
+														<div class="col-2 afterControl justify-content-center pl-1" id="afterControl51" style="font-size:0.7em; font-weight:bold;">
+															<input type="hidden" name="REVIEW_NUM" value="51">
+															<a class="modifyReviewReply" value="" style="cursor: pointer;">수정</a> &nbsp;
+															<a class="formCancel" value="reviewReplyModify" style="cursor: pointer;">취소</a>
+														</div>
+													</div>
+												</div>
+											</div>
+										</div>											
 									</div>
-								</div> <!-- ReviewCount>0일 경우 i번 돈다 -->
-								<div class="ReviewAndReplySum pb-3" id="ReviewAndReplySum52">
-									<div class="ReviewSum" id="ReviewSum52"></div>
-									<div class="ReviewReplySum" id="ReviewReplySum52"></div>
 								</div>
-								<div class="ReviewAndReplySum pb-3" id="ReviewAndReplySum53"></div>
-								<div class="ReviewAndReplySum pb-3" id="ReviewAndReplySum54"></div>
-								<div class="ReviewAndReplySum pb-3" id="ReviewAndReplySum55"></div>
-							</div>
-						</div>
-					</div>					
+								<div class="ReviewAndReplySum pb-3" id="ReviewAndReplySum2">
+									<div class="ReviewSum"></div>	
+									<div class="ReviewReplySum"></div>
+								</div>	
+									
+									<br/><br/><br/><br/><br/><br/><br/>
+									<!-- productdetailnote -->
+
+									
+									
+							
+							</div> <!-- ReviewtableSection end -->
+						</div><!-- ReviewSection_wrap end -->
+					</div>	<!-- ReviewSection end -->
 				
 				
 				<br/></br><!-- 페이지네이션 영역 -->
@@ -810,298 +1071,19 @@
 		</div>
 		<!-- content end -->
 		
-
+		
 	<script>
-	$(document).ready(function() {
-		
-//		pageMove(1);	//페이지에 처음 들어올 경우 고려
-
-		/*댓글 등록할 때 사진 여러개일 때 쪼개주는 함수*/
-		// , 가 몇 개 있는지만 구하면 된다
-		function splitImg(REVIEW_FILE) {
-			var reviewImgArray = REVIEW_FILE.split(',');
-			return reviewImgArray;
-		}    
-
-		
-		/*날짜 형식 변경*/
-		function date_format(format) {
-			var year = format.getFullYear();
-			var month = format.getMonth() + 1;
-			if(month<10) {
-				month = '0' + month;
-			}
-			var date = format.getDate();
-			if(date<10) {
-				date = '0' + date;
-			}
+		function ReviewList() {
 			
-			return year + "-" + month + "-" + date + " " ;
-		}		
+			
+			
+		};
 		
-
-		function getReviewList() {
-			//table 내부 내용을 제거(초기화)
-			$('#ReviewtableSection').empty();
-	//		var insertSpace = '<div class="ReviewAndReplySum pb-3" id="ReviewAndReplySum0"></div>';	//insert될 리뷰가 들어올 곳
-	//		$('#ReviewtableSection').append(insertSpace);
-			$.ajax({
-				url:'/NAGAGU/getReviewList123.pro',
-				type:'POST',
-				data : { 'PRODUCT_NUM' : <%=PRODUCT_NUM%> },
-				dataType : "json", // 서버에서 보내줄 데이터 타입
-				contentType : 'application/x-www-form-urlencoded; charset=UTF-8',
-				success:function(retVal) {
-					var reviewCount = retVal.reviewCount;
-					console.log(retVal.reviewList)
-					console.log("retVal.reviewCount : "+retVal.reviewCount)
-					console.log("retVal.reviewList : "+retVal.reviewList)
-					console.log("retVal.review_RE_Count : "+retVal.review_RE_Count)
-					console.log("retVal.review_RE_List : "+retVal.review_RE_List)
-					
-					var output='';
-					var replyoutput ='';
-					
-					if(retVal.reviewCount > 0) {
-						for(var i=0; i<retVal.reviewList.length; i++) {	//reviewCount 상관 없음
-							
-							var REVIEW_NUM = retVal.reviewList[i].REVIEW_NUM;
-							var MEMBER_PICTURE = retVal.reviewList[i].MEMBER_PICTURE;
-							var MEMBER_NICK = retVal.reviewList[i].MEMBER_NICK;
-							var REVIEW_DATE = new Date(retVal.reviewList[i].REVIEW_DATE);
-							var date = date_format(REVIEW_DATE);
-							var REVIEW_GRADE = retVal.reviewList[i].REVIEW_GRADE;
-							var rate = 20*retVal.reviewList[i].REVIEW_GRADE;
-							var REVIEW_FILE = retVal.reviewList[i].REVIEW_FILE;
-							var REVIEW_CONTENT = retVal.reviewList[i].REVIEW_CONTENT;
-
-							console.log('i번째'+REVIEW_NUM);
-							output += '<div class="ReviewAndReplySum pb-3" id="ReviewAndReplySum'+REVIEW_NUM+'">';
-							output += '<div class="ReviewSum" id="ReviewSum'+REVIEW_NUM+'">';
-							output += '<div class="ReviewList pb-3" id="ReviewList'+REVIEW_NUM+'">';
-							output += '<div class="beforeModifyReview" id="beforeModifyReview'+REVIEW_NUM+'">';
-							output += '<div class="row justify-content-center">';
-							output += '<div class="col-1 justify-content-end"><img src="'+MEMBER_PICTURE+'" alt="" class="rounded-circle"></div>';
-							output += '<div class="col-11">';
-							output += '<div class="row pb-1">';
-							output += '<div class="col-2 justify-content-end name">'+MEMBER_NICK+'</div>';
-							output += '<div class="col-8 justify-content-center"></div>';
-							output += '<div class="col-2 justify-content-center smallfont">'+date+'</div>';
-							output += '</div>';
-							output += '<div class="row pb-2">';
-							output += '<div class="col-12" style="font-size:0.7em; font-weight:bold;">'+REVIEW_GRADE+' &nbsp;';
-							output += '<span class="star-rating">';
-							output += '<span style ="width:'+rate+'%"></span>';
-							output += '</span></div></div>';
-							output += '<div class="row pb-2">';
-							output += '<div class="col-12">';
-							
-							if(REVIEW_FILE == '#') {
-								output += '<img src="#" class="review_img"  style="display:none;">   &nbsp;&nbsp;';            
-							} else {
-								//split함수 호출 //, 가 몇 개 있는지 구해서 //for문으로 그 개수만큼 돌림...review_file[i]
-								var reviewImgArray = splitImg(REVIEW_FILE);
-								for(var k=0;k<reviewImgArray.length;k++) {
-									output += '<img src="/productupload/image/' + reviewImgArray[k] + '" class="review_img">&nbsp;';                        
-								}               
-							}
-							
-							output += '</div></div>';
-							output += '<div class="row pb-2">';
-							output += '<div class="col-11 pr-0">' + REVIEW_CONTENT + '</div></div>';
-							output += '<div class="row">';
-							output += '<div class="col-2 justify-content-center" style="font-size:0.7em; font-weight:bold; cursor: pointer;">';
-							output += '<a class="review_replybtn" id="review_replybtn' + REVIEW_NUM + '" value="' + REVIEW_NUM + '">답글</a>';
-							output += '</div>';
-							output += '<div class="col-8 justify-content-center"></div>';
-							output += '<div class="col-2 beforeControl justify-content-center" id="beforeControl'+REVIEW_NUM+'" style="font-size:0.7em; font-weight:bold;">';
-							output += '<input type="hidden" name="REVIEW_NUM" value="'+REVIEW_NUM+'">';
-							output += '<a class="gomodifyReviewform">수정</a> &nbsp;';
-							output += '<a class="deleteReview">삭제</a>';
-							output += '</div></div></div></div></div>';
-							output += '<div class="afterModifyReview" id="afterModifyReview'+REVIEW_NUM+'"></div>';
-							output += '</div></div>';
-							
-							output += '<div class="ReviewReplySum" id="ReviewReplySum'+REVIEW_NUM+'">';
-							output += '<div class="ReviewReplyformSection" id="ReviewReplyformSection'+REVIEW_NUM+'">';
-							output += '<div class="ReviewReplyInsertSpace" id="ReviewReplyInsertSpace'+REVIEW_NUM+'"></div>';
-							if(retVal.review_RE_Count>0) {
-								for(var j=0; j<retVal.review_RE_List.length; j++) {
-									if(REVIEW_NUM == retVal.review_RE_List[j].REVIEW_RE) {
-										var REPLY_NUM = retVal.review_RE_List[j].REVIEW_NUM;
-										var REPLY_NICK = retVal.review_RE_List[j].MEMBER_NICK;
-										var REPLY_PICTURE = retVal.review_RE_List[j].MEMBER_PICTURE;
-										var REPLY_CONTENT = retVal.review_RE_List[j].REVIEW_CONTENT;
-										var REPLY_DATE = new Date(retVal.review_RE_List[j].REVIEW_DATE);
-										var replydate = date_format(REPLY_DATE);
-										console.log('원글i='+i)
-										console.log('리뷰j='+j)
-										//리뷰 출력
-										
-										output += '<div class="ReviewReplyList pb-2" id="ReviewReplyList'+REPLY_NUM+'">';
-										output += '<div class="row justify-content-center">';
-										output += '<div class="col-1"></div>';
-										
-										output += '<div class="col-1"><img src="'+REPLY_PICTURE+'" alt="" class="rounded-circle"></div>';
-										output += '<div class="col-10">';
-										output += '<div class="row">';
-										output += '<div class="col-2 justify-content-end name">'+REPLY_NICK+'</div>';
-										output += '<div class="col-8 justify-content-center"></div>';
-										output += '<div class="col-2 justify-content-center smallfont pl-1">'+replydate+'</div>';
-										output += '</div>';
-										output += '<div class="beforeModifyReviewReply" id="beforeModifyReviewReply'+REPLY_NUM+'">';
-										output += '<div class="row">';
-										output += '<div class="col-11 pr-0">'+REPLY_CONTENT;
-										output += '</div></div></div>';
-										output += '<div class="afterModifyReviewReply" id="afterModifyReviewReply'+REPLY_NUM+'">';
-										output += '<form class="modifyReviewReplyForm" id="modifyReviewFormReply'+REPLY_NUM+'">';	
-										output += '<div class="row">';			
-										output += '<div class="col-11 pr-0">';			
-										output += '<input type="hidden" name="REVIEW_NUM" value="'+REPLY_NUM+'">';			
-										output += '<textarea rows="2" name="REVIEW_CONTENT" id="REVIEW_CONTENT'+REPLY_NUM+'" class="col-12 pl-0 pr-0">'+REPLY_CONTENT+'</textarea>';			
-										output += '</div></div></form></div>';
-										output += '<div class="row">';
-										output += '<div class="col-2 replytext justify-content-center"></div>';
-										output += '<div class="col-8 justify-content-center"></div>';
-										output += '<div class="col-2 beforeControl justify-content-center pl-1" id="beforeControl'+REPLY_NUM+'">';								
-										output += '<input type="hidden" name="REVIEW_NUM" value="'+REPLY_NUM+'">';
-										output += '<a class="gomodifyReviewReplyform">수정</a> &nbsp;';
-										output += '<a class="deleteReview">삭제</a>';
-										output += '</div>';
-										output += '<div class="col-2 afterControl justify-content-center pl-1" id="afterControl'+REPLY_NUM+'">';
-										output += '<input type="hidden" name="REVIEW_NUM" value="'+REPLY_NUM+'">';
-										output += '<a class="modifyReviewReply">수정</a> &nbsp;';
-										output += '<a class="formCancel" value="reviewReplyModify">취소</a>';
-										output += '</div></div></div></div></div>';
-										
-									}			
-								}
-							}
-							
-							output += '</div></div></div>';
-							$('#ReviewtableSection').append(output);				
-						}						
-					} else {
-						output += '등록된 댓글이 없습니다.'
-						$('#ReviewtableSection').append(output);	//이상한데...!?!?!?
-					}
-
-
-		          },
-		          error:function() {
-		             alert("ajax통신 실패!!!");
-		          }
-	       });
-		}
-		
-
-	
-		//Review 등록하기 버튼(insert) //원글
-		$(document).on("click",".insertReview",function(event){
-			var formId = 'ReviewForm';
-			var REVIEW_RE = 0;	//원글
-	
-	
-			var form = new FormData(document.getElementById(formId));
-		
-			$.ajax({
-				url : "/NAGAGU/review_insert123.do", 
-				data : form,
-				dataType: 'json',
-				processData : false,
-				contentType : false,
-				type : 'POST',				
-				success:function(retVal) {
-					if(retVal.insertres == "OK") {
-						console.log("OK")
-//						console.log(retVal)
-						getReviewList()
-					} else {
-						alert("insert 실패!!!");
-					}
-				},
-				error:function() {
-					alert("ajax통신 실패!!!");
-				}
-				
-			});
-			event.preventDefault();
 	
 		
 		
-		})
- 
-	getReviewList();
-	});		
-	
-	
-	
-	//https://www.podo-dev.com/blogs/15
-<%-- 	function pageMove(pg){
-		console.log(pg)
-		console.log(<%=PRODUCT_NUM%>)
-		var perPgLine = 5;
-		$.ajax({
-			type : "POST",
-			url : "/NAGAGU/getReviewList.pro",
-            dataType : 'json',
-            contentType : 'application/x-www-form-urlencoded; charset=UTF-8',
-			data : { 'pg' : pg, 'PRODUCT_NUM' : <%=PRODUCT_NUM%> },	//pg:선택한 페이지, perPgLine : 페이지당 게시글 개수
-			dataType: 'JSON',
-			success : function(retVal) {
-				console.log(retVal)
-				if(retVal.res == "OK") {
-					var arr = retVal.reviewList;
-					var reviewCount = retVal.reviewCount;
-					var page = pg;
-					//update board from data	//게시글을 다시 그려줌
-					//페이징을 다시 그려줌
-					updatePaging("pageMove", page, reviewCount, 5, 3); 
-					
-				} else if (retVal.res == "FAIL") {
-					alert("FAIL");
-				}
-				 
-				
-			},
-			error : function(e) {
-				alert('실패')
-				console.log(e);
-			}
-		});
-	}	
-	//페이징 다시 그려줌
-	//callFunc : 페이지 클릭 시 호출되는 함수이다. 1을 누르면 pagemove(1) 호출.
-	//page  : 현재 페이지
-	//allRowCnt : 전체 게시글 수
-	//perPgLine : 페이지당 게시글 수
-	//pgGrpCnt : 페이징을 몇개씩 묵을 것인가. ex.3인경우  (1,2,3) (4,5,6)
-	function updatePaging(callFunc, page, allRowCnt, perPgLine, pgGrpCnt){
-		console.log("callFunc = "+callFunc)
-		console.log("page = "+page)
-		console.log("allRowCnt = "+allRowCnt)
-		console.log("perPgLine = "+perPgLine)
-		console.log("pgGrpCnt = "+pgGrpCnt)
-//		var boardPager	= $('.ReviewListSection22');	//페이징을 담을 곳
-		var boardPager	= $('.ReviewList_Sum');	//페이징을 담을 곳
-		var	pager		= drawPager(callFunc, page, allRowCnt, perPgLine, pgGrpCnt);
-				
-		boardPager.empty();
-		boardPager.append(pager);
-	}
-	// drawPager() 함수를 호출하여, 그려진 페이징을 가져오자.
-	function drawPager(callFunc, page, allRowCnt, perPgLine, pgGrpCnt) {
-		var output='';
-		output += '<div class="ReviewList">'		
-		output += '<div class="col-1 justify-content-end">'		
 		
-		return output;
-	} 
-	 --%>
-
-	
-
-
+		
 //취소버튼들
 		//Review입력폼 / Qna입력폼
 		$(document).on("click",".formCancel",function(event){
@@ -1110,9 +1092,9 @@
 			var formType = $(this).attr('value');
 			
 			
-			if(formType=='ReviewForm') {	//리뷰 입력폼에서 취소
+			if(formType=='reviewForm') {	//리뷰 입력폼에서 취소
  				$("#ReviewformSection").css('display','none');
-				$('#ReviewForm').each(function() {  
+				$('#reviewForm').each(function() {  
 					this.reset();  
 				});  
 				$('.imgs_wrap').empty();
@@ -1140,8 +1122,10 @@
 				var REVIEW_NUM = $(this).prev().prev().val();
 				console.log(REVIEW_NUM)
 				$("#review_replybtn"+REVIEW_NUM).css('display','block');	//답글버튼 보임
-				$("#ReviewReplyformSection"+REVIEW_NUM).empty();	//답글 지움
-
+				$("#Review_replyformSection"+REVIEW_NUM).css('display','none');	//답글폼 숨김		
+				$('#review_replyForm'+REVIEW_NUM).each(function() {  
+					this.reset();  
+				});  
 
 			}
 			else if(formType=='reviewReplyModify') {	//답글 수정 취소
@@ -1383,7 +1367,7 @@
 			
 		})
 		
-		//Review_Reply폼 버튼	//답글 버튼
+		//Review_Reply폼 버튼
 		$(document).on("click",".review_replybtn",function(event){
 			if(<%=MEMBER_STATUS%> == 100){
 				if(<%=WORKSHOP_STATUS%> == 100) {
@@ -1393,42 +1377,116 @@
 				}
 				return;
 			}
-			var REVIEW_NUM = $(this).attr('value');
-			console.log(REVIEW_NUM);   
-			$("#review_replybtn"+REVIEW_NUM).css('display','none');	//답글버튼 숨김
-			
-			var replyform = '';
-			replyform += '<form class="ReviewReplyform" id="ReviewReplyform'+REVIEW_NUM+'" name="REVIEW_CONTENT" enctype="multipart/form-data">';
-			replyform += '<div class="row justify-content-center">';
-			replyform += '<div class="col-1"></div>';
-			replyform += '<div class="col-1"><img src="<%=MEMBER_PICTURE%>" alt="" class="rounded-circle"></div>';
-			replyform += '<div class="col-10">';
-			replyform += '<div class="row">';
-			replyform += '<div class="col-2 justify-content-end name"><%=MEMBER_NICK%></div>';
-			replyform += '<div class="col-8 justify-content-center"></div>';
-			replyform += '<div class="col-2 justify-content-center smallfont pl-1"></div></div>';	
-			replyform += '<div class="row">';
-			replyform += '<div class="col-11 pr-0">';
-			replyform += '<textarea rows="3" name="REVIEW_CONTENT" class="col-12 pl-0 pr-0"></textarea>';
-			replyform += '</div></div>';
-			replyform += '<div class="row">';
-			replyform += '<div class="col-2 replytext justify-content-center"></div>';
-			replyform += '<div class="col-8 justify-content-center"></div>';
-			replyform += '<div class="col-2 beforeControl justify-content-center pl-1">';
-			replyform += '<input type="hidden" name="PRODUCT_NUM" value="'+<%=PRODUCT_NUM%>+'">';		
-			replyform += '<input type="hidden" name="REVIEW_NUM" value="'+REVIEW_NUM+'">';		
-			replyform += '<a class="insertReviewReply">작성</a> &nbsp;';
-			replyform += '<a class="formCancel" value="reviewReply">취소</a>';
-			replyform += '</div></div></div></div></form>';
-			
-			$('#ReviewReplyformSection'+REVIEW_NUM).append(replyform);
+			console.log($(this).attr('value'));   
+			$("#review_replybtn"+$(this).attr('value')).css('display','none');	//답글버튼 숨김
+			$("#Review_replyformSection"+$(this).attr('value')).css('display','block');	//답글폼 보임
 			
 		})
 
-		
-	
+		/*댓글 등록할 때 사진 여러개일 때 쪼개주는 함수*/
+		// , 가 몇 개 있는지만 구하면 된다
+		function splitImg(REVIEW_FILE) {
+			var reviewImgArray = REVIEW_FILE.split(',');
+			return reviewImgArray;
+		}    		
 
+		//Review 등록하기 버튼(insert) //원글
+		$(document).on("click",".insertReview",function(event){
+			var formId = 'reviewForm';
+			var REVIEW_RE = 0;	//원글
+
+
+			var form = new FormData(document.getElementById(formId));			
+		//	var formData = new FormData(document.getElementById('폼 아이디'));
+			
+	/* 		
+			$.ajax({
+				url : "/NAGAGU/review_insert123.do", 
+				data : form,
+				dataType: 'json',
+				processData : false,
+				contentType : false,
+				type : 'POST',				
+				success:function(retVal) {
+					console.log(retVal)
+					alert('성공!');
+					var output = '';
+					var REVIEW_NUM = retVal.reviewVO.review_NUM;
+					var review_DATE = new Date(retVal.reviewVO.review_DATE);
+					var date = date_format(review_DATE);
+					var rate = 20*retVal.reviewVO.review_GRADE;
+					
+					var REVIEW_FILE = retVal.reviewVO.review_FILE;
+					
+					console.log('data.reviewnum='+retVal.reviewVO.review_NUM);
+					
+					
+					output += '<div class="ReviewList pb-3" id="ReviewList"'+REVIEW_NUM+'">';
+					output += '<div class="beforeModifyReview" id="beforeModifyReview'+REVIEW_NUM+'">';
+					output += '<div class="row justify-content-center">';
+					output += '<div class="col-1 justify-content-end">'+프사+'</div>';
+					
+					
+					
+					output += '<div class="col-11">';
+					output += '<div class="row pb-1">';
+					output += '<div class="col-2 justify-content-end name">닉네임</div>';
+					output += '<div class="col-8 justify-content-center"></div>';
+					output += '<div class="col-2 justify-content-center smallfont">날짜</div>';
+					output += '</div>';   
+					output += '<div class="row pb-2">';			
+					output += '<div class="col-12" style="font-size:0.7em; font-weight:bold;">'+grade+'&nbsp;';			
+					output += '<span class='star-rating'><span style ="width:10%"></span></span>';  
+					output += '</div></div>';
+					
+					output += '<div class="row pb-2">';
+					output += '<div class="col-12">';
+					output += '이미지';
+	
+					if(REVIEW_FILE == '#') {
+                        output += '<img src="#" class="review_img"  style="display:none;">   &nbsp;&nbsp;';            
+                     } else {
+                        //split함수 호출 //, 가 몇 개 있는지 구해서 //for문으로 그 개수만큼 돌림...review_file[i]
+                        var reviewImgArray = splitImg(REVIEW_FILE);
+                        for(i=0;i<reviewImgArray.length;i++) {
+                           output += '<img src="/productupload/image/' + reviewImgArray[i] + '" class="review_img">';                        
+                        }               
+                     }
+					
+					
+					output += '</div></div>';
+					output += '<div class="row pb-2">';
+					output += '<div class="col-11 pr-0">'+content;
+					output += '</div></div>';
+											
+								
+					output += '<div class="row">';		
+					output += '<div class="col-2 justify-content-center" style="font-size:0.7em; font-weight:bold; cursor: pointer;">';		
+					output += '<a class="review_replybtn" id="review_replybtn00" value="00" style="cursor: pointer;">답글</a>';		
+					output += '</div>';		
+					output += '<div class="col-8 justify-content-center"></div>';		
+					output += '<div class="col-2 beforeControl justify-content-center" id="beforeControl00" style="font-size:0.7em; font-weight:bold;">';		
+							
+									
+					output += '<input type="hidden" name="REVIEW_NUM" value="00">';	
+					output += '<a class="gomodifyReviewform" style="cursor: pointer;">수정</a> &nbsp;';	
+					output += '<a class="deleteReview" style="cursor: pointer;">삭제</a>';	
+					output += '</div></div></div></div></div>';	
+									
+					$('.reviewInsertSpace'+num).append(output);
+					
+					
+				},
+				error:function() {
+					alert("ajax통신 실패!!!");
+				}
+				
+			});
+			event.preventDefault();
+
+		 */
 		
+		})
 		
 
 		//Review 등록하기 버튼(insert) //답글
@@ -1439,7 +1497,7 @@
 			/*
 			if($(this).prev().val() != null) {	//답글
 				console.log("등록하려는 원글의 REVIEW_NUM : " + $(this).prev().val())
-				formId = 'ReviewReplyform';
+				formId = 'review_replyForm';
 				REVIEW_RE = $(this).prev().val();
 			}			
 			
@@ -1505,7 +1563,28 @@
 		
 		
 		
-
+		
+		
+		/*날짜 형식 변경*/
+		function date_format(format) {
+			var year = format.getFullYear();
+			var month = format.getMonth() + 1;
+			if(month<10) {
+				month = '0' + month;
+			}
+			var date = format.getDate();
+			if(date<10) {
+				date = '0' + date;
+			}
+			
+			return year + "-" + month + "-" + date + " " ;
+		}		
+		
+		/*
+		
+var review_DATE = new Date(data.review_DATE);
+                     var date = date_format(review_DATE);		
+		*/
 		
 		
 		//리뷰 이미지를 클릭하면 원본 사이즈로 커짐(기본은 100)

@@ -39,7 +39,7 @@ create sequence store_review_seq
 		<result property="REVIEW_RE" column="REVIEW_RE" />	
 	</resultMap>
 
-	<resultMap type="com.spring.store.Product_reviewVO" id="productReviewResultMap">
+	<resultMap type="java.util.HashMap" id="productReviewResultMap">
 		<result property="REVIEW_NUM" column="REVIEW_NUM" />	
 		<result property="REVIEW_MEMBER" column="REVIEW_MEMBER" />	
 		<result property="REVIEW_PRODUCT" column="REVIEW_PRODUCT" />	
@@ -48,6 +48,8 @@ create sequence store_review_seq
 		<result property="REVIEW_CONTENT" column="REVIEW_CONTENT" />	
 		<result property="REVIEW_GRADE" column="REVIEW_GRADE" />	
 		<result property="REVIEW_RE" column="REVIEW_RE" />		
+		<result property="MEMBER_NICK" column="MEMBER_NICK" />		
+		<result property="MEMBER_PICTURE" column="MEMBER_PICTURE" />		
 	</resultMap>
 
 	<resultMap type="com.spring.member.MemberVO" id="memberReviewResultMap">
@@ -105,30 +107,28 @@ create sequence store_review_seq
 	<select id="getReviewList" parameterType="java.util.HashMap" resultMap="productReviewResultMap">
 		SELECT * FROM
 		(SELECT rownum rnum, REVIEW_NUM, REVIEW_MEMBER, REVIEW_PRODUCT, REVIEW_DATE, 
-				REVIEW_FILE, REVIEW_CONTENT, REVIEW_GRADE, REVIEW_RE
-		 FROM (SELECT * FROM PRODUCT_REVIEW WHERE REVIEW_PRODUCT=#{PRODUCT_NUM} AND REVIEW_RE=0 ORDER BY REVIEW_DATE DESC))
+				REVIEW_FILE, REVIEW_CONTENT, REVIEW_GRADE, REVIEW_RE 
+		 FROM (SELECT * FROM PRODUCT_REVIEW WHERE REVIEW_PRODUCT=#{PRODUCT_NUM} AND REVIEW_RE=0 ORDER BY REVIEW_DATE DESC)) 
 		<![CDATA[ WHERE rnum >= #{startrow} AND rnum <= #{endrow} ]]>
 			
 	</select>
 
 	<select id="getReviewList123" parameterType="java.util.HashMap" resultMap="productReviewResultMap">
-
-    select * from
-        (select rownum rnum, review_num, REVIEW_MEMBER, REVIEW_PRODUCT, REVIEW_DATE, REVIEW_FILE, REVIEW_CONTENT, REVIEW_GRADE, REVIEW_RE,
-            member_nick, member_picture from
-            (select R.*, N.member_nick, n.member_picture from product_review R, nagagu_member N 
-            where r.review_product=#{PRODUCT_NUM} and r.review_member=n.member_num and r.review_re=0 order by r.review_date desc)
-         )   <![CDATA[ WHERE rnum >= #{startrow} AND rnum <= #{endrow} ]]>
+		SELECT * FROM
+			(SELECT rownum rnum, REVIEW_NUM, REVIEW_MEMBER, REVIEW_PRODUCT, REVIEW_DATE, REVIEW_FILE, REVIEW_CONTENT, REVIEW_GRADE, REVIEW_RE,
+			MEMBER_NICK, MEMBER_PICTURE FROM  
+				(SELECT R.*, N.MEMBER_NICK, N.MEMBER_PICTURE FROM PRODUCT_REVIEW R, NAGAGU_MEMBER N 
+				WHERE R.REVIEW_PRODUCT=#{PRODUCT_NUM} AND R.REVIEW_MEMBER=N.MEMBER_NUM AND R.REVIEW_RE=0 ORDER BY R.REVIEW_DATE DESC)) 
+			<![CDATA[ WHERE rnum >= #{startrow} AND rnum <= #{endrow} ]]>	
            
 	</select>
 	<select id="getReview_RE_List123" parameterType="java.util.HashMap" resultMap="productReviewResultMap">
-
-    select * from
-        (select rownum rnum, review_num, REVIEW_MEMBER, REVIEW_PRODUCT, REVIEW_DATE, REVIEW_FILE, REVIEW_CONTENT, REVIEW_GRADE, REVIEW_RE,
-            member_nick, member_picture from
-            (select R.*, N.member_nick, n.member_picture from product_review R, nagagu_member N 
-            where r.review_product=#{PRODUCT_NUM} and r.review_member=n.member_num and r.review_re!=0 order by r.review_date desc)
-         )   <![CDATA[ WHERE rnum >= #{startrow} AND rnum <= #{endrow} ]]>
+		SELECT * FROM
+			(SELECT rownum rnum, REVIEW_NUM, REVIEW_MEMBER, REVIEW_PRODUCT, REVIEW_DATE, REVIEW_FILE, REVIEW_CONTENT, REVIEW_GRADE, REVIEW_RE,
+			MEMBER_NICK, MEMBER_PICTURE FROM 
+				(SELECT R.*, N.MEMBER_NICK, N.MEMBER_PICTURE FROM PRODUCT_REVIEW R, NAGAGU_MEMBER N 
+				WHERE R.REVIEW_PRODUCT=#{PRODUCT_NUM} AND R.REVIEW_MEMBER=N.MEMBER_NUM AND R.REVIEW_RE!=0 ORDER BY R.REVIEW_DATE DESC)) 
+			<![CDATA[ WHERE rnum >= #{startrow} AND rnum <= #{endrow} ]]>	
            
 	</select>
 
