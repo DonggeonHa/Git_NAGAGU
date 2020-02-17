@@ -85,7 +85,7 @@
 	
 	<select id="estimateList" parameterType="java.util.HashMap" resultMap="estimateMap">
 		select * from (select ROW_NUMBER() OVER (order by ESTIMATE_DATE desc) as RNUM, ESTIMATE_NUM, ESTIMATE_MEMBER, ESTIMATE_NICK, ESTIMATE_TITLE, 
-		ESTIMATE_DATE, ESTIMATE_CATEGORY, ESTIMATE_PAY, ESTIMATE_STATE, ESTIMATE_AVG, ESTIMATE_OFFERCOUNT from ESTIMATE)
+		ESTIMATE_DATE, ESTIMATE_CATEGORY, ESTIMATE_CONTENT, ESTIMATE_PAY, ESTIMATE_STATE, ESTIMATE_AVG, ESTIMATE_OFFERCOUNT from ESTIMATE)
 		<![CDATA[where RNUM >= #{startRow} and RNUM <= #{endRow}]]>
 		<if test="ES_CATEGORY == 'title'"> and ESTIMATE_TITLE like '%'||#{ES_SEARCH}||'%'</if>
 		<if test="ES_CATEGORY == 'content'"> and ESTIMATE_CONTENT like '%'||#{ES_SEARCH}||'%'</if>
@@ -214,14 +214,12 @@
     	A.ESTIMATE_TITLE, A.ESTIMATE_CATEGORY, B.OFFER_PRICE, B.OFFER_DATE, A.ESTIMATE_STATE, B.OFFER_STATE, A.ESTIMATE_NUM, B.OFFER_NUM 
     	, B.OFFER_CONTENT from ESTIMATE A, (select * from ESTIMATE_OFFER where OFFER_WORKSHOP = #{OFFER_WORKSHOP}) B
     	where A.ESTIMATE_NUM = B.OFFER_ESTIMATE
-    	<if test="ESTIMATE_STATE!=null">and A.ESTIMATE_STATE = #{ESTIMATE_STATE}</if>
+		<if test="WO_SEARCH_CATEGORY == 'cate_title'"> and A.ESTIMATE_TITLE like '%'||#{WO_SEARCH}||'%'</if>
+		<if test="WO_SEARCH_CATEGORY == 'cate_member'"> and A.ESTIMATE_NICK like '%'||#{WO_SEARCH}||'%'</if>
+		<if test="WO_CATEGORY != '' and WO_CATEGORY != 'all'"> and A.ESTIMATE_CATEGORY = #{WO_CATEGORY} </if>
+		<if test="WO_STATE != '' and WO_STATE != -1"> and A.ESTIMATE_STATE = #{WO_STATE} </if>
    		)
         <![CDATA[where RNUM >= #{startRow} and RNUM <= #{endRow}]]>
-		<if test="WO_CATEGORY == 'title'"> and ESTIMATE_TITLE like '%'||#{ES_SEARCH}||'%'</if>
-		<if test="WO_CATEGORY == 'category'"> and ESTIMATE_CATEGORY like '%'||#{ES_SEARCH}||'%'</if>
-		<if test="WO_CATEGORY == 'nick'"> and ESTIMATE_NICK like '%'||#{ES_SEARCH}||'%'</if>
-		<if test="WO_CATEGORY == 'TandC'"> and (ESTIMATE_TITLE like '%'||#{ES_SEARCH}||'%'
-		or ESTIMATE_CONTENT like '%'||#{ES_SEARCH}||'%')</if>
     </select>
     
 </mapper>

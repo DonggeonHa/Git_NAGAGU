@@ -3,6 +3,9 @@
 <%
 	String MEMBER_EMAIL = (String)session.getAttribute("MEMBER_EMAIL");
 %>
+<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 <style>
 	#work_store th, td {
 		text-align:center;
@@ -20,25 +23,48 @@
 	.btn_bid_cancle {
 		color:red;
 	}
+	
+	.selector {
+		float:left;
+	}
+	
+	#selectState {
+		margin-left:5px;
+	}
+	
 </style>
 <div id="page-content-wrapper" style="padding-top: 5%;">
+
+<!-- 리스트 폼 시작 -->
+<form id="listinfo" method="post">
+	<input type="hidden" id="search_category" name="search_category">
+	<input type="hidden" id="search_text" name="search_text">
+	<input type="hidden" id="wo_category" name="wo_category">
+	<input type="hidden" id="wo_state" name="wo_state">
+</form>
+
+<!-- 리스트 폼 끝 -->
+
+
 	<div class="container-fluid">
         <div class="pb-5">
             <h1>견적 제안 관리</h1>
         </div>
         <div class="d-flex justify-content-between pb-2">
 	        <div class="justify-content-start">
-	            <button type="button" class="btn btn-sm btn-outline-dark mr-2">전체표시</button>
-	            <button type="button" class="btn btn-sm btn-outline-dark mr-2">선택 삭제</button>                         
+	            <button type="button" id="btn_reset" class="btn btn-sm btn-outline-dark mr-2">전체표시</button>
+	            <button type="button" id="btn_select_note" class="btn btn-sm btn-outline-dark mr-2">선택 쪽지</button>    
+	            <button type="button" id="btn_select_delete" class="btn btn-sm btn-outline-dark mr-2">선택 삭제</button>                         
 	            <span class="listnum_txt pt-2">전체 제안내역</span>
 	            <span class="listnum_num pt-2" id="offer_count"></span>
 	        </div>
 	    </div>
 	    <div class="d-flex justify-content-between pb-2">
 	    	<div class="justify-content-start" style="padding: 0;">
-				<div class="">
-					<select class="search_hidden_state form-control" id="selectClassType" name="selectClassType" onchange="btn_select()" style="height: 100%;">
-						<option value="allClass">전체</option>
+				<div class="selector">
+					<select class="search_hidden_state form-control" id="selectCategory" name="selectCategory" style="height: 100%;">
+						<option disabled hidden>가구 종류</option>
+						<option value="all">전체</option>
 						<option value="table">책상</option>
 						<option value="chair">의자</option>
 						<option value="bookshelf">책장</option>
@@ -49,30 +75,41 @@
 						<option value="misc">기타</option>
 					</select>
 				</div>
+				<div class="selector">
+					<select class="search_hidden_state form-control" id="selectState" name="selectState" style="height: 100%;">
+						<option disabled hidden>현재 상태</option>
+						<option value="-1">전체</option>
+						<option value="0">입찰중</option>
+						<option value="1">낙찰</option>
+						<option value="2">유찰</option>
+						<option value="3">취소</option>
+					</select>
+				</div>
 			</div>
 	        <div class="justify-content-end">
 	        	<div class="d-flex justify-content-end">
 		            <!-- Example split danger button -->
 		            <div class="dropdown">
-		                <button class="btn dropbtn btn-sm dropdown-toggle btn-search-mode" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+		                <button class="btn dropbtn btn-sm dropdown-toggle btn-search-mode" type="button" id="scButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 		                   	 선택
 		                </button>
 		                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-		                    <a class="dropdown-item" onclick="select_category()">제목</a>
-		                    <a class="dropdown-item" onclick="select_category()">작성자</a>
+		                    <button class="dropdown-item" value="cate_title">제목</button>
+		                    <button class="dropdown-item" value="cate_member">작성자</button>
 		                </div>
 		            </div>
 		
 		            <!-- search -->
 		            <nav class="navbar-light bg-light">
 		              <form class="form-inline" >
-		                <input class="form-control mr-sm-2" type="search" aria-label="Search" style="height:90%">
-		                <button class="btn btn_search btn-sm my-2 my-sm-0" type="submit">검색</button>
+		                <input class="form-control mr-sm-2" id="search_input"type="search" aria-label="Search" style="height:90%">
+		                <button class="btn btn_search btn-sm my-2 my-sm-0" id="btn_search">검색</button>
 		              </form>
 		            </nav>
 	            </div>
 	        </div>
         </div>
+        <form id="chk_form" method="post">
 	    <table class="table" id="work_store">
 	        <thead>
 	            <tr>
@@ -91,6 +128,7 @@
 	        <tbody>
 	         </tbody>
 	    </table>
+	    </form>
 	    
 	    <!--  견적 수정 modal -->
 		<div class="modal fade" id="modifyFormModal" tabindex="-1" role="dialog"
@@ -139,12 +177,17 @@
 	var checkPrice =  /^[0-9]*$/;
 
 	$(document).ready(function() {
+
+		$('#selectCategory').val('가구 종류');
+		$('#selectState').val('현재 상태');
+		
 		
 		/* 제안 댓글 리스트 불러오기 */
 		function getList() {
 			console.log("get list start");
 			
 			var params = $('#listinfo').serialize();
+			console.log(params);
 			
 			$.ajax({
 				url:'/NAGAGU/workshop_offer_list.ws', 
@@ -162,25 +205,52 @@
 					var woList = data.woList;
 					var rnum = data.rnum;
 
-		            $('#offer_count').html(data.offerCount + '건');
+		            $('#offer_count').html(woList.length + '건');
 					
 					if (data.offerCount == 0) {
-						output += '<tr><td colspan="5" class="list_caution">등록된 제안이 없습니다</td><tr>';
+						output += '<tr><td colspan="10" class="list_caution">등록된 제안이 없습니다</td><tr>';
 					}
 					
 					else {
 						/* 리스트 작성*/
+						
 						$.each(woList, function(index, item) {
+							
+							var es_date = formatDate(item.OFFER_DATE);
+							
+							var es_state = '';
+							
+							switch (item.ESTIMATE_STATE) {
+							case 0 :
+								es_state = '입찰중';
+								break;
+							case 1 :
+								switch (item.OFFER_CASE) {
+								case 1 :
+									es_state = '낙찰'
+									break;
+								case 2 :
+									es_state = '낙찰 실패'
+									break;
+								}
+								break;
+							case 2 :
+								es_state = '유찰';
+								break;
+							case 3 :
+								es_state = '취소';
+								break;
+							}
 
 				            output += '<tr>';
-				            output += '<td scope="col" ><input type="checkbox" class="chk"></td>';  
+				            output += '<td scope="col" ><input type="checkbox" class="chk" name="chk" value=' + item.OFFER_NUM + '>';  
+				            output += '<input type="hidden" class="disabled" name="chk2" value=' + item.ESTIMATE_MEMBER + '></td>';
 				            output += '<th scope="col" >' + rnum + '</th>';
 				            output += '<td scope="col" >' + item.ESTIMATE_NICK + '</td>';
 				            output += '<td scope="col" >' + item.ESTIMATE_TITLE + '</td>';
 				            output += '<td scope="col" >';
 				            
 				            var category = item.ESTIMATE_CATEGORY;
-				            console.log("카테고리 : " + category);
 				            
 				            switch (category) {
 				            case 'table':
@@ -211,14 +281,13 @@
 				            
 				            output += '</td>';
 				            output += '<td id="offer_price_' + item.OFFER_NUM + '" scope="col" >' + addComma(item.OFFER_PRICE) + '</td>';
-				            output += '<td scope="col" >' + item.OFFER_DATE + '</td>';
-				            output += '<td scope="col" >' + item.ESTIMATE_STATE + '</td>';
+				            output += '<td scope="col" >' + es_date + '</td>';
+				            output += '<td scope="col" >' + es_state + '</td>';
 				            output += '<td scope="col">';
 				            output += '<input type="hidden" id="offer_content_' + item.OFFER_NUM + '" value=' + item.OFFER_CONTENT + '>';
-				            console.log("OFFER_CONTENT : " + item.OFFER_CONTENT);
 				            output += '<button class="btn_detail" value=' + item.ESTIMATE_NUM + '>보기</button>';
 				            output += '<button class="btn_modify" of_num=' + item.OFFER_NUM + ' es_num=' + item.ESTIMATE_NUM + ' alt="" data-toggle="modal" data-target="#modifyFormModal" aria-haspopup="true" aria-expanded="false">수정</button>';
-				           	output += '<button class="btn_delete" of_num=' + item.OFFER_NUM + ' es_num=' + item.ESTIMATE_NUM + '>삭제</button>';
+				           	output += '<button class="btn_delete" of_num=' + item.OFFER_NUM + '>삭제</button>';
 				            output += '</td>';
 				            output += '<td scope="col">';
 				            output += '<button class="btn_note" value=' + item.ESTIMATE_NUM + '>쪽지</button>';
@@ -263,11 +332,19 @@
 	   	}
             
         $("#all_select").click(function() {
-             setSelect();
+            setSelect();
         });
-        
-        $("input[class='chk']").click(function() {
-             checkSelect();
+
+        $(document).delegate('.chk', 'click', function() {
+        	var check2 = $(this).parent().find('input[name="chk2"]');
+        	if (check2.attr('disabled') == 'true') {
+            	check2.attr('disabled', 'false');
+        	}
+        	else {
+            	check2.attr('disabled', 'true');
+        	}
+        	console.log(check2.val());
+            checkSelect();
         });
 		            
 	    $("#all_select").prop("checked",false);
@@ -370,10 +447,7 @@
 		$(document).delegate('.btn_delete', 'click', function() {
 			if (confirm("정말로 삭제하시겠습니까?")) {
 				var of_num = $(this).attr('of_num');
-				var es_num =  $(this).attr('es_num');
-				console.log(of_num);
-				console.log(es_num);
-				var params = {"OFFER_NUM" : of_num, "ESTIMATE_NUM" : es_num };
+				var params = {"OFFER_NUM" : of_num};
 				console.log(params);
 				$.ajax({
 					url:'/NAGAGU/offer_delete.es',
@@ -396,6 +470,116 @@
 			return false;
 		});
 		
+		/* 카테고리 선택 */
+		
+		$('#selectCategory').change(function() {
+			$('#wo_category').val($('#selectCategory').val());
+			
+			getList();
+			
+			return false;
+		});
+
+		$('#selectState').change(function() {
+			$('#wo_state').val($('#selectState').val());
+			
+			getList();
+			
+			return false;
+		});
+		
+		/* 검색 드롭다운 */
+		
+		$('.dropbtn').click(function() {
+			$('.dropdown-menu').show();
+			
+			return false;
+		});
+		
+		$('.dropdown-item').click(function () {
+			$('#search_category').val($(this).val());
+			$('#scButton').html($(this).html());
+			$('.dropdown-menu').hide();
+			
+			return false;
+		});
+		
+		$(document).click(function(e){
+			   
+		    if (!$(e.target).is('.dropdown-item')) {
+				$('.dropdown-menu').hide();
+		    }
+
+		});
+		
+		$('#btn_search').click(function() {
+			$('#search_text').val($('#search_input').val());
+			
+			getList();
+			
+			return false;
+		});
+		
+		/* 초기화 */
+		$('#btn_reset').click(function() {
+			$('#selectCategory').val('가구 종류');
+			$('#selectState').val('현재 상태');
+			$('#scButton').html('선택');
+			$('input[type="hidden"]').val('');
+			getList();
+			
+			return false;
+		});
+		
+		/* 선택 삭제 */
+		
+		$(document).delegate('#btn_select_delete', 'click', function() {
+			if ($("input[name='chk']:checked").length==0) {
+	    		return false;
+	    	}
+			
+	    	if (confirm("정말로 삭제하시겠습니까?")) {
+				var params = $('#chk_form').serialize();
+				var test = $('#listinfo').serialize();
+				console.log(params);
+				console.log(test);
+				$.ajax({
+					url:'/NAGAGU/offer_delete.es',
+					type:'POST',
+					data:params,
+					aync:false,
+					contentType: 'application/x-www-form-urlencoded; charset=utf-8',
+					success : function(data) {
+						alert("제안글이 성공적으로 삭제되었습니다.");
+						getList();
+					},
+				     error:function(request,status,error){
+				         alert("code = "+ request.status + " message = " + request.responseText + " error = " + error);
+					}
+					
+				});
+			
+			}
+
+			return false;
+		});
+	
+		
+		/* Date format */
+		
+		function formatDate(date) {
+		    var d = new Date(date),
+		        month = '' + (d.getMonth() + 1),
+		        day = '' + d.getDate(),
+		        year = d.getFullYear();
+		
+		    if (month.length < 2) 
+		        month = '0' + month;
+		    if (day.length < 2) 
+		        day = '0' + day;
+	
+	    	return [year, month, day].join('.');
+		}
 		
 		getList();
 		

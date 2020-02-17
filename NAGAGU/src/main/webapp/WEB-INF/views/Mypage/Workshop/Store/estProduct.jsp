@@ -10,7 +10,7 @@
 	            <button type="button" id="all_select" class="btn btn-sm btn-outline-dark mr-2">전체표시</button>
 	            <button type="button" id="all_select" class="btn btn-sm btn-outline-dark mr-2">선택 쪽지</button>                         
 	            <span class="listnum_txt pt-2">전체 주문내역</span>
-	            <span class="listnum_num pt-2">194건</span>
+	            <span class="listnum_num pt-2" id="es_order_count">0건</span>
 	        </div>
 	        <div class="justify-content-end">
 	        	<div class="d-flex justify-content-end">

@@ -457,6 +457,7 @@
     </div>
     
     <script>
+    /* 전체 선택 체크박스 */
 	    function setSelect() {
 	        if ($("#all_select").is(":checked")) {
 	               $("input[type=checkbox]").prop("checked", true);
@@ -476,6 +477,8 @@
 	        
 	        return true;
 	   	}
+	 
+	    /* 쪽지 보관하기 */
 	    
 	    $("#btn_boxing").click(function(){
 	    	if ($("input[name='chk']:checked").length==0) {
@@ -485,9 +488,15 @@
 	    	$("#selectForm").submit();
 	    });
 
+	    /* 쪽지 삭제하기 */
 	    $("#btn_delete").click(function(){
-	    	$("#selectForm").attr("action", "noteDelete.nt");
-	    	$("#selectForm").submit();
+	    	if ($("input[name='chk']:checked").length==0) {
+	    		return false;
+	    	}
+	    	if (confirm('정말 삭제하시겠습니까?')) {
+		    	$("#selectForm").attr("action", "noteDelete.nt");
+		    	$("#selectForm").submit();
+	    	}
 	    });
 	        
 	    $(document).ready(function(){

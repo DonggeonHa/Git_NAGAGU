@@ -207,9 +207,13 @@ public class EstimateServiceImpl implements EstimateService {
 	}
 	
 	@Override
-	public int offerDelete (int ESTIMATE_NUM, int OFFER_NUM) {
+	public int offerDelete (int OFFER_NUM) {
 		EstimateMapper mapper = sqlSession.getMapper(EstimateMapper.class);
 		int res = 0;
+
+		EstimateOfferVO vo = mapper.offerDetail(OFFER_NUM);
+		int ESTIMATE_NUM = vo.getOFFER_ESTIMATE();
+		
 		int res1 = mapper.offerDelete(OFFER_NUM);
 		
 		if (res1 == 1) {

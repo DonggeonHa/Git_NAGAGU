@@ -1,6 +1,8 @@
 package com.spring.note;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashSet;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -10,7 +12,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.spring.member.MemberVO;
 import com.spring.workshop.WorkShopMemberVO;
 
 @Controller
@@ -302,14 +306,6 @@ public class NoteController {
 		String receive_pic = null;
 		
 		String receive_mail = request.getParameter("receive_mail");
-		String workshop_name = request.getParameter("workshop_name");
-		
-		if (receive_mail == null && workshop_name != null) {
-			
-			WorkShopMemberVO workshopvo = new WorkShopMemberVO();
-			workshopvo.setWORKSHOP_NAME(workshop_name);
-			receive_mail = noteService.getWorkshopMail(workshopvo);
-		}
 		
 		int memberChk = noteService.checkMember(receive_mail);
 		
@@ -339,12 +335,79 @@ public class NoteController {
 		return "Mypage/Note/noteWrite";
 	}
 	
+	@RequestMapping("selectedForm.nt")
+	public String selectedSend (HttpServletRequest request, HttpSession session, Model model) throws Exception {
+
+		String sender_mail = "";
+		String sender_nick = "";
+		
+		if (session.getAttribute("MEMBER_EMAIL") != null) {
+			sender_mail = (String)session.getAttribute("MEMBER_EMAIL");
+			sender_nick = (String)session.getAttribute("MEMBER_NICK");
+		}
+		else if (session.getAttribute("WORKSHOP_EMAIL") != null) {
+			sender_mail = (String)session.getAttribute("WOKRSHOP_EMAIL");
+			sender_nick = (String)session.getAttribute("WOKRSHOP_NAME");
+		}
+		
+			
+		String[] receivers = request.getParameterValues("chk2");
+		receivers = new HashSet<String>(Arrays.asList(receivers)).toArray(new String[0]);
+
+		ArrayList<MemberVO> receiverList = new ArrayList<MemberVO>();
+		
+		int receiverCount = 0;
+
+		for (String receiver_mail : receivers) {
+			MemberVO vo = new MemberVO();
+			String receiver_nick = null;
+			String receiver_pic = null;
+			
+			int chk = noteService.checkMember(receiver_mail);
+			
+			if (chk == 1) {
+				MemberVO membervo = noteService.getMember(receiver_mail);
+				receiver_nick = membervo.getMEMBER_NICK();
+				receiver_pic = membervo.getMEMBER_PICTURE();
+				
+			}
+			else if (chk == 2) {
+				WorkShopMemberVO workshopvo = noteService.getWorkshop(receiver_mail);
+				receiver_nick = workshopvo.getWORKSHOP_NAME();
+				receiver_pic = workshopvo.getWORKSHOP_PICTURE();
+			}
+
+			vo.setMEMBER_EMAIL(receiver_mail);
+			vo.setMEMBER_NICK(receiver_nick);
+			vo.setMEMBER_PICTURE(receiver_pic);
+			
+			receiverList.add(vo);
+			receiverCount++;
+		}
+		
+		model.addAttribute("receiverList", receiverList);
+		
+		return "Mypage/Note/noteWrite";
+	}
+	
 	@RequestMapping("notewrite.nt")
+	@ResponseBody
 	public String noteWrite(HttpServletRequest request, HttpSession session) throws Exception {
 		NoteVO vo = new NoteVO();
+		String sender_mail = "";
+		String sender_nick = "";
 		
-			vo.setNOTE_SENDER_MAIL((String)session.getAttribute("send_mail"));
-			vo.setNOTE_SENDER_NICK((String)session.getAttribute("send_nick"));
+		if (session.getAttribute("MEMBER_EMAIL") != null) {
+			sender_mail = (String)session.getAttribute("MEMBER_EMAIL");
+			sender_nick = (String)session.getAttribute("MEMBER_NICK");
+		}
+		else if (session.getAttribute("WORKSHOP_EMAIL") != null) {
+			sender_mail = (String)session.getAttribute("WOKRSHOP_EMAIL");
+			sender_nick = (String)session.getAttribute("WOKRSHOP_NAME");
+		}
+		
+			vo.setNOTE_SENDER_MAIL(sender_mail);
+			vo.setNOTE_SENDER_NICK(sender_nick);
 			vo.setNOTE_RECEIVER_MAIL(request.getParameter("receiver_mail"));
 			vo.setNOTE_RECEIVER_NICK(request.getParameter("receiver_nick"));
 			vo.setNOTE_TITLE(request.getParameter("note_title"));

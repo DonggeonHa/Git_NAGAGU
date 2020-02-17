@@ -370,13 +370,24 @@ public class EstimateController {
 	@RequestMapping(value = "/offer_delete.es", produces="application/json; charset=UTF-8")
 	@ResponseBody
 	public HashMap<String, Object> offerDelete (HttpServletRequest request) {
-		int ESTIMATE_NUM = Integer.parseInt(request.getParameter("ESTIMATE_NUM"));
-		int OFFER_NUM = Integer.parseInt(request.getParameter("OFFER_NUM"));
+
+		int deleteCount = 0;
 		
-		int res = estimateService.offerDelete(ESTIMATE_NUM, OFFER_NUM);
+		if (request.getParameterValues("chk") != null) {
+			String[] offerNums = request.getParameterValues("chk");
+			
+			for (String offerNum : offerNums) {
+				int OFFER_NUM = Integer.parseInt(offerNum);
+				deleteCount += estimateService.offerDelete(OFFER_NUM);
+			}
+		}
+		else {
+			int OFFER_NUM = Integer.parseInt(request.getParameter("OFFER_NUM"));
+			deleteCount = estimateService.offerDelete(OFFER_NUM);
+		}
+
 		HashMap<String, Object> map = new HashMap<String, Object>();
-		
-		if (res == 1) {
+		if (deleteCount >= 1) {
 			map.put("res", "Offer successfully added");
 		}
 		else {

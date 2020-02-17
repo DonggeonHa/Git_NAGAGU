@@ -32,9 +32,14 @@ public class EstimateManagementController {
 		String OFFER_WORKSHOP = (String)session.getAttribute("WORKSHOP_NAME");
 		
 		HashMap <String, Object> listmap = new HashMap <String, Object>();
-		listmap.put("WO_CATEGORY", request.getParameter("search_category"));
+		listmap.put("WO_SEARCH_CATEGORY", request.getParameter("search_category"));
 		listmap.put("WO_SEARCH", request.getParameter("search_text"));
-		listmap.put("WO_CATEGORY", request.getParameter("search_text"));
+		listmap.put("WO_CATEGORY", request.getParameter("wo_category"));
+		listmap.put("WO_STATE", request.getParameter("wo_state"));
+		System.out.println("test : " + listmap.get("WO_SEARCH_CATEGORY"));
+		System.out.println("test : " + listmap.get("WO_SEARCH"));
+		System.out.println("test : " + listmap.get("WO_CATEGORY"));
+		System.out.println("test : " + listmap.get("WO_STATE"));
 		
 		HashMap <String, Object> countMap = new HashMap <String, Object>();
 		countMap.put("OFFER_WORKSHOP", OFFER_WORKSHOP);
