@@ -173,13 +173,13 @@ public class ProductController {
 		ArrayList<Product_reviewVO> review_RE_List = null;
 		reviewCount = reviewService.getReviewCount(map1);
 		review_RE_Count = reviewService.getReview_RE_Count(map1);
-		reviewList = reviewService.getReviewList123(map1);
+//		reviewList = reviewService.getReviewList123(map1);
 		review_RE_List = reviewService.getReview_RE_List(map1);
 
 		
 		HashMap<String, Object> retVal = new HashMap<String, Object>();
 		try {
-			reviewList = reviewService.getReviewList123(map1);
+//			reviewList = reviewService.getReviewList123(map1);
 			retVal.put("res", "OK");
 			retVal.put("reviewCount", reviewCount);	//allRowCnt
 			retVal.put("reviewList", reviewList);

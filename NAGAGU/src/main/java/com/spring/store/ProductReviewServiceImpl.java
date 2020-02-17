@@ -8,7 +8,6 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.spring.mapper.PicsCommentMapper;
 import com.spring.mapper.ProductReviewMapper;
 import com.spring.member.MemberVO;
 
@@ -62,9 +61,9 @@ public class ProductReviewServiceImpl implements ProductReviewService {
 		return reviewList;
 	}
 	@Override
-	public ArrayList<Product_reviewVO> getReviewList123(HashMap<String, Object> map) {
+	public ArrayList<HashMap<String, Object>> getReviewList123(HashMap<String, Object> map) {
 		ProductReviewMapper reviewMapper = sqlSession.getMapper(ProductReviewMapper.class);
-		ArrayList<Product_reviewVO> reviewList = null;
+		ArrayList<HashMap<String, Object>>  reviewList = null;
 		reviewList = reviewMapper.getReviewList123(map);
 		return reviewList;
 	}
@@ -78,9 +77,9 @@ public class ProductReviewServiceImpl implements ProductReviewService {
 	}
 	
 	@Override
-	public ArrayList<Product_reviewVO> getReview_RE_List123(HashMap<String, Object> map) {
+	public ArrayList<HashMap<String, Object>> getReview_RE_List123(HashMap<String, Object> map) {
 		ProductReviewMapper reviewMapper = sqlSession.getMapper(ProductReviewMapper.class);
-		ArrayList<Product_reviewVO> review_RE_List = null;
+		ArrayList<HashMap<String, Object>> review_RE_List = null;
 		review_RE_List = reviewMapper.getReview_RE_List123(map);
 		return review_RE_List;
 	}
