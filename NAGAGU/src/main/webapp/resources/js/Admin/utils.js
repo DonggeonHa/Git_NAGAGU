@@ -7,7 +7,14 @@ window.chartColors = {
 	green: 'rgb(75, 192, 192)',
 	blue: 'rgb(54, 162, 235)',
 	purple: 'rgb(153, 102, 255)',
-	grey: 'rgb(201, 203, 207)'
+	grey: 'rgb(201, 203, 207)',
+	nagagu_yellow : '#eda645',
+	nagagu_navy : '#1b1b27',
+	delete_member : '#f5d473', //노랑
+	delete_workshopMember : '#78acfa', //파랑
+	member : '#eda645', //주황
+	workshopMember : '#4276ed', //진파랑
+	line: '#133cd1'
 };
 
 (function(global) {

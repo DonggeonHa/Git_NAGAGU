@@ -35,26 +35,6 @@ public class AdminController {
 		return "Admin/login";
 	}
 	
-	@RequestMapping(value = "/Alogin.ad", method = {RequestMethod.GET, RequestMethod.POST})
-	public ModelAndView Alogin(AdminMemberVO adminVO, HttpSession session, ModelAndView mav) {
-		System.out.println("아이디 : " + adminVO.getADMIN_ID());
-		System.out.println("비밀번호 : " + adminVO.getADMIN_PASS());
-		int res = adminService.user_chk(adminVO);
-		System.out.println("admin res는" + res);
-		
-		if (res == 1) {	//로그인(아이디,비번 맞음)-이메일 인증 완료
-			session.setAttribute("ADMIN_NUM", adminVO.getADMIN_NUM());
-			
-		} else {	//아이디or비번 틀렸을 때
-			System.out.println("아이디 또는 비밀번호 틀림");
-			return null;
-		}
-		
-		mav.addObject("adminVO", adminVO);
-		mav.setViewName("Admin/Aindex");
-		
-		return mav;
-	}
 	
 	@RequestMapping(value = "/index.ad")
 	public String Menu() {

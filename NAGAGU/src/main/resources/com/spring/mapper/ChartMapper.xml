@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.spring.mapper.ChartMapper">
+	<resultMap type="com.spring.chart.CountPicsVO" id="CommunityMap">
+		<result property="COUNT" column="COUNT"/> 
+		<result property="PICS_DATE" column="PICS_DATE"/>
+	</resultMap>
+	<resultMap type="com.spring.academy.ClassVO" id="classResultMap">
+		<result property="CLASS_NUMBER" column="CLASS_NUMBER" />	
+		<result property="WORKSHOP_NUM" column="WORKSHOP_NUM" />
+		<result property="WORKSHOP_NAME" column="WORKSHOP_NAME" />
+		<result property="WORKSHOP_PICTURE" column="WORKSHOP_PICTURE" />
+		<result property="CLASS_DIVISION" column="CLASS_DIVISION" />	
+		<result property="CLASS_NAME" column="CLASS_NAME" />	
+		<result property="CLASS_ABRIEF" column="CLASS_ABRIEF" />	
+		<result property="CLASS_AMOUNT" column="CLASS_AMOUNT" />	
+		<result property="CLASS_DATE" column="CLASS_DATE" />	
+		<result property="CLASS_DATE_CONFIGURATION_1" column="CLASS_DATE_CONFIGURATION_1" />	
+		<result property="CLASS_DATE_CONFIGURATION_2" column="CLASS_DATE_CONFIGURATION_2" />	
+		<result property="CLASS_AREA" column="CLASS_AREA" />	
+		<result property="CLASS_CATEGORY" column="CLASS_CATEGORY" />	
+		<result property="CLASS_INTRODUCTION_1" column="CLASS_INTRODUCTION_1" />	
+		<result property="CLASS_INTRODUCTION_2" column="CLASS_INTRODUCTION_2" />	
+		<result property="CLASS_INTRODUCTION_3" column="CLASS_INTRODUCTION_3" />	
+		<result property="CLASS_ETC" column="CLASS_ETC" />	
+		<result property="CLASS_BANNER" column="CLASS_BANNER" />	
+		<result property="CLASS_IMAGE" column="CLASS_IMAGE" />
+		<result property="CLASS_ADDRESS" column="CLASS_ADDRESS" />
+		<result property="CLASS_DETAIL_ADDRESS" column="CLASS_DETAIL_ADDRESS" />
+		<result property="CLASS_COUNT_MEMBER" column="CLASS_COUNT_MEMBER" />
+		<result property="CLASS_STATUS" column="CLASS_STATUS" />
+	</resultMap>
+	<!-- <select id="CountBoard" parameterType="String" resultType="int">
+		select count(*) as COUNT from (select trunc(PICS_DATE, 'DD') as PICS_DATE from pics 
+		where trunc(PICS_DATE) = to_date(#{selectDate})) group by PICS_DATE order by pics_date asc
+	</select> -->
+	
+	<select id="CountBoard" parameterType="String" resultType="int">
+		select count(*) from pics where trunc(PICS_DATE) = to_date(#{selectDate}) order by pics_date asc
+	</select>
+	
+	<select id="PopularClass" resultMap="classResultMap">
+		select class_name, workshop_name,class_count_member from academy order by class_count_member desc
+	</select>
+	
+	<select id="insertMemberCount" parameterType="String" resultType="int">
+		select count(*) from nagagu_member where trunc(member_date) = to_date(#{selectDate}) order by member_date asc
+	</select>
+	
+	<select id="insertWSMemberCount" parameterType="String" resultType="int">
+		select count(*) from nagagu_workshop_member where trunc(workshop_date) = to_date(#{selectDate}) order by workshop_date asc
+	</select>
+</mapper>
