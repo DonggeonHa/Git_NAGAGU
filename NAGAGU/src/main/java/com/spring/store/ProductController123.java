@@ -316,7 +316,7 @@ public class ProductController123 {
 		    
 			//reviewVO.setREVIEW_NUM(0); //시퀀스 이용
 			reviewVO.setREVIEW_MEMBER((int)session.getAttribute("MEMBER_NUM"));
-			reviewVO.setREVIEW_PRODUCT(Integer.parseInt(request.getParameter("REVIEW_PRODUCT")));
+			reviewVO.setREVIEW_PRODUCT(Integer.parseInt(request.getParameter("PRODUCT_NUM")));
 			reviewVO.setREVIEW_DATE(new Timestamp(System.currentTimeMillis()));
 			reviewVO.setREVIEW_FILE(str);
 			reviewVO.setREVIEW_CONTENT(request.getParameter("REVIEW_CONTENT"));
@@ -350,17 +350,17 @@ public class ProductController123 {
 			//update해야하는 상품의 vo 가져옴
 			if(request.getParameter("REVIEW_RE") == null) {
 				ProductVO productVO = null;
-				productVO = productService.getproductVO(Integer.parseInt(request.getParameter("REVIEW_PRODUCT")));
+				productVO = productService.getproductVO(Integer.parseInt(request.getParameter("PRODUCT_NUM")));
 			
 				double grade = productVO.getPRODUCT_GRADE();	//이  grade에 인원수를 곱해줘야 순수 grade누적값이 나온다.
-				int gradepeoplecount = reviewService.getGradePeopleCount(Integer.parseInt(request.getParameter("REVIEW_PRODUCT")));	//인원수 구해오기(PRODUCT_NUM = REVIEW_PRODUCT)
+				int gradepeoplecount = reviewService.getGradePeopleCount(Integer.parseInt(request.getParameter("PRODUCT_NUM")));	//인원수 구해오기(PRODUCT_NUM = REVIEW_PRODUCT)
 				double totalGrade = grade * (gradepeoplecount-1);	//이전까지 total 누적 grade	//gradepeoplecount는 update된 후이므로 이전걸 계산하려면 -1해줘야함
 		
 				//(grade 총합+현재 리뷰 grade) / (gradepeoplecount)
 				double newGrade = (totalGrade+Double.parseDouble(request.getParameter("REVIEW_GRADE"))) / (gradepeoplecount);
 				
 				//product테이블에 grade update
-				productVO.setPRODUCT_NUM(Integer.parseInt(request.getParameter("REVIEW_PRODUCT")));
+				productVO.setPRODUCT_NUM(Integer.parseInt(request.getParameter("PRODUCT_NUM")));
 				productVO.setPRODUCT_GRADE(newGrade);
 				productService.updateGrade(productVO);
 				

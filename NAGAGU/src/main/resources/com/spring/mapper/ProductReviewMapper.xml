@@ -172,9 +172,9 @@ create sequence store_review_seq
  
  
 	<insert id="insertReview" parameterType="com.spring.store.Product_reviewVO">
-	<selectKey keyProperty="REVIEW_NUM" resultType="int" order="BEFORE">
-			SELECT store_review_seq.nextval From DUAL
-	</selectKey>
+		<selectKey keyProperty="REVIEW_NUM" resultType="int" order="BEFORE">
+				SELECT store_review_seq.nextval From DUAL
+		</selectKey>
 		INSERT INTO PRODUCT_REVIEW VALUES
 		(#{REVIEW_NUM}, #{REVIEW_MEMBER}, #{REVIEW_PRODUCT}, #{REVIEW_DATE}, #{REVIEW_FILE, jdbcType=VARCHAR}, 
 			#{REVIEW_CONTENT}, #{REVIEW_GRADE}, #{REVIEW_RE})

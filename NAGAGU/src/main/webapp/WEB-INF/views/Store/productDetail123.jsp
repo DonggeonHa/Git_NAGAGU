@@ -481,7 +481,7 @@
 							<div id="ReviewformSection" class="pb-2">
 								<form id="ReviewForm" name="REVIEW_CONTENT" enctype="multipart/form-data"> <!-- 리뷰 작성 폼 영역 : 하나 -->
 									<input type="hidden" name="MEMBER_NUM" value="MEMBER_NUM">
-									<input type="hidden" name="REVIEW_PRODUCT" value="<%=PRODUCT_NUM %>">
+									<input type="hidden" name="PRODUCT_NUM" value="<%=PRODUCT_NUM %>">
 									<div class="row justify-content-center">
 										<div class="col-1 justify-content-end">
 											<img src="<%=MEMBER_PICTURE%>" alt="" class="rounded-circle">
@@ -722,12 +722,12 @@
 					console.log("retVal.review_RE_Count : "+retVal.review_RE_Count)
 					console.log("retVal.review_RE_List : "+retVal.review_RE_List)
 					
-					var output='';
-					var replyoutput ='';
+					
 					
 					if(retVal.reviewCount > 0) {
 						for(var i=0; i<retVal.reviewList.length; i++) {	//reviewCount 상관 없음
 //							alert(i+'번째');
+							var output='';
 							var REVIEW_NUM = retVal.reviewList[i].REVIEW_NUM;
 							var MEMBER_PICTURE = retVal.reviewList[i].MEMBER_PICTURE;
 							var MEMBER_NICK = retVal.reviewList[i].MEMBER_NICK;
@@ -841,9 +841,9 @@
 								}
 							}
 							
-							output += '</div></div></div>';
+							output += '</div></div>';
 							$('#ReviewtableSection').append(output);				
-						}						
+						}	//for 끝					
 					} else {
 						output += '등록된 댓글이 없습니다.'
 						$('#ReviewtableSection').append(output);	//이상한데...!?!?!?
@@ -876,9 +876,13 @@
 				type : 'POST',				
 				success:function(retVal) {
 					if(retVal.insertres == "OK") {
-						console.log("OK")
-//						console.log(retVal)
-						getReviewList()
+		 				$("#ReviewformSection").css('display','none');	//댓글 등록 성공하면 form은 초기화
+						$('#ReviewForm').each(function() {  
+							this.reset();  
+						});  
+						$('.imgs_wrap').empty();
+						$("#ReviewButtonSection").show();
+						getReviewList();
 					} else {
 						alert("insert 실패!!!");
 					}
@@ -888,12 +892,44 @@
 				}
 				
 			});
-			event.preventDefault();
-	
-		
-		
+			event.preventDefault();		
 		})
- 
+
+		
+
+			//Review 등록하기 버튼(insert) //답글
+			$(document).on("click",".insertReviewReply",function(event){
+				var REVIEW_NUM = $(this).prev().val();	//원글번호(review_re로 저장할 것)
+				console.log("REVIEW_NUM : " + REVIEW_NUM)
+				
+				var formId = 'ReviewReplyform'+REVIEW_NUM;
+				var form = new FormData(document.getElementById(formId));
+				$.ajax({
+					url : "/NAGAGU/review_insert123.do", 
+					data : form,
+					dataType: 'json',
+					processData : false,
+					contentType : false,
+					type : 'POST',				
+					success:function(retVal) {
+						if(retVal.insertres == "OK") {
+			 				
+							getReviewList();
+						} else {
+							alert("insert 실패!!!");
+						}
+					},
+					error:function() {
+						alert("ajax통신 실패!!!");
+					}
+				});
+				event.preventDefault();			
+	
+			})
+			
+		
+		
+		
 	getReviewList();
 	});		
 	
@@ -1279,7 +1315,7 @@
 			replyform += '<div class="col-8 justify-content-center"></div>';
 			replyform += '<div class="col-2 beforeControl justify-content-center pl-1">';
 			replyform += '<input type="hidden" name="PRODUCT_NUM" value="'+<%=PRODUCT_NUM%>+'">';		
-			replyform += '<input type="hidden" name="REVIEW_NUM" value="'+REVIEW_NUM+'">';		
+			replyform += '<input type="hidden" name="REVIEW_RE" value="'+REVIEW_NUM+'">';		
 			replyform += '<a class="insertReviewReply">작성</a> &nbsp;';
 			replyform += '<a class="formCancel" value="reviewReply">취소</a>';
 			replyform += '</div></div></div></div></form>';
@@ -1294,26 +1330,18 @@
 		
 		
 
-		//Review 등록하기 버튼(insert) //답글
-		$(document).on("click",".insertReviewReply",function(event){
-			var REVIEW_NUM = $(this).prev().val();	//원글번호(review_re로 저장할 것)
-			console.log("REVIEW_NUM : " + REVIEW_NUM)
+
 		
-			/*
-			if($(this).prev().val() != null) {	//답글
-				console.log("등록하려는 원글의 REVIEW_NUM : " + $(this).prev().val())
-				formId = 'ReviewReplyform';
-				REVIEW_RE = $(this).prev().val();
-			}			
-			
-			*/
-			
-			
-			//review_replyForm00 폼
-		})
-			
-
-
+	
+		
+		
+		
+		
+		
+		
+		
+		
+		
 		
 		
 //Review 수정하기----------------------------------------------------------------------------------------------------	  		
