@@ -444,7 +444,7 @@ public class ProductController {
 		//넘겨받은 REVIEW_RE가 존재하면 답글이고(원글의 REVIEW_NUM을 전달해줌), null이면 원글이다.
 		if(request.getParameter("REVIEW_RE") != null) {	
 			//답글 - GRADE=10, RE=NUM
-			reviewVO.setREVIEW_GRADE(7);
+			reviewVO.setREVIEW_GRADE(10);
 			reviewVO.setREVIEW_RE(Integer.parseInt(request.getParameter("REVIEW_RE")));
 		} else {	
 			//원글 - GRADE=GRADE, RE=0

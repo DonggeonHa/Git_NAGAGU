@@ -52,6 +52,19 @@ create sequence store_review_seq
 		<result property="MEMBER_PICTURE" column="MEMBER_PICTURE" />		
 	</resultMap>
 
+	<resultMap type="com.spring.store.Product_reviewVO" id="productVOReviewResultMap">
+		<result property="REVIEW_NUM" column="REVIEW_NUM" />	
+		<result property="REVIEW_MEMBER" column="REVIEW_MEMBER" />	
+		<result property="REVIEW_PRODUCT" column="REVIEW_PRODUCT" />	
+		<result property="REVIEW_DATE" column="REVIEW_DATE" />	
+		<result property="REVIEW_FILE" column="REVIEW_FILE" />	
+		<result property="REVIEW_CONTENT" column="REVIEW_CONTENT" />	
+		<result property="REVIEW_GRADE" column="REVIEW_GRADE" />	
+		<result property="REVIEW_RE" column="REVIEW_RE" />		
+		<result property="MEMBER_NICK" column="MEMBER_NICK" />		
+		<result property="MEMBER_PICTURE" column="MEMBER_PICTURE" />		
+	</resultMap>
+
 	<resultMap type="com.spring.member.MemberVO" id="memberReviewResultMap">
 		<result property="MEMBER_NUM" column="MEMBER_NUM" />	
 		<result property="MEMBER_EMAIL" column="MEMBER_EMAIL" />	
@@ -184,7 +197,7 @@ create sequence store_review_seq
 		SELECT count(*) FROM PRODUCT_REVIEW WHERE REVIEW_PRODUCT=#{REVIEW_PRODUCT} AND REVIEW_RE = 0
 	</select>	
 
-	<select id="getReviewVO" parameterType="java.util.HashMap" resultMap="productReviewResultMap">
+	<select id="getReviewVO" parameterType="java.util.HashMap" resultMap="productVOReviewResultMap">
 		SELECT * FROM PRODUCT_REVIEW WHERE REVIEW_NUM=#{REVIEW_NUM}
 	</select>
 

@@ -372,7 +372,52 @@ public class ProductController123 {
 
 	
 	
-	
+		//리뷰 댓글 수정 폼
+		@RequestMapping(value="/gomodifyReviewform.do",  produces="application/json;charset=UTF-8")
+		@ResponseBody
+		public Map<String, Object> gomodifyReviewform(HttpServletRequest request) throws Exception {
+			System.out.println("gomodifyReviewform 컨트롤러 왔다");
+			int REVIEW_NUM = Integer.parseInt(request.getParameter("REVIEW_NUM"));
+			System.out.println("REVIEW_NUM = " + REVIEW_NUM);
+			
+			Product_reviewVO reviewVO = null;
+			
+
+			Map<String, Object> retVal = new HashMap<String, Object>(); //리턴값 저장
+			try {
+				reviewVO = reviewService.getReviewVO(REVIEW_NUM);
+				retVal.put("res", "OK");
+				retVal.put("reviewVO", reviewVO);
+			} catch(Exception e) {
+				retVal.put("res", "Fail");
+			}
+			return retVal;
+			
+		}		
+		
+		//리뷰 댓글 수정 폼
+		@RequestMapping(value="/modifyReview.do",  produces="application/json;charset=UTF-8")
+		@ResponseBody
+		public Map<String, Object> modifyReview(HttpServletRequest request) throws Exception {
+			System.out.println("modifyReview 컨트롤러 왔다");
+			int REVIEW_NUM = Integer.parseInt(request.getParameter("REVIEW_NUM"));
+			System.out.println("REVIEW_NUM = " + REVIEW_NUM);
+			
+			Product_reviewVO reviewVO = null;
+			
+			
+			Map<String, Object> retVal = new HashMap<String, Object>(); //리턴값 저장
+			try {
+				reviewVO = reviewService.getReviewVO(REVIEW_NUM);
+				retVal.put("res", "OK");
+				retVal.put("reviewVO", reviewVO);
+			} catch(Exception e) {
+				retVal.put("res", "Fail");
+			}
+			return retVal;
+			
+		}		
+		
 	
 	
 	
