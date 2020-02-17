@@ -141,7 +141,7 @@
     </insert>
     
     <update id="offerModify" parameterType="com.spring.estimate.EstimateOfferVO">
-    	update ESTIMATE_OFFER set OFFER_PRICE = #{OFFER_PRICE}, OFFER_CONTENT=#{OFFER_PRICE} where OFFER_NUM = #{OFFER_NUM}
+    	update ESTIMATE_OFFER set OFFER_PRICE = #{OFFER_PRICE}, OFFER_CONTENT=#{OFFER_CONTENT} where OFFER_NUM = #{OFFER_NUM}
     </update>
 	
 	<delete id="offerDelete" parameterType="int">

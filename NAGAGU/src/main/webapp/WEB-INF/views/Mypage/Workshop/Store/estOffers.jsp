@@ -290,7 +290,7 @@
 				           	output += '<button class="btn_delete" of_num=' + item.OFFER_NUM + '>삭제</button>';
 				            output += '</td>';
 				            output += '<td scope="col">';
-				            output += '<button class="btn_note" value=' + item.ESTIMATE_NUM + '>쪽지</button>';
+				            output += '<button class="btn_note" value=' + item.ESTIMATE_MEMBER + '>쪽지</button>';
 				            output += '</td>';
 				            output += '</tr>';
 				            
@@ -373,7 +373,7 @@
 		/* 쪽지 보내기 */
 		$(document).delegate('.btn_note', 'click', function() {
 			var send_address = $(this).attr("value");
-			console.log(send_workshop);
+			console.log(send_address);
 			window.open('/NAGAGU/noteForm.nt?receive_mail=' + send_address, "쪽지 보내기", "width=600 height=700");
 			return false;
 		});
