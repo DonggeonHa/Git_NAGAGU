@@ -4,9 +4,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
-import com.spring.mapper.ProductReviewMapper;
 import com.spring.workshop.WorkShopMemberVO;
-import com.spring.workshop.WorkshopVO;
 
 public interface AcademyService {
 	public boolean insertClass(ClassVO academy) throws Exception;

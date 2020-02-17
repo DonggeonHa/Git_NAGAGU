@@ -86,6 +86,10 @@
 		border-bottom-left-radius:10px; 
 		border-bottom-right-radius:10px;
 	}
+	
+	.img-tag a {
+		color : black;
+	}
 	.img:hover .img {
 		opacity: 0.3;
 		transition: all 0.3s ease-in-out;
@@ -96,20 +100,7 @@
 		opacity: 1;
 	}
 	
-	.pagination {
-		display: inline-block;
-		margin-bottom: 30px;
-	}
-	
-	.pagination a {
-		color: black;
-		float: left;
-		padding: 8px 16px;
-		text-decoration: none;
-	}
-	
-	.pagination a:hover {
-		background-color: #ef902e;
+	.profile_children a {
 		color: black;
 	}
 	
@@ -222,9 +213,12 @@
 		</c:if>
 	</div>
 	<!-- images start -->
-	<div class="d-flex justify-content-start pt-2 mt-4 row">
+	
 	<%
-		if (listcount > 0) {							
+		if (listcount > 0) {
+	%>
+			<div class="d-flex justify-content-start pt-2 mt-4 row">
+	<%
 			for (int i = 0; i < picsList.size(); i++) {								
 				PicsVO pics_vo = picsList.get(i);								
 				MemberVO member_vo=memberList.get(i);
@@ -277,28 +271,44 @@
 	<%
 			} 
 	%>
-	</div>
+			</div>
 			<!-- pagenation -->
-			<div class="row justify-content-center">
-				<div class="pagination">
+			<nav aria-label="Page navigation example">
+				<ul class="pagination d-flex justify-content-center">
 				<%
 					if (nowpage <= 1) {
 				%>
-						&laquo;
+						<li class="page-item disabled">
+							<a class="page-link" href="#" tabindex="-1" aria-disabled="true">
+								이전
+							</a>
+					    </li>
 				<%
 					} else {
 				%>
-						<a href="./community.cm?page=<%=nowpage - 1%>&PICS_CATEGORY=<%=PICS_CATEGORY%>">&laquo;</a>
+						<li class="page-item">
+							<a class="page-link" href="./community.cm?page=<%=nowpage - 1%>&PICS_CATEGORY=<%=PICS_CATEGORY%>">
+								이전
+							</a>
+						</li>
 				<%
 					}
 					for (int a = startpage; a <= endpage; a++) {
 						if (a == nowpage) {
 				%><!-- 현재 보고있는 페이지에는 링크를 걸지 않겠다. -->
-							<%=a%>
+							<li class="page-item list active">
+								<span class="page-link">
+									<%=a%>
+								</span>
+							</li>
 				<%
 						} else {
 				%>
-							<a href="./community.cm?page=<%=a%>&PICS_CATEGORY=<%=PICS_CATEGORY%>&sort=<%=sort%>"><%=a%></a>
+							<li class="page-item">
+								<a class="page-link" href="./community.cm?page=<%=a%>&PICS_CATEGORY=<%=PICS_CATEGORY%>&sort=<%=sort%>">
+									<%=a%>
+								</a>
+							</li>
 				<%
 						}
 					}
@@ -306,18 +316,25 @@
 				<%
 					if (nowpage >= maxpage) {
 				%>
-						&raquo;
+						<li class="page-item disabled">
+							<a class="page-link" href="#" tabindex="-1" aria-disabled="true">
+								다음
+							</a>
+					    </li>
 				<%
 					} else {
 				%>
-						<a href="./community.cm?page=<%=nowpage + 1%>&PICS_CATEGORY=<%=PICS_CATEGORY%>">&raquo;</a>
+						<li class="page-item">
+							<a class="page-link" href="./community.cm?page=<%=nowpage + 1%>&PICS_CATEGORY=<%=PICS_CATEGORY%>">
+								다음
+							</a>
+					    </li>
 				<%
 					}
 				%>
-				</div>
-			</div>
+				</ul>
+			</nav>
 			<!-- pagenation 끝 -->
-			<!-- SECTION: content  -->
 	<% 
 		} else {
 	%>

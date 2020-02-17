@@ -2,16 +2,17 @@ package com.spring.workshop;
 
 import java.sql.Date;
 
-public class WorkshopVO {
+public class DeleteWorkShopMemberVO {
 	private int WORKSHOP_NUM;
 	private String WORKSHOP_EMAIL;
 	private String WORKSHOP_PASS;
 	private String WORKSHOP_NAME;
+	private String WORKSHOP_CEO_NAME;	//대표 이름
 	private String WORKSHOP_PHONE;
+	private String WORKSHOP_ZIP;
 	private String WORKSHOP_ADDRESS1;
 	private String WORKSHOP_ADDRESS2;
-	private String WORKSHOP_ZIP;
-	private String WORKSHOP_LICENSE;
+	private String WORKSHOP_LICENSE;	//사업자 번호
 	private Date WORKSHOP_DATE;
 	private String WORKSHOP_INTRO;
 	private String WORKSHOP_OWNER;
@@ -44,11 +45,23 @@ public class WorkshopVO {
 	public void setWORKSHOP_NAME(String wORKSHOP_NAME) {
 		WORKSHOP_NAME = wORKSHOP_NAME;
 	}
+	public String getWORKSHOP_CEO_NAME() {
+		return WORKSHOP_CEO_NAME;
+	}
+	public void setWORKSHOP_CEO_NAME(String wORKSHOP_CEO_NAME) {
+		WORKSHOP_CEO_NAME = wORKSHOP_CEO_NAME;
+	}
 	public String getWORKSHOP_PHONE() {
 		return WORKSHOP_PHONE;
 	}
 	public void setWORKSHOP_PHONE(String wORKSHOP_PHONE) {
 		WORKSHOP_PHONE = wORKSHOP_PHONE;
+	}
+	public String getWORKSHOP_ZIP() {
+		return WORKSHOP_ZIP;
+	}
+	public void setWORKSHOP_ZIP(String wORKSHOP_ZIP) {
+		WORKSHOP_ZIP = wORKSHOP_ZIP;
 	}
 	public String getWORKSHOP_ADDRESS1() {
 		return WORKSHOP_ADDRESS1;
@@ -61,12 +74,6 @@ public class WorkshopVO {
 	}
 	public void setWORKSHOP_ADDRESS2(String wORKSHOP_ADDRESS2) {
 		WORKSHOP_ADDRESS2 = wORKSHOP_ADDRESS2;
-	}
-	public String getWORKSHOP_ZIP() {
-		return WORKSHOP_ZIP;
-	}
-	public void setWORKSHOP_ZIP(String wORKSHOP_ZIP) {
-		WORKSHOP_ZIP = wORKSHOP_ZIP;
 	}
 	public String getWORKSHOP_LICENSE() {
 		return WORKSHOP_LICENSE;
@@ -116,5 +123,4 @@ public class WorkshopVO {
 	public void setWORKSHOP_PICTURE(String wORKSHOP_PICTURE) {
 		WORKSHOP_PICTURE = wORKSHOP_PICTURE;
 	}
-
 }

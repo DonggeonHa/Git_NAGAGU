@@ -238,4 +238,34 @@ public class MemberServiceImpl implements MemberService{
 				return 0;	//해당사항 없음
 		}
 	}
+
+	
+	/* 회원 탈퇴 */
+	@Override
+	public int deleteMember(MemberVO memberVO) {
+		int res = 0;
+		
+		try {
+			memberMapper memberMapper = sqlSession.getMapper(memberMapper.class);
+			res = memberMapper.deleteMember(memberVO);
+		} catch (Exception e) {
+			System.out.println("멤버 삭제 실패!" + e.getMessage());
+		}
+		
+		return res;
+	}
+
+	@Override
+	public int duplicateMember(MemberVO deleteVO) {
+		int res = 0;
+		
+		try {
+			memberMapper memberMapper = sqlSession.getMapper(memberMapper.class);
+			res = memberMapper.duplicateMember(deleteVO);
+		} catch (Exception e) {
+			System.out.println("삭제테이블로 이동 실패!" + e.getMessage());
+		}
+		
+		return res;
+	}
 }

@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import com.spring.community.PicsVO;
 import com.spring.mapper.WorkShopMemberMapper;
+import com.spring.mapper.memberMapper;
 
 @Service("workShopMemberService")
 public class WorkShopMemberServiceImpl implements WorkShopMemberService {
@@ -142,5 +143,33 @@ public class WorkShopMemberServiceImpl implements WorkShopMemberService {
 		}
 		
 		return null;
+	}
+
+	@Override
+	public int deleteWMember(WorkShopMemberVO workshopVO) {
+		int res = 0;
+		
+		try {
+			WorkShopMemberMapper workshopMapper = sqlSession.getMapper(WorkShopMemberMapper.class);
+			res = workshopMapper.deleteWMember(workshopVO);
+		} catch (Exception e) {
+			System.out.println("공방멤버 삭제 실패!" + e.getMessage());
+		}
+		
+		return res;
+	}
+
+	@Override
+	public int duplicateWMember(WorkShopMemberVO workshopVO) {
+		int res = 0;
+		
+		try {
+			WorkShopMemberMapper workshopMapper = sqlSession.getMapper(WorkShopMemberMapper.class);
+			res = workshopMapper.duplicateWMember(workshopVO);
+		} catch (Exception e) {
+			System.out.println("공방멤버 이동 실패!" + e.getMessage());
+		}
+		
+		return res;
 	}
 }

@@ -4,8 +4,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 import com.spring.chat.WorkshopVO;
-import com.spring.community.LikeVO;
-import com.spring.community.PicsVO;
 import com.spring.member.MemberVO;
 
 public interface memberMapper {
@@ -20,22 +18,21 @@ public interface memberMapper {
 	MemberVO selectMember(MemberVO memberVO); // 로그인 시 세션에 넣을 Member_NUM 호출
 	
 	
-	
 	/* 경태 */
 	ArrayList<MemberVO> getMemberList(HashMap<String, Object> map);
 	MemberVO getMemberDetail(MemberVO memberVO);
 	//MemberVO getMemberDetailbyEmail(MemberVO memberVO);
 	
 	
-	
-	
 	/* 기재 */
-	public MemberVO getMember(String MEM_MAIL);
-	public WorkshopVO getWorkshop(String MEM_MAIL);
-	public int countMember(String MEM_MAIL);
-	public int countWorkshop(String MEM_MAIL);
+	MemberVO getMember(String MEM_MAIL);
+	WorkshopVO getWorkshop(String MEM_MAIL);
+	int countMember(String MEM_MAIL);
+	int countWorkshop(String MEM_MAIL);
 
 
-	
+	/* 회원 탈퇴 */
+	int deleteMember(MemberVO memberVO);
+	int duplicateMember(MemberVO deleteVO);
 
 }

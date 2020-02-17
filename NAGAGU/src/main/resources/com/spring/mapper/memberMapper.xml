@@ -39,6 +39,22 @@
 		<result property="WORK_PIC" column="WORKSHOP_PICTURE"/>
 	</resultMap>
 	
+	<resultMap type="com.spring.member.DeleteMemberVO" id="deletememberResultMap">
+		<result property="MEMBER_NUM" column="MEMBER_NUM" />
+		<result property="MEMBER_EMAIL" column="MEMBER_EMAIL" />
+		<result property="MEMBER_PASS" column="MEMBER_PASS" />
+		<result property="MEMBER_NAME" column="MEMBER_NAME" />
+		<result property="MEMBER_NICK" column="MEMBER_NICK" />
+		<result property="MEMBER_PHONE" column="MEMBER_PHONE" />
+		<result property="MEMBER_DATE" column="MEMBER_DATE" />
+		<result property="MEMBER_PICTURE" column="MEMBER_PICTURE" />
+		<result property="MEMBER_LIKE_PRODUCT" column="MEMBER_LIKE_PRODUCT" />
+		<result property="MEMBER_STATUS" column="MEMBER_STATUS" />		
+		<result property="ADDRESS_ZIP" column="ADDRESS_ZIP" />		
+		<result property="ADDRESS_ADDRESS1" column="ADDRESS_ADDRESS1" />		
+		<result property="ADDRESS_ADDRESS2" column="ADDRESS_ADDRESS2" />		
+	</resultMap>
+	
 	
 	<select id="nickname_chk" resultMap="memberResultMap">
 		select * from nagagu_member where member_nick = #{MEMBER_NICK}
@@ -86,6 +102,7 @@
 		select * from nagagu_member where member_email = #{MEMBER_EMAIL}
 	</select>
 	
+	
 	<!-- 멤버 리스트(커뮤니티 사진의 멤버리스트) 경태형 --> 
 	<select id="getMemberList" parameterType="java.util.HashMap" resultMap="memberResultMap">	
  		SELECT *
@@ -99,8 +116,7 @@
 		SELECT * FROM nagagu_member WHERE MEMBER_NUM =#{MEMBER_NUM}
 	</select>
 
-	
-	
+
 	<!-- 기재형 쪽 멤버 메퍼 -->
 	<select id="getMember" parameterType="String" resultMap="memberResultMap">
 		select member_email, member_nick, member_picture from nagagu_member where member_email=#{MEMBER_EMAIL}
@@ -119,9 +135,21 @@
 	</select>
 
 	<select id="getMemberDetailbyEmail" parameterType="com.spring.member.MemberVO" resultMap="memberResultMap">
-	SELECT * FROM nagagu_member WHERE MEMBER_EMAIL=#{MEMBER_EMAIL}
+		SELECT * FROM nagagu_member WHERE MEMBER_EMAIL=#{MEMBER_EMAIL}
 	</select>
 	
 
+	<!-- 회원탈퇴용 매퍼 -->
+	<insert id="duplicateMember" parameterType="com.spring.member.MemberVO">
+		INSERT INTO delete_member
+		SELECT *
+		from nagagu_member
+		where member_email = #{MEMBER_EMAIL} AND member_pass = #{MEMBER_PASS}
+	</insert>
+	
+	<delete id="deleteMember" parameterType="com.spring.member.MemberVO">
+		DELETE FROM nagagu_member 
+		WHERE member_email = #{MEMBER_EMAIL} AND member_pass = #{MEMBER_PASS}
+	</delete>
 	
 </mapper>
