@@ -16,6 +16,7 @@ public class DeleteMemberVO {
 	private int ADDRESS_ZIP;
 	private String ADDRESS_ADDRESS1;
 	private String ADDRESS_ADDRESS2;
+	private Date DELETE_SYSDATE;
 	
 	public int getMEMBER_NUM() {
 		return MEMBER_NUM;
@@ -95,4 +96,11 @@ public class DeleteMemberVO {
 	public void setADDRESS_ADDRESS2(String aDDRESS_ADDRESS2) {
 		ADDRESS_ADDRESS2 = aDDRESS_ADDRESS2;
 	}
+	public Date getDELETE_SYSDATE() {
+		return DELETE_SYSDATE;
+	}
+	public void setDELETE_SYSDATE(Date dELETE_SYSDATE) {
+		DELETE_SYSDATE = dELETE_SYSDATE;
+	}
+	
 }

@@ -258,10 +258,25 @@ public class MemberServiceImpl implements MemberService{
 	@Override
 	public int duplicateMember(MemberVO deleteVO) {
 		int res = 0;
-		
+		System.out.println("EMAIL : " + deleteVO.getMEMBER_EMAIL());
+		System.out.println("PASS : " + deleteVO.getMEMBER_PASS());
 		try {
 			memberMapper memberMapper = sqlSession.getMapper(memberMapper.class);
 			res = memberMapper.duplicateMember(deleteVO);
+		} catch (Exception e) {
+			System.out.println("삭제테이블로 이동 실패!" + e.getMessage());
+		}
+		
+		return res;
+	}
+
+	@Override
+	public int sysdateMember(MemberVO deleteVO) {
+		int res = 0;
+		
+		try {
+			memberMapper memberMapper = sqlSession.getMapper(memberMapper.class);
+			res = memberMapper.sysdateMember(deleteVO);
 		} catch (Exception e) {
 			System.out.println("삭제테이블로 이동 실패!" + e.getMessage());
 		}

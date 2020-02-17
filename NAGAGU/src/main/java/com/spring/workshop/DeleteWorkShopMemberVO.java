@@ -20,6 +20,7 @@ public class DeleteWorkShopMemberVO {
 	private String WORKSHOP_ACNUM;
 	private int WORKSHOP_STATUS;
 	private String WORKSHOP_PICTURE;
+	private Date DELETE_SYSDATE;
 	
 	public int getWORKSHOP_NUM() {
 		return WORKSHOP_NUM;
@@ -122,5 +123,11 @@ public class DeleteWorkShopMemberVO {
 	}
 	public void setWORKSHOP_PICTURE(String wORKSHOP_PICTURE) {
 		WORKSHOP_PICTURE = wORKSHOP_PICTURE;
+	}
+	public Date getDELETE_SYSDATE() {
+		return DELETE_SYSDATE;
+	}
+	public void setDELETE_SYSDATE(Date dELETE_SYSDATE) {
+		DELETE_SYSDATE = dELETE_SYSDATE;
 	}
 }

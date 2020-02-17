@@ -34,5 +34,6 @@ public interface memberMapper {
 	/* 회원 탈퇴 */
 	int deleteMember(MemberVO memberVO);
 	int duplicateMember(MemberVO deleteVO);
+	int sysdateMember(MemberVO deleteVO);
 
 }

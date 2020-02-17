@@ -53,6 +53,7 @@
 		<result property="ADDRESS_ZIP" column="ADDRESS_ZIP" />		
 		<result property="ADDRESS_ADDRESS1" column="ADDRESS_ADDRESS1" />		
 		<result property="ADDRESS_ADDRESS2" column="ADDRESS_ADDRESS2" />		
+		<result property="DELETE_SYSDATE" column="DELETE_SYSDATE" />		
 	</resultMap>
 	
 	
@@ -141,11 +142,18 @@
 
 	<!-- 회원탈퇴용 매퍼 -->
 	<insert id="duplicateMember" parameterType="com.spring.member.MemberVO">
-		INSERT INTO delete_member
-		SELECT *
+	INSERT INTO delete_member(MEMBER_NUM, MEMBER_EMAIL, MEMBER_PASS, MEMBER_NAME, MEMBER_NICK, MEMBER_PHONE, MEMBER_DATE, MEMBER_PICTURE,
+									   MEMBER_LIKE_PRODUCT, MEMBER_STATUS, ADDRESS_ZIP, ADDRESS_ADDRESS1, ADDRESS_ADDRESS2)
+		SELECT MEMBER_NUM, MEMBER_EMAIL, MEMBER_PASS, MEMBER_NAME, MEMBER_NICK, MEMBER_PHONE, MEMBER_DATE, MEMBER_PICTURE,
+									   MEMBER_LIKE_PRODUCT, MEMBER_STATUS, ADDRESS_ZIP, ADDRESS_ADDRESS1, ADDRESS_ADDRESS2
 		from nagagu_member
-		where member_email = #{MEMBER_EMAIL} AND member_pass = #{MEMBER_PASS}
+		where MEMBER_EMAIL = #{MEMBER_EMAIL} AND MEMBER_PASS = #{MEMBER_PASS}
 	</insert>
+	
+	<update id="sysdateMember" parameterType="com.spring.member.MemberVO">
+		UPDATE delete_member SET delete_sysdate = SYSDATE 
+		where MEMBER_EMAIL = #{MEMBER_EMAIL} AND MEMBER_PASS = #{MEMBER_PASS}
+	</update>
 	
 	<delete id="deleteMember" parameterType="com.spring.member.MemberVO">
 		DELETE FROM nagagu_member 

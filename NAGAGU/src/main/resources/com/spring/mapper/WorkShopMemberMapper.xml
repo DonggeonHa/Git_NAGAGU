@@ -83,11 +83,18 @@
 	
 	<!-- 회원탈퇴용 매퍼 -->
 	<insert id="duplicateWMember" parameterType="com.spring.workshop.WorkShopMemberVO">
-		INSERT INTO delete_workshop_member
-		SELECT *
+		INSERT INTO delete_workshop_member(WORKSHOP_NUM, WORKSHOP_EMAIL, WORKSHOP_PASS, WORKSHOP_NAME, WORKSHOP_CEO_NAME, WORKSHOP_PHONE, WORKSHOP_ZIP, WORKSHOP_ADDRESS1, WORKSHOP_ADDRESS2,
+               WORKSHOP_LICENSE, WORKSHOP_DATE, WORKSHOP_INTRO, WORKSHOP_OWNER, WORKSHOP_BANK, WORKSHOP_ACNUM, WORKSHOP_STATUS, WORKSHOP_PICTURE)
+		SELECT WORKSHOP_NUM, WORKSHOP_EMAIL, WORKSHOP_PASS, WORKSHOP_NAME, WORKSHOP_CEO_NAME, WORKSHOP_PHONE, WORKSHOP_ZIP, WORKSHOP_ADDRESS1, WORKSHOP_ADDRESS2,
+               WORKSHOP_LICENSE, WORKSHOP_DATE, WORKSHOP_INTRO, WORKSHOP_OWNER, WORKSHOP_BANK, WORKSHOP_ACNUM, WORKSHOP_STATUS, WORKSHOP_PICTURE
 		from nagagu_workshop_member
-		where workshop_email = #{WORKSHOP_EMAIL} AND workshop_pass = #{WORKSHOP_PASS}
+		where WORKSHOP_EMAIL = #{WORKSHOP_EMAIL} AND WORKSHOP_PASS = #{WORKSHOP_PASS}
 	</insert>
+	
+	<update id="sysdateWMember" parameterType="com.spring.workshop.WorkShopMemberVO">
+		UPDATE delete_workshop_member SET delete_sysdate = SYSDATE 
+		WHERE WORKSHOP_EMAIL = #{WORKSHOP_EMAIL} AND WORKSHOP_PASS = #{WORKSHOP_PASS}
+	</update>
 	
 	<delete id="deleteWMember" parameterType="com.spring.workshop.WorkShopMemberVO">
 		DELETE FROM nagagu_workshop_member 

@@ -22,4 +22,5 @@ public interface MemberService {
 	/* 회원 탈퇴 */
 	public int deleteMember(MemberVO memberVO);
 	public int duplicateMember(MemberVO deleteVO);
+	public int sysdateMember(MemberVO deleteVO);
 }
