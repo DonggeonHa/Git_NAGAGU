@@ -185,10 +185,11 @@ public class BasketController {
 			productOrderVO.setORDER_MEMBER(MEMBER_NUM);
 			ArrayList<Map<String, Object>> myPaidOrder = null;
 			ArrayList<Map<String, Object>> getCount= null;
-			//ProductOrderVO paidVO = basketService.getPaidProductOrderVO(productOrderVO);
+            ArrayList<Map<String, Object>> orderList= null;
+            orderList  = basketService.getOrderList(map);//아직 결제 안된 리스트
 			myPaidOrder  = basketService.getPaidList(map);
 			getCount  = basketService.getCount(map);
-			System.out.println("myPaidOrder="+myPaidOrder);
+			retVal.put("orderList", orderList);
 			retVal.put("getCount", getCount);
 			retVal.put("myPaidOrder", myPaidOrder);
 			retVal.put("res", "OK");

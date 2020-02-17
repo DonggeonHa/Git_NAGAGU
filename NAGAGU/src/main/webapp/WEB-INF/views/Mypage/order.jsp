@@ -6,8 +6,6 @@
 
 <%
 	ArrayList<Map<String, Object>> orderList = (ArrayList<Map<String, Object>>) request.getAttribute("orderList");
-	System.out.println(orderList.size());
-	String[] array = new String[orderList.size()];
 %>
 
 <link rel="stylesheet" type="text/css" href="./resources/css/Mypage/order.css">
@@ -38,6 +36,12 @@
 	.nav-link.active {
 		background-color: #EAEAEA !important;
 	}
+    td dl div{
+        text-align: right;  
+    }
+    .second-container .table{
+        font-weight:600; 
+    }
 </style>
 
 <div class="container order-container">
@@ -54,7 +58,6 @@
 				<%
 					for(int i=0; i<orderList.size(); i++){
 						Map<String, Object>	list = orderList.get(i);
-					
 				%>
 						<tr>
 							<td align="center">
@@ -79,14 +82,18 @@
 										<span>가격</span>
 										<span class="text-center price"><%=list.get("PRODUCT_PRICE")%></span>
 									</div>
+								    <div> 
+                                        <span>+배송비</span>
+                                        <span class="text-center ship"><%=list.get("PRODUCT_SHIP_PRICE")%></span>
+                                    </div>
 									<div>
-										<span>수량</span>
+										<span>수량 X</span>
 										<span class="text-center amount"><%=list.get("BASKET_AMOUNT")%></span>
 									</div>
 									<dd>&nbsp;</dd>
 									<div>
-										<span>+배송비</span>
-										<span class="text-center ship"><%=list.get("PRODUCT_SHIP_PRICE")%></span>
+										<span>총가격</span>
+                                        <span class="text-center chongPrice"></span>
 									</div>
 								</dl>
 							</td>
@@ -236,7 +243,7 @@
 				<div class="col-2 d-flex justify-content-end totalPrice">
 				</div>
 			</div>
-			<div class="row" style="font-size: 16px; padding-bottom: 1%;">
+			<div class="row" style="font-size: 20px; padding-bottom: 1%;">
 				<div class="col-2">
 					+ 배송비  
 				</div>
@@ -390,20 +397,38 @@
 		var totalPayPrice=0;
 		function getTotalPrice(){
 	 		//오른쪽 상품금액 + 배송비 + 결제금액 구해서 뿌리기
+            var sum_price=0;
+            var sum_shipPrice=0;
+            var sum_PayPrice=0;
 			$('.price').each(function (index,item){
+                var amount =  $(item).parent().parent().find('.amount').text()
 				var price = $(item).text()
-				var amount = $(item).parent().parent().find('.amount').text()
-				totalPrice += price*amount
-				$('.totalPrice').text(totalPrice);
-			})
+                var shipPrice = $(item).parent().parent().find('.ship').text()
+                chongPrice = (price*1+shipPrice*1)*amount*1
+                $(this).parent().parent().find('.chongPrice').text(chongPrice.toLocaleString()).append('원');
+                
+                sum_price     += price*1*amount;
+                sum_shipPrice += shipPrice*1*amount;
+            }) 
+            sum_PayPrice= sum_price*1+sum_shipPrice*1;
+            $('.totalPrice').text(sum_price.toLocaleString()).append('원')
+            $('.totalShipPrice').text('+'+sum_shipPrice.toLocaleString()).append('원')
+            $('.totalPayPrice').text('총 결제금액 : '+sum_PayPrice.toLocaleString()).append('원')  
+            
+		}
+        getTotalPrice();
+        
+        function changeComma(){ 
+            $('.price').each(function (index,item){
+                var price = $(item).text()*1
+                $(item).text(price.toLocaleString()+'원')    
+            })
 			$('.ship').each(function (index,item){
-				totalShipPrice += $(item).text()*1
-				$('.totalShipPrice').text('+'+totalShipPrice);
+                var ship = $(item).text()*1
+                $(item).text(ship.toLocaleString()+'원')    
 			})
-			totalPayPrice = totalPrice+totalShipPrice;
-			$('.totalPayPrice').text('총 결제금액 : '+totalPayPrice);
-	 	}
-		getTotalPrice();
+	    }
+	    changeComma();
 		
 		//배송지 정보와 동일하게 채우기
 		$(document).on('click','#getInfo_btn',function(){ 

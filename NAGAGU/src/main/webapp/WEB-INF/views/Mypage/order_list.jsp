@@ -213,6 +213,16 @@
 <div class="container bg-light">
 	<nav>
 		<div class="nav d-flex justify-content-between shadow p-3 mb5 bg-white rounded" id="nav-tab" role="tablist">
+ 	        <a href="./mypage_order.my" class="nav-item nav-link" status="0" id="unfinish" role="tab" aria-controls="nav-profile" aria-selected="false"> 
+                <dl class="text-center">
+                    <dt class="unpaid">결제미완료</dt>
+                    <dd></dd>
+                    <dd class="count_unpaid"></dd>
+                </dl>
+            </a>
+            <div class="text-center align-self-center">
+                <i class="far fa-arrow-alt-circle-right" style="font-size: 30px;"></i>
+            </div>
 	    	<a class="nav-item nav-link" status="0" id="nav-finish-tab" data-toggle="tab" href="#nav-finish" role="tab" aria-controls="nav-profile" aria-selected="false">
 	    		<dl class="text-center">
 	    			<dt>결제완료</dt>
@@ -301,8 +311,16 @@
 	  			  dataType : "json",
 	              success: function (retVal) {
 	        		if(retVal.res=="OK"){
+                        console.log(retVal.orderList)
+                        if(retVal.orderList.length!=0){
+                            $('.count_unpaid').html(''+retVal.orderList.length+'건')
+                                             
+                        }
 	        			console.log(retVal.getCount)
 	        			console.log(retVal.myPaidOrder)
+                        if(retVal.myPaidOrder.length==0){
+                            return
+                        }
 	        			var url = './productdetail.pro?PRODUCT_NUM='
         				var paidPrice=0;
 	        			var d_date = new Date(retVal.myPaidOrder[0].ORDER_DATE); 
@@ -337,7 +355,7 @@
 					    		x++;
 				        	}
 				        	output += '</div><hr>'   
-				        	$('.output').append(output)
+				        	$('.output').html(output)
 		        			}
 		        			$('.count_paid').text(retVal.getCount.length)
 			        	
