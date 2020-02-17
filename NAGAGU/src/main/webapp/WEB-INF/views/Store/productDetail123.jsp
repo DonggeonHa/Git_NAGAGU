@@ -506,7 +506,7 @@
 														<option value="3.0">3.0</option>
 														<option value="3.5">3.5</option>
 														<option value="4.0">4.0</option>
-														<option value="4.5">5.5</option>
+														<option value="4.5">4.5</option>
 														<option value="5.0">5.0</option>
 													</select>											
 												</div>
@@ -845,7 +845,7 @@
 							$('#ReviewtableSection').append(output);				
 						}	//for 끝					
 					} else {
-						output += '등록된 댓글이 없습니다.'
+						var output += '등록된 댓글이 없습니다.';
 						$('#ReviewtableSection').append(output);	//이상한데...!?!?!?
 					}
 
