@@ -1,4 +1,4 @@
-/****************************** MEMBER  ************************/
+/****************************** MEMBER  *************************/
 
 Drop table nagagu_member;
 Drop sequence nagagu_member_seq;
