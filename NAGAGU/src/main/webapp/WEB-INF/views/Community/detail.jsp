@@ -39,13 +39,9 @@
 	   color: rgba(0, 0, 0, 0.8);
 	   font-size: 1rem !important;
 	}
-	.main>.title {
-	   margin-left: 0 !important;
-	   margin-right: 0 !important;
-	   padding: 0px auto;
-	}
 	.img-wrap {
-	   height: auto;
+        margin-top: 15px;
+        height: auto;
 	}
 	.img-wrap p{
 		display: flex;
@@ -56,12 +52,14 @@
  	   border-right:1px solid; 
  	   border-color:rgba(0, 0, 0, 0.1); 
  	} 
-/* 	.container{ */
-/* 		margin-bottom:50px; */
-/* 	} */
-	.container-mypage{
-	   margin: 50px 0 10px 0 ;
+	.detailmain .title{
+	   padding-bottom: 10px;
+	   border-bottom: 1px solid;
+	   border-color:rgba(0, 0, 0, 0.1);
 	}
+	.category_cm{
+	    margin-top: 50px;
+	} 
 	.sidebar {
 	   width: 25%;
 	   height: 25vh;
@@ -196,10 +194,10 @@
 	}
 </style>
 
-   <div class="container">
+	<div class="container category_cm">
       <div class="wrapper row justify-content-between">
          <div class="detailmain">
-            <div class="row justify-content-between title"> 
+            <div class="d-flex justify-content-between title">  
                <div class="col-9 page-tap">  
                   <div>
                   	<h6><a href="community.cm">COMMUNITY</a> > 상세보기 </h6>

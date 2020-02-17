@@ -30,16 +30,10 @@
 		font-size: 20px;
 		border-bottom: 1px solid #EAEAEA;
 	}
-	
-	/* .main-content { */
-	/* 	margin: 0 0 100px 0; */
-	/* } */
-	
-	/* .main-content a, .main-content a:link, .main-content a:hover { */
-	/* 	text-decoration: none; */
-	/* 	color: black; */
-	/* } */
-	
+    .cm-main-content a, .cm-main-content a:link, .cm-main-content a:hover{ 
+         text-decoration: none; 
+         color: black; 
+    }
 	img {
 		width: 100%;
 		height: 100%;
@@ -161,7 +155,7 @@
 	}
 </style>
 
-<div class="container main-content category_cm">
+<div class="container cm-main-content category_cm">
 	<div class="content">
 		<div class="search-tap">
 			<div class="caption py-5">

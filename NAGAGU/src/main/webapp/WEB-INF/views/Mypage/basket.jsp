@@ -67,25 +67,25 @@
 	}
 	
 	.sidebar {
-		margin-top: 30px;
+		margin-top: 70px;
 		background-color: rgba(0, 0, 0, 0.1);
 		height: 30vh;
 	}
-	
-	.category *{
-		color: rgb(0, 0, 0, 0.6);  
-	}
-	
+    .each-row .category{
+        background-color: rgba(239,144,14,0.3); 
+        padding-top: 5px;  
+		padding-bottom: 5px;  
+    }    
+    .category *{
+        align-self: center;
+        text-align: center;
+        color: rgb(0, 0, 0, 0.6);  
+    }
 	 .basic_price, .shipPrice, .chongprice {
 		margin-bottom: 0;
 		margin-top: 10px;
 	}
-	
-	.category{
-		border-bottom: 1px solid #ef900e;
-		padding-bottom: 10px;  
-		/* background-color: rgba(0, 0, 0, 0.1); */
-	}.category *{
+	.category *{
 		align-items: baseline;
 		text-align: center;
 	}
@@ -99,17 +99,22 @@
 	.totalShipPrice,.totalPayPrice,.totalPrice{
 		padding-right:25px !important;
 	}
-	/*
-	.category p{
-		margin-top: 10px; 
-	}.category div{
-		margin: 0 auto;
-		padding: 10px 0px !important;  
-	} */
+    .category .btn_wrap{
+        text-align: right !important;
+    }
+    .sidebar .line{ 
+        border-top: 1px solid white;
+    }
+    .forcss{
+        font-size:1.2rem;
+    }
+    .basket_wrapper{
+        font-weight: 700;
+    }
 </style>
 
 <div class="container">
-	<div class="wrapper row justify-content-between">
+	<div class="basket_wrapper row justify-content-between">
 		<div class="basketmain">
 			<div class="d-flex">
 				<div class="btn-group-toggle" data-toggle="buttons">
@@ -132,9 +137,6 @@
 					<div class="col-10">
 						<div class="d-flex justify-content-between">
 							<div>title</div>
-							<div>
-								<i class="fas fa-times"></i>
-							</div>
 						</div>
 						<font size="1">일반택배</font>
 						<div class="d-flex justify-content-between">
@@ -177,12 +179,13 @@
 		<!-- sidebar start -->
 		<div class="sidebar" id="sidebar">
 			<div class="row justify-content-around text-right sidebarOutput">
-				<div class="col-6">상품금액</div>
-				<div class="col-6 totalPrice"></div>
-				<div class="col-6">+배송비</div>
-				<div class="col-6 totalShipPrice">+</div>
-				<div class="col-6">결제금액</div>
-				<div class="col-6 totalPayPrice"></div>
+				<div class="col-6 forcss">상품금액</div>
+                <div class="col-6 forcss totalPrice"></div>
+                <div class="col-6 forcss">+배송비</div>
+                <div class="col-6 forcss totalShipPrice">+</div>
+                <div class="col-12 line"></div>
+                <div class="col-6 forcss">결제금액</div>
+                <div class="col-6 forcss totalPayPrice"></div>
 				<div class="">
 					<a href="#" class="btn btn-warning text-white btn_commit">구매하기</a>
 				</div>
@@ -232,7 +235,7 @@
 				    					output += '<div class="col-2">사이즈</div>'
 			    						output += '<div class="col-2">컬러</div>'
 		    							output += '<div class="col-2">수량</div>'  
-					    				output += '<div class="col-2">삭제&nbsp;&nbsp;<i class="fas fa-times"></i></div></div>' 
+	                                    output += '<div class="col-2 btn_wrap"><button class="btn btn-outline-light delete_btn">삭제</button></div></div>'   
 					    				
 					    				output += '<div class="row values">' 
 				    					output += '<a href="'+url+retVal.getbasketList[j].PRODUCT_NUM+'">'
@@ -262,13 +265,10 @@
 					    				output += '<div class="price_wrap text-right col-2">'
 							    			output += '<div class="basic_price text-right" value='+retVal.getbasketList[j].PRODUCT_PRICE+'>가격</div><span>'+retVal.getbasketList[j].PRODUCT_PRICE+'</span>'
 							    			output += '<div class="shipPrice text-right" value='+retVal.getbasketList[j].PRODUCT_SHIP_PRICE+'>+배송비</div><span>'+retVal.getbasketList[j].PRODUCT_SHIP_PRICE+'</span>'
-						    				output += '<div class="chongprice text-right"><b>총가격</div><span></span></b>' 
+						    				output += '<div class="chongprice text-right"></div>총가격<span></span></b>' 
 						    			output += '</div>'
 						    				
 					    				output += '</div></div></div>' 
-				    		
-					    				//output += '<p>배송업체 : <span>'+retVal.getbasketList[j].PRODUCT_SHIP_COMPANY+'</span></p>'
-					    			//</div></div>'
 			        	}  
 	        			console.log(output)
 	        			$('#check_all').next().text(countOutput).css('margin-left','15px')
@@ -318,22 +318,35 @@
 				var shipPrice = $(data).parent().next().find('.shipPrice').attr('value')
 				//선택 수량 x 가격
 				var changedPrice= amount*(price*1+shipPrice*1)
-				$(data).parent().next().find('.chongprice').next().text(changedPrice)
+				$(data).parent().next().find('.chongprice').next().text(changedPrice.toLocaleString()).append('원') 
 			}
 			//처음에?
-			else{
+			else{ 
 				$('.amount').each(function (index,item){
 					var amount =  $(this).val() 
 					var price =  $(this).parent().next().find('.basic_price').attr('value')
 					var shipPrice = $(this).parent().next().find('.shipPrice').attr('value')
 					//선택 수량 x 가격 
 					var changedPrice= amount*(price*1+shipPrice*1)
-					$(this).parent().next().find('.chongprice').next().text(changedPrice)
-				}) 
+					$(this).parent().next().find('.chongprice').next().text(changedPrice.toLocaleString()).append('원')
+				})
+				function changeComma(){
+		            $('.basic_price').each(function (index,item){
+		                var price = $(item).next().text()*1
+		                $(item).next().text(price.toLocaleString()).append('원')    
+		            })
+		            $('.shipPrice').each(function (index,item){
+		                var ship = $(item).next().text()*1
+		                $(item).next().text(ship.toLocaleString()).append('원')    
+		            })
+		        }
+				changeComma(); 
 			}  
 			//가격+배송비 구해서 총가격에 뿌리기
-			getTotalPrice()
+			getTotalPrice();
+			
 		};
+        
 	 	function getTotalPrice(){
 			var sum_price=0;
 			var sum_shipPrice=0;
@@ -346,9 +359,12 @@
 				sum_shipPrice += shipPrice*1*amount;
 			}) 
 			sum_PayPrice= sum_price*1+sum_shipPrice*1;
-			$('.totalPrice').text(sum_price)
-			$('.totalShipPrice').text(sum_shipPrice)
-			$('.totalPayPrice').text(sum_PayPrice)
+			$('.totalPrice').text(sum_price.toLocaleString()).append('원')
+			$('.totalShipPrice').text(sum_shipPrice.toLocaleString()).append('원')
+			console.log('sum'+sum_PayPrice)
+			$('.totalPayPrice').text(sum_PayPrice.toLocaleString()).append('원')
+			
+			
 	 	}
 		//전체선택
 		$(document).on('click','#check_all',function(){
@@ -380,7 +396,10 @@
 			getTotalPrice()
 		}); 
 		//누르면 장바구니에서 삭제
-		$(document).on('click','.fa-times',function(){
+        $(document).on('click','.delete_btn',function(){
+            if(!confirm('삭제하시겠습니까?')){
+                return
+            }
 			var num = $(this).parent().parent().parent().parent().attr('bnum')
 			$.ajax({
 				  url: "/NAGAGU/deleteBasket.my",
