@@ -26,23 +26,6 @@
 %>
 
 <style>
-	.pagination {
-		display: inline-block;
-		margin-bottom: 30px;
-	}
-	
-	.pagination a {
-		color: black;
-		float: left;
-		padding: 8px 16px;
-		text-decoration: none;
-	}
-	
-	.pagination a:hover {
-		background-color: #ef902e;
-		color: black;
-	}
-	
 	.content a, .content a:link, .content a:visited {
 		color: black;
 		text-decoration: none;
@@ -212,31 +195,48 @@
 			%>
 					</div>
 					<!-- pagenation -->
-					<div class="row justify-content-center">
+					<nav aria-label="Page navigation example">
+						<ul class="pagination d-flex justify-content-center">
 						<% 
 							if(nowpage <= 1) { 
 						%>
-								&laquo;&nbsp;
+								<li class="page-item disabled">
+									<a class="page-link" href="#" tabindex="-1" aria-disabled="true">
+										이전
+									</a>
+							    </li>
 						<% 
 							} 
 							else { 
 						%>
-								<a href ="./classlist.ac?page=<%=nowpage-1%>">&laquo;</a>
+								<li class="page-item">
+									<a class="page-link" href="./classlist.ac?CLASS_CATEGORY=<%=CLASS_CATEGORY%>&page=<%=nowpage - 1%>">
+										이전
+									</a>
+								</li>
 						<%	
 							} 
 						%>
 							
 						<%
 							for(int a = startpage; a <= endpage; a++) {
-									if(a == nowpage) { 
+								if(a == nowpage) { 
 						%>
-										<%=a%> <!-- 현재 보고있는 페이지에는 링크를 걸지 않겠다. -->
+									<li class="page-item list active">
+										<span class="page-link">
+											<%=a%>
+										</span>
+									</li> <!-- 현재 보고있는 페이지에는 링크를 걸지 않겠다. -->
 						<% 
-									} else { 
+								} else { 
 						%>
-										<a href="./classlist.ac?page=<%=a%>">&nbsp;<%=a%>&nbsp;</a>
+									<li class="page-item">
+										<a class="page-link" href="./classlist.ac?CLASS_CATEGORY=<%=CLASS_CATEGORY%>&page=<%=a%>">
+											<%=a%>
+										</a>
+									</li>
 						<% 
-									}
+								}
 							}
 						%>	
 		
@@ -244,15 +244,24 @@
 						<%
 							if(nowpage >= maxpage) {  
 						%> 
-								&nbsp;&raquo;
+								<li class="page-item disabled">
+									<a class="page-link" href="#" tabindex="-1" aria-disabled="true">
+										다음
+									</a>
+							    </li>
 						<%	
 							} else { 
 						%>
-								<a href="./classlist.ac?page=<%=nowpage+1%>">&raquo;</a>
+								<li class="page-item">
+									<a class="page-link" href="./classlist.ac?CLASS_CATEGORY=<%=CLASS_CATEGORY%>&page=<%=nowpage + 1%>">
+										다음
+									</a>
+								</li>
 						<%
 							} 
 						%>
-					</div>
+						</ul>
+					</nav>
 			<%
 				} else {
 			%>

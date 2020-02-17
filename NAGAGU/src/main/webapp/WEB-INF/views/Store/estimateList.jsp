@@ -40,11 +40,6 @@
 		margin:0;
 	}
 	
-	.order-body {
-		font-family: '만화진흥원체', 'KOMACON', KOMACON;
-		font-size: 15px;
-	}
-	
 	dl.text-center {
 		color: orange;
 	}
@@ -200,9 +195,9 @@
 		if (MEMBER_EMAIL != null) {
 	%>
 	
-	<div class="row justify-content-end">
-		<a class="btn btn-outline-dark mb-2" onClick="location.href='./estimate_form.es'" style="cursor: pointer;">글쓰기</a>
-	</div>
+			<div class="row justify-content-end">
+				<a class="btn btn-outline-dark mb-2" onClick="location.href='./estimate_form.es'" style="cursor: pointer;">글쓰기</a>
+			</div>
 	
 	<%
 		}
@@ -234,8 +229,10 @@
 		<%
 					} else {
 		%>
-				<tr onClick="location.href='./estimate_detail.es?ESTIMATE_NUM=<%=el.getESTIMATE_NUM()%>&page=<%=nowpage %>'" style="cursor: pointer;">
-		<% } %>
+						<tr onClick="location.href='./estimate_detail.es?ESTIMATE_NUM=<%=el.getESTIMATE_NUM()%>&page=<%=nowpage %>'" style="cursor: pointer;">
+		<% 
+					} 
+		%>
 					<td><%=rnum %></td>
 					<td><%=el.getESTIMATE_NICK() %></td>
 					<td class="es_title"><%=el.getESTIMATE_TITLE() %></td>
@@ -283,34 +280,30 @@
 	<!-- 글찾기 -->
 
 	<form id="search_form" action="estimate.es" method="post">
-	<input type="hidden" name="page" value=<%=nowpage %>>
-	<div class="search" align="center">
-		<select id="category" name="category" size="1">
-			<option value="title">제목</option>
-			<option value="content">본문</option>
-			<option value="nick">신청인</option>
-			<option value="TandC">제목+본문</option>
-		</select> 
-		<input type="text" size="12" id="search_text" name="search_text"> 
-		<input type="button" name="search" value="검색" id="btn_search" style="cursor: pointer;">
-	</div>
+		<input type="hidden" name="page" value="<%=nowpage%>">
+		<div class="d-flex justify-content-center">
+			<div class="justify-content-start">
+				<select id="category" name="category" class="h-100">
+					<option value="title">제목</option>
+					<option value="content">본문</option>
+					<option value="nick">신청인</option>
+					<option value="TandC">제목+본문</option>
+				</select>
+			</div> 
+			<div class="justify-content-end">
+				<input type="text" id="search_text" name="search_text" class="h-100"> 
+				<input type="button" class="btn btn-outline-dark" name="search" value="검색" id="btn_search" style="cursor: pointer;">
+			</div>
+		</div>
 	</form>
 	<br />
 	<!-- 버튼 -->
 
-
 	<div id = "pagination" class="pagination justify-content-center" align="center">
 	</div>
-
-	<br />
 </div>
 <!-- content 끝 -->
 
-<br />
-<br />
-<br />
-<br />
-<!-- Optional JavaScript -->
 <script>
 	$('#btn_search').click(function() {
 		var category = $('#category').val();

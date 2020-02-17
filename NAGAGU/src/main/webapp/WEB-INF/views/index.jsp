@@ -1,5 +1,11 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"	pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 
+<%
+	String message = (String)request.getAttribute("message");
+%>
 <style>
 	section.scene {
 		
@@ -99,7 +105,6 @@
 				<button type="button" class="btn btn-outline-primary">둘러보기</button>
 				<button type="button" class="btn btn-outline-primary">가입하기</button>
 			</div>
-
 		</section>
 		<section class="scene two">
 			<header>
@@ -109,7 +114,7 @@
 		</section>
 		<section class="scene three">
 			<header>
-				<h1>나가구 이용하기</h1>  
+				<h1>나가구 이용하기</h1>
 				Lorem ipsum dolor sit amet, consectetur adipisicing elit. Totam
 				suscipit sint ab beatae nihi
 			</header>
@@ -139,3 +144,13 @@
 		</section>
 	</div>
 </div>
+
+<script>
+	/* 탈퇴 처리 후 alert문으로 메시지 처리*/
+	$(document).ready(function() {
+		var responseMessage = "<c:out value="${message}" />";
+		if (responseMessage != "") {
+			alert(responseMessage);
+		}
+	});
+</script>

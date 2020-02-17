@@ -51,3 +51,7 @@
 li a {
 	color: #d3d3d3;
 }
+
+#MEMBER_PASS, #WORKSHOP_PASS {
+	font-family: '유토이미지고딕R', 'BBTreeGR', BBTreeGR;
+}

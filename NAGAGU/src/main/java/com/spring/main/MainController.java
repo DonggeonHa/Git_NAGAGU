@@ -32,6 +32,8 @@ import com.spring.member.KakaoController;
 import com.spring.member.MemberService;
 import com.spring.member.MemberVO;
 import com.spring.member.NaverLoginBO;
+import com.spring.workshop.WorkShopMemberService;
+import com.spring.workshop.WorkShopMemberVO;
 
 @Controller
 public class MainController {
@@ -53,6 +55,9 @@ public class MainController {
 	
 	@Autowired
 	private MainService Mainservice;
+	
+	@Autowired
+	private WorkShopMemberService workShopMemberService;
 	
 	@RequestMapping(value = "/index.ma", method = { RequestMethod.GET, RequestMethod.POST })
 	public ModelAndView Index(Model model, HttpSession session) {
@@ -254,12 +259,6 @@ public class MainController {
 		return mav;
 	}
 	
-	@RequestMapping(value = "/test.ma")
-	public String test() {
-		
-		return "Admin/Info/MemberInfo";
-	}
-	
 	@RequestMapping(value = "/memberInsert.ma")
 	public String memberInsert(MemberVO memberVO, RedirectAttributes redirect, HttpServletRequest request) {
 		String email  = request.getParameter("MEMBER_EMAIL");
@@ -333,6 +332,48 @@ public class MainController {
         
         return mv;
     }
+    
+    @RequestMapping(value = "/deleteMember.ma")
+	public ModelAndView deleteMember(MemberVO memberVO, HttpSession session) {
+		ModelAndView mav = new ModelAndView();
+		try {
+			int res = memberService.duplicateMember(memberVO);
+			
+			if ( res == 1 ) {
+				System.out.println("멤버 정보 이동 성공!");
+				int del = memberService.deleteMember(memberVO);
+				System.out.println("멤버 삭제 성공!");
+				
+				session.invalidate();
+				mav.setViewName("redirect:/");
+				mav.addObject("message", "탈퇴처리 되었습니다. 그동안 NAGAGU를 이용해주셔서 감사합니다.");
+			}
+		} catch(Exception e) {
+			System.out.println("멤버삭제 실패!!!" + e.getMessage());
+		}
+		return mav;
+	}
+    
+    @RequestMapping(value = "/deleteWMember.ma")
+	public ModelAndView deleteWMember(WorkShopMemberVO workshopVO, HttpSession session) {
+		ModelAndView mav = new ModelAndView();
+		try {
+			int res = workShopMemberService.duplicateWMember(workshopVO);
+			
+			if ( res == 1 ) {
+				System.out.println("공방멤버 정보 이동 성공!");
+				int del = workShopMemberService.deleteWMember(workshopVO);
+				System.out.println("공방멤버 삭제 성공!");
+				
+				session.invalidate();
+				mav.setViewName("index");
+				mav.addObject("message", "탈퇴처리 되었습니다. 그동안 NAGAGU를 이용해주셔서 감사합니다.");
+			}
+		} catch(Exception e) {
+			System.out.println("멤버삭제 실패!!!" + e.getMessage());
+		}
+		return mav;
+	}
     
     
     @RequestMapping(value = "/summernote.ma", method=RequestMethod.POST)

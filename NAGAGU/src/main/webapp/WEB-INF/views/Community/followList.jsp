@@ -43,7 +43,7 @@
 			height: auto; 
 			border-radius:100%;		 
 		} 
-		.main{
+		.followmain{
 			margin-top: 150px;
 			width: 100% !important;
 		}
@@ -69,7 +69,7 @@
 			height: auto; 
 			border-radius:100%;		 
 		} 
-		.main{
+		.followmain{
 			margin-top: 150px;
 			width: 100% !important;
 		}
@@ -121,7 +121,7 @@
 		}
 	}
 	/* card-size end */
-	.main img {
+	.followmain img {
 		width: 100%;
 		max-height: 300px;
 		height: auto; 
@@ -135,7 +135,7 @@
 	.nickNameTap a, .title a{
 		color: black;
 	}
-	.main {
+	.followmain {
 		width: 75%;
 		height: 850px; 
 	}
@@ -144,9 +144,6 @@
 		height: 25vh;
 	}
 	
-	.container-mypage{
-		margin: 50px 0;
-	}
 	.img_wrap img{
 		border-radius: 100%;
 	}
@@ -172,7 +169,7 @@
 	}
 </style>
 
-<div class="container container-mypage category_cm">
+<div class="container" style="margin-top: 30px; margin-bottom: 30px;">
 	<div class="wrapper row justify-content-between">
 		<div class="col-10 nickNameTap">
 			<div>
@@ -181,7 +178,7 @@
 				</h6>
 			</div>
 		</div>
-		<div class="main p-0">
+		<div class="followmain p-0">
 			<div class="pics-wrap">
 				<div class="row justify-content-around title mx-0 pt-2 ">
 					<div class="col-4 text-center">

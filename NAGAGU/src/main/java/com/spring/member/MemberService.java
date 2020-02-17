@@ -15,7 +15,11 @@ public interface MemberService {
 	public int user_chk(MemberVO memberVO);
 	public ArrayList<MemberVO> get_nick_list();
 	public MemberVO selectMember(MemberVO memberVO);
-	ArrayList<MemberVO> getMemberList(HashMap<String, Object> map);
-	MemberVO getMemberDetail(MemberVO memberVO);
+	public ArrayList<MemberVO> getMemberList(HashMap<String, Object> map);
+	public MemberVO getMemberDetail(MemberVO memberVO);
 	public int checkMember(String mem_mail) throws Exception;
+	
+	/* 회원 탈퇴 */
+	public int deleteMember(MemberVO memberVO);
+	public int duplicateMember(MemberVO deleteVO);
 }
