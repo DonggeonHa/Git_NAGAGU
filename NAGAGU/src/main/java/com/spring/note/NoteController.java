@@ -26,8 +26,8 @@ public class NoteController {
 	@RequestMapping(value="receiveList.nt")
 	public String noteReceive(HttpServletRequest request, Model model, HttpSession session) throws Exception {
 		
-		String member_mail = request.getParameter("MEMBER_EMAIL");
-		String workshop_name = request.getParameter("WORKSHOP_NAME");
+		String member_mail = (String)session.getAttribute("MEMBER_EMAIL");
+		String workshop_name = (String)session.getAttribute("WORKSHOP_NAME");
 		String receiver = member_mail;
 		
 		if (member_mail == null && workshop_name != null) {
@@ -75,8 +75,8 @@ public class NoteController {
 	
 	@RequestMapping(value="sendList.nt")
 	public String noteSend(HttpServletRequest request, Model model, HttpSession session) throws Exception {
-		String member_mail = request.getParameter("MEMBER_EMAIL");
-		String workshop_name = request.getParameter("WORKSHOP_NAME");
+		String member_mail = (String)session.getAttribute("MEMBER_EMAIL");
+		String workshop_name = (String)session.getAttribute("WORKSHOP_NAME");
 		String sender = member_mail;
 		
 		if (member_mail == null && workshop_name != null) {
@@ -124,8 +124,16 @@ public class NoteController {
 	
 	@RequestMapping(value="boxedList.nt")
 	public String noteBoxed(HttpServletRequest request, Model model, HttpSession session) throws Exception {
-		session.setAttribute("mem_mail", "lagls@naver.com");
-		String boxer = (String)session.getAttribute("mem_mail");
+		String member_mail = (String)session.getAttribute("MEMBER_EMAIL");
+		String workshop_name = (String)session.getAttribute("WORKSHOP_NAME");
+		String boxer = member_mail;
+		
+		if (member_mail == null && workshop_name != null) {
+			
+			WorkShopMemberVO workshopvo = new WorkShopMemberVO();
+			workshopvo.setWORKSHOP_NAME(workshop_name);
+			boxer = noteService.getWorkshopMail(workshopvo);
+		}
 		
 		int page = 1;
 		int limit = 10;
@@ -396,16 +404,17 @@ public class NoteController {
 		NoteVO vo = new NoteVO();
 		String sender_mail = "";
 		String sender_nick = "";
+		System.out.println("test1 : " + (String)session.getAttribute("MEMBER_EMAIL"));
+		System.out.println("test1 : " + (String)session.getAttribute("WORKSHOP_EMAIL"));
 		
 		if (session.getAttribute("MEMBER_EMAIL") != null) {
 			sender_mail = (String)session.getAttribute("MEMBER_EMAIL");
 			sender_nick = (String)session.getAttribute("MEMBER_NICK");
 		}
 		else if (session.getAttribute("WORKSHOP_EMAIL") != null) {
-			sender_mail = (String)session.getAttribute("WOKRSHOP_EMAIL");
-			sender_nick = (String)session.getAttribute("WOKRSHOP_NAME");
+			sender_mail = (String)session.getAttribute("WORKSHOP_EMAIL");
+			sender_nick = (String)session.getAttribute("WORKSHOP_NAME");
 		}
-		
 			vo.setNOTE_SENDER_MAIL(sender_mail);
 			vo.setNOTE_SENDER_NICK(sender_nick);
 			vo.setNOTE_RECEIVER_MAIL(request.getParameter("receiver_mail"));
