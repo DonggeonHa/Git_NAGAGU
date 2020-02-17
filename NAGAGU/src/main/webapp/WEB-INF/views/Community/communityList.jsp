@@ -185,28 +185,28 @@
 				<a id="others_tab" href="./community.cm?PICS_CATEGORY=others&PICS_REVIEW=<%=PICS_REVIEW%>&sort=<%=sort%>">기타</a>					
 			</div>
 			<div class="row m-0 my-2 justify-content-between">
-					<div class="col-3 d-flex">
-						<select id = "sort" class="form-control mr-2" onchange="location.href=(this.value);">									
-							<option value="./community.cm?PICS_CATEGORY=<%=PICS_CATEGORY%>&PICS_REVIEW=<%=PICS_REVIEW%>&sort=new" id="new">최신순</option>
-							<option value="./community.cm?PICS_CATEGORY=<%=PICS_CATEGORY%>&PICS_REVIEW=<%=PICS_REVIEW%>&sort=read" id="read">조회순</option>
-							<option value="./community.cm?PICS_CATEGORY=<%=PICS_CATEGORY%>&PICS_REVIEW=<%=PICS_REVIEW%>&sort=like" id="like">인기순</option>
-						</select>
-						<select id = "sort" class="form-control" onchange="location.href=(this.value);">
-							<option value="./community.cm?PICS_CATEGORY=<%=PICS_CATEGORY%>&PICS_REVIEW=0&sort=<%=sort%>" id="all">모두보기</option>
-							<option value="./community.cm?PICS_CATEGORY=<%=PICS_CATEGORY%>&PICS_REVIEW=1&sort=<%=sort%>" id="review">후기</option>
-							<option value="./community.cm?PICS_CATEGORY=<%=PICS_CATEGORY%>&PICS_REVIEW=2&sort=<%=sort%>" id="no_review">일반</option>
-						</select>
-					</div>
-						<div class="col-4 d-flex px-0">
-							<select id = "search_option" class="form-control" onchange="">									
-								<option value="tag" id="tag">태그</option>
-								<option value="write" id="write">글쓴이</option>
-								<option value="content" id="content">내용</option>
-							</select>
-							<input type="text" class="form-control mx-2" id="keyword" >  
-							<!-- /input-group -->
-							<button class="btn btn-outline-secondary" type="submit" id="search_btn">검색</button>
-						</div> 
+				<div class="col-3 d-flex">
+					<select id = "sort" class="form-control mr-2" onchange="location.href=(this.value);">									
+						<option value="./community.cm?PICS_CATEGORY=<%=PICS_CATEGORY%>&PICS_REVIEW=<%=PICS_REVIEW%>&sort=new" id="new">최신순</option>
+						<option value="./community.cm?PICS_CATEGORY=<%=PICS_CATEGORY%>&PICS_REVIEW=<%=PICS_REVIEW%>&sort=read" id="read">조회순</option>
+						<option value="./community.cm?PICS_CATEGORY=<%=PICS_CATEGORY%>&PICS_REVIEW=<%=PICS_REVIEW%>&sort=like" id="like">인기순</option>
+					</select>
+					<select id = "sort" class="form-control" onchange="location.href=(this.value);">
+						<option value="./community.cm?PICS_CATEGORY=<%=PICS_CATEGORY%>&PICS_REVIEW=0&sort=<%=sort%>" id="all">모두보기</option>
+						<option value="./community.cm?PICS_CATEGORY=<%=PICS_CATEGORY%>&PICS_REVIEW=1&sort=<%=sort%>" id="review">후기</option>
+						<option value="./community.cm?PICS_CATEGORY=<%=PICS_CATEGORY%>&PICS_REVIEW=2&sort=<%=sort%>" id="no_review">일반</option>
+					</select>
+				</div>
+				<div class="col-4 d-flex px-0">
+					<select id = "search_option" class="form-control" onchange="">									
+						<option value="tag" id="tag">태그</option>
+						<option value="write" id="write">글쓴이</option>
+						<option value="content" id="content">내용</option>
+					</select>
+					<input type="text" class="form-control mx-2" id="keyword" >  
+					<!-- /input-group -->
+					<button class="btn btn-outline-secondary" type="submit" id="search_btn">검색</button>
+				</div> 
 			</div>
 				<!-- /.col-lg-6 -->
 		</div>
@@ -222,16 +222,17 @@
 		</c:if>
 	</div>
 	<!-- images start -->
+	<div class="d-flex justify-content-start pt-2 mt-4 row">
 	<%
 		if (listcount > 0) {							
 			for (int i = 0; i < picsList.size(); i++) {								
 				PicsVO pics_vo = picsList.get(i);								
 				MemberVO member_vo=memberList.get(i);
 	%>
-				<div class="row pt-2 mt-4">
-					<div class="col-md-4 img-wrap">
+				
+					<div class="col-4 img-wrap">
 						<div class="profile">
-							<div class="profile_children" >
+							<div class="profile_children">
 								<div>
 									<a href="memberLikePics.cm?MEMBER_NUM=<%=member_vo.getMEMBER_NUM()%>"> 
 										<img src=<%=member_vo.getMEMBER_PICTURE()%>	style="width:50px; height:50px;"><b><%=member_vo.getMEMBER_NICK()%></b> 
@@ -271,11 +272,12 @@
 							<br />
 						</div>
 					</div>
-				</div>
+				
 				<!-- images end -->
 	<%
 			} 
 	%>
+	</div>
 			<!-- pagenation -->
 			<div class="row justify-content-center">
 				<div class="pagination">
