@@ -83,4 +83,5 @@
 	<context:component-scan base-package="com.spring.admin" />
 	<context:component-scan base-package="com.spring.order" />
 	<context:component-scan base-package="com.spring.workshopMypage" />
+	<context:component-scan base-package="com.spring.chart" />
 </beans:beans>
