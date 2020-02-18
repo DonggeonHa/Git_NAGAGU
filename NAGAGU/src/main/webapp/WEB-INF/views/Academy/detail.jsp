@@ -36,15 +36,6 @@
 %>
 
 <style>
-	@font-face {
-		font-family: 'KOMACON';
-		src:
-			url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_seven@1.2/KOMACON.woff')
-			format('woff');
-		font-weight: normal;
-		font-style: normal;
-	}
-	
 	.Precautions dl dd {
 		font-size: 1rem;
 	}
@@ -63,11 +54,6 @@
 		color: #f6f6f6;
 		margin-top: 100px;
 		margin-bottom: 100px;
-	}
-	
-	.order-body {
-		font-family: '만화진흥원체', 'KOMACON', KOMACON;
-		font-size: 15px;
 	}
 	
 	.sticky {
@@ -89,8 +75,8 @@
 		top: 20px;
 	}
 	
-	.nav-item .nav-link {
-		color: #9d9d9d;
+	.nl.active {
+		background-color: #EAEAEA !important;
 	}
 	
 	.comments_table {
@@ -164,6 +150,10 @@
 	.group {
 		margin-top : 30px;
 	}
+	
+	.modal-header {
+		border-bottom: 3px solid #c9c9c9 !important;
+	}
 </style>
 
 <div class="container class-detail-container category_ac">
@@ -181,7 +171,7 @@
   							} 
   							else {
   								if(i == 0) {
-				%>    				
+					%>    				
 								<div class="carousel-item active" style="width: 1300px; height: 530px;">
    	      							<img src="/communityupload/image/<%=cl.getCLASS_BANNER().split(",")[i]%>" class="d-block w-100" style="max-width: 100%; height: 100%;">
    	    						</div>
@@ -298,9 +288,9 @@
 					</div>
 				</div>
 			</div>
-			<!-- 댓글 테이블 시작 -->
+			<!-- 리뷰 테이블 시작 -->
 			
-			<!-- 댓글 테이블 끝 -->
+			<!-- 리뷰 테이블 끝 -->
 			<!-- Q&A 테이블 시작 -->
 			
 			<!-- Q&A 테이블 끝 -->
@@ -324,26 +314,26 @@
 							<col style="width:30%">
 							<col style="width:70%">
 						</colgroup>
-					  <thead>
-					    <tr>
-					      <th scope="col">클래스 금액</th>
-					      <th scope="col"><fmt:formatNumber type="number" maxFractionDigits="3" value="<%=cl.getCLASS_AMOUNT()%>" />원 </th>
-					    </tr>
-					  </thead>
-					  <tbody>
-					    <tr>
-					      <th scope="row">카테고리</th>
-					      <td><%=cl.getCLASS_CATEGORY()%></td>
-					    </tr>
-					    <tr>
-					      <th scope="row">일시</th>
-					      <td><%=cl.getCLASS_DATE_CONFIGURATION_1()%> ~ <%=cl.getCLASS_DATE_CONFIGURATION_2()%></td>
-					    </tr>
-					    <tr>
-					      <th scope="row">지역</th>
-					      <td><%=cl.getCLASS_AREA()%></td>
-					    </tr>
-					  </tbody>
+						<thead>
+							<tr>
+								<th scope="col">클래스 금액</th>
+								<th scope="col"><fmt:formatNumber type="number" maxFractionDigits="3" value="<%=cl.getCLASS_AMOUNT()%>" />원 </th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr>
+								<th scope="row">카테고리</th>
+								<td><%=cl.getCLASS_CATEGORY()%></td>
+							</tr>
+							<tr>
+								<th scope="row">일시</th>
+								<td><%=cl.getCLASS_DATE_CONFIGURATION_1()%> ~ <%=cl.getCLASS_DATE_CONFIGURATION_2()%></td>
+							</tr>
+							<tr>
+								<th scope="row">지역</th>
+								<td><%=cl.getCLASS_AREA()%></td>
+							</tr>
+						</tbody>
 					</table>
 				</div>
 				<div class="btnArea text-center">
@@ -381,17 +371,18 @@
 				<h5 class="modal-title" id="myExtraLargeModalLabel"><%=cl.getCLASS_NAME()%></h5>
 			</div>
 			<div class="modal-body mbody">
-				<p class="text-center"><%=cl.getCLASS_ABRIEF()%></p>
 				<div class="row">
 					<div class="col-12">
 						<div style="font-size: large; font-weight: bolder; padding-bottom: 3%;">공방 정보</div>
 						<div>
 							<table class="table table-borderless table-sm">
 								<colgroup>
+									<col style="width:5%">
 									<col style="width:30%">
-									<col style="width:70%">
+									<col style="width:60%">
 								</colgroup>
 								<tr>
+									<td></td>
 									<th scope="row">사용기간</th>
 									<td>
 										<%=cl.getCLASS_DATE_CONFIGURATION_1()%> ~ <%=cl.getCLASS_DATE_CONFIGURATION_2()%> <br>
@@ -399,14 +390,17 @@
 									</td>
 								</tr>
 								<tr>
+									<td></td>
 									<th scope="row">공방 장소</th>
 									<td><%=cl.getCLASS_ADDRESS()%>&nbsp;&nbsp;<%=cl.getCLASS_DETAIL_ADDRESS()%></td>
 								</tr>
 								<tr>
+									<td></td>
 									<th scope="row">공방 지역</th>
 									<td><%=cl.getCLASS_AREA()%></td>
 								</tr>
 								<tr>
+									<td></td>
 									<th scope="row">구매 수량</th>
 									<td class="d-flex justify-content-between">
 										<select name="sel" id="sel" class="form-control" style="width: 100px">
@@ -420,31 +414,35 @@
 										<div class="d-flex align-items-center" style="color: red;">
 											1인당 최대 구매 가능 갯수는 5개입니다.
 										</div>
-										
 									</td>
 								</tr>
 							</table>
 						</div>
 					</div>
 				</div>
+				<hr>
 				<div class="row">
 					<div class="col-12">
 						<div style="font-size: large; font-weight: bolder; padding-bottom: 3%;">예약자 정보</div>
 						<div>
 							<table class="table table-borderless table-sm">
 								<colgroup>
+									<col style="width:5%">
 									<col style="width:30%">
-									<col style="width:70%">
+									<col style="width:60%">
 								</colgroup>
 								<tr>
+									<td></td>
 									<th scope="row">예약자</th>
 									<td><%=MEMBER_NAME%></td>
 								</tr>
 								<tr>
+									<td></td>
 									<th scope="row">연락처</th>
 									<td><%=MEMBER_PHONE%></td>
 								</tr>
 								<tr>
+									<td></td>
 									<th scope="row">이메일</th>
 									<td><%=MEMBER_EMAIL%></td>
 								</tr>
@@ -452,28 +450,34 @@
 						</div>
 					</div>
 				</div>
+				<hr>
 				<div class="row">
 					<div class="col-12">
 						<div style="font-size: large; font-weight: bolder; padding-bottom: 3%;">판매자 정보</div>
 						<div>
 							<table class="table table-borderless table-sm">
 								<colgroup>
+									<col style="width:5%">
 									<col style="width:30%">
-									<col style="width:70%">
+									<col style="width:60%">
 								</colgroup>
 								<tr>
+									<td></td>
 									<th scope="row">공방 이름</th>
 									<td><%=cl.getWORKSHOP_NAME()%></td>
 								</tr>
 								<tr>
+									<td></td>
 									<th scope="row">대표자 명</th>
 									<td><%=ws.getWORKSHOP_CEO_NAME()%></td>
 								</tr>
 								<tr>
+									<td></td>
 									<th scope="row">사업자 번호</th>
 									<td><%=ws.getWORKSHOP_LICENSE()%></td>
 								</tr>
 								<tr>
+									<td></td>
 									<th scope="row">연락처</th>
 									<td><%=ws.getWORKSHOP_PHONE()%></td>
 								</tr>
@@ -481,13 +485,14 @@
 						</div>
 					</div>
 				</div>
+				<hr>
 				<div class="row">
 					<div class="col-12">
 						<div>
 							<table class="table table-borderless table-sm">
 								<colgroup>
-									<col style="width:30%">
-									<col style="width:70%">
+									<col style="width:37%">
+									<col style="width:63%">
 								</colgroup>
 								<tr>
 									<th scope="row" style="font-size: large; font-weight: bolder; padding-bottom: 3%;">결제금액</th>
@@ -502,7 +507,7 @@
 				<div>
 					<ul class="nav nav-pills mb-3 table table-bordered" id="pills-tab" role="tablist">
 						<li class="nav-item">
-							<a class="nav-link active" id="pills-card-tab"	data-toggle="pill" href="#pills-card" role="tab" aria-controls="pills-home" aria-selected="true"> 
+							<a class="nav-link nl" id="pills-card-tab"	data-toggle="pill" href="#pills-card" role="tab" aria-controls="pills-home" aria-selected="true" style="cursor: default;"> 
 								<label>
 									<img width="64" src="https://bucketplace-v2-development.s3.amazonaws.com/pg/card.png" alt="Card">
 									<div class="text-center">
@@ -512,7 +517,7 @@
 							</a>
 						</li>
 						<li class="nav-item">
-							<a class="nav-link"	id="pills-vbank-tab" data-toggle="pill" href="#pills-vbank"	role="tab" aria-controls="pills-home" aria-selected="true">
+							<a class="nav-link nl"	id="pills-vbank-tab" data-toggle="pill" href="#pills-vbank"	role="tab" aria-controls="pills-home" aria-selected="true" style="cursor: default;">
 								<label> 
 									<img width="64"	src="https://bucketplace-v2-development.s3.amazonaws.com/pg/vbank.png" alt="Vbank">
 									<div class="text-center">
@@ -522,7 +527,7 @@
 							</a>
 						</li>
 						<li class="nav-item">
-							<a class="nav-link"	id="pills-phone-tab" data-toggle="pill" href="#pills-phone"	role="tab" aria-controls="pills-home" aria-selected="true">
+							<a class="nav-link nl"	id="pills-phone-tab" data-toggle="pill" href="#pills-phone"	role="tab" aria-controls="pills-home" aria-selected="true" style="cursor: default;">
 								<label> 
 									<img width="64"	src="https://bucketplace-v2-development.s3.amazonaws.com/pg/phone.png" alt="Phone">
 									<div class="text-center">
@@ -532,7 +537,7 @@
 							</a>
 						</li>
 						<li class="nav-item">
-							<a class="nav-link" id="pills-toss-tab" data-toggle="pill" href="#pills-toss" role="tab" aria-controls="pills-home" aria-selected="true">
+							<a class="nav-link nl" id="pills-toss-tab" data-toggle="pill" href="#pills-toss" role="tab" aria-controls="pills-home" aria-selected="true" style="cursor: default;">
 								<label> 
 									<img width="64"	src="https://bucketplace-v2-development.s3.amazonaws.com/pg/toss.png" alt="Toss">
 									<div class="text-center">
@@ -542,7 +547,7 @@
 							</a>
 						</li>
 						<li class="nav-item">
-							<a class="nav-link"	id="pills-naver-tab" data-toggle="pill" href="#pills-naver"	role="tab" aria-controls="pills-home" aria-selected="true">
+							<a class="nav-link nl"	id="pills-naver-tab" data-toggle="pill" href="#pills-naver"	role="tab" aria-controls="pills-home" aria-selected="true" style="cursor: default;">
 								<label> 
 									<img width="64"	src="https://bucketplace-v2-development.s3.amazonaws.com/pg/naver.png" alt="Naver">
 									<div class="text-center">
@@ -552,7 +557,7 @@
 							</a>
 						</li>
 						<li class="nav-item">
-							<a class="nav-link"	id="pills-kakao-tab" data-toggle="pill" href="#pills-kakao"	role="tab" aria-controls="pills-home" aria-selected="true">
+							<a class="nav-link nl"	id="pills-kakao-tab" data-toggle="pill" href="#pills-kakao"	role="tab" aria-controls="pills-home" aria-selected="true" style="cursor: default;">
 								<label> 
 									<img width="64"	src="${pageContext.request.contextPath}/resources/images/Mypage/kakao.png" alt="Kakao">
 									<div class="text-center">
@@ -575,7 +580,7 @@
 							</dl>
 							
 							<div class="center" style="padding-bottom: 2rem;">
-								<button type="button" id="Payment_Card" class="btn btn-outline-dark mr-4">예약 신청하기1</button>
+								<button type="button" id="Payment_Card" class="btn btn-outline-dark mr-4">예약 신청하기</button>
 								<button type="button" id="btn" class="btn btn-outline-dark">뒤로</button>
 							</div>
 						</div>
@@ -591,7 +596,7 @@
 							</dl>
 							
 							<div class="center" style="padding-bottom: 2rem;">
-								<button type="button" id="btn" class="btn btn-outline-dark mr-4">예약 신청하기2</button>
+								<button type="button" id="btn" class="btn btn-outline-dark mr-4">예약 신청하기</button>
 								<button type="button" id="btn" class="btn btn-outline-dark">뒤로</button>
 							</div>
 						</div>
@@ -607,7 +612,7 @@
 							</dl>
 							
 							<div class="center" style="padding-bottom: 2rem;">
-								<button type="button" id="btn" class="btn btn-outline-dark mr-4">예약 신청하기3</button>
+								<button type="button" id="btn" class="btn btn-outline-dark mr-4">예약 신청하기</button>
 								<button type="button" id="btn" class="btn btn-outline-dark">뒤로</button>
 							</div>
 						</div>
@@ -633,7 +638,7 @@
 								</dl>
 								
 								<div class="center" style="padding-bottom: 2rem;">
-									<button type="button" id="btn" class="btn btn-outline-dark mr-4">예약 신청하기4</button>
+									<button type="button" id="btn" class="btn btn-outline-dark mr-4">예약 신청하기</button>
 									<button type="button" id="btn" class="btn btn-outline-dark">뒤로</button>
 								</div>
 							</div>
@@ -650,7 +655,7 @@
 							</dl>
 							
 							<div class="center" style="padding-bottom: 2rem;">
-								<button type="button" id="btn" class="btn btn-outline-dark mr-4">예약 신청하기5</button>
+								<button type="button" id="btn" class="btn btn-outline-dark mr-4">예약 신청하기</button>
 								<button type="button" id="btn" class="btn btn-outline-dark">뒤로</button>
 							</div>
 						</div>
@@ -666,7 +671,7 @@
 							</dl>
 							
 							<div class="center" style="padding-bottom: 2rem;">
-								<button type="button" id="Payment_Card" class="btn btn-outline-dark mr-4" onclick="Payment_Card()">예약 신청하기6</button>
+								<button type="button" id="Payment_Card" class="btn btn-outline-dark mr-4" onclick="Payment_Card()">예약 신청하기</button>
 								<button type="button" id="btn" class="btn btn-outline-dark">뒤로</button>
 							</div>
 						</div>

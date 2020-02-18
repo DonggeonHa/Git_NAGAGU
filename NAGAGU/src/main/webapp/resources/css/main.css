@@ -23,4 +23,5 @@
 
 .page-item.active .page-link {
 	background-color: #ef900e !important;
+	border-line: none
 }

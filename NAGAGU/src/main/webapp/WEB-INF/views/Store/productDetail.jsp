@@ -9,6 +9,7 @@
 <%@ page import = "java.text.SimpleDateFormat" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
+<%@ taglib prefix = "fmt" uri = "http://java.sun.com/jsp/jstl/fmt" %>
 <%
 	System.out.println("=========================================");
 	System.out.println("=========================================");
@@ -517,13 +518,17 @@
 								<thead>
 									<tr>
 										<th scope="col">가격</th>
-										<th scope="col" name="PRODUCT_PRICE"><%=vo.getPRODUCT_PRICE()%>원</th>
+										<th scope="col" name="PRODUCT_PRICE">
+											<fmt:formatNumber type="number" maxFractionDigits="3" value="<%=vo.getPRODUCT_PRICE()%>" />원
+										</th>
 									</tr>
 								</thead>
 								<tbody>
 									<tr>
 										<th scope="row">배송비</th>
-										<td name="PRODUCT_SHIP_PRICE"><%=vo.getPRODUCT_SHIP_PRICE()%></td>
+										<td name="PRODUCT_SHIP_PRICE">
+											<fmt:formatNumber type="number" maxFractionDigits="3" value="<%=vo.getPRODUCT_SHIP_PRICE()%>" />원
+										</td>
 									</tr>
 									<tr>
 										<th scope="row">배송 기간</th>
@@ -1325,7 +1330,6 @@
 							output += '</div></div>';
 							output += '<div class="ReviewReplySum" id="ReviewReplySum'+REVIEW_NUM+'">';
 							output += '<div class="ReviewReplyformSection" id="ReviewReplyformSection'+REVIEW_NUM+'"></div>';
-					//		output += '<div class="ReviewReplyInsertSpace" id="ReviewReplyInsertSpace'+REVIEW_NUM+'"></div>';
 							if(retVal.review_RE_Count>0) {
 								for(var j=0; j<retVal.review_RE_List.length; j++) {
 									if(REVIEW_NUM == retVal.review_RE_List[j].REVIEW_RE) {

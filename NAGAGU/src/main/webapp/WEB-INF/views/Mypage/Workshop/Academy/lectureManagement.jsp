@@ -412,8 +412,9 @@
 	
 	function updateClass($class_NUMBER){
 		var CLASS_NUMBER = $class_NUMBER;
+		console.log(CLASS_NUMBER);
 		
-		location.href="./updateClass.mywork?CLASS_NUMBER=" + CLASS_NUMBER;
+		location.href="./updateClassForm.mywork?CLASS_NUMBER=" + CLASS_NUMBER;
 	}
 	
 	// 만들어진 테이블에 페이지 처리

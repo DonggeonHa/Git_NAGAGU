@@ -1,4 +1,3 @@
-
 <%@ page language="java" contentType="text/html; charset=UTF-8"	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@page import="java.text.SimpleDateFormat"%>
@@ -188,87 +187,12 @@
 			</a>
 		</div>
 	</div>
-
 </div>
 
 <div class="container">
-	<div class="row" style="margin-left: 0px;"><ul class="nav nav-tabs" id="myTab" role="tablist">
-			<li class="nav-item"><a class="nav-link active" id="toclass"
-				data-toggle="tab" href="#home" role="tab" aria-controls="home"
-				aria-selected="true">예약 강의</a></li>
-			<li class="nav-item"><a class="nav-link" id="profile-tab"
-				data-toggle="tab" href="#profile" role="tab"
-				aria-controls="profile" aria-selected="false">지난 강의</a></li>
-		</ul>
-	</div>
-	<div class="tab-content" id="myTabContent">
-		<div class="tab-pane fade show active row" id=""
-			role="tabpanel" aria-labelledby="toclass">
-			<!-- 댓글 뿌려지는 장소 -->
-			<div class="row mx-0 my-2 reply-content replyOutput">
-			</div>
-		</div>
-	</div>
+	
 </div>
 
 <script>
-	$(document).ready(function(){
-		  /*날짜 형식 변경*/
-	      function date_format(format) {
-	          var year = format.getFullYear();
-	          var month = format.getMonth() + 1;
-	          if(month<10) {
-	             month = '0' + month;
-	          }
-	          var date = format.getDate();
-	          if(date<10) {
-	             date = '0' + date;
-	          }
-	         return year + "-" + month + "-" + date + " " ;
-	      }
-		//상품 후기  가져오기 함수 정의
-		function getClasses(event){
-			var loginNum = '<%=session.getAttribute("MEMBER_NUM")%>'; 
-			alert('로그인넘버='+loginNum)
-			var category = 'toClass'
-			if(loginNum == 0){
-				return
-			}
-			$.ajax({
-				  url: "/NAGAGU/loginMemberClass.cm",
-	              type: "POST",
-	              data: { 'category' : category},
-	              contentType:
-	  				'application/x-www-form-urlencoded; charset=utf-8',
-	              success: function (retVal) {
-	        		if(retVal.res=="OK"){
-	        			var output="";
-	        			console.log(retVal.classList)
-			        	for(var j=0; j<retVal.classList.length; j++){
-			        		var imgsrc = retVal.classList[j].class_IMAGE
-			        		var date = retVal.classList[j].class_DATE
-			        		var content = retVal.classList[j].class_INTRODUCTION_1
-			        		var title = retVal.classList[j].class_NAME
-			        		
-			        		var d_date = new Date(retVal.classList[j].class_DATE);
-			        		var date = date_format(d_date); 
-			        		console.log(imgsrc)
-				    		output += '<div class="col-4"><img src="/productupload/image/'+imgsrc+'"></div>'
-				    		output += '<div class="col-8"><div class="row justify-content-between"><div class="name">['+title+']</div>'
-				    		output += '<div class="smallfont">'+date+'</div></div><div class="row">'
-				    		output += '<div class="comm_content">'+content+'</div></div></div>'
-			        	}
-			        	$('.replyOutput').html(output)
-					}else{
-						alert("update fail");
-					}  
-				 },
-				error:function(){
-					alert("ajax통신 실패!!");
-				}
-			})
-		} 
-		//처음 로드하고 사진 가져오기 호출
-		getClasses();
-	})
+	
 </script>
