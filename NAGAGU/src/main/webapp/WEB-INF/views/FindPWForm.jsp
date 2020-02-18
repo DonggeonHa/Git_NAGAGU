@@ -183,7 +183,7 @@ $(document).ready(function(){
 function chage_pw() {
 	/* if(sub_pw2==true && sub_pw1==true){
 		document.pw_form.submit();
-	} */
+	} **/
 	document.pw_form.submit();
 	
 }
