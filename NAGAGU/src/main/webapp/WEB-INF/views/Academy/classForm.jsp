@@ -549,8 +549,7 @@
 				// document.getElementById('postcode').value = data.zonecode;
 				document.getElementById("address").value = addr;
 				// 커서를 상세주소 필드로 이동한다.
-				document.getElementById("detailAddress")
-				.focus();
+				document.getElementById("detailAddress").focus();
 			}
 		}).open();
 	}

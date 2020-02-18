@@ -69,8 +69,6 @@
 							</td>
 							<td colspan="2">
 								<dl>
-									<%-- <c:forTokens var="list" items="${orderList}">  
-									</c:forTokens>  --%>
 									<dt><%=list.get("PRODUCT_TITLE")%></dt>
 									<dd><%=list.get("PRODUCT_BRIEF")%></dd>
 									<dd>사이즈 : <%=list.get("BASKET_SIZE")%> | 컬러 : <%=list.get("BASKET_COLOR")%></dd>
@@ -126,6 +124,15 @@
 				</div>
 				<div class="form-group row">
 					<div class="col-2">
+						<label for="inputAddress">우편번호</label>
+					</div>
+					<div class="col-3">
+						<input type="text" class="form-control zip" value="${memberDetail.ADDRESS_ZIP}">
+					</div>
+					<div class="col-7"></div>
+				</div>
+				<div class="form-group row">
+					<div class="col-2">
 						<label for="inputAddress">주소</label>
 					</div>
 					<div class="col-10">
@@ -158,7 +165,7 @@
 					<h5 style="padding-top: 2%;">배송지</h5>
 				</div>
 				<div class="col-10">
-					<button type="button" id="getInfo_btn" class="btn btn-outline-dark" ><font size="2">배송지 정보와 동일하게 채우기</button>
+					<button type="button" id="getInfo_btn" class="btn btn-outline-dark" ><font size="2">주문자 정보와 동일하게 채우기</button>
 				</div>
 			</div>
 			<hr>
@@ -178,10 +185,10 @@
 						<label for="inputAddress">우편번호</label>
 					</div>
 					<div class="col-3">
-						<input type="text" class="form-control addrNum">
+						<input type="text" id="postcode" class="txtInp form-control toZip"readonly />
 					</div>
 					<div class="col-2">
-						<a href="#" class="btn btn-dark text-white w-100" role="button" aria-pressed="true">우편번호</a>
+						<input type = "button" onclick="execDaumPostcode()" value = "주소검색" class="btn btn-outline-dark">
 					</div>
 					<div class="col-5">
 					</div>
@@ -191,15 +198,15 @@
 						<label for="inputAddress">주소</label>
 					</div>
 					<div class="col-10 input-group">
-						<input type="text" class="form-control toAddress1" >
+						<input id = "address" class = "txtInp form-control toAddress1" type = "text" readonly/> &nbsp;
 					</div>
 				</div>
 				<div class="form-group row">
 					<div class="col-2">
-						
 					</div>
 					<div class="col-10 input-group">
-						<input type="text" class="form-control toAddress2" >
+						<input id= "detailAddress" class = "txtInp form-control toAddress2" type = "text" placeholder = "상세 주소를 입력해주세요."/>
+						<input id="extraAddress" type="hidden" placeholder="참고항목">
 					</div>
 				</div>
 				<div class="form-group row">
@@ -387,7 +394,70 @@
 </div>
 
 <script type="text/javascript" src="https://service.iamport.kr/js/iamport.payment-1.1.2.js"></script>
+<!-- 우편번호 API -->
+<script src="https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 <script>
+	/* 우편번호 api */
+	function execDaumPostcode() {
+	    new daum.Postcode({
+			oncomplete: function(data) {
+	            // 팝업에서 검색결과 항목을 클릭했을때 실행할 코드를 작성하는 부분.
+	
+	            // 각 주소의 노출 규칙에 따라 주소를 조합한다.
+	            // 내려오는 변수가 값이 없는 경우엔 공백('')값을 가지므로, 이를 참고하여 분기 한다.
+	            var addr = ''; // 주소 변수
+	            var extraAddr = ''; // 참고항목 변수
+	            
+	            var themeObj = {
+	                     //bgColor: "", //바탕 배경색
+	                     searchBgColor: "#3498DB", //검색창 배경색
+	                     //contentBgColor: "", //본문 배경색(검색결과,결과없음,첫화면,검색서제스트)
+	                     //pageBgColor: "", //페이지 배경색
+	                     //textColor: "", //기본 글자색
+	                     queryTextColor: "#FFFFFF" //검색창 글자색
+	                     //postcodeTextColor: "", //우편번호 글자색
+	                     //emphTextColor: "", //강조 글자색
+	                     //outlineColor: "", //테두리
+	            };
+	
+	            //사용자가 선택한 주소 타입에 따라 해당 주소 값을 가져온다.
+	            if (data.userSelectedType === 'R') { // 사용자가 도로명 주소를 선택했을 경우
+	                addr = data.roadAddress;
+	            } else { // 사용자가 지번 주소를 선택했을 경우(J)
+	                addr = data.jibunAddress;
+	            }
+	
+	            // 사용자가 선택한 주소가 도로명 타입일때 참고항목을 조합한다.
+	            if(data.userSelectedType === 'R'){
+	                // 법정동명이 있을 경우 추가한다. (법정리는 제외)
+	                // 법정동의 경우 마지막 문자가 "동/로/가"로 끝난다.
+	                if(data.bname !== '' && /[동|로|가]$/g.test(data.bname)){
+	                    extraAddr += data.bname;
+	                }
+	                // 건물명이 있고, 공동주택일 경우 추가한다.
+	                if(data.buildingName !== '' && data.apartment === 'Y'){
+	                    extraAddr += (extraAddr !== '' ? ', ' + data.buildingName : data.buildingName);
+	                }
+	                // 표시할 참고항목이 있을 경우, 괄호까지 추가한 최종 문자열을 만든다.
+	                if(extraAddr !== ''){
+	                    extraAddr = ' (' + extraAddr + ')';
+	                }
+	                // 조합된 참고항목을 해당 필드에 넣는다.
+	                document.getElementById("extraAddress").value = extraAddr;
+	            
+	            } else {
+	                document.getElementById("extraAddress").value = '';
+	            }
+	
+	            // 우편번호와 주소 정보를 해당 필드에 넣는다.
+	            document.getElementById("postcode").value = data.zonecode;
+	            document.getElementById("address").value = addr;
+	            // 커서를 상세주소 필드로 이동한다.
+	            document.getElementById("detailAddress").focus();
+	        }
+	    }).open();
+	}
+
 	$(document).ready(function(){
 		//누르면 주문에서 삭제
         $(document).on('click','.delete_btn',function(){
@@ -462,6 +532,7 @@
 		//배송지 정보와 동일하게 채우기
 		$(document).on('click','#getInfo_btn',function(){ 
 			$('.toName').val($('.name').val())
+			$('.toZip').val($('.zip').val())
 			$('.toAddress1').val($('.address1').val())
 			$('.toAddress2').val($('.address2').val())
 			$('.toPhone').val($('.phone').val())
@@ -483,11 +554,8 @@
 			if($('.toName').val()==''){
 				alert('이름을 채워주세요'); 
 				return
-			}if($('.toAddress1').val()=='' || $('.toAddress2').val()==''){
-				alert('주소를 채워주세요'); 
-				return
-			}if($('.toAddress1').val()=='' || $('.toAddress2').val()==''){
-				alert('주소를 채워주세요'); 
+			}if($('.toZip').val()=='' || $('.toAddress1').val()=='' || $('.toAddress2').val()==''){
+				alert('주소를 채워주세요');
 				return
 			}if($('.toPhone').val()==''){
 				alert('번호를 채워주세요'); 
@@ -497,7 +565,8 @@
 				return
 			}
 			var ORDER_PERSON = $('.toName').val();
-			var ORDER_ADDRESS = $('.toAddress1').val();
+			var ORDER_ADDRESS = $('.toZip').val();
+				ORDER_ADDRESS += $('.toAddress1').val();
 				ORDER_ADDRESS += $('.toAddress2').val();
 			var ORDER_PHONE= $('.toPhone').val();
 			var ORDER_MEMO= '없음';
@@ -518,7 +587,7 @@
 			   buyer_tel :  $('.toPhone').val(),	// 구매자 전화번호
 			   buyer_addr1 :  $('.toAddress1').val(),	// 구매자 주소
 			   buyer_addr2 :  $('.toAddress2').val(),
-			   buyer_postcode :  '',	// 구매자 우편번호
+			   buyer_postcode :  $('.toZip').val(),	// 구매자 우편번호
 			}, function(rsp) {
 				if ( rsp.success ){
 					var id= rsp.merchant_uid;
@@ -558,7 +627,7 @@
 					             });
 				} else {
 				 	  //[3] 아직 제대로 결제가 되지 않았습니다.
-				       //[4] 결제된 금액이 요청한 금액과 달라 결제를 자동취소처리하였습니다.
+				      //[4] 결제된 금액이 요청한 금액과 달라 결제를 자동취소처리하였습니다.
 				}
 			});
 		});

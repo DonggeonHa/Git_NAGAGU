@@ -221,7 +221,7 @@
 						<input type="hidden" id="ESTIMATE_PAY" name="ESTIMATE_PAY">
 						<ul class="nav nav-pills mb-3 table table-bordered" id="pills-tab" role="tablist">
 							<li class="nav-item payment" value="card">
-								<a class="nav-link bt active" id="pills-card-tab" data-toggle="pill" href="#pills-card" role="tab" aria-controls="pills-home" aria-selected="true"> 
+								<a class="nav-link bt" id="pills-card-tab" data-toggle="pill" href="#pills-card" role="tab" aria-controls="pills-home" aria-selected="true"> 
 									<label> 
 										<img width="64" src="https://bucketplace-v2-development.s3.amazonaws.com/pg/card.png" alt="Card">
 										<div class="text-center">

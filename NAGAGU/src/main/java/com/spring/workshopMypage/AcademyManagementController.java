@@ -34,6 +34,8 @@ public class AcademyManagementController {
 		ClassVO classVO = new ClassVO();
 		ModelAndView mav = new ModelAndView();
 		
+		System.out.println(1231231);
+		
 		int CLASS_NUMBER =  Integer.parseInt(request.getParameter("CLASS_NUMBER"));
 		classVO = academyManagementService.getclassDetail(CLASS_NUMBER);
 		classVO.setCLASS_NUMBER(CLASS_NUMBER);
@@ -44,7 +46,7 @@ public class AcademyManagementController {
 		return mav;
 	}
 	
-	@RequestMapping(value="/updateClass.mywork", method = RequestMethod.POST)
+	@RequestMapping(value="/updateClass.mywork", method = {RequestMethod.POST, RequestMethod.GET})
 	public ModelAndView updateClass(MultipartHttpServletRequest request, HttpServletResponse response, HttpSession session) throws Exception {
 		response.setCharacterEncoding("utf-8");
 		response.setContentType("text/html; charset=utf-8");
