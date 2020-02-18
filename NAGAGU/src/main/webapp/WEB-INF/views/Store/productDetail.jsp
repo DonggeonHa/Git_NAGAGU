@@ -470,7 +470,7 @@
 
 
 
-		<div class="container class-detail-container">
+		<div class="container class-detail-container category_st">
 			<div class="row justify-content-between title">
 				<h6>
 					<a href="productlist.pro?PRODUCT_CATEGORY=all">STORE</a> > 상세보기
@@ -483,8 +483,7 @@
 							<%
 								for (int i = 0; i < imgArr.length; i++) {
 							%>
-							<div class="thumbItem<%if (i == 0) {%> thumbCheck <%}%>"
-								thumb-idx=<%=i%>>
+							<div class="thumbItem<%if (i == 0) {%> thumbCheck <%}%>" thumb-idx=<%=i%>>
 								<img src=<%=imgArr[i]%>>
 							</div>
 							<%
@@ -518,17 +517,13 @@
 								<thead>
 									<tr>
 										<th scope="col">가격</th>
-										<th scope="col" name="PRODUCT_PRICE">
-											<fmt:formatNumber type="number" maxFractionDigits="3" value="<%=vo.getPRODUCT_PRICE()%>" />원
-										</th>
+										<th scope="col" class="PRODUCT_PRICE" value="<%=vo.getPRODUCT_PRICE()%>" name="PRODUCT_PRICE"><%=vo.getPRODUCT_PRICE()%>원</th>
 									</tr>
 								</thead>
 								<tbody>
 									<tr>
 										<th scope="row">배송비</th>
-										<td name="PRODUCT_SHIP_PRICE">
-											<fmt:formatNumber type="number" maxFractionDigits="3" value="<%=vo.getPRODUCT_SHIP_PRICE()%>" />원
-										</td>
+										<td class="PRODUCT_SHIP_PRICE" value="<%=vo.getPRODUCT_SHIP_PRICE()%>" name="PRODUCT_SHIP_PRICE"><%=vo.getPRODUCT_SHIP_PRICE()%></td>
 									</tr>
 									<tr>
 										<th scope="row">배송 기간</th>
@@ -571,7 +566,7 @@
 									</tr>
 									<tr>
 										<th scope="row">총 합계금액</th>
-										<td></td>
+										<td class="total">12</td>
 									</tr>
 									<tr>
 										<td colspan="2">
@@ -970,7 +965,7 @@
 		                  			<tbody>
 		                  				<tr>
 											<th scope="row">총 합계금액</th>
-											<td></td>
+											<td class="total"></td>
 										</tr>
 		                  			</tbody>
 		                  		</table>
@@ -1026,7 +1021,6 @@
 		</div>
    <!-- content end -->
 <script>
-
    	$('.basket_btn').on('click',function(){
    		if($('.BASKET_COLOR').val()==''){
    			alert('색상을 선택해주세요') 
@@ -1106,7 +1100,20 @@
 		}
 		document.goodsform.BASKET_AMOUNT.value = test;
 	}
-      
+    function getPrice(){
+    	var amount = $('.BASKET_AMOUNT').val();
+    	var price = $('.PRODUCT_PRICE').attr('value')*1;
+    	$('.PRODUCT_PRICE').text(price.toLocaleString()+'원');  
+    	var shipPrice = $('.PRODUCT_SHIP_PRICE').attr('value')*1;
+    	$('.PRODUCT_SHIP_PRICE').text(shipPrice.toLocaleString()+'원');
+    	console.log(amount)
+    	console.log(price)
+    	console.log(shipPrice)
+    	var total = (price*1+shipPrice*1)*amount*1
+    	$('.total').text(total.toLocaleString()+'원');
+    }
+    getPrice();
+   	
   //장바구니 2개 밸류 일치시키기
     $('select[name=BASKET_COLOR]').on('change',function(){
        var value = $(this).val()
@@ -1119,6 +1126,7 @@
     $('select[name=BASKET_AMOUNT]').on('change',function(){
        var value = $(this).val()
        $('.BASKET_AMOUNT').val(value)
+       getPrice()
     })
 
  

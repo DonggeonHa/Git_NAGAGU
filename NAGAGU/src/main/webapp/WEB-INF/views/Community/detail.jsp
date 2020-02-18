@@ -23,6 +23,7 @@
 	if(session.getAttribute("MEMBER_NUM")!=null){
 		MEMBER_NUM = (int)session.getAttribute("MEMBER_NUM");
 	}
+	System.out.println(MEMBER_NUM);
 %> 
 
 <style>
@@ -192,6 +193,19 @@
 		align-self: center;
 		margin-bottom: 0px !important;
 	}
+	.reply_container{
+		margin-bottom: 50px;
+	}
+	.follow_btn {
+		border: none;
+		background: rgba(0,0,0,0.3);  	
+		font-size: 1rem;	 
+		border-radius: 10px;
+		transition:all 0.2s; 
+		box-shadow: 0px 3px rgba(0,0,0,0.1); 
+		color: white;
+		margin-left: 5px;
+	}
 </style>
 
 	<div class="container category_cm">
@@ -228,7 +242,10 @@
                				content="";
             			}
             %>
-            	<div class="col-12"><%=picsVO.getPICS_CONTENT()%></div>
+            	<div class="col-12">
+            	<img src="/communityupload/image/<%=picsVO.getPICS_MAIN_IMAGE()%>" style="width:500px; height:500px;">
+            	<%=picsVO.getPICS_CONTENT()%>
+            	</div>
             <%       
               		}
             %>
@@ -278,7 +295,7 @@
          </div>
          <!-- side bar end -->
       </div>
-      <div class="container">
+      <div class="container reply_container">
       <!-- wrapper end -->
       <!-- 댓글 테이블 시작 -->
 		<br />
@@ -369,7 +386,7 @@
 							output += '<div class="col-2 smallfont px-0 text-right">'+date+'</div>	';
 							output += '<div class="col-12" id="commentNum'+item.list[i].PICS_RE_NUM+'">'+item.list[i].PICS_RE_CONTENT+'</div>';
 							output += '<div class="col-12"><div class="row justify-content-between"><div>';
-							output += '<a href="#" class="smallfont re_reply ml-3 show_re_reply" num='+item.list[i].PICS_RE_NUM+'>답글달기  </a>'
+							output += '<a href="#" class="smallfont re_reply ml-3 " num='+item.list[i].PICS_RE_NUM+'>답글달기  </a>'
 							output += '<a href="#" class="smallfont show_re_reply" num='+item.list[i].PICS_RE_NUM+'>답글'+re_count+'개</a></div>'
 							j++;
 						}else{
@@ -404,12 +421,19 @@
 		//클릭하면  대댓글 보이기
 		$(document).on('click','.show_re_reply',function(event){
 			var num = $(this).attr('num')
-			console.log(num)
 			$('.re_num'+num).toggle('slow')
 		})
 		
 		//답글 달기 누르기
 		$(document).on('click','.re_reply',function(event){
+			var	loginNum = '<%=MEMBER_NUM%>';
+			if(loginNum == 0){
+				alert('로그인해주세요') 
+				return
+			}
+			if($('.re_insert_form').length==1){
+				return				
+			}
 			var num= $(this).attr("num");
 			var output="";
 			output += '<form class="re_insert_form" id="re_insert_form">';
@@ -427,7 +451,6 @@
  
 		//대댓글 입력
 		$(document).on('click','#input_data',function(event){
-			console.log(this) 
  			if ($(this).parent().prev().find('textarea').val()=="") {
 				alert("글 내용을 입력해주세요.");
 				$(this).parent().prev().find('textarea').focus();

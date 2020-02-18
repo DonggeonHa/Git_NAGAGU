@@ -107,7 +107,7 @@
 	<!-- 멤버 리스트(커뮤니티 사진의 멤버리스트) 경태형 --> 
 	<select id="getMemberList" parameterType="java.util.HashMap" resultMap="memberResultMap">	
  		SELECT *
-		FROM PICS P, nagagu_member M
+		FROM PICS P, NAGAGU_MEMBER M
 		WHERE P.PICS_MEMBER = M.MEMBER_NUM
         ORDER BY P.PICS_DATE DESC
         <!-- <![CDATA[ WHERE rnum >= #{startrow} AND rnum <= #{endrow} ]]> --> 

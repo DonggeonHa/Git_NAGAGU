@@ -193,7 +193,7 @@
 </style>
 
 <!-- content start -->
-<div class="container">
+<div class="container category_st">
 	<div class="content">
 		<div class="search-tap">
 			<div class="caption py-5">

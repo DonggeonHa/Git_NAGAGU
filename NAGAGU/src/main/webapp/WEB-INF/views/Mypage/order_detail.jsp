@@ -146,8 +146,8 @@
 		border-color: rgba(0, 0, 0, 0.2);
 	}
 	.each-row img {
-		width: 100px;
-		height: 100px;
+		width: 130px;
+		height: 130px;
 	}
 	.each-row a, .each-row a:link, .each-row a:hover {
 		text-decoration: none !important;
@@ -277,7 +277,7 @@
   				    				output += '<div class="col-2">'+retVal.myPaidOrder[j].PRODUCT_SHIP_COMPANY+'</div>'
   				    				output += '<div class="col-2">'+retVal.myPaidOrder[j].BASKET_SIZE+'</div>'
   				    				output += '<div class="col-2">'+retVal.myPaidOrder[j].BASKET_COLOR+'</div>'
-  				    				output += '<div class="price col-2" value="'+retVal.myPaidOrder[j].BASKET_AMOUNT+'">수량'+retVal.myPaidOrder[j].BASKET_AMOUNT+'</div>'
+  				    				output += '<div class="price col-2" value="'+retVal.myPaidOrder[j].BASKET_AMOUNT+'">'+retVal.myPaidOrder[j].BASKET_AMOUNT+'</div>'
   				    				output += '<div class="price_wrap text-right col-2">'
 						    			output += '<div class="basic_price text-right" value='+retVal.myPaidOrder[j].PRODUCT_PRICE+'>가격</div><span>'+price+'원</span>'
 						    			output += '<div class="shipPrice text-right" value='+retVal.myPaidOrder[j].PRODUCT_SHIP_PRICE+'>+배송비</div><span>'+ship+'원</span>'

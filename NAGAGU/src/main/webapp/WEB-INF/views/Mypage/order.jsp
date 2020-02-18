@@ -61,7 +61,7 @@
 				%>
 						<tr>
 							<td align="center">
-								<img class="basket-size" src="/productupload/image/<%=list.get("PRODUCT_IMAGE")%>" style="padding: 0 3% 3% 0;">
+								<img class="basket-size" src="/productupload/image/<%=list.get("PRODUCT_IMAGE")%>" >
 								<input type="hidden" class="BASKET_NUM" name="BASKET_NUM" value="<%=list.get("BASKET_NUM")%>">
 								<input type="hidden" name="BASKET_AMOUNT" value="<%=list.get("BASKET_AMOUNT")%>">
 								<input type="hidden" name="PRODUCT_PRICE" value="<%=list.get("PRODUCT_PRICE")%>">
@@ -88,7 +88,6 @@
 										<span>수량 X</span>
 										<span class="text-center amount"><%=list.get("BASKET_AMOUNT")%></span>
 									</div>
-									<dd>&nbsp;</dd>
 									<div>
 										<span style="font-size:1.2rem;">총가격</span>
                                         <span class="text-center chongPrice" style="font-size:1.2rem;"></span>
@@ -276,7 +275,7 @@
 			<div>
 				<ul class="nav nav-pills mb-3 table table-bordered" id="pills-tab" role="tablist">
 					<li class="nav-item">
-						<a class="nav-link active pay_method" value="toss" id="pills-toss-tab" data-toggle="pill" href="#pills-toss" role="tab" aria-controls="pills-home" aria-selected="true">
+						<a class="nav-link pay_method" value="toss" id="pills-toss-tab" data-toggle="pill" href="#pills-toss" role="tab" aria-controls="pills-home" aria-selected="true">
 							<label>
 								<img width="64" src="https://bucketplace-v2-development.s3.amazonaws.com/pg/toss.png" alt="Toss">
 								<div class="text-center"><font color="black">토스</font></div>
@@ -317,8 +316,8 @@
 					</li>
 				</ul>
 				<div class="tab-content" id="pills-tabContent">
-					<div class="tab-pane fade active show" id="pills-toss" role="tabpanel" aria-labelledby="pills-toss-tab">
-						<div style="background-color: #EAEAEA; padding: 1%; " class="radius mb-5">
+					<div class="tab-pane fade" id="pills-toss" role="tabpanel" aria-labelledby="pills-toss-tab">
+						<div style="padding: 1%; " class="radius mb-5">
 							<dl>
 								<dt><font size="3">토스 결제 혜택</font></dt>
 								<dd>- 수/목요일에 10만원 이상 결제 시 7천원 즉시 할인</dd>

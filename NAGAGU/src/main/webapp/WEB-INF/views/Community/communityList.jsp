@@ -147,11 +147,15 @@
 	 .caption .active{
 	 	color: rgba(0,0,0,1) !important;
 	 }
-	.img-tag a{
+	.img-tag{
+		padding-left:10px; 
+	}.img-tag a{
 		display:inline-block;
-		width: 24%;
-		text-align: center;
+		text-align: center; 
 		color: rgba(0,0,0,0.5) !important;
+	}
+	.category_cm{
+		margin-bottom: 50px; 
 	}
 </style>
 
@@ -211,7 +215,7 @@
 	<%
 		if (listcount > 0) {
 	%>
-			<div class="d-flex justify-content-start pt-2 mt-4 row">
+			<div class="d-flex justify-content-start pt-2 mt-4 mb-5 row">
 	<%
 			for (int i = 0; i < picsList.size(); i++) {								
 				PicsVO pics_vo = picsList.get(i);								
@@ -234,7 +238,7 @@
 								<div>조회수<%=pics_vo.getPICS_READ()%></div>
 							</div> 
 						</div>
-						<a href="${pageContext.request.contextPath}/community_detail.cm?PICS_NUM=<%=pics_vo.getPICS_NUM()%>&MEMBER_NUM=<%=member_vo.getMEMBER_NUM()%>&PICS_MEMBER=<%=pics_vo.getPICS_MEMBER()%>">
+						<a href="./community_detail.cm?PICS_NUM=<%=pics_vo.getPICS_NUM()%>&MEMBER_NUM=<%=member_vo.getMEMBER_NUM()%>&PICS_MEMBER=<%=pics_vo.getPICS_MEMBER()%>">
 							<div class="img">
 								<img src="/communityupload/image/<%=pics_vo.getPICS_MAIN_IMAGE()%>" class="img" />
 								<div class="hover-image heart_output" id="<%=pics_vo.getPICS_NUM()%>" name="picnum<%=pics_vo.getPICS_NUM()%>">
