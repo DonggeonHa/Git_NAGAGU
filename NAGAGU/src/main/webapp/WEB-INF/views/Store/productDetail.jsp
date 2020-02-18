@@ -447,6 +447,9 @@
 		font-size:0.7em; 
 		font-weight:bold;	
 	}		
+	.page-link {
+		color: black !important;
+	}
 </style>
 
 <div class="container class-detail-container category_st">
@@ -753,9 +756,8 @@
 			<!-- 리뷰 페이지네이션 -->
 			<br/>
 			<div class="d-flex justify-content-center">
-				<nav aria-label="Page navigation example" class="paginated" id="user-page"></nav>
+				<nav aria-label="Page navigation example" class="review_paginated" id="review-page"></nav>
 			</div>
-			
 			<br />
 			<!-- 리뷰 페이지네이션 끝 -->
 
@@ -818,7 +820,9 @@
 		
 			<!-- Q&A pagenation -->
 			<br/>
-			
+			<div class="d-flex justify-content-center">
+				<nav aria-label="Page navigation example" class="qna_paginated" id="qna-page"></nav>
+			</div>
 			
 			<br />
 			<!-- Q&A pagenation 끝 -->			
@@ -1399,7 +1403,7 @@
 						var output = '<div class="justify-content-center pt-3 pb-1" style="text-align:center;">등록된 댓글이 없습니다.</div>';
 						$('#ReviewtableSection').append(output);	//이상한데...!?!?!?
 					}
-					page();
+					review_page();
 		          },
 		          error:function() {
 		             alert("getReviewList ajax통신 실패!!!");
@@ -1408,15 +1412,15 @@
 		}
 		
 		// 만들어진 댓글에 페이지 처리
-		function page() { 	
+		function review_page() { 	
 			$('#remo').empty();
 			var reSortColors = function($table) {};
-			$('nav.paginated').each(function() {
+			$('nav.review_paginated').each(function() {
 				var pagesu = 10;  //페이지 번호 갯수
 		  		var currentPage = 0;
 		  		var numPerPage = 5;  //목록의 수
 		  		var $table = $('#ReviewtableSection');    
-		  		var $user = $('#user-page');
+		  		var $user = $('#review-page');
 		  
 				//length로 원래 리스트의 전체길이구함
 				var numRows = $table.find('.ReviewAndReplySum').length;
@@ -1459,14 +1463,14 @@
 						endp = numPages;
 					}
 					// [처음]
-					$('<li class="page-item" cursor: "pointer"><a class="page-link" href="#">처음</a></li>').bind('click', {newPage: page},function(event) {
+					$('<li class="page-item" style="cursor: pointer"><span class="page-link">처음</span></li>').bind('click', {newPage: page},function(event) {
 						currentPage = 0;   
 						$table.trigger('repaginate');  
 						$($(".page-item")[2]).addClass('active').siblings().removeClass('active');
 					}).appendTo($pager).addClass('clickable');
 					
 			    	// [이전]
-					$('<li class="page-item" cursor: "pointer"><a class="page-link" href="#">이전</a></li>').bind('click', {newPage: page},function(event) {
+					$('<li class="page-item" style="cursor: pointer"><span class="page-link">이전</span></li>').bind('click', {newPage: page},function(event) {
 						if(currentPage == 0) return; 
 						currentPage = currentPage-1;
 						$table.trigger('repaginate'); 
@@ -1475,7 +1479,7 @@
 			    	
 			    	// [1,2,3,4,5,6,7,8]
 					for (var page = nowp ; page < endp; page++) {
-						$('<li class="page-item" cursor: "pointer"></li>').html('<a class="page-link" href="#">' + (page + 1) + '</a>').bind('click', {newPage: page}, function(event) {
+						$('<li class="page-item" style="cursor: pointer"></li>').html('<span class="page-link">' + (page + 1) + '</span>').bind('click', {newPage: page}, function(event) {
 							currentPage = event.data['newPage'];
 							$table.trigger('repaginate');
 							$($(".page-item")[(currentPage-nowp)+2]).addClass('active').siblings().removeClass('active');
@@ -1483,7 +1487,7 @@
 					}
 			    	
 			    	// [다음]
-					$('<li class="page-item" cursor: "pointer"><a class="page-link" href="#">다음</a></li>').bind('click', {newPage: page},function(event) {
+					$('<li class="page-item" style="cursor: pointer"><span class="page-link">다음</span></li>').bind('click', {newPage: page},function(event) {
 						if(currentPage == numPages-1) return;
 						currentPage = currentPage+1;
 						$table.trigger('repaginate'); 
@@ -1491,7 +1495,7 @@
 					}).appendTo($pager).addClass('clickable');
 			    	
 			    	// [끝]
-					$('<li class="page-item" cursor: "pointer"><a class="page-link" href="#">끝</a></li>').bind('click', {newPage: page},function(event) {
+					$('<li class="page-item" style="cursor: pointer"><span class="page-link">끝</span></li>').bind('click', {newPage: page},function(event) {
 						currentPage = numPages-1;
 						$table.trigger('repaginate');
 						$($(".page-item")[endp-nowp+1]).addClass('active').siblings().removeClass('active');
@@ -1779,6 +1783,7 @@
 //QNA----------------------------------------------------------------------------------------------------	 		
 //QNA----------------------------------------------------------------------------------------------------	 		
 		function getQnaList() {
+			$('#remo2').empty();
 			$('#QnatableSection').empty();	//table 내부 내용을 제거(초기화)
 			$.ajax({
 				url:'/NAGAGU/getQnaList.pro',
@@ -1915,12 +1920,113 @@
 						var output = '<div class="justify-content-center pt-3 pb-1" style="text-align:center;">등록된 문의가 없습니다.</div>';
 						$('#QnatableSection').append(output);	
 					}
+					qna_page();
 		          },
 		          error:function() {
 		             alert("getQnaList ajax통신 실패!!!");
 		          }
 	       });
 		}		
+		
+		// 만들어진 QNA에 페이지 처리
+		function qna_page() { 	
+			$('#remo2').empty();
+			var reSortColors = function($table) {};
+			$('nav.qna_paginated').each(function() {
+				var pagesu = 10;  //페이지 번호 갯수
+		  		var currentPage = 0;
+		  		var numPerPage = 5;  //목록의 수
+		  		var $table = $('#QnatableSection');    
+		  		var $user = $('#qna-page');
+		  
+				//length로 원래 리스트의 전체길이구함
+				var numRows = $table.find('.QnaAndReplySum').length;
+				//Math.ceil를 이용하여 반올림
+				var numPages = Math.ceil(numRows / numPerPage);
+				//리스트가 없으면 종료
+				if (numPages==0) return;
+				//pager라는 클래스의 div엘리먼트 작성
+				var $pager = $('<ul id="remo2" class="pager pagination"></ul>');
+				
+				var nowp = currentPage;
+				var endp = nowp+10;
+		  
+				//페이지를 클릭하면 다시 셋팅
+				$table.bind('repaginate', function() {
+				//기본적으로 모두 감춘다, 현재페이지+1 곱하기 현재페이지까지 보여준다
+		  
+					$table.find('.QnaAndReplySum').hide().slice(currentPage * numPerPage, (currentPage + 1) * numPerPage).show();
+					$("#remo2").html("");
+		   
+					if (numPages > 1) {     // 한페이지 이상이면
+						if (currentPage < 5 && numPages-currentPage >= 5) {   // 현재 5p 이하이면
+							nowp = 0;     // 1부터 
+							endp = pagesu;    // 10까지
+						} else {
+							nowp = currentPage -5;  // 6넘어가면 2부터 찍고
+							endp = nowp+pagesu;   // 10까지
+							pi = 1;
+						}
+					 
+						if (numPages < endp) {   // 10페이지가 안되면
+							endp = numPages;   // 마지막페이지를 갯수 만큼
+							nowp = numPages-pagesu;  // 시작페이지를   갯수 -10
+						}
+						if (nowp < 1) {     // 시작이 음수 or 0 이면
+							nowp = 0;     // 1페이지부터 시작
+						}
+					} else {       // 한페이지 이하이면
+						nowp = 0;      // 한번만 페이징 생성
+						endp = numPages;
+					}
+					// [처음]
+					$('<li class="page-item2" style="cursor: pointer"><span class="page-link">처음</span></li>').bind('click', {newPage: page},function(event) {
+						currentPage = 0;   
+						$table.trigger('repaginate');  
+						$($(".page-item2")[2]).addClass('active').siblings().removeClass('active');
+					}).appendTo($pager).addClass('clickable');
+					
+			    	// [이전]
+					$('<li class="page-item2" style="cursor: pointer"><span class="page-link">이전</span></li>').bind('click', {newPage: page},function(event) {
+						if(currentPage == 0) return; 
+						currentPage = currentPage-1;
+						$table.trigger('repaginate'); 
+						$($(".page-item2")[(currentPage-nowp)+2]).addClass('active').siblings().removeClass('active');
+					}).appendTo($pager).addClass('clickable');
+			    	
+			    	// [1,2,3,4,5,6,7,8]
+					for (var page = nowp ; page < endp; page++) {
+						$('<li class="page-item2" style="cursor: pointer"></li>').html('<span class="page-link">' + (page + 1) + '</span>').bind('click', {newPage: page}, function(event) {
+							currentPage = event.data['newPage'];
+							$table.trigger('repaginate');
+							$($(".page-item2")[(currentPage-nowp)+2]).addClass('active').siblings().removeClass('active');
+						}).appendTo($pager).addClass('clickable');
+					}
+			    	
+			    	// [다음]
+					$('<li class="page-item2" style="cursor: pointer"><span class="page-link">다음</span></li>').bind('click', {newPage: page},function(event) {
+						if(currentPage == numPages-1) return;
+						currentPage = currentPage+1;
+						$table.trigger('repaginate'); 
+						$($(".page-item2")[(currentPage-nowp)+2]).addClass('active').siblings().removeClass('active');
+					}).appendTo($pager).addClass('clickable');
+			    	
+			    	// [끝]
+					$('<li class="page-item2" style="cursor: pointer"><span class="page-link">끝</span></li>').bind('click', {newPage: page},function(event) {
+						currentPage = numPages-1;
+						$table.trigger('repaginate');
+						$($(".page-item2")[endp-nowp+1]).addClass('active').siblings().removeClass('active');
+					}).appendTo($pager).addClass('clickable');
+			     
+			     	$($(".page-item2")[2]).addClass('active');
+		  		});
+				
+				$pager.insertAfter($pager).find('li.page-item2:first').next().next().addClass('active');   
+				$pager.appendTo($user);
+				$table.trigger('repaginate');
+			});
+		}
+		
 		
 		//Qna 등록하기 버튼(insert) //원글
 		$(document).on("click",".insertQna",function(event){

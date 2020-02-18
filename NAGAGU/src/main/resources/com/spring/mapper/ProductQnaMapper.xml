@@ -88,7 +88,6 @@ create sequence store_qna_seq
 			MEMBER_NICK, MEMBER_PICTURE FROM 
 				(SELECT Q.*, N.MEMBER_NICK, N.MEMBER_PICTURE FROM PRODUCT_QNA Q, NAGAGU_MEMBER N
 				WHERE Q.QNA_PRODUCT=#{PRODUCT_NUM} AND Q.QNA_MEMBER=N.MEMBER_NUM AND Q.QNA_RE=0 ORDER BY Q.QNA_DATE DESC))
-			<![CDATA[ WHERE rnum >= #{startrow} AND rnum <= #{endrow} ]]>
 	</select>
 
 	<select id="getQna_RE_List" parameterType="java.util.HashMap" resultMap="productQnaResultMap">
@@ -97,7 +96,6 @@ create sequence store_qna_seq
 			WORKSHOP_NAME, WORKSHOP_PICTURE FROM 
 				(SELECT Q.*, N.WORKSHOP_NAME, N.WORKSHOP_PICTURE FROM PRODUCT_QNA Q, NAGAGU_WORKSHOP_MEMBER N
 				WHERE Q.QNA_PRODUCT=#{PRODUCT_NUM} AND Q.QNA_MEMBER=N.WORKSHOP_NUM AND Q.QNA_RE!=0 ORDER BY Q.QNA_DATE DESC))
-                <![CDATA[ WHERE rnum >= #{startrow} AND rnum <= #{endrow} ]]>
 	</select>
 	
 	

@@ -181,19 +181,10 @@ public class ProductController {
 	public HashMap<String, Object> getQnaList(ProductVO productVO, MemberVO memberVO, Model model, HttpServletRequest request, HttpSession session) {
 		System.out.println("getQnaList 컨트롤러 start!");
 		
-		/*리뷰 리스트*/
-		int limit = 5; //한 페이지당 출력할 글의 수
-		int qnapage = 1;
-		if(request.getParameter("qnapage") != null) {
-			qnapage = Integer.parseInt(request.getParameter("qnapage"));
-		}
-		int startrow = (qnapage - 1) * 5 + 1; // 읽기 시작할 row 번호.
-		int endrow = startrow + limit - 1; //읽을 마지막 row 번호.
+		
 		int PRODUCT_NUM= Integer.parseInt(request.getParameter("PRODUCT_NUM"));
 		
 		HashMap<String, Object> map = new HashMap<String, Object>();
-		map.put("startrow", startrow);
-		map.put("endrow", endrow);
 		map.put("PRODUCT_NUM", PRODUCT_NUM);
 		
 		int qnaCount;	
