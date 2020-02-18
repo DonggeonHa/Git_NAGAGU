@@ -84,15 +84,15 @@
 	<div class="content">
 		<div class="search-tap">
 			<div class="caption py-5">
-				<a id="all_tab" href='./classlist.ac?CLASS_CATEGORY=all&CLASS_AREA=<%=CLASS_AREA%>'>전체</a> 
-				<a id="table_tab" href='./classlist.ac?CLASS_CATEGORY=table&CLASS_AREA=<%=CLASS_AREA%>'>책상</a> 
-				<a id="chair_tab"  href='./classlist.ac?CLASS_CATEGORY=chair&CLASS_AREA=<%=CLASS_AREA%>'>의자</a> 
-				<a id="bookshelf_tab" href='./classlist.ac?CLASS_CATEGORY=bookshelf&CLASS_AREA=<%=CLASS_AREA%>'>책장</a> 
-				<a id="bed_tab" href='./classlist.ac?CLASS_CATEGORY=bed&CLASS_AREA=<%=CLASS_AREA%>'>침대</a> 
-				<a id="drawer_tab" href='./classlist.ac?CLASS_CATEGORY=drawer&CLASS_AREA=<%=CLASS_AREA%>'>서랍장</a> 
-				<a id="sidetable_tab" href='./classlist.ac?CLASS_CATEGORY=sidetable&CLASS_AREA=<%=CLASS_AREA%>'>협탁</a> 
-				<a id="dressing_table_tab" href='./classlist.ac?CLASS_CATEGORY=dressing_table&CLASS_AREA=<%=CLASS_AREA%>'>화장대</a> 
-				<a id="others_tab" href='./classlist.ac?CLASS_CATEGORY=others&CLASS_AREA=<%=CLASS_AREA%>'>기타</a>
+				<a id="all_tab" href='./classlist.ac?CLASS_CATEGORY=all&CLASS_AREA=지역'>전체</a> 
+				<a id="table_tab" href='./classlist.ac?CLASS_CATEGORY=table&CLASS_AREA=지역'>책상</a> 
+				<a id="chair_tab"  href='./classlist.ac?CLASS_CATEGORY=chair&CLASS_AREA=지역'>의자</a> 
+				<a id="bookshelf_tab" href='./classlist.ac?CLASS_CATEGORY=bookshelf&CLASS_AREA=지역'>책장</a> 
+				<a id="bed_tab" href='./classlist.ac?CLASS_CATEGORY=bed&CLASS_AREA=지역'>침대</a> 
+				<a id="drawer_tab" href='./classlist.ac?CLASS_CATEGORY=drawer&CLASS_AREA=지역'>서랍장</a> 
+				<a id="sidetable_tab" href='./classlist.ac?CLASS_CATEGORY=sidetable&CLASS_AREA=지역'>협탁</a> 
+				<a id="dressing_table_tab" href='./classlist.ac?CLASS_CATEGORY=dressing_table&CLASS_AREA=지역'>화장대</a> 
+				<a id="others_tab" href='./classlist.ac?CLASS_CATEGORY=others&CLASS_AREA=지역'>기타</a>
 			</div>
 			<div class="d-flex bd-highlight nav-tag" style="padding: 1% 0;">
 				<div class="mr-auto bd-highlight">
@@ -100,32 +100,32 @@
 						<tr>
 							<td>
 								<select id ="CLASS_AREA" name="CLASS_AREA" class="form-control mr-2" onchange="if(this.value) location.href=(this.value);">
-									<option name="지역" value='./classlist.ac?CLASS_CATEGORY=<%=CLASS_CATEGORY%>&CLASS_AREA=<%=CLASS_AREA%>'>지역</option>
-									<option name="종로구" value='./classlist.ac?CLASS_CATEGORY=<%=CLASS_CATEGORY%>&CLASS_AREA=<%=CLASS_AREA%>'>종로구</option>
-									<option name="중구" value='./classlist.ac?CLASS_CATEGORY=<%=CLASS_CATEGORY%>&CLASS_AREA=<%=CLASS_AREA%>'>중구</option>
-									<option name="용산구" value='./classlist.ac?CLASS_CATEGORY=<%=CLASS_CATEGORY%>&CLASS_AREA=<%=CLASS_AREA%>'>용산구</option>
-									<option name="성동구" value='./classlist.ac?CLASS_CATEGORY=<%=CLASS_CATEGORY%>&CLASS_AREA=<%=CLASS_AREA%>'>성동구</option>
-									<option name="광진구" value='./classlist.ac?CLASS_CATEGORY=<%=CLASS_CATEGORY%>&CLASS_AREA=<%=CLASS_AREA%>'>광진구</option>
-									<option name="동대문구" value='./classlist.ac?CLASS_CATEGORY=<%=CLASS_CATEGORY%>&CLASS_AREA=<%=CLASS_AREA%>'>동대문구</option>
-									<option name="중랑구" value='./classlist.ac?CLASS_CATEGORY=<%=CLASS_CATEGORY%>&CLASS_AREA=<%=CLASS_AREA%>'>중랑구</option>
-									<option name="성북구" value='./classlist.ac?CLASS_CATEGORY=<%=CLASS_CATEGORY%>&CLASS_AREA=<%=CLASS_AREA%>'>성북구</option>
-									<option name="강북구" value='./classlist.ac?CLASS_CATEGORY=<%=CLASS_CATEGORY%>&CLASS_AREA=<%=CLASS_AREA%>'>강북구</option>
-									<option name="도봉구" value='./classlist.ac?CLASS_CATEGORY=<%=CLASS_CATEGORY%>&CLASS_AREA=<%=CLASS_AREA%>'>도봉구</option>
-									<option name="노원구" value='./classlist.ac?CLASS_CATEGORY=<%=CLASS_CATEGORY%>&CLASS_AREA=<%=CLASS_AREA%>'>노원구</option>
-									<option name="은평구" value='./classlist.ac?CLASS_CATEGORY=<%=CLASS_CATEGORY%>&CLASS_AREA=<%=CLASS_AREA%>'>은평구</option>
-									<option name="서대문구" value='./classlist.ac?CLASS_CATEGORY=<%=CLASS_CATEGORY%>&CLASS_AREA=<%=CLASS_AREA%>'>서대문구</option>
-									<option name="마포구" value='./classlist.ac?CLASS_CATEGORY=<%=CLASS_CATEGORY%>&CLASS_AREA=<%=CLASS_AREA%>'>마포구</option>
-									<option name="양천구" value='./classlist.ac?CLASS_CATEGORY=<%=CLASS_CATEGORY%>&CLASS_AREA=<%=CLASS_AREA%>'>양천구</option>
-									<option name="강서구" value='./classlist.ac?CLASS_CATEGORY=<%=CLASS_CATEGORY%>&CLASS_AREA=<%=CLASS_AREA%>'>강서구</option>
-									<option name="구로구" value='./classlist.ac?CLASS_CATEGORY=<%=CLASS_CATEGORY%>&CLASS_AREA=<%=CLASS_AREA%>'>구로구</option>
-									<option name="금천구" value='./classlist.ac?CLASS_CATEGORY=<%=CLASS_CATEGORY%>&CLASS_AREA=<%=CLASS_AREA%>'>금천구</option>
-									<option name="영등포구" value='./classlist.ac?CLASS_CATEGORY=<%=CLASS_CATEGORY%>&CLASS_AREA=<%=CLASS_AREA%>'>영등포구</option>
-									<option name="동작구" value='./classlist.ac?CLASS_CATEGORY=<%=CLASS_CATEGORY%>&CLASS_AREA=<%=CLASS_AREA%>'>동작구</option>
-									<option name="관악구" value='./classlist.ac?CLASS_CATEGORY=<%=CLASS_CATEGORY%>&CLASS_AREA=<%=CLASS_AREA%>'>관악구</option>
-									<option name="서초구" value='./classlist.ac?CLASS_CATEGORY=<%=CLASS_CATEGORY%>&CLASS_AREA=<%=CLASS_AREA%>'>서초구</option>
-									<option name="강남구" value='./classlist.ac?CLASS_CATEGORY=<%=CLASS_CATEGORY%>&CLASS_AREA=<%=CLASS_AREA%>'>강남구</option>
-									<option name="송파구" value='./classlist.ac?CLASS_CATEGORY=<%=CLASS_CATEGORY%>&CLASS_AREA=<%=CLASS_AREA%>'>송파구</option>
-									<option name="강동구" value='./classlist.ac?CLASS_CATEGORY=<%=CLASS_CATEGORY%>&CLASS_AREA=<%=CLASS_AREA%>'>강동구</option>
+									<option name="지역" value='./classlist.ac?CLASS_CATEGORY=<%=CLASS_CATEGORY%>&CLASS_AREA=지역' id="지역">지역</option>
+									<option name="종로구" value='./classlist.ac?CLASS_CATEGORY=<%=CLASS_CATEGORY%>&CLASS_AREA=종로구' id="종로구">종로구</option>
+									<option name="중구" value='./classlist.ac?CLASS_CATEGORY=<%=CLASS_CATEGORY%>&CLASS_AREA=중구' id="중구">중구</option>
+									<option name="용산구" value='./classlist.ac?CLASS_CATEGORY=<%=CLASS_CATEGORY%>&CLASS_AREA=용산구' id="용산구">용산구</option>
+									<option name="성동구" value='./classlist.ac?CLASS_CATEGORY=<%=CLASS_CATEGORY%>&CLASS_AREA=성동구' id="성동구">성동구</option>
+									<option name="광진구" value='./classlist.ac?CLASS_CATEGORY=<%=CLASS_CATEGORY%>&CLASS_AREA=광진구' id="광진구">광진구</option>
+									<option name="동대문구" value='./classlist.ac?CLASS_CATEGORY=<%=CLASS_CATEGORY%>&CLASS_AREA=동대문구' id="동대문구">동대문구</option>
+									<option name="중랑구" value='./classlist.ac?CLASS_CATEGORY=<%=CLASS_CATEGORY%>&CLASS_AREA=중랑구' id="중랑구">중랑구</option>
+									<option name="성북구" value='./classlist.ac?CLASS_CATEGORY=<%=CLASS_CATEGORY%>&CLASS_AREA=성북구' id="성북구">성북구</option>
+									<option name="강북구" value='./classlist.ac?CLASS_CATEGORY=<%=CLASS_CATEGORY%>&CLASS_AREA=강북구' id="강북구">강북구</option>
+									<option name="도봉구" value='./classlist.ac?CLASS_CATEGORY=<%=CLASS_CATEGORY%>&CLASS_AREA=도봉구' id="도봉구">도봉구</option>
+									<option name="노원구" value='./classlist.ac?CLASS_CATEGORY=<%=CLASS_CATEGORY%>&CLASS_AREA=노원구' id="노원구">노원구</option>
+									<option name="은평구" value='./classlist.ac?CLASS_CATEGORY=<%=CLASS_CATEGORY%>&CLASS_AREA=은평구' id="은평구">은평구</option>
+									<option name="서대문구" value='./classlist.ac?CLASS_CATEGORY=<%=CLASS_CATEGORY%>&CLASS_AREA=서대문구' id="서대문구">서대문구</option>
+									<option name="마포구" value='./classlist.ac?CLASS_CATEGORY=<%=CLASS_CATEGORY%>&CLASS_AREA=마포구' id="마포구">마포구</option>
+									<option name="양천구" value='./classlist.ac?CLASS_CATEGORY=<%=CLASS_CATEGORY%>&CLASS_AREA=양천구' id="양천구">양천구</option>
+									<option name="강서구" value='./classlist.ac?CLASS_CATEGORY=<%=CLASS_CATEGORY%>&CLASS_AREA=강서구' id="강서구">강서구</option>
+									<option name="구로구" value='./classlist.ac?CLASS_CATEGORY=<%=CLASS_CATEGORY%>&CLASS_AREA=구로구' id="구로구">구로구</option>
+									<option name="금천구" value='./classlist.ac?CLASS_CATEGORY=<%=CLASS_CATEGORY%>&CLASS_AREA=금천구' id="금천구">금천구</option>
+									<option name="영등포구" value='./classlist.ac?CLASS_CATEGORY=<%=CLASS_CATEGORY%>&CLASS_AREA=영등포구' id="영등포구">영등포구</option>
+									<option name="동작구" value='./classlist.ac?CLASS_CATEGORY=<%=CLASS_CATEGORY%>&CLASS_AREA=동작구' id="동작구">동작구</option>
+									<option name="관악구" value='./classlist.ac?CLASS_CATEGORY=<%=CLASS_CATEGORY%>&CLASS_AREA=관악구' id="관악구">관악구</option>
+									<option name="서초구" value='./classlist.ac?CLASS_CATEGORY=<%=CLASS_CATEGORY%>&CLASS_AREA=서초구' id="서초구">서초구</option>
+									<option name="강남구" value='./classlist.ac?CLASS_CATEGORY=<%=CLASS_CATEGORY%>&CLASS_AREA=강남구' id="강남구">강남구</option>
+									<option name="송파구" value='./classlist.ac?CLASS_CATEGORY=<%=CLASS_CATEGORY%>&CLASS_AREA=송파구' id="송파구">송파구</option>
+									<option name="강동구" value='./classlist.ac?CLASS_CATEGORY=<%=CLASS_CATEGORY%>&CLASS_AREA=강동구' id="강동구">강동구</option>
 								</select>
 							</td>
 							<td>&nbsp;</td>
@@ -297,59 +297,83 @@
 		$('#'+category+'_tab').addClass('active');
 	});
 	
-	$(document).ready(function() {
-		var area = "<%=CLASS_AREA%>";
-		
-		if(area=="종로구"){
-			$("#CLASS_AREA").val("종로구").attr("selected", "selected");
-		} else if(area=="중구"){
-			$("#CLASS_AREA").val("중구").attr("selected", "selected");
-		} else if(area=="용산구"){
-			$("#CLASS_AREA").val("용산구").attr("selected", "selected");
-		} else if(area=="성동구"){
-			$("#CLASS_AREA").val("성동구").attr("selected", "selected");
-		} else if(area=="광진구"){
-			$("#CLASS_AREA").val("광진구").attr("selected", "selected");
-		} else if(area=="동대문구"){
-			$("#CLASS_AREA").val("동대문구").attr("selected", "selected");
-		} else if(area=="중랑구"){
-			$("#CLASS_AREA").val("중랑구").attr("selected", "selected");
-		} else if(area=="성북구"){
-			$("#CLASS_AREA").val("성북구").attr("selected", "selected");
-		} else if(area=="강북구"){
-			$("#CLASS_AREA").val("강북구").attr("selected", "selected");
-		} else if(area=="도봉구"){
-			$("#CLASS_AREA").val("도봉구").attr("selected", "selected");
-		} else if(area=="노원구"){
-			$("#CLASS_AREA").val("노원구").attr("selected", "selected");
-		} else if(area=="은평구"){
-			$("#CLASS_AREA").val("은평구").attr("selected", "selected");
-		} else if(area=="서대문구"){
-			$("#CLASS_AREA").val("서대문구").attr("selected", "selected");
-		} else if(area=="마포구"){
-			$("#CLASS_AREA").val("마포구").attr("selected", "selected");
-		} else if(area=="양천구"){
-			$("#CLASS_AREA").val("양천구").attr("selected", "selected");
-		} else if(area=="강서구"){
-			$("#CLASS_AREA").val("강서구").attr("selected", "selected");
-		} else if(area=="구로구"){
-			$("#CLASS_AREA").val("구로구").attr("selected", "selected");
-		} else if(area=="금천구"){
-			$("#CLASS_AREA").val("금천구").attr("selected", "selected");
-		} else if(area=="영등포구"){
-			$("#CLASS_AREA").val("영등포구").attr("selected", "selected");
-		} else if(area=="동작구"){
-			$("#CLASS_AREA").val("동작구").attr("selected", "selected");
-		} else if(area=="관악구"){
-			$("#CLASS_AREA").val("관악구").attr("selected", "selected");
-		} else if(area=="서초구"){
-			$("#CLASS_AREA").val("서초구").attr("selected", "selected");
-		} else if(area=="강남구"){
-			$("#CLASS_AREA").val("강남구").attr("selected", "selected");
-		} else if(area=="송파구"){
-			$("#CLASS_AREA").val("송파구").attr("selected", "selected");
-		} else if(area=="강동구"){
-			$("#CLASS_AREA").val("강동구").attr("selected", "selected");
-		}
-	});
+	
+	var area='<%=CLASS_AREA%>';
+	switch(area) {
+		case '종로구' : 
+			$('#종로구').prop('selected', true);
+			break;
+		case '중구' :
+			$('#중구').prop('selected', true);
+			break;
+		case '용산구' : 
+			$('#용산구').prop('selected', true);
+			break;
+		case '성동구' :
+			$('#성동구').prop('selected', true);
+			break;
+		case '광진구' : 
+			$('#광진구').prop('selected', true);
+			break;
+		case '동대문구' :
+			$('#동대문구').prop('selected', true);
+			break;
+		case '중랑구' : 
+			$('#중랑구').prop('selected', true);
+			break;
+		case '성북구' :
+			$('#성북구').prop('selected', true);
+			break;
+		case '강북구' : 
+			$('#강북구').prop('selected', true);
+			break;
+		case '도봉구' :
+			$('#도봉구').prop('selected', true);
+			break;
+		case '노원구' : 
+			$('#노원구').prop('selected', true);
+			break;
+		case '은평구' :
+			$('#은평구').prop('selected', true);
+			break;
+		case '서대문구' : 
+			$('#서대문구').prop('selected', true);
+			break;
+		case '마포구' :
+			$('#마포구').prop('selected', true);
+			break;
+		case '양천구' : 
+			$('#양천구').prop('selected', true);
+			break;
+		case '강서구' :
+			$('#강서구').prop('selected', true);
+			break;
+		case '구로구' : 
+			$('#구로구').prop('selected', true);
+			break;
+		case '금천구' :
+			$('#금천구').prop('selected', true);
+			break;
+		case '영등포구' : 
+			$('#영등포구').prop('selected', true);
+			break;
+		case '동작구' :
+			$('#동작구').prop('selected', true);
+			break;
+		case '관악구' :
+			$('#관악구').prop('selected', true);
+			break;
+		case '서초구' : 
+			$('#서초구').prop('selected', true);
+			break;
+		case '강남구' :
+			$('#강남구').prop('selected', true);
+			break;
+		case '송파구' : 
+			$('#송파구').prop('selected', true);
+			break;
+		case '강동구' :
+			$('#강동구').prop('selected', true);
+			break;
+	}
 </script>
