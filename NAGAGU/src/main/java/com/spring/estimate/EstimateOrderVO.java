@@ -7,7 +7,9 @@ public class EstimateOrderVO {
 	private int ES_ORDER_ESTIMATE;
 	private int ES_ORDER_OFFER;
 	private String ES_ORDER_TITLE;
+	private String ES_ORDER_CATEGORY;
 	private String ES_ORDER_BUYER;
+	private String ES_ORDER_BUYER_MAIL;
 	private String ES_ORDER_WORKSHOP;
 	private String ES_ORDER_PIC;
 	private int ES_ORDER_PRICE;
@@ -109,4 +111,17 @@ public class EstimateOrderVO {
 	public void setES_ORDER_STATE(int eS_ORDER_STATE) {
 		ES_ORDER_STATE = eS_ORDER_STATE;
 	}
+	public String getES_ORDER_CATEGORY() {
+		return ES_ORDER_CATEGORY;
+	}
+	public void setES_ORDER_CATEGORY(String eS_ORDER_CATEGORY) {
+		ES_ORDER_CATEGORY = eS_ORDER_CATEGORY;
+	}
+	public String getES_ORDER_BUYER_MAIL() {
+		return ES_ORDER_BUYER_MAIL;
+	}
+	public void setES_ORDER_BUYER_MAIL(String eS_ORDER_BUYER_MAIL) {
+		ES_ORDER_BUYER_MAIL = eS_ORDER_BUYER_MAIL;
+	}
+	
 }

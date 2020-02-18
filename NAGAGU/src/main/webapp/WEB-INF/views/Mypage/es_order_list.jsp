@@ -5,6 +5,8 @@
 <%@ page import ="java.text.DecimalFormat" %>
 <%
 	String MEMBER_EMAIL = (String)session.getAttribute("MEMBER_EMAIL");
+	String MEMBER_NAME = (String)session.getAttribute("MEMBER_NAME");
+	String MEMBER_PHONE = (String)session.getAttribute("MEMBER_PHONE");
 
 	ArrayList<EstimateOrderVO> eoList = (ArrayList<EstimateOrderVO>)request.getAttribute("esOrderList");
 	
@@ -423,6 +425,7 @@
 	%>
 	</div>
 </div>
+
 		
 <script>	
 	$(document).delegate('.btn_cancel', 'click', function() {
