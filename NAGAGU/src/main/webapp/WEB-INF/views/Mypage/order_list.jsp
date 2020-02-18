@@ -2,7 +2,9 @@
 
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.2/animate.css">
 <style>
-
+	.container{
+		margin-bottom: 100px;
+	}
 	.container-mypage a,.container-mypage  a:link,.container-mypage  a:hover {
 		text-decoration: none;
 		color: white !important;
@@ -119,10 +121,7 @@
 		color: black;
 	}
 	.each-row{
-		margin-top:15px;  	 
-	}
-	.each-row div{
-		color: black;
+		margin-top:5px;  	 
 	}
 	.output b{
 		margin-left:15px;
@@ -130,7 +129,7 @@
 	.brief{
 		margin-top:15px;
 	}
-		.main-output img{
+	.main-output img{
 		width : 100%;
 		height: auto;
 	}
@@ -161,9 +160,12 @@
 		margin-top: 10px;
 	}
 	.category{
-		padding-bottom: 10px;
-		padding-top: 10px;
-		background-color: rgba(239,144,14,0.3);
+/* 		padding-bottom: 10px;
+		padding-top: 10px; */
+		/* background-color: rgba(239,144,14,0.3); */
+		border-bottom: 1px solid rgba(239,144,14,0.3);
+		border-top: 1px solid rgba(239,144,14,0.3);
+		color: rgb(0, 0, 0, 0.2) !important;
 	}.category *{
 		align-items: baseline;
 		text-align: center;
@@ -185,11 +187,17 @@
 		margin: 0 auto;
 	}
 	.order_tab{
-		margin-top: 15px;
+		margin-top: 50px;
 		margin-left: 0px;
 		padding-left: 0px;
-		background-color: rgba(0,0,0,0.1);
-	}
+		/* border-top: 1px solid rgb(0,0,0,1); */ 
+	} 
+    .price_wrap div{
+    	margin-top: 0px;
+    }.end{
+    	/* background-color: rgba(239,144,14,0.3);
+    	border-top: 2px solid rgb(0,0,0,1); */ 
+    }
 </style>
 
 <div class="container-mypage" role="main">
@@ -374,12 +382,12 @@
   							//카운트(오더 목록을 받아서)
   							console.log(retVal.getCount)
 	                        console.log(retVal.orderList)
-	                        if(retVal.orderList.length!=0){
+	                        /* if(retVal.orderList.length!=0){
 	                            $('.count_unpaid').html(''+retVal.orderList.length+'건')
 	                        }
   							if(retVal.getCount.length!=0){
   								$('.count_paid').html(''+retVal.getCount.length+'건')
-  							}
+  							} */
   							//오더마다 안에 들어있는 리스트 받아서
   							for(var i=0; i<retVal.getCount.length; i++){
   								var ORDER_AMOUNT= retVal.getCount[i].ORDER_AMOUNT
@@ -413,15 +421,16 @@
 						        			paidPrice += total;
 						        		//본문
 						        		output += '<div class="col-12 d-flex each-row" id="'+retVal.myPaidOrder[j].PRODUCT_NUM+'" bNum='+retVal.myPaidOrder[j].BASKET_NUM+'>'
-				    					output += '<div class="col-2"><a href="'+url+retVal.myPaidOrder[j].PRODUCT_NUM+'">'
+				    					output += '<div class="col-2 text-center"><a href="'+url+retVal.myPaidOrder[j].PRODUCT_NUM+'">'
 							    		output += '<img src="/productupload/image/'+retVal.myPaidOrder[j].PRODUCT_IMAGE+'"></a></div>'
 							    		output += '<div class="col-10">'
 						    				output += '<div class="row category">'
 						    					output += '<div class="col-2">상품명</div>'
 					    						output += '<div class="col-2">배송</div>'
 						    					output += '<div class="col-2">사이즈</div>'
-					    						output += '<div class="col-2">컬러</div>'
-				    							output += '<div class="col-2">수량</div>'
+					    						output += '<div class="col-1">컬러</div>'
+				    							output += '<div class="col-1">수량</div>'
+			    								output += '<div class="col-2">상태</div>' 
 			    								output += '<div class="col-2 text-right">금액</div>'   
 			                                output += '</div>'
 			                              	output += '<div class="row values">' 
@@ -430,23 +439,22 @@
 			  				    					 output += '<p>'+retVal.myPaidOrder[j].PRODUCT_BRIEF+'</p></a></div>'
 			  				    				output += '<div class="col-2">'+retVal.myPaidOrder[j].PRODUCT_SHIP_COMPANY+'</div>'
 			  				    				output += '<div class="col-2">'+retVal.myPaidOrder[j].BASKET_SIZE+'</div>'
-			  				    				output += '<div class="col-2">'+retVal.myPaidOrder[j].BASKET_COLOR+'</div>'
-			  				    				output += '<div class="price col-2" value="'+retVal.myPaidOrder[j].BASKET_AMOUNT+'">'+retVal.myPaidOrder[j].BASKET_AMOUNT+'</div>'
+			  				    				output += '<div class="col-1">'+retVal.myPaidOrder[j].BASKET_COLOR+'</div>'
+			  				    				output += '<div class="price col-1" value="'+retVal.myPaidOrder[j].BASKET_AMOUNT+'">'+retVal.myPaidOrder[j].BASKET_AMOUNT+'</div>'
+			  				    				output += '<div class="col-2">배송준비중</div>'
 			  				    				output += '<div class="price_wrap text-right col-2">'
-									    			output += '<div class="basic_price text-right" value='+retVal.myPaidOrder[j].PRODUCT_PRICE+'>가격</div><span>'+price+'원</span>'
-									    			output += '<div class="shipPrice text-right" value='+retVal.myPaidOrder[j].PRODUCT_SHIP_PRICE+'>+배송비</div><span>'+ship+'원</span>'
-								    				output += '<div class="chongprice text-right" style="font-size:1.2rem;">총가격</div><span style="font-size:1.2rem;">'+total.toLocaleString()+'원</span></b>' 
+								    				output += '<div class="chongprice text-right">총가격</div><span>'+total.toLocaleString()+'원</span></b>'   
 								    			output += '</div>'
 						    				output += '</div></div></div>'
  	  				            		}
-  	  	  								output += '</div><hr>'
+  	  	  								output += '<div class="end col-12"></div></div>' 
   	  				            		console.log(output) 
 	  	  					        	$('.output').append(output)  
-	  	  					        	if(retVal.getCount.length!=0){
+	  	  					        	/* if(retVal.getCount.length!=0){
 	  	  					        		$('.count_paid').text(retVal.getCount.length+'건').css('color','rgba(239,144,14,1)')	
 	  	  					        	}
 		  	  		        			$('.chongprice').css('color','rgba(239,144,14,1)');
-		  	  	        				$('.chongprice').next().css('color','rgba(239,144,14,1)');
+		  	  	        				$('.chongprice').next().css('color','rgba(239,144,14,1)'); */
   	  				            	}
   	  				            }
 	  	  				        

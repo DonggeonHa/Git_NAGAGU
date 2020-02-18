@@ -43,6 +43,7 @@
 	}
 	
 	.each-row img {
+	align-self: center;
 		width: 100px;
 		height: 100px;
 	}
@@ -59,7 +60,7 @@
 	}
 	
 	.btn_check_all {
-		margin-right: 40px;
+		margin-right: 25px;  
 	}
 	
 	.option span {
@@ -97,7 +98,7 @@
 		margin-top: 0;
 	}
 	.totalShipPrice,.totalPayPrice,.totalPrice{
-		padding-right:25px !important;
+		padding-right:35px !important;
 	}
     .category .btn_wrap{
         text-align: right !important;
@@ -110,6 +111,9 @@
     }
     .basket_wrapper{
         font-weight: 700;
+    }
+    .price_wrap div{
+    	margin-top: 0px;
     }
     
 </style>
@@ -188,7 +192,7 @@
                 <div class="col-6 forcss" style="font-size:1.5rem;">결제금액</div>
                 <div class="col-6 forcss totalPayPrice" style="font-size:1.5rem;"></div>
 				<div class="">
-					<a href="#" class="btn btn-warning text-white btn_commit">구매하기</a>
+					<a href="#" class="btn btn-secondary text-white btn_commit">구매하기</a> 
 				</div>
 			</div>
 			<!-- side bar end -->

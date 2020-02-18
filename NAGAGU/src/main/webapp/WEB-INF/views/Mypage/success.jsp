@@ -138,8 +138,8 @@
 		border-color: rgba(0, 0, 0, 0.2);
 	}
 	.each-row img {
-		width: 100px;
-		height: 100px;
+		width: 150px;
+		height: 150px;
 	}
 	.each-row a, .each-row a:link, .each-row a:hover {
 		text-decoration: none !important;
@@ -175,6 +175,9 @@
 	.font_change{
 		font-size:1.2rem !important; 
 	}
+    .price_wrap div{
+    	margin-top: 0px;
+    }
 	
 </style>
 

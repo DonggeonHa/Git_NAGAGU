@@ -79,6 +79,10 @@
 	.submit-btn-wrap {
 		margin-right: 30px !important;
 	}
+	.category_cm{
+		margin-top: 50px;
+		margin-bottom: 50px;
+	}
 </style>
 		
 <div class="container category_cm">
@@ -221,7 +225,7 @@
 	 $(document).ready(function() {
 		$('#summernote1').summernote({
 			width: 670,
-			height: 300,
+			height: 700,
 			lang: 'ko-KR',
 			callbacks: {
 				  onImageUpload: function(files) {
