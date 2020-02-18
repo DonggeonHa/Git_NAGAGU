@@ -109,7 +109,7 @@
 	            </div>
 	        </div>
         </div>
-        <form id="chk_form" method="post">
+        <form id="chk_form">
 	    <table class="table" id="work_store">
 	        <thead>
 	            <tr>
@@ -526,9 +526,31 @@
 			$('#selectState').val('현재 상태');
 			$('#scButton').html('선택');
 			$('input[type="hidden"]').val('');
+			$('input[type=checkbox]').prop('checked', false);
 			getList();
 			
 			return false;
+		});
+		
+		/* 선택 쪽지보내기 */
+		
+		$(document).delegate('#btn_select_note', 'click', function() {
+			if ($("input[name='chk']:checked").length==0) {
+	    		return false;
+	    	}
+		    
+		    window.open('', 'new_pop' ,'width=600,height=700');
+		    
+		    
+		    var frm = $('#chk_form');
+		    
+		    frm.action = 'selectedForm.nt';
+		    frm.target = 'new_pop';
+		    frm.method = 'post';
+		    
+		    frm.submit();
+		    
+		    return false;
 		});
 		
 		/* 선택 삭제 */
@@ -540,9 +562,7 @@
 			
 	    	if (confirm("정말로 삭제하시겠습니까?")) {
 				var params = $('#chk_form').serialize();
-				var test = $('#listinfo').serialize();
 				console.log(params);
-				console.log(test);
 				$.ajax({
 					url:'/NAGAGU/offer_delete.es',
 					type:'POST',

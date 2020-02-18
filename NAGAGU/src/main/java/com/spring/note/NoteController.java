@@ -395,7 +395,7 @@ public class NoteController {
 		
 		model.addAttribute("receiverList", receiverList);
 		
-		return "Mypage/Note/noteWrite";
+		return "Mypage/Note/noteWriteSelected";
 	}
 	
 	@RequestMapping("notewrite.nt")
