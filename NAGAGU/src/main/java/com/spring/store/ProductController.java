@@ -819,7 +819,6 @@ public class ProductController {
 		int WORKSHOP_NUM = 0;
 		Product_qnaVO qnaVO = new Product_qnaVO();
 		
-		
 		if(session.getAttribute("MEMBER_NUM") != null) {	//멤버로그인(원글)
 			System.out.println("원글qna insert");
 			MEMBER_NUM = (int)session.getAttribute("MEMBER_NUM");
@@ -889,10 +888,6 @@ public class ProductController {
 		System.out.println("modifyQna 컨트롤러 왔다");
 
 		vo.setQNA_DATE(new Timestamp(System.currentTimeMillis()));
-
-		
-		
-
 		
 		Map<String, Object> retVal = new HashMap<String, Object>(); //리턴값 저장
 		try {
@@ -903,10 +898,6 @@ public class ProductController {
 			retVal.put("res", "Fail");
 		}
 		return retVal;		
-		
-		
-		
-		
 	}		
 	
 	

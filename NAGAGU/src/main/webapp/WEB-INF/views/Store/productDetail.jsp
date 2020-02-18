@@ -1812,7 +1812,36 @@
 			event.preventDefault();		
 		})
 		
-		
+		//qna 등록하기 버튼(insert) //답글
+		$(document).on("click",".insertQnaReply",function(event){
+			var QNA_NUM = $(this).prev().val();	//원글번호(review_re로 저장할 것)
+			console.log("QNA_NUM : " + QNA_NUM)
+			
+			var formId = 'QnaReplyform'+QNA_NUM;
+			var form = new FormData(document.getElementById(formId));
+			$.ajax({
+				url : "/NAGAGU/insertQna.do", 
+				data : form,
+				dataType: 'json',
+				processData : false,
+				contentType : false,
+				type : 'POST',				
+				success:function(retVal) {
+					if(retVal.res == "OK") {
+		 				
+						getQnaList();
+					} else {
+						alert("qna reply insert 실패!!!");
+					}
+				},
+				error:function() {
+					alert("qna reply ajax통신 실패!!!");
+				}
+			});
+			event.preventDefault();			
+
+		})
+				
 //Qna 수정하기----------------------------------------------------------------------------------------------------	  		
 			
 		//qna 수정 폼 (원글)
@@ -2338,14 +2367,7 @@
 		
 		//QnaReplyform폼 버튼	//답글 버튼 (reply)
 		$(document).on("click",".qna_replybtn",function(event){
-<%-- 			if(<%=MEMBER_STATUS%> == 100){
-				if(<%=WORKSHOP_STATUS%> == 100) {
-					alert('로그인 해주세요!');					
-				} else {
-					alert('회원만 작성 가능합니다.');
-				}
-				return;
-			} --%>
+
 			var QNA_NUM = $(this).attr('value');
 			console.log(QNA_NUM);   
 			$("#qna_replybtn"+QNA_NUM).css('display','none');	//답글버튼 숨김
