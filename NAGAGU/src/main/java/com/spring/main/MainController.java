@@ -494,7 +494,7 @@ public class MainController {
         mailSender.send(message);
         
         redirect.addAttribute("ps", password);
-        redirect.addAttribute("MEMBER_EMAIL", email);
+        redirect.addAttribute("mm", email);
         
       } catch(Exception e){
         System.out.println(e);
