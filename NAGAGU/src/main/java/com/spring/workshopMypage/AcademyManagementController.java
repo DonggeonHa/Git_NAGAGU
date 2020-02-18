@@ -168,6 +168,7 @@ public class AcademyManagementController {
 			workshopVO.setWORKSHOP_ZIP(request.getParameter("WORKSHOP_ZIP"));
 			workshopVO.setWORKSHOP_ADDRESS1(request.getParameter("WORKSHOP_ADDRESS1"));
 			workshopVO.setWORKSHOP_ADDRESS2(request.getParameter("WORKSHOP_ADDRESS2"));
+			workshopVO.setWORKSHOP_INTRO(request.getParameter("WORKSHOP_INTRO"));
 			workshopVO.setWORKSHOP_NAME(WORKSHOP_NAME);
 			
 			int result = academyManagementService.modifyWorkshop(workshopVO);

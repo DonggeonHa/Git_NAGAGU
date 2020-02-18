@@ -18,6 +18,9 @@ public interface MemberService {
 	public ArrayList<MemberVO> getMemberList(HashMap<String, Object> map);
 	public MemberVO getMemberDetail(MemberVO memberVO);
 	public int checkMember(String mem_mail) throws Exception;
+	public int findMemberPW(MemberVO memberVO);
+	public int updateMemberPW(MemberVO memberVO);
+	
 	
 	/* 회원 탈퇴 */
 	public int deleteMember(MemberVO memberVO);

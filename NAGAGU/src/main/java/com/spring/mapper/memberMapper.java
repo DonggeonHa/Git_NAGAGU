@@ -16,7 +16,8 @@ public interface memberMapper {
 	int member_status_chk(MemberVO memberVO);	//로그인 시 이메일 인증 여부 확인
 	ArrayList<MemberVO> nick_list();
 	MemberVO selectMember(MemberVO memberVO); // 로그인 시 세션에 넣을 Member_NUM 호출
-	
+	int findMemberPW(MemberVO memberVO);	//비밀번호 찾기
+	int updateMemberPW(MemberVO memberVO);
 	
 	/* 경태 */
 	ArrayList<MemberVO> getMemberList(HashMap<String, Object> map);

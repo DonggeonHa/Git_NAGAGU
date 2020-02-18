@@ -405,7 +405,7 @@
 				<div class="row justify-content-center" style="margin-top: 20px; margin: 0 auto;">
 					<a href="./WorkshopSignup.ws" style="text-decoration: none; margin-right: 10px; color: black;" class="sign-in-form-action-entry">사업자가입</a>
 					<a href="./signup.ma" style="text-decoration: none; margin-right: 10px; color: black;" class="sign-in-form-action-entry">회원가입</a>
-					<a href="" style="text-decoration: none; color: black;" class="sign-in-form-action-entry">비밀번호 찾기</a>
+					<a href="./FindMember.ma" style="text-decoration: none; color: black;" class="sign-in-form-action-entry">ID/PW 찾기</a>
 				</div>
 				<div class="row justify-content-center" style="margin-top:30px; font-size: 11.5px; color: #757575;">
 				 	SNS계정으로 간편 로그인 / 회원가입

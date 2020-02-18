@@ -190,9 +190,8 @@
 }
 
 .container-fluid {
-	padding: 20px;
+	padding: 20px 20px 20px 130px;
 	margin-top: 30px;
-	margin-left: 50px;
 }
 
 #btn_submit, #btn_cancel {
@@ -217,17 +216,8 @@
     transition: background 0.2s;
     width: 250px;
     height: 45px;
-    margin-right: 500px;
-}/* 
-.out {
-	width: 100%;
-	text-align: center;
-    margin-top: 44px;
- }
-.in {
- display: inline-block;
- margin:0 auto;
- } */
+}
+
  
 #edit-title {
 	color: #3a3a6c;

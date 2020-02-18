@@ -64,12 +64,19 @@
                 </div>
                 <div class="error_next_box" id="pass2Msg" style="display: hidden;" aria-live="assertive"></div>
             </div>
-            <div class="signup_form_name form group">
+            <div class="signup_form_name form_group">
             	<div class="signup_form_label">이름</div>
                 <div class="signup_form_input">
                     <input type="text" id="member_name" name="MEMBER_NAME" class="form_input" required>
                 </div>
                 <div class="error_next_box" id="nameMsg" style="display: hidden;" aria-live="assertive"></div>
+            </div>
+            <div class="signup_form_name form_group">
+            	<div class="signup_form_label">휴대폰</div>
+                <div class="signup_form_input">
+                    <input type="text" id="member_phone" name="MEMBER_PHONE" class="form_input" required>
+                </div>
+                <div class="error_next_box" id="phoneMsg" style="display: hidden;" aria-live="assertive"></div>
             </div>
             <div class="signup_form_nickname form_group mt-4">
                 <div class="signup_form_label">별명</div>
@@ -197,7 +204,18 @@
 	      });	
 	}
     
-    
+	// 비밀번호 정규식(특수문자 / 문자 / 숫자 포함 형태의 8~15자리 이내의 암호 정규식)
+	var pwJ = /^.*(?=^.{8,15}$)(?=.*\d)(?=.*[a-zA-Z])(?=.*[!@#$%^&+=]).*$/;
+	// 이름 정규식
+	var nameJ = /^[가-힣]{2,6}$/;
+	// 이메일 검사 정규식
+	var mailJ = /^[a-z0-9_+.-]+@([a-z0-9-]+\.)+[a-z0-9]{2,4}$/;
+	// 휴대폰 번호 정규식
+	var phoneJ = /^\d{3}\d{3,4}\d{4}$/;
+	// 별명 정규식
+	var nickJ = /^[ㄱ-ㅎ|가-힣|a-z|A-Z|0-9|\*]{2,15}$/;
+	// 숫자 정규식
+	var num = /^[0-9]{5}$/;
     
     var emailFlag = false;
     var passFlag = false;
@@ -205,6 +223,7 @@
     var submitFlag = false;
     var termFlag = false;
     var nameFlag = false;
+    var phoneFlag = false;
     
     function showErrorMsg(obj, msg) {
     obj.attr("class", "error_next_box");
@@ -281,6 +300,11 @@
     $("#member_nick").blur(function(){
         nickFlag=false;
         checkNick();
+    });
+    
+    $("#member_phone").blur(function(){
+        phoneFlag=false;
+        checkPhone();
     });
     
     function checkEmail1(event) {
@@ -376,6 +400,26 @@
     	
     	nameFlag = false;
         return true;
+    }
+    
+    function checkPhone(evnet) {
+    	var phone = $("#member_phone").val();
+        var oMsg = $("#phoneMsg");
+        
+        if(phone==""){
+        	showErrorMsg(oMsg, "필수 정보입니다.");
+            return false;
+        }  else if(!phoneJ.test(phone)) {
+			showErrorMsg(oMsg, "올바른 번호를 입력하세요.");
+			phonefocus.focus();
+			return false;
+    		
+		} else {
+			oMsg.hide();
+			sub_phone = true;
+			
+            return true;
+		}
     }
     
     function checkNick(event) {

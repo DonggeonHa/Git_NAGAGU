@@ -50,4 +50,12 @@
 	<select id="insertWSMemberCount" parameterType="String" resultType="int">
 		select count(*) from nagagu_workshop_member where trunc(workshop_date) = to_date(#{selectDate}) order by workshop_date asc
 	</select>
+	
+	<select id="deleteMemberCount" parameterType="String" resultType="int">
+		select count(*) from delete_member where trunc(member_date) = to_date(#{selectDate}) order by member_date asc
+	</select>
+	
+	<select id="deleteWSMemberCount" parameterType="String" resultType="int">
+		select count(*) from delete_workshop_member where trunc(workshop_date) = to_date(#{selectDate}) order by workshop_date asc
+	</select>
 </mapper>

@@ -3,6 +3,7 @@ package com.spring.main;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
+import java.util.Random;
 
 import javax.mail.internet.MimeMessage;
 import javax.servlet.http.HttpServletRequest;
@@ -401,4 +402,120 @@ public class MainController {
 			return img_name;
 		}
 	}
+    
+    @RequestMapping(value="/FindMember.ma")
+    public String findMember() {
+    	
+    	return "FindMember";
+    }
+    
+    @RequestMapping(value="/FindMemberPw.ma", method = RequestMethod.POST)
+    public String findMemberPw(RedirectAttributes redirect, HttpServletRequest request) {
+    	String email = (String)request.getParameter("MEMBER_EMAIL");
+    	String password = null;
+    	int update_pw = 0;
+    	
+    	MemberVO memberVO = new MemberVO();
+    	memberVO.setMEMBER_EMAIL(email);
+    	memberVO.setMEMBER_NAME((String)request.getParameter("MEMBER_NAME"));
+    	
+    	System.out.println(memberVO.getMEMBER_EMAIL() + memberVO.getMEMBER_NAME());
+    	
+		int result = memberService.findMemberPW(memberVO);
+		
+		if(result != 0) {
+			StringBuffer temp = new StringBuffer();
+			Random rnd = new Random();
+			for (int i = 0; i < 14; i++) {
+			    int rIndex = rnd.nextInt(3);
+			    switch (rIndex) {
+			    case 0:
+			        // a-z
+			        temp.append((char) ((int) (rnd.nextInt(26)) + 97));
+			        break;
+			    case 1:
+			        // A-Z
+			        temp.append((char) ((int) (rnd.nextInt(26)) + 65));
+			        break;
+			    case 2:
+			        // 0-9
+			        temp.append((rnd.nextInt(10)));
+			        break;
+			    }
+			}
+			password = temp.toString();
+			memberVO.setMEMBER_PASS(password);
+			
+			update_pw = memberService.updateMemberPW(memberVO);
+			if(update_pw != 0) {
+				redirect.addAttribute("MEMBER_EMAIL", email);
+				redirect.addAttribute("ps", password);
+				
+				return ("redirect:/updateMailSending.ma");
+			}
+			
+		}
+		
+		return("redirect:/FindMember.ma");	//실패시 회원가입 창으로 이동
+    }
+    
+ // mailSending 코드
+    @RequestMapping(value = "/updateMailSending.ma")
+    public String updateMailSending(HttpServletRequest request, RedirectAttributes redirect, @RequestParam("ps") String password, @RequestParam("MEMBER_EMAIL") String email) {
+     
+      String setfrom = "jieunkim.itit@gmail.com";  //host 메일 주소
+      String title = "NAGAGU 비밀번호 재설정";	//메일 이름
+      String content1= "http://localhost:8000/NAGAGU/mailUpadteLink.ma?ps=" + password;	//내용
+      String content2="임시비밀번호: " + password;
+      String content3="비밀번호 변경창이 사라졌을 경우 아래 링크를 클릭해주세요." + "\n";
+     
+      try {
+        MimeMessage message = mailSender.createMimeMessage();
+        MimeMessageHelper messageHelper 
+                          = new MimeMessageHelper(message, true, "UTF-8");
+   
+        messageHelper.setFrom(setfrom);  // 보내는사람 생략하거나 하면 정상작동을 안함
+        messageHelper.setTo(email);     // 받는사람 이메일
+        messageHelper.setSubject(title); // 메일제목은 생략이 가능하다
+        messageHelper.setText(content3 + content1+ "\n"+ "\n"+ "\n" + content2);  // 메일 내용
+       
+        mailSender.send(message);
+        
+        redirect.addAttribute("ps", password);
+        redirect.addAttribute("MEMBER_EMAIL", email);
+        
+      } catch(Exception e){
+        System.out.println(e);
+      }
+     
+      return "redirect:/mailUpadteLink.ma";
+    }
+    
+    @RequestMapping(value = "/mailUpadteLink.ma", method = RequestMethod.GET)
+    public String mailUpadteLink(HttpServletRequest request, HttpServletResponse response, MemberVO memberVO) {
+//    	String member_email = request.getParameter("MEMBER_EMAIL");
+//    	memberVO.setMEMBER_EMAIL(member_email);
+    	System.out.println("pw 찾기 인증");
+    	
+    	System.out.println(request.getParameter("ps"));
+    	
+    	
+    	response.setCharacterEncoding("utf-8");
+        response.setContentType("text/html; charset=utf-8");
+        PrintWriter writer;
+        
+        try {
+           writer = response.getWriter();
+//           int res = memberService.emailLink_chk(memberVO);
+           
+//           if(res == 1) {
+//        	   writer.write("<script>alert('인증 성공'); location.href='index.ma';</script>");
+//           }
+           
+        } catch (Exception e) {
+           e.printStackTrace(); 
+        }
+     
+        return "FindPWForm";
+    }
 }

@@ -109,9 +109,9 @@
                     </div>
                 </div>
             </div>
-            <div class="row justify-content-center in">
-            		<button type="submit" id="btn_submit" onclick="click_sub();">수정</button>
-            		<input type='reset' id="btn_cancel" value="취소">
+            <div class="d-flex justify-content-center">
+           		<button type="button" id="btn_submit" onclick="click_sub();">수정</button>
+           		<input type='reset' id="btn_cancel" value="취소">
             </div>
         </form>
         </div>
