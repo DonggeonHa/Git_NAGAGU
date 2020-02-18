@@ -43,8 +43,15 @@ public class BasketController {
 		int BASKET_PRODUCT = Integer.parseInt(request.getParameter("PRODUCT_NUM"));
 		basketVO.setBASKET_PRODUCT(BASKET_PRODUCT);
 		System.out.println("amount는"+basketVO.getBASKET_AMOUNT());
+		
 		try {
 			basketService.insertCart(basketVO);
+			//insert후 바스켓넘버 받아오기
+			HashMap<String, Object> map = new HashMap<String, Object>();
+			map.put("MEMBER_NUM", MEMBER_NUM);
+			ArrayList<Map<String, Object>> getbasketList = null;
+			getbasketList = basketService.getbasketList(map);
+			retVal.put("getbasketList", getbasketList);
 			retVal.put("res", "OK");
 		}catch(Exception e) {
 			retVal.put("res", "FAIL");

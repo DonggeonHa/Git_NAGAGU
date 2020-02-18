@@ -92,10 +92,13 @@
 									</div>
 									<dd>&nbsp;</dd>
 									<div>
-										<span>총가격</span>
-                                        <span class="text-center chongPrice"></span>
+										<span style="font-size:1.2rem;">총가격</span>
+                                        <span class="text-center chongPrice" style="font-size:1.2rem;"></span>
 									</div>
 								</dl>
+							</td>
+							<td>
+								<button class="btn btn-outline-dark delete_btn" value="<%=list.get("BASKET_NUM")%>">삭제</button> 
 							</td>
 						</tr>
 				<%
@@ -386,6 +389,32 @@
 <script type="text/javascript" src="https://service.iamport.kr/js/iamport.payment-1.1.2.js"></script>
 <script>
 	$(document).ready(function(){
+		//누르면 주문에서 삭제
+        $(document).on('click','.delete_btn',function(){
+            if(!confirm('삭제하시겠습니까?')){
+                return
+            }
+			var bNum = $(this).attr('value')
+			$.ajax({
+				  url: "/NAGAGU/deleteBasket.my",
+	              type: "POST",
+	              data: { 'BASKET_NUM' : bNum},
+	              contentType:
+	  				'application/x-www-form-urlencoded; charset=utf-8',
+	              success: function (retVal) {
+	        		if(retVal.res=="OK"){
+						getBasket()
+						changePrice()
+					}else{
+						alert("update fail");
+					}  
+				 },
+				error:function(){
+					alert("ajax통신 실패!!");
+				}
+			})
+		});
+		//
 		
 		var totalPrice=0;
 		var totalShipPrice=0;
@@ -424,6 +453,11 @@
 			})
 	    }
 	    changeComma();
+	    
+	    //컬러 체인지
+	    $('.chongPrice').css('color','rgba(239,144,14,1)');
+		$('.chongPrice').prev().css('color','rgba(239,144,14,1)');
+		$('.totalPayPrice').css('color','rgba(239,144,14,1)');
 		
 		//배송지 정보와 동일하게 채우기
 		$(document).on('click','#getInfo_btn',function(){ 

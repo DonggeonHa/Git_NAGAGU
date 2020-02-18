@@ -598,11 +598,11 @@
 													</a>
 												</div>
 												<div style="width: 45%;">
-													<a href="#" class="btn btn-outline-dark btn-lg btn-block"
+													<a href="#" class="btn btn-outline-dark btn-lg btn-block basket_btn"
 														role="button" aria-pressed="true" id="basket_btn">장바구니</a>
 												</div>
 												<div style="width: 45%;">
-													<a href="#" class="btn btn-outline-dark btn-lg btn-block"
+													<a href="#" class="btn btn-outline-dark btn-lg btn-block order_btn"
 														role="button" aria-pressed="true" id="order_btn">바로구매</a>
 												</div>
 												<% 
@@ -984,10 +984,10 @@
 											</a>
 										</div>
 										<div style="width:45%;">
-											<a href="#" class="btn btn-outline-dark btn-lg btn-block" role="button" aria-pressed="true" id="basket_btn">장바구니</a>
+											<a href="#" class="btn btn-outline-dark btn-lg btn-block basket_btn" role="button" aria-pressed="true" id="basket_btn">장바구니</a>
 										</div>
 										<div style="width:45%;">
-											<a href="#" class="btn btn-outline-dark btn-lg btn-block" role="button" aria-pressed="true" id="order_btn">바로구매</a>
+											<a href="#" class="btn btn-outline-dark btn-lg btn-block order_btn" role="button" aria-pressed="true" id="order_btn">바로구매</a>
 										</div>
 								<% 
 									} 
@@ -1003,22 +1003,41 @@
    <!-- content end -->
 <script>
 
-   	$('#basket_btn').on('click',function(){
-		var params=$("#goodsform").serialize();
+   	$('.basket_btn').on('click',function(){
+   		if($('.BASKET_COLOR').val()==''){
+   			alert('색상을 선택해주세요') 
+   			return
+   		}
+   		if($('.BASKET_SIZE').val()==''){
+   			alert('사이즈를 선택해주세요') 
+   			return
+   		}
+   		insert_basket()
+   	});
+   	function insert_basket(item){
+   		var params=$("#goodsform").serialize();
+   		var list ='';
 		$.ajax({
 			  url: "/NAGAGU/insertBasket.my",
               type: "POST",
               data: params,
+              async: false,
+              dataType: "json",
               contentType:
   				'application/x-www-form-urlencoded; charset=utf-8',
               success: function (retVal) {
             	  console.log(params)
         		if(retVal.res=="OK"){
+       				if(item=='order'){
+       					list = retVal.getbasketList[0].BASKET_NUM
+       					return
+       				}
         			if(confirm('장바구니로 이동하시겠습니까?')){
-        				location.href= '${pageContext.request.contextPath}/mypage_basket.my'
+        				location.href= './mypage_basket.my'
         			}else{
         				alert("장바구니에 담겼습니다")
         			}
+        			return 
 				}else{
 					alert("update fail");
 				}  
@@ -1027,15 +1046,28 @@
 				alert("ajax통신 실패!!");
 			}
 		})
-   	});
-   	$('#order_btn').on('click',function(){
-		if(confirm('이동?')){
-			var url = '${pageContext.request.contextPath}/mypage_order.my'
-				+ '?PRODUCT_NUM='+<%=vo.getPRODUCT_NUM()%>
-			var frm=document.getElementById("goodsform");
-			//frm.action=url;
-			//frm.submit();
-			//location.href=url;			
+		return list
+   	}
+   	$('.order_btn').on('click',function(){
+		if(confirm('바로 구매 하시겠습니까??')){
+			var bNum = insert_basket('order')
+			var category='order'
+			var arr = new Array();
+				arr.push(bNum)
+			var Data = { "arr": arr,"category":category}; 
+			$.ajax({ 
+				type: "post", 
+				url: "/NAGAGU/updateCheck.my",
+				dataType: "json", 
+				data: Data, 
+				success: function (data){
+					var url = '/NAGAGU/mypage_order.my';
+					location.href = url
+				},
+				error:function(){
+					alert("ajax통신 실패!!");
+				} 
+			});		
 		}	
    	})
 
