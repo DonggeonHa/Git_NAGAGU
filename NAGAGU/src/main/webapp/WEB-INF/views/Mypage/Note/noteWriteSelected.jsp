@@ -1,13 +1,10 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ page import = "java.util.*" %>
+<%@ page import = "com.spring.member.MemberVO" %>
 <%
-	String sender_mail = (String)session.getAttribute("WORKSHOP_EMAIL");
-	String receive_mail = (String)request.getAttribute("receive_mail");
-	String receive_nick = (String)request.getAttribute("receive_nick");
-	String receive_pic = (String)request.getAttribute("receive_pic");
+	ArrayList<MemberVO> rl = (ArrayList<MemberVO>)request.getAttribute("receiverList");
 	String redirection = (String)request.getAttribute("redirection");
-	
 %>
 <!DOCTYPE html>
 <html>
@@ -177,15 +174,27 @@
                 <h1 class="pop_title_txt"><span class="fas fa-envelope-open-text icon"></span>쪽지함</h1>
             </div>
         </div>
-        <form method="post" action="notewrite.nt" id="note_form">
-        <input type="hidden" name="receiver_mail" value=<%=receive_mail %>>
-        <input type="hidden" name="receiver_nick" value=<%=receive_nick %>>
+        <form method="post" action="selectedwrite.nt" id="note_form">
+        <input type="hidden" name="receiver_list" value=<%=rl %>>
         <div class="pop_body">
             <div class="content_top">
                 <table class="top_form">
-                    <tr>
+                	<tr>
                         <th>받는 사람</th>
-                        <td><img src="<%=receive_pic%>" width="30" height="30">&nbsp;<%=receive_nick %></td>
+                	</tr>
+                    <tr>
+                        <td>
+                        	<div class="receiverList">
+                        	<%
+                        		for (int i=0; i<rl.size(); i++) {
+                        			MemberVO vo = rl.get(i);
+                        	%>
+                        		<img src="<%=vo.getMEMBER_PICTURE()%>" width="30" height="30">&nbsp;<%=vo.getMEMBER_NICK() %><br/>
+                        	<%
+                        		}
+                        	%>
+                        	</div>
+                        </td>
                     </tr>
                     <tr>
                         <th>제목</th>
@@ -240,7 +249,7 @@
         	var params = $("#note_form").serialize();
         	
         	$.ajax({
-        		url:"/NAGAGU/notewrite.nt",
+        		url:"/NAGAGU/selectedwrite.nt",
         		data:params,
         		type:"POST",
         		success:function(e){
