@@ -152,4 +152,12 @@
 		WHERE member_email = #{MEMBER_EMAIL} AND member_pass = #{MEMBER_PASS}
 	</delete>
 	
+	
+	<select id="findMemberPW" parameterType="com.spring.member.MemberVO" resultType="int">
+		select * from nagagu_member where member_email = #{MEMBER_EMAIL} AND member_name = #{MEMBER_NAME}
+	</select>
+	
+	<update id="updateMemberPW" parameterType="com.spring.member.MemberVO">
+		update nagagu_member set member_pass = #{MEMBER_PASS} where member_email = #{MEMBER_EMAIL}
+	</update>
 </mapper>

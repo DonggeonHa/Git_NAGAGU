@@ -268,4 +268,34 @@ public class MemberServiceImpl implements MemberService{
 		
 		return res;
 	}
+
+	@Override
+	public int findMemberPW(MemberVO memberVO) {
+		int res = 0;
+		
+		try {
+			memberMapper memberMapper = sqlSession.getMapper(memberMapper.class);
+			System.out.println("findmemberPW Impl: " + memberVO.getMEMBER_EMAIL() + memberVO.getMEMBER_NAME());
+			res = memberMapper.findMemberPW(memberVO);
+			
+		} catch (Exception e) {
+			System.out.println("회원정보 조회 실패!" + e.getMessage());
+		}
+		
+		return res;
+	}
+
+	@Override
+	public int updateMemberPW(MemberVO memberVO) {
+		int update_result = 0;
+		
+		try {
+			memberMapper memberMapper = sqlSession.getMapper(memberMapper.class);
+			update_result = memberMapper.updateMemberPW(memberVO);
+		} catch (Exception e) {
+			System.out.println("비밀번호 업데이트 실패!" + e.getMessage());
+		}
+		
+		return update_result;
+	}
 }
