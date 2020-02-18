@@ -168,4 +168,8 @@
 	<update id="updateMemberPW" parameterType="com.spring.member.MemberVO">
 		update nagagu_member set member_pass = #{MEMBER_PASS} where member_email = #{MEMBER_EMAIL}
 	</update>
+	
+	<select id="lastPwUpdate" parameterType="String" resultType="int">
+		select * from nagagu_member where member_email = #{member_email} and member_pass = #{pass1}
+	</select>
 </mapper>

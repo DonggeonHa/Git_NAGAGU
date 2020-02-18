@@ -294,4 +294,18 @@ public class MemberServiceImpl implements MemberService{
 		}
 		return update_result;
 	}
+
+	@Override
+	public int lastPwUpdate(String pass1, String member_email) {
+		int result = 0;
+		
+		try {
+			memberMapper memberMapper = sqlSession.getMapper(memberMapper.class);
+			
+			result = memberMapper.lastPwUpdate(pass1, member_email);
+		} catch (Exception e) {
+			System.out.println("비밀번호 확인 실패!" + e.getMessage());
+		}
+		return result;
+	}
 }

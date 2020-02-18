@@ -404,9 +404,21 @@ public class MainController {
 	}
     
     @RequestMapping(value="/FindMember.ma")
-    public String findMember() {
+    public ModelAndView findMember(Model model, HttpSession session) {
+    	ModelAndView mav = new ModelAndView();
     	
-    	return "FindMember";
+    	/* 네이버아이디로 인증 URL을 생성하기 위하여 naverLoginBO클래스의 getAuthorizationUrl메소드 호출 */
+	    String naverAuthUrl = naverLoginBO.getAuthorizationUrl(session);
+	    System.out.println("네이버:" + naverAuthUrl);
+	    model.addAttribute("naver_url", naverAuthUrl);
+      
+	    //카카오 인증 url을 view로 전달
+	    String kakaoUrI = KakaoController.getAuthorizationUri(session);
+	    System.out.println("카카오: "+ kakaoUrI);
+	    model.addAttribute("kakao_url", kakaoUrI);
+    	
+    	mav.setViewName("FindMember");
+    	return mav;
     }
     
     @RequestMapping(value="/FindMemberPw.ma", method = RequestMethod.POST)
@@ -465,7 +477,7 @@ public class MainController {
      
       String setfrom = "jieunkim.itit@gmail.com";  //host 메일 주소
       String title = "NAGAGU 비밀번호 재설정";	//메일 이름
-      String content1= "http://localhost:8000/NAGAGU/mailUpadteLink.ma?ps=" + password;	//내용
+      String content1= "http://localhost:8000/NAGAGU/mailUpadteLink.ma?mm=" + email;	//내용
       String content2="임시비밀번호: " + password;
       String content3="비밀번호 변경창이 사라졌을 경우 아래 링크를 클릭해주세요." + "\n";
      
@@ -492,12 +504,25 @@ public class MainController {
     }
     
     @RequestMapping(value = "/mailUpadteLink.ma", method = RequestMethod.GET)
-    public String mailUpadteLink(HttpServletRequest request, HttpServletResponse response, MemberVO memberVO) {
-//    	String member_email = request.getParameter("MEMBER_EMAIL");
-//    	memberVO.setMEMBER_EMAIL(member_email);
-    	System.out.println("pw 찾기 인증");
+    public ModelAndView mailUpadteLink(HttpServletRequest request, HttpServletResponse response, MemberVO memberVO,
+    		Model model, HttpSession session, RedirectAttributes redirect) {
+    	ModelAndView mav = new ModelAndView();
     	
-    	System.out.println(request.getParameter("ps"));
+    	/* 네이버아이디로 인증 URL을 생성하기 위하여 naverLoginBO클래스의 getAuthorizationUrl메소드 호출 */
+	    String naverAuthUrl = naverLoginBO.getAuthorizationUrl(session);
+	    System.out.println("네이버:" + naverAuthUrl);
+	    model.addAttribute("naver_url", naverAuthUrl);
+      
+	    //카카오 인증 url을 view로 전달
+	    String kakaoUrI = KakaoController.getAuthorizationUri(session);
+	    System.out.println("카카오: "+ kakaoUrI);
+	    model.addAttribute("kakao_url", kakaoUrI);
+    	
+    	
+    	String member_email = request.getParameter("mm");
+    	memberVO.setMEMBER_EMAIL(member_email);
+    	System.out.println("pw 찾기 인증");
+    	System.out.println(request.getParameter("mm"));
     	
     	
     	response.setCharacterEncoding("utf-8");
@@ -506,16 +531,40 @@ public class MainController {
         
         try {
            writer = response.getWriter();
-//           int res = memberService.emailLink_chk(memberVO);
-           
-//           if(res == 1) {
-//        	   writer.write("<script>alert('인증 성공'); location.href='index.ma';</script>");
-//           }
+           writer.write("<script>alert('이메일을 확인 해주세요.');</script>");
+           redirect.addAttribute("MEMBER_EMAIL", request.getParameter("mm"));
+           mav.addObject("memberVO", memberVO);
+           mav.setViewName("FindPWForm");
            
         } catch (Exception e) {
            e.printStackTrace(); 
         }
      
-        return "FindPWForm";
+        return mav;
+    }
+    
+    @RequestMapping(value="/FindPw.ma", method = RequestMethod.POST)
+    public String findPw(Model model, HttpServletRequest request, MemberVO memberVO) {
+    	String pass2 = (String)request.getParameter("MEMBER_PASS2");
+    	String email = (String)request.getParameter("MEMBER_EMAIL");
+    	int result = 0;
+    	
+    	memberVO.setMEMBER_PASS(pass2);
+    	memberVO.setMEMBER_EMAIL(email);
+    	
+    	try {
+    		System.out.println(pass2+email);
+    		result = memberService.updateMemberPW(memberVO);
+    		
+    		if(result != 0) {
+    			System.out.println("비밀번호 찾기 - 변경 성공");
+    			return "redirect:/index.ma";
+    		}
+    	} catch (Exception e) {
+    		e.getMessage();
+    	}
+    	
+    	return "FindPWForm";
+    	
     }
 }

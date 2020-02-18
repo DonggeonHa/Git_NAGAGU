@@ -3,6 +3,8 @@ package com.spring.mapper;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import org.apache.ibatis.annotations.Param;
+
 import com.spring.chat.WorkshopVO;
 import com.spring.member.MemberVO;
 
@@ -18,6 +20,7 @@ public interface memberMapper {
 	MemberVO selectMember(MemberVO memberVO); // 로그인 시 세션에 넣을 Member_NUM 호출
 	int findMemberPW(MemberVO memberVO);	//비밀번호 찾기
 	int updateMemberPW(MemberVO memberVO);
+	int lastPwUpdate(@Param("pass1") String pass1, @Param("member_email") String member_email);
 	
 	/* 경태 */
 	ArrayList<MemberVO> getMemberList(HashMap<String, Object> map);
