@@ -775,12 +775,12 @@
 					</div>
 	
 	                  
-					<!-- 리뷰 pagenation -->
+					<!-- 리뷰 페이지네이션 -->
 					<br/>
 					
 					
 					<br />
-					<!-- 리뷰 pagenation 끝 -->
+					<!-- 리뷰 페이지네이션 끝 -->
 		
 		
 			
@@ -1386,7 +1386,7 @@
 							$('#ReviewtableSection').append(output);				
 						}					
 					} else {
-						var output = '등록된 댓글이 없습니다.';
+						var output = '<div class="justify-content-center pt-3 pb-1" style="text-align:center;">등록된 댓글이 없습니다.</div>';
 						$('#ReviewtableSection').append(output);	//이상한데...!?!?!?
 					}
 		          },
@@ -1402,8 +1402,7 @@
 		$(document).on("click",".insertReview",function(event){
 			var formId = 'ReviewForm';
 			var REVIEW_RE = 0;	//원글
-	
-	
+			
 			var form = new FormData(document.getElementById(formId));
 		
 			$.ajax({
@@ -1434,7 +1433,6 @@
 			event.preventDefault();		
 		})
 
-		
 
 		//Review 등록하기 버튼(insert) //답글
 		$(document).on("click",".insertReviewReply",function(event){
@@ -1700,113 +1698,115 @@
 							var date = date_format(QNA_DATE);
 							var QNA_CONTENT = retVal.qnaList[i].QNA_CONTENT;
 
+							
 							output += '<div class="QnaAndReplySum pt-2 pb-1" id="QnaAndReplySum'+QNA_NUM+'">';
-							output += '<div class="QnaSum" id="QnaSum'+QNA_NUM+'">';
-							output += '<div class="QnaList pb-3" id="QnaList'+QNA_NUM+'">';
-							output += '<div class="beforeModifyQna" id="beforeModifyQna'+QNA_NUM+'">';
-							output += '<div class="row justify-content-center">';
-							output += '<div class="col-1 justify-content-end"><img src="'+MEMBER_PICTURE+'" alt="" class="rounded-circle"></div>';
-							output += '<div class="col-11">';
-							output += '<div class="row pb-1">';
-							output += '<div class="col-2 justify-content-end name">'+MEMBER_NICK+'</div>';
-							output += '<div class="col-8 justify-content-center"></div>';
-							output += '<div class="col-2 justify-content-center smallfont">'+date+'</div>';
-							output += '</div>';
-							output += '<div class="row pb-2">';
-							output += '</div>';
-							output += '<div class="row pb-2">';
-							output += '<div class="col-11 pr-0">' + QNA_CONTENT + '</div></div>';
-							output += '<div class="row">';
-							output += '<div class="col-2 justify-content-center" style="font-size:0.7em; font-weight:bold; cursor: pointer;">';
-							//작성항 공방만 답글버튼 보인다
-							if(<%=WORKSHOP_NUM%> == <%=WorkshopMatchingNumber%>) {
+							
+							//if
+							if((<%=WORKSHOP_NUM%> == <%=WorkshopMatchingNumber%>) || ('<%=MEMBER_NICK%>' == MEMBER_NICK)) {
+								output += '<div class="QnaSum" id="QnaSum'+QNA_NUM+'">';
+								output += '<div class="QnaList pb-3" id="QnaList'+QNA_NUM+'">';
+								output += '<div class="beforeModifyQna" id="beforeModifyQna'+QNA_NUM+'">';
+								output += '<div class="row justify-content-center">';
+								output += '<div class="col-1 justify-content-end"><img src="'+MEMBER_PICTURE+'" alt="" class="rounded-circle"></div>';
+								output += '<div class="col-11">';
+								output += '<div class="row pb-1">';
+								output += '<div class="col-2 justify-content-end name">'+MEMBER_NICK+'</div>';
+								output += '<div class="col-8 justify-content-center"></div>';
+								output += '<div class="col-2 justify-content-center smallfont">'+date+'</div>';
+								output += '</div>';
+								output += '<div class="row pb-2">';
+								output += '</div>';
+								output += '<div class="row pb-2">';
+								output += '<div class="col-11 pr-0">' + QNA_CONTENT + '</div></div>';
+								output += '<div class="row">';
+								output += '<div class="col-2 justify-content-center" style="font-size:0.7em; font-weight:bold; cursor: pointer;">';
+								//답글 버튼은 작성한 공방만 보인다
+								if(<%=WORKSHOP_NUM%> == <%=WorkshopMatchingNumber%>) {
+									output += '<a class="qna_replybtn" id="qna_replybtn' + QNA_NUM + '" value="' + QNA_NUM + '">답글</a>';
+								}
+								output += '</div>';		
+								output += '<div class="col-8 justify-content-center"></div>';
+								console.log("MEMBER_NICK = " + MEMBER_NICK)
+								//수정,삭제버튼은 작성 본인만 보인다
+								if('<%=MEMBER_NICK%>' == MEMBER_NICK) {
+									output += '<div class="col-2 QnabeforeControl justify-content-center" id="QnabeforeControl'+QNA_NUM+'" style="font-size:0.7em; font-weight:bold;">';
+									output += '<input type="hidden" name="REVIEW_NUM" value="'+QNA_NUM+'">';
+									output += '<a class="gomodifyQnaform">수정</a> &nbsp;';
+									output += '<a class="deleteQna">삭제</a>';
+									output += '</div>';
+								}
+								output += '</div></div></div></div>';
+								output += '<div class="afterModifyQna" id="afterModifyQna'+QNA_NUM+'"></div>';
+								output += '</div></div>';
+								output += '<div class="QnaReplySum" id="QnaReplySum'+QNA_NUM+'">';
+								output += '<div class="QnaReplyformSection" id="QnaReplyformSection'+QNA_NUM+'"></div>';
 								
-								output += '<a class="qna_replybtn" id="qna_replybtn' + QNA_NUM + '" value="' + QNA_NUM + '">답글</a>';
-							}
-							output += '</div>';							
-
-							output += '<div class="col-8 justify-content-center"></div>';
-							console.log("MEMBER_NICK = " + MEMBER_NICK)
-							//작성 본인만 수정,삭제버튼 보인다
-							if('<%=MEMBER_NICK%>' == MEMBER_NICK) {
-								output += '<div class="col-2 QnabeforeControl justify-content-center" id="QnabeforeControl'+QNA_NUM+'" style="font-size:0.7em; font-weight:bold;">';
-								output += '<input type="hidden" name="REVIEW_NUM" value="'+QNA_NUM+'">';
-								output += '<a class="gomodifyQnaform">수정</a> &nbsp;';
-								output += '<a class="deleteQna">삭제</a>';
+								if(retVal.qna_RE_Count>0) {
+									for(var j=0; j<retVal.qna_RE_List.length; j++) {
+										if(QNA_NUM == retVal.qna_RE_List[j].QNA_RE) {
+											var REPLY_NUM = retVal.qna_RE_List[j].QNA_NUM;
+											var WORKSHOP_PICTURE = retVal.qna_RE_List[j].WORKSHOP_PICTURE;
+											var WORKSHOP_NAME = retVal.qna_RE_List[j].WORKSHOP_NAME;
+											var REPLY_CONTENT = retVal.qna_RE_List[j].QNA_CONTENT;
+											var REPLY_DATE = new Date(retVal.qna_RE_List[j].QNA_DATE);
+											var replydate = date_format(REPLY_DATE);
+	
+											//리뷰 출력
+											output += '<div class="QnaReplyList pb-2" id="QnaReplyList'+REPLY_NUM+'">';
+											output += '<div class="row justify-content-center">';
+											output += '<div class="col-1"></div>';
+											output += '<div class="col-1"><img src="'+WORKSHOP_PICTURE+'" alt="" class="rounded-circle"></div>';
+											output += '<div class="col-10">';
+											output += '<div class="row">';
+											output += '<div class="col-2 justify-content-end name">'+WORKSHOP_NAME+'</div>';
+											output += '<div class="col-8 justify-content-center"></div>';
+											output += '<div class="col-2 justify-content-center smallfont pl-1">'+replydate+'</div>';
+											output += '</div>';
+											output += '<div class="beforeModifyQnaReply" id="beforeModifyQnaReply'+REPLY_NUM+'">';
+											output += '<div class="row">';
+											output += '<div class="col-11 pr-0">'+REPLY_CONTENT;
+											output += '</div></div></div>';
+											output += '<div class="afterModifyQnaReply" id="afterModifyQnaReply'+REPLY_NUM+'">';
+											output += '<form class="modifyQnaReplyForm" id="modifyQnaFormReply'+REPLY_NUM+'">';	
+											output += '<div class="row">';			
+											output += '<div class="col-11 pr-0">';			
+											output += '<input type="hidden" name="QNA_NUM" value="'+REPLY_NUM+'">';			
+											output += '<textarea rows="2" name="QNA_CONTENT" id="QNA_CONTENT'+REPLY_NUM+'" class="col-12 pl-0 pr-0">'+REPLY_CONTENT+'</textarea>';			
+											output += '</div></div></form></div>';
+											output += '<div class="row">';
+											output += '<div class="col-2 replytext justify-content-center"></div>';
+											output += '<div class="col-8 justify-content-center"></div>';
+											
+											//수정 삭제 버튼은 작성한 워크샵만 보인다
+											if(<%=WORKSHOP_NUM%> == <%=WorkshopMatchingNumber%>) {
+												output += '<div class="col-2 QnabeforeControl justify-content-center pl-1" id="QnabeforeControl'+REPLY_NUM+'">';								
+												output += '<input type="hidden" name="QNA_NUM" value="'+REPLY_NUM+'">';
+												output += '<a class="gomodifyQnaReplyform">수정</a> &nbsp;';
+												output += '<a class="deleteQna">삭제</a>';
+												output += '</div>';
+												output += '<div class="col-2 QnaafterControl justify-content-center pl-1" id="QnaafterControl'+REPLY_NUM+'">';
+												output += '<input type="hidden" name="QNA_NUM" value="'+REPLY_NUM+'">';
+												output += '<a class="modifyQnaReply">수정</a> &nbsp;';
+												output += '<a class="formCancel" value="qnaReplyModify">취소</a>';
+												output += '</div>';
+											}
+											output += '</div></div></div></div>';
+										}			
+									}
+								}
+								output += '</div>';
+							} else {
+								output += '<div class="justify-content-center pt-1 pb-1 mt-5 mb-5 text-center">';
+								output += '문의는 작성 회원만 열람 가능합니다.';
 								output += '</div>';
 							}
-							
-							output += '</div></div></div></div>';
-							output += '<div class="afterModifyQna" id="afterModifyQna'+QNA_NUM+'"></div>';
-							output += '</div></div>';
-							
-							output += '<div class="QnaReplySum" id="QnaReplySum'+QNA_NUM+'">';
-							output += '<div class="QnaReplyformSection" id="QnaReplyformSection'+QNA_NUM+'"></div>';
-							if(retVal.qna_RE_Count>0) {
-								for(var j=0; j<retVal.qna_RE_List.length; j++) {
-									if(QNA_NUM == retVal.qna_RE_List[j].QNA_RE) {
-										var REPLY_NUM = retVal.qna_RE_List[j].QNA_NUM;
-										var REPLY_NICK = retVal.qna_RE_List[j].MEMBER_NICK;
-										var REPLY_PICTURE = retVal.qna_RE_List[j].MEMBER_PICTURE;
-										var REPLY_CONTENT = retVal.qna_RE_List[j].QNA_CONTENT;
-										var REPLY_DATE = new Date(retVal.qna_RE_List[j].QNA_DATE);
-										var replydate = date_format(REPLY_DATE);
-
-										//리뷰 출력
-										output += '<div class="QnaReplyList pb-2" id="QnaReplyList'+REPLY_NUM+'">';
-										output += '<div class="row justify-content-center">';
-										output += '<div class="col-1"></div>';
-										
-										output += '<div class="col-1"><img src="'+REPLY_PICTURE+'" alt="" class="rounded-circle"></div>';
-										output += '<div class="col-10">';
-										output += '<div class="row">';
-										output += '<div class="col-2 justify-content-end name">'+REPLY_NICK+'</div>';
-										output += '<div class="col-8 justify-content-center"></div>';
-										output += '<div class="col-2 justify-content-center smallfont pl-1">'+replydate+'</div>';
-										output += '</div>';
-										output += '<div class="beforeModifyQnaReply" id="beforeModifyQnaReply'+REPLY_NUM+'">';
-										output += '<div class="row">';
-										output += '<div class="col-11 pr-0">'+REPLY_CONTENT;
-										output += '</div></div></div>';
-										output += '<div class="afterModifyQnaReply" id="afterModifyQnaReply'+REPLY_NUM+'">';
-										output += '<form class="modifyQnaReplyForm" id="modifyQnaFormReply'+REPLY_NUM+'">';	
-										output += '<div class="row">';			
-										output += '<div class="col-11 pr-0">';			
-										output += '<input type="hidden" name="QNA_NUM" value="'+REPLY_NUM+'">';			
-										output += '<textarea rows="2" name="QNA_CONTENT" id="QNA_CONTENT'+REPLY_NUM+'" class="col-12 pl-0 pr-0">'+REPLY_CONTENT+'</textarea>';			
-										output += '</div></div></form></div>';
-										output += '<div class="row">';
-										output += '<div class="col-2 replytext justify-content-center"></div>';
-										output += '<div class="col-8 justify-content-center"></div>';
-										
-										//워크샵과 작성자만 보인다
-										if('<%=MEMBER_NICK%>' == REPLY_NICK) {
-										
-											output += '<div class="col-2 QnabeforeControl justify-content-center pl-1" id="QnabeforeControl'+REPLY_NUM+'">';								
-											output += '<input type="hidden" name="QNA_NUM" value="'+REPLY_NUM+'">';
-											output += '<a class="gomodifyQnaReplyform">수정</a> &nbsp;';
-											output += '<a class="deleteQna">삭제</a>';
-											output += '</div>';
-											output += '<div class="col-2 QnaafterControl justify-content-center pl-1" id="QnaafterControl'+REPLY_NUM+'">';
-											output += '<input type="hidden" name="QNA_NUM" value="'+REPLY_NUM+'">';
-											output += '<a class="modifyQnaReply">수정</a> &nbsp;';
-											output += '<a class="formCancel" value="qnaReplyModify">취소</a>';
-											output += '</div>';
-										}
-										output += '</div></div></div></div>';
-									}			
-								}
-							}
-							
-							output += '</div></div>';
+							output += '</div>';
 							$('#QnatableSection').append(output);				
 						}	//for 끝					
 					} else {
-						var output = '등록된 문의가 없습니다.';
-						$('#QnatableSection').append(output);	//이상한데...!?!?!?
+						var output = '<div class="justify-content-center pt-3 pb-1" style="text-align:center;">등록된 문의가 없습니다.</div>';
+						$('#QnatableSection').append(output);	
 					}
-
-
 		          },
 		          error:function() {
 		             alert("getQnaList ajax통신 실패!!!");
@@ -1850,7 +1850,7 @@
 		
 		//qna 등록하기 버튼(insert) //답글
 		$(document).on("click",".insertQnaReply",function(event){
-			var QNA_NUM = $(this).prev().val();	//원글번호(review_re로 저장할 것)
+			var QNA_NUM = $(this).prev().val();	//원글번호(qna_re로 저장할 것)
 			console.log("QNA_NUM : " + QNA_NUM)
 			
 			var formId = 'QnaReplyform'+QNA_NUM;
@@ -1886,7 +1886,6 @@
 			console.log("QNA_NUM : " + QNA_NUM)
 			
 			$('#beforeModifyQna'+QNA_NUM).css('display', 'none');
-			
 
 			$.ajax({
 				url : "/NAGAGU/gomodifyQnaform.do", 
@@ -1937,14 +1936,10 @@
 			event.preventDefault();		
 		})			
 		
-		
-		
 		//qna 수정 process (원글)
 		$(document).on("click",".modifyQna",function(event){
 			var QNA_NUM = $(this).prev().val();
 			console.log("QNA_NUM"+QNA_NUM)
-			
-
 
  			var formId = 'modifyQnaForm'+QNA_NUM;
  	 		var form = new FormData(document.getElementById(formId));
@@ -1969,19 +1964,17 @@
 			event.preventDefault();				
 		})		
 		
-		////!!!!!
 		//qna 수정 process (답글)
 		$(document).on("click",".modifyQnaReply",function(event){
 			var QNA_NUM = $(this).prev().val();
 			console.log("QNA_NUM"+QNA_NUM)
-
 
  			var formId = 'modifyQnaFormReply'+QNA_NUM;
 			console.log("formId"+formId)
  	 		var form = new FormData(document.getElementById(formId));
  	 		
 			$.ajax({
-				url : "/NAGAGU/modifyQnaReply.do", 
+				url : "/NAGAGU/modifyQna.do", 
 				data : form,
 				dataType: 'json',
 				processData : false,
@@ -2000,6 +1993,42 @@
 			});
 			event.preventDefault();				
 		})			
+		
+
+//Qna 삭제하기----------------------------------------------------------------------------------------------------	  
+
+		//원글, 답글 same
+		$(document).on("click",".deleteQna",function(event){
+			var QNA_NUM = $(this).prev().prev().val();
+			console.log("QNA_NUM : " + QNA_NUM)
+			var delete_confirm = confirm("삭제하시겠습니까?");
+			if(delete_confirm) {
+				$.ajax({
+					url : "/NAGAGU/deleteQna.do", 
+					type:'GET',
+					data : {'QNA_NUM':QNA_NUM},
+					dataType : 'json', // 서버에서 보내줄 데이터 타입
+					async: false,
+					contentType : 'application/x-www-form-urlencoded; charset=UTF-8',
+					success:function(retVal) {
+						if(retVal.res == "OK") {
+							getQnaList();
+						} else if(retVal.res == "Children"){
+							alert("답변이 존재하는 문의는 삭제할 수 없습니다.");
+						} else {
+							alert("삭제 실패!");
+						}
+					},
+					error:function() {
+						alert("ajax통신 실패!!!");
+					}
+				});
+				event.preventDefault();					
+			}
+		})						
+		
+		
+		
 		
 		
 	//ready 끝	
@@ -2441,8 +2470,8 @@
 			var QNA_NUM = $(this).prev().val();
 			console.log("QNA_NUM : " + QNA_NUM)
 			
-			$('#beforeModifyReviewReply'+QNA_NUM).css('display', 'none');
-			$('#afterModifyReviewReply'+QNA_NUM).css('display', 'block'); 
+			$('#beforeModifyQnaReply'+QNA_NUM).css('display', 'none');
+			$('#afterModifyQnaReply'+QNA_NUM).css('display', 'block'); 
 			$('#QnabeforeControl'+QNA_NUM).css('display', 'none');	//수정,삭제버튼 숨김
 			$('#QnaafterControl'+QNA_NUM).css('display', 'block'); 	//수정,취소버튼 보임
 	

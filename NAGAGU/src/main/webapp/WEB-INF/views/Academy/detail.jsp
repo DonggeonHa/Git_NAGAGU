@@ -4,6 +4,7 @@
 <%@ page import = "com.spring.academy.*"%>
 <%@ page import = "com.spring.workshop.*" %>
 <%@ page import = "com.spring.member.*" %>
+<%@ page import = "java.text.SimpleDateFormat" %>
 <%@ taglib uri = "http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib prefix = "fmt" uri = "http://java.sun.com/jsp/jstl/fmt" %>
 
@@ -34,6 +35,33 @@
 	}
 	
 %>
+
+<%
+//선주꺼 붙임.....
+//멤버가 댓글 작성시 필요
+String MEMBER_PICTURE = (String)session.getAttribute("MEMBER_PICTURE"); 
+String WORKSHOP_PICTURE = (String)session.getAttribute("WORKSHOP_PICTURE");
+String WORKSHOP_NAME = (String)session.getAttribute("WORKSHOP_NAME");
+//로그인 상태 체크 위한
+Integer MEMBER_STATUS = 100;	//비로그인시 100
+if(session.getAttribute("MEMBER_EMAIL") == null) {
+	MEMBER_STATUS = (Integer)session.getAttribute("MEMBER_STATUS");		
+}
+Integer WORKSHOP_STATUS = 100;	//비로그인시 100
+if(session.getAttribute("MEMBER_EMAIL") == null) {
+	WORKSHOP_STATUS = (Integer)session.getAttribute("WORKSHOP_STATUS");		
+}
+//(QNA)글쓴이만 답글 버튼이 보인다. 글쓴이인지 체크하기 위해 이 글의 WORKSHOP_NUM 받아옴
+int WorkshopMatchingNumber = (int)request.getAttribute("WorkshopMatchingNumber");
+Integer WORKSHOP_NUM = (Integer)session.getAttribute("WORKSHOP_NUM");
+//날짜 포맷 형식
+SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+
+
+
+int CLASS_NUMBER = cl.getCLASS_NUMBER();
+%>
+
 
 <style>
 	.Precautions dl dd {
@@ -288,10 +316,174 @@
 					</div>
 				</div>
 			</div>
-			<!-- 리뷰 테이블 시작 -->
 			
-			<!-- 리뷰 테이블 끝 -->
+			<!-- 댓글 테이블 시작 -->
+			<span id="t3"></span>
+			<br /><br /><hr />
+           
+			<!-- 리뷰 테이블 시작 -->
+			<h3 id="review_scroll" >Review</h3>
+			<br /><br />	
+			<div id="ReviewSection">
+				<div id="ReviewButtonSection">	
+					<div class="row justify-content-center pt-3 pb-3"> <!-- 리뷰 댓글달기 버튼 -->
+						<button class="btn btn-dark btn-sm review_btn">댓글 달기</button>
+					</div>
+				</div>
+				<div id="ReviewWrapSection" class="pb-1">
+					<div id="ReviewformSection" class="pb-2">
+						<form id="ReviewForm" name="REVIEW_CONTENT" enctype="multipart/form-data"> <!-- 리뷰 작성 폼 영역 : 하나 -->
+							<input type="hidden" name="MEMBER_NUM" value="MEMBER_NUM">
+							<input type="hidden" name="PRODUCT_NUM" value="<%=CLASS_NUMBER %>">
+							<div class="row justify-content-center">
+								<div class="col-1 justify-content-end">
+									<img src="<%=MEMBER_PICTURE%>" alt="" class="rounded-circle">
+								</div>
+								<div class="col-11">
+									<div class="row pb-1">
+										<div class="col-2 justify-content-end name"><%=MEMBER_NICK%> </div>
+										<div class="col-8 justify-content-center"></div>
+										<div class="col-2 justify-content-center smallfont"></div>
+									</div>
+									<div class="row pb-1"> <!-- 평점 -->
+										<div class="col-3 pr-0">
+											<img src="${pageContext.request.contextPath}/resources/images/star1.png" alt="" width="15px" height="15px" >
+											&nbsp;
+											<select name="REVIEW_GRADE" id="REVIEW_GRADE" style="">
+												<option value="0">0</option>
+												<option value="0.5">0.5</option>
+												<option value="1">1.0</option>
+												<option value="1.5">1.5</option>
+												<option value="2">2.0</option>
+												<option value="2.5">2.5</option>
+												<option value="3">3.0</option>
+												<option value="3.5">3.5</option>
+												<option value="4">4.0</option>
+												<option value="4.5">4.5</option>
+												<option value="5">5.0</option>
+											</select>											
+										</div>
+										<div class="9"></div>
+									</div>
+									
+									<div class="row pb-2"> <!-- 파일 -->
+										<div class="col-12">
+											<div class="file_input">
+											    <label>
+											        사진 업로드
+											        <input type="file" multiple="multiple" name="REVIEW_FILE" id="input_imgs">
+											    </label>
+											    <input type="text" readonly="readonly" title="File Route" value="선택된 파일이 없습니다">
+											</div>			
+										</div>
+									</div>
+									<div class="row pb-2">
+										<div class="col-12 imgs_wrap">
+											<img id="inputimg" >
+										</div>
+									</div>
+									<div class="row pb-1">	<!-- 내용 textarea -->
+										<div class="col-11 pr-0">
+											<textarea rows="3" name="REVIEW_CONTENT" class="col-12 pl-0 pr-0" 
+												id=""></textarea>
+										</div>	
+									</div>
+									<div class="row"> <!-- 수정, 삭제 -->
+										<div class="col-2 justify-content-center"></div>
+										<div class="col-8 justify-content-center"></div>
+										<div class="col-2 justify-content-center" style="font-size:0.7em; font-weight:bold;">
+											<a class="insertReview">작성</a> &nbsp;
+											<a class="formCancel" value="ReviewForm">취소</a>
+										</div>
+									</div>
+								</div>
+							</div>
+						</form>		
+					</div>
+					<div id="ReviewtableSection" class="pb-2">
+					
+						
+					</div>
+				</div>
+			</div>			
+			<!-- 리뷰 페이지네이션 -->
+			<br/>
+			
+			
+			<br />
+			<!-- 리뷰 페이지네이션 끝 -->			
+			
+			
+			<!-- 댓글 테이블 끝 -->
+			
+			
+			
+			
 			<!-- Q&A 테이블 시작 -->
+	
+			<span id="t4"></span>
+			<br /><br /><hr />
+			
+			<!-- Q&A 테이블 시작 -->
+			<h3 id="qna_scroll">Q&A</h3>
+			<br /><br />	
+			<div id="QnaSection">
+				<div id="QnaButtonSection">	
+					<div class="row justify-content-center pt-3 pb-3"> <!-- 리뷰 댓글달기 버튼 -->
+						<button class="btn btn-dark btn-sm qna_btn">문의하기</button>
+					</div>
+				</div>
+				<div id="QnaWrapSection" class="pb-1">
+					<div id="QnaformSection" class="pb-2">
+						<form id="QnaForm" name="QNA_CONTENT"> <!-- 리뷰 작성 폼 영역 : 하나 -->
+							<input type="hidden" name="MEMBER_NUM" value="MEMBER_NUM">
+							<input type="hidden" name="PRODUCT_NUM" value="<%=CLASS_NUMBER %>">
+							<div class="row justify-content-center">
+								<div class="col-1 justify-content-end">
+									<img src="<%=MEMBER_PICTURE%>" alt="" class="rounded-circle">
+								</div>
+								<div class="col-11">
+									<div class="row pb-1">
+										<div class="col-2 justify-content-end name"><%=MEMBER_NICK%> </div>
+										<div class="col-8 justify-content-center"></div>
+										<div class="col-2 justify-content-center smallfont"></div>
+									</div>
+									<div class="row pb-1">	<!-- 내용 textarea -->
+										<div class="col-11 pr-0">
+											<textarea rows="3" name="QNA_CONTENT" class="col-12 pl-0 pr-0" 
+												id=""></textarea>
+										</div>	
+									</div>
+									<div class="row"> <!-- 수정, 삭제 -->
+										<div class="col-2 justify-content-center"></div>
+										<div class="col-8 justify-content-center"></div>
+										<div class="col-2 justify-content-center" style="font-size:0.7em; font-weight:bold;">
+											<a class="insertQna">작성</a> &nbsp;
+											<a class="formCancel" value="QnaForm">취소</a>
+										</div>
+									</div>
+								</div>
+							</div>
+						</form>		
+					</div>
+					<div id="QnatableSection" class="pb-2">
+					
+						
+					</div>
+				</div>
+			</div>
+		
+		
+			<!-- Q&A pagenation -->
+			<br/>
+			
+			
+			<br />
+			<!-- Q&A pagenation 끝 -->		
+
+	
+	
+	
 			
 			<!-- Q&A 테이블 끝 -->
 		</div>

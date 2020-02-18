@@ -11,8 +11,6 @@ public interface ProductQnaService {
 	ArrayList<HashMap<String, Object>> getQnaList(HashMap<String, Object> map);
 	ArrayList<HashMap<String, Object>> getQna_RE_List(HashMap<String, Object> map);
 	
-	
-	
 	int insertQna(Product_qnaVO qnaVO);
 	Product_qnaVO getQnaVO(Product_qnaVO qnaVO);
 	int modifyQna(Product_qnaVO qnaVO);
