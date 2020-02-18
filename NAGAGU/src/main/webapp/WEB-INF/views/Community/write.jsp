@@ -190,7 +190,6 @@
 	});
 	
 	function addboard(){
-		alert('hi')
 		function addTags(){				
 			var	tags_value= '';
 			var tags_children = $('div.tags').children();
@@ -202,7 +201,6 @@
 				}
 			}
 			$('#pics_tags').val(tags_value);
-			alert("확인!!!!!!" + $('#pics_tags').val());
 		}
 		addTags();			
 		document.writeForm.submit();
