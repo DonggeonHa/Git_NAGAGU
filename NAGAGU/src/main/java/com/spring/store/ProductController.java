@@ -810,15 +810,14 @@ public class ProductController {
 	//=====================================================
 	//===============================================QNA insert
 	//-------------------------------------------QNA_RE_insert
-	@RequestMapping(value="/qna_insert.do",  produces="application/json;charset=UTF-8")
+	@RequestMapping(value="/insertQna.do",  produces="application/json;charset=UTF-8")
 	@ResponseBody
-	public Map<String, Object> insert_qna(HttpServletRequest request, HttpSession session) throws Exception {
-		System.out.println("qna_insert 컨트롤러 start!");
+	public Map<String, Object> insertQna(HttpServletRequest request, HttpSession session) throws Exception {
+		System.out.println("insertQna 컨트롤러 start!");
 
 		int MEMBER_NUM = 0;
 		int WORKSHOP_NUM = 0;
 		Product_qnaVO qnaVO = new Product_qnaVO();
-		
 		
 		if(session.getAttribute("MEMBER_NUM") != null) {	//멤버로그인(원글)
 			System.out.println("원글qna insert");
@@ -835,41 +834,70 @@ public class ProductController {
 		}
 		
 		System.out.println("QNA_CONTENT=" + request.getParameter("QNA_CONTENT"));
-		System.out.println("QNA_PRODUCT=" + request.getParameter("QNA_PRODUCT"));
-		System.out.println("WORKSHOP_NUM=" + request.getParameter("WORKSHOP_NUM"));
-		System.out.println("MEMBER_NUM=" + request.getParameter("MEMBER_NUM"));
+		System.out.println("QNA_PRODUCT=" + request.getParameter("PRODUCT_NUM"));
+		System.out.println("WORKSHOP_NUM=" + WORKSHOP_NUM);
+		System.out.println("MEMBER_NUM=" + MEMBER_NUM);
 
 //		qnaVO.setQNA_NUM(qNA_NUM);	//시퀀스 이용
 	    qnaVO.setQNA_CONTENT(request.getParameter("QNA_CONTENT"));
 	    qnaVO.setQNA_DATE(new Timestamp(System.currentTimeMillis()));
-	    qnaVO.setQNA_PRODUCT(Integer.parseInt(request.getParameter("QNA_PRODUCT")));
+	    qnaVO.setQNA_PRODUCT(Integer.parseInt(request.getParameter("PRODUCT_NUM")));
 	
 
 		
 		Map<String, Object> retVal = new HashMap<String, Object>();
 		try {
 			int res = qnaService.insertQna(qnaVO);
-			Product_qnaVO vo = qnaService.getQnaVO(qnaVO);
+		//	Product_qnaVO vo = qnaService.getQnaVO(qnaVO);
 			retVal.put("res", "OK");
-			retVal.put("vo", vo);
+		//	retVal.put("vo", vo);
 		}catch(Exception e) {
 			retVal.put("res", "FAIL");
-			retVal.put("message", "Failure");
+		//	retVal.put("message", "Failure");
 		}
 		return retVal;
 	}		
+
+	
+	//리뷰 댓글 수정 폼
+	@RequestMapping(value="/gomodifyQnaform.do",  produces="application/json;charset=UTF-8")
+	@ResponseBody
+	public Map<String, Object> gomodifyQnaform(HttpServletRequest request) throws Exception {
+		System.out.println("gomodifyQnaform 컨트롤러 왔다");
+		int QNA_NUM = Integer.parseInt(request.getParameter("QNA_NUM"));
+		System.out.println("QNA_NUM = " + QNA_NUM);
+		
+		Product_qnaVO qnaVO = new Product_qnaVO();
+		qnaVO.setQNA_NUM(QNA_NUM);
+		Map<String, Object> retVal = new HashMap<String, Object>(); //리턴값 저장
+		try {
+			qnaVO = qnaService.getQnaVO(qnaVO);
+			retVal.put("res", "OK");
+			retVal.put("qnaVO", qnaVO);
+		} catch(Exception e) {
+			retVal.put("res", "Fail");
+		}
+		return retVal;
+		
+	}		
 	
 	//===============================================QNA modify
-	@RequestMapping(value="/qna_modify.do",  produces="application/json;charset=UTF-8")
+	@RequestMapping(value="/modifyQna.do",  produces="application/json;charset=UTF-8")
 	@ResponseBody
-	public Product_qnaVO qna_modify(Product_qnaVO vo, HttpServletRequest request) throws Exception {
-		System.out.println("qna_modify 컨트롤러 왔다");
+	public Map<String, Object> modifyQna(Product_qnaVO vo, HttpServletRequest request) throws Exception {
+		System.out.println("modifyQna 컨트롤러 왔다");
 
 		vo.setQNA_DATE(new Timestamp(System.currentTimeMillis()));
+		
+		Map<String, Object> retVal = new HashMap<String, Object>(); //리턴값 저장
+		try {
+			int res = qnaService.modifyQna(vo);
 
-		int res = qnaService.modifyQna(vo);
-		System.out.println("ccc");
-		return vo;
+			retVal.put("res", "OK");
+		} catch(Exception e) {
+			retVal.put("res", "Fail");
+		}
+		return retVal;		
 	}		
 	
 	
