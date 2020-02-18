@@ -147,4 +147,25 @@ public class MemberAjaxController {
 		
 		return retVal;
 	}
+	
+	@PostMapping(value = "/checkPW.su", produces = "application/json;charset=UTF-8")
+	public Map<String, Object> checkPW(String pass1, String member_email) {
+		Map<String, Object> retVal = new HashMap<String, Object>(); // 리턴값 저장
+		
+		System.out.println("member_email이랑pass1: " + member_email + pass1);
+		int result = 0;
+		
+		try {
+			result = memberService.lastPwUpdate(pass1, member_email);
+			
+			if(result != 0) {
+				retVal.put("res", "chk_pw_success");
+			}
+			
+		} catch (Exception e) {
+			retVal.put("fail", "chk_pw_fail");
+		}
+		
+		return retVal;
+	}
 }

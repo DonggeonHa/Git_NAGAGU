@@ -3,6 +3,8 @@ package com.spring.member;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import org.apache.ibatis.annotations.Param;
+
 import com.spring.community.LikeVO;
 import com.spring.community.PicsVO;
 
@@ -20,6 +22,7 @@ public interface MemberService {
 	public int checkMember(String mem_mail) throws Exception;
 	public int findMemberPW(MemberVO memberVO);
 	public int updateMemberPW(MemberVO memberVO);
+	int lastPwUpdate(@Param("pass1") String pass1, @Param("member_email") String member_email);
 	
 	
 	/* 회원 탈퇴 */

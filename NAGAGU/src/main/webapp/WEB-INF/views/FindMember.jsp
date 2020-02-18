@@ -29,10 +29,10 @@ img {vertical-align:top;}
 .find_idpw_table{
     text-align: center;
     margin: auto;
-    width: 300px;
+    width: 330px;
     border: 1px solid #aaaaaa;
     border-collapse: collapse;
-    height: 250px;
+    height: 280px;
 }
 
 .find_idpw_textbox{
@@ -45,11 +45,7 @@ img {vertical-align:top;}
 .find_idpw_text1{
     vertical-align: bottom;
     margin: 15px 2px 0px 2px;
-    /* background-color: #EEEEEE; */
-    /* 분홍 계열 */
     background-color: #EEEEEE;
-    /* 하늘 계열 */
-    /* background-color: rgb(237, 245, 250); */
     height: 30px;
     font-size: 13px;
 }
@@ -103,7 +99,7 @@ img {vertical-align:top;}
     <!-- <section class="content"> -->
         <div class="find_content">
             <br />
-            <p style="margin: 18px 0 16px 14px; font-size: 24px;">
+            <p style="margin: 18px 0 35px 14px; font-size: 30px;">
                 이메일/비밀번호 찾기
             </p>
         </div>
