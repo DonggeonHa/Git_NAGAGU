@@ -235,7 +235,7 @@
 		cursor:pointer;
 	}
 </style>
-<!-- content start -->
+<!-- content starts -->
 <div class="container" style="margin-top: 30px; margin-bottom: 30px;">
 	<div class="justify-content-between title">
 		<div class="col-10 page-tap">
