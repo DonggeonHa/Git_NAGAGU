@@ -38,3 +38,61 @@ CREATE TABLE MY_CLASS (
 CREATE SEQUENCE MY_CLASS_SEQ
     start with 1
     increment by 1;
+
+
+
+
+
+
+/*강의 리뷰*/ 
+create table CLASS_REVIEW(
+    REVIEW_NUM          NUMBER PRIMARY KEY,
+    REVIEW_MEMBER       NUMBER,
+    REVIEW_CLASS      NUMBER,
+    CONSTRAINT CLASS_REVIEW_NUM FOREIGN KEY (REVIEW_CLASS) 
+        REFERENCES ACADEMY(CLASS_NUMBER)ON DELETE CASCADE, 
+    REVIEW_DATE         DATE,
+    REVIEW_FILE         VARCHAR2(2000),
+    REVIEW_CONTENT      VARCHAR2(1000),
+    REVIEW_GRADE        NUMBER(2,1),
+    REVIEW_RE			NUMBER
+);
+
+/*강의 리뷰 시퀀스*/ 
+create sequence class_review_seq
+    start with 1
+    increment by 1
+    maxvalue 10000;
+    
+    
+    
+//-------------------------------------------    
+/*강의 qna*/     
+create table CLASS_QNA(
+    QNA_NUM			NUMBER PRIMARY KEY,
+    QNA_MEMBER      NUMBER,
+    QNA_CLASS     NUMBER,
+    CONSTRAINT CLASS_QNA_NUM FOREIGN KEY (QNA_CLASS) 
+        REFERENCES ACADEMY(CLASS_NUMBER)ON DELETE CASCADE, 
+    QNA_DATE        DATE,
+    QNA_CONTENT     VARCHAR2(1000),
+    QNA_RE			NUMBER,
+    QNA_STATUS		NUMBER
+);   
+
+/*강의qna 시퀀스*/      
+create sequence class_qna_seq
+    start with 1
+    increment by 1
+    maxvalue 10000;
+   
+      
+
+
+
+
+
+
+
+
+    

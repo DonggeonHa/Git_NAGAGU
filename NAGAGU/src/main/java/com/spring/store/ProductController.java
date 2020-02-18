@@ -576,9 +576,6 @@ public class ProductController {
 				
 			}
 			
-
-			
-			
 		}catch(Exception e) {
 			retVal.put("res", "FAIL");
 			retVal.put("message", "Failure");
@@ -843,17 +840,12 @@ public class ProductController {
 	    qnaVO.setQNA_DATE(new Timestamp(System.currentTimeMillis()));
 	    qnaVO.setQNA_PRODUCT(Integer.parseInt(request.getParameter("PRODUCT_NUM")));
 	
-
-		
 		Map<String, Object> retVal = new HashMap<String, Object>();
 		try {
 			int res = qnaService.insertQna(qnaVO);
-		//	Product_qnaVO vo = qnaService.getQnaVO(qnaVO);
 			retVal.put("res", "OK");
-		//	retVal.put("vo", vo);
 		}catch(Exception e) {
 			retVal.put("res", "FAIL");
-		//	retVal.put("message", "Failure");
 		}
 		return retVal;
 	}		
@@ -900,12 +892,40 @@ public class ProductController {
 		return retVal;		
 	}		
 	
+
+	//리뷰 댓글 수정 process (답글)
+	@RequestMapping(value="/modifyQnaReply.do",  produces="application/json;charset=UTF-8")
+	@ResponseBody
+	public Map<String, Object>  modifyQnaReply(HttpServletRequest request) throws Exception {
+		System.out.println("modifyQnaReply 컨트롤러 왔다");
+		int QNA_NUM = Integer.parseInt(request.getParameter("QNA_NUM"));
+		String QNA_CONTENT = request.getParameter("QNA_CONTENT");
+		Product_qnaVO vo = new Product_qnaVO();
+
+		vo.setQNA_NUM(QNA_NUM);
+		vo.setQNA_DATE(new Timestamp(System.currentTimeMillis()));
+		vo.setQNA_CONTENT(QNA_CONTENT);
+		
+		Map<String, Object> retVal = new HashMap<String, Object>(); //리턴값 저장
+		try {
+					
+		//	int res = qnaService.modifyQnaReply(vo);
+				retVal.put("res", "OK");
+			
+		}catch(Exception e) {
+			retVal.put("res", "FAIL");
+			retVal.put("message", "Failure");
+		}		
+		
+		
+		return retVal;
+	}		
 	
 	//-------------------------------------------QNA delete
-	@RequestMapping(value="/delete_qna.do",  produces="application/json;charset=UTF-8")
+	@RequestMapping(value="/deleteQna.do",  produces="application/json;charset=UTF-8")
 	@ResponseBody
 	public Map<String, Object> delete_qna(HttpServletRequest request) throws Exception {
-		System.out.println("delete_qna 컨트롤러 왔다");
+		System.out.println("deleteQna 컨트롤러 왔다");
 		int QNA_NUM = Integer.parseInt(request.getParameter("QNA_NUM"));
 		Product_qnaVO qnaVO = new Product_qnaVO();
 		qnaVO.setQNA_NUM(QNA_NUM);	
@@ -918,33 +938,21 @@ public class ProductController {
 			//답글을 가지고 있는 댓글은 삭제할 수 없다.
 			//삭제하고자 하는 댓글의 qna_num을 qna_re로 하는 데이터가 있을 경우, 삭제 불가
 			int count = qnaService.findChildrenRE(qnaVO);
-			//답변 존재(삭제 불가능)
-			if(count == 0) {
-				//답변 달려있지 않음(삭제 가능)
+			if(count == 0) {	//답변 달려있지 않음(삭제 가능)
 				res = qnaService.deleteQna(qnaVO);
-			} else {
-				
-			}
-			
-			if(res != 0) {
 				retVal.put("res", "OK");
-			} else {
-				retVal.put("res", "FAIL");
+			} else {	//답글 존재(삭제 불가능)
+				retVal.put("res", "Children");
 			}
 			
 			
 		}catch(Exception e) {
 			retVal.put("res", "FAIL");
-			retVal.put("message", "Failure");
 		}		
 		System.out.println(retVal);
 		return retVal;
 		
 	}			
-	
-	
-
-	
 	
 	
 	
