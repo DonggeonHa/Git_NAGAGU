@@ -268,7 +268,7 @@
   				    				output += '<div class="price_wrap text-right col-2">'
 						    			output += '<div class="basic_price text-right" value='+retVal.myPaidOrder[j].PRODUCT_PRICE+'>가격</div><span>'+price+'원</span>'
 						    			output += '<div class="shipPrice text-right" value='+retVal.myPaidOrder[j].PRODUCT_SHIP_PRICE+'>+배송비</div><span>'+ship+'원</span>'
-					    				output += '<div class="chongprice text-right" style="font-size:1.2rem;">총가격</div><span style="font-size:1.2rem;">'+paidPrice.toLocaleString()+'원</span></b>' 
+					    				output += '<div class="chongprice text-right" style="font-size:1.2rem;">총가격</div><span style="font-size:1.2rem;">'+total.toLocaleString()+'원</span></b>' 
 					    			output += '</div>'
 			    				output += '</div></div></div>' 
 			        	}  
