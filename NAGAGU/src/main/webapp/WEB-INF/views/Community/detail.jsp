@@ -242,7 +242,10 @@
                				content="";
             			}
             %>
-            	<div class="col-12"><%=picsVO.getPICS_CONTENT()%></div>
+            	<div class="col-12">
+            	<img src="/communityupload/image/<%=picsVO.getPICS_MAIN_IMAGE()%>" style="width:500px; height:500px;">
+            	<%=picsVO.getPICS_CONTENT()%>
+            	</div>
             <%       
               		}
             %>
