@@ -53,7 +53,7 @@
 						<label for="exampleInputPassword">비밀번호</label>
 						<input type="password" class="form-control" id="exampleInputPassword" name="ADMIN_PASS">
 					</div>
-					<button type="submit" class="btn btn-warning btn-lg btn-block text-white">로그인</button>
+					<button type="submit" class="btn btn-warning btn-lg btn-block text-white" style="margin-top: 25px;">로그인</button>
 				</form>
 		     </div>
 		 </div>

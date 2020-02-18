@@ -56,7 +56,7 @@
 		font-family: '유토이미지고딕R', 'BBTreeGR', BBTreeGR;
 	}
 	
-	#pass2Msg{
+	#pass1Msg, #pass2Msg{
 		margin-top: -20px;
 	    font-size: 12px;
 	    color: red;
@@ -72,9 +72,11 @@ $(document).ready(function(e){
 function pw_btn() {
 	
 	var pass1 = $("#pass1").val();
+	var pass2 = $("#pass2").val();
+	var pass3 = $("#pass3").val();
 	var email = $("#member_email").val();
 	
-	if(pass1==null || pass2==null || pass3==null){
+	if(pass1=="" || pass2=="" || pass3==""){
 		alert("빈 칸 없이 입력해주세요.");
 		
 		return false;
@@ -101,30 +103,6 @@ function pw_btn() {
 	 });
 }
 
-
-$('#pass1').blur(function() {
-	var password1 = $('#pass1').val();
-	var oMsg = $('#pass1Msg');
-	var pw1 = $('#pass1');
-	
-	if(password1 == "") {
-		showErrorMsg(oMsg, "필수 정보입니다.");
-        
-		return false;
-	} else if(!pwJ.test(password1)) {
-		showErrorMsg(oMsg, "8자 이상 영문+숫자+하나 이상의 특수문자를 사용하세요.");
-		pw1.focus();
-		
-		return false;
-	} else {
-		oMsg.hide();
-		sub_pw1 = true;
-		
-        return true;
-	}
-});
-
-
 $(document).ready(function(){
 	// 비밀번호 정규식(특수문자 / 문자 / 숫자 포함 형태의 8~15자리 이내의 암호 정규식)
 	var pwJ = /^.*(?=^.{8,15}$)(?=.*\d)(?=.*[a-zA-Z])(?=.*[!@#$%^&+=]).*$/;
@@ -138,18 +116,10 @@ $(document).ready(function(){
         obj.show();
     }
 	
-	$('#pass2').blur(function() {
+	$('#pass3').blur(function() {
 	    var pass1 = $("#pass2").val();
 	    var pass2 = $("#pass3").val();
 	    var oMsg = $("#pass2Msg");
-	    
-	    if (pass1=="") {
-	        showErrorMsg(oMsg, "필수 정보입니다.");
-	        
-	        return false;
-	    } else {
-	    	oMsg.hide();
-	    }
 	    
 	    if (pass1 != pass2) {
 	        showErrorMsg(oMsg,"비밀번호가 일치하지 않습니다.");
@@ -165,26 +135,52 @@ $(document).ready(function(){
 	    return true;
 	});
 
-	$('#pass2').keyup(function (){
+	$('#pass3').keyup(function (){
 		var pass1 = $("#pass2").val();
 	    var pass2 = $("#pass3").val();
 	    var oMsg = $("#pass2Msg");
 	    
 		if(pass1 != pass2){
 			 showErrorMsg(oMsg,"비밀번호가 일치하지 않습니다.");
-			 sub_pw1 = false;
+			 sub_pw2 = false;
 			 
 	         return false;
+		}else {
+			oMsg.hide();
+	        sub_pw2 = true;
+		}
+	});
+	
+	$('#pass2').blur(function (){
+		var pass1 = $("#pass2").val();
+	    var pass2 = $("#pass3").val();
+	    var oMsg = $("#pass2Msg");
+	    var oMsg2 = $("#pass1Msg");
+	    
+		if(!pwJ.test(pass1)) {
+			showErrorMsg(oMsg2, "8자 이상 15자 이내, 영문+숫자+하나 이상의 특수문자를 사용하세요.");
+			$("#pass2").focus();
+			
+			return false;
+		} else if(pass1 != pass2){
+			oMsg2.hide();
+			showErrorMsg(oMsg,"비밀번호가 일치하지 않습니다.");
+			sub_pw1 = false;
+			 
+	         return false;
+		} else {
+			oMsg.hide();
+			oMsg2.hide();
+	        sub_pw1 = true;
 		}
 	});
 	
 });
 
 function chage_pw() {
-	/* if(sub_pw2==true && sub_pw1==true){
+	if(sub_pw2==true && sub_pw1==true){
 		document.pw_form.submit();
-	} **/
-	document.pw_form.submit();
+	}
 	
 }
 </script>
@@ -214,12 +210,12 @@ function chage_pw() {
 	        </tr>
 	        <tr>
 	        	<td>
-	        		<input type="password" STYLE="ime-mode: disabled" name="MEMBER_PASS2" placeholder="8자 이상 영문,숫자,특수문자 사용" id="pass2" class="find_idpw_textbox"><br>
+	        		<input type="password" STYLE="ime-mode: disabled" name="MEMBER_PASS2" placeholder="8자 이상 15자 이내 (영문,숫자,특수문자 사용)" id="pass2" class="find_idpw_textbox"><br>
 	            </td>
 	       	</tr>
 	       	<tr class="msg" style="display: hidden;">
 	       		<td>
-	       		<div class="error_next_box" id="pass2Msg" style="display: hidden;" aria-live="assertive"></div>
+	       		<div class="error_next_box" id="pass1Msg" style="display: hidden;" aria-live="assertive"></div>
 	       		</td>
 	       	</tr>
 	       	<tr>

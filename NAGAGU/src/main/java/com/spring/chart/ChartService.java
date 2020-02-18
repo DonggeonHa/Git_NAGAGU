@@ -11,4 +11,6 @@ public interface ChartService {
 	ArrayList<ClassVO> PopularClass() throws Exception;
 	int insertMemberCount(@Param("selectDate")String selectDate) throws Exception;
 	int insertWSMemberCount(@Param("selectDate")String selectDate) throws Exception;
+	int deleteMemberCount(@Param("selectDate")String selectDate) throws Exception;
+	int deleteWSMemberCount(@Param("selectDate")String selectDate) throws Exception;
 }
