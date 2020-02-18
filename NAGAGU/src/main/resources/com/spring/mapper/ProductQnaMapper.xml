@@ -35,7 +35,7 @@ create sequence store_qna_seq
 		<result property="QNA_STATUS" column="QNA_STATUS" />
 	</resultMap>
 
-	<resultMap type="com.spring.store.Product_qnaVO" id="productQnaResultMap">
+	<resultMap type="java.util.HashMap" id="productQnaResultMap">
 		<result property="QNA_NUM" column="QNA_NUM" />	
 		<result property="QNA_MEMBER" column="QNA_MEMBER" />	
 		<result property="QNA_PRODUCT" column="QNA_PRODUCT" />	
@@ -117,7 +117,7 @@ create sequence store_qna_seq
 	</update>
 	 
 	 
-	<select id="getQnaVO" parameterType="com.spring.store.Product_qnaVO" resultMap="productQnaResultMap">
+	<select id="getQnaVO" parameterType="com.spring.store.Product_qnaVO" resultMap="productVOQnaResultMap">
 		SELECT * FROM PRODUCT_QNA WHERE QNA_NUM=#{QNA_NUM} 
 	</select>	 
 	 
