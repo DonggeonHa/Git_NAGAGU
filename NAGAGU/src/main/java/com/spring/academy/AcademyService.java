@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
+import com.spring.store.ProductVO;
 import com.spring.workshop.WorkShopMemberVO;
 
 public interface AcademyService {
@@ -18,4 +19,6 @@ public interface AcademyService {
 	//경태 마이페이지 강의목록
 	public ArrayList<Map<String, Object>> getLoginMemberClass(HashMap<String, Object> map);
 	ArrayList<ClassVO> getClassListOfMember(HashMap<String, Object> map) throws Exception;
+	//선주
+	int updateGrade(ClassVO vo);
 }

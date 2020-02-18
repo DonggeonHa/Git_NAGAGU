@@ -91,6 +91,37 @@
 		<result property="MEMBER_NAME" column="MEMBER_NAME" />
 	</resultMap>
 	
+	<resultMap type="java.util.HashMap" id="classReviewResultMap">
+		<result property="CLASS_CATEGORY" column="CLASS_CATEGORY" />
+		<result property="CLASS_NAME" column="CLASS_NAME" />
+		<result property="CLASS_NUMBER" column="CLASS_NUMBER" />
+		<result property="MEMBER_NICK" column="MEMBER_NICK" />
+		<result property="REVIEW_NUM" column="REVIEW_NUM" />	
+		<result property="REVIEW_MEMBER" column="REVIEW_MEMBER" />
+		<result property="REVIEW_CLASS" column="REVIEW_CLASS" />
+		<result property="REVIEW_DATE" column="REVIEW_DATE" />
+		<result property="REVIEW_FILE" column="REVIEW_FILE" />	
+		<result property="REVIEW_CONTENT" column="REVIEW_CONTENT" />	
+		<result property="REVIEW_GRADE" column="REVIEW_GRADE" />	
+		<result property="REVIEW_RE" column="REVIEW_RE" />	
+	</resultMap>
+
+	<resultMap type="java.util.HashMap" id="classQnaResultMap">
+		<result property="CLASS_CATEGORY" column="CLASS_CATEGORY" />
+		<result property="CLASS_NAME" column="CLASS_NAME" />
+		<result property="CLASS_NUMBER" column="CLASS_NUMBER" />
+		<result property="MEMBER_NICK" column="MEMBER_NICK" />
+		<result property="QNA_NUM" column="QNA_NUM" />	
+		<result property="QNA_MEMBER" column="QNA_MEMBER" />
+		<result property="QNA_CLASS" column="QNA_CLASS" />
+		<result property="QNA_DATE" column="QNA_DATE" />
+		<result property="QNA_CONTENT" column="QNA_CONTENT" />	
+		<result property="QNA_RE" column="QNA_RE" />	
+		<result property="QNA_STATUS" column="QNA_STATUS" />	
+	</resultMap>	
+	
+	
+	
 	<select id="getManagementClassList" resultMap="classResultMap">
 	    select * from (select CLASS_NUMBER, CLASS_STATUS, CLASS_AREA, CLASS_AMOUNT, CLASS_DIVISION, CLASS_NAME, CLASS_CATEGORY, 
 	    CLASS_DATE_CONFIGURATION_1, CLASS_DATE_CONFIGURATION_2, CLASS_COUNT_MEMBER from (select * from ACADEMY where
@@ -151,4 +182,92 @@
  		where WORKSHOP_NAME=#{WORKSHOP_NAME}
  	</update>
  	
+ 	
+ 	<!-- 선주 리뷰,qna -->
+	<select id="getclassReviewList" parameterType="java.util.HashMap" resultMap="classReviewResultMap">
+		SELECT A.CLASS_CATEGORY, A.CLASS_NAME, A.CLASS_NUMBER, N.MEMBER_NICK, R.REVIEW_NUM, R.REVIEW_MEMBER, R.REVIEW_CLASS, R.REVIEW_DATE, 
+		R.REVIEW_FILE, R.REVIEW_CONTENT, R.REVIEW_GRADE, R.REVIEW_RE
+		FROM ACADEMY A, CLASS_REVIEW R, nagagu_workshop_member W, nagagu_member N
+		WHERE A.CLASS_NUMBER =R.REVIEW_CLASS
+		AND W.WORKSHOP_NUM=A.WORKSHOP_NUM
+		AND W.WORKSHOP_NUM=#{WORKSHOP_NUM}
+		AND R.REVIEW_MEMBER=N.MEMBER_NUM
+		<if test="selectClassType2 == 'allClass'">
+			<if test="selectClassType1 == 'all'">
+				<if test="selectCategory != '지역'"> AND A.CLASS_CATEGORY = #{selectCategory} </if>
+				<if test="searchType == 'member_nick'"> AND N.MEMBER_NICK LIKE '%'||#{keyword}||'%' </if>
+				<if test="searchType == 'class_name'"> AND A.CLASS_NAME LIKE '%'||#{keyword}||'%' </if>
+				<if test="searchType == 'review_content'"> AND R.REVIEW_CONTENT LIKE '%'||#{keyword}||'%' </if>	
+			</if>
+			<if test="selectClassType1 == 'inClass'"> AND A.CLASS_STATUS = 1
+				<if test="selectCategory != '지역'"> AND A.CLASS_CATEGORY = #{selectCategory} </if>
+				<if test="searchType == 'member_nick'"> AND N.MEMBER_NICK LIKE '%'||#{keyword}||'%' </if>
+				<if test="searchType == 'class_name'"> AND A.CLASS_NAME LIKE '%'||#{keyword}||'%' </if>
+				<if test="searchType == 'review_content'"> AND R.REVIEW_CONTENT LIKE '%'||#{keyword}||'%' </if>	
+			</if>
+			<if test="selectClassType2 == 'endClass'"> AND A.CLASS_STATUS = 2
+				<if test="selectCategory != '지역'"> AND A.CLASS_CATEGORY = #{selectCategory} </if>
+				<if test="searchType == 'member_nick'"> AND N.MEMBER_NICK LIKE '%'||#{keyword}||'%' </if>
+				<if test="searchType == 'class_name'"> AND A.CLASS_NAME LIKE '%'||#{keyword}||'%' </if>
+				<if test="searchType == 'review_content'"> AND R.REVIEW_CONTENT LIKE '%'||#{keyword}||'%' </if>	
+			</if>
+		</if>
+		<if test="selectClassType2 != 'allClass'"> AND A.CLASS_DIVISION = # {selectClassType2}
+			<if test="selectClassType1 == 'all'">
+				<if test="selectCategory != '지역'"> AND A.CLASS_CATEGORY = #{selectCategory} </if>
+				<if test="searchType == 'member_nick'"> AND N.MEMBER_NICK LIKE '%'||#{keyword}||'%' </if>
+				<if test="searchType == 'class_name'"> AND A.CLASS_NAME LIKE '%'||#{keyword}||'%' </if>
+				<if test="searchType == 'review_content'"> AND R.REVIEW_CONTENT LIKE '%'||#{keyword}||'%' </if>	
+			</if>
+			<if test="selectClassType1 == 'inClass'"> AND A.CLASS_STATUS = 1
+				<if test="selectCategory != '지역'"> AND A.CLASS_CATEGORY = #{selectCategory} </if>
+				<if test="searchType == 'member_nick'"> AND N.MEMBER_NICK LIKE '%'||#{keyword}||'%' </if>
+				<if test="searchType == 'class_name'"> AND A.CLASS_NAME LIKE '%'||#{keyword}||'%' </if>
+				<if test="searchType == 'review_content'"> AND R.REVIEW_CONTENT LIKE '%'||#{keyword}||'%' </if>	
+			</if>
+			<if test="selectClassType2 == 'endClass'"> AND A.CLASS_STATUS = 2
+				<if test="selectCategory != '지역'"> AND A.CLASS_CATEGORY = #{selectCategory} </if>
+				<if test="searchType == 'member_nick'"> AND N.MEMBER_NICK LIKE '%'||#{keyword}||'%' </if>
+				<if test="searchType == 'class_name'"> AND A.CLASS_NAME LIKE '%'||#{keyword}||'%' </if>
+				<if test="searchType == 'review_content'"> AND R.REVIEW_CONTENT LIKE '%'||#{keyword}||'%' </if>	
+			</if>
+		</if>
+					
+		ORDER BY R.${selectListAlign} DESC			
+				
+	</select>
+
+
+	<select id="getclassQnaList" parameterType="java.util.HashMap" resultMap="classQnaResultMap">
+		SELECT P.CLASS_CATEGORY, P.CLASS_NAME, P.CLASS_NUMBER, N.MEMBER_NICK, Q.QNA_NUM, Q.QNA_MEMBER, Q.QNA_CLASS, Q.QNA_DATE, 
+		Q.QNA_CONTENT, Q.QNA_RE, Q.QNA_STATUS
+		FROM ACADEMY A, CLASS_QNA Q, nagagu_workshop_member W, nagagu_member N
+		WHERE P.PRODUCT_NUM =Q.QNA_PRODUCT
+		AND W.WORKSHOP_NUM=P.PRODUCT_WORKSHOP
+		AND W.WORKSHOP_NUM=#{WORKSHOP_NUM}
+		AND Q.QNA_MEMBER=N.MEMBER_NUM
+			<if test="selectClassType == 'all'">
+				<if test="selectCategory != 'all'"> AND P.PRODUCT_CATEGORY = #{selectCategory} </if>
+				<if test="searchType == 'member_nick'"> AND N.MEMBER_NICK LIKE '%'||#{keyword}||'%' </if>
+				<if test="searchType == 'product_title'"> AND P.PRODUCT_TITLE LIKE '%'||#{keyword}||'%' </if>
+				<if test="searchType == 'qna_content'"> AND Q.QNA_CONTENT LIKE '%'||#{keyword}||'%' </if>				
+			</if>
+			
+
+			<if test="selectClassType == 'Standby'"> AND Q.QNA_STATUS=0 
+				<if test="selectCategory != 'all'"> AND P.PRODUCT_CATEGORY = #{selectCategory} </if>
+				<if test="searchType == 'member_nick'"> AND N.MEMBER_NICK LIKE '%'||#{keyword}||'%' </if>
+				<if test="searchType == 'product_title'"> AND P.PRODUCT_TITLE LIKE '%'||#{keyword}||'%' </if>
+				<if test="searchType == 'qna_content'"> AND Q.QNA_CONTENT LIKE '%'||#{keyword}||'%' </if>
+			</if>
+			
+			
+			<if test="selectClassType == 'Completed'"> AND Q.QNA_STATUS=1 
+				<if test="selectCategory != 'all'"> AND P.PRODUCT_CATEGORY = #{selectCategory} </if>
+				<if test="searchType == 'member_nick'"> AND N.MEMBER_NICK LIKE '%'||#{keyword}||'%' </if>
+				<if test="searchType == 'product_title'"> AND P.PRODUCT_TITLE LIKE '%'||#{keyword}||'%' </if>
+				<if test="searchType == 'qna_content'"> AND Q.QNA_CONTENT LIKE '%'||#{keyword}||'%' </if>
+			</if>
+		ORDER BY Q.${selectListAlign} DESC	
+	</select>
 </mapper>

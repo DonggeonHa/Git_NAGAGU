@@ -33,33 +33,35 @@
 		MEMBER_NAME = (String)session.getAttribute("MEMBER_NAME");
 		MEMBER_PHONE = (String)session.getAttribute("MEMBER_PHONE");
 	}
-	
+
 %>
 
 <%
-//선주꺼 붙임.....
-//멤버가 댓글 작성시 필요
-String MEMBER_PICTURE = (String)session.getAttribute("MEMBER_PICTURE"); 
-String WORKSHOP_PICTURE = (String)session.getAttribute("WORKSHOP_PICTURE");
-String WORKSHOP_NAME = (String)session.getAttribute("WORKSHOP_NAME");
-//로그인 상태 체크 위한
-Integer MEMBER_STATUS = 100;	//비로그인시 100
-if(session.getAttribute("MEMBER_EMAIL") == null) {
-	MEMBER_STATUS = (Integer)session.getAttribute("MEMBER_STATUS");		
-}
-Integer WORKSHOP_STATUS = 100;	//비로그인시 100
-if(session.getAttribute("MEMBER_EMAIL") == null) {
-	WORKSHOP_STATUS = (Integer)session.getAttribute("WORKSHOP_STATUS");		
-}
-//(QNA)글쓴이만 답글 버튼이 보인다. 글쓴이인지 체크하기 위해 이 글의 WORKSHOP_NUM 받아옴
-int WorkshopMatchingNumber = (int)request.getAttribute("WorkshopMatchingNumber");
-Integer WORKSHOP_NUM = (Integer)session.getAttribute("WORKSHOP_NUM");
-//날짜 포맷 형식
-SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+	//선주꺼 붙임.....
+	//멤버가 댓글 작성시 필요
+	String MEMBER_PICTURE = (String)session.getAttribute("MEMBER_PICTURE"); 
+	String WORKSHOP_PICTURE = (String)session.getAttribute("WORKSHOP_PICTURE");
+	String WORKSHOP_NAME = (String)session.getAttribute("WORKSHOP_NAME");
+	
+	//로그인 상태 체크 위한
+	Integer MEMBER_STATUS = 100;	//비로그인시 100
+	if(session.getAttribute("MEMBER_EMAIL") != null) {
+		MEMBER_STATUS = (Integer)session.getAttribute("MEMBER_STATUS");		
+	}
+	Integer WORKSHOP_STATUS = 100;	//비로그인시 100
+	if(WORKSHOP_CEO_NAME != null) {
+		WORKSHOP_STATUS = (Integer)session.getAttribute("WORKSHOP_STATUS");		
+	}
+	
+	//(QNA)글쓴이만 답글 버튼이 보인다. 글쓴이인지 체크하기 위해 이 글의 WORKSHOP_NUM 받아옴
+	int WorkshopMatchingNumber = (int)request.getAttribute("WorkshopMatchingNumber");
+	Integer WORKSHOP_NUM = (Integer)session.getAttribute("WORKSHOP_NUM");
+	//날짜 포맷 형식
+	SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+	
+	
+	int CLASS_NUMBER = cl.getCLASS_NUMBER();
 
-
-
-int CLASS_NUMBER = cl.getCLASS_NUMBER();
 %>
 
 
@@ -182,6 +184,226 @@ int CLASS_NUMBER = cl.getCLASS_NUMBER();
 	.modal-header {
 		border-bottom: 3px solid #c9c9c9 !important;
 	}
+	
+	/* 리뷰, QNA 부분 ===========================================================   */
+	img {
+		   max-width: 100%;
+		   height: auto;
+		}
+		
+	
+	hr {
+	   background-color: #EF902E;
+	}
+
+	/*별점주기*/
+	.star-rating { 
+		width:52px; 
+	}
+	.star-rating,.star-rating span { 
+		display:inline-block; height:10px; overflow:hidden; background:url('${pageContext.request.contextPath}/resources/images/star_2.png') no-repeat; 
+	}
+	.star-rating span{ 
+		background-position:left bottom; line-height:0; vertical-align:top; 
+	}   
+		/*리뷰 이미지 호버*/   
+		.img {
+			width:100px;
+		}
+		.review_img_modify {
+			width:100px;
+			height:100px;         
+		}      
+		.addlike {
+			background-color:#23272B !important;
+			color:white !important; 
+		}
+		.row h6{
+			margin-left:30px; 
+		}
+		.row h6 a,.row h6 a:link,.row h6 a:hover{
+			text-decoration: none !important;
+			color: black !important;
+		}		
+		/*input type=file css*/
+		.file_input label {
+			position:relative;
+			cursor:pointer;
+			display:inline-block;
+			vertical-align:middle;
+			overflow:hidden;
+			width:80px;
+			height:30px;
+			background:RGBA(204, 204, 204, 0.5);
+			color:black;
+			text-align:center;
+			line-height:30px;
+			margin-bottom:0;
+			font-size:0.8rem;
+			padding:1px 1px;
+			border-radius:3px;
+		}
+		.file_input label input {
+			position:absolute;
+			width:0;
+			height:0;
+			overflow:hidden;
+		}
+		.file_input input[type=text] {
+			vertical-align:middle;
+			display:inline-block;
+			width:400px;
+			height:28px;
+			line-height:28px;
+			font-size:11px;
+			padding:0;
+			border:0;
+		}
+
+		/*댓글 폼 영역*/
+		#ReviewformSection {
+			display:none ;
+			padding:8px 0; 
+			border-bottom:1px solid gray;		
+		}
+		/*ReviewAndReplySum : 리뷰(하나)+리뷰 답글(여러개)이 묶여서 반복되는 영역 - bottom에 회색 구분선*/
+		.ReviewAndReplySum {
+			border-bottom:1px solid RGBA(128, 128, 128, 0.5);	
+			padding-bottom:8px;	
+		}
+
+		
+		.imgs_wrap {
+			display:none;
+		}
+
+		.review_img {
+			width:100px;
+			height:100px;
+		}
+
+		.replytext {	
+			font-size:0.7em; font-weight:bold;	/*답글 버튼*/
+		}
+		
+		.ReviewList {
+			padding-top:8px; 
+			padding-bottom:8px;
+		}		
+		
+		
+
+		/*REVIEW*/
+		#REVIEW_GRADE{
+			width=15px;			/*리뷰 입력폼에서 별점 선택창*/
+		}
+		.insertReview {
+			cursor: pointer;	/*리뷰 입력폼에서 작성버튼*/
+		}
+		.formCancel {
+			cursor: pointer;	/*Review, ReviewReply 입력취소, 수정 취소버튼*/
+		}		
+		
+
+		/*REVIEW_REPLY*/
+
+		.review_replybtn {
+			cursor: pointer;	/*리뷰 리스트에서 답글달기 폼 버튼*/
+		}
+		.gomodifyReviewform {
+			cursor: pointer;	/*리뷰 수정버튼*/
+		}
+		.deleteReview {
+			cursor: pointer;	/*Review, ReviewReply 삭제*/
+		}		
+		
+		
+		.ReviewbeforeControl {
+			font-size:0.7em; 
+			font-weight:bold;
+		}
+		.ReviewafterControl {
+			display:none;	
+			font-size:0.7em; 
+			font-weight:bold;	
+		}
+
+		
+		.ReviewReplyformSection {
+			padding:8px 0;		/*?*/
+		}
+		.afterModifyReviewReply {
+			display:none;		/*리뷰 답글 작성폼*/	
+		}
+				
+		.insertReviewReply {
+			cursor: pointer;	/*리뷰답글 작성*/
+		}
+		.gomodifyReviewReplyform {
+			cursor: pointer;	/*ReviewReply 수정폼 버튼*/
+		}
+
+		.modifyReviewReply {
+			cursor: pointer;	/*ReviewReply 수정버튼*/
+		}
+
+
+
+	/*qna*/
+		#QnaformSection {
+			display:none ;
+			padding:8px 0; 
+			border-bottom:1px solid gray;		
+		}
+		/*QnaAndReplySum : 리뷰(하나)+리뷰 답글(여러개)이 묶여서 반복되는 영역 - bottom에 회색 구분선*/
+		.QnaAndReplySum {
+			border-bottom:1px solid RGBA(128, 128, 128, 0.5);	
+			padding-bottom:8px;	
+		}		
+		.QnaList {
+			padding-top:8px; 
+			padding-bottom:8px;
+		}	
+		.insertQna {
+			cursor: pointer;	/*리뷰 입력폼에서 작성버튼*/
+		}	
+		.qna_replybtn {
+			cursor: pointer;	/*리뷰 리스트에서 답글달기 폼 버튼*/
+		}
+		.gomodifyQnaform {
+			cursor: pointer;	/*리뷰 수정버튼*/
+		}
+		.deleteQna {
+			cursor: pointer;	/*Qna, QnaReply 삭제*/
+		}			
+		.QnaReplyformSection {
+			padding:8px 0;		/*?*/
+		}
+		.afterModifyQnaReply {
+			display:none;		/*리뷰 답글 작성폼*/	
+		}
+				
+		.insertQnaReply {
+			cursor: pointer;	/*리뷰답글 작성*/
+		}
+		.gomodifyQnaReplyform {
+			cursor: pointer;	/*QnaReply 수정폼 버튼*/
+		}	
+		.modifyQnaReply {
+			cursor: pointer;	/*QnaReply 수정버튼*/
+		}	
+			
+		.QnabeforeControl {
+			font-size:0.7em; 
+			font-weight:bold;
+		}
+		.QnaafterControl {
+			display:none;	
+			font-size:0.7em; 
+			font-weight:bold;	
+		}	
+	
+	
 </style>
 
 <div class="container class-detail-container category_ac">
@@ -327,14 +549,14 @@ int CLASS_NUMBER = cl.getCLASS_NUMBER();
 			<div id="ReviewSection">
 				<div id="ReviewButtonSection">	
 					<div class="row justify-content-center pt-3 pb-3"> <!-- 리뷰 댓글달기 버튼 -->
-						<button class="btn btn-dark btn-sm review_btn">댓글 달기</button>
+						<button class="btn btn-dark btn-sm review_btn">후기 등록</button>
 					</div>
 				</div>
 				<div id="ReviewWrapSection" class="pb-1">
 					<div id="ReviewformSection" class="pb-2">
 						<form id="ReviewForm" name="REVIEW_CONTENT" enctype="multipart/form-data"> <!-- 리뷰 작성 폼 영역 : 하나 -->
 							<input type="hidden" name="MEMBER_NUM" value="MEMBER_NUM">
-							<input type="hidden" name="PRODUCT_NUM" value="<%=CLASS_NUMBER %>">
+							<input type="hidden" name="CLASS_NUMBER" value="<%=CLASS_NUMBER %>">
 							<div class="row justify-content-center">
 								<div class="col-1 justify-content-end">
 									<img src="<%=MEMBER_PICTURE%>" alt="" class="rounded-circle">
@@ -437,7 +659,7 @@ int CLASS_NUMBER = cl.getCLASS_NUMBER();
 					<div id="QnaformSection" class="pb-2">
 						<form id="QnaForm" name="QNA_CONTENT"> <!-- 리뷰 작성 폼 영역 : 하나 -->
 							<input type="hidden" name="MEMBER_NUM" value="MEMBER_NUM">
-							<input type="hidden" name="PRODUCT_NUM" value="<%=CLASS_NUMBER %>">
+							<input type="hidden" name="CLASS_NUMBER" value="<%=CLASS_NUMBER %>">
 							<div class="row justify-content-center">
 								<div class="col-1 justify-content-end">
 									<img src="<%=MEMBER_PICTURE%>" alt="" class="rounded-circle">
@@ -960,6 +1182,368 @@ int CLASS_NUMBER = cl.getCLASS_NUMBER();
 	            }
 	        });
 	    }
+
+//선주(ready 안)		
+
+//취소버튼들
+		//Review입력폼 / Qna입력폼
+		$(document).on("click",".formCancel",function(event){
+			console.log(this)
+			console.log($(this).attr('value'))
+			var formType = $(this).attr('value');
+			
+			if(formType=='ReviewForm') {	//리뷰 입력폼에서 취소
+ 				$("#ReviewformSection").css('display','none');
+				$('#ReviewForm').each(function() {  
+					this.reset();  
+				});  
+				$('.imgs_wrap').empty();
+				$("#ReviewButtonSection").show();
+			} 
+			else if(formType=='reviewModify') {	//리뷰 수정폼에서 취소
+				var REVIEW_NUM = $(this).prev().prev().val();
+	
+				$('#beforeModifyReview'+REVIEW_NUM).css('display', 'block');	//수정,삭제버튼 보임
+				$('#afterModifyReview'+REVIEW_NUM).empty();
+
+			}
+			else if(formType=='reviewReply') {	//답글 입력 취소
+				var REVIEW_NUM = $(this).prev().prev().val();
+				console.log(REVIEW_NUM)
+				$("#review_replybtn"+REVIEW_NUM).css('display','block');	//답글버튼 보임
+				$("#ReviewReplyformSection"+REVIEW_NUM).empty();	//답글 지움
+
+			}
+			else if(formType=='reviewReplyModify') {	//답글 수정 취소
+				var REVIEW_NUM = $(this).prev().prev().val();
+
+				$('#beforeModifyReviewReply'+REVIEW_NUM).css('display', 'block');
+				$('#afterModifyReviewReply'+REVIEW_NUM).css('display', 'none'); 
+				$('#ReviewbeforeControl'+REVIEW_NUM).css('display', 'block');	//수정,삭제버튼 보임
+				$('#ReviewafterControl'+REVIEW_NUM).css('display', 'none'); 	//수정,취소버튼 숨김
+//				$('#modifyReviewFormReply'+REVIEW_NUM).empty();	//수정폼 초기화(content)
+				$('#modifyReviewFormReply'+REVIEW_NUM).each(function() {  
+					this.reset();  
+				});  
+			}
+			else if(formType=='QnaForm') {	//문의 입력폼에서 취소
+ 				$("#QnaformSection").css('display','none');
+				$('#QnaForm').each(function() {  
+					this.reset();  
+				});  
+				$("#QnaButtonSection").show();
+			} 
+			else if(formType=='qnaModify') {	//리뷰 수정폼에서 취소
+				var QNA_NUM = $(this).prev().prev().val();
+				$('#beforeModifyQna'+QNA_NUM).css('display', 'block');	//수정,삭제버튼 보임
+				$('#afterModifyQna'+QNA_NUM).empty();
+
+			}
+			else if(formType=='qnaReply') {	//답글 입력 취소
+				var QNA_NUM = $(this).prev().prev().val();
+				console.log(QNA_NUM)
+				$("#qna_replybtn"+QNA_NUM).css('display','block');	//답글버튼 보임
+				$("#QnaReplyformSection"+QNA_NUM).empty();	//답글 지움
+
+			}
+			else if(formType=='qnaReplyModify') {	//답글 수정 취소
+				var QNA_NUM = $(this).prev().prev().val();
+
+				$('#beforeModifyQnaReply'+QNA_NUM).css('display', 'block');
+				$('#afterModifyQnaReply'+QNA_NUM).css('display', 'none'); 
+				$('#QnabeforeControl'+QNA_NUM).css('display', 'block');	//수정,삭제버튼 보임
+				$('#QnaafterControl'+QNA_NUM).css('display', 'none'); 	//수정,취소버튼 숨김
+//				$('#modifyQnaFormReply'+QNA_NUM).empty();	//수정폼 초기화(content)
+				$('#modifyQnaFormReply'+QNA_NUM).each(function() {  
+					this.reset();  
+				});  
+			}			
+			event.preventDefault();	
+		});
+
+
+
+//input type=file 이미지 업로드/수정----------------------------------------------------------------------------------------------------	    	
+		//파일 업로드창 css 바꾸기
+		$('.file_input [id="input_imgs"]').change(function() {
+			var fileName = $(this).val();
+			var fileCount = $(this).get(0).files.length;
+			var tmpvar = $('.file_input input[type=text]')[0];
+			if($(this).get(0).files.length == 1){
+				$(tmpvar).val(fileName);
+			}
+			else {
+				$(tmpvar).val('파일 '+fileCount+'개');
+			}
+		});
+		$('.file_input [id="modify_input_imgs"]').change(function() {
+			var fileName = $(this).val();
+			var fileCount = $(this).get(0).files.length;
+			var tmpvar = $('.file_input input[type=text]')[1];
+			if($(this).get(0).files.length == 1){
+				$(tmpvar).val(fileName);
+			}
+			else {
+				$(tmpvar).val('추가 업로드 파일 '+fileCount+'개');
+			}
+		});
+		
+		
+		//입력-------------------------------------------------------------
+		//ReviewForm 다중이미지 업로드
+		$('#input_imgs').on("change", handleImgFileSelect);
+		
+		//이미지 정보들을 담을 배열
+		var sel_files= [];
+		function handleImgFileSelect(e) {
+			$('.imgs_wrap').css('display','block');
+			//이미지 정보들을 초기화
+			sel_files = [];
+			$('.imgs_wrap').empty();
+			
+			var files = e.target.files;
+			var filesArr = Array.prototype.slice.call(files);
+			
+			var index = 0;
+			filesArr.forEach(function(f) {
+				if(!f.type.match("image.*")) {
+					alert("확장자는 이미지 확장자만 가능합니다.");
+					return;
+				}
+          
+				sel_files.push(f);
+				
+				var reader = new FileReader();
+				reader.onload = function(e) {
+					var html="<a href=\"javascript:void(0);\" onclick=\"deleteImageAction("+index+")\" id=\"img_id_"+index+"\"><img src=\"" + e.target.result + "\" data-file='"+f.name+"' class='review_img' title='Click to remove' width='100' height='100'>&nbsp;</a>";
+					
+					$(".imgs_wrap").append(html);
+					index++;
+				}
+				reader.readAsDataURL(f);          
+			});
+		}      
+
+		//파일 선택 후 클릭해서 삭제 가능
+		//ReviewForm 이미지 삭제
+		function deleteImageAction(index) {
+			var delete_confirm = confirm("삭제하시겠습니까?");
+			if(delete_confirm) {
+				console.log("index : " + index);
+				sel_files.splice(index, 1);
+				
+				var img_id = "#img_id_" + index;
+				console.log("img_id : " + img_id);
+				$(img_id).remove();
+				
+				console.log("sel_files : " + sel_files);            
+			} 
+		}		
+		
+		//수정-------------------------------------------------------------
+		//Review Modify 댓글 수정시 이미지 추가 가능
+		$(document).on("change","#modify_input_imgs",function(e){ 
+			sel_files = [];
+			$('.modify_imgs_wrap').empty();
+			
+			var files = e.target.files;
+			var filesArr = Array.prototype.slice.call(files);
+			
+			var index = 0;
+			filesArr.forEach(function(f) {
+				if(!f.type.match("image.*")) {
+					alert("확장자는 이미지 확장자만 가능합니다.");
+					return;
+				}
+			
+				sel_files.push(f);
+			          
+				var reader = new FileReader();
+				reader.onload = function(e) {
+					var html="<a href=\"javascript:void(0);\" onclick=\"deleteImageAction("+index+")\" id=\"img_id_"+index+"\"><img src=\"" + e.target.result + "\" data-file='"+f.name+"' class='review_img ' title='Click to remove' width='100' height='100'>&nbsp;</a>";
+					
+					$(".modify_imgs_wrap").append(html);
+					index++;
+				}
+				reader.readAsDataURL(f);
+			 });
+		 });    
+
+		//Review Modify - 댓글 수정시 before 이미지 삭제
+		function deleteBeforeImageAction(index) {
+			var delete_confirm = confirm("삭제하시겠습니까?");
+			if(delete_confirm) {
+				console.log("index : " + index);
+				sel_files.splice(index, 1);
+				
+				var img_id = "#beforeimg_id_" + index;
+				console.log("#beforeimg_id_+index : " + img_id);
+		
+				var deleteImg=$("input[type=hidden][name=deleteImg]").val();	//기본은 ""
+				deleteImg += $(img_id).children().attr('value')+',';	//삭제할 때마다 deleteImg의 value에 추가됨
+				console.log("deleteImg : " + deleteImg);
+				$("input[type=hidden][name=deleteImg]").val(deleteImg);
+					
+				$(img_id).remove();
+				
+				console.log("sel_files : " + sel_files);            
+			} 
+		}
+
+		
+//Review 등록하기----------------------------------------------------------------------------------------------------	    
+
+		//Review폼 버튼 (review)
+		$(document).on("click",".review_btn",function(event){
+			if(<%=MEMBER_STATUS%> == 100){
+				if(<%=WORKSHOP_STATUS%> == 100) {
+					alert('로그인 해주세요!');					
+				} else {
+					alert('회원만 작성 가능합니다.');
+				}
+				return;
+			}
+			   
+			$("#ReviewformSection").css('display','block');
+			$("#ReviewButtonSection").css('display','none');	//댓글달기버튼영역 숨김
+			
+		})
+		
+		//ReviewReplyform폼 버튼	//답글 버튼 (reply)
+		$(document).on("click",".review_replybtn",function(event){
+			if(<%=MEMBER_STATUS%> == 100){
+				if(<%=WORKSHOP_STATUS%> == 100) {
+					alert('로그인 해주세요!');					
+				} else {
+					alert('회원만 작성 가능합니다.');
+				}
+				return;
+			}
+			var REVIEW_NUM = $(this).attr('value');
+			console.log(REVIEW_NUM);   
+			$("#review_replybtn"+REVIEW_NUM).css('display','none');	//답글버튼 숨김
+			
+			var replyform = '';
+			replyform += '<form class="ReviewReplyform" id="ReviewReplyform'+REVIEW_NUM+'" name="REVIEW_CONTENT" enctype="multipart/form-data">';
+			replyform += '<div class="row justify-content-center">';
+			replyform += '<div class="col-1"></div>';
+			replyform += '<div class="col-1"><img src="<%=MEMBER_PICTURE%>" alt="" class="rounded-circle"></div>';
+			replyform += '<div class="col-10">';
+			replyform += '<div class="row">';
+			replyform += '<div class="col-2 justify-content-end name"><%=MEMBER_NICK%></div>';
+			replyform += '<div class="col-8 justify-content-center"></div>';
+			replyform += '<div class="col-2 justify-content-center smallfont pl-1"></div></div>';	
+			replyform += '<div class="row">';
+			replyform += '<div class="col-11 pr-0">';
+			replyform += '<textarea rows="3" name="REVIEW_CONTENT" class="col-12 pl-0 pr-0"></textarea>';
+			replyform += '</div></div>';
+			replyform += '<div class="row">';
+			replyform += '<div class="col-2 replytext justify-content-center"></div>';
+			replyform += '<div class="col-8 justify-content-center"></div>';
+			replyform += '<div class="col-2 ReviewbeforeControl justify-content-center pl-1">';
+			replyform += '<input type="hidden" name="CLASS_NUMBER" value="'+<%=CLASS_NUMBER%>+'">';		
+			replyform += '<input type="hidden" name="REVIEW_RE" value="'+REVIEW_NUM+'">';		
+			replyform += '<a class="insertReviewReply">작성</a> &nbsp;';
+			replyform += '<a class="formCancel" value="reviewReply">취소</a>';
+			replyform += '</div></div></div></div></form>';
+			
+			$('#ReviewReplyformSection'+REVIEW_NUM).append(replyform);
+			
+		})
+
+		//afterModifyReviewReply 답글수정폼 (reply)		
+		$(document).on("click",".gomodifyReviewReplyform",function(event){
+			var REVIEW_NUM = $(this).prev().val();
+			console.log("REVIEW_NUM : " + REVIEW_NUM)
+			
+			$('#beforeModifyReviewReply'+REVIEW_NUM).css('display', 'none');
+			$('#afterModifyReviewReply'+REVIEW_NUM).css('display', 'block'); 
+			$('#ReviewbeforeControl'+REVIEW_NUM).css('display', 'none');	//수정,삭제버튼 숨김
+			$('#ReviewafterControl'+REVIEW_NUM).css('display', 'block'); 	//수정,취소버튼 보임
+	
+		})
+		
+		//왜 안 돼..............?????????????????????????????????????????????
+		//리뷰 이미지를 클릭하면 원본 사이즈로 커짐(기본은 100)
+		$(".review_img").click(function(){
+			if($(this).css('width') != '100px' ) {
+				$(this).css({'width':'100','height':'100'});
+			} else {
+				$(this).css({'width':'100%','height':'100%'});
+			}
+		})	
+		
+
+//-----------------------------------------------------------------------------
+//QNA--------------------------------------------------------------------------
+//-----------------------------------------------------------------------------
+//Review 등록하기----------------------------------------------------------------------------------------------------	    
+
+		//Qna폼 버튼 (qna)
+		$(document).on("click",".qna_btn",function(event){
+			if(<%=MEMBER_STATUS%> == 100){
+				if(<%=WORKSHOP_STATUS%> == 100) {
+					alert('로그인 해주세요!');					
+				} else {
+					alert('회원만 작성 가능합니다.');
+				}
+				return;
+			}
+			   
+			$("#QnaformSection").css('display','block');
+			$("#QnaButtonSection").css('display','none');	//댓글달기버튼영역 숨김
+			
+		})
+		
+		//QnaReplyform폼 버튼	//답글 버튼 (reply)
+		$(document).on("click",".qna_replybtn",function(event){
+
+			var QNA_NUM = $(this).attr('value');
+			console.log(QNA_NUM);   
+			$("#qna_replybtn"+QNA_NUM).css('display','none');	//답글버튼 숨김
+			
+			var replyform = '';
+			replyform += '<form class="QnaReplyform" id="QnaReplyform'+QNA_NUM+'" name="QNA_CONTENT">';
+			replyform += '<div class="row justify-content-center">';
+			replyform += '<div class="col-1"></div>';
+			replyform += '<div class="col-1"><img src="<%=WORKSHOP_PICTURE%>" alt="" class="rounded-circle"></div>';
+			replyform += '<div class="col-10">';
+			replyform += '<div class="row">';
+			replyform += '<div class="col-2 justify-content-end name"><%=WORKSHOP_NAME%></div>';
+			replyform += '<div class="col-8 justify-content-center"></div>';
+			replyform += '<div class="col-2 justify-content-center smallfont pl-1"></div></div>';	
+			replyform += '<div class="row">';
+			replyform += '<div class="col-11 pr-0">';
+			replyform += '<textarea rows="3" name="QNA_CONTENT" class="col-12 pl-0 pr-0"></textarea>';
+			replyform += '</div></div>';
+			replyform += '<div class="row">';
+			replyform += '<div class="col-2 replytext justify-content-center"></div>';
+			replyform += '<div class="col-8 justify-content-center"></div>';
+			replyform += '<div class="col-2 QnabeforeControl justify-content-center pl-1">';
+			replyform += '<input type="hidden" name="CLASS_NUMBER" value="'+<%=CLASS_NUMBER%>+'">';		
+			replyform += '<input type="hidden" name="QNA_RE" value="'+QNA_NUM+'">';		
+			replyform += '<a class="insertQnaReply">작성</a> &nbsp;';
+			replyform += '<a class="formCancel" value="qnaReply">취소</a>';
+			replyform += '</div></div></div></div></form>';
+			
+			$('#QnaReplyformSection'+QNA_NUM).append(replyform);
+		})
+
+		//afterModifyQnaReply 답글수정폼 (reply)		
+		$(document).on("click",".gomodifyQnaReplyform",function(event){
+			var QNA_NUM = $(this).prev().val();
+			console.log("QNA_NUM : " + QNA_NUM)
+			
+			$('#beforeModifyQnaReply'+QNA_NUM).css('display', 'none');
+			$('#afterModifyQnaReply'+QNA_NUM).css('display', 'block'); 
+			$('#QnabeforeControl'+QNA_NUM).css('display', 'none');	//수정,삭제버튼 숨김
+			$('#QnaafterControl'+QNA_NUM).css('display', 'block'); 	//수정,취소버튼 보임
+	
+		})
+				
+
+		
+		
 		
 		$(document).ready(function() {
 			$('#sel').on('change', function(e) {
@@ -967,5 +1551,800 @@ int CLASS_NUMBER = cl.getCLASS_NUMBER();
 				var amount = (<%=cl.getCLASS_AMOUNT()%> * $('#sel').val());
 				$('#Amount').html(amount.toLocaleString()+"원");
 			});
+			//선주
+			/*댓글 등록할 때 사진 여러개일 때 쪼개주는 함수*/
+			function splitImg(REVIEW_FILE) {		// , 가 몇 개 있는지만 구하면 된다
+				var reviewImgArray = REVIEW_FILE.split(',');
+				return reviewImgArray;
+			}    			
+			/*날짜 형식 변경*/
+			function date_format(format) {
+				var year = format.getFullYear();
+				var month = format.getMonth() + 1;
+				if(month<10) {
+					month = '0' + month;
+				}
+				var date = format.getDate();
+				if(date<10) {
+					date = '0' + date;
+				}
+				
+				return year + "-" + month + "-" + date + " " ;
+			}			
+		
+			function getReviewList() {
+				$('#ReviewtableSection').empty();	//table 내부 내용을 제거(초기화)
+				$.ajax({
+					url:'/NAGAGU/getReviewList.acdo',
+					type:'POST',
+					data : { 'CLASS_NUMBER' : <%=CLASS_NUMBER%> },
+					dataType : "json", // 서버에서 보내줄 데이터 타입
+					contentType : 'application/x-www-form-urlencoded; charset=UTF-8',
+					success:function(retVal) {
+						var reviewCount = retVal.reviewCount;
+						console.log(retVal.reviewList)
+						console.log("retVal.reviewCount : "+retVal.reviewCount)
+						console.log("retVal.reviewList : "+retVal.reviewList)
+						console.log("retVal.review_RE_Count : "+retVal.review_RE_Count)
+						console.log("retVal.review_RE_List : "+retVal.review_RE_List)
+						
+						if(retVal.reviewCount > 0) {
+							for(var i=0; i<retVal.reviewList.length; i++) {	//reviewCount도 상관 없음
+								var output='';
+								var REVIEW_NUM = retVal.reviewList[i].REVIEW_NUM;
+								var MEMBER_PICTURE = retVal.reviewList[i].MEMBER_PICTURE;
+								var MEMBER_NICK = retVal.reviewList[i].MEMBER_NICK;
+								var REVIEW_DATE = new Date(retVal.reviewList[i].REVIEW_DATE);
+								var date = date_format(REVIEW_DATE);
+								var REVIEW_GRADE = retVal.reviewList[i].REVIEW_GRADE;
+								var rate = 20*retVal.reviewList[i].REVIEW_GRADE;
+								var REVIEW_FILE = retVal.reviewList[i].REVIEW_FILE;
+								var REVIEW_CONTENT = retVal.reviewList[i].REVIEW_CONTENT;
+
+								output += '<div class="ReviewAndReplySum pt-2 pb-1" id="ReviewAndReplySum'+REVIEW_NUM+'">';
+								output += '<div class="ReviewSum" id="ReviewSum'+REVIEW_NUM+'">';
+								output += '<div class="ReviewList pb-3" id="ReviewList'+REVIEW_NUM+'">';
+								output += '<div class="beforeModifyReview" id="beforeModifyReview'+REVIEW_NUM+'">';
+								output += '<div class="row justify-content-center">';
+								output += '<div class="col-1 justify-content-end"><img src="'+MEMBER_PICTURE+'" alt="" class="rounded-circle"></div>';
+								output += '<div class="col-11">';
+								output += '<div class="row pb-1">';
+								output += '<div class="col-2 justify-content-end name">'+MEMBER_NICK+'</div>';
+								output += '<div class="col-8 justify-content-center"></div>';
+								output += '<div class="col-2 justify-content-center smallfont">'+date+'</div>';
+								output += '</div>';
+								output += '<div class="row pb-2">';
+								output += '<div class="col-12" style="font-size:0.7em; font-weight:bold;">'+REVIEW_GRADE+' &nbsp;';
+								output += '<span class="star-rating">';
+								output += '<span style ="width:'+rate+'%"></span>';
+								output += '</span></div></div>';
+								output += '<div class="row pb-2">';
+								output += '<div class="col-12">';
+								if(REVIEW_FILE == '#') {
+									output += '<img src="#" class="review_img"  style="display:none;">   &nbsp;&nbsp;';            
+								} else {
+									//split함수 호출 //, 가 몇 개 있는지 구해서 //for문으로 그 개수만큼 돌림...review_file[i]
+									var reviewImgArray = splitImg(REVIEW_FILE);
+									for(var k=0;k<reviewImgArray.length;k++) {
+										output += '<img src="/productupload/image/' + reviewImgArray[k] + '" class="review_img">&nbsp;';                        
+									}               
+								}
+								output += '</div></div>';
+								output += '<div class="row pb-2">';
+								output += '<div class="col-11 pr-0">' + REVIEW_CONTENT + '</div></div>';
+								output += '<div class="row">';
+								output += '<div class="col-2 justify-content-center" style="font-size:0.7em; font-weight:bold; cursor: pointer;">';
+								output += '<a class="review_replybtn" id="review_replybtn' + REVIEW_NUM + '" value="' + REVIEW_NUM + '">답글</a>';
+								output += '</div>';
+								output += '<div class="col-8 justify-content-center"></div>';
+								console.log("MEMBER_NICK = " + MEMBER_NICK)
+								//작성 본인만 수정,삭제버튼 보인다
+								if('<%=MEMBER_NICK%>' == MEMBER_NICK) {
+									output += '<div class="col-2 ReviewbeforeControl justify-content-center" id="ReviewbeforeControl'+REVIEW_NUM+'" style="font-size:0.7em; font-weight:bold;">';
+									output += '<input type="hidden" name="REVIEW_NUM" value="'+REVIEW_NUM+'">';
+									output += '<a class="gomodifyReviewform">수정</a> &nbsp;';
+									output += '<a class="deleteReview">삭제</a>';
+									output += '</div>';
+								}
+								output += '</div></div></div></div>';
+								output += '<div class="afterModifyReview" id="afterModifyReview'+REVIEW_NUM+'"></div>';
+								output += '</div></div>';
+								output += '<div class="ReviewReplySum" id="ReviewReplySum'+REVIEW_NUM+'">';
+								output += '<div class="ReviewReplyformSection" id="ReviewReplyformSection'+REVIEW_NUM+'"></div>';
+								if(retVal.review_RE_Count>0) {
+									for(var j=0; j<retVal.review_RE_List.length; j++) {
+										if(REVIEW_NUM == retVal.review_RE_List[j].REVIEW_RE) {
+											var REPLY_NUM = retVal.review_RE_List[j].REVIEW_NUM;
+											var REPLY_NICK = retVal.review_RE_List[j].MEMBER_NICK;
+											var REPLY_PICTURE = retVal.review_RE_List[j].MEMBER_PICTURE;
+											var REPLY_CONTENT = retVal.review_RE_List[j].REVIEW_CONTENT;
+											var REPLY_DATE = new Date(retVal.review_RE_List[j].REVIEW_DATE);
+											var replydate = date_format(REPLY_DATE);
+											//리뷰 출력
+											output += '<div class="ReviewReplyList pb-2" id="ReviewReplyList'+REPLY_NUM+'">';
+											output += '<div class="row justify-content-center">';
+											output += '<div class="col-1"></div>';
+											output += '<div class="col-1"><img src="'+REPLY_PICTURE+'" alt="" class="rounded-circle"></div>';
+											output += '<div class="col-10">';
+											output += '<div class="row">';
+											output += '<div class="col-2 justify-content-end name">'+REPLY_NICK+'</div>';
+											output += '<div class="col-8 justify-content-center"></div>';
+											output += '<div class="col-2 justify-content-center smallfont pl-1">'+replydate+'</div>';
+											output += '</div>';
+											output += '<div class="beforeModifyReviewReply" id="beforeModifyReviewReply'+REPLY_NUM+'">';
+											output += '<div class="row">';
+											output += '<div class="col-11 pr-0">'+REPLY_CONTENT;
+											output += '</div></div></div>';
+											output += '<div class="afterModifyReviewReply" id="afterModifyReviewReply'+REPLY_NUM+'">';
+											output += '<form class="modifyReviewReplyForm" id="modifyReviewFormReply'+REPLY_NUM+'">';	
+											output += '<div class="row">';			
+											output += '<div class="col-11 pr-0">';			
+											output += '<input type="hidden" name="REVIEW_NUM" value="'+REPLY_NUM+'">';			
+											output += '<textarea rows="2" name="REVIEW_CONTENT" id="REVIEW_CONTENT'+REPLY_NUM+'" class="col-12 pl-0 pr-0">'+REPLY_CONTENT+'</textarea>';			
+											output += '</div></div></form></div>';
+											output += '<div class="row">';
+											output += '<div class="col-2 replytext justify-content-center"></div>';
+											output += '<div class="col-8 justify-content-center"></div>';
+											//작성 본인만 수정,삭제버튼 보인다
+											if('<%=MEMBER_NICK%>' == REPLY_NICK) {
+											
+												output += '<div class="col-2 ReviewbeforeControl justify-content-center pl-1" id="ReviewbeforeControl'+REPLY_NUM+'">';								
+												output += '<input type="hidden" name="REVIEW_NUM" value="'+REPLY_NUM+'">';
+												output += '<a class="gomodifyReviewReplyform">수정</a> &nbsp;';
+												output += '<a class="deleteReview">삭제</a>';
+												output += '</div>';
+												output += '<div class="col-2 ReviewafterControl justify-content-center pl-1" id="ReviewafterControl'+REPLY_NUM+'">';
+												output += '<input type="hidden" name="REVIEW_NUM" value="'+REPLY_NUM+'">';
+												output += '<a class="modifyReviewReply">수정</a> &nbsp;';
+												output += '<a class="formCancel" value="reviewReplyModify">취소</a>';
+												output += '</div>';
+											}
+											output += '</div></div></div></div>';
+										}			
+									}
+								}
+								output += '</div></div>';
+								$('#ReviewtableSection').append(output);				
+							}					
+						} else {
+							var output = '<div class="justify-content-center pt-3 pb-1" style="text-align:center;">등록된 댓글이 없습니다.</div>';
+							$('#ReviewtableSection').append(output);	//이상한데...!?!?!?
+						}
+			          },
+			          error:function() {
+			             alert("getReviewList ajax통신 실패!!!");
+			          }
+		       });
+			}		
+		
+//Review 등록하기----------------------------------------------------------------------------------------------------	  					
+			//Review 등록하기 버튼(insert) //원글
+			$(document).on("click",".insertReview",function(event){
+				var formId = 'ReviewForm';
+				var REVIEW_RE = 0;	//원글
+				
+				var form = new FormData(document.getElementById(formId));
+			
+				$.ajax({
+					url : "/NAGAGU/insertReview.acdo", 
+					data : form,
+					dataType: 'json',
+					processData : false,
+					contentType : false,
+					type : 'POST',				
+					success:function(retVal) {
+						if(retVal.insertres == "OK") {
+			 				$("#ReviewformSection").css('display','none');	//댓글 등록 성공하면 form은 초기화
+							$('#ReviewForm').each(function() {  
+								this.reset();  
+							});  
+							$('.imgs_wrap').empty();
+							$("#ReviewButtonSection").show();
+							getReviewList();
+						} else {
+							alert("review insert 실패!!!");
+						}
+					},
+					error:function() {
+						alert("ajax통신 실패!!!");
+					}
+					
+				});
+				event.preventDefault();		
+			})
+
+
+			//Review 등록하기 버튼(insert) //답글
+			$(document).on("click",".insertReviewReply",function(event){
+				var REVIEW_NUM = $(this).prev().val();	//원글번호(review_re로 저장할 것)
+				console.log("REVIEW_NUM : " + REVIEW_NUM)
+				
+				var formId = 'ReviewReplyform'+REVIEW_NUM;
+				var form = new FormData(document.getElementById(formId));
+				$.ajax({
+					url : "/NAGAGU/insertReview.acdo", 
+					data : form,
+					dataType: 'json',
+					processData : false,
+					contentType : false,
+					type : 'POST',				
+					success:function(retVal) {
+						if(retVal.insertres == "OK") {
+			 				
+							getReviewList();
+						} else {
+							alert("review reply insert 실패!!!");
+						}
+					},
+					error:function() {
+						alert("ajax통신 실패!!!");
+					}
+				});
+				event.preventDefault();			
+
+			})		
+		
+			
+//Review 수정하기----------------------------------------------------------------------------------------------------	  		
+			//review 수정 폼 (원글)
+			$(document).on("click",".gomodifyReviewform",function(event){
+				var REVIEW_NUM = $(this).prev().val();
+				console.log("REVIEW_NUM : " + REVIEW_NUM)
+				
+				$('#beforeModifyReview'+REVIEW_NUM).css('display', 'none');
+				
+
+				$.ajax({
+					url : "/NAGAGU/gomodifyReviewform.acdo", 
+					data : { 'REVIEW_NUM' : REVIEW_NUM },
+					dataType: 'JSON',
+					contentType : 'application/x-www-form-urlencoded; charset=UTF-8',
+					type : 'POST',				
+					success:function(retVal) {
+						console.log(retVal)
+						if(retVal.res == "OK") {
+			 				var output='';
+							var REVIEW_NUM = retVal.reviewVO.review_NUM;
+							var REVIEW_DATE = new Date(retVal.reviewVO.review_DATE);
+							var date = date_format(REVIEW_DATE);
+							var REVIEW_GRADE = retVal.reviewVO.review_GRADE;
+							var REVIEW_FILE = retVal.reviewVO.review_FILE;
+							var REVIEW_CONTENT = retVal.reviewVO.review_CONTENT;		 
+			 				var beforeimgcount = 0;	//수정폼 뿌렸을 때 기존 이미지 n개 표시하기 위해
+							
+			 				output += '<form class="modifyReviewForm" id="modifyReviewForm'+REVIEW_NUM+'">';
+			 				output += '<div class="row justify-content-center">';
+			 				output += '<div class="col-1 justify-content-end"><img src="<%=MEMBER_PICTURE%>" alt="" class="rounded-circle"></div>';
+			 				output += '<div class="col-11">';
+			 				output += '<div class="row pb-1">';
+			 				output += '<div class="col-2 justify-content-end name"><%=MEMBER_NICK%></div>';
+			 				output += '<div class="col-8 justify-content-center"></div>';
+			 				output += '<div class="col-2 justify-content-center smallfont">'+date+'</div>';
+			 				output += '</div>';
+			 				output += '<div class="row pb-2">';
+			 				output += '<div class="col-3 pr-0">';
+			 				output += '<img src="${pageContext.request.contextPath}/resources/images/star1.png" alt="" width="15px" height="15px">&nbsp;';
+			 				output += '<select name="REVIEW_GRADE" id="REVIEW_GRADE'+REVIEW_NUM+'"style="width=15px;">';
+			 				output += '<option value="0">0</option><option value="0.5">0.5</option><option value="1">1.0</option><option value="1.5">1.5</option>';
+			 				output += '<option value="2">2.0</option><option value="2.5">2.5</option><option value="3">3.0</option><option value="3.5">3.5</option>';
+			 				output += '<option value="4">4.0</option><option value="4.5">4.5</option><option value="5">5.0</option></select></div>';
+			 				output += '<div class="9"></div></div>';
+			 				output += '<div class="row ">';
+			 				output += '<div class="col-12 pb-2">';
+							if(REVIEW_FILE == '#') {
+								output += '<img src="#" class="review_img"  style="display:none;">   &nbsp;&nbsp;';            
+							} else {
+								output += '<div class="before_imgs_wrap">';
+								reviewImgArray = splitImg(REVIEW_FILE);
+								beforeimgcount = reviewImgArray.length;
+								for(var k=0;k<reviewImgArray.length;k++) {
+									output += '<a onclick="deleteBeforeImageAction('+k+')" id="beforeimg_id_'+k+'">';                        
+									output += '<img src="/productupload/image/' + reviewImgArray[k] + '" class="review_img beforeimg" value="'+reviewImgArray[k]+'" title="Click to remove" width="100" height="100">&nbsp;';                        
+									output += '</a>';
+								}     
+								output += '</div>';
+								output += '<div class="modify_imgs_wrap">';
+								output += '<img id="modify_inputimg" >';
+								output += '</div>';
+							}
+							output += '</div>';
+							output += '<div class="col-12 pb-2">';
+			 				output += '<div class="file_input">';		
+			 				output += '<label>추가 업로드<input type="file" multiple="multiple" name="REVIEW_FILE" id="modify_input_imgs"></label>';		
+			 				output += '<input type="text" readonly="readonly" title="File Route" value="기존 파일'+beforeimgcount+'개">';		
+			 				output += '</div></div></div>';		
+			 				output += '<div class="row">';		
+			 				output += '<div class="col-11 pr-0">';		
+			 				output += '<textarea rows="3" name="REVIEW_CONTENT" id="REVIEW_CONTENT'+REVIEW_NUM+'" class="col-12 pl-0 pr-0">'+REVIEW_CONTENT+'</textarea>';		
+			 				output += '</div></div>';	
+			 				output += '<div class="row">';	
+			 				output += '<div class="col-2 justify-content-center"></div>';	
+			 				output += '<div class="col-8 justify-content-center"></div>';	
+			 				output += '<div class="col-2 justify-content-center" id="ReviewafterControl" style="font-size:0.7em; font-weight:bold;">';	///응?
+			 				output += '<input type="hidden" name="deleteImg" value="">';		
+			 				output += '<input type="hidden" name="beforeImg" value="">';		
+			 				output += '<input type="hidden" name="REVIEW_NUM" value="'+REVIEW_NUM+'">';	
+			 				output += '<a class="modifyReview" style="cursor: pointer;">수정</a> &nbsp;';	
+			 				output += '<a class="formCancel" value="reviewModify" style="cursor: pointer;">취소</a>';	
+			 				output += '</div></div></div></div></form>';
+			 				
+			 				$('#afterModifyReview'+REVIEW_NUM).append(output);
+			 				$("#REVIEW_GRADE"+REVIEW_NUM).val(+REVIEW_GRADE).prop("selected", true); //원래 평점을 set해줌
+						} else {
+							alert("수정폼 데이터 가져오기 실패!!!");
+						}
+					},
+					error:function() {
+						alert("ajax통신 실패!!!");
+					}
+				});
+				event.preventDefault();		
+			})		
+			
+			
+			
+			//review 수정 process (원글)
+			$(document).on("click",".modifyReview",function(event){
+				var REVIEW_NUM = $(this).prev().val();
+				console.log("REVIEW_NUM"+REVIEW_NUM)
+				
+				//deleteImg는 기존 이미지 중 삭제 원하는 사진
+				//beforeImg는 기존 이미지 중 원하는 사진은 삭제하고 남은 사진들. 새로 추가한 사진과 함께 db에 다시 업로드할 것임
+				var beforeImg = '';		//beforeImg는 
+				for(var i=0;i<$('.beforeimg').length;i++) {
+					var tmp = $('.beforeimg')[i];
+					beforeImg += $(tmp).attr("value") + ',';
+				}
+				console.log("beforeImg : "+beforeImg)
+				$("input[type=hidden][name=beforeImg]").val(beforeImg);
+
+	 			var formId = 'modifyReviewForm'+REVIEW_NUM;
+	 	 		var form = new FormData(document.getElementById(formId));
+				$.ajax({
+					url : "/NAGAGU/modifyReview.acdo", 
+					data : form,
+					dataType: 'json',
+					processData : false,
+					contentType : false,
+					type : 'POST',				
+					success:function(retVal) {
+						if(retVal.res == "OK") {
+							getReviewList();
+						} else {
+							alert("수정 실패!!!");
+						}
+					},
+					error:function() {
+						alert("ajax통신 실패!!!");
+					}
+				});
+				event.preventDefault();				
+			})		
+			
+			//review 수정 process (답글)
+			$(document).on("click",".modifyReviewReply",function(event){
+				var REVIEW_NUM = $(this).prev().val();
+				console.log("REVIEW_NUM"+REVIEW_NUM)
+
+
+	 			var formId = 'modifyReviewFormReply'+REVIEW_NUM;
+				console.log("formId"+formId)
+	 	 		var form = new FormData(document.getElementById(formId));
+	 	 		
+				$.ajax({
+					url : "/NAGAGU/modifyReviewReply.acdo", 
+					data : form,
+					dataType: 'json',
+					processData : false,
+					contentType : false,
+					type : 'POST',				
+					success:function(retVal) {
+						if(retVal.res == "OK") {
+							getReviewList();
+						} else {
+							alert("수정 실패!!!");
+						}
+					},
+					error:function() {
+						alert("ajax통신 실패!!!");
+					}
+				});
+				event.preventDefault();				
+			})				
+//Review 삭제하기----------------------------------------------------------------------------------------------------	  
+			//원글, 답글 same
+			$(document).on("click",".deleteReview",function(event){
+				var REVIEW_NUM = $(this).prev().prev().val();
+				console.log("REVIEW_NUM : " + REVIEW_NUM)
+				var delete_confirm = confirm("삭제하시겠습니까?");
+				if(delete_confirm) {
+					$.ajax({
+						url : "/NAGAGU/deleteReview.acdo", 
+						type:'GET',
+						data : {'REVIEW_NUM':REVIEW_NUM},
+						dataType : 'json', // 서버에서 보내줄 데이터 타입
+						async: false,
+						contentType : 'application/x-www-form-urlencoded; charset=UTF-8',
+						success:function(retVal) {
+							if(retVal.res == "OK") {
+								getReviewList();
+							} else if(retVal.res == "Children"){
+								alert("답글이 존재하는 댓글은 삭제할 수 없습니다.");
+							} else {
+								alert("삭제 실패!");
+							}
+						},
+						error:function() {
+							alert("ajax통신 실패!!!");
+						}
+					});
+					event.preventDefault();					
+				}
+			})				
+					
+
+//QNA----------------------------------------------------------------------------------------------------	 		
+//QNA----------------------------------------------------------------------------------------------------	 		
+//QNA----------------------------------------------------------------------------------------------------	 		
+			function getQnaList() {
+				$('#QnatableSection').empty();	//table 내부 내용을 제거(초기화)
+				$.ajax({
+					url:'/NAGAGU/getQnaList.acdo',
+					type:'POST',
+					data : { 'CLASS_NUMBER' : <%=CLASS_NUMBER%> },
+				dataType : "json", // 서버에서 보내줄 데이터 타입
+				contentType : 'application/x-www-form-urlencoded; charset=UTF-8',
+				success:function(retVal) {
+					var reviewCount = retVal.qnaCount;
+					console.log(retVal.qnaList)
+					console.log("retVal.qnaCount : "+retVal.qnaCount)
+					console.log("retVal.qnaList : "+retVal.qnaList)
+					console.log("retVal.qna_RE_Count : "+retVal.qna_RE_Count)
+					console.log("retVal.qna_RE_List : "+retVal.qna_RE_List)
+					
+					
+					if(retVal.qnaCount > 0) {
+						for(var i=0; i<retVal.qnaList.length; i++) {	//reviewCount도 상관 없음
+							var output='';
+							var QNA_NUM = retVal.qnaList[i].QNA_NUM;
+							var MEMBER_PICTURE = retVal.qnaList[i].MEMBER_PICTURE;
+							var MEMBER_NICK = retVal.qnaList[i].MEMBER_NICK;
+							var QNA_DATE = new Date(retVal.qnaList[i].QNA_DATE);
+							var date = date_format(QNA_DATE);
+							var QNA_CONTENT = retVal.qnaList[i].QNA_CONTENT;
+		
+							output += '<div class="QnaAndReplySum pt-2 pb-1" id="QnaAndReplySum'+QNA_NUM+'">';
+
+							//if
+							if((<%=WORKSHOP_NUM%> == <%=WorkshopMatchingNumber%>) || ('<%=MEMBER_NICK%>' == MEMBER_NICK)) {
+								output += '<div class="QnaSum" id="QnaSum'+QNA_NUM+'">';
+								output += '<div class="QnaList pb-3" id="QnaList'+QNA_NUM+'">';
+								output += '<div class="beforeModifyQna" id="beforeModifyQna'+QNA_NUM+'">';
+								output += '<div class="row justify-content-center">';
+								output += '<div class="col-1 justify-content-end"><img src="'+MEMBER_PICTURE+'" alt="" class="rounded-circle"></div>';
+								output += '<div class="col-11">';
+								output += '<div class="row pb-1">';
+								output += '<div class="col-2 justify-content-end name">'+MEMBER_NICK+'</div>';
+								output += '<div class="col-8 justify-content-center"></div>';
+								output += '<div class="col-2 justify-content-center smallfont">'+date+'</div>';
+								output += '</div>';
+								output += '<div class="row pb-2">';
+								output += '</div>';
+								output += '<div class="row pb-2">';
+								output += '<div class="col-11 pr-0">' + QNA_CONTENT + '</div></div>';
+								output += '<div class="row">';
+								output += '<div class="col-2 justify-content-center" style="font-size:0.7em; font-weight:bold; cursor: pointer;">';
+								//답글 버튼은 작성한 공방만 보인다
+								if(<%=WORKSHOP_NUM%> == <%=WorkshopMatchingNumber%>) {
+									output += '<a class="qna_replybtn" id="qna_replybtn' + QNA_NUM + '" value="' + QNA_NUM + '">답글</a>';
+								}
+								output += '</div>';		
+								output += '<div class="col-8 justify-content-center"></div>';
+								console.log("MEMBER_NICK = " + MEMBER_NICK)
+								//수정,삭제버튼은 작성 본인만 보인다
+								if('<%=MEMBER_NICK%>' == MEMBER_NICK) {
+									output += '<div class="col-2 QnabeforeControl justify-content-center" id="QnabeforeControl'+QNA_NUM+'" style="font-size:0.7em; font-weight:bold;">';
+									output += '<input type="hidden" name="REVIEW_NUM" value="'+QNA_NUM+'">';
+									output += '<a class="gomodifyQnaform">수정</a> &nbsp;';
+									output += '<a class="deleteQna">삭제</a>';
+									output += '</div>';
+								}
+								output += '</div></div></div></div>';
+								output += '<div class="afterModifyQna" id="afterModifyQna'+QNA_NUM+'"></div>';
+								output += '</div></div>';
+								output += '<div class="QnaReplySum" id="QnaReplySum'+QNA_NUM+'">';
+								output += '<div class="QnaReplyformSection" id="QnaReplyformSection'+QNA_NUM+'"></div>';
+								
+								if(retVal.qna_RE_Count>0) {
+									for(var j=0; j<retVal.qna_RE_List.length; j++) {
+										if(QNA_NUM == retVal.qna_RE_List[j].QNA_RE) {
+											var REPLY_NUM = retVal.qna_RE_List[j].QNA_NUM;
+											var WORKSHOP_PICTURE = retVal.qna_RE_List[j].WORKSHOP_PICTURE;
+											var WORKSHOP_NAME = retVal.qna_RE_List[j].WORKSHOP_NAME;
+											var REPLY_CONTENT = retVal.qna_RE_List[j].QNA_CONTENT;
+											var REPLY_DATE = new Date(retVal.qna_RE_List[j].QNA_DATE);
+											var replydate = date_format(REPLY_DATE);
+		
+											//리뷰 출력
+											output += '<div class="QnaReplyList pb-2" id="QnaReplyList'+REPLY_NUM+'">';
+											output += '<div class="row justify-content-center">';
+											output += '<div class="col-1"></div>';
+											output += '<div class="col-1"><img src="'+WORKSHOP_PICTURE+'" alt="" class="rounded-circle"></div>';
+											output += '<div class="col-10">';
+											output += '<div class="row">';
+											output += '<div class="col-2 justify-content-end name">'+WORKSHOP_NAME+'</div>';
+											output += '<div class="col-8 justify-content-center"></div>';
+											output += '<div class="col-2 justify-content-center smallfont pl-1">'+replydate+'</div>';
+											output += '</div>';
+											output += '<div class="beforeModifyQnaReply" id="beforeModifyQnaReply'+REPLY_NUM+'">';
+											output += '<div class="row">';
+											output += '<div class="col-11 pr-0">'+REPLY_CONTENT;
+											output += '</div></div></div>';
+											output += '<div class="afterModifyQnaReply" id="afterModifyQnaReply'+REPLY_NUM+'">';
+											output += '<form class="modifyQnaReplyForm" id="modifyQnaFormReply'+REPLY_NUM+'">';	
+											output += '<div class="row">';			
+											output += '<div class="col-11 pr-0">';			
+											output += '<input type="hidden" name="QNA_NUM" value="'+REPLY_NUM+'">';			
+											output += '<textarea rows="2" name="QNA_CONTENT" id="QNA_CONTENT'+REPLY_NUM+'" class="col-12 pl-0 pr-0">'+REPLY_CONTENT+'</textarea>';			
+											output += '</div></div></form></div>';
+											output += '<div class="row">';
+											output += '<div class="col-2 replytext justify-content-center"></div>';
+											output += '<div class="col-8 justify-content-center"></div>';
+											
+											//수정 삭제 버튼은 작성한 워크샵만 보인다
+											if(<%=WORKSHOP_NUM%> == <%=WorkshopMatchingNumber%>) {
+													output += '<div class="col-2 QnabeforeControl justify-content-center pl-1" id="QnabeforeControl'+REPLY_NUM+'">';								
+													output += '<input type="hidden" name="QNA_NUM" value="'+REPLY_NUM+'">';
+													output += '<a class="gomodifyQnaReplyform">수정</a> &nbsp;';
+													output += '<a class="deleteQna">삭제</a>';
+													output += '</div>';
+													output += '<div class="col-2 QnaafterControl justify-content-center pl-1" id="QnaafterControl'+REPLY_NUM+'">';
+													output += '<input type="hidden" name="QNA_NUM" value="'+REPLY_NUM+'">';
+													output += '<a class="modifyQnaReply">수정</a> &nbsp;';
+													output += '<a class="formCancel" value="qnaReplyModify">취소</a>';
+													output += '</div>';
+												}
+												output += '</div></div></div></div>';
+											}			
+										}
+									}
+									output += '</div>';
+								} else {
+									output += '<div class="justify-content-center pt-1 pb-1 mt-5 mb-5 text-center">';
+									output += '문의는 작성 회원만 열람 가능합니다.';
+									output += '</div>';
+								}
+								output += '</div>';
+								$('#QnatableSection').append(output);				
+							}	//for 끝					
+						} else {
+							var output = '<div class="justify-content-center pt-3 pb-1" style="text-align:center;">등록된 문의가 없습니다.</div>';
+							$('#QnatableSection').append(output);	
+						}
+			          },
+			          error:function() {
+			             alert("getQnaList ajax통신 실패!!!");
+			          }
+		       });
+			}		
+			
+			//Qna 등록하기 버튼(insert) //원글
+			$(document).on("click",".insertQna",function(event){
+				var formId = 'QnaForm';
+				var QNA_RE = 0;	//원글
+			
+				var form = new FormData(document.getElementById(formId));
+			
+				$.ajax({
+					url : "/NAGAGU/insertQna.acdo", 
+					data : form,
+					dataType: 'json',
+					processData : false,
+					contentType : false,
+					type : 'POST',				
+					success:function(retVal) {
+						if(retVal.res == "OK") {
+		 				$("#QnaformSection").css('display','none');	//댓글 등록 성공하면 form은 초기화
+							$('#QnaForm').each(function() {  
+								this.reset();  
+							});  
+							$("#QnaButtonSection").show();
+							getQnaList();
+						} else {
+							alert("qna insert 실패!!!");
+						}
+					},
+					error:function() {
+						alert("qna insert ajax통신 실패!!!");
+					}
+					
+				});
+				event.preventDefault();		
+			})
+			
+			//qna 등록하기 버튼(insert) //답글
+			$(document).on("click",".insertQnaReply",function(event){
+				var QNA_NUM = $(this).prev().val();	//원글번호(qna_re로 저장할 것)
+				console.log("QNA_NUM : " + QNA_NUM)
+				
+				var formId = 'QnaReplyform'+QNA_NUM;
+				var form = new FormData(document.getElementById(formId));
+				$.ajax({
+					url : "/NAGAGU/insertQna.acdo", 
+					data : form,
+					dataType: 'json',
+					processData : false,
+					contentType : false,
+					type : 'POST',				
+					success:function(retVal) {
+						if(retVal.res == "OK") {
+			 				
+							getQnaList();
+						} else {
+							alert("qna reply insert 실패!!!");
+						}
+					},
+					error:function() {
+						alert("qna reply ajax통신 실패!!!");
+					}
+				});
+				event.preventDefault();			
+		
+			})
+					
+		//Qna 수정하기----------------------------------------------------------------------------------------------------	  		
+				
+			//qna 수정 폼 (원글)
+			$(document).on("click",".gomodifyQnaform",function(event){
+				var QNA_NUM = $(this).prev().val();
+				console.log("QNA_NUM : " + QNA_NUM)
+				
+				$('#beforeModifyQna'+QNA_NUM).css('display', 'none');
+		
+				$.ajax({
+					url : "/NAGAGU/gomodifyQnaform.acdo", 
+					data : { 'QNA_NUM' : QNA_NUM },
+					dataType: 'JSON',
+					contentType : 'application/x-www-form-urlencoded; charset=UTF-8',
+					type : 'POST',				
+					success:function(retVal) {
+						console.log(retVal)
+						if(retVal.res == "OK") {
+			 				var output='';
+							var QNA_NUM = retVal.qnaVO.qna_NUM;
+							var QNA_DATE = new Date(retVal.qnaVO.qna_DATE);
+							var date = date_format(QNA_DATE);
+							var QNA_CONTENT = retVal.qnaVO.qna_CONTENT;		 
+			 				
+			 				output += '<form class="modifyQnaForm" id="modifyQnaForm'+QNA_NUM+'">';
+			 				output += '<div class="row justify-content-center">';
+			 				output += '<div class="col-1 justify-content-end"><img src="<%=MEMBER_PICTURE%>" alt="" class="rounded-circle"></div>';
+		 				output += '<div class="col-11">';
+		 				output += '<div class="row pb-1">';
+		 				output += '<div class="col-2 justify-content-end name"><%=MEMBER_NICK%></div>';
+			 				output += '<div class="col-8 justify-content-center"></div>';
+			 				output += '<div class="col-2 justify-content-center smallfont">'+date+'</div>';
+			 				output += '</div>';		
+			 				output += '<div class="row">';		
+			 				output += '<div class="col-11 pr-0">';		
+			 				output += '<textarea rows="3" name="QNA_CONTENT" id="QNA_CONTENT'+QNA_NUM+'" class="col-12 pl-0 pr-0">'+QNA_CONTENT+'</textarea>';		
+			 				output += '</div></div>';	
+			 				output += '<div class="row">';	
+			 				output += '<div class="col-2 justify-content-center"></div>';	
+			 				output += '<div class="col-8 justify-content-center"></div>';	
+			 				output += '<div class="col-2 justify-content-center" id="QnaafterControl" style="font-size:0.7em; font-weight:bold;">';		
+			 				output += '<input type="hidden" name="QNA_NUM" value="'+QNA_NUM+'">';	
+			 				output += '<a class="modifyQna" style="cursor: pointer;">수정</a> &nbsp;';	
+			 				output += '<a class="formCancel" value="qnaModify" style="cursor: pointer;">취소</a>';	
+			 				output += '</div></div></div></div></form>';
+			 				
+			 				$('#afterModifyQna'+QNA_NUM).append(output);
+						} else {
+							alert("수정폼 데이터 가져오기 실패!!!");
+						}
+					},
+					error:function() {
+						alert("ajax통신 실패!!!");
+					}
+				});
+				event.preventDefault();		
+			})			
+			
+			//qna 수정 process (원글)
+			$(document).on("click",".modifyQna",function(event){
+				var QNA_NUM = $(this).prev().val();
+				console.log("QNA_NUM"+QNA_NUM)
+		
+					var formId = 'modifyQnaForm'+QNA_NUM;
+			 		var form = new FormData(document.getElementById(formId));
+				$.ajax({
+					url : "/NAGAGU/modifyQna.acdo", 
+					data : form,
+					dataType: 'json',
+					processData : false,
+					contentType : false,
+					type : 'POST',				
+					success:function(retVal) {
+						if(retVal.res == "OK") {
+							getQnaList();
+						} else {
+							alert("수정 실패!!!");
+						}
+					},
+					error:function() {
+						alert("ajax통신 실패!!!");
+					}
+				});
+				event.preventDefault();				
+			})		
+			
+			//qna 수정 process (답글)
+			$(document).on("click",".modifyQnaReply",function(event){
+				var QNA_NUM = $(this).prev().val();
+				console.log("QNA_NUM"+QNA_NUM)
+		
+					var formId = 'modifyQnaFormReply'+QNA_NUM;
+				console.log("formId"+formId)
+			 		var form = new FormData(document.getElementById(formId));
+			 		
+				$.ajax({
+					url : "/NAGAGU/modifyQna.acdo", 
+					data : form,
+					dataType: 'json',
+					processData : false,
+					contentType : false,
+					type : 'POST',				
+					success:function(retVal) {
+						if(retVal.res == "OK") {
+							getQnaList();
+						} else {
+							alert("수정 실패!!!");
+						}
+					},
+					error:function() {
+						alert("ajax통신 실패!!!");
+					}
+				});
+				event.preventDefault();				
+			})			
+			
+		
+		//Qna 삭제하기----------------------------------------------------------------------------------------------------	  
+		
+			//원글, 답글 same
+			$(document).on("click",".deleteQna",function(event){
+				var QNA_NUM = $(this).prev().prev().val();
+				console.log("QNA_NUM : " + QNA_NUM)
+				var delete_confirm = confirm("삭제하시겠습니까?");
+				if(delete_confirm) {
+					$.ajax({
+						url : "/NAGAGU/deleteQna.acdo", 
+						type:'GET',
+						data : {'QNA_NUM':QNA_NUM},
+						dataType : 'json', // 서버에서 보내줄 데이터 타입
+						async: false,
+						contentType : 'application/x-www-form-urlencoded; charset=UTF-8',
+						success:function(retVal) {
+							if(retVal.res == "OK") {
+								getQnaList();
+							} else if(retVal.res == "Children"){
+								alert("답변이 존재하는 문의는 삭제할 수 없습니다.");
+							} else {
+								alert("삭제 실패!");
+							}
+						},
+						error:function() {
+							alert("ajax통신 실패!!!");
+						}
+					});
+					event.preventDefault();					
+				}
+			})						
+			
+		//ready 끝	
+		getReviewList();
+		getQnaList();	
+				
+		
 		});
 </script>

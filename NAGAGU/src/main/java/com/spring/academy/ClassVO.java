@@ -26,7 +26,9 @@ public class ClassVO {
 	private String CLASS_DETAIL_ADDRESS;
 	private int CLASS_COUNT_MEMBER;
 	private int CLASS_STATUS;
+	private double CLASS_GRADE;
 	
+
 	public int getCLASS_NUMBER() {
 		return CLASS_NUMBER;
 	}
@@ -164,5 +166,11 @@ public class ClassVO {
 	}
 	public void setCLASS_STATUS(int cLASS_STATUS) {
 		CLASS_STATUS = cLASS_STATUS;
+	}
+	public double getCLASS_GRADE() {
+		return CLASS_GRADE;
+	}
+	public void setCLASS_GRADE(double cLASS_GRADE) {
+		CLASS_GRADE = cLASS_GRADE;
 	}
 }

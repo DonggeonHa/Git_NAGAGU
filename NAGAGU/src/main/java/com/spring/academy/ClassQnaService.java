@@ -1,19 +1,19 @@
-package com.spring.store;
+package com.spring.academy;
 
 import java.util.ArrayList;
 
 import java.util.HashMap;
 
 
-public interface ProductQnaService {
+public interface ClassQnaService {
 	int getQnaCount(HashMap<String, Object> map);
 	int getQna_RE_Count(HashMap<String, Object> map);
 	ArrayList<HashMap<String, Object>> getQnaList(HashMap<String, Object> map);
 	ArrayList<HashMap<String, Object>> getQna_RE_List(HashMap<String, Object> map);
 	
-	int insertQna(Product_qnaVO qnaVO);
-	Product_qnaVO getQnaVO(Product_qnaVO qnaVO);
-	int modifyQna(Product_qnaVO qnaVO);
-	int findChildrenRE(Product_qnaVO qnaVO);
-	int deleteQna(Product_qnaVO qnaVO);
+	int insertQna(Class_qnaVO qnaVO);
+	Class_qnaVO getQnaVO(Class_qnaVO qnaVO);
+	int modifyQna(Class_qnaVO qnaVO);
+	int findChildrenRE(Class_qnaVO qnaVO);
+	int deleteQna(Class_qnaVO qnaVO);
 }

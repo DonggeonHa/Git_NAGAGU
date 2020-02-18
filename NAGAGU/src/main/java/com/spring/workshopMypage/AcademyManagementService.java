@@ -1,7 +1,9 @@
 package com.spring.workshopMypage;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.annotations.Param;
 
@@ -18,4 +20,8 @@ public interface AcademyManagementService {
 	ClassVO getclassDetail(@Param("CLASS_NUMBER") int CLASS_NUMBER);
 	int updateClass(ClassVO classVO);
 	int modifyWorkshop(WorkShopMemberVO workshopVO);
+	//선주 review, qna
+	ArrayList<Map<String, Object>> getclassReviewList(HashMap<String, Object> map);
+	ArrayList<Map<String, Object>> getclassQnaList(HashMap<String, Object> map);
+	
 }

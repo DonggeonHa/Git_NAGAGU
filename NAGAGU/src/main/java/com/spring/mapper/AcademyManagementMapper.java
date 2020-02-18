@@ -1,6 +1,9 @@
 package com.spring.mapper;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.annotations.Param;
 
@@ -22,4 +25,9 @@ public interface AcademyManagementMapper {
 	int updateClass(ClassVO classVO);
 	
 	int modifyWorkshop(WorkShopMemberVO workshopVO);
+	
+	
+	//선주 리뷰,문의
+	ArrayList<Map<String, Object>> getclassReviewList(HashMap<String, Object> map);
+	ArrayList<Map<String, Object>> getclassQnaList(HashMap<String, Object> map);
 }

@@ -63,12 +63,7 @@
 	String PRODUCT_COLOR = vo.getPRODUCT_COLOR();
 	String PRODUCT_SIZE = vo.getPRODUCT_SIZE();
 	int bannerImgCount = StringUtils.countOccurrencesOf(vo.getPRODUCT_BANNER(), ",");
-	System.out.println('1');
-	
-	
-	
 
-	System.out.println('3');
 
 /* 	
 	//qna 답글 공방 멤버 관련
@@ -470,555 +465,555 @@
 
 
 
-		<div class="container class-detail-container category_st">
-			<div class="row justify-content-between title">
-				<h6>
-					<a href="productlist.pro?PRODUCT_CATEGORY=all">STORE</a> > 상세보기
-				</h6>
-			</div>
-			<div class="row" style="padding-bottom: 5%;">
-				<div class="col-7">
-					<div class="row justify-content-center pt-4">
-						<div class="thumbList">
-							<%
-								for (int i = 0; i < imgArr.length; i++) {
-							%>
-							<div class="thumbItem<%if (i == 0) {%> thumbCheck <%}%>" thumb-idx=<%=i%>>
-								<img src=<%=imgArr[i]%>>
-							</div>
-							<%
-								}
-							%>
-						</div>
-						<div class="thumbMain">
-							<a href=<%=imgArr[0]%> target="_blank"><img
-								src=<%=imgArr[0]%>></a>
-						</div>
+<div class="container class-detail-container category_st">
+	<div class="row justify-content-between title">
+		<h6>
+			<a href="productlist.pro?PRODUCT_CATEGORY=all">STORE</a> > 상세보기
+		</h6>
+	</div>
+	<div class="row" style="padding-bottom: 5%;">
+		<div class="col-7">
+			<div class="row justify-content-center pt-4">
+				<div class="thumbList">
+					<%
+						for (int i = 0; i < imgArr.length; i++) {
+					%>
+					<div class="thumbItem<%if (i == 0) {%> thumbCheck <%}%>" thumb-idx=<%=i%>>
+						<img src=<%=imgArr[i]%>>
 					</div>
+					<%
+						}
+					%>
 				</div>
-				<div class="col-5">
-					<form name="goodsform" action="#" method="post" id="goodsform">
-						<div class="row pt-4 pl-4">
-							<div class="col-3">
-								<img
-									src="${pageContext.request.contextPath}/resources/images/Community/peko.png"
-									width="95%">
-							</div>
-							<hr>
-							<div class="col-9">
-								<h3 name="PRODUCT_SHOPNAME"><%=vo.getPRODUCT_SHOPNAME()%></h3>
-								<p name="PRODUCT_TITLE">
-									<font size="2"><%=vo.getPRODUCT_BRIEF()%></font>
-								</p>
-							</div>
-						</div>
-						<div>
-							<table class="table table-borderless">
-								<thead>
-									<tr>
-										<th scope="col">가격</th>
-										<th scope="col" class="PRODUCT_PRICE" value="<%=vo.getPRODUCT_PRICE()%>" name="PRODUCT_PRICE"><%=vo.getPRODUCT_PRICE()%>원</th>
-									</tr>
-								</thead>
-								<tbody>
-									<tr>
-										<th scope="row">배송비</th>
-										<td class="PRODUCT_SHIP_PRICE" value="<%=vo.getPRODUCT_SHIP_PRICE()%>" name="PRODUCT_SHIP_PRICE"><%=vo.getPRODUCT_SHIP_PRICE()%></td>
-									</tr>
-									<tr>
-										<th scope="row">배송 기간</th>
-										<td name="PRODUCT_SHIP_DAYS"><%=vo.getPRODUCT_SHIP_DAYS()%>일</td>
-									</tr>
-									<tr>
-										<th scope="row">색상선택</th>
-										<td><select name="BASKET_COLOR" size="1"
-											class="form-control BASKET_COLOR">
-												<option value="">선택</option>
-												<c:forTokens var="color" items="<%=PRODUCT_COLOR %>"
-													delims=",">
-													<option value="${fn:trim(color)}">${fn:trim(color)}</option>
-												</c:forTokens>
-										</select></td>
-									</tr>
-									<tr>
-										<th scope="row">사이즈선택</th>
-										<td><select name="BASKET_SIZE" size="1"
-											class="form-control BASKET_SIZE">
-												<option value="">선택</option>
-												<c:forTokens var="size" items="<%=PRODUCT_SIZE %>" delims=",">
-													<option value="${fn:trim(size)}">${fn:trim(size)}</option>
-												</c:forTokens>
-										</select></td>
-									</tr>
-									<tr>
-										<th scope="row">수량</th>
-										<td>
-											<div>
-												<select name="BASKET_AMOUNT" size="1" class="form-control BASKET_AMOUNT">
-													<option value="1">1</option>
-													<option value="2">2</option>
-													<option value="3">3</option>
-													<option value="4">4</option>
-													<option value="5">5</option>
-												</select>
-											</div>
-										</td>
-									</tr>
-									<tr>
-										<th scope="row">총 합계금액</th>
-										<td class="total">12</td>
-									</tr>
-									<tr>
-										<td colspan="2">
-											<div class="d-flex justify-content-between">
-												<% 
-														if(WORKSHOP_CEO_NAME == null && MEMBER_EMAIL == null) { 
-													%>
-												<%-- 비로그인일 때 --%>
-												<div>
-													<button type="button" class="btn btn-outline-dark btn-lg"
-														data-toggle="modal" data-target="#exampleModalCenter">
-														<input type="hidden" name="PRODUCT_NUM"
-															value="<%=PRODUCT_NUM %>">♥
-													</button>
-												</div>
-												<div style="width: 45%;">
-													<button type="button"
-														class="btn btn-outline-dark btn-lg btn-block"
-														data-toggle="modal" data-target="#exampleModalCenter">장바구니</button>
-												</div>
-												<div style="width: 45%;">
-													<button type="button"
-														class="btn btn-outline-dark btn-lg btn-block"
-														data-toggle="modal" data-target="#exampleModalCenter">바로구매</button>
-												</div>
-												<% 
-														} else if(WORKSHOP_CEO_NAME != null) { 
-													%>
-												<%-- 공방 로그인일 때(하트 안 보임) --%>
-												<div style="width: 50%;">
-													<a href="classreservation.ac"
-														class="btn btn-outline-dark btn-lg btn-block disabled"
-														role="button" aria-pressed="true">장바구니</a>
-												</div>
-												<div style="width: 50%;">
-													<a href="#"
-														class="btn btn-outline-dark btn-lg btn-block disabled"
-														role="button" aria-pressed="true">바로구매</a>
-												</div>
-												<% 
-														} else { 
-													%>
-												<%-- 일반회원일때 --%>
-												<div>
-													<a href="#" class="btn btn-outline-dark btn-lg LikeAjax"
-														role="button" aria-pressed="true"> <input
-														type="hidden" name="PRODUCT_NUM" value="<%=PRODUCT_NUM %>">♥
-													</a>
-												</div>
-												<div style="width: 45%;">
-													<a href="#" class="btn btn-outline-dark btn-lg btn-block basket_btn"
-														role="button" aria-pressed="true" id="basket_btn">장바구니</a>
-												</div>
-												<div style="width: 45%;">
-													<a href="#" class="btn btn-outline-dark btn-lg btn-block order_btn"
-														role="button" aria-pressed="true" id="order_btn">바로구매</a>
-												</div>
-												<% 
-														} 
-													%>
-											</div>
-										</td>
-									</tr>
-								</tbody>
-							</table>
-						</div>
-						<div class="btnArea text-center"></div>
-						<br />
-					</form>
+				<div class="thumbMain">
+					<a href=<%=imgArr[0]%> target="_blank"><img
+						src=<%=imgArr[0]%>></a>
 				</div>
 			</div>
-			<div class="row" style="padding: 15px 15px;">
-				<div class="col-8">
-					<div style="line-height: 0.5em;" id="t1">
-						<dl>
-							<dt><h3><%=vo.getPRODUCT_TITLE() %></h3><br></dt>
-							<dl><h5><%=vo.getPRODUCT_BRIEF() %></h5></dl>
-						</dl>
+		</div>
+		<div class="col-5">
+			<form name="goodsform" action="#" method="post" id="goodsform">
+				<div class="row pt-4 pl-4">
+					<div class="col-3">
+						<img
+							src="${pageContext.request.contextPath}/resources/images/Community/peko.png"
+							width="95%">
 					</div>
-					<div class="row sticky">
-						<div class="col-12">
-							<ul class="nav nav-tabs nav-fill h-30">
-							   <li class="nav-item">
-							      <a class="nav-link" href="#t1"><h5>상품정보</h5></a>
-							   </li>
-							   <li class="nav-item">
-							      <a class="nav-link" href="#t2"><h5>리뷰</h5></a>
-							   </li>
-							   <li class="nav-item">
-							      <a class="nav-link" href="#t3"><h5>Q&A</h5></a>
-							   </li>
-							   <li class="nav-item">
-							      <a class="nav-link" href="#t4"><h5>배송/환불</h5></a>
-							   </li>
-							</ul>
-						</div>
+					<hr>
+					<div class="col-9">
+						<h3 name="PRODUCT_SHOPNAME"><%=vo.getPRODUCT_SHOPNAME()%></h3>
+						<p name="PRODUCT_TITLE">
+							<font size="2"><%=vo.getPRODUCT_BRIEF()%></font>
+						</p>
 					</div>
-					<div class="row justify-content-center">
-					<% if (vo.getPRODUCT_INFO() != null) { %>
-						<%=vo.getPRODUCT_INFO() %>
-						<br /><br />
-					<% } else { %>
-						<!-- vo.getPRODUCT_INFO() = 없는 경우-->
-						<table width="50%" border="0" cellpadding="0" cellspacing="0" align="center" valign="middle">
-							<tr align="center" valign="middle">
-								<td align="right"><font size=2>상세 정보가 없습니다.</font></td>
+				</div>
+				<div>
+					<table class="table table-borderless">
+						<thead>
+							<tr>
+								<th scope="col">가격</th>
+								<th scope="col" class="PRODUCT_PRICE" value="<%=vo.getPRODUCT_PRICE()%>" name="PRODUCT_PRICE"><%=vo.getPRODUCT_PRICE()%>원</th>
 							</tr>
-						</table>
-					<% } %>
-					</div>
-					<!-- 상세 사진정보 끝 -->
-					
-					<span id="t2"></span>
-					<br /><br /><hr />
-		           
-					<!-- 리뷰 테이블 시작 -->
-					<h3 id="review_scroll" >Review</h3>
-					<br /><br />
-					
-					<div id="ReviewSection">
-						<div id="ReviewButtonSection">	
-							<div class="row justify-content-center pt-3 pb-3"> <!-- 리뷰 댓글달기 버튼 -->
-								<button class="btn btn-dark btn-sm review_btn">댓글 달기</button>
-							</div>
-						</div>
-						<div id="ReviewWrapSection" class="pb-1">
-							<div id="ReviewformSection" class="pb-2">
-								<form id="ReviewForm" name="REVIEW_CONTENT" enctype="multipart/form-data"> <!-- 리뷰 작성 폼 영역 : 하나 -->
-									<input type="hidden" name="MEMBER_NUM" value="MEMBER_NUM">
-									<input type="hidden" name="PRODUCT_NUM" value="<%=PRODUCT_NUM %>">
-									<div class="row justify-content-center">
-										<div class="col-1 justify-content-end">
-											<img src="<%=MEMBER_PICTURE%>" alt="" class="rounded-circle">
-										</div>
-										<div class="col-11">
-											<div class="row pb-1">
-												<div class="col-2 justify-content-end name"><%=MEMBER_NICK%> </div>
-												<div class="col-8 justify-content-center"></div>
-												<div class="col-2 justify-content-center smallfont"></div>
-											</div>
-											<div class="row pb-1"> <!-- 평점 -->
-												<div class="col-3 pr-0">
-													<img src="${pageContext.request.contextPath}/resources/images/star1.png" alt="" width="15px" height="15px" >
-													&nbsp;
-													<select name="REVIEW_GRADE" id="REVIEW_GRADE" style="">
-														<option value="0">0</option>
-														<option value="0.5">0.5</option>
-														<option value="1">1.0</option>
-														<option value="1.5">1.5</option>
-														<option value="2">2.0</option>
-														<option value="2.5">2.5</option>
-														<option value="3">3.0</option>
-														<option value="3.5">3.5</option>
-														<option value="4">4.0</option>
-														<option value="4.5">4.5</option>
-														<option value="5">5.0</option>
-													</select>											
-												</div>
-												<div class="9"></div>
-											</div>
-											
-											<div class="row pb-2"> <!-- 파일 -->
-												<div class="col-12">
-													<div class="file_input">
-													    <label>
-													        사진 업로드
-													        <input type="file" multiple="multiple" name="REVIEW_FILE" id="input_imgs">
-													    </label>
-													    <input type="text" readonly="readonly" title="File Route" value="선택된 파일이 없습니다">
-													</div>			
-												</div>
-											</div>
-											<div class="row pb-2">
-												<div class="col-12 imgs_wrap">
-													<img id="inputimg" >
-												</div>
-											</div>
-											<div class="row pb-1">	<!-- 내용 textarea -->
-												<div class="col-11 pr-0">
-													<textarea rows="3" name="REVIEW_CONTENT" class="col-12 pl-0 pr-0" 
-														id=""></textarea>
-												</div>	
-											</div>
-											<div class="row"> <!-- 수정, 삭제 -->
-												<div class="col-2 justify-content-center"></div>
-												<div class="col-8 justify-content-center"></div>
-												<div class="col-2 justify-content-center" style="font-size:0.7em; font-weight:bold;">
-													<a class="insertReview">작성</a> &nbsp;
-													<a class="formCancel" value="ReviewForm">취소</a>
-												</div>
-											</div>
-										</div>
-									</div>
-								</form>		
-							</div>
-							<div id="ReviewtableSection" class="pb-2">
-							
-								
-							</div>
-						</div>
-					</div>
-	
-	                  
-					<!-- 리뷰 페이지네이션 -->
-					<br/>
-					
-					
-					<br />
-					<!-- 리뷰 페이지네이션 끝 -->
-		
-		
-			
-					<span id="t3"></span>
-					<br /><br /><hr />
-					
-					<!-- Q&A 테이블 시작 -->
-					<h3 id="qna_scroll">Q&A</h3>
-					<br /><br />
-		
-	            
-					<div id="QnaSection">
-						<div id="QnaButtonSection">	
-							<div class="row justify-content-center pt-3 pb-3"> <!-- 리뷰 댓글달기 버튼 -->
-								<button class="btn btn-dark btn-sm qna_btn">문의하기</button>
-							</div>
-						</div>
-						<div id="QnaWrapSection" class="pb-1">
-							<div id="QnaformSection" class="pb-2">
-								<form id="QnaForm" name="QNA_CONTENT"> <!-- 리뷰 작성 폼 영역 : 하나 -->
-									<input type="hidden" name="MEMBER_NUM" value="MEMBER_NUM">
-									<input type="hidden" name="PRODUCT_NUM" value="<%=PRODUCT_NUM %>">
-									<div class="row justify-content-center">
-										<div class="col-1 justify-content-end">
-											<img src="<%=MEMBER_PICTURE%>" alt="" class="rounded-circle">
-										</div>
-										<div class="col-11">
-											<div class="row pb-1">
-												<div class="col-2 justify-content-end name"><%=MEMBER_NICK%> </div>
-												<div class="col-8 justify-content-center"></div>
-												<div class="col-2 justify-content-center smallfont"></div>
-											</div>
-											<div class="row pb-1">	<!-- 내용 textarea -->
-												<div class="col-11 pr-0">
-													<textarea rows="3" name="QNA_CONTENT" class="col-12 pl-0 pr-0" 
-														id=""></textarea>
-												</div>	
-											</div>
-											<div class="row"> <!-- 수정, 삭제 -->
-												<div class="col-2 justify-content-center"></div>
-												<div class="col-8 justify-content-center"></div>
-												<div class="col-2 justify-content-center" style="font-size:0.7em; font-weight:bold;">
-													<a class="insertQna">작성</a> &nbsp;
-													<a class="formCancel" value="QnaForm">취소</a>
-												</div>
-											</div>
-										</div>
-									</div>
-								</form>		
-							</div>
-							<div id="QnatableSection" class="pb-2">
-							
-								
-							</div>
-						</div>
-					</div>
-				
-				
-					<!-- Q&A pagenation -->
-					<br/>
-					
-					
-					<br />
-					<!-- Q&A pagenation 끝 -->			
-				
-				
-				
-				
-				
-					<!-- Q&A 테이블 끝 -->
-					
-					<br /><br /><hr />
-		
-		      
-		            <!-- 배송 및 환불 시작 -->
-		      
-		            <h3 id="t4">배송 및 환불</h3>
-		            <br /><br />
-					<div class="ship_info" style="width: 100%; margin: 0 auto; font-size: 0.9em; color: #212529;">
-						<div class="row_ship_info">
-					    	<h5>배송정보</h5>
-							모든 제품은 메이킹퍼니처 직원이 직접 배송하며 배송비는 고객 부담입니다. 지역, 제품 수량 또는 설치 여부에 따라 주문 시
-							배송비를 미리 안내해드립니다. 기본 배송비 외에 사다리차, 엘레베이터, 주차비 사용료 등 추가 비용이 발생 시 고객님
-							부담입니다.
-							<%=vo.getPRODUCT_SHIP_INFO() %>
-						</div>
-						<div class="row_ship_info">
-							<h5>배송정보</h5>
-							모든 제품은 메이킹퍼니처 직원이 직접 배송하며 배송비는 고객 부담입니다. 지역, 제품 수량 또는 설치 여부에 따라 주문 시
-							배송비를 미리 안내해드립니다. 기본 배송비 외에 사다리차, 엘레베이터, 주차비 사용료 등 추가 비용이 발생 시 고객님
-							부담입니다.
-							반품 배송지 : <%=vo.getPRODUCT_SHIP_RETURN_PLACE() %>
-						</div>
-						<br />
-						
-						<div class="row_ship_info">
-							<h5>A/S</h5>
-							핸드메이드 제품으로 나뭇결, 무늬, 옹이의 형태나 파임, 칠과 색상이 다를 수 있고 약간의 흠집이나 찍힘(표면의 크랙 또는
-							뜯김)이 있을 수 있으며, 100% 원목으로 기후변화에 따른 수축, 팽창으로 인한 휘어짐(상판), 갈라짐(마구리면)이
-							발생할 수 있습니다. 이런 자연스러운 현상들은 교체 및 교환 대상이 아니며 무상 A/S 사유가 되지 않습니다. 구매 전 꼭
-							참고해주시기 바랍니다.
-							<%=vo.getPRODUCT_AS_INFO() %>
-						</div>
-						<br />
-						
-						<div class="row_ship_info">
-							<h5>Wood Furniture</h5>
-							원목가구의 수축 및 팽창은 원목만의 자연스러운 특징입니다.<br /> -지나치게 건조한 곳, 습한 곳은 피하세요. -가구의
-							수평을 유지해주세요.(수평이 안 맞게 되면 가구가 뒤틀려버립니다.) -가구에 화학약품(신나, 메니큐어 등)이 닿지 않게
-							해주세요. -평소에는 물걸레 청소하시면 됩니다. -뜨거운 냄비와 같은 고온의 뜨거운 물체에 직접 닿는 것은 피하시기
-							바랍니다. -한 달에 1~2번 가구용 왁스로 닦아주세요. -원목가구는 수축기와 팽창기(계절의 변화)에 따라 갈라짐이나
-							미세한 크랙이 발생할 수 있으며, 시간이 경과하면 원상회복이 될 수 있습니다. 이는 원목가구만의 자연스러운 현상이며 제품의
-							하자가 아닙니다.
-							<%=vo.getPRODUCT_STORE_INFO() %>
-						</div>
-						<br />
-						
-						<div class="row_ship_info">
-							<h5>A/S규정[1년 무상]</h5>
-							무상 A/S -보증기간 이내의 제품으로 정상적인 상태에서 제조상의 결함 제품 -원/부나내의 결함이 발생된 경우
-							-메이킹퍼니처의 귀책 사유로 인한 결함 발생 제품
-							<%=vo.getPRODUCT_RETURN_INFO() %>
-						</div>
-						<div class="row_ship_info">
-							유상 A/S -고객의 취급 부주의 및 고의적 훼손 경우 -고객 임의 개조에 의한 파손의 경우나 타 업체에서 수리해 변경된 경우 -유상 서비스 요금은 [수리비+부품비+출장비+기타실 비용] 등이 포함됩니다.
-						</div>
-					</div>
-				</div>
-				<div class="col-4">
-		        	<div class="sticky2" style="border: 1px solid #EAEAEA;">
-		            	<form name="goodsform" action="#" method="post" id="goodsform">
-		                	<div>
-		                    	<table class="table table-borderless">
-		                        	<tbody>
-			                            <tr>
-											<th scope="row">색상선택</th>
-											<td>
-												<select name="BASKET_COLOR" size="1" class="form-control BASKET_COLOR">
-													<option value="">선택</option>
-													<c:forTokens var="color" items="<%=PRODUCT_COLOR %>" delims=",">
-														<option value="${fn:trim(color)}">${fn:trim(color)}</option>
-													</c:forTokens>
-												</select>
-											</td>
-										</tr>
-										<tr>
-											<th scope="row">사이즈선택</th>
-											<td>
-												<select name="BASKET_SIZE" size="1" class="form-control BASKET_SIZE">
-													<option value="">선택</option>
-													<c:forTokens var="size" items="<%=PRODUCT_SIZE %>" delims=",">
-														<option value="${fn:trim(size)}">${fn:trim(size)}</option>
-													</c:forTokens>
-												</select>
-											</td>
-										</tr>
-										<tr>
-											<th scope="row">수량</th>
-											<td>
-												<div>
-													<select name="BASKET_AMOUNT" size="1" class="form-control BASKET_AMOUNT">
-														<option value="1">1</option>
-														<option value="2">2</option>
-														<option value="3">3</option>
-														<option value="4">4</option>
-														<option value="5">5</option>
-													</select>
-												</div>
-											</td>
-										</tr>
-										<tr><td></td></tr>
-										<tr><td></td></tr>
-										<tr><td></td></tr>
-										<tr><td></td></tr>
-										<tr><td></td></tr>
-										<tr><td></td></tr>
-										<tr><td></td></tr>
-										<tr><td></td></tr>
-										<tr><td></td></tr>
-										<tr><td></td></tr>
-										<tr><td></td></tr>
-									</tbody>
-								</table>
-		                  	</div>
-		                  	<div>
-		                  		<table class="table table-borderless">
-		                  			<tbody>
-		                  				<tr>
-											<th scope="row">총 합계금액</th>
-											<td class="total"></td>
-										</tr>
-		                  			</tbody>
-		                  		</table>
-		                  	</div>
-							<div class="d-flex justify-content-between d-flex align-items-end">
-								<% 
-									if(WORKSHOP_CEO_NAME == null && MEMBER_EMAIL == null) { 
-								%> <%-- 비로그인일 때 --%>
+						</thead>
+						<tbody>
+							<tr>
+								<th scope="row">배송비</th>
+								<td class="PRODUCT_SHIP_PRICE" value="<%=vo.getPRODUCT_SHIP_PRICE()%>" name="PRODUCT_SHIP_PRICE"><%=vo.getPRODUCT_SHIP_PRICE()%></td>
+							</tr>
+							<tr>
+								<th scope="row">배송 기간</th>
+								<td name="PRODUCT_SHIP_DAYS"><%=vo.getPRODUCT_SHIP_DAYS()%>일</td>
+							</tr>
+							<tr>
+								<th scope="row">색상선택</th>
+								<td><select name="BASKET_COLOR" size="1"
+									class="form-control BASKET_COLOR">
+										<option value="">선택</option>
+										<c:forTokens var="color" items="<%=PRODUCT_COLOR %>"
+											delims=",">
+											<option value="${fn:trim(color)}">${fn:trim(color)}</option>
+										</c:forTokens>
+								</select></td>
+							</tr>
+							<tr>
+								<th scope="row">사이즈선택</th>
+								<td><select name="BASKET_SIZE" size="1"
+									class="form-control BASKET_SIZE">
+										<option value="">선택</option>
+										<c:forTokens var="size" items="<%=PRODUCT_SIZE %>" delims=",">
+											<option value="${fn:trim(size)}">${fn:trim(size)}</option>
+										</c:forTokens>
+								</select></td>
+							</tr>
+							<tr>
+								<th scope="row">수량</th>
+								<td>
 									<div>
-										<button type="button" class="btn btn-outline-dark btn-lg" data-toggle="modal" data-target="#exampleModalCenter">
-											<input type="hidden" name = "PRODUCT_NUM" value="<%=PRODUCT_NUM %>">♥
-										</button>
-									</div>	
-									<div style="width:45%;">
-										<button type="button" class="btn btn-outline-dark btn-lg btn-block" data-toggle="modal" data-target="#exampleModalCenter" >장바구니</button>
+										<select name="BASKET_AMOUNT" size="1" class="form-control BASKET_AMOUNT">
+											<option value="1">1</option>
+											<option value="2">2</option>
+											<option value="3">3</option>
+											<option value="4">4</option>
+											<option value="5">5</option>
+										</select>
 									</div>
-									<div style="width:45%;">
-										<button type="button" class="btn btn-outline-dark btn-lg btn-block" data-toggle="modal" data-target="#exampleModalCenter" >바로구매</button>
-									</div>
-								<% 
-									} else if(WORKSHOP_CEO_NAME != null) { 
-								%>	<%-- 공방 로그인일 때(하트 안 보임) --%>
-										<div style="width:50%;">
-											<a href="classreservation.ac" class="btn btn-outline-dark btn-lg btn-block disabled" role="button" aria-pressed="true">장바구니</a>
-										</div>
-										<div style="width:50%;">
-											<a href="#" class="btn btn-outline-dark btn-lg btn-block disabled" role="button" aria-pressed="true" >바로구매</a>
-										</div>
-								<% 
-									} else { 
-								%> <%-- 일반회원일때 --%>
+								</td>
+							</tr>
+							<tr>
+								<th scope="row">총 합계금액</th>
+								<td class="total">12</td>
+							</tr>
+							<tr>
+								<td colspan="2">
+									<div class="d-flex justify-content-between">
+										<% 
+												if(WORKSHOP_CEO_NAME == null && MEMBER_EMAIL == null) { 
+											%>
+										<%-- 비로그인일 때 --%>
 										<div>
-											<a href="#" class="btn btn-outline-dark btn-lg LikeAjax" role="button" aria-pressed="true">
-												<input type="hidden" name = "PRODUCT_NUM" value="<%=PRODUCT_NUM %>">♥
+											<button type="button" class="btn btn-outline-dark btn-lg"
+												data-toggle="modal" data-target="#exampleModalCenter">
+												<input type="hidden" name="PRODUCT_NUM"
+													value="<%=PRODUCT_NUM %>">♥
+											</button>
+										</div>
+										<div style="width: 45%;">
+											<button type="button"
+												class="btn btn-outline-dark btn-lg btn-block"
+												data-toggle="modal" data-target="#exampleModalCenter">장바구니</button>
+										</div>
+										<div style="width: 45%;">
+											<button type="button"
+												class="btn btn-outline-dark btn-lg btn-block"
+												data-toggle="modal" data-target="#exampleModalCenter">바로구매</button>
+										</div>
+										<% 
+												} else if(WORKSHOP_CEO_NAME != null) { 
+											%>
+										<%-- 공방 로그인일 때(하트 안 보임) --%>
+										<div style="width: 50%;">
+											<a href="classreservation.ac"
+												class="btn btn-outline-dark btn-lg btn-block disabled"
+												role="button" aria-pressed="true">장바구니</a>
+										</div>
+										<div style="width: 50%;">
+											<a href="#"
+												class="btn btn-outline-dark btn-lg btn-block disabled"
+												role="button" aria-pressed="true">바로구매</a>
+										</div>
+										<% 
+												} else { 
+											%>
+										<%-- 일반회원일때 --%>
+										<div>
+											<a href="#" class="btn btn-outline-dark btn-lg LikeAjax"
+												role="button" aria-pressed="true"> <input
+												type="hidden" name="PRODUCT_NUM" value="<%=PRODUCT_NUM %>">♥
 											</a>
 										</div>
-										<div style="width:45%;">
-											<a href="#" class="btn btn-outline-dark btn-lg btn-block basket_btn" role="button" aria-pressed="true" id="basket_btn">장바구니</a>
+										<div style="width: 45%;">
+											<a href="#" class="btn btn-outline-dark btn-lg btn-block basket_btn"
+												role="button" aria-pressed="true" id="basket_btn">장바구니</a>
 										</div>
-										<div style="width:45%;">
-											<a href="#" class="btn btn-outline-dark btn-lg btn-block order_btn" role="button" aria-pressed="true" id="order_btn">바로구매</a>
+										<div style="width: 45%;">
+											<a href="#" class="btn btn-outline-dark btn-lg btn-block order_btn"
+												role="button" aria-pressed="true" id="order_btn">바로구매</a>
 										</div>
-								<% 
-									} 
-								%>
+										<% 
+												} 
+											%>
+									</div>
+								</td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+				<div class="btnArea text-center"></div>
+				<br />
+			</form>
+		</div>
+	</div>
+	<div class="row" style="padding: 15px 15px;">
+		<div class="col-8">
+			<div style="line-height: 0.5em;" id="t1">
+				<dl>
+					<dt><h3><%=vo.getPRODUCT_TITLE() %></h3><br></dt>
+					<dl><h5><%=vo.getPRODUCT_BRIEF() %></h5></dl>
+				</dl>
+			</div>
+			<div class="row sticky">
+				<div class="col-12">
+					<ul class="nav nav-tabs nav-fill h-30">
+					   <li class="nav-item">
+					      <a class="nav-link" href="#t1"><h5>상품정보</h5></a>
+					   </li>
+					   <li class="nav-item">
+					      <a class="nav-link" href="#t2"><h5>리뷰</h5></a>
+					   </li>
+					   <li class="nav-item">
+					      <a class="nav-link" href="#t3"><h5>Q&A</h5></a>
+					   </li>
+					   <li class="nav-item">
+					      <a class="nav-link" href="#t4"><h5>배송/환불</h5></a>
+					   </li>
+					</ul>
+				</div>
+			</div>
+			<div class="row justify-content-center">
+			<% if (vo.getPRODUCT_INFO() != null) { %>
+				<%=vo.getPRODUCT_INFO() %>
+				<br /><br />
+			<% } else { %>
+				<!-- vo.getPRODUCT_INFO() = 없는 경우-->
+				<table width="50%" border="0" cellpadding="0" cellspacing="0" align="center" valign="middle">
+					<tr align="center" valign="middle">
+						<td align="right"><font size=2>상세 정보가 없습니다.</font></td>
+					</tr>
+				</table>
+			<% } %>
+			</div>
+			<!-- 상세 사진정보 끝 -->
+			
+			<span id="t2"></span>
+			<br /><br /><hr />
+           
+			<!-- 리뷰 테이블 시작 -->
+			<h3 id="review_scroll" >Review</h3>
+			<br /><br />
+			
+			<div id="ReviewSection">
+				<div id="ReviewButtonSection">	
+					<div class="row justify-content-center pt-3 pb-3"> <!-- 리뷰 댓글달기 버튼 -->
+						<button class="btn btn-dark btn-sm review_btn">댓글 등록</button>
+					</div>
+				</div>
+				<div id="ReviewWrapSection" class="pb-1">
+					<div id="ReviewformSection" class="pb-2">
+						<form id="ReviewForm" name="REVIEW_CONTENT" enctype="multipart/form-data"> <!-- 리뷰 작성 폼 영역 : 하나 -->
+							<input type="hidden" name="MEMBER_NUM" value="MEMBER_NUM">
+							<input type="hidden" name="PRODUCT_NUM" value="<%=PRODUCT_NUM %>">
+							<div class="row justify-content-center">
+								<div class="col-1 justify-content-end">
+									<img src="<%=MEMBER_PICTURE%>" alt="" class="rounded-circle">
+								</div>
+								<div class="col-11">
+									<div class="row pb-1">
+										<div class="col-2 justify-content-end name"><%=MEMBER_NICK%> </div>
+										<div class="col-8 justify-content-center"></div>
+										<div class="col-2 justify-content-center smallfont"></div>
+									</div>
+									<div class="row pb-1"> <!-- 평점 -->
+										<div class="col-3 pr-0">
+											<img src="${pageContext.request.contextPath}/resources/images/star1.png" alt="" width="15px" height="15px" >
+											&nbsp;
+											<select name="REVIEW_GRADE" id="REVIEW_GRADE" style="">
+												<option value="0">0</option>
+												<option value="0.5">0.5</option>
+												<option value="1">1.0</option>
+												<option value="1.5">1.5</option>
+												<option value="2">2.0</option>
+												<option value="2.5">2.5</option>
+												<option value="3">3.0</option>
+												<option value="3.5">3.5</option>
+												<option value="4">4.0</option>
+												<option value="4.5">4.5</option>
+												<option value="5">5.0</option>
+											</select>											
+										</div>
+										<div class="9"></div>
+									</div>
+									
+									<div class="row pb-2"> <!-- 파일 -->
+										<div class="col-12">
+											<div class="file_input">
+											    <label>
+											        사진 업로드
+											        <input type="file" multiple="multiple" name="REVIEW_FILE" id="input_imgs">
+											    </label>
+											    <input type="text" readonly="readonly" title="File Route" value="선택된 파일이 없습니다">
+											</div>			
+										</div>
+									</div>
+									<div class="row pb-2">
+										<div class="col-12 imgs_wrap">
+											<img id="inputimg" >
+										</div>
+									</div>
+									<div class="row pb-1">	<!-- 내용 textarea -->
+										<div class="col-11 pr-0">
+											<textarea rows="3" name="REVIEW_CONTENT" class="col-12 pl-0 pr-0" 
+												id=""></textarea>
+										</div>	
+									</div>
+									<div class="row"> <!-- 수정, 삭제 -->
+										<div class="col-2 justify-content-center"></div>
+										<div class="col-8 justify-content-center"></div>
+										<div class="col-2 justify-content-center" style="font-size:0.7em; font-weight:bold;">
+											<a class="insertReview">작성</a> &nbsp;
+											<a class="formCancel" value="ReviewForm">취소</a>
+										</div>
+									</div>
+								</div>
 							</div>
-							<br/>
-						</form>
+						</form>		
+					</div>
+					<div id="ReviewtableSection" class="pb-2">
+					
+						
 					</div>
 				</div>
 			</div>
-    		<br>
+
+                 
+			<!-- 리뷰 페이지네이션 -->
+			<br/>
+			
+			
+			<br />
+			<!-- 리뷰 페이지네이션 끝 -->
+
+
+	
+			<span id="t3"></span>
+			<br /><br /><hr />
+			
+			<!-- Q&A 테이블 시작 -->
+			<h3 id="qna_scroll">Q&A</h3>
+			<br /><br />
+
+           
+			<div id="QnaSection">
+				<div id="QnaButtonSection">	
+					<div class="row justify-content-center pt-3 pb-3"> <!-- 리뷰 댓글달기 버튼 -->
+						<button class="btn btn-dark btn-sm qna_btn">문의하기</button>
+					</div>
+				</div>
+				<div id="QnaWrapSection" class="pb-1">
+					<div id="QnaformSection" class="pb-2">
+						<form id="QnaForm" name="QNA_CONTENT"> <!-- 리뷰 작성 폼 영역 : 하나 -->
+							<input type="hidden" name="MEMBER_NUM" value="MEMBER_NUM">
+							<input type="hidden" name="PRODUCT_NUM" value="<%=PRODUCT_NUM %>">
+							<div class="row justify-content-center">
+								<div class="col-1 justify-content-end">
+									<img src="<%=MEMBER_PICTURE%>" alt="" class="rounded-circle">
+								</div>
+								<div class="col-11">
+									<div class="row pb-1">
+										<div class="col-2 justify-content-end name"><%=MEMBER_NICK%> </div>
+										<div class="col-8 justify-content-center"></div>
+										<div class="col-2 justify-content-center smallfont"></div>
+									</div>
+									<div class="row pb-1">	<!-- 내용 textarea -->
+										<div class="col-11 pr-0">
+											<textarea rows="3" name="QNA_CONTENT" class="col-12 pl-0 pr-0" 
+												id=""></textarea>
+										</div>	
+									</div>
+									<div class="row"> <!-- 수정, 삭제 -->
+										<div class="col-2 justify-content-center"></div>
+										<div class="col-8 justify-content-center"></div>
+										<div class="col-2 justify-content-center" style="font-size:0.7em; font-weight:bold;">
+											<a class="insertQna">작성</a> &nbsp;
+											<a class="formCancel" value="QnaForm">취소</a>
+										</div>
+									</div>
+								</div>
+							</div>
+						</form>		
+					</div>
+					<div id="QnatableSection" class="pb-2">
+					
+						
+					</div>
+				</div>
+			</div>
+		
+		
+			<!-- Q&A pagenation -->
+			<br/>
+			
+			
+			<br />
+			<!-- Q&A pagenation 끝 -->			
+		
+		
+		
+		
+		
+			<!-- Q&A 테이블 끝 -->
+			
+			<br /><br /><hr />
+
+      
+            <!-- 배송 및 환불 시작 -->
+      
+            <h3 id="t4">배송 및 환불</h3>
+            <br /><br />
+			<div class="ship_info" style="width: 100%; margin: 0 auto; font-size: 0.9em; color: #212529;">
+				<div class="row_ship_info">
+			    	<h5>배송정보</h5>
+					모든 제품은 메이킹퍼니처 직원이 직접 배송하며 배송비는 고객 부담입니다. 지역, 제품 수량 또는 설치 여부에 따라 주문 시
+					배송비를 미리 안내해드립니다. 기본 배송비 외에 사다리차, 엘레베이터, 주차비 사용료 등 추가 비용이 발생 시 고객님
+					부담입니다.
+					<%=vo.getPRODUCT_SHIP_INFO() %>
+				</div>
+				<div class="row_ship_info">
+					<h5>배송정보</h5>
+					모든 제품은 메이킹퍼니처 직원이 직접 배송하며 배송비는 고객 부담입니다. 지역, 제품 수량 또는 설치 여부에 따라 주문 시
+					배송비를 미리 안내해드립니다. 기본 배송비 외에 사다리차, 엘레베이터, 주차비 사용료 등 추가 비용이 발생 시 고객님
+					부담입니다.
+					반품 배송지 : <%=vo.getPRODUCT_SHIP_RETURN_PLACE() %>
+				</div>
+				<br />
+				
+				<div class="row_ship_info">
+					<h5>A/S</h5>
+					핸드메이드 제품으로 나뭇결, 무늬, 옹이의 형태나 파임, 칠과 색상이 다를 수 있고 약간의 흠집이나 찍힘(표면의 크랙 또는
+					뜯김)이 있을 수 있으며, 100% 원목으로 기후변화에 따른 수축, 팽창으로 인한 휘어짐(상판), 갈라짐(마구리면)이
+					발생할 수 있습니다. 이런 자연스러운 현상들은 교체 및 교환 대상이 아니며 무상 A/S 사유가 되지 않습니다. 구매 전 꼭
+					참고해주시기 바랍니다.
+					<%=vo.getPRODUCT_AS_INFO() %>
+				</div>
+				<br />
+				
+				<div class="row_ship_info">
+					<h5>Wood Furniture</h5>
+					원목가구의 수축 및 팽창은 원목만의 자연스러운 특징입니다.<br /> -지나치게 건조한 곳, 습한 곳은 피하세요. -가구의
+					수평을 유지해주세요.(수평이 안 맞게 되면 가구가 뒤틀려버립니다.) -가구에 화학약품(신나, 메니큐어 등)이 닿지 않게
+					해주세요. -평소에는 물걸레 청소하시면 됩니다. -뜨거운 냄비와 같은 고온의 뜨거운 물체에 직접 닿는 것은 피하시기
+					바랍니다. -한 달에 1~2번 가구용 왁스로 닦아주세요. -원목가구는 수축기와 팽창기(계절의 변화)에 따라 갈라짐이나
+					미세한 크랙이 발생할 수 있으며, 시간이 경과하면 원상회복이 될 수 있습니다. 이는 원목가구만의 자연스러운 현상이며 제품의
+					하자가 아닙니다.
+					<%=vo.getPRODUCT_STORE_INFO() %>
+				</div>
+				<br />
+				
+				<div class="row_ship_info">
+					<h5>A/S규정[1년 무상]</h5>
+					무상 A/S -보증기간 이내의 제품으로 정상적인 상태에서 제조상의 결함 제품 -원/부나내의 결함이 발생된 경우
+					-메이킹퍼니처의 귀책 사유로 인한 결함 발생 제품
+					<%=vo.getPRODUCT_RETURN_INFO() %>
+				</div>
+				<div class="row_ship_info">
+					유상 A/S -고객의 취급 부주의 및 고의적 훼손 경우 -고객 임의 개조에 의한 파손의 경우나 타 업체에서 수리해 변경된 경우 -유상 서비스 요금은 [수리비+부품비+출장비+기타실 비용] 등이 포함됩니다.
+				</div>
+			</div>
 		</div>
+		<div class="col-4">
+        	<div class="sticky2" style="border: 1px solid #EAEAEA;">
+            	<form name="goodsform" action="#" method="post" id="goodsform">
+                	<div>
+                    	<table class="table table-borderless">
+                        	<tbody>
+	                            <tr>
+									<th scope="row">색상선택</th>
+									<td>
+										<select name="BASKET_COLOR" size="1" class="form-control BASKET_COLOR">
+											<option value="">선택</option>
+											<c:forTokens var="color" items="<%=PRODUCT_COLOR %>" delims=",">
+												<option value="${fn:trim(color)}">${fn:trim(color)}</option>
+											</c:forTokens>
+										</select>
+									</td>
+								</tr>
+								<tr>
+									<th scope="row">사이즈선택</th>
+									<td>
+										<select name="BASKET_SIZE" size="1" class="form-control BASKET_SIZE">
+											<option value="">선택</option>
+											<c:forTokens var="size" items="<%=PRODUCT_SIZE %>" delims=",">
+												<option value="${fn:trim(size)}">${fn:trim(size)}</option>
+											</c:forTokens>
+										</select>
+									</td>
+								</tr>
+								<tr>
+									<th scope="row">수량</th>
+									<td>
+										<div>
+											<select name="BASKET_AMOUNT" size="1" class="form-control BASKET_AMOUNT">
+												<option value="1">1</option>
+												<option value="2">2</option>
+												<option value="3">3</option>
+												<option value="4">4</option>
+												<option value="5">5</option>
+											</select>
+										</div>
+									</td>
+								</tr>
+								<tr><td></td></tr>
+								<tr><td></td></tr>
+								<tr><td></td></tr>
+								<tr><td></td></tr>
+								<tr><td></td></tr>
+								<tr><td></td></tr>
+								<tr><td></td></tr>
+								<tr><td></td></tr>
+								<tr><td></td></tr>
+								<tr><td></td></tr>
+								<tr><td></td></tr>
+							</tbody>
+						</table>
+                  	</div>
+                  	<div>
+                  		<table class="table table-borderless">
+                  			<tbody>
+                  				<tr>
+									<th scope="row">총 합계금액</th>
+									<td class="total"></td>
+								</tr>
+                  			</tbody>
+                  		</table>
+                  	</div>
+					<div class="d-flex justify-content-between d-flex align-items-end">
+						<% 
+							if(WORKSHOP_CEO_NAME == null && MEMBER_EMAIL == null) { 
+						%> <%-- 비로그인일 때 --%>
+							<div>
+								<button type="button" class="btn btn-outline-dark btn-lg" data-toggle="modal" data-target="#exampleModalCenter">
+									<input type="hidden" name = "PRODUCT_NUM" value="<%=PRODUCT_NUM %>">♥
+								</button>
+							</div>	
+							<div style="width:45%;">
+								<button type="button" class="btn btn-outline-dark btn-lg btn-block" data-toggle="modal" data-target="#exampleModalCenter" >장바구니</button>
+							</div>
+							<div style="width:45%;">
+								<button type="button" class="btn btn-outline-dark btn-lg btn-block" data-toggle="modal" data-target="#exampleModalCenter" >바로구매</button>
+							</div>
+						<% 
+							} else if(WORKSHOP_CEO_NAME != null) { 
+						%>	<%-- 공방 로그인일 때(하트 안 보임) --%>
+								<div style="width:50%;">
+									<a href="classreservation.ac" class="btn btn-outline-dark btn-lg btn-block disabled" role="button" aria-pressed="true">장바구니</a>
+								</div>
+								<div style="width:50%;">
+									<a href="#" class="btn btn-outline-dark btn-lg btn-block disabled" role="button" aria-pressed="true" >바로구매</a>
+								</div>
+						<% 
+							} else { 
+						%> <%-- 일반회원일때 --%>
+								<div>
+									<a href="#" class="btn btn-outline-dark btn-lg LikeAjax" role="button" aria-pressed="true">
+										<input type="hidden" name = "PRODUCT_NUM" value="<%=PRODUCT_NUM %>">♥
+									</a>
+								</div>
+								<div style="width:45%;">
+									<a href="#" class="btn btn-outline-dark btn-lg btn-block basket_btn" role="button" aria-pressed="true" id="basket_btn">장바구니</a>
+								</div>
+								<div style="width:45%;">
+									<a href="#" class="btn btn-outline-dark btn-lg btn-block order_btn" role="button" aria-pressed="true" id="order_btn">바로구매</a>
+								</div>
+						<% 
+							} 
+						%>
+					</div>
+					<br/>
+				</form>
+			</div>
+		</div>
+	</div>
+  		<br>
+</div>
    <!-- content end -->
 <script>
    	$('.basket_btn').on('click',function(){
@@ -1113,38 +1108,23 @@
     	$('.total').text(total.toLocaleString()+'원');
     }
     getPrice();
-   	
-  //장바구니 2개 밸류 일치시키기
-    $('select[name=BASKET_COLOR]').on('change',function(){
-       var value = $(this).val()
-       $('.BASKET_COLOR').val(value)
-    })
-    $('select[name=BASKET_SIZE]').on('change',function(){
-       var value = $(this).val()
-       $('.BASKET_SIZE').val(value)
-    })
-    $('select[name=BASKET_AMOUNT]').on('change',function(){
-       var value = $(this).val()
-       $('.BASKET_AMOUNT').val(value)
-       getPrice()
-    })
+	   	
+	//장바구니 2개 밸류 일치시키기
+	$('select[name=BASKET_COLOR]').on('change',function(){
+		var value = $(this).val()
+		$('.BASKET_COLOR').val(value)
+	})
+	$('select[name=BASKET_SIZE]').on('change',function(){
+		var value = $(this).val()
+		$('.BASKET_SIZE').val(value)
+	})
+	$('select[name=BASKET_AMOUNT]').on('change',function(){
+		var value = $(this).val()
+		$('.BASKET_AMOUNT').val(value)
+		getPrice()
+	})
 
- 
-	function infochange() {
-		if($('#comment_info').val() == '등록된 댓글이 없습니다') {
-			$('#comment_info').val('');
-		} else {
-		//  	  $('#comment_info').val('등록된 댓글이 없습니다');
-		}
-		if($('#qna_info').val() == '등록된 문의가 없습니다') {
-		$('#qna_info').val('');
-		} else {
-		//      	  $('#qna_info').val('등록된 문의가 없습니다');  
-		}
-	}      
-      
 
-      
       
 	//좋아요 기능
 	$(document).ready(function(){  
@@ -1405,7 +1385,7 @@
 		}
 		
 
-	
+//Review 등록하기----------------------------------------------------------------------------------------------------	  		
 		//Review 등록하기 버튼(insert) //원글
 		$(document).on("click",".insertReview",function(event){
 			var formId = 'ReviewForm';
@@ -2488,17 +2468,6 @@
 
 		
 
-		
-		//왜 안 돼..............?????????????????????????????????????????????
-		//리뷰 이미지를 클릭하면 원본 사이즈로 커짐(기본은 100)
-		$(".review_img").click(function(){
-			if($(this).css('width') != '100px' ) {
-				$(this).css({'width':'100','height':'100'});
-			} else {
-				$(this).css({'width':'100%','height':'100%'});
-			}
-		})	
-	 
 	 
 	 
 	 

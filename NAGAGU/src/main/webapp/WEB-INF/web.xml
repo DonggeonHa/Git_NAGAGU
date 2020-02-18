@@ -34,6 +34,7 @@
 		<url-pattern>*.ma</url-pattern>
 		<url-pattern>*.my</url-pattern>
 		<url-pattern>*.su</url-pattern>
+		<url-pattern>*.acdo</url-pattern> <!-- Academy AJAX -->
 		<url-pattern>*.do</url-pattern> <!-- Store AJAX -->
 		<url-pattern>*.ch</url-pattern> <!-- Chat -->
 		<url-pattern>*.nt</url-pattern> <!-- Note -->

@@ -1,7 +1,9 @@
 package com.spring.workshopMypage;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.session.SqlSession;
@@ -11,6 +13,7 @@ import org.springframework.stereotype.Service;
 import com.spring.academy.ClassVO;
 import com.spring.mapper.AcademyManagementMapper;
 import com.spring.mapper.AcademyMapper;
+import com.spring.mapper.ProductManagementMapper;
 import com.spring.workshop.WorkShopMemberVO;
 
 @Service
@@ -113,5 +116,27 @@ public class AcademyManagementServiceImpl implements AcademyManagementService {
 
 
 
+
+	@Override
+	public ArrayList<Map<String, Object>> getclassReviewList(HashMap<String, Object> map) {
+		ArrayList<Map<String, Object>> ClassReviewList = null;
+		
+		AcademyManagementMapper managementMapper = sqlSession.getMapper(AcademyManagementMapper.class);
+		ClassReviewList = managementMapper.getclassReviewList(map);
+		
+		return ClassReviewList;
+	}
+
+	@Override
+	public ArrayList<Map<String, Object>> getclassQnaList(HashMap<String, Object> map) {
+		ArrayList<Map<String, Object>> searchList = null;
+		
+		AcademyManagementMapper managementMapper = sqlSession.getMapper(AcademyManagementMapper.class);
+		searchList = managementMapper.getclassQnaList(map);
+		
+		return searchList;
+	}
+
+	
 	
 }

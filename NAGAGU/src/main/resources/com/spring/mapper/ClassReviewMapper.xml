@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- 
+
+-->
+
+
+<!-- 이 xml문서와 맵핑할 인터페이스 경로, 이름 -->
+<mapper namespace="com.spring.mapper.ClassReviewMapper">
+	<resultMap type="java.util.HashMap" id="hashmapVO">
+		<result property="REVIEW_NUM" column="REVIEW_NUM" />	
+		<result property="REVIEW_MEMBER" column="REVIEW_MEMBER" />	
+		<result property="REVIEW_CLASS" column="REVIEW_CLASS" />	
+		<result property="REVIEW_DATE" column="REVIEW_DATE" />	
+		<result property="REVIEW_FILE" column="REVIEW_FILE" />	
+		<result property="REVIEW_CONTENT" column="REVIEW_CONTENT" />	
+		<result property="REVIEW_GRADE" column="REVIEW_GRADE" />	
+		<result property="REVIEW_RE" column="REVIEW_RE" />	
+	</resultMap>
+
+	<resultMap type="java.util.HashMap" id="classReviewResultMap">
+		<result property="REVIEW_NUM" column="REVIEW_NUM" />	
+		<result property="REVIEW_MEMBER" column="REVIEW_MEMBER" />	
+		<result property="REVIEW_CLASS" column="REVIEW_CLASS" />	
+		<result property="REVIEW_DATE" column="REVIEW_DATE" />	
+		<result property="REVIEW_FILE" column="REVIEW_FILE" />	
+		<result property="REVIEW_CONTENT" column="REVIEW_CONTENT" />	
+		<result property="REVIEW_GRADE" column="REVIEW_GRADE" />	
+		<result property="REVIEW_RE" column="REVIEW_RE" />		
+		<result property="MEMBER_NICK" column="MEMBER_NICK" />		
+		<result property="MEMBER_PICTURE" column="MEMBER_PICTURE" />		
+	</resultMap>
+
+	<resultMap type="com.spring.academy.Class_reviewVO" id="classVOReviewResultMap">
+		<result property="REVIEW_NUM" column="REVIEW_NUM" />	
+		<result property="REVIEW_MEMBER" column="REVIEW_MEMBER" />	
+		<result property="REVIEW_CLASS" column="REVIEW_CLASS" />	
+		<result property="REVIEW_DATE" column="REVIEW_DATE" />	
+		<result property="REVIEW_FILE" column="REVIEW_FILE" />	
+		<result property="REVIEW_CONTENT" column="REVIEW_CONTENT" />	
+		<result property="REVIEW_GRADE" column="REVIEW_GRADE" />	
+		<result property="REVIEW_RE" column="REVIEW_RE" />		
+		<result property="MEMBER_NICK" column="MEMBER_NICK" />		
+		<result property="MEMBER_PICTURE" column="MEMBER_PICTURE" />		
+	</resultMap>
+
+	<resultMap type="com.spring.member.MemberVO" id="memberReviewResultMap">
+		<result property="MEMBER_NUM" column="MEMBER_NUM" />	
+		<result property="MEMBER_EMAIL" column="MEMBER_EMAIL" />	
+		<result property="MEMBER_PASS" column="MEMBER_PASS" />	
+		<result property="MEMBER_NAME" column="MEMBER_NAME" />	
+		<result property="MEMBER_NICK" column="MEMBER_NICK" />	
+		<result property="MEMBER_PHONE" column="MEMBER_PHONE" />	
+		<result property="MEMBER_DATE" column="MEMBER_DATE" />	
+		<result property="MEMBER_PICTURE" column="MEMBER_PICTURE" />	
+		<result property="MEMBER_LIKE_PRODUCT" column="MEMBER_LIKE_PRODUCT" />	
+		<result property="MEMBER_STATUS" column="MEMBER_STATUS" />
+	</resultMap>
+	
+
+	
+	<select id="getLoginMemberbyNUM" parameterType="com.spring.member.MemberVO" resultMap="memberReviewResultMap">
+		SELECT * FROM nagagu_member WHERE MEMBER_NUM=#{MEMBER_NUM}
+	</select> 
+
+
+
+	<select id="getReviewCount" parameterType="java.util.HashMap" resultType="int">
+		SELECT count(*) FROM CLASS_REVIEW WHERE REVIEW_CLASS=#{CLASS_NUMBER} AND REVIEW_RE = 0
+	</select>	
+
+	<select id="getReview_RE_Count" parameterType="java.util.HashMap" resultType="int">
+		SELECT count(*) FROM CLASS_REVIEW WHERE REVIEW_CLASS=#{CLASS_NUMBER} AND REVIEW_RE != 0
+	</select>
+	
+	<select id="getReviewList" parameterType="java.util.HashMap" resultMap="classReviewResultMap">
+		SELECT * FROM
+			(SELECT rownum rnum, REVIEW_NUM, REVIEW_MEMBER, REVIEW_CLASS, REVIEW_DATE, REVIEW_FILE, REVIEW_CONTENT, REVIEW_GRADE, REVIEW_RE,
+			MEMBER_NICK, MEMBER_PICTURE FROM  
+				(SELECT R.*, N.MEMBER_NICK, N.MEMBER_PICTURE FROM CLASS_REVIEW R, NAGAGU_MEMBER N 
+				WHERE R.REVIEW_CLASS=#{CLASS_NUMBER} AND R.REVIEW_MEMBER=N.MEMBER_NUM AND R.REVIEW_RE=0 ORDER BY R.REVIEW_DATE DESC)) 
+			<![CDATA[ WHERE rnum >= #{startrow} AND rnum <= #{endrow} ]]>	
+           
+	</select>
+	<select id="getReview_RE_List" parameterType="java.util.HashMap" resultMap="classReviewResultMap">
+		SELECT * FROM
+			(SELECT rownum rnum, REVIEW_NUM, REVIEW_MEMBER, REVIEW_CLASS, REVIEW_DATE, REVIEW_FILE, REVIEW_CONTENT, REVIEW_GRADE, REVIEW_RE,
+			MEMBER_NICK, MEMBER_PICTURE FROM 
+				(SELECT R.*, N.MEMBER_NICK, N.MEMBER_PICTURE FROM CLASS_REVIEW R, NAGAGU_MEMBER N 
+				WHERE R.REVIEW_CLASS=#{CLASS_NUMBER} AND R.REVIEW_MEMBER=N.MEMBER_NUM AND R.REVIEW_RE!=0 ORDER BY R.REVIEW_DATE DESC)) 
+			<![CDATA[ WHERE rnum >= #{startrow} AND rnum <= #{endrow} ]]>	
+           
+	</select>
+
+
+<!--  
+
+			SELECT * 
+		FROM TB_PTFOLIO_BOARDS
+		WHERE 1 = 1 
+		ORDER BY BOARD_SORT, BOARD_DATE DESC, BOARD_SEQ DESC
+		LIMIT #{startRow}, #{perPgLine}
+-->
+
+ 
+	<insert id="insertReview" parameterType="com.spring.academy.Class_reviewVO">
+		<selectKey keyProperty="REVIEW_NUM" resultType="int" order="BEFORE">
+				SELECT class_review_seq.nextval From DUAL
+		</selectKey>
+		INSERT INTO CLASS_REVIEW VALUES
+		(#{REVIEW_NUM}, #{REVIEW_MEMBER}, #{REVIEW_CLASS}, #{REVIEW_DATE}, #{REVIEW_FILE, jdbcType=VARCHAR}, 
+			#{REVIEW_CONTENT}, #{REVIEW_GRADE}, #{REVIEW_RE})
+	</insert>
+	
+	<select id="getGradePeopleCount" parameterType="int" resultType="int">
+		SELECT count(*) FROM CLASS_REVIEW WHERE REVIEW_CLASS=#{REVIEW_CLASS} AND REVIEW_RE = 0
+	</select>	
+
+	<select id="getReviewVO" parameterType="java.util.HashMap" resultMap="classVOReviewResultMap">
+		SELECT * FROM CLASS_REVIEW WHERE REVIEW_NUM=#{REVIEW_NUM}
+	</select>
+
+
+	<update id="modifyReview" parameterType="com.spring.academy.Class_reviewVO">
+		UPDATE CLASS_REVIEW SET 
+			REVIEW_DATE=#{REVIEW_DATE}, REVIEW_FILE=#{REVIEW_FILE},
+			REVIEW_CONTENT=#{REVIEW_CONTENT}, REVIEW_GRADE=#{REVIEW_GRADE}
+		WHERE REVIEW_NUM =#{REVIEW_NUM} 
+	</update>
+
+
+	<update id="deleteReviewImg" parameterType="java.util.HashMap">
+		UPDATE CLASS_REVIEW SET 
+			REVIEW_FILE=#{mod_REVIEW_FILE}
+		WHERE REVIEW_NUM =#{REVIEW_NUM} 
+	</update>
+	
+	<select id="getREVIEW_FILE" parameterType="int" resultType="String">
+		SELECT REVIEW_FILE FROM CLASS_REVIEW WHERE REVIEW_NUM=#{REVIEW_NUM}
+	</select>
+
+	<select id="findChildrenRE" parameterType="int" resultType="int">
+		SELECT count(*) FROM CLASS_REVIEW WHERE REVIEW_RE=#{REVIEW_NUM} 
+	</select>	
+	
+	<delete id="deleteReview" parameterType="java.util.HashMap">
+		DELETE FROM CLASS_REVIEW WHERE REVIEW_NUM=#{REVIEW_NUM}
+	</delete>	
+	
+	<!-- 답글 수정, 삭제 -->	
+	<update id="modifyReviewReply" parameterType="com.spring.academy.Class_reviewVO">
+		UPDATE CLASS_REVIEW SET 
+			REVIEW_DATE=#{REVIEW_DATE}, REVIEW_CONTENT=#{REVIEW_CONTENT}
+		WHERE REVIEW_NUM =#{REVIEW_NUM} 
+	</update>
+
+	
+</mapper>

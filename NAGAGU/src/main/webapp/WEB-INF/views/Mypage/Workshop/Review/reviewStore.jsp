@@ -59,6 +59,7 @@
 						<div class="select3" style="padding-left:5px">	<!-- 보기 정렬 -->
 							<select class="search_hidden_state justify-content-start form-control" id="selectListAlign" name="selectListAlign" onchange="btn_select3()" style="height: 33px;">
 								<option value="review_date">최근 등록순</option>
+								<option value="review_grade">평점순</option>
 							</select>
 						</div>								
 					</div>

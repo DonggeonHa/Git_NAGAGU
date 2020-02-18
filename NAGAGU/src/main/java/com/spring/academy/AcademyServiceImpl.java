@@ -9,6 +9,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.spring.mapper.AcademyMapper;
+import com.spring.mapper.ProductMapper;
+import com.spring.store.ProductVO;
 import com.spring.workshop.WorkShopMemberVO;
 
 @Service
@@ -117,4 +119,13 @@ public class AcademyServiceImpl implements AcademyService {
 		
 		return classList;
 	}
+
+	@Override
+	public int updateGrade(ClassVO vo) {
+		int res;
+		AcademyMapper classMapper = sqlSession.getMapper(AcademyMapper.class); 
+		res = classMapper.updateGrade(vo);
+		return res;
+	}
+
 }

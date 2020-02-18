@@ -23,7 +23,6 @@ import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.view.json.MappingJackson2JsonView;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.spring.member.KakaoController;
 import com.spring.member.MemberVO;
 import com.spring.member.NaverLoginBO;
@@ -243,11 +242,11 @@ public class ProductController {
 		int WorkshopNum = workshopVO.getWORKSHOP_NUM();
 		model.addAttribute("WorkshopNum",WorkshopNum);
 		model.addAttribute("WorkshopMatchingNumber",WorkshopMatchingNumber);
-		/*qna 답글 출력시 워크샵 name, pic 필요함*/
-		String WorkshopName = workshopVO.getWORKSHOP_NAME();
-		String WorkshopPicture = workshopVO.getWORKSHOP_PICTURE();
-		model.addAttribute("WorkshopName",WorkshopName);
-		model.addAttribute("WorkshopPicture",WorkshopPicture);
+//		/*qna 답글 출력시 워크샵 name, pic 필요함*/
+//		String WorkshopName = workshopVO.getWORKSHOP_NAME();
+//		String WorkshopPicture = workshopVO.getWORKSHOP_PICTURE();
+//		model.addAttribute("WorkshopName",WorkshopName);
+//		model.addAttribute("WorkshopPicture",WorkshopPicture);
 
 		
 		
@@ -268,8 +267,8 @@ public class ProductController {
 	
 	@RequestMapping(value="/insertReview.do",  produces="application/json;charset=UTF-8")
 	@ResponseBody
-	public Map<String, Object> insert_review123(MultipartHttpServletRequest request, HttpSession session) throws Exception {
-		System.out.println("review_insert123 컨트롤러 start!");
+	public Map<String, Object> insertReview(MultipartHttpServletRequest request, HttpSession session) throws Exception {
+		System.out.println("insertReview 컨트롤러 start!");
 		
 		Product_reviewVO reviewVO = new Product_reviewVO();
 		

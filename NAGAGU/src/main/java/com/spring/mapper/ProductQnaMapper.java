@@ -3,7 +3,7 @@ package com.spring.mapper;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-import com.spring.member.MemberVO;
+
 import com.spring.store.Product_qnaVO;
 
 public interface ProductQnaMapper {
