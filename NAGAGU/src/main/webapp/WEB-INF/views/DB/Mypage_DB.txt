@@ -7,6 +7,7 @@ chatroom_workshop VARCHAR2(80)
 insert into chatroom values(1, 'cndanrh26@naver.com', '다떄려맞춤');
 insert into chatroom values(2, 'hadonggun@gmail.com', '다떄려맞춤22');
 commit;
+
 CREATE SEQUENCE chat_msg_seq
 START WITH 1
 INCREMENT BY 1
