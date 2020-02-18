@@ -284,6 +284,7 @@
 		.ReviewAndReply_Sum {
 			border-bottom:1px solid gray;		
 		}
+
 		
 		.imgs_wrap {
 			display:none;
@@ -302,7 +303,6 @@
 			padding-top:8px; 
 			padding-bottom:8px;
 		}		
-		
 		
 		
 
@@ -407,70 +407,44 @@
 
 
 	/*qna*/
-	.qnas_table {
-		color: #212529;
-	}
-	
-	.qna_sum {
-		width: 100%;
-		margin: 0 auto;
-	}
-	
-	.qna_add_section {
-		display: none;
-		background-color: #FAFAFA;
-	}
-	
-	.qna_mod_section {
-		display: none;
-	}
-	
-	.qna_control {
-		text-align: right;
-	}
-	
-	.qna_control a {
-		color: #343A40;
-		font-weight: bold;
-		font-size: 0.7rem;
-	}
-	
-	.qna_control_hidden {
-		text-align: right;
-	}
-	
-	.qna_control_hidden a {
-		color: #343A40;
-		font-weight: bold;
-		font-size: 0.7rem;
-	}
-	
-	.qna_re_form {
-		display: none;
-	}
-	
-	.qna_re_control {
-		text-align: right;
-	}
-	
-	.qna_re_control a {
-		color: #343A40;
-		font-weight: bold;
-		font-size: 0.7rem;
-	}
-	
-	.qna_re_control_hidden {
-		text-align: right;
-		display: none;
-	}
-	
-	.qna_re_control_hidden a {
-		color: #343A40;
-		font-weight: bold;
-		font-size: 0.7rem;
-	}
-	
-		
+		#QnaformSection {
+			display:none ;
+			padding:8px 0; 
+			border-bottom:1px solid gray;		
+		}
+		/*QnaAndReply_Sum : 리뷰(하나)+리뷰 답글(여러개)이 묶여서 반복되는 영역 - bottom에 회색 구분선*/
+		.QnaAndReply_Sum {
+			border-bottom:1px solid gray;		
+		}		
+		.QnaList {
+			padding-top:8px; 
+			padding-bottom:8px;
+		}	
+		.insertQna {
+			cursor: pointer;	/*리뷰 입력폼에서 작성버튼*/
+		}	
+		.qna_replybtn {
+			cursor: pointer;	/*리뷰 리스트에서 답글달기 폼 버튼*/
+		}
+		.gomodifyQnaform {
+			cursor: pointer;	/*리뷰 수정버튼*/
+		}
+		.deleteQna {
+			cursor: pointer;	/*Qna, QnaReply 삭제*/
+		}			
+		.QnaReplyformSection {
+			padding:8px 0;		/*?*/
+		}
+		.afterModifyQnaReply {
+			display:none;		/*리뷰 답글 작성폼*/	
+		}
+				
+		.insertQnaReply {
+			cursor: pointer;	/*리뷰답글 작성*/
+		}
+		.gomodifyQnaReplyform, modifyQnaReply {
+			cursor: pointer;	/*QnaReply 수정폼 버튼, QnaReply 수정버튼*/
+		}			
 	</style>
 
 
