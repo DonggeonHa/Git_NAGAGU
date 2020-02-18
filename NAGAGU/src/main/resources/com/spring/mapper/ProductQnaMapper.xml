@@ -43,6 +43,20 @@ create sequence store_qna_seq
 		<result property="QNA_CONTENT" column="QNA_CONTENT" />	
 		<result property="QNA_RE" column="QNA_RE" />
 		<result property="QNA_STATUS" column="QNA_STATUS" />
+		<result property="MEMBER_NICK" column="MEMBER_NICK" />		
+		<result property="MEMBER_PICTURE" column="MEMBER_PICTURE" />		
+	</resultMap>
+
+	<resultMap type="com.spring.store.Product_qnaVO" id="productVOQnaResultMap">
+		<result property="QNA_NUM" column="QNA_NUM" />	
+		<result property="QNA_MEMBER" column="QNA_MEMBER" />	
+		<result property="QNA_PRODUCT" column="QNA_PRODUCT" />	
+		<result property="QNA_DATE" column="QNA_DATE" />	
+		<result property="QNA_CONTENT" column="QNA_CONTENT" />
+		<result property="QNA_RE" column="QNA_RE" />		
+		<result property="QNA_STATUS" column="QNA_STATUS" />
+		<result property="MEMBER_NICK" column="MEMBER_NICK" />		
+		<result property="MEMBER_PICTURE" column="MEMBER_PICTURE" />		
 	</resultMap>
 
 	<resultMap type="com.spring.member.MemberVO" id="memberqnaResultMap">
@@ -70,28 +84,21 @@ create sequence store_qna_seq
 	
 	<select id="getQnaList" parameterType="java.util.HashMap" resultMap="productQnaResultMap">
 		SELECT * FROM
-		(SELECT rownum rnum, QNA_NUM, QNA_MEMBER, QNA_PRODUCT, QNA_DATE, QNA_CONTENT, QNA_RE, QNA_STATUS
-		 FROM (SELECT * FROM PRODUCT_QNA WHERE QNA_PRODUCT=#{PRODUCT_NUM} AND QNA_RE=0 ORDER BY QNA_DATE DESC))
-		<![CDATA[ WHERE rnum >= #{qnastartrow} AND rnum <= #{qnaendrow} ]]>
+			(SELECT rownum rnum, QNA_NUM, QNA_MEMBER, QNA_PRODUCT, QNA_DATE, QNA_CONTENT, QNA_RE, QNA_STATUS, 
+			MEMBER_NICK, MEMBER_PICTURE FROM 
+				(SELECT Q.*, N.MEMBER_NICK, N.MEMBER_PICTURE FROM PRODUCT_QNA Q, NAGAGU_MEMBER N
+				WHERE Q.QNA_PRODUCT=#{PRODUCT_NUM} AND Q.QNA_MEMBER=N.MEMBER_NUM AND Q.QNA_RE=0 ORDER BY Q.QNA_DATE DESC))
+			<![CDATA[ WHERE rnum >= #{startrow} AND rnum <= #{endrow} ]]>
 	</select>
 
 	<select id="getQna_RE_List" parameterType="java.util.HashMap" resultMap="productQnaResultMap">
 		SELECT * FROM
-		(SELECT rownum rnum, QNA_NUM, QNA_MEMBER, QNA_PRODUCT, QNA_DATE, QNA_CONTENT, QNA_RE, QNA_STATUS
-		 FROM (SELECT * FROM PRODUCT_QNA WHERE QNA_PRODUCT=#{PRODUCT_NUM} AND QNA_RE!=0 ORDER BY QNA_DATE DESC))
-		<![CDATA[ WHERE rnum >= #{qnastartrow} AND rnum <= #{qnaendrow} ]]>
+			(SELECT rownum rnum, QNA_NUM, QNA_MEMBER, QNA_PRODUCT, QNA_DATE, QNA_CONTENT, QNA_RE, QNA_STATUS, 
+			MEMBER_NICK, MEMBER_PICTURE FROM 
+				(SELECT Q.*, N.MEMBER_NICK, N.MEMBER_PICTURE FROM PRODUCT_QNA Q, NAGAGU_MEMBER N
+				WHERE Q.QNA_PRODUCT=#{PRODUCT_NUM} AND Q.QNA_MEMBER=N.MEMBER_NUM AND Q.QNA_RE!=0 ORDER BY Q.QNA_DATE DESC))
+			<![CDATA[ WHERE rnum >= #{startrow} AND rnum <= #{endrow} ]]>
 	</select>
-	
-		
-	<select id="getqnaMemberList" parameterType="java.util.HashMap" resultMap="memberqnaResultMap">
-		SELECT MEMBER_NICK, MEMBER_PICTURE
-		FROM PRODUCT_QNA P, nagagu_member M
-		WHERE P.QNA_MEMBER = M.MEMBER_NUM
-        ORDER BY P.QNA_DATE DESC
-  	</select>
-	
-
-	
 	
 	
 	<insert id="insertQna" parameterType="com.spring.store.Product_qnaVO">
