@@ -310,10 +310,19 @@ public class NoteController {
 	
 	@RequestMapping("noteForm.nt")
 	public String noteForm (HttpServletRequest request, HttpSession session, Model model) throws Exception {
+		String receive_mail = null;
 		String receive_nick = null;
 		String receive_pic = null;
 		
-		String receive_mail = request.getParameter("receive_mail");
+		if (request.getParameter("workshop_name") != null) {
+			WorkShopMemberVO vo = new WorkShopMemberVO();
+			vo.setWORKSHOP_NAME(request.getParameter("workshop_name"));
+			receive_mail = noteService.getWorkshopMail(vo);
+		}
+		else {
+			receive_mail = request.getParameter("receive_mail");
+			
+		}
 		
 		int memberChk = noteService.checkMember(receive_mail);
 		
