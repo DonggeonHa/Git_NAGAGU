@@ -103,14 +103,59 @@
 				%>
 			</table><hr>
 		</div>
-
+				<div>
+			<div class="row">
+				<div class="col-2">
+					<h5 style="padding-top: 2%;">주문자</h5>
+				</div>
+			</div>
+			<hr>
+			<form>
+				<div class="form-group row">
+					<div class="col-2">
+						<label for="inputAddress">이름</label>
+					</div>
+					<div class="col-5">
+						<input type="text" class="form-control name" value="${memberDetail.MEMBER_NAME}">
+					</div>
+					<div class="col-5">
+					</div>
+				</div>
+				<div class="form-group row">
+					<div class="col-2">
+						<label for="inputAddress">주소</label>
+					</div>
+					<div class="col-10">
+						<input type="text" class="form-control address1" value="${memberDetail.ADDRESS_ADDRESS1}">
+					</div>
+				</div>
+				<div class="form-group row">
+					<div class="col-2">
+					</div>
+					<div class="col-10 input-group">
+						<input type="text" class="form-control address2" value="${memberDetail.ADDRESS_ADDRESS2}">
+					</div>
+				</div>
+				<div class="form-group row">
+					<div class="col-2">
+						<label for="inputAddress">휴대전화</label>
+					</div>
+					<div class="col-5">
+						<input type="text" class="form-control phone" value="${memberDetail.MEMBER_PHONE}" >
+					</div>
+					<div class="col-5">
+					</div>
+				</div> 
+			</form> 
+		</div>
+		
 		<div style="padding: 0 0 5% 0;">
 			<div class="row mt-5">
 				<div class="col-2">
 					<h5 style="padding-top: 2%;">배송지</h5>
 				</div>
 				<div class="col-10">
-					
+					<button type="button" id="getInfo_btn" class="btn btn-outline-dark" ><font size="2">배송지 정보와 동일하게 채우기</button>
 				</div>
 			</div>
 			<hr>
@@ -120,7 +165,7 @@
 						<label for="inputAddress">받는분</label>
 					</div>
 					<div class="col-5">
-						<input type="text" class="form-control name">
+						<input type="text" class="form-control toName" name="ORDER_PERSON">
 					</div>
 					<div class="col-5">
 					</div>
@@ -143,7 +188,7 @@
 						<label for="inputAddress">주소</label>
 					</div>
 					<div class="col-10 input-group">
-						<input type="text" class="form-control address1" >
+						<input type="text" class="form-control toAddress1" >
 					</div>
 				</div>
 				<div class="form-group row">
@@ -151,7 +196,7 @@
 						
 					</div>
 					<div class="col-10 input-group">
-						<input type="text" class="form-control address2" >
+						<input type="text" class="form-control toAddress2" >
 					</div>
 				</div>
 				<div class="form-group row">
@@ -159,7 +204,7 @@
 						<label for="inputAddress">휴대전화</label>
 					</div>
 					<div class="col-5">
-						<input type="text" class="form-control phone" >
+						<input type="text" class="form-control toPhone" >
 					</div>
 					<div class="col-5">
 					</div>
@@ -172,56 +217,6 @@
 						<input type="text" class="form-control memo">
 					</div>
 				</div>
-			</form>
-		</div>
-
-		<div>
-			<div class="row">
-				<div class="col-2">
-					<h5 style="padding-top: 2%;">주문자</h5>
-				</div>
-				<div class="col-10">
-					<button type="button" id="getInfo_btn" class="btn btn-outline-dark"><font size="2">배송지 정보와 동일하게 채우기</button>
-					
-				</div>
-			</div>
-			<hr>
-			<form>
-				<div class="form-group row">
-					<div class="col-2">
-						<label for="inputAddress">이름</label>
-					</div>
-					<div class="col-5">
-						<input type="text" class="form-control toName" name="ORDER_PERSON">
-					</div>
-					<div class="col-5">
-					</div>
-				</div>
-				<div class="form-group row">
-					<div class="col-2">
-						<label for="inputAddress">주소</label>
-					</div>
-					<div class="col-10">
-						<input type="text" class="form-control toAddress1">
-					</div>
-				</div>
-				<div class="form-group row">
-					<div class="col-2">
-					</div>
-					<div class="col-10 input-group">
-						<input type="text" class="form-control toAddress2">
-					</div>
-				</div>
-				<div class="form-group row">
-					<div class="col-2">
-						<label for="inputAddress">휴대전화</label>
-					</div>
-					<div class="col-5">
-						<input type="text" class="form-control toPhone" >
-					</div>
-					<div class="col-5">
-					</div>
-				</div> 
 			</form>
 		</div>
 
@@ -467,9 +462,6 @@
 				alert('동의란에 체크주세요'); 
 				return
 			}
-			
-			var BASKET_NUMS ='';
-			var ORDER_PRICE = totalPayPrice;
 			var ORDER_PERSON = $('.toName').val();
 			var ORDER_ADDRESS = $('.toAddress1').val();
 				ORDER_ADDRESS += $('.toAddress2').val();
@@ -478,20 +470,16 @@
 			if($('.memo').val()!=null){
 				ORDER_MEMO=$('.memo').val();
 			}
-			var PRODUCT_NUM = '';
-			console.log(ORDER_MEMO)
 			//결제수단 구하기
 			console.log(new Date().getTime());
 			console.log(card)
 			var IMP = window.IMP; // 생략가능
 			IMP.init('imp41335180');  // 가맹점 식별 코드
-			
 			IMP.request_pay({
 			   pg : 'html5_inicis', // 결제방식 
 			   merchant_uid : new Date().getTime(),
 			   name : 'NAGAGU 결제',	// order 테이블에 들어갈 주문명 혹은 주문 번호
 			   amount : '100',	// 결제 금액
-			   
 			   buyer_name :  $('.toName').val(),	// 구매자 이름
 			   buyer_tel :  $('.toPhone').val(),	// 구매자 전화번호
 			   buyer_addr1 :  $('.toAddress1').val(),	// 구매자 주소
@@ -502,11 +490,13 @@
 					var id= rsp.merchant_uid;
 					for(var i=0; i<$('.BASKET_NUM').length;i++){
 						var BASKET_NUM = $('input[name=BASKET_NUM]')[i].value
-						console.log('bnum'+BASKET_NUM)
+						var PRODUCT_NUM = $('input[name=PRODUCT_NUM]')[i].value
+						console.log('pnum'+PRODUCT_NUM)
 						$.ajax({
 							  url: "/NAGAGU/insertOrderProduct.my", 
 					             type: "POST",
-					             data: {'ORDER_NUM' : BASKET_NUM,'ORDER_PERSON' : ORDER_PERSON, 'ORDER_ADDRESS':ORDER_ADDRESS, 'ORDER_PHONE':ORDER_PHONE,'ORDER_MEMO':ORDER_MEMO,'ORDER_AMOUNT': id, 'ORDER_METHOD' : card},
+					             data: {'ORDER_PRICE':PRODUCT_NUM,'ORDER_NUM':BASKET_NUM,'ORDER_PERSON' : ORDER_PERSON, 'ORDER_ADDRESS':ORDER_ADDRESS, 
+					            	 'ORDER_PHONE':ORDER_PHONE,'ORDER_MEMO':ORDER_MEMO,'ORDER_AMOUNT': id, 'ORDER_METHOD' : card},
 					             contentType:
 					 				'application/x-www-form-urlencoded; charset=utf-8'
 					 		});
@@ -524,7 +514,6 @@
 							dataType: "json", 
 							data: Data, 
 							success: function(){ 
-								alert('성공')
 							},
 							error:function(){
 								alert("ajax통신 실패!!");

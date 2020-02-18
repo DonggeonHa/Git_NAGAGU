@@ -158,13 +158,15 @@ public class BasketController {
 		return retVal;
 	}
 	@RequestMapping(value = "/mypage_order.my")
-		public String mypage_order(BasketVO basketVO, HttpSession session,HttpServletRequest request, Model model) {
+		public String mypage_order(BasketVO basketVO,MemberVO memberVO, HttpSession session,HttpServletRequest request, Model model) {
 			HashMap<String, Object> map = new HashMap<String, Object>();
 			int MEMBER_NUM = (int)session.getAttribute("MEMBER_NUM");
 			map.put("MEMBER_NUM", MEMBER_NUM);
-			
+			memberVO.setMEMBER_NUM(Integer.valueOf(MEMBER_NUM));
+			MemberVO memberDetail = memberService.getMemberDetail(memberVO);
 			ArrayList<Map<String, Object>> orderList = null;
 			orderList  = basketService.getOrderList(map);
+			model.addAttribute("memberDetail",memberDetail);
 			model.addAttribute("orderList",orderList);
 			return "Mypage/order";
 		}
@@ -187,8 +189,12 @@ public class BasketController {
 			ArrayList<Map<String, Object>> getCount= null;
             ArrayList<Map<String, Object>> orderList= null;
             orderList  = basketService.getOrderList(map);//아직 결제 안된 리스트
-			myPaidOrder  = basketService.getPaidList(map);
-			getCount  = basketService.getCount(map);
+            getCount  = basketService.getCount(map);
+            for(int i=0; i<getCount.size();i++) {
+            	System.out.println(getCount.get(i));
+            }
+            
+            myPaidOrder  = basketService.getPaidList(map);
 			retVal.put("orderList", orderList);
 			retVal.put("getCount", getCount);
 			retVal.put("myPaidOrder", myPaidOrder);

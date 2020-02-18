@@ -130,6 +130,66 @@
 	.brief{
 		margin-top:15px;
 	}
+		.main-output img{
+		width : 100%;
+		height: auto;
+	}
+	.main-output {
+		font-weight: 700;
+		margin-top: 15px;
+	}
+	.each-row {
+		margin-bottom: 15px;
+		border-bottom: 1px solid grey;
+		border-color: rgba(0, 0, 0, 0.2);
+	}
+	.each-row img {
+		width: 100px;
+		height: 100px;
+	}
+	.output a, .output a:link, .output a:hover {
+		text-decoration: none !important;
+		color: black !important;
+	}
+    .category *{
+        align-self: center;
+        text-align: center;
+        color: rgb(0, 0, 0, 0.6);  
+    }
+	 .basic_price, .shipPrice, .chongprice {
+		margin-bottom: 0;
+		margin-top: 10px;
+	}
+	.category{
+		padding-bottom: 10px;
+		padding-top: 10px;
+		background-color: rgba(239,144,14,0.3);
+	}.category *{
+		align-items: baseline;
+		text-align: center;
+	}
+	.values *{
+		margin-top: 10px;
+		text-align: center;
+	}
+	.amount,.basic_price{
+		margin-top: 0;
+	}
+	.totalShipPrice,.totalPayPrice,.totalPrice{
+		padding-right:25px !important;
+	}
+	.font_change{
+		font-size:1.2rem !important; 
+	}
+	.values b{
+		margin: 0 auto;
+	}
+	.order_tab{
+		margin-top: 15px;
+		margin-left: 0px;
+		padding-left: 0px;
+		background-color: rgba(0,0,0,0.1);
+	}
 </style>
 
 <div class="container-mypage" role="main">
@@ -272,7 +332,7 @@
 		</div>
 	</nav>
 	
-	<div class="tab-content" id="nav-tabContent">
+	<div class="tab-content main-output" id="nav-tabContent">
 		<div class="tab-pane fade show active shadow p-3 mb5 bg-white rounded" id="nav-waiting" role="tabpanel" aria-labelledby="nav-waiting-tab" style="padding-top: 30%;">
 			<div class="row output">
 			</div>
@@ -306,69 +366,102 @@
 			$.ajax({
 				  url: "/NAGAGU/getMyPaidOrder.my",
 	              type: "POST",
+	              async: false,
 	              contentType:
 	  				'application/x-www-form-urlencoded; charset=utf-8',
-	  			  dataType : "json",
-	              success: function (retVal) {
-	        		if(retVal.res=="OK"){
-                        console.log(retVal.orderList)
-                        if(retVal.orderList.length!=0){
-                            $('.count_unpaid').html(''+retVal.orderList.length+'건')
-                                             
-                        }
-	        			console.log(retVal.getCount)
-	        			console.log(retVal.myPaidOrder)
-                        if(retVal.myPaidOrder.length==0){
-                            return
-                        }
-	        			var url = './productdetail.pro?PRODUCT_NUM='
-        				var paidPrice=0;
-	        			var d_date = new Date(retVal.myPaidOrder[0].ORDER_DATE); 
-		        		var date = date_format(d_date);
-		        		var j=0;
-		/*        		console.log('status'+status)
-		        		if(status=!0 || status==null){
-		        			var output ='';
-		        			output += '<div>준비중인 상품이 없습니다</div>'
-		        			$('.output').append(output)
-		        			return
-		        		} */
-		        		//i=주문개수 j는 상품 수
-	        			for(var i=0; i<retVal.getCount.length; i++){
-	        				var output ='';
-		        			output += '<div class="col-12"><b>주문번호 '+retVal.myPaidOrder[i].ORDER_AMOUNT+' | 주문 날짜 '+date+'</b><a href="./order_detail.my?order_amount='+retVal.myPaidOrder[i].ORDER_AMOUNT+'">상세보기</a>';
-				        	for(var x=0; x<retVal.getCount[i].COUNT; j++){
-					    		output += '<div class="col-11 row each-row" id="'+retVal.myPaidOrder[j].PRODUCT_NUM+'" bNum='+retVal.myPaidOrder[j].BASKET_NUM+'><div class="col-2"><a href="'+url+retVal.myPaidOrder[j].PRODUCT_NUM+'">'
-					    		output += '<img src="/productupload/image/'+retVal.myPaidOrder[j].PRODUCT_IMAGE+'"></a></div>'
-					    		output += '<div class="col-10"><div class="d-flex justify-content-between"><a href="'+url+retVal.myPaidOrder[j].PRODUCT_NUM+'"><div>'+retVal.myPaidOrder[j].PRODUCT_TITLE+'</div></a>'
-					    		output += '<div></div></div><font size="1">일반택배</font>'
-					    		output += '<div class="d-flex justify-content-between brief"><div>'+retVal.myPaidOrder[j].PRODUCT_BRIEF+'</div>'
-					    		output += '<div class="price text-right" value="'+retVal.myPaidOrder[j].BASKET_AMOUNT+'">수량'+retVal.myPaidOrder[j].BASKET_AMOUNT+''
-					    		output += '<div class="basic_price" value='+retVal.myPaidOrder[j].PRODUCT_PRICE+'>가격 :<span>'+retVal.myPaidOrder[j].PRODUCT_PRICE+'</span></div></div></div></div><div class="col-12 d-flex justify-content-between"><div>'
-				    			output += '<div>사이즈 :'+retVal.myPaidOrder[j].BASKET_SIZE+'</div>'
-			    				output += '<div>컬러 :'+retVal.myPaidOrder[j].BASKET_COLOR+'</div>'
-			    				output += '<div>배송업체 :'+retVal.myPaidOrder[j].PRODUCT_SHIP_COMPANY+'</div>'
-					    		output += '</div><div style="align-self: flex-end;"><div class="shipPrice">+배송비 :<span>'+retVal.myPaidOrder[j].PRODUCT_SHIP_PRICE+'</span></div>'
-					    		output += '<span class="chongprice"></span></div></div></div><hr>'
-					    		//결제금액
-				    			paidPrice += retVal.myPaidOrder[j].PRODUCT_PRICE + retVal.myPaidOrder[j].PRODUCT_SHIP_PRICE;
-					    		x++;
-				        	}
-				        	output += '</div><hr>'   
-				        	$('.output').html(output)
-		        			}
-		        			$('.count_paid').text(retVal.getCount.length)
-			        	
-					}else{ 
-						alert("update fail"); 
-					}  
-				 },
-				error:function(){
-					alert("ajax통신 실패!!");
-				}
-			}) 
-		} 
-		//처음 로드하고 사진 가져오기 호출
+	  				success: function (retVal) {
+	  					if(retVal.res=="OK"){
+  							//카운트(오더 목록을 받아서)
+  							console.log(retVal.getCount)
+	                        console.log(retVal.orderList)
+	                        if(retVal.orderList.length!=0){
+	                            $('.count_unpaid').html(''+retVal.orderList.length+'건')
+	                        }
+  							if(retVal.getCount.length!=0){
+  								$('.count_paid').html(''+retVal.getCount.length+'건')
+  							}
+  							//오더마다 안에 들어있는 리스트 받아서
+  							for(var i=0; i<retVal.getCount.length; i++){
+  								var ORDER_AMOUNT= retVal.getCount[i].ORDER_AMOUNT
+  								var d_date = new Date(retVal.myPaidOrder[i].ORDER_DATE); 
+			        			var date = date_format(d_date);
+  								$.ajax({
+	  	  							url: "/NAGAGU/getPaidDetail.my",
+	  	  				            type: "POST",
+	  	  				            data: {'ORDER_AMOUNT':ORDER_AMOUNT},
+	  	  				        async: false,
+  	  				            contentType:
+  	  				  			'application/x-www-form-urlencoded; charset=utf-8',
+ 	  				            	success: function (retVal) {
+ 	  				            		if(retVal.res=="OK"){
+  	  				            		console.log(retVal.myPaidOrder)
+  	  				            		var paidPrice=0;
+  	  				            		var url = './productdetail.pro?PRODUCT_NUM='
+  	  				            		var output ='';
+  	  				            		//헤드
+  	  	  								output += '<div class="col-12 row justify-content-between order_tab">'
+ 	    				        			output += '<div><b>주문번호 '+ORDER_AMOUNT+' | 주문 날짜 '+date+'</b></div>'
+ 	    				        			output += '<div><a href="./order_detail.my?order_amount='+ORDER_AMOUNT+'">상세보기</a></div></div>'
+  	  				            				
+  	  				            		for(var j=0; j<retVal.myPaidOrder.length; j++){
+  	  				            			console.log('내부for문')
+  	  				            		var price = retVal.myPaidOrder[j].PRODUCT_PRICE.toLocaleString();
+						        		var ship = retVal.myPaidOrder[j].PRODUCT_SHIP_PRICE.toLocaleString();
+						        		var chong = retVal.myPaidOrder[j].PRODUCT_PRICE+retVal.myPaidOrder[j].PRODUCT_SHIP_PRICE;
+						        		var amount = retVal.myPaidOrder[j].BASKET_AMOUNT;
+						        		var	total = chong*amount*1
+						        			paidPrice += total;
+						        		//본문
+						        		output += '<div class="col-12 d-flex each-row" id="'+retVal.myPaidOrder[j].PRODUCT_NUM+'" bNum='+retVal.myPaidOrder[j].BASKET_NUM+'>'
+				    					output += '<div class="col-2"><a href="'+url+retVal.myPaidOrder[j].PRODUCT_NUM+'">'
+							    		output += '<img src="/productupload/image/'+retVal.myPaidOrder[j].PRODUCT_IMAGE+'"></a></div>'
+							    		output += '<div class="col-10">'
+						    				output += '<div class="row category">'
+						    					output += '<div class="col-2">상품명</div>'
+					    						output += '<div class="col-2">배송</div>'
+						    					output += '<div class="col-2">사이즈</div>'
+					    						output += '<div class="col-2">컬러</div>'
+				    							output += '<div class="col-2">수량</div>'
+			    								output += '<div class="col-2 text-right">금액</div>'   
+			                                output += '</div>'
+			                              	output += '<div class="row values">' 
+			  			    					output += '<a href="'+url+retVal.myPaidOrder[j].PRODUCT_NUM+'">'
+			  			    					output += '<div class="col-2"><b>'+retVal.myPaidOrder[j].PRODUCT_TITLE+'</b>'
+			  				    					 output += '<p>'+retVal.myPaidOrder[j].PRODUCT_BRIEF+'</p></a></div>'
+			  				    				output += '<div class="col-2">'+retVal.myPaidOrder[j].PRODUCT_SHIP_COMPANY+'</div>'
+			  				    				output += '<div class="col-2">'+retVal.myPaidOrder[j].BASKET_SIZE+'</div>'
+			  				    				output += '<div class="col-2">'+retVal.myPaidOrder[j].BASKET_COLOR+'</div>'
+			  				    				output += '<div class="price col-2" value="'+retVal.myPaidOrder[j].BASKET_AMOUNT+'">'+retVal.myPaidOrder[j].BASKET_AMOUNT+'</div>'
+			  				    				output += '<div class="price_wrap text-right col-2">'
+									    			output += '<div class="basic_price text-right" value='+retVal.myPaidOrder[j].PRODUCT_PRICE+'>가격</div><span>'+price+'원</span>'
+									    			output += '<div class="shipPrice text-right" value='+retVal.myPaidOrder[j].PRODUCT_SHIP_PRICE+'>+배송비</div><span>'+ship+'원</span>'
+								    				output += '<div class="chongprice text-right" style="font-size:1.2rem;">총가격</div><span style="font-size:1.2rem;">'+total.toLocaleString()+'원</span></b>' 
+								    			output += '</div>'
+						    				output += '</div></div></div>'
+ 	  				            		}
+  	  	  								output += '</div><hr>'
+  	  				            		console.log(output) 
+	  	  					        	$('.output').append(output)  
+	  	  					        	if(retVal.getCount.length!=0){
+	  	  					        		$('.count_paid').text(retVal.getCount.length+'건').css('color','rgba(239,144,14,1)')	
+	  	  					        	}
+		  	  		        			$('.chongprice').css('color','rgba(239,144,14,1)');
+		  	  	        				$('.chongprice').next().css('color','rgba(239,144,14,1)');
+  	  				            	}
+  	  				            }
+	  	  				        
+  								});
+  								
+  							}
+		  				}else{ 
+							alert("update fail"); 
+						}  
+					},
+					error:function(){
+						alert("ajax통신 실패!!");
+					}
+			})
+		}
 		getBasket()
 	});
 </script>

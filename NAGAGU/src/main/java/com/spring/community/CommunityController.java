@@ -234,51 +234,6 @@ public class CommunityController {
 		return "redirect:./community.cm";	
 	}
 	
-//	@RequestMapping(value = "/community_writeAction.cm")
-//	public String insetPics(MultipartHttpServletRequest request) throws Exception, IOException {	
-//		//picsVO만들어서 값 넣기
-//		PicsVO picsVO = new PicsVO();
-//		picsVO.setPICS_MEMBER(Integer.parseInt((request.getParameter("PICS_MEMBER"))));
-//		picsVO.setPICS_NICK(request.getParameter("PICS_NICK"));
-//		picsVO.setPICS_CATEGORY(request.getParameter("PICS_CATEGORY"));
-//		picsVO.setPICS_CONTENT_1(request.getParameter("PICS_CONTENT_1"));
-//		picsVO.setPICS_CONTENT_2(request.getParameter("PICS_CONTENT_2"));
-//		picsVO.setPICS_CONTENT_3(request.getParameter("PICS_CONTENT_3"));
-//		picsVO.setPICS_REVIEW(request.getParameter("PICS_REVIEW"));
-//		picsVO.setPICS_TAG(request.getParameter("PICS_TAG"));
-//		picsVO.setPICS_REF(1);
-//		//공방매퍼로 SELECT 필요		
-//		picsVO.setPICS_WORKSHOP("개인");
-//		if(request.getParameter("PICS_WORKSHOP")!=null) {
-//			picsVO.setPICS_WORKSHOP(request.getParameter("PICS_WORKSHOP"));
-//		}		
-//		//파일업로드 시작=-------------------------------------------------
-//		String uploadPath="C:\\Project138\\upload\\";
-//	    //사진 개수만큼 파일업로드 시작=-------------------------------------------------
-//		for (int i = 1; i < 4; i++) {
-//			if (!request.getFile("PICS_FILE_" + i).isEmpty()) {
-//				MultipartFile mf = request.getFile("PICS_FILE_" + i);
-//				String originalFileExtnesion = mf.getOriginalFilename().substring(mf.getOriginalFilename().lastIndexOf("."));
-//				String storedFileName = UUID.randomUUID().toString().replaceAll("-", "") + originalFileExtnesion;
-//				// 파일저장
-//				if (mf.getSize() != 0) {
-//					mf.transferTo(new File(uploadPath + storedFileName));
-//				}
-//				if (i == 1) {
-//					picsVO.setPICS_FILE_1(storedFileName);
-//				}
-//				if (i == 2) {
-//					picsVO.setPICS_FILE_2(storedFileName);
-//				}
-//				if (i == 3) {
-//					picsVO.setPICS_FILE_3(storedFileName);
-//				}
-//			}
-//		}
-//		communityService.insertPics(picsVO);
-//		return "redirect:./community.cm";	
-//	}
-	
 	@RequestMapping(value = "/community_delete.cm")
 	public String community_delete(PicsVO picsVO, HttpServletRequest request) {		
 		int result = communityService.deletePics(picsVO);		

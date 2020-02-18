@@ -206,6 +206,7 @@
 
 <script>
 	$(document).ready(function(){
+
 		/*날짜 형식 변경*/
 		function date_format(format) {
 		    var year = format.getFullYear();
@@ -240,7 +241,9 @@
 			        		var price = retVal.myPaidOrder[j].PRODUCT_PRICE.toLocaleString();
 			        		var ship = retVal.myPaidOrder[j].PRODUCT_SHIP_PRICE.toLocaleString();
 			        		var chong = retVal.myPaidOrder[j].PRODUCT_PRICE+retVal.myPaidOrder[j].PRODUCT_SHIP_PRICE;
-			        			paidPrice += retVal.myPaidOrder[j].PRODUCT_PRICE+retVal.myPaidOrder[j].PRODUCT_SHIP_PRICE;
+			        		var amount = retVal.myPaidOrder[j].BASKET_AMOUNT;
+			        		var	total = chong*amount*1
+			        			paidPrice += total;
 			        		
 				    		output += '<div class="col-12 row each-row" id="'+retVal.myPaidOrder[j].PRODUCT_NUM+'" bNum='+retVal.myPaidOrder[j].BASKET_NUM+'>'
 	    					output += '<div class="col-2"><a href="'+url+retVal.myPaidOrder[j].PRODUCT_NUM+'">'
@@ -261,11 +264,11 @@
   				    				output += '<div class="col-2">'+retVal.myPaidOrder[j].PRODUCT_SHIP_COMPANY+'</div>'
   				    				output += '<div class="col-2">'+retVal.myPaidOrder[j].BASKET_SIZE+'</div>'
   				    				output += '<div class="col-2">'+retVal.myPaidOrder[j].BASKET_COLOR+'</div>'
-  				    				output += '<div class="price col-2" value="'+retVal.myPaidOrder[j].BASKET_AMOUNT+'">수량'+retVal.myPaidOrder[j].BASKET_AMOUNT+'</div>'
+  				    				output += '<div class="price col-2" value="'+retVal.myPaidOrder[j].BASKET_AMOUNT+'">'+retVal.myPaidOrder[j].BASKET_AMOUNT+'</div>'
   				    				output += '<div class="price_wrap text-right col-2">'
 						    			output += '<div class="basic_price text-right" value='+retVal.myPaidOrder[j].PRODUCT_PRICE+'>가격</div><span>'+price+'원</span>'
 						    			output += '<div class="shipPrice text-right" value='+retVal.myPaidOrder[j].PRODUCT_SHIP_PRICE+'>+배송비</div><span>'+ship+'원</span>'
-					    				output += '<div class="chongprice text-right"></div>총가격<span>'+chong.toLocaleString()+'원</span></b>' 
+					    				output += '<div class="chongprice text-right" style="font-size:1.2rem;">총가격</div><span style="font-size:1.2rem;">'+paidPrice.toLocaleString()+'원</span></b>' 
 					    			output += '</div>'
 			    				output += '</div></div></div>' 
 			        	}  
@@ -282,6 +285,8 @@
 	      
 			        	$('.main-output').html(output)
 			        	$('.sub_output').append(sub_output) 
+			        	$('.chongprice').css('color','rgba(239,144,14,1)');
+        				$('.chongprice').next().css('color','rgba(239,144,14,1)');
 					}else{ 
 						alert("update fail"); 
 					}  
@@ -293,5 +298,7 @@
 		} 
 		//처음 로드하고 사진 가져오기 호출
 		getBasket()
+		
+		
 	});
 </script>

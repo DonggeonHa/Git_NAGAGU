@@ -38,13 +38,15 @@
 		<result property="ORDER_PHONE" column="ORDER_PHONE" />
 	</resultMap>
 	
-	<!-- 좋아요 한 사진 리스트(좋아요사진=사진넘버 중에서 파라미터 멤버가 좋아한 사진들) -->
+	<!-- 장바구니에 담긴 리스트 -->
 	<select id="getbasketList" parameterType="java.util.HashMap" resultMap="hashmapVO">
       SELECT * FROM BASKET,PRODUCT WHERE BASKET_MEMBER=#{MEMBER_NUM} AND BASKET_CHECK=0 AND BASKET_PRODUCT=PRODUCT_NUM ORDER BY BASKET_NUM
     </select>
+    <!-- 장바구니에 넘어가서 결제대기 리스트 -->
     <select id="getOrderList" parameterType="java.util.HashMap" resultMap="hashmapVO">
       SELECT * FROM BASKET,PRODUCT WHERE BASKET_MEMBER=#{MEMBER_NUM} AND BASKET_CHECK=1 AND BASKET_PRODUCT=PRODUCT_NUM ORDER BY BASKET_NUM
     </select>
+    <!-- 결제 후 구매완료 리스트 -->
     <select id="getPaidList" parameterType="java.util.HashMap" resultMap="hashmapVO">
       SELECT * FROM BASKET, PRODUCT_ORDER,PRODUCT WHERE ORDER_NUM= BASKET_NUM AND BASKET_PRODUCT = PRODUCT_NUM AND BASKET_MEMBER=#{MEMBER_NUM} ORDER BY ORDER_AMOUNT DESC
     </select>

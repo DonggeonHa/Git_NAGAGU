@@ -290,7 +290,6 @@
 		<c:if test="${num != 0}">
 			<form id="insert_form" class="row justify-content-between"
 				name="commentForm" action="/NAGAGU/insertComment.cm" method="post">
-				<%-- 			<input type="hidden" name="PICS_RE_REF" value="<c:out value=<%=picsVO.getp %>/>"> --%>
 				<div class="col-1"></div>
 				<div class="col-10">
 					<div class="btn_wrap">
@@ -350,24 +349,19 @@
 				url: '/NAGAGU/getCommentList.cm',
 				type:'POST',
 				data: params,
+				async: false,
 				dataType: "json",
 				contentType:'application/x-www-form-urlencoded; charset=utf-8',
 				success:function(item){
 					//폼 통해 받은 값들은 여기에
-					console.log(item.list.length) 
-					console.log(item.countList)
 					var j =0;
 					for(var i=0; i<item.list.length; i++){
 						var output='';
 		        		var d_date = new Date(item.list[i].PICS_RE_DATE);
 		        		var date = date_format(d_date);
-		        		console.log(item.list)
-		        		console.log('i'+i)
 		        		
 		        		if(item.list[i].PICS_RE_REF==item.list[i].PICS_RE_NUM){
-		        			console.log('원글')
 		        			var re_count = item.countList[j].RE_COUNT - 1;
-		        			console.log(item.countList[j].RE_COUNT)
 							output += '<div class="row mb-3 reply_line"><div class="col-1"><img src='
 							output += '<%=memberVO.getMEMBER_PICTURE()%> '; 
 							output += 'class="img-circle" style="width: 50px; height: 50px; margin: 0 20% auto;"></div>'
@@ -379,7 +373,6 @@
 							output += '<a href="#" class="smallfont show_re_reply" num='+item.list[i].PICS_RE_NUM+'>답글'+re_count+'개</a></div>'
 							j++;
 						}else{
-							console.log('댓글')
 							output += '<div class="row ml-5 re_reply_line re_num'+item.list[i].PICS_RE_REF+'"><div class="col-1"><img src='
 							output += '<%=memberVO.getMEMBER_PICTURE()%> '; 
 							output += 'class="img-circle" style="width: 50px; height: 50px; margin: 0 20% auto;"></div>'
@@ -397,12 +390,15 @@
 						$('#output').append(output);
 						$('.re_reply_line').css('display','none') 
 					}
-					$('.re_num'+num).css('display','flex');//입력받은 대댓글은 보이게
+					
+					
 				},
 				error:function(){
 					alert("ajax통신 실패!!");
 				}
 			});
+			console.log('num'+num)
+			$('.re_num'+num).css('display','flex');//입력받은 대댓글은 보이게	
 		}
 		
 		//클릭하면  대댓글 보이기
@@ -431,10 +427,17 @@
  
 		//대댓글 입력
 		$(document).on('click','#input_data',function(event){
+			console.log(this) 
+ 			if ($(this).parent().prev().find('textarea').val()=="") {
+				alert("글 내용을 입력해주세요.");
+				$(this).parent().prev().find('textarea').focus();
+				return;
+			}
 			var params=$("#re_insert_form").serialize();
 			params += '&PICS_RE_PICS='+<%=picsVO.getPICS_NUM()%>;
 			params += '&PICS_RE_MEMBER='+<%=MEMBER_NUM%>
 			console.log(params)
+			var re_num = $(this).attr('num')
 			jQuery.ajax({
 				url: '/NAGAGU/insertComment.cm',
 				type: 'POST',
@@ -445,6 +448,7 @@
 				success: function(retVal){
 					if(retVal.res=="OK"){
 						$('#text').val('');
+						select(re_num);
 					}else{
 						alert("insert fail");
 					}
@@ -452,17 +456,19 @@
 				error:function(){
 					alert("ajax통신 실패!!");
 				}
-				
 			});
 			event.preventDefault();
-			select($(this).attr('num'));
 		});
 		//댓글 입력
 		$(document).on('click','#input_data_jsp',function(event){
+			if ($('#text').val()=="") {
+				alert("글 내용을 입력해주세요.");
+				$('#text').focus();
+				return;
+			}			
 			var params=$("#insert_form").serialize();
 			params += '&PICS_RE_PICS='+<%=picsVO.getPICS_NUM()%>;
 			params += '&PICS_RE_MEMBER='+<%=MEMBER_NUM%>
-			console.log(params)
 			jQuery.ajax({
 				url: '/NAGAGU/insertComment.cm',
 				type: 'POST',
@@ -473,6 +479,7 @@
 				success: function(retVal){
 					if(retVal.res=="OK"){
 						$('#text').val('');
+						select();
 					}else{
 						alert("insert fail");
 					}
@@ -482,7 +489,7 @@
 				}
 			});
 			event.preventDefault();
-			select();
+			
 		});
 	
 		//삭제
@@ -499,7 +506,6 @@
 				contentType: 'application/x-www-form-urlencoded; charset=utf-8',
 				dataType: 'json',
 				success: function(retVal){
-					alert("AAAAA");
 					if(retVal.res == "OK"){
 						select();
 					}
@@ -538,7 +544,6 @@
 		$(document).on('click','.update_apply',function(event){
 			var num= $(this).attr("num"); 
 			var params=$("#update_form"+num).serialize();
-			alert(params);
 			jQuery.ajax({
 				url: '/NAGAGU/updateComment.cm',
 				type: 'POST',
@@ -566,27 +571,6 @@
 		});
 		select();
 	});
-	//유효성 검사
-	function insertCommentSubmit(){
-		var commentForm = document.commentForm;
-		
-/* 		if (commentForm.id.value=="") {
-			alert("작성자를 입력해주세요.");
-			form1.id.focus();
-			return;
-		} */
-		if (commentForm.text.value=="") {
-			alert("글 내용을 입력해주세요.");
-			commentForm.text.focus();
-			return;
-		}
-/* 		if (commentForm.pass.value=="") {
-			alert("비밀번호를 입력해주세요.");
-			form1.text.focus();
-			return;
-		} */
-		commentForm.submit();	
-	}
 	//팔로우
 	$(document).ready(function(){
 	//처음 로드할때 팔로우 한 멤버 팔로우 버튼 바꿔주기~
@@ -654,7 +638,6 @@
 		        		$('.flw_btn'+toNum).text('follow');
 		        		$('.flw_btn'+toNum).removeClass('flw_btn_active')
 		        	}
-					alert("성공");
 				}else{
 					alert("update fail");
 				} 

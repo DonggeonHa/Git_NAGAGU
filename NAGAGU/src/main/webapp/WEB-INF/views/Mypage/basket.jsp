@@ -111,6 +111,7 @@
     .basket_wrapper{
         font-weight: 700;
     }
+    
 </style>
 
 <div class="container">
@@ -120,8 +121,8 @@
 				<div class="btn-group-toggle" data-toggle="buttons">
 					<label
 						class="btn btn-sm btn-outline-warning text-white radius btn_check_all">
-						<i class="fas fa-check"></i> <input type="checkbox"
-						id="check_all" style="align-self: center;">
+						<i class="fas fa-check"></i> 
+						<input type="checkbox" id="check_all" style="align-self: center;">
 					</label>
 				</div>
 				<span><i>전체선택</i></span> <span></span>
@@ -184,8 +185,8 @@
                 <div class="col-6 forcss">+배송비</div>
                 <div class="col-6 forcss totalShipPrice">+</div>
                 <div class="col-12 line"></div>
-                <div class="col-6 forcss">결제금액</div>
-                <div class="col-6 forcss totalPayPrice"></div>
+                <div class="col-6 forcss" style="font-size:1.5rem;">결제금액</div>
+                <div class="col-6 forcss totalPayPrice" style="font-size:1.5rem;"></div>
 				<div class="">
 					<a href="#" class="btn btn-warning text-white btn_commit">구매하기</a>
 				</div>
@@ -265,15 +266,16 @@
 					    				output += '<div class="price_wrap text-right col-2">'
 							    			output += '<div class="basic_price text-right" value='+retVal.getbasketList[j].PRODUCT_PRICE+'>가격</div><span>'+retVal.getbasketList[j].PRODUCT_PRICE+'</span>'
 							    			output += '<div class="shipPrice text-right" value='+retVal.getbasketList[j].PRODUCT_SHIP_PRICE+'>+배송비</div><span>'+retVal.getbasketList[j].PRODUCT_SHIP_PRICE+'</span>'
-						    				output += '<div class="chongprice text-right"></div>총가격<span></span></b>' 
+						    				output += '<div class="chongprice text-right">총가격</div><span></span></b>'  
 						    			output += '</div>'
 						    				
 					    				output += '</div></div></div>' 
 			        	}  
 	        			console.log(output)
-	        			$('#check_all').next().text(countOutput).css('margin-left','15px')
+	        			$('#check_all').parent().parent().next().text(countOutput).css('margin-left','15px')
 			        	$('.main-output').html(output) 
-			        	
+			        	$('.chongprice').css('color','rgba(239,144,14,1)');
+        				$('.chongprice').next().css('color','rgba(239,144,14,1)');
 			        	changePrice() 
 					}else{ 
 						alert("update fail"); 
@@ -299,7 +301,6 @@
 	  				'application/x-www-form-urlencoded; charset=utf-8',
 	              success: function (retVal) {
 	        		if(retVal.res=="OK"){
-						alert('수량 변경성공')
 					}else{
 						alert("update fail");
 					}  
@@ -409,7 +410,6 @@
 	  				'application/x-www-form-urlencoded; charset=utf-8',
 	              success: function (retVal) {
 	        		if(retVal.res=="OK"){
-						alert('삭제성공')
 						getBasket()
 						changePrice()
 					}else{
@@ -443,7 +443,6 @@
 					dataType: "json", 
 					data: Data, 
 					success: function (data) { 
-						alert('성공')
 						var url = '/NAGAGU/mypage_order.my'
 						location.href = url
 					},

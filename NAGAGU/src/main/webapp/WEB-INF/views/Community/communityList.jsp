@@ -476,7 +476,6 @@
 	        		$('.flw_btn'+toNum).text('follow');
 	        		$('.flw_btn'+toNum).removeClass('flw_btn_active')
 	        	}
-				alert("성공");
 			}else{
 				alert("update fail");
 			} 
@@ -521,7 +520,6 @@
 	$('#search_btn').on('click',function(){
 		var keywordVal= $keyword.val();
 		var search_option = $('#search_option').val();
-		alert(keywordVal);
 		if(!keywordVal){
 			alert('검색어를 입력하세요');
 			$('#keyword').focus();
@@ -536,7 +534,6 @@
 	$('.img-tags').on('click',function(){
 		var text = $(this).text();
 		var search_text = text.substring(1,text.length);
-		alert(search_text);
 		var url = '${pageContext.request.contextPath}/community.cm'
 			+ '?keyword='+search_text
 			+ '&search_option=tag';
