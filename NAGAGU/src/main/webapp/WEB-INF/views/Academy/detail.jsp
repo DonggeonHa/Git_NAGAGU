@@ -307,10 +307,10 @@
 		</div>
 		<div class="col-4">
 			<div class="sticky2" style="border: 1px solid #EAEAEA; padding-top: 5%;">
-				<a href="./workshop_page.my?WORKSHOP_NUM=<%=cl.getWORKSHOP_NUM()%>">
+				<a href="./workshop_page.my?WORKSHOP_NUM=<%=cl.getWORKSHOP_NUM()%>" style="text-decoration:none !important; color : black;">
 				<div class="row pt-4 pl-4">
 					<div class="col-3">
-						<img src="<%=cl.getWORKSHOP_PICTURE()%>" style="width: 95%;">
+						<img src="<%=ws.getWORKSHOP_PICTURE()%>" style="width: 95%; border-radius: 100px;">
 					</div><hr>
 					<div class="col-9">
 						<h3><p><%=cl.getWORKSHOP_NAME()%></p></h3>

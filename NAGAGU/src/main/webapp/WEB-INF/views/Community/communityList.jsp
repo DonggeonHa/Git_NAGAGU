@@ -223,7 +223,7 @@
 							<div class="profile_children">
 								<div>
 									<a href="memberLikePics.cm?MEMBER_NUM=<%=member_vo.getMEMBER_NUM()%>"> 
-										<img src=<%=member_vo.getMEMBER_PICTURE()%>	style="width:50px; height:50px;"><b><%=member_vo.getMEMBER_NICK()%></b> 
+										<img src=<%=member_vo.getMEMBER_PICTURE()%>	style="width:50px; height:50px;">&nbsp;&nbsp;<b><%=member_vo.getMEMBER_NICK()%></b> 
 									</a>
 								</div >
 									<div id="output<%=member_vo.getMEMBER_NUM()%>" class="follow_btn_wrap">

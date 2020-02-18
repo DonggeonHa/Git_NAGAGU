@@ -9,7 +9,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
@@ -62,7 +61,7 @@ public class MypageEditController {
 				session.setAttribute("MEMBER_PHONE", memberVO.getMEMBER_PHONE());
 				session.setAttribute("MEMBER_PICTURE", memberVO.getMEMBER_PICTURE());
 				
-				return "redirect:/workshop.ws";
+				return "redirect:/mypage.my";
 			}
 		} catch (Exception e) {
 			System.out.println("회원정보 수정 실패!");

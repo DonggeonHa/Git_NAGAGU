@@ -150,8 +150,6 @@
 		height: 25vh;
 	}
 	
-
-	
 	.like-wrap, .pics-wrap{
 		border-top: 1px solid black;
 		border-color: rgba(0, 0, 0, 0.1) 
@@ -159,7 +157,7 @@
 
 </style>
 
-<div class="container">
+<div class="container" style="padding: 30px 0 30px 0;">
 	<div class="wrapper row justify-content-between">
 		<div class="col-10 nickNameTap">
 			<div>

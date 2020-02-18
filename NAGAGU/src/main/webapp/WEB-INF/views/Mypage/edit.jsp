@@ -9,8 +9,8 @@
 	String MEMBER_PICTURE = (String)session.getAttribute("MEMBER_PICTURE");
 %>
 
-		<!-- 우편번호 찾기 -->
-   		<script src="https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+<!-- 우편번호 찾기 -->
+<script src="https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 
 		
 <style type="text/css">
@@ -89,11 +89,11 @@
 			width: 360px;
 		}
 		.address_zip_div {
-			margin: 0px -217px;
+			
 		}
 		
 		.btn_address_zip {
-			margin-left: -219px;
+			
 		}
 	}
 	
@@ -105,11 +105,11 @@
 	
 	@media (max-width : 375px) {
 		.address_zip_div {
-			margin: 0px -69px !important;
+			
 		}
 		
 		.btn_address_zip {
-			margin-left: -70px !important;
+			
 		}
 	}
 	/*회원정보 수정 content부분*/
@@ -151,6 +151,10 @@
 	.edit_member_form_label {
 		display: block;
 		margin: 0 0 45px;
+		font-size: 16px;
+		font-weight: 500;
+		line-height: 21px;
+		word-break: keep-all;
 	}
 	
 	.edit_member_form_input {
@@ -171,13 +175,6 @@
 		border: 1px solid #dbdbdb;
 		background-color: #ffffff;
 		color: #424242;
-	}
-	
-	.edit_member_form_label {
-		font-size: 16px;
-		font-weight: 500;
-		line-height: 21px;
-		word-break: keep-all;
 	}
 	
 	#MEMBER_PASS, #MEMBER_PASS2 {
@@ -206,8 +203,7 @@
 		display: none;
 	}
 	
-	.image-upload .image-edit input+label, .image-upload .image-edit input+label
-		{
+	.image-upload .image-edit input+label, .image-upload .image-edit input+label {
 		display: inline-block;
 		width: 34px;
 		height: 34px;
@@ -221,14 +217,12 @@
 		transition: all 0.2s ease-in-out;
 	}
 	
-	.image-upload .image-edit input+label:hover, .image-upload .image-edit input+label:hover
-		{
+	.image-upload .image-edit input+label:hover, .image-upload .image-edit input+label:hover {
 		background: #f1f1f1;
 		border-color: #d6d6d6;
 	}
 	
-	.image-upload .image-edit input+label:after, .image-upload .image-edit input+label:after
-		{
+	.image-upload .image-edit input+label:after, .image-upload .image-edit input+label:after {
 		content: "\f040";
 		font-family: "FontAwesome";
 		color: #757575;
@@ -264,13 +258,13 @@
 	.image-upload .image-edit input+label:after, .image-upload .image-edit input+label:after {
 		top: 7px;
 	}
+	
 	/*프로필 편집 끝*/
 	.edit_member_form_wrap > hr {
 		border-top: 4px solid rgb(27, 27, 39);
 	}
 	#edit_member_form > hr {
 		border-top: 4px solid rgb(27, 27, 39);
-		margin: -37px 0 25px 0;
 	}
 	
 	/*form css부분*/
@@ -304,18 +298,27 @@
 	#btn_submit, #btn_cancel {
 		margin-top: 10px;
 		margin-right: 10px;
-	 			width: 100px;
+		width: 100px;
 	}
-	
 	
 	#nick_chk_btn{
 		width: 34%;
 		margin-left: 5px;
-	  		border-radius: 4px;
-	  		height: 42px;
-	  		background: orange;
+  		border-radius: 4px;
+  		height: 35px;
+  		background: #3A4B58;
 	    color: white;
 	    border: 0px;
+	}
+	
+	#address_btn {
+		width: 70px;
+		margin-left: 5px;
+  		border-radius: 4px;
+  		height: 35px;
+  		background: #3A4B58;
+	    color: white;
+	    border: 0;
 	}
 	/* ---------------------------- */
 	.container-mypage a,.container-mypage  a:link,.container-mypage  a:hover {
@@ -387,7 +390,7 @@
 	} 
 </style>
 
-<div class="container-mypage " role="main">
+<div class="container-mypage" role="main">
 	<div class="row card-wrap  text-center">
 		<div class="card card-hover">
 			<a href="mypage_like.my" class="href">
@@ -469,116 +472,143 @@
 	<h1 class="edit_member_form_title mt-5">회원정보 수정</h1>
 	<hr>
 	<form name="edit_member_form" id="edit_member_form" action="edit_member_form.my" method="post" enctype="multipart/form-data">
-	<div class="row">
-		<div class="col-3" id="profilefield">
-			<ul style="margin-top: 40px;">
-				<li><div class="edit_member_form_label">이메일</div></li>
-				<li><div class="edit_member_form_label">별명</div></li>
-				<!-- <li><div class="edit_member_form_label">비밀번호</div></li>
-				<li><div class="edit_member_form_label">비밀번호 확인</div></li> -->
-				<li><div class="edit_member_form_label" id="li_name">이름</div></li>
-				<li><div class="edit_member_form_label">휴대전화</div></li>
-				<li><div class="edit_member_form_label" id="li_profile">프로필 사진</div></li>
-				<li><div class="edit_member_form_label" style="margin-top: 213px;">우편번호</div></li>
-			</ul>
-		</div>
-		<div class="col-8 edit_member_form_div">
-				<div class="edit_form">
-					<div class="get_email">
-					<%=MEMBER_EMAIL %>
-					</div>
-				</div>
-				<div class="row edit_form">
-					<div class="col">
-						<%
-						if(MEMBER_NICK==null){
-						%>
-						<input type="text" id="MEMBER_NICK" name="MEMBER_NICK" placeholder="별명" value="">
-						<%} else { %>
-						<input type="text" id="MEMBER_NICK" name="MEMBER_NICK" placeholder="별명" value="<%=MEMBER_NICK %>">
-						<%} %>
-						<input type="hidden" id="nick_chk" name="member_chk" value="<%=MEMBER_NICK %>">
-					</div>
-					<div class="col">
-						<button type="button" id="nick_chk_btn" onclick="nickname_chk()" value="N">중복체크</button>
-					</div>
+		<table class="table table-borderless">
+			<colgroup>
+				<col style="width:20%">
+				<col style="width:60%">
+				<col style="width:30%">
+			</colgroup>
+		    <tr style="vertical-align:middle">
+				<td>이메일</td>
+				<td>
+					<%=MEMBER_EMAIL%>
+				</td>
+				<td></td>
+		    </tr>
+		    <tr style="vertical-align:middle">
+				<td style="vertical-align:middle">별명</td>
+				<td style="vertical-align:middle">
+				<%
+					if(MEMBER_NICK == null) {
+				%>
+						<div class="d-flex justify-content-between">
+							<input type="text" id="MEMBER_NICK" name="MEMBER_NICK" placeholder="별명" value="" class="form-control">
+							<button type="button" id="nick_chk_btn" onclick="nickname_chk()" value="N">중복체크</button>
+						</div>
+				<%
+					} else { 
+				%>
+						<div class="d-flex justify-content-between">
+							<input type="text" id="MEMBER_NICK" name="MEMBER_NICK" placeholder="별명" value="<%=MEMBER_NICK%>" class="form-control">
+							<button type="button" id="nick_chk_btn" onclick="nickname_chk()" value="N">중복체크</button>
+						</div>
+				<%
+					} 
+				%>
+					<input type="hidden" id="nick_chk" name="member_chk" value="<%=MEMBER_NICK%>">
 					<div class="col-12 error_next_box" id="nickMsg" style="display: hidden;" aria-live="assertive"></div>
-				</div>
-				
-				<div class="edit_form">
+				</td>
+				<td></td>
+		    </tr>
+		    <tr>
+				<td id="li_name" style="vertical-align:middle">이름</td>
+				<td style="vertical-align:middle">
 					<%
-					if(MEMBER_NAME==null){
+						if(MEMBER_NAME == null) {
 					%>
-					<input type="text" id="MEMBER_NAME" name="MEMBER_NAME" value="" placeholder="이름">
-					<%} else { %>
-					<input type="text" id="MEMBER_NAME" name="MEMBER_NAME" value="<%=MEMBER_NAME %>" placeholder="이름">
-					<%} %>
-				</div>
-				<div class="edit_form">
+							<input type="text" id="MEMBER_NAME" name="MEMBER_NAME" value="" placeholder="이름" class="form-control">
 					<%
-					if(memberVO.getMEMBER_PHONE()==null) {
+						} else { 
 					%>
-					<input type="text" id="MEMBER_PHONE" name="MEMBER_PHONE" placeholder="하이픈 제거 후 입력">
-					<%} else { %>
-					<input type="text" id="MEMBER_PHONE" name="MEMBER_PHONE" value="<%=memberVO.getMEMBER_PHONE() %>" placeholder="하이픈 제거 후 입력">
-					<%} %>
+							<input type="text" id="MEMBER_NAME" name="MEMBER_NAME" value="<%=MEMBER_NAME %>" placeholder="이름" class="form-control">
+					<%
+						} 
+					%>
+				</td>
+				<td></td>
+		    </tr>
+		    <tr>
+				<td style="vertical-align:middle">핸드폰</td>
+				<td style="vertical-align:middle">
+					<%
+						if(memberVO.getMEMBER_PHONE() == null) {
+					%>
+							<input type="text" id="MEMBER_PHONE" name="MEMBER_PHONE" placeholder="하이픈 제거 후 입력" class="form-control">
+					<%
+						} else { 
+					%>
+							<input type="text" id="MEMBER_PHONE" name="MEMBER_PHONE" value="<%=memberVO.getMEMBER_PHONE()%>" placeholder="하이픈 제거 후 입력" class="form-control">
+					<%
+						} 
+					%>
 					<div class="col-12 error_next_box" id="phoneMsg" style="display: hidden;" aria-live="assertive"></div>
-				</div>
-				<div class="image-upload">
-					<div class="image-edit">
-						<input type="file" name="img" id="imageUpload"
-							class="imageUpload" data-preview="imagePreview"
-							accept=".png, .jpg, .jpeg" /> <label for="imageUpload"></label>
+				</td>
+				<td></td>
+		    </tr>
+		    <tr style="vertical-align:top">
+				<td id="li_profile">프로필 사진</td>
+				<td>
+					<div class="image-upload">
+						<div class="image-edit">
+							<input type="file" name="img" id="imageUpload" class="imageUpload" data-preview="imagePreview" accept=".png, .jpg, .jpeg" /> 
+							<label for="imageUpload"></label>
+						</div>
+						<div class="preview">
+							<div id="imagePreview"></div>
+						</div>
 					</div>
-					<div class="preview">
-						<div id="imagePreview"></div>
-					</div>
-				</div>
-				<div class="edit_form" style="margin-top: 30px;">
+				</td>
+				<td></td>
+		    </tr>
+		    <tr style="vertical-align:top">
+				<td>우편번호</td>
+				<td>
 					<%
-					if(memberVO.getADDRESS_ZIP() == 0){
+						if(memberVO.getADDRESS_ZIP() == 0) {
 					%>
-					<div class="row justify-content-around m-0 align-items-center">
-						<div class="address_zip_div" style="margin: 0 -250px;">
-							<input type="text"  id="ADDRESS_ZIP" name="ADDRESS_ZIP" readonly="readonly" value="" class="zipcode">
-						</div>
-						<div class="btn_address_zip" style="margin-left: -220px;">
-							<button type="button" class="btn btn-outline-dark mx-2" 
-							class="zipcode_button" onclick="openZipSearch()">주소검색</button>
-						</div>
-					</div>
-					<div class="edit_member_form_input">
-						<input type="text" id="ADDRESS_ADDRESS1" name="ADDRESS_ADDRESS1" value="" placeholder="기본주소" class="form_input" readonly>
-					</div>
-					<div class="edit_member_form_input">
-						<input type="text" id="ADDRESS_ADDRESS2" name="ADDRESS_ADDRESS2" value="" placeholder="상세주소" class="form_input">
-					</div>
-					
-					<%} else { %>
-					<div class="row justify-content-around m-0 align-items-center">
-						<div class="address_zip_div" style="margin: 0 -250px;">
-							<input type="text"  id="ADDRESS_ZIP" name="ADDRESS_ZIP" readonly="readonly" value="<%=memberVO.getADDRESS_ZIP() %>" class="zipcode">
-						</div>
-						<div class="btn_address_zip" style="margin-left: -220px;">
-							<button type="button" class="btn btn-outline-dark mx-2" 
-							class="zipcode_button" onclick="openZipSearch()">주소검색</button>
-						</div>
-					</div>
-					<div class="edit_member_form_input">
-						<input type="text" id="ADDRESS_ADDRESS1" name="ADDRESS_ADDRESS1" value="<%=memberVO.getADDRESS_ADDRESS1()%>" placeholder=" 기본주소" class="form_input" readonly>
-					</div>
-					<div class="edit_member_form_input">
-						<input type="text" id="ADDRESS_ADDRESS2" name="ADDRESS_ADDRESS2" value="<%=memberVO.getADDRESS_ADDRESS2()%>" placeholder=" 상세주소" class="form_input">
-					</div>
-					<%} %>
-				</div>
+							<div class="d-flex justify-content-start align-items-center">
+								<div class="address_zip_div">
+									<input type="text"  id="ADDRESS_ZIP" name="ADDRESS_ZIP" readonly="readonly" value="" class="zipcode">
+								</div>
+								<div class="btn_address_zip">
+									<button type="button" id="address_btn" class="zipcode_button" onclick="openZipSearch()">주소검색</button>
+								</div>
+							</div>
+							<div class="edit_member_form_input">
+								<input type="text" id="ADDRESS_ADDRESS1" name="ADDRESS_ADDRESS1" value="" placeholder="기본주소" class="form_input" readonly>
+							</div>
+							<div class="edit_member_form_input">
+								<input type="text" id="ADDRESS_ADDRESS2" name="ADDRESS_ADDRESS2" value="" placeholder="상세주소" class="form_input">
+							</div>
+					<%
+						} else { 
+					%>
+							<div class="d-flex justify-content-start align-items-center">
+								<div class="address_zip_div">
+									<input type="text"  id="ADDRESS_ZIP" name="ADDRESS_ZIP" readonly="readonly" value="<%=memberVO.getADDRESS_ZIP() %>" class="zipcode">
+								</div>
+								<div class="btn_address_zip">
+									<button type="button" id="address_btn" class="zipcode_button" onclick="openZipSearch()">주소검색</button>
+								</div>
+							</div>
+							<div class="edit_member_form_input">
+								<input type="text" id="ADDRESS_ADDRESS1" name="ADDRESS_ADDRESS1" value="<%=memberVO.getADDRESS_ADDRESS1()%>" placeholder=" 기본주소" class="form_input" readonly>
+							</div>
+							<div class="edit_member_form_input">
+								<input type="text" id="ADDRESS_ADDRESS2" name="ADDRESS_ADDRESS2" value="<%=memberVO.getADDRESS_ADDRESS2()%>" placeholder=" 상세주소" class="form_input">
+							</div>
+					<%
+						} 
+					%>
+				</td>
+				<td></td>
+		    </tr>
+		</table>
+		<hr>
+		<div class="row justify-content-center" style="margin-bottom: 100px;">
+			<button id="btn_submit" class="btn btn-outline-dark" type="button">수정</button>
+			<button id="btn_cancel" class="btn btn-outline-dark" type="button" onclick="cancel();">취소</button>
 		</div>
-	</div>
-	<hr>
-	<div class="row justify-content-center" style="margin-bottom: 100px;">
-		<button id="btn_submit" class="btn btn-outline-dark" type="button">수정</button>
-		<button id="btn_cancel" class="btn btn-outline-dark" type="button" onclick="cancel();">취소</button>
-	</div>
 	</form>
 </div>
 
