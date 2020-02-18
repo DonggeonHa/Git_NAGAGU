@@ -116,7 +116,6 @@ public class ProductServiceImpl implements ProductService{
 			ProductMapper productMapper = sqlSession.getMapper(ProductMapper.class);
 			MemberLikeMapper memberlikeMapper=sqlSession.getMapper(MemberLikeMapper.class);
 			
-			System.out.println("???");
 			cnt = memberlikeMapper.selectMemberLike(map);
 			System.out.println("cnt="+cnt);
 			if(cnt==0) {	

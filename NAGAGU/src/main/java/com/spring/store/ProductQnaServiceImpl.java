@@ -34,28 +34,21 @@ public class ProductQnaServiceImpl implements ProductQnaService{
 	}
 
 	@Override
-	public ArrayList<Product_qnaVO> getQnaList(HashMap<String, Object> map) {
+	public ArrayList<HashMap<String, Object>> getQnaList(HashMap<String, Object> map) {
 		ProductQnaMapper qnaMapper = sqlSession.getMapper(ProductQnaMapper.class);
-		ArrayList<Product_qnaVO> qnaList = null;
+		ArrayList<HashMap<String, Object>> qnaList = null;
 		qnaList = qnaMapper.getQnaList(map);
 		return qnaList;
 	}
 
 	@Override
-	public ArrayList<Product_qnaVO> getQna_RE_List(HashMap<String, Object> map) {
+	public ArrayList<HashMap<String, Object>> getQna_RE_List(HashMap<String, Object> map) {
 		ProductQnaMapper qnaMapper = sqlSession.getMapper(ProductQnaMapper.class);
-		ArrayList<Product_qnaVO> getQna_RE_List = null;
+		ArrayList<HashMap<String, Object>> getQna_RE_List = null;
 		getQna_RE_List = qnaMapper.getQna_RE_List(map);
 		return getQna_RE_List;
 	}
 
-	@Override
-	public ArrayList<MemberVO> getqnaMemberList(HashMap<String, Object> map) {
-		ProductQnaMapper qnaMapper = sqlSession.getMapper(ProductQnaMapper.class);
-		ArrayList<MemberVO> qnaMemberList = null;
-		qnaMemberList = qnaMapper.getqnaMemberList(map);
-		return qnaMemberList;
-	}
 
 	@Override
 	public int insertQna(Product_qnaVO qnaVO) {

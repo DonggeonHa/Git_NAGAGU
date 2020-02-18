@@ -145,22 +145,22 @@ public class ProductController {
 		return mav;
 	}
 
-	//디테일-페이지네이션 에이젝스
+	
+
 	@RequestMapping(value = "/getReviewList.pro", method = RequestMethod.POST, produces="application/json;charset=UTF-8")
 	@ResponseBody
-	public HashMap<String, Object> productdetailreview(ProductVO productVO, MemberVO memberVO, Model model, HttpServletRequest request, HttpSession session) {
-		System.out.println("댓글확인");
-
-
+	public HashMap<String, Object> getReviewList(ProductVO productVO, MemberVO memberVO, Model model, HttpServletRequest request, HttpSession session) {
+		System.out.println("getReviewList 컨트롤러 start!");
 		
 		/*리뷰 리스트*/
 		int limit = 5; //한 페이지당 출력할 글의 수
-
-		int reviewpage = Integer.parseInt(request.getParameter("pg"));
-		int PRODUCT_NUM= Integer.parseInt(request.getParameter("PRODUCT_NUM"));
-		
+		int reviewpage = 1;
+		if(request.getParameter("reviewpage") != null) {
+			reviewpage = Integer.parseInt(request.getParameter("reviewpage"));
+		}
 		int startrow = (reviewpage - 1) * 5 + 1; // 읽기 시작할 row 번호.
 		int endrow = startrow + limit - 1; //읽을 마지막 row 번호.
+		int PRODUCT_NUM= Integer.parseInt(request.getParameter("PRODUCT_NUM"));
 		
 		HashMap<String, Object> map1 = new HashMap<String, Object>();
 		map1.put("startrow", startrow);
@@ -169,51 +169,68 @@ public class ProductController {
 		
 		int reviewCount;	
 		int review_RE_Count;	//RE는 답글
-		ArrayList<Product_reviewVO> reviewList = null;
-		ArrayList<Product_reviewVO> review_RE_List = null;
+		ArrayList<HashMap<String, Object>> reviewList = null;
+		ArrayList<HashMap<String, Object>> review_RE_List = null;
+
 		reviewCount = reviewService.getReviewCount(map1);
 		review_RE_Count = reviewService.getReview_RE_Count(map1);
-//		reviewList = reviewService.getReviewList123(map1);
+		reviewList = reviewService.getReviewList(map1);
 		review_RE_List = reviewService.getReview_RE_List(map1);
-
 		
 		HashMap<String, Object> retVal = new HashMap<String, Object>();
-		try {
-//			reviewList = reviewService.getReviewList123(map1);
-			retVal.put("res", "OK");
-			retVal.put("reviewCount", reviewCount);	//allRowCnt
-			retVal.put("reviewList", reviewList);
-			retVal.put("review_RE_Count", review_RE_Count);	
-			retVal.put("review_RE_List", review_RE_List);	
 
-		} catch(Exception e) {
-			retVal.put("res", "FAIL");
-		}
-		
+		retVal.put("reviewCount", reviewCount);	//allRowCnt
+		retVal.put("reviewList", reviewList);
+		retVal.put("review_RE_Count", review_RE_Count);	
+		retVal.put("review_RE_List", review_RE_List);	
 		return retVal;
 	}
 	
+	@RequestMapping(value = "/getQnaList.pro", method = RequestMethod.POST, produces="application/json;charset=UTF-8")
+	@ResponseBody
+	public HashMap<String, Object> getQnaList(ProductVO productVO, MemberVO memberVO, Model model, HttpServletRequest request, HttpSession session) {
+		System.out.println("getQnaList 컨트롤러 start!");
+		
+		/*리뷰 리스트*/
+		int limit = 5; //한 페이지당 출력할 글의 수
+		int qnapage = 1;
+		if(request.getParameter("qnapage") != null) {
+			qnapage = Integer.parseInt(request.getParameter("qnapage"));
+		}
+		int startrow = (qnapage - 1) * 5 + 1; // 읽기 시작할 row 번호.
+		int endrow = startrow + limit - 1; //읽을 마지막 row 번호.
+		int PRODUCT_NUM= Integer.parseInt(request.getParameter("PRODUCT_NUM"));
+		
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		map.put("startrow", startrow);
+		map.put("endrow", endrow);
+		map.put("PRODUCT_NUM", PRODUCT_NUM);
+		
+		int qnaCount;	
+		int qna_RE_Count;	//RE는 답글
+		ArrayList<HashMap<String, Object>> qnaList = null;
+		ArrayList<HashMap<String, Object>> qna_RE_List = null;
+		
+		qnaCount = qnaService.getQnaCount(map);
+		qna_RE_Count = qnaService.getQna_RE_Count(map);
+		qnaList = qnaService.getQnaList(map);
+		qna_RE_List = qnaService.getQna_RE_List(map);
+		
+		HashMap<String, Object> retVal = new HashMap<String, Object>();
+		
+		retVal.put("qnaCount", qnaCount);	//allRowCnt
+		retVal.put("qnaList", qnaList);
+		retVal.put("qna_RE_Count", qna_RE_Count);	
+		retVal.put("qna_RE_List", qna_RE_List);	
+		return retVal;
+	}
 
+	
 	@RequestMapping(value = "/productdetail.pro", method = RequestMethod.GET)
 	public String productdetail(ProductVO productVO, MemberVO memberVO, Model model, HttpServletRequest request, HttpSession session) {
 		System.out.println("detail");
-		/*로그인 멤버*/
-		if(session.getAttribute("MEMBER_NUM") != null) {
-			System.out.println("멤버넘");
-			System.out.println("멤버넘"+session.getAttribute("MEMBER_NUM"));
-			memberVO.setMEMBER_NUM((int)session.getAttribute("MEMBER_NUM"));
-			//int index = ((Integer)(session.getAttribute("index"))).intValue();
-			MemberVO LoginMemberVO = reviewService.getLoginMemberbyNUM(memberVO);			
-			System.out.println("1"+memberVO.getMEMBER_NUM());
-			System.out.println("로그인 멤버 확인- membernum="+(int)session.getAttribute("MEMBER_NUM"));
-			System.out.println("로그인 멤버 확인- membernick="+LoginMemberVO.getMEMBER_NICK());
-			System.out.println("로그인 멤버 확인- memberpicture="+LoginMemberVO.getMEMBER_PICTURE());
-			/*로그인 멤버 관련*/
-			model.addAttribute("LoginMemberVO",LoginMemberVO);
-		
-		}
+
 	
-		
 		/*상품 vo 가져오기*/
 		String PRODUCT_CATEGORY = request.getParameter("PRODUCT_CATEGORY");
 		int PRODUCT_NUM = Integer.parseInt(request.getParameter("PRODUCT_NUM"));
@@ -233,99 +250,6 @@ public class ProductController {
 		model.addAttribute("WorkshopPicture",WorkshopPicture);
 
 		
-		/*리뷰 리스트*/
-		int reviewpage = 1; //초기값 1
-		int limit = 5; //한 페이지당 출력할 글의 수
-		
-		if(request.getParameter("reviewpage") != null) {
-			reviewpage = Integer.parseInt(request.getParameter("reviewpage"));
-		}
-		
-		int startrow = (reviewpage - 1) * 5 + 1; // 읽기 시작할 row 번호.
-		int endrow = startrow + limit - 1; //읽을 마지막 row 번호.
-		
-		HashMap<String, Object> map = new HashMap<String, Object>();
-		map.put("startrow", startrow);
-		map.put("endrow", endrow);
-		map.put("PRODUCT_NUM", PRODUCT_NUM);
-		
-		int reviewCount;
-		int review_RE_Count;	//RE는 답글
-		ArrayList<Product_reviewVO> reviewList = null;
-		ArrayList<Product_reviewVO> review_RE_List = null;
-		reviewCount = reviewService.getReviewCount(map);
-		review_RE_Count = reviewService.getReview_RE_Count(map);
-		reviewList = reviewService.getReviewList(map);
-		review_RE_List = reviewService.getReview_RE_List(map);
-
-		//리스트 총 페이지 수
-		int maxpage = (int)((double)reviewCount / limit + 0.95); // 0.95를 더해서 올림 처리
-		int startpage = (((int) ((double)reviewpage / 10 + 0.9)) - 1) * 10 + 1; // 현재 페이지에 보여줄 시작 페이지 수 (1, 11, 21 등...)
-		int endpage =startpage + 10 - 1; // 현재 페이지에 보여줄 마지막 페이지 수 (10, 20, 30 등..)
-		
-		if (endpage > maxpage)
-			endpage = maxpage;		
-		
-		//리뷰 멤버
-		ArrayList<MemberVO> reviewMemberList = null;
-		reviewMemberList = reviewService.getreviewMemberList(map);
-		
-		
-		
-		//리뷰 답글 멤버
-		ArrayList<MemberVO> review_RE_MemberList = null;
-		review_RE_MemberList = reviewService.getreview_RE_MemberList(map);
-
-		
-		
-		/*qna 리스트*/
-		//qna 원글 리스트
-		int qnapage = 1; //초기값 1
-		int qnalimit = 5; //한 페이지당 출력할 글의 수
-		
-		if(request.getParameter("qnapage") != null) {
-			qnapage = Integer.parseInt(request.getParameter("qnapage"));
-		}
-		
-		int qnastartrow = (qnapage - 1) * 5 + 1; // 읽기 시작할 row 번호.
-		int qnaendrow = qnastartrow + qnalimit - 1; //읽을 마지막 row 번호.
-		
-		HashMap<String, Object> qnamap = new HashMap<String, Object>();
-		qnamap.put("qnastartrow", qnastartrow);
-		qnamap.put("qnaendrow", qnaendrow);
-		qnamap.put("PRODUCT_NUM", PRODUCT_NUM);
-		System.out.println("qnastartrow="+qnastartrow);
-		System.out.println("qnaendrow="+qnaendrow);
-		int qnaCount;
-		int qna_RE_Count;
-		ArrayList<Product_qnaVO> qnaList = null;
-		ArrayList<Product_qnaVO> qna_RE_List = null;
-		qnaCount = qnaService.getQnaCount(qnamap);	//원글이 존재하면, qna리스트 출력
-		qna_RE_Count = qnaService.getQna_RE_Count(qnamap);	//원글이 존재하면, qna리스트 출력
-		qnaList = qnaService.getQnaList(qnamap);	//원글 리스트
-		qna_RE_List = qnaService.getQna_RE_List(qnamap);	//원글 리스트
-
-	
-		
-		//qna 총 페이지 수
-		int qnamaxpage = (int)((double)qnaCount / qnalimit + 0.95); // 0.95를 더해서 올림 처리
-		int qnastartpage = (((int) ((double)qnapage / 10 + 0.9)) - 1) * 10 + 1; // 현재 페이지에 보여줄 시작 페이지 수 (1, 11, 21 등...)
-		int qnaendpage =startpage + 10 - 1; // 현재 페이지에 보여줄 마지막 페이지 수 (10, 20, 30 등..)
-		
-		if (qnaendpage > qnamaxpage)
-			qnaendpage = qnamaxpage;		
-		
-		
-		//qna 멤버
-		ArrayList<MemberVO> qnaMemberList = null;
-		qnaMemberList = qnaService.getqnaMemberList(map);
-		
-		if(qnaMemberList == null) {
-			System.out.println("qnaMemberList는 null");
-		} else {
-			System.out.println("qnaMemberList는 null이 아님");
-		}		
-		
 		
 		//상세페이지 들어가기 전에 조회수 1 증가
 		productService.updateReadCount(PRODUCT_NUM);
@@ -335,47 +259,18 @@ public class ProductController {
 		model.addAttribute("PRODUCT_CATEGORY", PRODUCT_CATEGORY);
 		model.addAttribute("PRODUCT_NUM", PRODUCT_NUM);
 
-		/*리뷰 댓글 관련 */
-		model.addAttribute("reviewpage", reviewpage);
-		model.addAttribute("maxpage", maxpage);
-		model.addAttribute("startpage", startpage);
-		model.addAttribute("endpage", endpage);
-		model.addAttribute("reviewCount", reviewCount);
-		model.addAttribute("review_RE_Count", review_RE_Count);
-		model.addAttribute("reviewList", reviewList);
-		model.addAttribute("review_RE_List", review_RE_List);
-		
-		/*리뷰 멤버 관련*/
-		model.addAttribute("reviewMemberList", reviewMemberList);
-		model.addAttribute("review_RE_MemberList", review_RE_MemberList);
-		
-		/*qna 댓글 관련 */
-		model.addAttribute("qnapage", qnapage);
-		model.addAttribute("qnamaxpage", qnamaxpage);
-		model.addAttribute("qnastartpage", qnastartpage);
-		model.addAttribute("qnaendpage", qnaendpage);
-		model.addAttribute("qnaCount", qnaCount);
-		model.addAttribute("qna_RE_Count", qna_RE_Count);
-		model.addAttribute("qnaList", qnaList);
-		model.addAttribute("qna_RE_List", qna_RE_List);
-		
-		/*qna 멤버 관련*/
-		model.addAttribute("qnaMemberList", qnaMemberList);		
+	
 		
 		return "Store/productDetail";
 	}
 	
 
-
 	
-	
-	//-------------------------------------------리뷰1-댓글등록
-	//-------------------------------------------리뷰re1-2.-답글등록process(review_re)
-	//다중파일 업로드 됨!!!
-	@RequestMapping(value="/review_insert.do",  produces="application/json;charset=UTF-8")
+	@RequestMapping(value="/insertReview.do",  produces="application/json;charset=UTF-8")
 	@ResponseBody
-	public String insert_review(MultipartHttpServletRequest request, HttpSession session) throws Exception {
-		System.out.println("컨트롤러 왔다");
+	public Map<String, Object> insert_review123(MultipartHttpServletRequest request, HttpSession session) throws Exception {
+		System.out.println("review_insert123 컨트롤러 start!");
+		
 		Product_reviewVO reviewVO = new Product_reviewVO();
 		
 		System.out.println("REVIEW_CONTENT=" + request.getParameter("REVIEW_CONTENT"));
@@ -431,166 +326,126 @@ public class ProductController {
 		} else {
 			str = "#";
 		}
-
+	
 	    
 		//reviewVO.setREVIEW_NUM(0); //시퀀스 이용
 		reviewVO.setREVIEW_MEMBER((int)session.getAttribute("MEMBER_NUM"));
-		reviewVO.setREVIEW_PRODUCT(Integer.parseInt(request.getParameter("REVIEW_PRODUCT")));
+		reviewVO.setREVIEW_PRODUCT(Integer.parseInt(request.getParameter("PRODUCT_NUM")));
 		reviewVO.setREVIEW_DATE(new Timestamp(System.currentTimeMillis()));
 		reviewVO.setREVIEW_FILE(str);
 		reviewVO.setREVIEW_CONTENT(request.getParameter("REVIEW_CONTENT"));
 		
-
+	
 		//넘겨받은 REVIEW_RE가 존재하면 답글이고(원글의 REVIEW_NUM을 전달해줌), null이면 원글이다.
 		if(request.getParameter("REVIEW_RE") != null) {	
+			System.out.println("답글");
 			//답글 - GRADE=10, RE=NUM
-			reviewVO.setREVIEW_GRADE(10);
+			reviewVO.setREVIEW_GRADE(7);
 			reviewVO.setREVIEW_RE(Integer.parseInt(request.getParameter("REVIEW_RE")));
 		} else {	
+			System.out.println("원글");
 			//원글 - GRADE=GRADE, RE=0
 			reviewVO.setREVIEW_GRADE(Double.parseDouble(request.getParameter("REVIEW_GRADE")));
 			reviewVO.setREVIEW_RE(0);
 		}
 		
-		int res = reviewService.insertReview(reviewVO);
+		Map<String, Object> retVal = new HashMap<String, Object>(); //리턴값 저장
+		try {
+			int res = reviewService.insertReview(reviewVO);
+			retVal.put("insertres", "OK");
+			retVal.put("reviewVO", reviewVO);
+		} catch(Exception e) {
+			retVal.put("insertres", "Fail");
+		}
 		
 		
-		//답글
-		//댓글(review) 입력시 grade update(답글 입력시는  grade 상관 없다)
+		
+		//댓글(review) 입력시 product grade update(답글 입력시는  grade 상관 없다)
 		//update해야하는 상품의 vo 가져옴
 		if(request.getParameter("REVIEW_RE") == null) {
-			System.out.println("왔나?");
 			ProductVO productVO = null;
-			productVO = productService.getproductVO(Integer.parseInt(request.getParameter("REVIEW_PRODUCT")));
+			productVO = productService.getproductVO(Integer.parseInt(request.getParameter("PRODUCT_NUM")));
 		
 			double grade = productVO.getPRODUCT_GRADE();	//이  grade에 인원수를 곱해줘야 순수 grade누적값이 나온다.
-			int gradepeoplecount = reviewService.getGradePeopleCount(Integer.parseInt(request.getParameter("REVIEW_PRODUCT")));	//인원수 구해오기(PRODUCT_NUM = REVIEW_PRODUCT)
+			int gradepeoplecount = reviewService.getGradePeopleCount(Integer.parseInt(request.getParameter("PRODUCT_NUM")));	//인원수 구해오기(PRODUCT_NUM = REVIEW_PRODUCT)
 			double totalGrade = grade * (gradepeoplecount-1);	//이전까지 total 누적 grade	//gradepeoplecount는 update된 후이므로 이전걸 계산하려면 -1해줘야함
-
+	
 			//(grade 총합+현재 리뷰 grade) / (gradepeoplecount)
 			double newGrade = (totalGrade+Double.parseDouble(request.getParameter("REVIEW_GRADE"))) / (gradepeoplecount);
 			
 			//product테이블에 grade update
-			productVO.setPRODUCT_NUM(Integer.parseInt(request.getParameter("REVIEW_PRODUCT")));
+			productVO.setPRODUCT_NUM(Integer.parseInt(request.getParameter("PRODUCT_NUM")));
 			productVO.setPRODUCT_GRADE(newGrade);
 			productService.updateGrade(productVO);
 			
-			
 		} 	
 		
-		
-		System.out.println("res="+res);		
-	
-		ObjectMapper mapper = new ObjectMapper();
-		try {
-			str = mapper.writeValueAsString(reviewVO);
-			System.out.println(str);
-		}catch(Exception e) {
-			System.out.println("first() mapper : " + e.getMessage());
-		}
-		
-		return str;
+		return retVal;
 		
 	}		
 	
 	
 	
-		
-	//-------------------------------------------리뷰2-1.-댓글수정폼	
 	//리뷰 댓글 수정 폼
-	@RequestMapping(value="/review_modify_form.do",  produces="application/json;charset=UTF-8")
+	@RequestMapping(value="/gomodifyReviewform.do",  produces="application/json;charset=UTF-8")
 	@ResponseBody
-	public Product_reviewVO modify_review_form(HttpServletRequest request) throws Exception {
-		System.out.println("modify_review_form 컨트롤러 왔다");
-		
+	public Map<String, Object> gomodifyReviewform(HttpServletRequest request) throws Exception {
+		System.out.println("gomodifyReviewform 컨트롤러 왔다");
 		int REVIEW_NUM = Integer.parseInt(request.getParameter("REVIEW_NUM"));
 		System.out.println("REVIEW_NUM = " + REVIEW_NUM);
 		
 		Product_reviewVO reviewVO = null;
 		
-		reviewVO = reviewService.getReviewVO(REVIEW_NUM);
-		System.out.println("modify에서 vo 잘 가져왔나?? content 확인 = " + reviewVO.getREVIEW_CONTENT());
-		return reviewVO;
-	}		
-	
-	
-	
-	//리뷰 댓글 수정에서 이미지 삭제
-	@RequestMapping(value="/review_img_delete.do",  produces="application/json;charset=UTF-8")
-	@ResponseBody
-	public String review_img_delete(HttpServletRequest request) throws Exception {
-		String newReviewImg = null;
-		int REVIEW_NUM = Integer.parseInt(request.getParameter("REVIEW_NUM"));
-//		String img_src = request.getParameter("img_src");	//삭제할 이미지 소스	
-		int i = Integer.parseInt(request.getParameter("index"));
-//		String img_src = request.getParameter("img_src");	//삭제할 이미지 소스
-//		System.out.println("img_src = " + img_src);
-		
-		String REVIEW_FILE = reviewService.getREVIEW_FILE(REVIEW_NUM); //기존 db에 있던 이미지 파일
-		
-		System.out.println("REVIEW_FILE = " + REVIEW_FILE);
-		
-		String path = "C:\\Project138\\upload\\"; 
-		String fullPath = "";
-		String[] f = REVIEW_FILE.split(",");
-		int length = f.length;
-		System.out.println("length="+length);
-//		for(int x=0; x<f.length; x++) {
-//			System.out.println("f["+x+"]번째 src는 "+f[x]);
-//		}
-		fullPath = path+f[i];
-		System.out.println("fullPath="+fullPath);
-		File file = new File(fullPath);					
-		file.delete();
-	   
-	    String mod_REVIEW_FILE = "";
 
-	    System.out.println("원본: " + REVIEW_FILE);
-	    System.out.println(); // 줄바꿈
-
-	    //delete이지만 REVIEW_FILE을 수정해서(원하는 이미지 삭제) update해주는 형식으로 해야할 것 같음
-	    // 문자열에서 특정 이미지 제거
-	    if (i == (length-1)) { //,가 맨 뒤에 없음
-	    	mod_REVIEW_FILE = REVIEW_FILE.replace(","+f[i], "");
-		    System.out.println("삭제(1): " + mod_REVIEW_FILE);
-	    } else {
-	    	mod_REVIEW_FILE = REVIEW_FILE.replace(f[i]+",", "");
-		    System.out.println("삭제(i != length-1 ): " + mod_REVIEW_FILE); // 출력 결과: 가나다라ABCDE 가나다라ABCDE		    
-	    }  
-	    System.out.println("mod_REVIEW_FILE="+mod_REVIEW_FILE);
-	    Map<String, Object> map = new HashMap<String, Object>(); 
-		map.put("REVIEW_NUM", REVIEW_NUM);
-		map.put("mod_REVIEW_FILE", mod_REVIEW_FILE);
-		
-		String str = "";
-		reviewService.deleteReviewImg(map);
-		newReviewImg = reviewService.newReviewImg(REVIEW_NUM); //기존 db 이미지 삭제했을 때, review_file(경로)에서 삭제하고 db에 새로 update  
-		ObjectMapper mapper = new ObjectMapper();
+		Map<String, Object> retVal = new HashMap<String, Object>(); //리턴값 저장
 		try {
-
-			str = mapper.writeValueAsString(newReviewImg);
-			System.out.println("컨트롤러 getComments"+str);
+			reviewVO = reviewService.getReviewVO(REVIEW_NUM);
+			retVal.put("res", "OK");
+			retVal.put("reviewVO", reviewVO);
 		} catch(Exception e) {
-			System.out.println("first() mapper : " + e.getMessage());
-		}			
-		return str;
+			retVal.put("res", "Fail");
+		}
+		return retVal;
+		
 	}		
+
 	
-	//-------------------------------------------리뷰2-2.-댓글수정process
-	//리뷰 댓글 수정 process
-	@RequestMapping(value="/review_modify.do",  produces="application/json;charset=UTF-8")
+	
+	//리뷰 댓글 수정 process (원글)
+	@RequestMapping(value="/modifyReview.do",  produces="application/json;charset=UTF-8")
 	@ResponseBody
-	public String modify_review(MultipartHttpServletRequest request) throws Exception {
-		System.out.println("modify_review 컨트롤러 왔다");
-		System.out.println("REVIEW_NUM = " + request.getParameter("REVIEW_NUM"));
+	public Map<String, Object> modifyReview(MultipartHttpServletRequest request) throws Exception {
+		System.out.println("modifyReview 컨트롤러 왔다");
+		int REVIEW_NUM = Integer.parseInt(request.getParameter("REVIEW_NUM"));
+		String beforeImg = request.getParameter("beforeImg");	//이전 이미지 중 남긴 이미지
+		String deleteImg = request.getParameter("deleteImg");	//이전 이미지 중 삭제할 이미지
+		String REVIEW_FILE = "";	//이전 이미지+추가 이미지
 		
-		//원래 db에 있던 이미지들 불러와야함(이후에 붙여야함)
-		String REVIEW_FILE = reviewService.getREVIEW_FILE(Integer.parseInt(request.getParameter("REVIEW_NUM")));
-		System.out.println("기존 REVIEW_FILE = " + REVIEW_FILE);
+		if(deleteImg.equals("")) {
+			System.out.println("삭제할 이미지 없음");
+		}else {
+			deleteImg = deleteImg.substring(0, deleteImg.length()-1);	//맨 마지막 , 떼기
+			System.out.println(deleteImg);
+			//기존의 이미지는 삭제
+			String path = "C:\\Project138\\upload\\"; 
+			String fullPath = "";
+			String[] f = deleteImg.split(",");
+			for(int i=0; i<f.length; i++) {
+				fullPath = path+f[i];
+				System.out.println("fullPath="+fullPath);
+				File file = new File(fullPath);					
+				file.delete();				
+			}
+			
+		}
 		
-		Product_reviewVO reviewVO = new Product_reviewVO();
-	
+		//beforeImg - 이전 이미지 중 살릴 이미지
+		if(beforeImg == ",") {	//기존 이미지 다 삭제했을 때, 바로 추가업로드 경로 붙일 수 있게 초기화시켜줌
+			beforeImg = "";
+		} 
 		
+		
+		//사진 추가 업로드 처리
 		List<MultipartFile> fileList = new ArrayList<MultipartFile>(); 
 		
 		// input file 에 아무것도 없을 경우 (파일을 업로드 하지 않았을 때 처리) 
@@ -605,90 +460,123 @@ public class ProductController {
 		} 
 		
 		long time = System.currentTimeMillis(); 
-		String str = "";
+		
 		for (MultipartFile mf : fileList) { 
 			String originFileName = mf.getOriginalFilename(); // 원본 파일 명 
 			String saveFileName = String.format("%d_%s", time, originFileName);
 
 			try { // 파일생성
 				mf.transferTo(new File(path, saveFileName)); 
-				str += saveFileName + ",";
+				beforeImg += saveFileName + ",";	//beforeImg에 추가 업로드 이미지 경로 추가
 			} catch (Exception e) { 
 				e.printStackTrace(); 
 				} 
 			}
 		System.out.println("파일 없을 때 6");
 
-		System.out.println("str = " + str);
+		System.out.println("beforeImg : " + beforeImg);
 		
-		if(str.length() != 0) {
-			str = str.substring(0, str.length()-1);
-			REVIEW_FILE += "," + str;	//기존 db파일,새로운파일 이어붙임
+		if(beforeImg.length() != 0) {
+			REVIEW_FILE = beforeImg.substring(0, beforeImg.length()-1);	//beforeImg + 추가 업로드 이미지
+			
 		} else {
-			str = "#";	//새로운 파일 없을시 붙이지 않음
+			REVIEW_FILE = "#";	//새로운 파일 없을시 붙이지 않음
 		}
+					
+		System.out.println("modify 전 REVIEW_FILE은 : " + REVIEW_FILE );
 		
-		
-		reviewVO.setREVIEW_NUM(Integer.parseInt(request.getParameter("REVIEW_NUM"))); //시퀀스 이용
+		Product_reviewVO reviewVO = new Product_reviewVO();
+		reviewVO.setREVIEW_NUM(REVIEW_NUM);
+		reviewVO.setREVIEW_CONTENT(request.getParameter("REVIEW_CONTENT"));
 		reviewVO.setREVIEW_DATE(new Timestamp(System.currentTimeMillis()));
 		reviewVO.setREVIEW_FILE(REVIEW_FILE);
-		reviewVO.setREVIEW_CONTENT(request.getParameter("REVIEW_CONTENT"));
 		reviewVO.setREVIEW_GRADE(Double.parseDouble(request.getParameter("REVIEW_GRADE")));
-		System.out.println("확인aaaaaaaaaaaa = "+reviewVO.getREVIEW_FILE());
 		
-		int res = reviewService.modifyReview(reviewVO);
-		System.out.println("res="+res);		
-	
 		
-		ObjectMapper mapper = new ObjectMapper();
+		Map<String, Object> retVal = new HashMap<String, Object>(); //리턴값 저장
 		try {
-			str = mapper.writeValueAsString(reviewVO);
-			System.out.println(str);
-			System.out.println("아아아");
-			
-		}catch(Exception e) {
-			System.out.println("응?");
-			System.out.println("first() mapper : " + e.getMessage());
+			int res = reviewService.modifyReview(reviewVO);
+			retVal.put("res", "OK");
+		} catch(Exception e) {
+			retVal.put("res", "Fail");
 		}
-		
-		return str;
+		return retVal;
 		
 	}		
-
 	
-	//-------------------------------------------리뷰3-댓글삭제
-	//-------------------------------------------리뷰re3-답글삭제(review_re)
-	@RequestMapping(value="/delete_review.do",  produces="application/json;charset=UTF-8")
+	
+
+
+	//리뷰 댓글 수정 process (답글)
+	@RequestMapping(value="/modifyReviewReply.do",  produces="application/json;charset=UTF-8")
 	@ResponseBody
-	public Map<String, Object> delete_review(HttpServletRequest request) throws Exception {
-		System.out.println("delete_review 컨트롤러 왔다");
+	public Map<String, Object>  modifyReviewReply(HttpServletRequest request) throws Exception {
+		System.out.println("modifyReviewReply 컨트롤러 왔다");
+		int REVIEW_NUM = Integer.parseInt(request.getParameter("REVIEW_NUM"));
+		String REVIEW_CONTENT = request.getParameter("REVIEW_CONTENT");
+		Product_reviewVO vo = new Product_reviewVO();
+
+		vo.setREVIEW_NUM(REVIEW_NUM);
+		vo.setREVIEW_DATE(new Timestamp(System.currentTimeMillis()));
+		vo.setREVIEW_CONTENT(REVIEW_CONTENT);
+		
 		Map<String, Object> retVal = new HashMap<String, Object>(); //리턴값 저장
 		try {
 					
-			int REVIEW_NUM = Integer.parseInt(request.getParameter("REVIEW_NUM"));
-			System.out.println("REVIEW_NUM = " + REVIEW_NUM);
+			int res = reviewService.modifyReviewReply(vo);
+				retVal.put("res", "OK");
 			
-			
+		}catch(Exception e) {
+			retVal.put("res", "FAIL");
+			retVal.put("message", "Failure");
+		}		
+		
+		
+		return retVal;
+	}		
+
+	//리뷰 댓글 삭제
+	@RequestMapping(value="/deleteReview.do",  produces="application/json;charset=UTF-8")
+	@ResponseBody
+	public Map<String, Object> deleteReview(HttpServletRequest request) throws Exception {	
+		System.out.println("deleteReview 컨트롤러 왔다");
+		
+		int REVIEW_NUM = Integer.parseInt(request.getParameter("REVIEW_NUM"));
+		
+		
+		Map<String, Object> retVal = new HashMap<String, Object>(); //리턴값 저장
+		try {
+					
 			int res = 0;
 			
-			//답글을 가지고 있는 댓글을 삭제하면, 해당 답글까지 다 삭제돼야 한다.
 			//답글을 가지고 있는 댓글은 삭제할 수 없다.
 			//본인의 review_num을 review_re로 하는 데이터가 있을 경우, 삭제 불가
 			int count = reviewService.findChildrenRE(REVIEW_NUM);
-			//있으면 답글이 있는 것
-			if(count == 0) {
-				//없으면 삭제 가능
+			
+			if(count == 0) {	//답글이 없으므로 삭제 가능
+				//upload폴더에서 파일 삭제
+				String getReviewFile = reviewService.getREVIEW_FILE(REVIEW_NUM);
+				if(!getReviewFile.equals("#")) {
+					String path = "C:\\Project138\\upload\\"; 
+					String fullPath = "";
+					String[] f = getReviewFile.split(",");
+
+					for(int i=0; i<f.length; i++) {
+						fullPath = path+f[i];
+						System.out.println("fullPath="+fullPath);
+						File file = new File(fullPath);					
+						file.delete();				
+					}						
+				}
+				//db 삭제
 				res = reviewService.deleteReview(REVIEW_NUM);
-			} else {
-				
+				retVal.put("res", "OK");
+			} else {	//답글 존재
+				retVal.put("res", "Children");
 				
 			}
 			
-			if(res != 0) {
-				retVal.put("res", "OK");
-			} else {
-				retVal.put("res", "FAIL");
-			}
+
 			
 			
 		}catch(Exception e) {
@@ -698,22 +586,8 @@ public class ProductController {
 		
 		return retVal;
 		
-	}		
-	
-	
-	//-------------------------------------------리뷰re2-2.-답글수정process(review_re)	
-	@RequestMapping(value="/review_re_modify.do",  produces="application/json;charset=UTF-8")
-	@ResponseBody
-	public Product_reviewVO review_re_modify(Product_reviewVO vo, HttpServletRequest request) throws Exception {
-		System.out.println("review_re_modify 컨트롤러 왔다");
-
-		vo.setREVIEW_DATE(new Timestamp(System.currentTimeMillis()));
-
-	//	int res = reviewService.modifyReview_RE(vo);
-		System.out.println("ccc");
-		return vo;
-	}		
-
+	}
+		
 	
 	//-------------------------------------------좋아요 누르는 기능
 	@RequestMapping(value = "/insertProLike.pro", method = RequestMethod.POST)
