@@ -173,7 +173,7 @@
 	
 	<select id="esOrderList" parameterType="java.util.HashMap" resultMap="orderMap">
 		select * from ESTIMATE_ORDER 
-		<if test="ES_ORDER_BUYER!=null">where ES_ORDER_BUYER = #{ES_ORDER_BUYER}</if>
+		<if test="ES_ORDER_BUYER_MAIL!=null">where ES_ORDER_BUYER_MAIL = #{ES_ORDER_BUYER_MAIL}</if>
 		<if test="ES_ORDER_STATE!=null">and ES_ORDER_STATE = #{ES_ORDER_STATE}</if>
 	</select>
 	
@@ -198,9 +198,9 @@
 	
 	<insert id="esOrderInsert" parameterType="com.spring.estimate.EstimateOrderVO">
 		insert into ESTIMATE_ORDER (ES_ORDER_NUM, ES_ORDER_ESTIMATE, ES_ORDER_OFFER, ES_ORDER_TITLE, ES_ORDER_BUYER, 
-		ES_ORDER_WORKSHOP, ES_ORDER_PIC, ES_ORDER_DATE, ES_ORDER_PRICE, ES_ORDER_STATE)
+		ES_ORDER_WORKSHOP, ES_ORDER_PIC, ES_ORDER_DATE, ES_ORDER_PRICE, ES_ORDER_STATE, ES_ORDER_CATEGORY, ES_ORDER_BUYER_MAIL)
 		values (ESTIMATE_ORDER_SEQ.nextval, #{ES_ORDER_ESTIMATE}, #{ES_ORDER_OFFER}, #{ES_ORDER_TITLE}, #{ES_ORDER_BUYER}, 
-		#{ES_ORDER_WORKSHOP}, #{ES_ORDER_PIC}, sysdate, #{ES_ORDER_PRICE}, 0)
+		#{ES_ORDER_WORKSHOP}, #{ES_ORDER_PIC}, sysdate, #{ES_ORDER_PRICE}, 0, #{ES_ORDER_CATEGORY}, #{ES_ORDER_BUYER_MAIL})
 	</insert>
 	
 	<delete id="esOrderDelete" parameterType="int">
@@ -208,10 +208,12 @@
 	</delete>
 	
 	<select id="esOrderCount" parameterType="java.util.HashMap" resultType="int">
-		select count(*) from ESTIMATE_ORDER where
-		<if test="ES_ORDER_BUYER!=null">ES_ORDER_BUYER = #{ES_ORDER_BUYER}</if>
-		<if test="ES_ORDER_WORKSHOP!=null">ES_ORDER_WORKSHOP = #{ES_ORDER_WORKSHOP}</if>
-		<if test="ES_ORDER_STATE!=null">and ES_ORDER_STATE = #{ES_ORDER_STATE}</if>		
+		select count(*) from ESTIMATE_ORDER
+		<where>
+			<if test="ES_ORDER_BUYER_MAIL!=null">ES_ORDER_BUYER_MAIL = #{ES_ORDER_BUYER_MAIL}</if>
+			<if test="ES_ORDER_WORKSHOP!=null">and ES_ORDER_WORKSHOP = #{ES_ORDER_WORKSHOP}</if>
+			<if test="ES_ORDER_STATE!=null">and ES_ORDER_STATE = #{ES_ORDER_STATE}</if>	
+		</where>	
 	</select>
     
     <!--  ///////////////////////  공방 견적 관리 ///////////////////////  -->

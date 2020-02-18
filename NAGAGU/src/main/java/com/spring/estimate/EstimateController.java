@@ -421,10 +421,12 @@ public class EstimateController {
 					vo.setES_ORDER_ESTIMATE(ESTIMATE_NUM);
 					vo.setES_ORDER_OFFER(OFFER_NUM);
 					vo.setES_ORDER_TITLE(esvo.getESTIMATE_TITLE());
-					vo.setES_ORDER_BUYER(esvo.getESTIMATE_MEMBER());
+					vo.setES_ORDER_BUYER(esvo.getESTIMATE_NICK());
 					vo.setES_ORDER_WORKSHOP(offervo.getOFFER_WORKSHOP());
 					vo.setES_ORDER_PIC(thumbPic);
 					vo.setES_ORDER_PRICE(offervo.getOFFER_PRICE());
+					vo.setES_ORDER_BUYER_MAIL(esvo.getESTIMATE_MEMBER());
+					vo.setES_ORDER_CATEGORY(esvo.getESTIMATE_CATEGORY());
 					
 					int res3 = estimateService.esOrderInsert(vo);
 				}
@@ -441,10 +443,10 @@ public class EstimateController {
 	/* 일반회원 : 의뢰한 견적 리스트 */
 	@RequestMapping(value = "/mypage_estimate.my")
 	public String MypageEsOrderDetail(HttpSession session, HttpServletRequest request, Model model) {
-		String ES_ORDER_BUYER = (String)session.getAttribute("MEMBER_EMAIL");
+		String ES_ORDER_BUYER_MAIL = (String)session.getAttribute("MEMBER_EMAIL");
 
 		HashMap<String, Object> map = new HashMap<String, Object>();
-		map.put("ES_ORDER_BUYER", ES_ORDER_BUYER);
+		map.put("ES_ORDER_BUYER_MAIL", ES_ORDER_BUYER_MAIL);
 		if (request.getParameter("ES_ORDER_STATE") != null) {
 			int ES_ORDER_STATE = Integer.parseInt(request.getParameter("ES_ORDER_STATE"));
 			map.put("ES_ORDER_STATE", ES_ORDER_STATE);
@@ -455,7 +457,7 @@ public class EstimateController {
 		for (int i=0; i<7; i++) {
 			HashMap<String, Object> cntmap = new HashMap<String, Object>();
 			cntmap.put("ES_ORDER_STATE", i);
-			cntmap.put("ES_ORDER_BUYER", ES_ORDER_BUYER);
+			cntmap.put("ES_ORDER_BUYER_MAIL", ES_ORDER_BUYER_MAIL);
 			int cnt = estimateService.esOrderCount(cntmap);
 			model.addAttribute("esCount" + i, cnt);
 		}
