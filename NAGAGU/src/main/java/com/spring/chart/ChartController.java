@@ -55,6 +55,10 @@ public class ChartController {
 		String workshopName = null;
 		int cmemberCount = 0;
 		
+		
+		int total_member = 0;
+		int delete_member = 0;
+		int delete_ws_member = 0;
 		try {
 			
 			//커뮤니티 게시글 수 구하기, 회원가입 수
@@ -69,22 +73,47 @@ public class ChartController {
 	            selectDate = sdf.format(c.getTime());
 	            
 	            memberCount = chartService.insertMemberCount(selectDate);
+	            System.out.println("memberCount: "+memberCount);
 	            WSCount = chartService.insertWSMemberCount(selectDate);
+	            System.out.println("WSCount: "+WSCount);
+	            delete_member = chartService.deleteMemberCount(selectDate);
+	            System.out.println("delete_member: "+delete_member);
+	            delete_ws_member = chartService.deleteWSMemberCount(selectDate);
+	            System.out.println("delete_ws_member: "+delete_ws_member);
+	            
 	            totalCount = memberCount + WSCount;
 
 	            System.out.println(memberCount+ "  " + WSCount + "  " + totalCount);
 	            
+	            //일반 회원가입 수
 	            if(memberCount == 0) {
 	            	mav.addObject("memberCount"+i, 0);
 	            	System.out.println("회원가입 날짜는: " + selectDate + ", 회원 수는: " + memberCount);
 	            }else {
-	            	mav.addObject("memberCount"+i, memberCount);	//일반 회원가입 수
+	            	mav.addObject("memberCount"+i, memberCount);	
 	            }
+	            
+	            //공방 회원가입 수
 	            if(WSCount == 0) {
 	            	mav.addObject("WSCount"+i, 0);
 	            } else {
-	            	mav.addObject("WSCount"+i, WSCount);	//공방 회원가입 수
+	            	mav.addObject("WSCount"+i, WSCount);	
 	            }
+	            
+	            //탈퇴 일반회원
+	            if(delete_member == 0) {
+	            	mav.addObject("deleteMember"+i, 0);
+	            } else {
+	            	mav.addObject("deleteMember"+i, -delete_member);
+	            }
+	            
+	            //탈퇴 공방회원
+	            if(delete_ws_member == 0) {
+	            	mav.addObject("deleteWSMember"+i, 0);
+	            } else {
+	            	mav.addObject("deleteWSMember"+i, -delete_ws_member);
+	            }
+	            
 	            
 	            mav.addObject("totalCount"+i, totalCount);	//총 회원가입 수
 	            

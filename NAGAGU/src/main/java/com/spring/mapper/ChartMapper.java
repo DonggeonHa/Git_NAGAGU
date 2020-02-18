@@ -12,4 +12,6 @@ public interface ChartMapper {
 	ArrayList<ClassVO> PopularClass();	//인기 클래스
 	int insertMemberCount(@Param("selectDate")String selectDate);	//일반 회원가입 수
 	int insertWSMemberCount(@Param("selectDate")String selectDate);	//공방 회원가입 수
+	int deleteMemberCount(@Param("selectDate")String selectDate);
+	int deleteWSMemberCount(@Param("selectDate")String selectDate);
 }

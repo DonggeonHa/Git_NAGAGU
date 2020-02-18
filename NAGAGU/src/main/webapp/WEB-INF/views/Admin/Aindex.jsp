@@ -75,7 +75,7 @@ var barChartData = {
 			borderWidth: 2,
 			fill: false,
 			data: [
-				100,
+				'${totalCount0}',
 				'${totalCount1}',
 				'${totalCount2}',
 				'${totalCount3}',
@@ -88,7 +88,7 @@ var barChartData = {
 			backgroundColor: window.chartColors.member,
 			stack: 'Stack 0',
 			data: [
-				35,
+				'${memberCount0}',
 				'${memberCount1}',
 				'${memberCount2}',
 				'${memberCount3}',
@@ -101,9 +101,9 @@ var barChartData = {
 			backgroundColor: window.chartColors.workshopMember,
 			stack: 'Stack 0',
 			data: [
-				65,
+				'${WSCount0}',
 				'${WSCount1}',
-				33,
+				'${WSCount2}',
 				'${WSCount3}',
 				'${WSCount4}',
 				'${WSCount5}',
@@ -114,26 +114,26 @@ var barChartData = {
 			backgroundColor: window.chartColors.delete_workshopMember,
 			stack: 'Stack 1',
 			data: [
-				-2,
-				-5,
-				'${WSCount2}',
-				'${WSCount3}',
-				'${WSCount4}',
-				'${WSCount5}',
-				'${WSCount6}',
+				'${deleteMember0}',
+				'${deleteMember1}',
+				'${deleteMember2}',
+				'${deleteMember3}',
+				'${deleteMember4}',
+				'${deleteMember5}',
+				'${deleteMember6}'
 			]
 		}, {
 			label: 'Dataset 4',
 			backgroundColor: window.chartColors.delete_member,
 			stack: 'Stack 1',
 			data: [
-				-10,
-				-7,
-				'${WSCount0}',
-				'${WSCount0}',
-				-1,
-				'${WSCount0}',
-				'${WSCount0}'
+				'${deleteWSMember0}',
+				'${deleteWSMember1}',
+				'${deleteWSMember2}',
+				'${deleteWSMember3}',
+				'${deleteWSMember4}',
+				'${deleteWSMember5}',
+				'${deleteWSMember6}'
 			]
 		}]
 

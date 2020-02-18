@@ -27,7 +27,7 @@ public class ChartServiceImpl implements ChartService{
 			countResult = chartMapper.CountBoard(selectDate);
 			
 		} catch (Exception e) {
-			throw new Exception("chart impl 에러", e);
+			throw new Exception("chart impl CountBoard에러", e);
 		}
 		
 		return countResult;
@@ -61,7 +61,7 @@ public class ChartServiceImpl implements ChartService{
 			countResult = chartMapper.insertMemberCount(selectDate);
 			
 		} catch (Exception e) {
-			throw new Exception("chart impl 에러", e);
+			throw new Exception("chart impl insertMemberCount에러", e);
 		}
 		
 		return countResult;
@@ -78,7 +78,41 @@ public class ChartServiceImpl implements ChartService{
 			countResult = chartMapper.insertWSMemberCount(selectDate);
 			
 		} catch (Exception e) {
-			throw new Exception("chart impl 에러", e);
+			throw new Exception("chart impl insertWSMemberCount에러", e);
+		}
+		
+		return countResult;
+	}
+
+	@Override
+	public int deleteMemberCount(String selectDate) throws Exception {
+		int countResult = 0;
+		
+		try {
+			ChartMapper chartMapper = sqlSession.getMapper(ChartMapper.class);
+			
+			//그 날짜의 게시글 수를 가져옴
+			countResult = chartMapper.deleteMemberCount(selectDate);
+			
+		} catch (Exception e) {
+			throw new Exception("chart impl deleteMemberCount에러", e);
+		}
+		
+		return countResult;
+	}
+
+	@Override
+	public int deleteWSMemberCount(String selectDate) throws Exception {
+		int countResult = 0;
+		
+		try {
+			ChartMapper chartMapper = sqlSession.getMapper(ChartMapper.class);
+			
+			//그 날짜의 게시글 수를 가져옴
+			countResult = chartMapper.deleteWSMemberCount(selectDate);
+			
+		} catch (Exception e) {
+			throw new Exception("chart impl deleteWSMemberCount에러", e);
 		}
 		
 		return countResult;
