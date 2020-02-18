@@ -115,7 +115,6 @@ create sequence store_review_seq
 			MEMBER_NICK, MEMBER_PICTURE FROM  
 				(SELECT R.*, N.MEMBER_NICK, N.MEMBER_PICTURE FROM PRODUCT_REVIEW R, NAGAGU_MEMBER N 
 				WHERE R.REVIEW_PRODUCT=#{PRODUCT_NUM} AND R.REVIEW_MEMBER=N.MEMBER_NUM AND R.REVIEW_RE=0 ORDER BY R.REVIEW_DATE DESC)) 
-			<![CDATA[ WHERE rnum >= #{startrow} AND rnum <= #{endrow} ]]>	
            
 	</select>
 	<select id="getReview_RE_List" parameterType="java.util.HashMap" resultMap="productReviewResultMap">
@@ -124,8 +123,6 @@ create sequence store_review_seq
 			MEMBER_NICK, MEMBER_PICTURE FROM 
 				(SELECT R.*, N.MEMBER_NICK, N.MEMBER_PICTURE FROM PRODUCT_REVIEW R, NAGAGU_MEMBER N 
 				WHERE R.REVIEW_PRODUCT=#{PRODUCT_NUM} AND R.REVIEW_MEMBER=N.MEMBER_NUM AND R.REVIEW_RE!=0 ORDER BY R.REVIEW_DATE DESC)) 
-			<![CDATA[ WHERE rnum >= #{startrow} AND rnum <= #{endrow} ]]>	
-           
 	</select>
 
 

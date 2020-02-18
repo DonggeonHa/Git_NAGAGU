@@ -152,19 +152,9 @@ public class ProductController {
 	public HashMap<String, Object> getReviewList(ProductVO productVO, MemberVO memberVO, Model model, HttpServletRequest request, HttpSession session) {
 		System.out.println("getReviewList 컨트롤러 start!");
 		
-		/*리뷰 리스트*/
-		int limit = 5; //한 페이지당 출력할 글의 수
-		int reviewpage = 1;
-		if(request.getParameter("reviewpage") != null) {
-			reviewpage = Integer.parseInt(request.getParameter("reviewpage"));
-		}
-		int startrow = (reviewpage - 1) * 5 + 1; // 읽기 시작할 row 번호.
-		int endrow = startrow + limit - 1; //읽을 마지막 row 번호.
 		int PRODUCT_NUM= Integer.parseInt(request.getParameter("PRODUCT_NUM"));
 		
 		HashMap<String, Object> map1 = new HashMap<String, Object>();
-		map1.put("startrow", startrow);
-		map1.put("endrow", endrow);
 		map1.put("PRODUCT_NUM", PRODUCT_NUM);
 		
 		int reviewCount;	

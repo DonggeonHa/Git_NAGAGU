@@ -139,13 +139,13 @@
 				</td>
 			</tr>
 			<tr>      
-                   <th>상품 소개</th>
-                   <td>
+				<th>상품 소개</th>
+				<td>
 					<div class="row">
 						<textarea id="summernote1" name="PRODUCT_INFO"></textarea>
 					</div>
-                   </td>
-               </tr>
+				</td>
+			</tr>
 			<tr>
 				<th>배송비</th>
 				<td>
@@ -154,7 +154,7 @@
 				 			<input class="form-control" type="text" name="PRODUCT_SHIP_PRICE" placeholder="" value="" style="text-align: right;">		
 				 		</div>
 				 		<div class="d-flex align-items-center">
-                   				&nbsp;원&nbsp;
+							&nbsp;원&nbsp;
                    		</div>
 				 	</div>	
 				</td>
@@ -285,15 +285,12 @@
 		</div>
 	</form>
 </div>	
-		
 <!-- include summernote css/js -->
 <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.15/dist/summernote.min.js"></script>
 
 <script>
-
-
 	/* 썸머노트 부분 */
-	 $(document).ready(function() {
+	$(document).ready(function() {
 		$('#summernote1').summernote({
 			width: 670,
 			height: 300,
@@ -310,24 +307,24 @@
 			  var form_data = new FormData();
 			  form_data.append('file', file);
 			  $.ajax({
-				 data:form_data,
-				 type:"POST",
-				 url:'./summernote.ma',
-				 cache: false,
-				 contentType: false,
-				 enctype: 'multitype/form-data',
-				 processData: false,
-				 success: function(url) {
-					 console.log("Success");
-					 console.log(url);
-					 $('#summernote1').summernote('editor.insertImage', url);
-					 
-				 },
-			 	 error: function() {
-					 console.log("Fail");
-			 	 }
-			  });
-		  }
+				data:form_data,
+				type:"POST",
+				url:'./summernote.ma',
+				cache: false,
+				contentType: false,
+				enctype: 'multitype/form-data',
+				processData: false,
+				success: function(url) {
+					console.log("Success");
+					console.log(url);
+					$('#summernote1').summernote('editor.insertImage', url);
+				 
+				},
+				error: function() {
+					console.log("Fail");
+				}
+			});
+		}
 	});
 
 	$(document).ready(function() {

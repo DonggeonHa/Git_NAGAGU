@@ -65,9 +65,6 @@
 	int bannerImgCount = StringUtils.countOccurrencesOf(vo.getPRODUCT_BANNER(), ",");
 	System.out.println('1');
 	
-	
-	
-
 	System.out.println('3');
 
 /* 	
@@ -94,931 +91,916 @@
 
 
 
-	<style>
-		@charset "UTF-8";
-		
-		img {
-		   max-width: 100%;
-		   height: auto;
-		}
-		
-		table {
-		   font-size: 0.98em;
-		}
-		
-		.nav_tab {
-		   background-color: #FEE100;
-		}
-		
-		/*안 먹힘*/
-		@media screen and (max-width: 375px) { 
-		   .nav-item {
-		      font-size:0.5em !important;
-		   }
-		   
-		}
-		
-		.name {
-		   font-weight: bold;
-		}
-		
-		.smallfont {
-		   font-size: 0.7em;
-		}
-		
-		a {
-		   color: gray;
-		   text-decoration: none;
-		}
-		
-		
-		.row_ship_info {
-		   padding:3px;
-		}      
-		
-		@font-face {
-		   font-family: 'KOMACON';
-		   src:
-		      url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_seven@1.2/KOMACON.woff')
-		      format('woff');
-		   font-weight: normal;
-		   font-style: normal;
-		}
-		
-		.Precautions dl dd {
-		   font-size: 0.7rem;
-		}
-		
-		#subject {
-		   font-size: 1.0rem;
-		}
-		
-		.class-detail-container {
-		   margin-top: 100px;
-		   margin-bottom: 100px;
-		}
-		
-		.hr-class {
-		   width: 100%;
-		   color: #f6f6f6;
-		   margin-top: 100px;
-		   margin-bottom: 100px;
-		}
-		
-		.order-body {
-		   font-family: '만화진흥원체', 'KOMACON', KOMACON;
-		}
-		
-		.sticky {
-		   padding-top: 5%;
-		   z-index:2;
-		   position: -webkit-sticky;
-		   position: sticky;
-		   background-color: #FFFFFF;
-		   top: 0;
-		}
-		
-		.sticky2 {
-		   z-index:2;
-		   position: -webkit-sticky;
-		   position: sticky;
-		   background-color: #FFFFFF;
-		   top: 20px;
-		}
-		
-		.nav-item .nav-link {
-		   color: #9d9d9d;
-		}
-		
-		.comments_table {
-		   font-size: 1rem;
-		}
-		
-		@media ( max-width : 700px) {
-		   .comments_table {
-		      font-size: 0.7rem;
-		   }
-		}
-		
-		div.col-2 img {
-		   width: 100%;
-		   height: 100%;
-		}
-		
+<style>
+	@charset "UTF-8";
+	
+	img {
+	   max-width: 100%;
+	   height: auto;
+	}
+	
+	table {
+	   font-size: 0.98em;
+	}
+	
+	.nav_tab {
+	   background-color: #FEE100;
+	}
+	
+	/*안 먹힘*/
+	@media screen and (max-width: 375px) { 
+	   .nav-item {
+	      font-size:0.5em !important;
+	   }
+	   
+	}
+	
+	.name {
+	   font-weight: bold;
+	}
+	
+	.smallfont {
+	   font-size: 0.7em;
+	}
+	
+	a {
+	   color: gray;
+	   text-decoration: none;
+	}
+	
+	.row_ship_info {
+	   padding:3px;
+	}      
+	
+	.Precautions dl dd {
+	   font-size: 0.7rem;
+	}
+	
+	#subject {
+	   font-size: 1.0rem;
+	}
+	
+	.class-detail-container {
+	   margin-top: 100px;
+	   margin-bottom: 100px;
+	}
+	
+	.hr-class {
+	   width: 100%;
+	   color: #f6f6f6;
+	   margin-top: 100px;
+	   margin-bottom: 100px;
+	}
+	
+	.sticky {
+	   padding-top: 5%;
+	   z-index:2;
+	   position: -webkit-sticky;
+	   position: sticky;
+	   background-color: #FFFFFF;
+	   top: 0;
+	}
+	
+	.sticky2 {
+	   z-index:2;
+	   position: -webkit-sticky;
+	   position: sticky;
+	   background-color: #FFFFFF;
+	   top: 20px;
+	}
+	
+	.nav-item .nav-link {
+	   color: #9d9d9d;
+	}
+	
+	.comments_table {
+	   font-size: 1rem;
+	}
+	
+	@media ( max-width : 700px) {
+	   .comments_table {
+	      font-size: 0.7rem;
+	   }
+	}
+	
+	div.col-2 img {
+	   width: 100%;
+	   height: 100%;
+	}
+	
 
-		hr {
-		   background-color: #EF902E;
-		}
-		
-		/*별점주기*/
-		.star-rating { 
-			width:52px; 
-		}
-		.star-rating,.star-rating span { 
-			display:inline-block; height:10px; overflow:hidden; background:url('${pageContext.request.contextPath}/resources/images/star_2.png') no-repeat; 
-		}
-		.star-rating span{ 
-			background-position:left bottom; line-height:0; vertical-align:top; 
-		}   		
-		
-		/*리뷰 이미지 호버*/   
-		.img {
-			width:100px;
-		}
-		.review_img_modify {
-			width:100px;
-			height:100px;         
-		}      
-		.addlike {
-			background-color:#23272B !important;
-			color:white !important; 
-		}
-		.row h6{
-			margin-left:30px; 
-		}
-		.row h6 a,.row h6 a:link,.row h6 a:hover{
-			text-decoration: none !important;
-			color: black !important;
-		}		
-		/*input type=file css*/
-		.file_input label {
-			position:relative;
-			cursor:pointer;
-			display:inline-block;
-			vertical-align:middle;
-			overflow:hidden;
-			width:80px;
-			height:30px;
-			background:RGBA(204, 204, 204, 0.5);
-			color:black;
-			text-align:center;
-			line-height:30px;
-			margin-bottom:0;
-			font-size:0.8rem;
-			padding:1px 1px;
-			border-radius:3px;
-		}
-		.file_input label input {
-			position:absolute;
-			width:0;
-			height:0;
-			overflow:hidden;
-		}
-		.file_input input[type=text] {
-			vertical-align:middle;
-			display:inline-block;
-			width:400px;
-			height:28px;
-			line-height:28px;
-			font-size:11px;
-			padding:0;
-			border:0;
-		}
+	hr {
+	   background-color: #EF902E;
+	}
+	
+	/*별점주기*/
+	.star-rating { 
+		width:52px; 
+	}
+	.star-rating,.star-rating span { 
+		display:inline-block; height:10px; overflow:hidden; background:url('${pageContext.request.contextPath}/resources/images/star_2.png') no-repeat; 
+	}
+	.star-rating span{ 
+		background-position:left bottom; line-height:0; vertical-align:top; 
+	}   		
+	
+	/*리뷰 이미지 호버*/   
+	.img {
+		width:100px;
+	}
+	.review_img_modify {
+		width:100px;
+		height:100px;         
+	}      
+	.addlike {
+		background-color:#23272B !important;
+		color:white !important; 
+	}
+	.row h6{
+		margin-left:30px; 
+	}
+	.row h6 a,.row h6 a:link,.row h6 a:hover{
+		text-decoration: none !important;
+		color: black !important;
+	}		
+	/*input type=file css*/
+	.file_input label {
+		position:relative;
+		cursor:pointer;
+		display:inline-block;
+		vertical-align:middle;
+		overflow:hidden;
+		width:80px;
+		height:30px;
+		background:RGBA(204, 204, 204, 0.5);
+		color:black;
+		text-align:center;
+		line-height:30px;
+		margin-bottom:0;
+		font-size:0.8rem;
+		padding:1px 1px;
+		border-radius:3px;
+	}
+	.file_input label input {
+		position:absolute;
+		width:0;
+		height:0;
+		overflow:hidden;
+	}
+	.file_input input[type=text] {
+		vertical-align:middle;
+		display:inline-block;
+		width:400px;
+		height:28px;
+		line-height:28px;
+		font-size:11px;
+		padding:0;
+		border:0;
+	}
 
-		/*댓글 폼 영역*/
-		#ReviewformSection {
-			display:none ;
-			padding:8px 0; 
-			border-bottom:1px solid gray;		
-		}
-		/*ReviewAndReplySum : 리뷰(하나)+리뷰 답글(여러개)이 묶여서 반복되는 영역 - bottom에 회색 구분선*/
-		.ReviewAndReplySum {
-			border-bottom:1px solid RGBA(128, 128, 128, 0.5);	
-			padding-bottom:8px;	
-		}
-
-		
-		.imgs_wrap {
-			display:none;
-		}
-
-		.review_img {
-			width:100px;
-			height:100px;
-		}
-
-		.replytext {	
-			font-size:0.7em; font-weight:bold;	/*답글 버튼*/
-		}
-		
-		.ReviewList {
-			padding-top:8px; 
-			padding-bottom:8px;
-		}		
-		
-		
-
-		/*REVIEW*/
-		#REVIEW_GRADE{
-			width=15px;			/*리뷰 입력폼에서 별점 선택창*/
-		}
-		.insertReview {
-			cursor: pointer;	/*리뷰 입력폼에서 작성버튼*/
-		}
-		.formCancel {
-			cursor: pointer;	/*Review, ReviewReply 입력취소, 수정 취소버튼*/
-		}		
-		
-
-		/*REVIEW_REPLY*/
-
-		.review_replybtn {
-			cursor: pointer;	/*리뷰 리스트에서 답글달기 폼 버튼*/
-		}
-		.gomodifyReviewform {
-			cursor: pointer;	/*리뷰 수정버튼*/
-		}
-		.deleteReview {
-			cursor: pointer;	/*Review, ReviewReply 삭제*/
-		}		
-		
-		
-		.ReviewbeforeControl {
-			font-size:0.7em; 
-			font-weight:bold;
-		}
-		.ReviewafterControl {
-			display:none;	
-			font-size:0.7em; 
-			font-weight:bold;	
-		}
-
-		
-		.ReviewReplyformSection {
-			padding:8px 0;		/*?*/
-		}
-		.afterModifyReviewReply {
-			display:none;		/*리뷰 답글 작성폼*/	
-		}
-				
-		.insertReviewReply {
-			cursor: pointer;	/*리뷰답글 작성*/
-		}
-		.gomodifyReviewReplyform {
-			cursor: pointer;	/*ReviewReply 수정폼 버튼*/
-		}
-
-		.modifyReviewReply {
-			cursor: pointer;	/*ReviewReply 수정버튼*/
-		}
-
-
-
+	/*댓글 폼 영역*/
+	#ReviewformSection {
+		display:none ;
+		padding:8px 0; 
+		border-bottom:1px solid gray;		
+	}
+	/*ReviewAndReplySum : 리뷰(하나)+리뷰 답글(여러개)이 묶여서 반복되는 영역 - bottom에 회색 구분선*/
+	.ReviewAndReplySum {
+		border-bottom:1px solid RGBA(128, 128, 128, 0.5);	
+		padding-bottom:8px;	
+	}
 
 	
-		/* 상품 이미지 관련*/
-		.thumbMain {
-			width: 510px;
-			height: 510px;
-			overflow: hidden;
-			display: block;
-			margin-right: 10px;
-		}
-		
-		.thumbMain img {
-			display: block;
-			min-height: 100%;
-			min-width: 100%;
-			-ms-interpolation-mode: bicubic;
-		}
-		
-		.thumbItem {
-			width: 95px;
-			height: 95px;
-			overflow: hidden;
-			display: block;
-			margin: 6px;
-		}
-		
-		.thumbCheck {
-			border: 2px solid #ef902e;
-			border-radius: 4px;
-		}
-		
-		.thumbItem img {
-			display: block;
-			min-height: 100%;
-			min-width: 100%;
-			-ms-interpolation-mode: bicubic;
-			transition: transform 0.2s;
-		}
-		
-		.thumbItem img:hover {
-			transform: scale(1.05);
-			cursor: pointer;
-		}
+	.imgs_wrap {
+		display:none;
+	}
 
+	.review_img {
+		width:100px;
+		height:100px;
+	}
 
+	.replytext {	
+		font-size:0.7em; font-weight:bold;	/*답글 버튼*/
+	}
+	
+	.ReviewList {
+		padding-top:8px; 
+		padding-bottom:8px;
+	}		
+	
+	
 
+	/*REVIEW*/
+	#REVIEW_GRADE{
+		width=15px;			/*리뷰 입력폼에서 별점 선택창*/
+	}
+	.insertReview {
+		cursor: pointer;	/*리뷰 입력폼에서 작성버튼*/
+	}
+	.formCancel {
+		cursor: pointer;	/*Review, ReviewReply 입력취소, 수정 취소버튼*/
+	}		
+	
 
-	/*qna*/
-		#QnaformSection {
-			display:none ;
-			padding:8px 0; 
-			border-bottom:1px solid gray;		
-		}
-		/*QnaAndReplySum : 리뷰(하나)+리뷰 답글(여러개)이 묶여서 반복되는 영역 - bottom에 회색 구분선*/
-		.QnaAndReplySum {
-			border-bottom:1px solid RGBA(128, 128, 128, 0.5);	
-			padding-bottom:8px;	
-		}		
-		.QnaList {
-			padding-top:8px; 
-			padding-bottom:8px;
-		}	
-		.insertQna {
-			cursor: pointer;	/*리뷰 입력폼에서 작성버튼*/
-		}	
-		.qna_replybtn {
-			cursor: pointer;	/*리뷰 리스트에서 답글달기 폼 버튼*/
-		}
-		.gomodifyQnaform {
-			cursor: pointer;	/*리뷰 수정버튼*/
-		}
-		.deleteQna {
-			cursor: pointer;	/*Qna, QnaReply 삭제*/
-		}			
-		.QnaReplyformSection {
-			padding:8px 0;		/*?*/
-		}
-		.afterModifyQnaReply {
-			display:none;		/*리뷰 답글 작성폼*/	
-		}
-				
-		.insertQnaReply {
-			cursor: pointer;	/*리뷰답글 작성*/
-		}
-		.gomodifyQnaReplyform {
-			cursor: pointer;	/*QnaReply 수정폼 버튼*/
-		}	
-		.modifyQnaReply {
-			cursor: pointer;	/*QnaReply 수정버튼*/
-		}	
+	/*REVIEW_REPLY*/
+
+	.review_replybtn {
+		cursor: pointer;	/*리뷰 리스트에서 답글달기 폼 버튼*/
+	}
+	.gomodifyReviewform {
+		cursor: pointer;	/*리뷰 수정버튼*/
+	}
+	.deleteReview {
+		cursor: pointer;	/*Review, ReviewReply 삭제*/
+	}		
+	
+	
+	.ReviewbeforeControl {
+		font-size:0.7em; 
+		font-weight:bold;
+	}
+	.ReviewafterControl {
+		display:none;	
+		font-size:0.7em; 
+		font-weight:bold;	
+	}
+
+	
+	.ReviewReplyformSection {
+		padding:8px 0;		/*?*/
+	}
+	.afterModifyReviewReply {
+		display:none;		/*리뷰 답글 작성폼*/	
+	}
 			
-		.QnabeforeControl {
-			font-size:0.7em; 
-			font-weight:bold;
-		}
-		.QnaafterControl {
-			display:none;	
-			font-size:0.7em; 
-			font-weight:bold;	
-		}	
-				
-	</style>
+	.insertReviewReply {
+		cursor: pointer;	/*리뷰답글 작성*/
+	}
+	.gomodifyReviewReplyform {
+		cursor: pointer;	/*ReviewReply 수정폼 버튼*/
+	}
+
+	.modifyReviewReply {
+		cursor: pointer;	/*ReviewReply 수정버튼*/
+	}
 
 
 
 
-		<div class="container class-detail-container category_st">
-			<div class="row justify-content-between title">
-				<h6>
-					<a href="productlist.pro?PRODUCT_CATEGORY=all">STORE</a> > 상세보기
-				</h6>
-			</div>
-			<div class="row" style="padding-bottom: 5%;">
-				<div class="col-7">
-					<div class="row justify-content-center pt-4">
-						<div class="thumbList">
-							<%
-								for (int i = 0; i < imgArr.length; i++) {
-							%>
-							<div class="thumbItem<%if (i == 0) {%> thumbCheck <%}%>" thumb-idx=<%=i%>>
+
+	/* 상품 이미지 관련*/
+	.thumbMain {
+		width: 510px;
+		height: 510px;
+		overflow: hidden;
+		display: block;
+		margin-right: 10px;
+	}
+	
+	.thumbMain img {
+		display: block;
+		min-height: 100%;
+		min-width: 100%;
+		-ms-interpolation-mode: bicubic;
+	}
+	
+	.thumbItem {
+		width: 95px;
+		height: 95px;
+		overflow: hidden;
+		display: block;
+		margin: 6px;
+	}
+	
+	.thumbCheck {
+		border: 2px solid #ef902e;
+		border-radius: 4px;
+	}
+	
+	.thumbItem img {
+		display: block;
+		min-height: 100%;
+		min-width: 100%;
+		-ms-interpolation-mode: bicubic;
+		transition: transform 0.2s;
+	}
+	
+	.thumbItem img:hover {
+		transform: scale(1.05);
+		cursor: pointer;
+	}
+
+
+
+
+/*qna*/
+	#QnaformSection {
+		display:none ;
+		padding:8px 0; 
+		border-bottom:1px solid gray;		
+	}
+	/*QnaAndReplySum : 리뷰(하나)+리뷰 답글(여러개)이 묶여서 반복되는 영역 - bottom에 회색 구분선*/
+	.QnaAndReplySum {
+		border-bottom:1px solid RGBA(128, 128, 128, 0.5);	
+		padding-bottom:8px;	
+	}		
+	.QnaList {
+		padding-top:8px; 
+		padding-bottom:8px;
+	}	
+	.insertQna {
+		cursor: pointer;	/*리뷰 입력폼에서 작성버튼*/
+	}	
+	.qna_replybtn {
+		cursor: pointer;	/*리뷰 리스트에서 답글달기 폼 버튼*/
+	}
+	.gomodifyQnaform {
+		cursor: pointer;	/*리뷰 수정버튼*/
+	}
+	.deleteQna {
+		cursor: pointer;	/*Qna, QnaReply 삭제*/
+	}			
+	.QnaReplyformSection {
+		padding:8px 0;		/*?*/
+	}
+	.afterModifyQnaReply {
+		display:none;		/*리뷰 답글 작성폼*/	
+	}
+			
+	.insertQnaReply {
+		cursor: pointer;	/*리뷰답글 작성*/
+	}
+	.gomodifyQnaReplyform {
+		cursor: pointer;	/*QnaReply 수정폼 버튼*/
+	}	
+	.modifyQnaReply {
+		cursor: pointer;	/*QnaReply 수정버튼*/
+	}	
+		
+	.QnabeforeControl {
+		font-size:0.7em; 
+		font-weight:bold;
+	}
+	.QnaafterControl {
+		display:none;	
+		font-size:0.7em; 
+		font-weight:bold;	
+	}		
+</style>
+
+<div class="container class-detail-container category_st">
+	<div class="row justify-content-between title">
+		<h6>
+			<a href="productlist.pro?PRODUCT_CATEGORY=all">STORE</a> > 상세보기
+		</h6>
+	</div>
+	<div class="row" style="padding-bottom: 5%;">
+		<div class="col-7">
+			<div class="row justify-content-center pt-4">
+				<div class="thumbList">
+					<%
+						for (int i = 0; i < imgArr.length; i++) {
+					%>
+							<div class="thumbItem<% if (i == 0) { %> thumbCheck <% } %>" thumb-idx="<%=i%>">
 								<img src=<%=imgArr[i]%>>
 							</div>
-							<%
-								}
-							%>
-						</div>
-						<div class="thumbMain">
-							<a href=<%=imgArr[0]%> target="_blank"><img
-								src=<%=imgArr[0]%>></a>
-						</div>
-					</div>
+					<%
+						}
+					%>
 				</div>
-				<div class="col-5">
-					<form name="goodsform" action="#" method="post" id="goodsform">
-						<div class="row pt-4 pl-4">
-							<div class="col-3">
-								<img
-									src="${pageContext.request.contextPath}/resources/images/Community/peko.png"
-									width="95%">
-							</div>
-							<hr>
-							<div class="col-9">
-								<h3 name="PRODUCT_SHOPNAME"><%=vo.getPRODUCT_SHOPNAME()%></h3>
-								<p name="PRODUCT_TITLE">
-									<font size="2"><%=vo.getPRODUCT_BRIEF()%></font>
-								</p>
-							</div>
-						</div>
-						<div>
-							<table class="table table-borderless">
-								<thead>
-									<tr>
-										<th scope="col">가격</th>
-										<th scope="col" class="PRODUCT_PRICE" value="<%=vo.getPRODUCT_PRICE()%>" name="PRODUCT_PRICE"><%=vo.getPRODUCT_PRICE()%>원</th>
-									</tr>
-								</thead>
-								<tbody>
-									<tr>
-										<th scope="row">배송비</th>
-										<td class="PRODUCT_SHIP_PRICE" value="<%=vo.getPRODUCT_SHIP_PRICE()%>" name="PRODUCT_SHIP_PRICE"><%=vo.getPRODUCT_SHIP_PRICE()%></td>
-									</tr>
-									<tr>
-										<th scope="row">배송 기간</th>
-										<td name="PRODUCT_SHIP_DAYS"><%=vo.getPRODUCT_SHIP_DAYS()%>일</td>
-									</tr>
-									<tr>
-										<th scope="row">색상선택</th>
-										<td><select name="BASKET_COLOR" size="1"
-											class="form-control BASKET_COLOR">
-												<option value="">선택</option>
-												<c:forTokens var="color" items="<%=PRODUCT_COLOR %>"
-													delims=",">
-													<option value="${fn:trim(color)}">${fn:trim(color)}</option>
-												</c:forTokens>
-										</select></td>
-									</tr>
-									<tr>
-										<th scope="row">사이즈선택</th>
-										<td><select name="BASKET_SIZE" size="1"
-											class="form-control BASKET_SIZE">
-												<option value="">선택</option>
-												<c:forTokens var="size" items="<%=PRODUCT_SIZE %>" delims=",">
-													<option value="${fn:trim(size)}">${fn:trim(size)}</option>
-												</c:forTokens>
-										</select></td>
-									</tr>
-									<tr>
-										<th scope="row">수량</th>
-										<td>
-											<div>
-												<select name="BASKET_AMOUNT" size="1" class="form-control BASKET_AMOUNT">
-													<option value="1">1</option>
-													<option value="2">2</option>
-													<option value="3">3</option>
-													<option value="4">4</option>
-													<option value="5">5</option>
-												</select>
-											</div>
-										</td>
-									</tr>
-									<tr>
-										<th scope="row">총 합계금액</th>
-										<td class="total">12</td>
-									</tr>
-									<tr>
-										<td colspan="2">
-											<div class="d-flex justify-content-between">
-												<% 
-														if(WORKSHOP_CEO_NAME == null && MEMBER_EMAIL == null) { 
-													%>
-												<%-- 비로그인일 때 --%>
-												<div>
-													<button type="button" class="btn btn-outline-dark btn-lg"
-														data-toggle="modal" data-target="#exampleModalCenter">
-														<input type="hidden" name="PRODUCT_NUM"
-															value="<%=PRODUCT_NUM %>">♥
-													</button>
-												</div>
-												<div style="width: 45%;">
-													<button type="button"
-														class="btn btn-outline-dark btn-lg btn-block"
-														data-toggle="modal" data-target="#exampleModalCenter">장바구니</button>
-												</div>
-												<div style="width: 45%;">
-													<button type="button"
-														class="btn btn-outline-dark btn-lg btn-block"
-														data-toggle="modal" data-target="#exampleModalCenter">바로구매</button>
-												</div>
-												<% 
-														} else if(WORKSHOP_CEO_NAME != null) { 
-													%>
-												<%-- 공방 로그인일 때(하트 안 보임) --%>
-												<div style="width: 50%;">
-													<a href="classreservation.ac"
-														class="btn btn-outline-dark btn-lg btn-block disabled"
-														role="button" aria-pressed="true">장바구니</a>
-												</div>
-												<div style="width: 50%;">
-													<a href="#"
-														class="btn btn-outline-dark btn-lg btn-block disabled"
-														role="button" aria-pressed="true">바로구매</a>
-												</div>
-												<% 
-														} else { 
-													%>
-												<%-- 일반회원일때 --%>
-												<div>
-													<a href="#" class="btn btn-outline-dark btn-lg LikeAjax"
-														role="button" aria-pressed="true"> <input
-														type="hidden" name="PRODUCT_NUM" value="<%=PRODUCT_NUM %>">♥
-													</a>
-												</div>
-												<div style="width: 45%;">
-													<a href="#" class="btn btn-outline-dark btn-lg btn-block basket_btn"
-														role="button" aria-pressed="true" id="basket_btn">장바구니</a>
-												</div>
-												<div style="width: 45%;">
-													<a href="#" class="btn btn-outline-dark btn-lg btn-block order_btn"
-														role="button" aria-pressed="true" id="order_btn">바로구매</a>
-												</div>
-												<% 
-														} 
-													%>
-											</div>
-										</td>
-									</tr>
-								</tbody>
-							</table>
-						</div>
-						<div class="btnArea text-center"></div>
-						<br />
-					</form>
+				<div class="thumbMain">
+					<a href=<%=imgArr[0]%> target="_blank">
+						<img src=<%=imgArr[0]%>>
+					</a>
 				</div>
 			</div>
-			<div class="row" style="padding: 15px 15px;">
-				<div class="col-8">
-					<div style="line-height: 0.5em;" id="t1">
-						<dl>
-							<dt><h3><%=vo.getPRODUCT_TITLE() %></h3><br></dt>
-							<dl><h5><%=vo.getPRODUCT_BRIEF() %></h5></dl>
-						</dl>
+		</div>
+		<div class="col-5">
+			<form name="goodsform" action="#" method="post" id="goodsform">
+				<div class="row pt-4 pl-4">
+					<div class="col-3">
+						<img src="${pageContext.request.contextPath}/resources/images/Community/peko.png" width="95%">
 					</div>
-					<div class="row sticky">
-						<div class="col-12">
-							<ul class="nav nav-tabs nav-fill h-30">
-							   <li class="nav-item">
-							      <a class="nav-link" href="#t1"><h5>상품정보</h5></a>
-							   </li>
-							   <li class="nav-item">
-							      <a class="nav-link" href="#t2"><h5>리뷰</h5></a>
-							   </li>
-							   <li class="nav-item">
-							      <a class="nav-link" href="#t3"><h5>Q&A</h5></a>
-							   </li>
-							   <li class="nav-item">
-							      <a class="nav-link" href="#t4"><h5>배송/환불</h5></a>
-							   </li>
-							</ul>
-						</div>
-					</div>
-					<div class="row justify-content-center">
-					<% if (vo.getPRODUCT_INFO() != null) { %>
-						<%=vo.getPRODUCT_INFO() %>
-						<br /><br />
-					<% } else { %>
-						<!-- vo.getPRODUCT_INFO() = 없는 경우-->
-						<table width="50%" border="0" cellpadding="0" cellspacing="0" align="center" valign="middle">
-							<tr align="center" valign="middle">
-								<td align="right"><font size=2>상세 정보가 없습니다.</font></td>
-							</tr>
-						</table>
-					<% } %>
-					</div>
-					<!-- 상세 사진정보 끝 -->
-					
-					<span id="t2"></span>
-					<br /><br /><hr />
-		           
-					<!-- 리뷰 테이블 시작 -->
-					<h3 id="review_scroll" >Review</h3>
-					<br /><br />
-					
-					<div id="ReviewSection">
-						<div id="ReviewButtonSection">	
-							<div class="row justify-content-center pt-3 pb-3"> <!-- 리뷰 댓글달기 버튼 -->
-								<button class="btn btn-dark btn-sm review_btn">댓글 달기</button>
-							</div>
-						</div>
-						<div id="ReviewWrapSection" class="pb-1">
-							<div id="ReviewformSection" class="pb-2">
-								<form id="ReviewForm" name="REVIEW_CONTENT" enctype="multipart/form-data"> <!-- 리뷰 작성 폼 영역 : 하나 -->
-									<input type="hidden" name="MEMBER_NUM" value="MEMBER_NUM">
-									<input type="hidden" name="PRODUCT_NUM" value="<%=PRODUCT_NUM %>">
-									<div class="row justify-content-center">
-										<div class="col-1 justify-content-end">
-											<img src="<%=MEMBER_PICTURE%>" alt="" class="rounded-circle">
-										</div>
-										<div class="col-11">
-											<div class="row pb-1">
-												<div class="col-2 justify-content-end name"><%=MEMBER_NICK%> </div>
-												<div class="col-8 justify-content-center"></div>
-												<div class="col-2 justify-content-center smallfont"></div>
-											</div>
-											<div class="row pb-1"> <!-- 평점 -->
-												<div class="col-3 pr-0">
-													<img src="${pageContext.request.contextPath}/resources/images/star1.png" alt="" width="15px" height="15px" >
-													&nbsp;
-													<select name="REVIEW_GRADE" id="REVIEW_GRADE" style="">
-														<option value="0">0</option>
-														<option value="0.5">0.5</option>
-														<option value="1">1.0</option>
-														<option value="1.5">1.5</option>
-														<option value="2">2.0</option>
-														<option value="2.5">2.5</option>
-														<option value="3">3.0</option>
-														<option value="3.5">3.5</option>
-														<option value="4">4.0</option>
-														<option value="4.5">4.5</option>
-														<option value="5">5.0</option>
-													</select>											
-												</div>
-												<div class="9"></div>
-											</div>
-											
-											<div class="row pb-2"> <!-- 파일 -->
-												<div class="col-12">
-													<div class="file_input">
-													    <label>
-													        사진 업로드
-													        <input type="file" multiple="multiple" name="REVIEW_FILE" id="input_imgs">
-													    </label>
-													    <input type="text" readonly="readonly" title="File Route" value="선택된 파일이 없습니다">
-													</div>			
-												</div>
-											</div>
-											<div class="row pb-2">
-												<div class="col-12 imgs_wrap">
-													<img id="inputimg" >
-												</div>
-											</div>
-											<div class="row pb-1">	<!-- 내용 textarea -->
-												<div class="col-11 pr-0">
-													<textarea rows="3" name="REVIEW_CONTENT" class="col-12 pl-0 pr-0" 
-														id=""></textarea>
-												</div>	
-											</div>
-											<div class="row"> <!-- 수정, 삭제 -->
-												<div class="col-2 justify-content-center"></div>
-												<div class="col-8 justify-content-center"></div>
-												<div class="col-2 justify-content-center" style="font-size:0.7em; font-weight:bold;">
-													<a class="insertReview">작성</a> &nbsp;
-													<a class="formCancel" value="ReviewForm">취소</a>
-												</div>
-											</div>
-										</div>
-									</div>
-								</form>		
-							</div>
-							<div id="ReviewtableSection" class="pb-2">
-							
-								
-							</div>
-						</div>
-					</div>
-	
-	                  
-					<!-- 리뷰 페이지네이션 -->
-					<br/>
-					
-					
-					<br />
-					<!-- 리뷰 페이지네이션 끝 -->
-		
-		
-			
-					<span id="t3"></span>
-					<br /><br /><hr />
-					
-					<!-- Q&A 테이블 시작 -->
-					<h3 id="qna_scroll">Q&A</h3>
-					<br /><br />
-		
-	            
-					<div id="QnaSection">
-						<div id="QnaButtonSection">	
-							<div class="row justify-content-center pt-3 pb-3"> <!-- 리뷰 댓글달기 버튼 -->
-								<button class="btn btn-dark btn-sm qna_btn">문의하기</button>
-							</div>
-						</div>
-						<div id="QnaWrapSection" class="pb-1">
-							<div id="QnaformSection" class="pb-2">
-								<form id="QnaForm" name="QNA_CONTENT"> <!-- 리뷰 작성 폼 영역 : 하나 -->
-									<input type="hidden" name="MEMBER_NUM" value="MEMBER_NUM">
-									<input type="hidden" name="PRODUCT_NUM" value="<%=PRODUCT_NUM %>">
-									<div class="row justify-content-center">
-										<div class="col-1 justify-content-end">
-											<img src="<%=MEMBER_PICTURE%>" alt="" class="rounded-circle">
-										</div>
-										<div class="col-11">
-											<div class="row pb-1">
-												<div class="col-2 justify-content-end name"><%=MEMBER_NICK%> </div>
-												<div class="col-8 justify-content-center"></div>
-												<div class="col-2 justify-content-center smallfont"></div>
-											</div>
-											<div class="row pb-1">	<!-- 내용 textarea -->
-												<div class="col-11 pr-0">
-													<textarea rows="3" name="QNA_CONTENT" class="col-12 pl-0 pr-0" 
-														id=""></textarea>
-												</div>	
-											</div>
-											<div class="row"> <!-- 수정, 삭제 -->
-												<div class="col-2 justify-content-center"></div>
-												<div class="col-8 justify-content-center"></div>
-												<div class="col-2 justify-content-center" style="font-size:0.7em; font-weight:bold;">
-													<a class="insertQna">작성</a> &nbsp;
-													<a class="formCancel" value="QnaForm">취소</a>
-												</div>
-											</div>
-										</div>
-									</div>
-								</form>		
-							</div>
-							<div id="QnatableSection" class="pb-2">
-							
-								
-							</div>
-						</div>
-					</div>
-				
-				
-					<!-- Q&A pagenation -->
-					<br/>
-					
-					
-					<br />
-					<!-- Q&A pagenation 끝 -->			
-				
-				
-				
-				
-				
-					<!-- Q&A 테이블 끝 -->
-					
-					<br /><br /><hr />
-		
-		      
-		            <!-- 배송 및 환불 시작 -->
-		      
-		            <h3 id="t4">배송 및 환불</h3>
-		            <br /><br />
-					<div class="ship_info" style="width: 100%; margin: 0 auto; font-size: 0.9em; color: #212529;">
-						<div class="row_ship_info">
-					    	<h5>배송정보</h5>
-							모든 제품은 메이킹퍼니처 직원이 직접 배송하며 배송비는 고객 부담입니다. 지역, 제품 수량 또는 설치 여부에 따라 주문 시
-							배송비를 미리 안내해드립니다. 기본 배송비 외에 사다리차, 엘레베이터, 주차비 사용료 등 추가 비용이 발생 시 고객님
-							부담입니다.
-							<%=vo.getPRODUCT_SHIP_INFO() %>
-						</div>
-						<div class="row_ship_info">
-							<h5>배송정보</h5>
-							모든 제품은 메이킹퍼니처 직원이 직접 배송하며 배송비는 고객 부담입니다. 지역, 제품 수량 또는 설치 여부에 따라 주문 시
-							배송비를 미리 안내해드립니다. 기본 배송비 외에 사다리차, 엘레베이터, 주차비 사용료 등 추가 비용이 발생 시 고객님
-							부담입니다.
-							반품 배송지 : <%=vo.getPRODUCT_SHIP_RETURN_PLACE() %>
-						</div>
-						<br />
-						
-						<div class="row_ship_info">
-							<h5>A/S</h5>
-							핸드메이드 제품으로 나뭇결, 무늬, 옹이의 형태나 파임, 칠과 색상이 다를 수 있고 약간의 흠집이나 찍힘(표면의 크랙 또는
-							뜯김)이 있을 수 있으며, 100% 원목으로 기후변화에 따른 수축, 팽창으로 인한 휘어짐(상판), 갈라짐(마구리면)이
-							발생할 수 있습니다. 이런 자연스러운 현상들은 교체 및 교환 대상이 아니며 무상 A/S 사유가 되지 않습니다. 구매 전 꼭
-							참고해주시기 바랍니다.
-							<%=vo.getPRODUCT_AS_INFO() %>
-						</div>
-						<br />
-						
-						<div class="row_ship_info">
-							<h5>Wood Furniture</h5>
-							원목가구의 수축 및 팽창은 원목만의 자연스러운 특징입니다.<br /> -지나치게 건조한 곳, 습한 곳은 피하세요. -가구의
-							수평을 유지해주세요.(수평이 안 맞게 되면 가구가 뒤틀려버립니다.) -가구에 화학약품(신나, 메니큐어 등)이 닿지 않게
-							해주세요. -평소에는 물걸레 청소하시면 됩니다. -뜨거운 냄비와 같은 고온의 뜨거운 물체에 직접 닿는 것은 피하시기
-							바랍니다. -한 달에 1~2번 가구용 왁스로 닦아주세요. -원목가구는 수축기와 팽창기(계절의 변화)에 따라 갈라짐이나
-							미세한 크랙이 발생할 수 있으며, 시간이 경과하면 원상회복이 될 수 있습니다. 이는 원목가구만의 자연스러운 현상이며 제품의
-							하자가 아닙니다.
-							<%=vo.getPRODUCT_STORE_INFO() %>
-						</div>
-						<br />
-						
-						<div class="row_ship_info">
-							<h5>A/S규정[1년 무상]</h5>
-							무상 A/S -보증기간 이내의 제품으로 정상적인 상태에서 제조상의 결함 제품 -원/부나내의 결함이 발생된 경우
-							-메이킹퍼니처의 귀책 사유로 인한 결함 발생 제품
-							<%=vo.getPRODUCT_RETURN_INFO() %>
-						</div>
-						<div class="row_ship_info">
-							유상 A/S -고객의 취급 부주의 및 고의적 훼손 경우 -고객 임의 개조에 의한 파손의 경우나 타 업체에서 수리해 변경된 경우 -유상 서비스 요금은 [수리비+부품비+출장비+기타실 비용] 등이 포함됩니다.
-						</div>
+					<hr>
+					<div class="col-9">
+						<h3 name="PRODUCT_SHOPNAME"><%=vo.getPRODUCT_SHOPNAME()%></h3>
+						<p name="PRODUCT_TITLE">
+							<font size="2"><%=vo.getPRODUCT_BRIEF()%></font>
+						</p>
 					</div>
 				</div>
-				<div class="col-4">
-		        	<div class="sticky2" style="border: 1px solid #EAEAEA;">
-		            	<form name="goodsform" action="#" method="post" id="goodsform">
-		                	<div>
-		                    	<table class="table table-borderless">
-		                        	<tbody>
-			                            <tr>
-											<th scope="row">색상선택</th>
-											<td>
-												<select name="BASKET_COLOR" size="1" class="form-control BASKET_COLOR">
-													<option value="">선택</option>
-													<c:forTokens var="color" items="<%=PRODUCT_COLOR %>" delims=",">
-														<option value="${fn:trim(color)}">${fn:trim(color)}</option>
-													</c:forTokens>
-												</select>
-											</td>
-										</tr>
-										<tr>
-											<th scope="row">사이즈선택</th>
-											<td>
-												<select name="BASKET_SIZE" size="1" class="form-control BASKET_SIZE">
-													<option value="">선택</option>
-													<c:forTokens var="size" items="<%=PRODUCT_SIZE %>" delims=",">
-														<option value="${fn:trim(size)}">${fn:trim(size)}</option>
-													</c:forTokens>
-												</select>
-											</td>
-										</tr>
-										<tr>
-											<th scope="row">수량</th>
-											<td>
-												<div>
-													<select name="BASKET_AMOUNT" size="1" class="form-control BASKET_AMOUNT">
-														<option value="1">1</option>
-														<option value="2">2</option>
-														<option value="3">3</option>
-														<option value="4">4</option>
-														<option value="5">5</option>
-													</select>
-												</div>
-											</td>
-										</tr>
-										<tr><td></td></tr>
-										<tr><td></td></tr>
-										<tr><td></td></tr>
-										<tr><td></td></tr>
-										<tr><td></td></tr>
-										<tr><td></td></tr>
-										<tr><td></td></tr>
-										<tr><td></td></tr>
-										<tr><td></td></tr>
-										<tr><td></td></tr>
-										<tr><td></td></tr>
-									</tbody>
-								</table>
-		                  	</div>
-		                  	<div>
-		                  		<table class="table table-borderless">
-		                  			<tbody>
-		                  				<tr>
-											<th scope="row">총 합계금액</th>
-											<td class="total"></td>
-										</tr>
-		                  			</tbody>
-		                  		</table>
-		                  	</div>
-							<div class="d-flex justify-content-between d-flex align-items-end">
-								<% 
-									if(WORKSHOP_CEO_NAME == null && MEMBER_EMAIL == null) { 
-								%> <%-- 비로그인일 때 --%>
+				<div>
+					<table class="table table-borderless">
+						<thead>
+							<tr>
+								<th scope="col">가격</th>
+								<th scope="col" class="PRODUCT_PRICE" value="<%=vo.getPRODUCT_PRICE()%>" name="PRODUCT_PRICE"><%=vo.getPRODUCT_PRICE()%>원</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr>
+								<th scope="row">배송비</th>
+								<td class="PRODUCT_SHIP_PRICE" value="<%=vo.getPRODUCT_SHIP_PRICE()%>" name="PRODUCT_SHIP_PRICE"><%=vo.getPRODUCT_SHIP_PRICE()%></td>
+							</tr>
+							<tr>
+								<th scope="row">배송 기간</th>
+								<td name="PRODUCT_SHIP_DAYS"><%=vo.getPRODUCT_SHIP_DAYS()%>일</td>
+							</tr>
+							<tr>
+								<th scope="row">색상선택</th>
+								<td><select name="BASKET_COLOR" size="1"
+									class="form-control BASKET_COLOR">
+										<option value="">선택</option>
+										<c:forTokens var="color" items="<%=PRODUCT_COLOR %>"
+											delims=",">
+											<option value="${fn:trim(color)}">${fn:trim(color)}</option>
+										</c:forTokens>
+								</select></td>
+							</tr>
+							<tr>
+								<th scope="row">사이즈선택</th>
+								<td><select name="BASKET_SIZE" size="1"
+									class="form-control BASKET_SIZE">
+										<option value="">선택</option>
+										<c:forTokens var="size" items="<%=PRODUCT_SIZE %>" delims=",">
+											<option value="${fn:trim(size)}">${fn:trim(size)}</option>
+										</c:forTokens>
+								</select></td>
+							</tr>
+							<tr>
+								<th scope="row">수량</th>
+								<td>
 									<div>
-										<button type="button" class="btn btn-outline-dark btn-lg" data-toggle="modal" data-target="#exampleModalCenter">
-											<input type="hidden" name = "PRODUCT_NUM" value="<%=PRODUCT_NUM %>">♥
-										</button>
-									</div>	
-									<div style="width:45%;">
-										<button type="button" class="btn btn-outline-dark btn-lg btn-block" data-toggle="modal" data-target="#exampleModalCenter" >장바구니</button>
+										<select name="BASKET_AMOUNT" size="1" class="form-control BASKET_AMOUNT">
+											<option value="1">1</option>
+											<option value="2">2</option>
+											<option value="3">3</option>
+											<option value="4">4</option>
+											<option value="5">5</option>
+										</select>
 									</div>
-									<div style="width:45%;">
-										<button type="button" class="btn btn-outline-dark btn-lg btn-block" data-toggle="modal" data-target="#exampleModalCenter" >바로구매</button>
-									</div>
-								<% 
-									} else if(WORKSHOP_CEO_NAME != null) { 
-								%>	<%-- 공방 로그인일 때(하트 안 보임) --%>
-										<div style="width:50%;">
-											<a href="classreservation.ac" class="btn btn-outline-dark btn-lg btn-block disabled" role="button" aria-pressed="true">장바구니</a>
-										</div>
-										<div style="width:50%;">
-											<a href="#" class="btn btn-outline-dark btn-lg btn-block disabled" role="button" aria-pressed="true" >바로구매</a>
-										</div>
-								<% 
-									} else { 
-								%> <%-- 일반회원일때 --%>
+								</td>
+							</tr>
+							<tr>
+								<th scope="row">총 합계금액</th>
+								<td class="total">12</td>
+							</tr>
+							<tr>
+								<td colspan="2">
+									<div class="d-flex justify-content-between">
+										<% 
+												if(WORKSHOP_CEO_NAME == null && MEMBER_EMAIL == null) { 
+											%>
+										<%-- 비로그인일 때 --%>
 										<div>
-											<a href="#" class="btn btn-outline-dark btn-lg LikeAjax" role="button" aria-pressed="true">
-												<input type="hidden" name = "PRODUCT_NUM" value="<%=PRODUCT_NUM %>">♥
+											<button type="button" class="btn btn-outline-dark btn-lg"
+												data-toggle="modal" data-target="#exampleModalCenter">
+												<input type="hidden" name="PRODUCT_NUM"	value="<%=PRODUCT_NUM %>">♥
+											</button>
+										</div>
+										<div style="width: 45%;">
+											<button type="button"
+												class="btn btn-outline-dark btn-lg btn-block"
+												data-toggle="modal" data-target="#exampleModalCenter">장바구니</button>
+										</div>
+										<div style="width: 45%;">
+											<button type="button"
+												class="btn btn-outline-dark btn-lg btn-block"
+												data-toggle="modal" data-target="#exampleModalCenter">바로구매</button>
+										</div>
+										<% 
+												} else if(WORKSHOP_CEO_NAME != null) { 
+											%>
+										<%-- 공방 로그인일 때(하트 안 보임) --%>
+										<div style="width: 50%;">
+											<a href="classreservation.ac"
+												class="btn btn-outline-dark btn-lg btn-block disabled"
+												role="button" aria-pressed="true">장바구니</a>
+										</div>
+										<div style="width: 50%;">
+											<a href="#"
+												class="btn btn-outline-dark btn-lg btn-block disabled"
+												role="button" aria-pressed="true">바로구매</a>
+										</div>
+										<% 
+												} else { 
+											%>
+										<%-- 일반회원일때 --%>
+										<div>
+											<a href="#" class="btn btn-outline-dark btn-lg LikeAjax"
+												role="button" aria-pressed="true"> <input
+												type="hidden" name="PRODUCT_NUM" value="<%=PRODUCT_NUM %>">♥
 											</a>
 										</div>
-										<div style="width:45%;">
-											<a href="#" class="btn btn-outline-dark btn-lg btn-block basket_btn" role="button" aria-pressed="true" id="basket_btn">장바구니</a>
+										<div style="width: 45%;">
+											<a href="#" class="btn btn-outline-dark btn-lg btn-block basket_btn"
+												role="button" aria-pressed="true" id="basket_btn">장바구니</a>
 										</div>
-										<div style="width:45%;">
-											<a href="#" class="btn btn-outline-dark btn-lg btn-block order_btn" role="button" aria-pressed="true" id="order_btn">바로구매</a>
+										<div style="width: 45%;">
+											<a href="#" class="btn btn-outline-dark btn-lg btn-block order_btn"
+												role="button" aria-pressed="true" id="order_btn">바로구매</a>
 										</div>
-								<% 
-									} 
-								%>
+										<% 
+												} 
+											%>
+									</div>
+								</td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+				<div class="btnArea text-center"></div>
+				<br />
+			</form>
+		</div>
+	</div>
+	<div class="row" style="padding: 15px 15px;">
+		<div class="col-8">
+			<div style="line-height: 0.5em;" id="t1">
+				<dl>
+					<dt><h3><%=vo.getPRODUCT_TITLE() %></h3><br></dt>
+					<dl><h5><%=vo.getPRODUCT_BRIEF() %></h5></dl>
+				</dl>
+			</div>
+			<div class="row sticky">
+				<div class="col-12">
+					<ul class="nav nav-tabs nav-fill h-30">
+					   <li class="nav-item">
+					      <a class="nav-link" href="#t1"><h5>상품정보</h5></a>
+					   </li>
+					   <li class="nav-item">
+					      <a class="nav-link" href="#t2"><h5>리뷰</h5></a>
+					   </li>
+					   <li class="nav-item">
+					      <a class="nav-link" href="#t3"><h5>Q&A</h5></a>
+					   </li>
+					   <li class="nav-item">
+					      <a class="nav-link" href="#t4"><h5>배송/환불</h5></a>
+					   </li>
+					</ul>
+				</div>
+			</div>
+			<div class="row justify-content-center">
+			<% 
+				if (vo.getPRODUCT_INFO() != null) { 
+			%>
+					<%=vo.getPRODUCT_INFO() %>
+					<br /><br />
+			<% 
+				} else { 
+			%>
+					<!-- vo.getPRODUCT_INFO() = 없는 경우-->
+					<table width="50%" border="0" cellpadding="0" cellspacing="0" align="center" valign="middle">
+						<tr align="center" valign="middle">
+							<td align="right"><font size=2>상세 정보가 없습니다.</font></td>
+						</tr>
+					</table>
+			<% 
+				} 
+			%>
+			</div>
+			<!-- 상세 사진정보 끝 -->
+			
+			<span id="t2"></span>
+			<br /><br /><hr />
+           
+			<!-- 리뷰 테이블 시작 -->
+			<h3 id="review_scroll" >Review</h3>
+			<br /><br />
+			
+			<div id="ReviewSection">
+				<div id="ReviewButtonSection">	
+					<div class="row justify-content-center pt-3 pb-3"> <!-- 리뷰 댓글달기 버튼 -->
+						<button class="btn btn-dark btn-sm review_btn">댓글 달기</button>
+					</div>
+				</div>
+				<div id="ReviewWrapSection" class="pb-1">
+					<div id="ReviewformSection" class="pb-2">
+						<form id="ReviewForm" name="REVIEW_CONTENT" enctype="multipart/form-data"> <!-- 리뷰 작성 폼 영역 : 하나 -->
+							<input type="hidden" name="MEMBER_NUM" value="MEMBER_NUM">
+							<input type="hidden" name="PRODUCT_NUM" value="<%=PRODUCT_NUM %>">
+							<div class="row justify-content-center">
+								<div class="col-1 justify-content-end">
+									<img src="<%=MEMBER_PICTURE%>" alt="" class="rounded-circle">
+								</div>
+								<div class="col-11">
+									<div class="row pb-1">
+										<div class="col-2 justify-content-end name"><%=MEMBER_NICK%> </div>
+										<div class="col-8 justify-content-center"></div>
+										<div class="col-2 justify-content-center smallfont"></div>
+									</div>
+									<div class="row pb-1"> <!-- 평점 -->
+										<div class="col-3 pr-0">
+											<img src="${pageContext.request.contextPath}/resources/images/star1.png" alt="" width="15px" height="15px" >
+											&nbsp;
+											<select name="REVIEW_GRADE" id="REVIEW_GRADE" style="">
+												<option value="0">0</option>
+												<option value="0.5">0.5</option>
+												<option value="1">1.0</option>
+												<option value="1.5">1.5</option>
+												<option value="2">2.0</option>
+												<option value="2.5">2.5</option>
+												<option value="3">3.0</option>
+												<option value="3.5">3.5</option>
+												<option value="4">4.0</option>
+												<option value="4.5">4.5</option>
+												<option value="5">5.0</option>
+											</select>											
+										</div>
+										<div class="9"></div>
+									</div>
+									
+									<div class="row pb-2"> <!-- 파일 -->
+										<div class="col-12">
+											<div class="file_input">
+											    <label>
+											       	 사진 업로드
+											        <input type="file" multiple="multiple" name="REVIEW_FILE" id="input_imgs">
+											    </label>
+											    <input type="text" readonly="readonly" title="File Route" value="선택된 파일이 없습니다">
+											</div>			
+										</div>
+									</div>
+									<div class="row pb-2">
+										<div class="col-12 imgs_wrap">
+											<img id="inputimg">
+										</div>
+									</div>
+									<div class="row pb-1">	<!-- 내용 textarea -->
+										<div class="col-11 pr-0">
+											<textarea rows="3" name="REVIEW_CONTENT" class="col-12 pl-0 pr-0" id=""></textarea>
+										</div>	
+									</div>
+									<div class="row"> <!-- 수정, 삭제 -->
+										<div class="col-2 justify-content-center"></div>
+										<div class="col-8 justify-content-center"></div>
+										<div class="col-2 justify-content-center" style="font-size:0.7em; font-weight:bold;">
+											<a class="insertReview">작성</a> &nbsp;
+											<a class="formCancel" value="ReviewForm">취소</a>
+										</div>
+									</div>
+								</div>
 							</div>
-							<br/>
-						</form>
+						</form>		
+					</div>
+					<div id="ReviewtableSection" class="pb-2">
 					</div>
 				</div>
 			</div>
-    		<br>
+
+                 
+			<!-- 리뷰 페이지네이션 -->
+			<br/>
+			<div class="d-flex justify-content-center">
+				<nav aria-label="Page navigation example" class="paginated" id="user-page"></nav>
+			</div>
+			
+			<br />
+			<!-- 리뷰 페이지네이션 끝 -->
+
+
+	
+			<span id="t3"></span>
+			<br /><br /><hr />
+			
+			<!-- Q&A 테이블 시작 -->
+			<h3 id="qna_scroll">Q&A</h3>
+			<br /><br />
+
+           
+			<div id="QnaSection">
+				<div id="QnaButtonSection">	
+					<div class="row justify-content-center pt-3 pb-3"> <!-- 리뷰 댓글달기 버튼 -->
+						<button class="btn btn-dark btn-sm qna_btn">문의하기</button>
+					</div>
+				</div>
+				<div id="QnaWrapSection" class="pb-1">
+					<div id="QnaformSection" class="pb-2">
+						<form id="QnaForm" name="QNA_CONTENT"> <!-- 리뷰 작성 폼 영역 : 하나 -->
+							<input type="hidden" name="MEMBER_NUM" value="MEMBER_NUM">
+							<input type="hidden" name="PRODUCT_NUM" value="<%=PRODUCT_NUM %>">
+							<div class="row justify-content-center">
+								<div class="col-1 justify-content-end">
+									<img src="<%=MEMBER_PICTURE%>" alt="" class="rounded-circle">
+								</div>
+								<div class="col-11">
+									<div class="row pb-1">
+										<div class="col-2 justify-content-end name"><%=MEMBER_NICK%> </div>
+										<div class="col-8 justify-content-center"></div>
+										<div class="col-2 justify-content-center smallfont"></div>
+									</div>
+									<div class="row pb-1">	<!-- 내용 textarea -->
+										<div class="col-11 pr-0">
+											<textarea rows="3" name="QNA_CONTENT" class="col-12 pl-0 pr-0" 
+												id=""></textarea>
+										</div>	
+									</div>
+									<div class="row"> <!-- 수정, 삭제 -->
+										<div class="col-2 justify-content-center"></div>
+										<div class="col-8 justify-content-center"></div>
+										<div class="col-2 justify-content-center" style="font-size:0.7em; font-weight:bold;">
+											<a class="insertQna">작성</a> &nbsp;
+											<a class="formCancel" value="QnaForm">취소</a>
+										</div>
+									</div>
+								</div>
+							</div>
+						</form>		
+					</div>
+					<div id="QnatableSection" class="pb-2">
+					
+						
+					</div>
+				</div>
+			</div>
+		
+		
+			<!-- Q&A pagenation -->
+			<br/>
+			
+			
+			<br />
+			<!-- Q&A pagenation 끝 -->			
+		
+		
+		
+		
+		
+			<!-- Q&A 테이블 끝 -->
+			
+			<br /><br /><hr />
+
+      
+            <!-- 배송 및 환불 시작 -->
+      
+            <h3 id="t4">배송 및 환불</h3>
+            <br /><br />
+			<div class="ship_info" style="width: 100%; margin: 0 auto; font-size: 0.9em; color: #212529;">
+				<div class="row_ship_info">
+			    	<h5>배송정보</h5>
+					모든 제품은 메이킹퍼니처 직원이 직접 배송하며 배송비는 고객 부담입니다. 지역, 제품 수량 또는 설치 여부에 따라 주문 시
+					배송비를 미리 안내해드립니다. 기본 배송비 외에 사다리차, 엘레베이터, 주차비 사용료 등 추가 비용이 발생 시 고객님
+					부담입니다.
+					<%=vo.getPRODUCT_SHIP_INFO() %>
+				</div>
+				<div class="row_ship_info">
+					<h5>배송정보</h5>
+					모든 제품은 메이킹퍼니처 직원이 직접 배송하며 배송비는 고객 부담입니다. 지역, 제품 수량 또는 설치 여부에 따라 주문 시
+					배송비를 미리 안내해드립니다. 기본 배송비 외에 사다리차, 엘레베이터, 주차비 사용료 등 추가 비용이 발생 시 고객님
+					부담입니다.
+					반품 배송지 : <%=vo.getPRODUCT_SHIP_RETURN_PLACE() %>
+				</div>
+				<br />
+				
+				<div class="row_ship_info">
+					<h5>A/S</h5>
+					핸드메이드 제품으로 나뭇결, 무늬, 옹이의 형태나 파임, 칠과 색상이 다를 수 있고 약간의 흠집이나 찍힘(표면의 크랙 또는
+					뜯김)이 있을 수 있으며, 100% 원목으로 기후변화에 따른 수축, 팽창으로 인한 휘어짐(상판), 갈라짐(마구리면)이
+					발생할 수 있습니다. 이런 자연스러운 현상들은 교체 및 교환 대상이 아니며 무상 A/S 사유가 되지 않습니다. 구매 전 꼭
+					참고해주시기 바랍니다.
+					<%=vo.getPRODUCT_AS_INFO() %>
+				</div>
+				<br />
+				
+				<div class="row_ship_info">
+					<h5>Wood Furniture</h5>
+					원목가구의 수축 및 팽창은 원목만의 자연스러운 특징입니다.<br /> -지나치게 건조한 곳, 습한 곳은 피하세요. -가구의
+					수평을 유지해주세요.(수평이 안 맞게 되면 가구가 뒤틀려버립니다.) -가구에 화학약품(신나, 메니큐어 등)이 닿지 않게
+					해주세요. -평소에는 물걸레 청소하시면 됩니다. -뜨거운 냄비와 같은 고온의 뜨거운 물체에 직접 닿는 것은 피하시기
+					바랍니다. -한 달에 1~2번 가구용 왁스로 닦아주세요. -원목가구는 수축기와 팽창기(계절의 변화)에 따라 갈라짐이나
+					미세한 크랙이 발생할 수 있으며, 시간이 경과하면 원상회복이 될 수 있습니다. 이는 원목가구만의 자연스러운 현상이며 제품의
+					하자가 아닙니다.
+					<%=vo.getPRODUCT_STORE_INFO() %>
+				</div>
+				<br />
+				
+				<div class="row_ship_info">
+					<h5>A/S규정[1년 무상]</h5>
+					무상 A/S -보증기간 이내의 제품으로 정상적인 상태에서 제조상의 결함 제품 -원/부나내의 결함이 발생된 경우
+					-메이킹퍼니처의 귀책 사유로 인한 결함 발생 제품
+					<%=vo.getPRODUCT_RETURN_INFO() %>
+				</div>
+				<div class="row_ship_info">
+					유상 A/S -고객의 취급 부주의 및 고의적 훼손 경우 -고객 임의 개조에 의한 파손의 경우나 타 업체에서 수리해 변경된 경우 -유상 서비스 요금은 [수리비+부품비+출장비+기타실 비용] 등이 포함됩니다.
+				</div>
+			</div>
 		</div>
+		<div class="col-4">
+        	<div class="sticky2" style="border: 1px solid #EAEAEA;">
+            	<form name="goodsform" action="#" method="post" id="goodsform">
+                	<div>
+                    	<table class="table table-borderless">
+                        	<tbody>
+	                            <tr>
+									<th scope="row">색상선택</th>
+									<td>
+										<select name="BASKET_COLOR" size="1" class="form-control BASKET_COLOR">
+											<option value="">선택</option>
+											<c:forTokens var="color" items="<%=PRODUCT_COLOR %>" delims=",">
+												<option value="${fn:trim(color)}">${fn:trim(color)}</option>
+											</c:forTokens>
+										</select>
+									</td>
+								</tr>
+								<tr>
+									<th scope="row">사이즈선택</th>
+									<td>
+										<select name="BASKET_SIZE" size="1" class="form-control BASKET_SIZE">
+											<option value="">선택</option>
+											<c:forTokens var="size" items="<%=PRODUCT_SIZE %>" delims=",">
+												<option value="${fn:trim(size)}">${fn:trim(size)}</option>
+											</c:forTokens>
+										</select>
+									</td>
+								</tr>
+								<tr>
+									<th scope="row">수량</th>
+									<td>
+										<div>
+											<select name="BASKET_AMOUNT" size="1" class="form-control BASKET_AMOUNT">
+												<option value="1">1</option>
+												<option value="2">2</option>
+												<option value="3">3</option>
+												<option value="4">4</option>
+												<option value="5">5</option>
+											</select>
+										</div>
+									</td>
+								</tr>
+								<tr><td></td></tr>
+								<tr><td></td></tr>
+								<tr><td></td></tr>
+								<tr><td></td></tr>
+								<tr><td></td></tr>
+								<tr><td></td></tr>
+								<tr><td></td></tr>
+								<tr><td></td></tr>
+								<tr><td></td></tr>
+								<tr><td></td></tr>
+								<tr><td></td></tr>
+							</tbody>
+						</table>
+                  	</div>
+                  	<div>
+                  		<table class="table table-borderless">
+                  			<tbody>
+                  				<tr>
+									<th scope="row">총 합계금액</th>
+									<td class="total"></td>
+								</tr>
+                  			</tbody>
+                  		</table>
+                  	</div>
+					<div class="d-flex justify-content-between d-flex align-items-end">
+						<% 
+							if(WORKSHOP_CEO_NAME == null && MEMBER_EMAIL == null) { 
+						%> 	<%-- 비로그인일 때 --%>
+								<div>
+									<button type="button" class="btn btn-outline-dark btn-lg" data-toggle="modal" data-target="#exampleModalCenter">
+										<input type="hidden" name = "PRODUCT_NUM" value="<%=PRODUCT_NUM %>">♥
+									</button>
+								</div>	
+								<div style="width:45%;">
+									<button type="button" class="btn btn-outline-dark btn-lg btn-block" data-toggle="modal" data-target="#exampleModalCenter" >장바구니</button>
+								</div>
+								<div style="width:45%;">
+									<button type="button" class="btn btn-outline-dark btn-lg btn-block" data-toggle="modal" data-target="#exampleModalCenter" >바로구매</button>
+								</div>
+						<% 
+							} else if(WORKSHOP_CEO_NAME != null) { 
+						%>	<%-- 공방 로그인일 때(하트 안 보임) --%>
+								<div style="width:50%;">
+									<a href="classreservation.ac" class="btn btn-outline-dark btn-lg btn-block disabled" role="button" aria-pressed="true">장바구니</a>
+								</div>
+								<div style="width:50%;">
+									<a href="#" class="btn btn-outline-dark btn-lg btn-block disabled" role="button" aria-pressed="true" >바로구매</a>
+								</div>
+						<% 
+							} else { 
+						%> <%-- 일반회원일때 --%>
+								<div>
+									<a href="#" class="btn btn-outline-dark btn-lg LikeAjax" role="button" aria-pressed="true">
+										<input type="hidden" name = "PRODUCT_NUM" value="<%=PRODUCT_NUM %>">♥
+									</a>
+								</div>
+								<div style="width:45%;">
+									<a href="#" class="btn btn-outline-dark btn-lg btn-block basket_btn" role="button" aria-pressed="true" id="basket_btn">장바구니</a>
+								</div>
+								<div style="width:45%;">
+									<a href="#" class="btn btn-outline-dark btn-lg btn-block order_btn" role="button" aria-pressed="true" id="order_btn">바로구매</a>
+								</div>
+						<% 
+							} 
+						%>
+					</div>
+					<br/>
+				</form>
+			</div>
+		</div>
+	</div>
+  	<br>
+</div>
    <!-- content end -->
 <script>
    	$('.basket_btn').on('click',function(){
@@ -1260,6 +1242,7 @@
 		
 
 		function getReviewList() {
+			$('#remo').empty();
 			$('#ReviewtableSection').empty();	//table 내부 내용을 제거(초기화)
 			$.ajax({
 				url:'/NAGAGU/getReviewList.pro',
@@ -1288,115 +1271,135 @@
 							var REVIEW_FILE = retVal.reviewList[i].REVIEW_FILE;
 							var REVIEW_CONTENT = retVal.reviewList[i].REVIEW_CONTENT;
 
-							output += '<div class="ReviewAndReplySum pt-2 pb-1" id="ReviewAndReplySum'+REVIEW_NUM+'">';
-							output += '<div class="ReviewSum" id="ReviewSum'+REVIEW_NUM+'">';
-							output += '<div class="ReviewList pb-3" id="ReviewList'+REVIEW_NUM+'">';
-							output += '<div class="beforeModifyReview" id="beforeModifyReview'+REVIEW_NUM+'">';
-							output += '<div class="row justify-content-center">';
-							output += '<div class="col-1 justify-content-end"><img src="'+MEMBER_PICTURE+'" alt="" class="rounded-circle"></div>';
-							output += '<div class="col-11">';
-							output += '<div class="row pb-1">';
-							output += '<div class="col-2 justify-content-end name">'+MEMBER_NICK+'</div>';
-							output += '<div class="col-8 justify-content-center"></div>';
-							output += '<div class="col-2 justify-content-center smallfont">'+date+'</div>';
-							output += '</div>';
-							output += '<div class="row pb-2">';
-							output += '<div class="col-12" style="font-size:0.7em; font-weight:bold;">'+REVIEW_GRADE+' &nbsp;';
-							output += '<span class="star-rating">';
-							output += '<span style ="width:'+rate+'%"></span>';
-							output += '</span></div></div>';
-							output += '<div class="row pb-2">';
-							output += '<div class="col-12">';
-							if(REVIEW_FILE == '#') {
-								output += '<img src="#" class="review_img"  style="display:none;">   &nbsp;&nbsp;';            
-							} else {
-								//split함수 호출 //, 가 몇 개 있는지 구해서 //for문으로 그 개수만큼 돌림...review_file[i]
-								var reviewImgArray = splitImg(REVIEW_FILE);
-								for(var k=0;k<reviewImgArray.length;k++) {
-									output += '<img src="/productupload/image/' + reviewImgArray[k] + '" class="review_img">&nbsp;';                        
-								}               
-							}
-							output += '</div></div>';
-							output += '<div class="row pb-2">';
-							output += '<div class="col-11 pr-0">' + REVIEW_CONTENT + '</div></div>';
-							output += '<div class="row">';
-							output += '<div class="col-2 justify-content-center" style="font-size:0.7em; font-weight:bold; cursor: pointer;">';
-							output += '<a class="review_replybtn" id="review_replybtn' + REVIEW_NUM + '" value="' + REVIEW_NUM + '">답글</a>';
-							output += '</div>';
-							output += '<div class="col-8 justify-content-center"></div>';
+							output += '<div class="ReviewAndReplySum pt-2 pb-1" id="ReviewAndReplySum'+ REVIEW_NUM +'">';
+								output += '<div class="ReviewSum" id="ReviewSum'+ REVIEW_NUM +'">';
+									output += '<div class="ReviewList pb-3" id="ReviewList'+ REVIEW_NUM +'">';
+										output += '<div class="beforeModifyReview" id="beforeModifyReview'+ REVIEW_NUM +'">';
+											output += '<div class="row justify-content-center">';
+												output += '<div class="col-1 justify-content-end"><img src="'+ MEMBER_PICTURE +'" alt="" class="rounded-circle"></div>';
+												output += '<div class="col-11">';
+													output += '<div class="row pb-1">';
+														output += '<div class="col-2 justify-content-end name">'+ MEMBER_NICK +'</div>';
+														output += '<div class="col-8 justify-content-center"></div>';
+														output += '<div class="col-2 justify-content-center smallfont">'+ date +'</div>';
+													output += '</div>';
+													output += '<div class="row pb-2">';
+														output += '<div class="col-12" style="font-size:0.7em; font-weight:bold;">'+REVIEW_GRADE+' &nbsp;';
+															output += '<span class="star-rating">';
+																output += '<span style ="width:'+rate+'%"></span>';
+															output += '</span>';
+														output += '</div>';
+													output += '</div>';
+													output += '<div class="row pb-2">';
+														output += '<div class="col-12">';
+														if(REVIEW_FILE == '#') {
+															output += '<img src="#" class="review_img"  style="display:none;">   &nbsp;&nbsp;';            
+														} else {
+															//split함수 호출 //, 가 몇 개 있는지 구해서 //for문으로 그 개수만큼 돌림...review_file[i]
+															var reviewImgArray = splitImg(REVIEW_FILE);
+															for(var k=0;k<reviewImgArray.length;k++) {
+																output += '<img src="/productupload/image/' + reviewImgArray[k] + '" class="review_img">&nbsp;';                        
+															}               
+														}
+														output += '</div>';
+													output += '</div>';
+													output += '<div class="row pb-2">';
+														output += '<div class="col-11 pr-0">' + REVIEW_CONTENT + '</div>';
+													output += '</div>';
+													output += '<div class="row">';
+														output += '<div class="col-2 justify-content-center" style="font-size:0.7em; font-weight:bold; cursor: pointer;">';
+															output += '<a class="review_replybtn" id="review_replybtn' + REVIEW_NUM + '" value="' + REVIEW_NUM + '">답글</a>';
+														output += '</div>';
+														output += '<div class="col-8 justify-content-center"></div>';
+														
 							console.log("MEMBER_NICK = " + MEMBER_NICK)
-							//작성 본인만 수정,삭제버튼 보인다
-							if('<%=MEMBER_NICK%>' == MEMBER_NICK) {
-								output += '<div class="col-2 ReviewbeforeControl justify-content-center" id="ReviewbeforeControl'+REVIEW_NUM+'" style="font-size:0.7em; font-weight:bold;">';
-								output += '<input type="hidden" name="REVIEW_NUM" value="'+REVIEW_NUM+'">';
-								output += '<a class="gomodifyReviewform">수정</a> &nbsp;';
-								output += '<a class="deleteReview">삭제</a>';
-								output += '</div>';
-							}
-							output += '</div></div></div></div>';
-							output += '<div class="afterModifyReview" id="afterModifyReview'+REVIEW_NUM+'"></div>';
-							output += '</div></div>';
-							output += '<div class="ReviewReplySum" id="ReviewReplySum'+REVIEW_NUM+'">';
-							output += '<div class="ReviewReplyformSection" id="ReviewReplyformSection'+REVIEW_NUM+'"></div>';
-							if(retVal.review_RE_Count>0) {
-								for(var j=0; j<retVal.review_RE_List.length; j++) {
-									if(REVIEW_NUM == retVal.review_RE_List[j].REVIEW_RE) {
-										var REPLY_NUM = retVal.review_RE_List[j].REVIEW_NUM;
-										var REPLY_NICK = retVal.review_RE_List[j].MEMBER_NICK;
-										var REPLY_PICTURE = retVal.review_RE_List[j].MEMBER_PICTURE;
-										var REPLY_CONTENT = retVal.review_RE_List[j].REVIEW_CONTENT;
-										var REPLY_DATE = new Date(retVal.review_RE_List[j].REVIEW_DATE);
-										var replydate = date_format(REPLY_DATE);
-										//리뷰 출력
-										output += '<div class="ReviewReplyList pb-2" id="ReviewReplyList'+REPLY_NUM+'">';
+							
+													//작성 본인만 수정,삭제버튼 보인다
+													if('<%=MEMBER_NICK%>' == MEMBER_NICK) {
+														output += '<div class="col-2 ReviewbeforeControl justify-content-center" id="ReviewbeforeControl'+REVIEW_NUM+'" style="font-size:0.7em; font-weight:bold;">';
+															output += '<input type="hidden" name="REVIEW_NUM" value="'+REVIEW_NUM+'">';
+															output += '<a class="gomodifyReviewform">수정</a> &nbsp;';
+															output += '<a class="deleteReview">삭제</a>';
+														output += '</div>';
+													}
+													output += '</div>'; // <div class="row">
+												output += '</div>'; // <div class="col-11">
+											output += '</div>'; // <div class="row justify-content-center">
+										output += '</div>'; // <div class="beforeModifyReview" id="beforeModifyReview'+REVIEW_NUM+'">
+										output += '<div class="afterModifyReview" id="afterModifyReview'+REVIEW_NUM+'"></div>';
+									output += '</div>'; // <div class="ReviewList pb-3" id="ReviewList'+REVIEW_NUM+'">
+								output += '</div>'; // <div class="ReviewSum" id="ReviewSum'+REVIEW_NUM+'">
+								output += '<div class="ReviewReplySum" id="ReviewReplySum'+REVIEW_NUM+'">';
+									output += '<div class="ReviewReplyformSection" id="ReviewReplyformSection'+REVIEW_NUM+'"></div>';
+						if(retVal.review_RE_Count > 0) {
+							for(var j=0; j < retVal.review_RE_List.length; j++) {
+								if(REVIEW_NUM == retVal.review_RE_List[j].REVIEW_RE) {
+									var REPLY_NUM = retVal.review_RE_List[j].REVIEW_NUM;
+									var REPLY_NICK = retVal.review_RE_List[j].MEMBER_NICK;
+									var REPLY_PICTURE = retVal.review_RE_List[j].MEMBER_PICTURE;
+									var REPLY_CONTENT = retVal.review_RE_List[j].REVIEW_CONTENT;
+									var REPLY_DATE = new Date(retVal.review_RE_List[j].REVIEW_DATE);
+									var replydate = date_format(REPLY_DATE);
+									//리뷰 출력
+									output += '<div class="ReviewReplyList pb-2" id="ReviewReplyList'+REPLY_NUM+'">';
 										output += '<div class="row justify-content-center">';
-										output += '<div class="col-1"></div>';
-										output += '<div class="col-1"><img src="'+REPLY_PICTURE+'" alt="" class="rounded-circle"></div>';
-										output += '<div class="col-10">';
-										output += '<div class="row">';
-										output += '<div class="col-2 justify-content-end name">'+REPLY_NICK+'</div>';
-										output += '<div class="col-8 justify-content-center"></div>';
-										output += '<div class="col-2 justify-content-center smallfont pl-1">'+replydate+'</div>';
-										output += '</div>';
-										output += '<div class="beforeModifyReviewReply" id="beforeModifyReviewReply'+REPLY_NUM+'">';
-										output += '<div class="row">';
-										output += '<div class="col-11 pr-0">'+REPLY_CONTENT;
-										output += '</div></div></div>';
-										output += '<div class="afterModifyReviewReply" id="afterModifyReviewReply'+REPLY_NUM+'">';
-										output += '<form class="modifyReviewReplyForm" id="modifyReviewFormReply'+REPLY_NUM+'">';	
-										output += '<div class="row">';			
-										output += '<div class="col-11 pr-0">';			
-										output += '<input type="hidden" name="REVIEW_NUM" value="'+REPLY_NUM+'">';			
-										output += '<textarea rows="2" name="REVIEW_CONTENT" id="REVIEW_CONTENT'+REPLY_NUM+'" class="col-12 pl-0 pr-0">'+REPLY_CONTENT+'</textarea>';			
-										output += '</div></div></form></div>';
-										output += '<div class="row">';
-										output += '<div class="col-2 replytext justify-content-center"></div>';
-										output += '<div class="col-8 justify-content-center"></div>';
-										//작성 본인만 수정,삭제버튼 보인다
-										if('<%=MEMBER_NICK%>' == REPLY_NICK) {
-										
-											output += '<div class="col-2 ReviewbeforeControl justify-content-center pl-1" id="ReviewbeforeControl'+REPLY_NUM+'">';								
-											output += '<input type="hidden" name="REVIEW_NUM" value="'+REPLY_NUM+'">';
-											output += '<a class="gomodifyReviewReplyform">수정</a> &nbsp;';
-											output += '<a class="deleteReview">삭제</a>';
-											output += '</div>';
-											output += '<div class="col-2 ReviewafterControl justify-content-center pl-1" id="ReviewafterControl'+REPLY_NUM+'">';
-											output += '<input type="hidden" name="REVIEW_NUM" value="'+REPLY_NUM+'">';
-											output += '<a class="modifyReviewReply">수정</a> &nbsp;';
-											output += '<a class="formCancel" value="reviewReplyModify">취소</a>';
-											output += '</div>';
-										}
-										output += '</div></div></div></div>';
-									}			
-								}
+											output += '<div class="col-1"></div>';
+											output += '<div class="col-1"><img src="'+REPLY_PICTURE+'" alt="" class="rounded-circle"></div>';
+											output += '<div class="col-10">';
+												output += '<div class="row">';
+													output += '<div class="col-2 justify-content-end name">'+REPLY_NICK+'</div>';
+													output += '<div class="col-8 justify-content-center"></div>';
+													output += '<div class="col-2 justify-content-center smallfont pl-1">'+replydate+'</div>';
+												output += '</div>';
+												output += '<div class="beforeModifyReviewReply" id="beforeModifyReviewReply'+REPLY_NUM+'">';
+													output += '<div class="row">';
+														output += '<div class="col-11 pr-0">'+ REPLY_CONTENT + '</div>';
+													output += '</div>';
+												output += '</div>';
+												output += '<div class="afterModifyReviewReply" id="afterModifyReviewReply'+REPLY_NUM+'">';
+													output += '<form class="modifyReviewReplyForm" id="modifyReviewFormReply'+REPLY_NUM+'">';	
+														output += '<div class="row">';			
+															output += '<div class="col-11 pr-0">';			
+																output += '<input type="hidden" name="REVIEW_NUM" value="'+REPLY_NUM+'">';			
+																output += '<textarea rows="2" name="REVIEW_CONTENT" id="REVIEW_CONTENT'+REPLY_NUM+'" class="col-12 pl-0 pr-0">'+REPLY_CONTENT+'</textarea>';			
+															output += '</div>';
+														output += '</div>';
+													output += '</form>';
+												output += '</div>';
+												output += '<div class="row">';
+													output += '<div class="col-2 replytext justify-content-center"></div>';
+													output += '<div class="col-8 justify-content-center"></div>';
+													
+												//작성 본인만 수정,삭제버튼 보인다
+												if('<%=MEMBER_NICK%>' == REPLY_NICK) {
+												
+													output += '<div class="col-2 ReviewbeforeControl justify-content-center pl-1" id="ReviewbeforeControl'+REPLY_NUM+'">';								
+														output += '<input type="hidden" name="REVIEW_NUM" value="'+REPLY_NUM+'">';
+														output += '<a class="gomodifyReviewReplyform">수정</a> &nbsp;';
+														output += '<a class="deleteReview">삭제</a>';
+													output += '</div>';
+													output += '<div class="col-2 ReviewafterControl justify-content-center pl-1" id="ReviewafterControl'+REPLY_NUM+'">';
+														output += '<input type="hidden" name="REVIEW_NUM" value="'+REPLY_NUM+'">';
+														output += '<a class="modifyReviewReply">수정</a> &nbsp;';
+														output += '<a class="formCancel" value="reviewReplyModify">취소</a>';
+													output += '</div>';
+												}
+												output += '</div>'; // <div class="row">
+											output += '</div>'; // <div class="col-10">
+										output += '</div>'; // <div class="row justify-content-center">
+									output += '</div>'; // <div class="ReviewReplyList pb-2" id="ReviewReplyList'+REPLY_NUM+'">
+								}			
 							}
-							output += '</div></div>';
+						}
+								output += '</div>'; // <div class="ReviewReplySum" id="ReviewReplySum'+REVIEW_NUM+'">
+							output += '</div>'; // <div class="ReviewAndReplySum pt-2 pb-1" id="ReviewAndReplySum'+REVIEW_NUM+'">
 							$('#ReviewtableSection').append(output);				
 						}					
 					} else {
 						var output = '<div class="justify-content-center pt-3 pb-1" style="text-align:center;">등록된 댓글이 없습니다.</div>';
 						$('#ReviewtableSection').append(output);	//이상한데...!?!?!?
 					}
+					page();
 		          },
 		          error:function() {
 		             alert("getReviewList ajax통신 실패!!!");
@@ -1404,7 +1407,104 @@
 	       });
 		}
 		
-
+		// 만들어진 댓글에 페이지 처리
+		function page() { 	
+			$('#remo').empty();
+			var reSortColors = function($table) {};
+			$('nav.paginated').each(function() {
+				var pagesu = 10;  //페이지 번호 갯수
+		  		var currentPage = 0;
+		  		var numPerPage = 5;  //목록의 수
+		  		var $table = $('#ReviewtableSection');    
+		  		var $user = $('#user-page');
+		  
+				//length로 원래 리스트의 전체길이구함
+				var numRows = $table.find('.ReviewAndReplySum').length;
+				//Math.ceil를 이용하여 반올림
+				var numPages = Math.ceil(numRows / numPerPage);
+				//리스트가 없으면 종료
+				if (numPages==0) return;
+				//pager라는 클래스의 div엘리먼트 작성
+				var $pager = $('<ul id="remo" class="pager pagination"></ul>');
+				
+				var nowp = currentPage;
+				var endp = nowp+10;
+		  
+				//페이지를 클릭하면 다시 셋팅
+				$table.bind('repaginate', function() {
+				//기본적으로 모두 감춘다, 현재페이지+1 곱하기 현재페이지까지 보여준다
+		  
+					$table.find('.ReviewAndReplySum').hide().slice(currentPage * numPerPage, (currentPage + 1) * numPerPage).show();
+					$("#remo").html("");
+		   
+					if (numPages > 1) {     // 한페이지 이상이면
+						if (currentPage < 5 && numPages-currentPage >= 5) {   // 현재 5p 이하이면
+							nowp = 0;     // 1부터 
+							endp = pagesu;    // 10까지
+						} else {
+							nowp = currentPage -5;  // 6넘어가면 2부터 찍고
+							endp = nowp+pagesu;   // 10까지
+							pi = 1;
+						}
+					 
+						if (numPages < endp) {   // 10페이지가 안되면
+							endp = numPages;   // 마지막페이지를 갯수 만큼
+							nowp = numPages-pagesu;  // 시작페이지를   갯수 -10
+						}
+						if (nowp < 1) {     // 시작이 음수 or 0 이면
+							nowp = 0;     // 1페이지부터 시작
+						}
+					} else {       // 한페이지 이하이면
+						nowp = 0;      // 한번만 페이징 생성
+						endp = numPages;
+					}
+					// [처음]
+					$('<li class="page-item" cursor: "pointer"><a class="page-link" href="#">처음</a></li>').bind('click', {newPage: page},function(event) {
+						currentPage = 0;   
+						$table.trigger('repaginate');  
+						$($(".page-item")[2]).addClass('active').siblings().removeClass('active');
+					}).appendTo($pager).addClass('clickable');
+					
+			    	// [이전]
+					$('<li class="page-item" cursor: "pointer"><a class="page-link" href="#">이전</a></li>').bind('click', {newPage: page},function(event) {
+						if(currentPage == 0) return; 
+						currentPage = currentPage-1;
+						$table.trigger('repaginate'); 
+						$($(".page-item")[(currentPage-nowp)+2]).addClass('active').siblings().removeClass('active');
+					}).appendTo($pager).addClass('clickable');
+			    	
+			    	// [1,2,3,4,5,6,7,8]
+					for (var page = nowp ; page < endp; page++) {
+						$('<li class="page-item" cursor: "pointer"></li>').html('<a class="page-link" href="#">' + (page + 1) + '</a>').bind('click', {newPage: page}, function(event) {
+							currentPage = event.data['newPage'];
+							$table.trigger('repaginate');
+							$($(".page-item")[(currentPage-nowp)+2]).addClass('active').siblings().removeClass('active');
+						}).appendTo($pager).addClass('clickable');
+					}
+			    	
+			    	// [다음]
+					$('<li class="page-item" cursor: "pointer"><a class="page-link" href="#">다음</a></li>').bind('click', {newPage: page},function(event) {
+						if(currentPage == numPages-1) return;
+						currentPage = currentPage+1;
+						$table.trigger('repaginate'); 
+						$($(".page-item")[(currentPage-nowp)+2]).addClass('active').siblings().removeClass('active');
+					}).appendTo($pager).addClass('clickable');
+			    	
+			    	// [끝]
+					$('<li class="page-item" cursor: "pointer"><a class="page-link" href="#">끝</a></li>').bind('click', {newPage: page},function(event) {
+						currentPage = numPages-1;
+						$table.trigger('repaginate');
+						$($(".page-item")[endp-nowp+1]).addClass('active').siblings().removeClass('active');
+					}).appendTo($pager).addClass('clickable');
+			     
+			     	$($(".page-item")[2]).addClass('active');
+		  		});
+				
+				$pager.insertAfter($pager).find('li.page-item:first').next().next().addClass('active');   
+				$pager.appendTo($user);
+				$table.trigger('repaginate');
+			});
+		}
 	
 		//Review 등록하기 버튼(insert) //원글
 		$(document).on("click",".insertReview",function(event){
