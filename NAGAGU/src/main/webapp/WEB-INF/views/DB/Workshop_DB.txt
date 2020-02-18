@@ -24,7 +24,7 @@ create table nagagu_workshop_member(
     
     
 create table delete_workshop_member(
-    WORKSHOP_NUM number PRIMARY key,
+    WORKSHOP_NUM number,
     WORKSHOP_EMAIL varchar2(30) UNIQUE,
     WORKSHOP_PASS varchar2(30),
     WORKSHOP_NAME varchar2(50) UNIQUE,
@@ -40,5 +40,6 @@ create table delete_workshop_member(
     WORKSHOP_OWNER VARCHAR2(15),
     WORKSHOP_BANK VARCHAR2(20),
     WORKSHOP_ACNUM VARCHAR2(100) UNIQUE,
-    WORKSHOP_PICTURE VARCHAR2(1000)
+    WORKSHOP_PICTURE VARCHAR2(1000),
+    DELETE_SYSDATE DATE
     );

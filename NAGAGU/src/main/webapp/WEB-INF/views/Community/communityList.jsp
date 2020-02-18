@@ -223,7 +223,7 @@
 							<div class="profile_children">
 								<div>
 									<a href="memberLikePics.cm?MEMBER_NUM=<%=member_vo.getMEMBER_NUM()%>"> 
-										<img src=<%=member_vo.getMEMBER_PICTURE()%>	style="width:50px; height:50px;"><b><%=member_vo.getMEMBER_NICK()%></b> 
+										<img src=<%=member_vo.getMEMBER_PICTURE()%>	style="width:50px; height:50px;">&nbsp;&nbsp;<b><%=member_vo.getMEMBER_NICK()%></b> 
 									</a>
 								</div >
 									<div id="output<%=member_vo.getMEMBER_NUM()%>" class="follow_btn_wrap">
@@ -421,72 +421,75 @@
 			}
 			$.ajax({
 				url: "/NAGAGU/getFollowMembers.cm",
-		              type: "POST",
-		              data: { 'fromNum' : fromNum},
-		              datatype: 'json',
-		              contentType:
-		  				'application/x-www-form-urlencoded; charset=utf-8',
-		              success: function (retVal) {
-		            	if(retVal.res=="OK"){ 
-		            		//내가 팔로우 한 리스트 받아와서 일치하는 항목 찾기
-		            		console.log(retVal.followMembers)
-		            		var a = retVal.followMembers
-		            		for(var j=0; j<retVal.followMembers.length; j++){
-				        		var toNum = retVal.followMembers[j].member_NUM
-		        				$('.flw_btn'+toNum).text('following');
-		      	        		$('.flw_btn'+toNum).addClass('flw_btn_active')
-		        			}
-		      			}else{
-		      				alert("update fail");
-		      			} 
-		              },
-			error:function(){
-				alert("ajax통신 실패!!");
-			}
+	            type: "POST",
+	            data: { 'fromNum' : fromNum},
+	            datatype: 'json',
+	            contentType: 'application/x-www-form-urlencoded; charset=utf-8',
+	            success: function (retVal) {
+		          	if(retVal.res=="OK"){ 
+		          		//내가 팔로우 한 리스트 받아와서 일치하는 항목 찾기
+		          		console.log(retVal.followMembers)
+		          		var a = retVal.followMembers
+		          		for(var j=0; j<retVal.followMembers.length; j++) {
+		        			var toNum = retVal.followMembers[j].member_NUM
+		      				$('.flw_btn'+toNum).text('following');
+		    	        	$('.flw_btn'+toNum).addClass('flw_btn_active')
+		      			}
+		    		} else {
+		    			alert("update fail");
+		    		} 
+	            },
+				error:function(){
+					alert("ajax통신 실패!!");
+				}
 			})
 		}
+		
 		follow_check()
-	 //팔로우 버튼 누르기
-	 $(document).on("click",".follow_btn",function (){
-		 var toNum = this.id
-		 var fromNum = '<%=LOGIN_MEMBER_NUM%>';
-		 if(fromNum==0){ 
-			alert('로그인 하세요') 
-			return				
-		 }
-		 if(fromNum==toNum){
-			alert('본인이네요') 
-			return				
-		 } 
-		 
-		$.ajax({
-		url: "/NAGAGU/followAction.cm",
-              type: "POST",
-              data: { 'fromNum' : fromNum , 'toNum' : toNum},
-              contentType:
-  				'application/x-www-form-urlencoded; charset=utf-8',
-              success: function (retVal) {
-	        if(retVal.res=="OK"){
-	        	if(retVal.cnt==0){
-	        		//팔로우 추가 하면 (멤버 넘버가 올리 사진들 모두 값 바꿔준다)
-	        		$('.flw_btn'+toNum).text('following');
-	        		$('.flw_btn'+toNum).addClass('flw_btn_active')
-	        	}else{
-	        		//팔로우 끊으면
-	        		$('.flw_btn'+toNum).text('follow');
-	        		$('.flw_btn'+toNum).removeClass('flw_btn_active')
-	        	}
-			}else{
-				alert("update fail");
+
+		//팔로우 버튼 누르기
+		$(document).on("click",".follow_btn",function (){
+			var toNum = this.id
+			var fromNum = '<%=LOGIN_MEMBER_NUM%>';
+			if(fromNum==0){ 
+				alert('로그인 하세요') 
+				return				
+			}
+			if(fromNum==toNum){
+				alert('본인이네요') 
+				return				
 			} 
-		},
-	error:function(){
-		alert("ajax통신 실패!!");
-	}
+			 
+			$.ajax({
+				url: "/NAGAGU/followAction.cm",
+				type: "POST",
+				data: { 'fromNum' : fromNum , 'toNum' : toNum},
+				contentType:
+				'application/x-www-form-urlencoded; charset=utf-8',
+				success: function (retVal) {
+					if(retVal.res=="OK"){
+			        	if(retVal.cnt==0){
+			        		//팔로우 추가 하면 (멤버 넘버가 올리 사진들 모두 값 바꿔준다)
+			        		$('.flw_btn'+toNum).text('following');
+			        		$('.flw_btn'+toNum).addClass('flw_btn_active')
+			        	}else{
+			        		//팔로우 끊으면
+			        		$('.flw_btn'+toNum).text('follow');
+			        		$('.flw_btn'+toNum).removeClass('flw_btn_active')
+			        	}
+							alert("성공");
+					} else {
+							alert("update fail");
+					} 
+				},
+				error:function(){
+					alert("ajax통신 실패!!");
+				}
+			})
+				event.preventDefault();
+		})
 	})
-		event.preventDefault();
-	})
-	})
+	
 	//정렬 옵션 선택
 	var sort='<%=sort%>';
 	var review='<%=PICS_REVIEW%>';

@@ -11,4 +11,5 @@ public interface WorkShopMemberService {
 	/* 회원 탈퇴 */
 	public int deleteWMember(WorkShopMemberVO workshopVO);
 	public int duplicateWMember(WorkShopMemberVO workshopVO);
+	public int sysdateWMember(WorkShopMemberVO workshopVO);
 }

@@ -338,14 +338,16 @@ public class MainController {
 		ModelAndView mav = new ModelAndView();
 		try {
 			int res = memberService.duplicateMember(memberVO);
+			int res2 = memberService.sysdateMember(memberVO);
 			
-			if ( res == 1 ) {
+			if ( res == 1 && res2 == 1) {
 				System.out.println("멤버 정보 이동 성공!");
 				int del = memberService.deleteMember(memberVO);
+				
 				System.out.println("멤버 삭제 성공!");
 				
 				session.invalidate();
-				mav.setViewName("redirect:/");
+				mav.setViewName("index");
 				mav.addObject("message", "탈퇴처리 되었습니다. 그동안 NAGAGU를 이용해주셔서 감사합니다.");
 			}
 		} catch(Exception e) {
@@ -359,8 +361,9 @@ public class MainController {
 		ModelAndView mav = new ModelAndView();
 		try {
 			int res = workShopMemberService.duplicateWMember(workshopVO);
+			int res2 = workShopMemberService.sysdateWMember(workshopVO);
 			
-			if ( res == 1 ) {
+			if ( res == 1 && res2 == 1) {
 				System.out.println("공방멤버 정보 이동 성공!");
 				int del = workShopMemberService.deleteWMember(workshopVO);
 				System.out.println("공방멤버 삭제 성공!");

@@ -1,6 +1,5 @@
 package com.spring.mapper;
 
-import com.spring.member.MemberVO;
 import com.spring.workshop.WorkShopMemberVO;
 
 public interface WorkShopMemberMapper {
@@ -16,4 +15,5 @@ public interface WorkShopMemberMapper {
 	/* 회원 탈퇴 */
 	int deleteWMember(WorkShopMemberVO workshopVO);
 	int duplicateWMember(WorkShopMemberVO workshopVO);
+	int sysdateWMember(WorkShopMemberVO workshopVO);
 }

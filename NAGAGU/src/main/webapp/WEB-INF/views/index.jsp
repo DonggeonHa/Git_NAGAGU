@@ -101,10 +101,6 @@
 				세상에 하나 뿐인 나만의 가구를 주문하고 다양한 가구를 구경해보세요. <br/>
 				직접 만들어 보고 싶다면 클래스에 등록해보세요.<br/>
 			</header>
-			<div class="btn-wrap">
-				<button type="button" class="btn btn-outline-primary">둘러보기</button>
-				<button type="button" class="btn btn-outline-primary">가입하기</button>
-			</div>
 		</section>
 		<section class="scene two">
 			<header>

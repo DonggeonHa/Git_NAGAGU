@@ -118,7 +118,7 @@
 						<p>&nbsp;&nbsp;&nbsp;신규 아이디로 재가입해주세요. </p>
 						<div class="form-group">
 							<label for="recipient-name" class="email">이메일</label>
-							<input type="text" class="form-control" id="MEMBER_EMAIL" name="MEMBER_EMAIL">
+							<input type="text" class="form-control" value="<%=MEMBER_EMAIL%>" name="MEMBER_EMAIL" readonly>
 						</div>
 						<div class="form-group">
 							<label for="message-text" class="password">비밀번호</label>

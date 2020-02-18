@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib prefix = "fmt" uri = "http://java.sun.com/jsp/jstl/fmt" %>
 <%@ page import="java.util.*"%>
 <%@ page import="com.spring.member.MemberVO" %>
 <%@ page import="com.spring.store.ProductVO"%>
@@ -287,7 +288,9 @@
 		                                <span class="grade"><i class="fas fa-star"></i><span><%=pro.getPRODUCT_GRADE()%></span></span>
 		                            </div>
 		                            <div class="col-4">
-		                                <span class="price"><%=pro.getPRODUCT_PRICE()%>&nbsp;원</span>
+		                                <span class="price">
+		                                	<fmt:formatNumber type="number" maxFractionDigits="3" value="<%=pro.getPRODUCT_PRICE()%>" />&nbsp;원
+		                                </span>
 		                            </div>
 		                        </div>
 		                    </div>
