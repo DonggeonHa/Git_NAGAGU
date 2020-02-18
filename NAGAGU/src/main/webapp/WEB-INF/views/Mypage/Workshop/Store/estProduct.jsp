@@ -162,7 +162,7 @@
 			console.log(params);
 			
 			$.ajax({
-				url:'/NAGAGU/workshop_offer_list.ws', 
+				url:'/NAGAGU/workshop_estimate_list.ws', 
 				type:'POST', 
 				data: params,
 				dataType:"json", 
@@ -170,59 +170,61 @@
 				contentType:'application/x-www-form-urlencoded; charset=utf-8',
 				success:function(data) {
 					console.log(data.offerCount);
-					console.log(data.woList);
+					console.log(data.eoList);
 					
 					var output = '';
 					
-					var woList = data.woList;
+					var eoList = data.eoList;
 					var rnum = data.rnum;
 
-		            $('#offer_count').html(woList.length + '건');
+		            $('#offer_count').html(eoList.length + '건');
 					
-					if (data.offerCount == 0) {
-						output += '<tr><td colspan="10" class="list_caution">등록된 제안이 없습니다</td><tr>';
+					if (eoList.length == 0) {
+						output += '<tr><td colspan="10" class="list_caution">등록된 주문이 없습니다</td><tr>';
 					}
 					
 					else {
 						/* 리스트 작성*/
 						
-						$.each(woList, function(index, item) {
+						$.each(eoList, function(index, item) {
 							
-							var es_date = formatDate(item.OFFER_DATE);
+							var eo_date = formatDate(item.eo_ORDER_DATE);
 							
-							var es_state = '';
+							var eo_state = '';
 							
-							switch (item.ESTIMATE_STATE) {
+							switch (item.eo_ORDER_STATE) {
 							case 0 :
-								es_state = '입찰중';
+								eo_state = '입금대기';
 								break;
 							case 1 :
-								switch (item.OFFER_CASE) {
-								case 1 :
-									es_state = '낙찰'
-									break;
-								case 2 :
-									es_state = '낙찰 실패'
-									break;
-								}
+								eo_state = '결제완료'
 								break;
 							case 2 :
-								es_state = '유찰';
+								eo_state = '제작중';
 								break;
 							case 3 :
-								es_state = '취소';
+								eo_state = '배송준비';
+								break;
+							case 4 :
+								eo_state = '배송중';
+								break;
+							case 5 :
+								eo_state = '배송완료';
+								break;
+							case 6 :
+								eo_state = '구매확정';
 								break;
 							}
 
 				            output += '<tr>';
-				            output += '<td scope="col" ><input type="checkbox" class="chk" name="chk" value=' + item.OFFER_NUM + '>';  
-				            output += '<input type="hidden" class="disabled" name="chk2" value=' + item.ESTIMATE_MEMBER + '></td>';
+				            output += '<td scope="col" ><input type="checkbox" class="chk" name="chk" value=' + item.eo_ORDER_NUM + '>';  
+				            output += '<input type="hidden" class="disabled" name="chk2" value=' + item.eo_ORDER_BUYER_MAIL + '></td>';
 				            output += '<th scope="col" >' + rnum + '</th>';
-				            output += '<td scope="col" >' + item.ESTIMATE_NICK + '</td>';
-				            output += '<td scope="col" >' + item.ESTIMATE_TITLE + '</td>';
+				            output += '<td scope="col" >' + item.eo_ORDER_BUYER + '</td>';
+				            output += '<td scope="col" >' + item.eo_ORDER_TITLE + '</td>';
 				            output += '<td scope="col" >';
 				            
-				            var category = item.ESTIMATE_CATEGORY;
+				            var category = item.eo_ORDER_CATEGORY;
 				            
 				            switch (category) {
 				            case 'table':
@@ -252,17 +254,14 @@
 				            }
 				            
 				            output += '</td>';
-				            output += '<td id="offer_price_' + item.OFFER_NUM + '" scope="col" >' + addComma(item.OFFER_PRICE) + '</td>';
-				            output += '<td scope="col" >' + es_date + '</td>';
-				            output += '<td scope="col" >' + es_state + '</td>';
+				            output += '<td scope="col" >' + addComma(item.eo_ORDER_PRICE) + '</td>';
+				            output += '<td scope="col" >' + eo_date + '</td>';
+				            output += '<td scope="col" >' + eo_state + '</td>';
 				            output += '<td scope="col">';
-				            output += '<input type="hidden" id="offer_content_' + item.OFFER_NUM + '" value=' + item.OFFER_CONTENT + '>';
-				            output += '<button class="btn_detail" value=' + item.ESTIMATE_NUM + '>보기</button>';
-				            output += '<button class="btn_modify" of_num=' + item.OFFER_NUM + ' es_num=' + item.ESTIMATE_NUM + ' alt="" data-toggle="modal" data-target="#modifyFormModal" aria-haspopup="true" aria-expanded="false">수정</button>';
-				           	output += '<button class="btn_delete" of_num=' + item.OFFER_NUM + '>삭제</button>';
+				            output += '<button class="btn_detail" value=' + item.ES_ORDER_ESTIMATE + '>보기</button>';
 				            output += '</td>';
 				            output += '<td scope="col">';
-				            output += '<button class="btn_note" value=' + item.ESTIMATE_MEMBER + '>쪽지</button>';
+				            output += '<button class="btn_note" value=' + item.ES_ORDER_ESTIMATE + '>쪽지</button>';
 				            output += '</td>';
 				            output += '</tr>';
 				            
@@ -359,62 +358,6 @@
 			return false;
 		});
 		
-		/* 견적 수정 모달 */
-		$(document).delegate('.btn_modify', 'click', function() {
-			
-			var m_estimate = $(this).attr('es_num');
-			$('#modify_estimate').val(m_estimate);
-			var m_offer_num = $(this).attr('of_num');
-			$('#modify_offer_num').val(m_offer_num);
-			var m_price = $('#offer_price_' + m_offer_num).html();
-			$('#modify_offer_price').val(unComma(m_price));
-			var m_content = $('#offer_content_' + m_offer_num).val();
-			$('#modify_offer_content').val(m_content);
-
-			return false;
-		});
-		
-		/* 견적 수정 신청 */
-		$('#btn_modify_submit').click(function() {
-			var modify_price = $('#modify_offer_price').val();
-			var modify_content = $('#modify_offer_content').val();
-			
-			if (!checkPrice.test(modify_price)) {
-				alert("가격란은 숫자만 입력 가능합니다.");
-				$('#modify_offer_price').focus();
-				
-				return false;
-			}
-			if (modify_price == "") {
-				alert("가격을 입력해주십시시오.");
-				$('#modify_offer_price').focus();
-				
-				return false;
-			}
-			if (modify_content == "") {
-				alert("내용을 입력해주십시오.");
-				$('#modify_offer_content').focus();
-			}
-			
-			var params = $('#modifyForm').serialize();
-			
-			$.ajax({
-				url:'/NAGAGU/offer_modify.es',
-				type:'POST',
-				data:params,
-				aync:false,
-				contentType: 'application/x-www-form-urlencoded; charset=utf-8',
-				success : function(data) {
-					alert("제안글이 성공적으로 수정되었습니다.");
-					location.reload();
-				},
-			     error:function(request,status,error){
-			         alert("code = "+ request.status + " message = " + request.responseText + " error = " + error);
-				}
-				
-			});
-		});
-		
 		/* 견적 제안 삭제 */
 		$(document).delegate('.btn_delete', 'click', function() {
 			if (confirm("정말로 삭제하시겠습니까?")) {
@@ -445,7 +388,7 @@
 		/* 카테고리 선택 */
 		
 		$('#selectCategory').change(function() {
-			$('#wo_category').val($('#selectCategory').val());
+			$('#eo_category').val($('#selectCategory').val());
 			
 			getList();
 			
@@ -453,7 +396,7 @@
 		});
 
 		$('#selectState').change(function() {
-			$('#wo_state').val($('#selectState').val());
+			$('#eo_state').val($('#selectState').val());
 			
 			getList();
 			
@@ -513,8 +456,7 @@
 		    
 		    window.open('', 'new_pop' ,'width=600,height=700');
 		    
-		    
-		    var frm = $('#chk_form');
+		    var frm = document.forms["chk_form"];
 		    
 		    frm.action = 'selectedForm.nt';
 		    frm.target = 'new_pop';

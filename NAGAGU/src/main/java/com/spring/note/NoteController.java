@@ -345,7 +345,7 @@ public class NoteController {
 	
 	@RequestMapping("selectedForm.nt")
 	public String selectedSend (HttpServletRequest request, HttpSession session, Model model) throws Exception {
-
+		System.out.println("테스팅");
 		String sender_mail = "";
 		String sender_nick = "";
 		

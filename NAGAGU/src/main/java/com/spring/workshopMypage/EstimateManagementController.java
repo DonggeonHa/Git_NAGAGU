@@ -11,6 +11,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.spring.estimate.EstimateOrderVO;
 import com.spring.estimate.EstimateService;
 
 @Controller
@@ -43,11 +44,6 @@ public class EstimateManagementController {
 		
 		HashMap <String, Object> countMap = new HashMap <String, Object>();
 		countMap.put("OFFER_WORKSHOP", OFFER_WORKSHOP);
-		
-		if (request.getParameter("ESTIMATE_STATE") != null) {
-			int ESTIMATE_STATE = Integer.parseInt(request.getParameter("ESTIMATE_STATE"));
-			countMap.put("ESTIMATE_STATE", ESTIMATE_STATE);
-		}
 		
 		int page = 1;
 		int limit = 20;
@@ -96,7 +92,7 @@ public class EstimateManagementController {
 	@RequestMapping(value = "/workshop_estimate_list.ws")
 	@ResponseBody
 	public HashMap <String, Object> WorkshopEstimateList(HttpServletRequest request, HttpSession session) {
-		String OFFER_WORKSHOP = (String)session.getAttribute("WORKSHOP_NAME");
+		String ES_ORDER_WORKSHOP = (String)session.getAttribute("WORKSHOP_NAME");
 		
 		HashMap <String, Object> listmap = new HashMap <String, Object>();
 		listmap.put("EO_SEARCH_CATEGORY", request.getParameter("search_category"));
@@ -109,16 +105,11 @@ public class EstimateManagementController {
 		System.out.println("test : " + listmap.get("EO_STATE"));
 		
 		HashMap <String, Object> countMap = new HashMap <String, Object>();
-		countMap.put("OFFER_WORKSHOP", OFFER_WORKSHOP);
-		
-		if (request.getParameter("ESTIMATE_STATE") != null) {
-			int ESTIMATE_STATE = Integer.parseInt(request.getParameter("ESTIMATE_STATE"));
-			countMap.put("ESTIMATE_STATE", ESTIMATE_STATE);
-		}
+		countMap.put("ES_ORDER_WORKSHOP", ES_ORDER_WORKSHOP);
 		
 		int page = 1;
 		int limit = 20;
-		int offerCount = estimateService.offerCount(countMap);
+		int offerCount = estimateService.esOrderCount(countMap);
 		
 		if (request.getParameter("page") != null) {
 			page = Integer.parseInt(request.getParameter("page"));
@@ -130,7 +121,7 @@ public class EstimateManagementController {
 		int startpage = (((int) ((double)page/10 + 0.9)) - 1) * 10 + 1;
 		int endpage = startpage+9;
 		
-		listmap.put("OFFER_WORKSHOP", OFFER_WORKSHOP);
+		listmap.put("ES_ORDER_WORKSHOP", ES_ORDER_WORKSHOP);
 		listmap.put("startRow", startRow);
 		listmap.put("endRow", endRow);
 		
@@ -139,7 +130,7 @@ public class EstimateManagementController {
 		
 		int rnum = offerCount - (page-1)*limit;
 
-		ArrayList<HashMap <String, Object>> woList = estimateService.workOfferList(listmap);
+		ArrayList<EstimateOrderVO> eoList = estimateService.esOrderList(listmap);
 		
 		HashMap <String, Object> resMap = new HashMap <String, Object>();
 		resMap.put("page", page);
@@ -148,7 +139,7 @@ public class EstimateManagementController {
 		resMap.put("endpage", endpage);
 		resMap.put("offerCount", offerCount);
 		resMap.put("rnum", rnum);
-		resMap.put("woList", woList);
+		resMap.put("eoList", eoList);
 		
 		return resMap;
 	}

@@ -109,7 +109,7 @@
 	            </div>
 	        </div>
         </div>
-        <form id="chk_form">
+        <form id="chk_form" name="chk_form">
 	    <table class="table" id="work_store">
 	        <thead>
 	            <tr>
@@ -207,7 +207,7 @@
 
 		            $('#offer_count').html(woList.length + '건');
 					
-					if (data.offerCount == 0) {
+					if (woList.length == 0) {
 						output += '<tr><td colspan="10" class="list_caution">등록된 제안이 없습니다</td><tr>';
 					}
 					
@@ -225,12 +225,12 @@
 								es_state = '입찰중';
 								break;
 							case 1 :
-								switch (item.OFFER_CASE) {
+								switch (item.OFFER_STATE) {
 								case 1 :
-									es_state = '낙찰'
+									es_state = '<b><font color="red">낙찰</font></b>';
 									break;
 								case 2 :
-									es_state = '낙찰 실패'
+									es_state = '<b><font color="#d3d3d3">낙찰 실패</font></b>';
 									break;
 								}
 								break;
@@ -541,16 +541,13 @@
 		    
 		    window.open('', 'new_pop' ,'width=600,height=700');
 		    
-		    
-		    var frm = $('#chk_form');
-		    
+		    var frm = document.forms["chk_form"];
 		    frm.action = 'selectedForm.nt';
 		    frm.target = 'new_pop';
 		    frm.method = 'post';
 		    
 		    frm.submit();
-		    
-		    return false;
+		  
 		});
 		
 		/* 선택 삭제 */
