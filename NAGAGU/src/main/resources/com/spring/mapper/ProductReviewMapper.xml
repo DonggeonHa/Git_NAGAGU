@@ -109,7 +109,7 @@ create sequence store_review_seq
 		SELECT count(*) FROM PRODUCT_REVIEW WHERE REVIEW_PRODUCT=#{PRODUCT_NUM} AND REVIEW_RE != 0
 	</select>
 	
-	<select id="getReview_MemberList" parameterType="java.util.HashMap" resultMap="productReviewResultMap">
+<!-- 	<select id="getReview_MemberList" parameterType="java.util.HashMap" resultMap="productReviewResultMap">
 		SELECT * FROM
 		(SELECT rownum rnum, REVIEW_NUM, REVIEW_MEMBER, REVIEW_PRODUCT, REVIEW_DATE, 
 				REVIEW_FILE, REVIEW_CONTENT, REVIEW_GRADE, REVIEW_RE
@@ -124,7 +124,7 @@ create sequence store_review_seq
 		 FROM (SELECT * FROM PRODUCT_REVIEW WHERE REVIEW_PRODUCT=#{PRODUCT_NUM} AND REVIEW_RE=0 ORDER BY REVIEW_DATE DESC)) 
 		<![CDATA[ WHERE rnum >= #{startrow} AND rnum <= #{endrow} ]]>
 			
-	</select>
+	</select> -->
 
 	<select id="getReviewList123" parameterType="java.util.HashMap" resultMap="productReviewResultMap">
 		SELECT * FROM
@@ -154,7 +154,7 @@ create sequence store_review_seq
 		ORDER BY BOARD_SORT, BOARD_DATE DESC, BOARD_SEQ DESC
 		LIMIT #{startRow}, #{perPgLine}
 -->
-
+<!-- 
 
 	<select id="getReview_RE_List" parameterType="java.util.HashMap" resultMap="productReviewResultMap">
 		SELECT * FROM
@@ -181,7 +181,7 @@ create sequence store_review_seq
         ORDER BY P.REVIEW_DATE DESC
   	</select>
 
- 
+  -->
  
  
 	<insert id="insertReview" parameterType="com.spring.store.Product_reviewVO">
@@ -219,11 +219,11 @@ create sequence store_review_seq
 	<select id="getREVIEW_FILE" parameterType="int" resultType="String">
 		SELECT REVIEW_FILE FROM PRODUCT_REVIEW WHERE REVIEW_NUM=#{REVIEW_NUM}
 	</select>
-		
+<!-- 		
 	<select id="newReviewImg" parameterType="java.util.HashMap" resultType="String">
 		SELECT REVIEW_FILE FROM PRODUCT_REVIEW WHERE REVIEW_NUM=#{REVIEW_NUM}
 	</select>
-	
+	 -->
 	<select id="findChildrenRE" parameterType="int" resultType="int">
 		SELECT count(*) FROM PRODUCT_REVIEW WHERE REVIEW_RE=#{REVIEW_NUM} 
 	</select>	
@@ -231,8 +231,9 @@ create sequence store_review_seq
 	<delete id="deleteReview" parameterType="java.util.HashMap">
 		DELETE FROM PRODUCT_REVIEW WHERE REVIEW_NUM=#{REVIEW_NUM}
 	</delete>	
+	
 	<!-- 답글 수정, 삭제 -->	
-	<update id="modifyReview_RE" parameterType="com.spring.store.Product_reviewVO">
+	<update id="modifyReviewReply" parameterType="com.spring.store.Product_reviewVO">
 		UPDATE PRODUCT_REVIEW SET 
 			REVIEW_DATE=#{REVIEW_DATE}, REVIEW_CONTENT=#{REVIEW_CONTENT}
 		WHERE REVIEW_NUM =#{REVIEW_NUM} 

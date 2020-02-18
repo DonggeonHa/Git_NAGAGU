@@ -128,30 +128,7 @@ public class ProductController123 {
 		map.put("endrow", endrow);
 		map.put("PRODUCT_NUM", PRODUCT_NUM);
 		
-		int reviewCount;
-		int review_RE_Count;	//RE는 답글
-		ArrayList<Product_reviewVO> reviewList = null;
-		ArrayList<Product_reviewVO> review_RE_List = null;
-		reviewCount = reviewService.getReviewCount(map);
-		review_RE_Count = reviewService.getReview_RE_Count(map);
-		reviewList = reviewService.getReviewList(map);
-		review_RE_List = reviewService.getReview_RE_List(map);
 
-		//리스트 총 페이지 수
-		int maxpage = (int)((double)reviewCount / limit + 0.95); // 0.95를 더해서 올림 처리
-		int startpage = (((int) ((double)reviewpage / 10 + 0.9)) - 1) * 10 + 1; // 현재 페이지에 보여줄 시작 페이지 수 (1, 11, 21 등...)
-		int endpage =startpage + 10 - 1; // 현재 페이지에 보여줄 마지막 페이지 수 (10, 20, 30 등..)
-		
-		if (endpage > maxpage)
-			endpage = maxpage;		
-		
-		//리뷰 멤버
-		ArrayList<MemberVO> reviewMemberList = null;
-		reviewMemberList = reviewService.getreviewMemberList(map);
-		
-		//리뷰 답글 멤버
-		ArrayList<MemberVO> review_RE_MemberList = null;
-		review_RE_MemberList = reviewService.getreview_RE_MemberList(map);
 
 		
 		/*qna 리스트*/
@@ -186,7 +163,7 @@ public class ProductController123 {
 		//qna 총 페이지 수
 		int qnamaxpage = (int)((double)qnaCount / qnalimit + 0.95); // 0.95를 더해서 올림 처리
 		int qnastartpage = (((int) ((double)qnapage / 10 + 0.9)) - 1) * 10 + 1; // 현재 페이지에 보여줄 시작 페이지 수 (1, 11, 21 등...)
-		int qnaendpage =startpage + 10 - 1; // 현재 페이지에 보여줄 마지막 페이지 수 (10, 20, 30 등..)
+		int qnaendpage =qnastartpage + 10 - 1; // 현재 페이지에 보여줄 마지막 페이지 수 (10, 20, 30 등..)
 		
 		if (qnaendpage > qnamaxpage)
 			qnaendpage = qnamaxpage;		
@@ -211,19 +188,6 @@ public class ProductController123 {
 		model.addAttribute("PRODUCT_CATEGORY", PRODUCT_CATEGORY);
 		model.addAttribute("PRODUCT_NUM", PRODUCT_NUM);
 
-		/*리뷰 댓글 관련 */
-		model.addAttribute("reviewpage", reviewpage);
-		model.addAttribute("maxpage", maxpage);
-		model.addAttribute("startpage", startpage);
-		model.addAttribute("endpage", endpage);
-		model.addAttribute("reviewCount", reviewCount);
-		model.addAttribute("review_RE_Count", review_RE_Count);
-		model.addAttribute("reviewList", reviewList);
-		model.addAttribute("review_RE_List", review_RE_List);
-		
-		/*리뷰 멤버 관련*/
-		model.addAttribute("reviewMemberList", reviewMemberList);
-		model.addAttribute("review_RE_MemberList", review_RE_MemberList);
 		
 		/*qna 댓글 관련 */
 		model.addAttribute("qnapage", qnapage);
@@ -395,22 +359,92 @@ public class ProductController123 {
 			
 		}		
 		
-		//리뷰 댓글 수정 폼
+		//리뷰 댓글 수정 process (원글)
 		@RequestMapping(value="/modifyReview.do",  produces="application/json;charset=UTF-8")
 		@ResponseBody
-		public Map<String, Object> modifyReview(HttpServletRequest request) throws Exception {
+		public Map<String, Object> modifyReview(MultipartHttpServletRequest request) throws Exception {
 			System.out.println("modifyReview 컨트롤러 왔다");
 			int REVIEW_NUM = Integer.parseInt(request.getParameter("REVIEW_NUM"));
-			System.out.println("REVIEW_NUM = " + REVIEW_NUM);
+			String beforeImg = request.getParameter("beforeImg");	//이전 이미지 중 남긴 이미지
+			String deleteImg = request.getParameter("deleteImg");	//이전 이미지 중 삭제할 이미지
+			String REVIEW_FILE = "";	//이전 이미지+추가 이미지
 			
-			Product_reviewVO reviewVO = null;
+			if(deleteImg.equals("")) {
+				System.out.println("삭제할 이미지 없음");
+			}else {
+				deleteImg = deleteImg.substring(0, deleteImg.length()-1);	//맨 마지막 , 떼기
+				System.out.println(deleteImg);
+				//기존의 이미지는 삭제
+				String path = "C:\\Project138\\upload\\"; 
+				String fullPath = "";
+				String[] f = deleteImg.split(",");
+				for(int i=0; i<f.length; i++) {
+					fullPath = path+f[i];
+					System.out.println("fullPath="+fullPath);
+					File file = new File(fullPath);					
+					file.delete();				
+				}
+				
+			}
+			
+			//beforeImg - 이전 이미지 중 살릴 이미지
+			if(beforeImg == ",") {	//기존 이미지 다 삭제했을 때, 바로 추가업로드 경로 붙일 수 있게 초기화시켜줌
+				beforeImg = "";
+			} 
+			
+			
+			//사진 추가 업로드 처리
+			List<MultipartFile> fileList = new ArrayList<MultipartFile>(); 
+			
+			// input file 에 아무것도 없을 경우 (파일을 업로드 하지 않았을 때 처리) 
+			if(request.getFiles("REVIEW_FILE").get(0).getSize() != 0) { 
+				fileList = request.getFiles("REVIEW_FILE"); 
+			} 	
+			
+			String path = "C:\\Project138\\upload\\"; 
+			File fileDir = new File(path); 
+			if (!fileDir.exists()) { 
+				fileDir.mkdirs(); 
+			} 
+			
+			long time = System.currentTimeMillis(); 
+			
+			for (MultipartFile mf : fileList) { 
+				String originFileName = mf.getOriginalFilename(); // 원본 파일 명 
+				String saveFileName = String.format("%d_%s", time, originFileName);
+
+				try { // 파일생성
+					mf.transferTo(new File(path, saveFileName)); 
+					beforeImg += saveFileName + ",";	//beforeImg에 추가 업로드 이미지 경로 추가
+				} catch (Exception e) { 
+					e.printStackTrace(); 
+					} 
+				}
+			System.out.println("파일 없을 때 6");
+
+			System.out.println("beforeImg : " + beforeImg);
+			
+			if(beforeImg.length() != 0) {
+				REVIEW_FILE = beforeImg.substring(0, beforeImg.length()-1);	//beforeImg + 추가 업로드 이미지
+				
+			} else {
+				REVIEW_FILE = "#";	//새로운 파일 없을시 붙이지 않음
+			}
+						
+			System.out.println("modify 전 REVIEW_FILE은 : " + REVIEW_FILE );
+			
+			Product_reviewVO reviewVO = new Product_reviewVO();
+			reviewVO.setREVIEW_NUM(REVIEW_NUM);
+			reviewVO.setREVIEW_CONTENT(request.getParameter("REVIEW_CONTENT"));
+			reviewVO.setREVIEW_DATE(new Timestamp(System.currentTimeMillis()));
+			reviewVO.setREVIEW_FILE(REVIEW_FILE);
+			reviewVO.setREVIEW_GRADE(Double.parseDouble(request.getParameter("REVIEW_GRADE")));
 			
 			
 			Map<String, Object> retVal = new HashMap<String, Object>(); //리턴값 저장
 			try {
-				reviewVO = reviewService.getReviewVO(REVIEW_NUM);
+				int res = reviewService.modifyReview(reviewVO);
 				retVal.put("res", "OK");
-				retVal.put("reviewVO", reviewVO);
 			} catch(Exception e) {
 				retVal.put("res", "Fail");
 			}
@@ -418,9 +452,88 @@ public class ProductController123 {
 			
 		}		
 		
+		
+		
+
+		//리뷰 댓글 수정 process (답글)
+		@RequestMapping(value="/modifyReviewReply.do",  produces="application/json;charset=UTF-8")
+		@ResponseBody
+		public Map<String, Object>  modifyReviewReply(HttpServletRequest request) throws Exception {
+			System.out.println("modifyReviewReply 컨트롤러 왔다");
+			int REVIEW_NUM = Integer.parseInt(request.getParameter("REVIEW_NUM"));
+			String REVIEW_CONTENT = request.getParameter("REVIEW_CONTENT");
+			Product_reviewVO vo = new Product_reviewVO();
+
+			vo.setREVIEW_NUM(REVIEW_NUM);
+			vo.setREVIEW_DATE(new Timestamp(System.currentTimeMillis()));
+			vo.setREVIEW_CONTENT(REVIEW_CONTENT);
+			
+			Map<String, Object> retVal = new HashMap<String, Object>(); //리턴값 저장
+			try {
+						
+				int res = reviewService.modifyReviewReply(vo);
+					retVal.put("res", "OK");
+				
+			}catch(Exception e) {
+				retVal.put("res", "FAIL");
+				retVal.put("message", "Failure");
+			}		
+			
+			
+			return retVal;
+		}		
 	
-	
-	
-	
+		//리뷰 댓글 삭제
+		@RequestMapping(value="/deleteReview.do",  produces="application/json;charset=UTF-8")
+		@ResponseBody
+		public Map<String, Object> deleteReview(HttpServletRequest request) throws Exception {	
+			System.out.println("deleteReview 컨트롤러 왔다");
+			
+			int REVIEW_NUM = Integer.parseInt(request.getParameter("REVIEW_NUM"));
+			
+			
+			Map<String, Object> retVal = new HashMap<String, Object>(); //리턴값 저장
+			try {
+						
+				int res = 0;
+				
+				//답글을 가지고 있는 댓글은 삭제할 수 없다.
+				//본인의 review_num을 review_re로 하는 데이터가 있을 경우, 삭제 불가
+				int count = reviewService.findChildrenRE(REVIEW_NUM);
+				
+				if(count == 0) {	//답글이 없으므로 삭제 가능
+					//upload폴더에서 파일 삭제
+					String getReviewFile = reviewService.getREVIEW_FILE(REVIEW_NUM);
+					if(!getReviewFile.equals("#")) {
+						String path = "C:\\Project138\\upload\\"; 
+						String fullPath = "";
+						String[] f = getReviewFile.split(",");
+
+						for(int i=0; i<f.length; i++) {
+							fullPath = path+f[i];
+							System.out.println("fullPath="+fullPath);
+							File file = new File(fullPath);					
+							file.delete();				
+						}						
+					}
+					//db 삭제
+					res = reviewService.deleteReview(REVIEW_NUM);
+					retVal.put("res", "OK");
+				} else {	//답글 존재
+					retVal.put("res", "Children");
+					
+				}
+				
+
+				
+				
+			}catch(Exception e) {
+				retVal.put("res", "FAIL");
+				retVal.put("message", "Failure");
+			}		
+			
+			return retVal;
+			
+		}
 	
 }

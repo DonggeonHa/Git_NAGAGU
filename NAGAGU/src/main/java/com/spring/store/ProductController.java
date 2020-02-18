@@ -709,7 +709,7 @@ public class ProductController {
 
 		vo.setREVIEW_DATE(new Timestamp(System.currentTimeMillis()));
 
-		int res = reviewService.modifyReview_RE(vo);
+	//	int res = reviewService.modifyReview_RE(vo);
 		System.out.println("ccc");
 		return vo;
 	}		

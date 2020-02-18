@@ -58,27 +58,10 @@
 	String PRODUCT_COLOR = vo.getPRODUCT_COLOR();
 	String PRODUCT_SIZE = vo.getPRODUCT_SIZE();
 	int bannerImgCount = StringUtils.countOccurrencesOf(vo.getPRODUCT_BANNER(), ",");
-	
+	System.out.println('1');
 	//리뷰 관련
-	ArrayList<HashMap<String, Object>> reviewList = (ArrayList<HashMap<String, Object>>) request.getAttribute("reviewList");
-	ArrayList<HashMap<String, Object>> review_RE_List = (ArrayList<HashMap<String, Object>>) request.getAttribute("review_RE_List");
-	int reviewCount = ((Integer) request.getAttribute("reviewCount")).intValue(); // (전체/카테고리)글 개수
-	int review_RE_Count = ((Integer) request.getAttribute("review_RE_Count")).intValue(); // (전체/카테고리)글 개수
-	int nowpage = ((Integer) request.getAttribute("reviewpage")).intValue();
-	int maxpage = ((Integer) request.getAttribute("maxpage")).intValue();
-	int startpage = ((Integer) request.getAttribute("startpage")).intValue();
-	int endpage = ((Integer) request.getAttribute("endpage")).intValue();
-	//리뷰 이미지 수 구하기
-	int[] reviewImgCount = new int[reviewList.size()];	
-	for(int i=0; i<reviewImgCount.length; i++) {
-		reviewImgCount[i] = StringUtils.countOccurrencesOf((String)reviewList.get(i).get("REVIEW_FILE"), ",");
-		/*
-		System.out.println("--------------------------");
-		System.out.println( i + "번째 reviewImgCount = " +  reviewImgCount[i]);
-		System.out.println( "reviewImgCount["+i+"]="+reviewImgCount[i]);
-		*/
-	}
 
+	System.out.println('3');
 	//qna 관련
 	ArrayList<Product_qnaVO> qnaList = (ArrayList<Product_qnaVO>) request.getAttribute("qnaList");
 	ArrayList<Product_qnaVO> qna_RE_List = (ArrayList<Product_qnaVO>) request.getAttribute("qna_RE_List");	
@@ -922,9 +905,11 @@
 			event.preventDefault();			
 
 		})
+		
+		
+//Review 수정하기----------------------------------------------------------------------------------------------------	  		
 			
-		//수정 폼
-		//원글		
+		//review 수정 폼 (원글)
 		$(document).on("click",".gomodifyReviewform",function(event){
 			var REVIEW_NUM = $(this).prev().val();
 			console.log("REVIEW_NUM : " + REVIEW_NUM)
@@ -948,7 +933,7 @@
 						var REVIEW_GRADE = retVal.reviewVO.review_GRADE;
 						var REVIEW_FILE = retVal.reviewVO.review_FILE;
 						var REVIEW_CONTENT = retVal.reviewVO.review_CONTENT;		 
-		 				var beforeimgcount = 0;
+		 				var beforeimgcount = 0;	//수정폼 뿌렸을 때 기존 이미지 n개 표시하기 위해
 						
 		 				output += '<form class="modifyReviewForm" id="modifyReviewForm'+REVIEW_NUM+'">';
 		 				output += '<div class="row justify-content-center">';
@@ -983,8 +968,9 @@
 							output += '</div>';
 							output += '<div class="modify_imgs_wrap">';
 							output += '<img id="modify_inputimg" >';
-							output += '</div></div>';
+							output += '</div>';
 						}
+						output += '</div>';
 						output += '<div class="col-12 pb-2">';
 		 				output += '<div class="file_input">';		
 		 				output += '<label>추가 업로드<input type="file" multiple="multiple" name="REVIEW_FILE" id="modify_input_imgs"></label>';		
@@ -997,15 +983,15 @@
 		 				output += '<div class="row">';	
 		 				output += '<div class="col-2 justify-content-center"></div>';	
 		 				output += '<div class="col-8 justify-content-center"></div>';	
-		 				output += '<div class="col-2 justify-content-center" id="review_control" style="font-size:0.7em; font-weight:bold;">';	
+		 				output += '<div class="col-2 justify-content-center" id="review_control" style="font-size:0.7em; font-weight:bold;">';
+		 				output += '<input type="hidden" name="deleteImg" value="">';		
+		 				output += '<input type="hidden" name="beforeImg" value="">';		
 		 				output += '<input type="hidden" name="REVIEW_NUM" value="'+REVIEW_NUM+'">';	
-		 				output += '<input type="hidden" name="beforeImg" value="">';	
 		 				output += '<a class="modifyReview" style="cursor: pointer;">수정</a> &nbsp;';	
 		 				output += '<a class="formCancel" value="reviewModify" style="cursor: pointer;">취소</a>';	
-		 				output += '</div></div></div></div></form></div>';
+		 				output += '</div></div></div></div></form>';
 		 				
 		 				$('#afterModifyReview'+REVIEW_NUM).append(output);
-		 				console.log(REVIEW_GRADE)
 		 				$("#REVIEW_GRADE"+REVIEW_NUM).val(+REVIEW_GRADE).prop("selected", true); //원래 평점을 set해줌
 					} else {
 						alert("수정폼 데이터 가져오기 실패!!!");
@@ -1017,6 +1003,109 @@
 			});
 			event.preventDefault();		
 		})		
+		
+		
+		
+		//review 수정 process (원글)
+		$(document).on("click",".modifyReview",function(event){
+			var REVIEW_NUM = $(this).prev().val();
+			console.log("REVIEW_NUM"+REVIEW_NUM)
+			
+			//deleteImg는 기존 이미지 중 삭제 원하는 사진
+			//beforeImg는 기존 이미지 중 원하는 사진은 삭제하고 남은 사진들. 새로 추가한 사진과 함께 db에 다시 업로드할 것임
+			var beforeImg = '';		//beforeImg는 
+			for(var i=0;i<$('.beforeimg').length;i++) {
+				var tmp = $('.beforeimg')[i];
+				beforeImg += $(tmp).attr("value") + ',';
+			}
+			console.log("beforeImg : "+beforeImg)
+			$("input[type=hidden][name=beforeImg]").val(beforeImg);
+
+ 			var formId = 'modifyReviewForm'+REVIEW_NUM;
+ 	 		var form = new FormData(document.getElementById(formId));
+			$.ajax({
+				url : "/NAGAGU/modifyReview.do", 
+				data : form,
+				dataType: 'json',
+				processData : false,
+				contentType : false,
+				type : 'POST',				
+				success:function(retVal) {
+					if(retVal.res == "OK") {
+						getReviewList();
+					} else {
+						alert("수정 실패!!!");
+					}
+				},
+				error:function() {
+					alert("ajax통신 실패!!!");
+				}
+			});
+			event.preventDefault();				
+		})		
+		
+		//review 수정 process (답글)
+		$(document).on("click",".modifyReviewReply",function(event){
+			var REVIEW_NUM = $(this).prev().val();
+			console.log("REVIEW_NUM"+REVIEW_NUM)
+
+
+ 			var formId = 'modifyReviewFormReply'+REVIEW_NUM;
+			console.log("formId"+formId)
+ 	 		var form = new FormData(document.getElementById(formId));
+ 	 		
+			$.ajax({
+				url : "/NAGAGU/modifyReviewReply.do", 
+				data : form,
+				dataType: 'json',
+				processData : false,
+				contentType : false,
+				type : 'POST',				
+				success:function(retVal) {
+					if(retVal.res == "OK") {
+						getReviewList();
+					} else {
+						alert("수정 실패!!!");
+					}
+				},
+				error:function() {
+					alert("ajax통신 실패!!!");
+				}
+			});
+			event.preventDefault();				
+		})				
+//Review 삭제하기----------------------------------------------------------------------------------------------------	  
+
+		//원글, 답글 same
+		$(document).on("click",".deleteReview",function(event){
+			var REVIEW_NUM = $(this).prev().prev().val();
+			console.log("REVIEW_NUM : " + REVIEW_NUM)
+			var delete_confirm = confirm("삭제하시겠습니까?");
+			if(delete_confirm) {
+				$.ajax({
+					url : "/NAGAGU/deleteReview.do", 
+					type:'GET',
+					data : {'REVIEW_NUM':REVIEW_NUM},
+					dataType : 'json', // 서버에서 보내줄 데이터 타입
+					async: false,
+					contentType : 'application/x-www-form-urlencoded; charset=UTF-8',
+					success:function(retVal) {
+						if(retVal.res == "OK") {
+							getReviewList();
+						} else if(retVal.res == "Children"){
+							alert("답글이 존재하는 댓글은 삭제할 수 없습니다.");
+						} else {
+							alert("삭제 실패!");
+						}
+					},
+					error:function() {
+						alert("ajax통신 실패!!!");
+					}
+				});
+				event.preventDefault();					
+			}
+		})				
+		
 		
 	//ready 끝	
 	getReviewList();
@@ -1097,7 +1186,6 @@
 			console.log($(this).attr('value'))
 			var formType = $(this).attr('value');
 			
-			
 			if(formType=='ReviewForm') {	//리뷰 입력폼에서 취소
  				$("#ReviewformSection").css('display','none');
 				$('#ReviewForm').each(function() {  
@@ -1109,27 +1197,15 @@
 			else if(formType=='reviewModify') {	//리뷰 수정폼에서 취소
 				var REVIEW_NUM = $(this).prev().prev().val();
 	
-				console.log(REVIEW_NUM)
-				
-				
 				$('#beforeModifyReview'+REVIEW_NUM).css('display', 'block');	//수정,삭제버튼 보임
 				$('#afterModifyReview'+REVIEW_NUM).empty();
 
-				
-/* 				$('#afterModifyReview'+REVIEW_NUM).css('display', 'none');	//수정,삭제버튼 보임
-				$('#modifyReviewForm'+REVIEW_NUM).each(function() {  
-					this.reset();  
-				}); 
-				$('.modify_imgs_wrap').empty();
- */				
-			//	$("#REVIEW_GRADE"+REVIEW_NUM).val("0.5").prop("selected", true);	//수정평점 초기화	
 			}
 			else if(formType=='reviewReply') {	//답글 입력 취소
 				var REVIEW_NUM = $(this).prev().prev().val();
 				console.log(REVIEW_NUM)
 				$("#review_replybtn"+REVIEW_NUM).css('display','block');	//답글버튼 보임
 				$("#ReviewReplyformSection"+REVIEW_NUM).empty();	//답글 지움
-
 
 			}
 			else if(formType=='reviewReplyModify') {	//답글 수정 취소
@@ -1147,13 +1223,7 @@
 			event.preventDefault();	
 		});
 
-	//	$('#afterGrade'+REVIEW_NUM).find('option:first').attr('selected', 'selected');	//수정할 평점 원래 평점으로 초기화
-	//	$("#id option:eq(0)").prop("selected", true); //첫번째 option 선택
-		
 
-	
-	
-	
 	
 	
 //input type=file 이미지 업로드/수정----------------------------------------------------------------------------------------------------	    	
@@ -1343,7 +1413,16 @@
 				
 				var img_id = "#beforeimg_id_" + index;
 				console.log("#beforeimg_id_+index : " + img_id);
+		
+					
+				
+				var deleteImg=$("input[type=hidden][name=deleteImg]").val();	//기본은 ""
+				deleteImg += $(img_id).children().attr('value')+',';	//삭제할 때마다 deleteImg의 value에 추가됨
+				console.log("deleteImg : " + deleteImg);
+				$("input[type=hidden][name=deleteImg]").val(deleteImg);
+					
 				$(img_id).remove();
+				
 				
 				console.log("sel_files : " + sel_files);            
 			} 
@@ -1432,9 +1511,7 @@
 		
 		
 		
-//Review 수정하기----------------------------------------------------------------------------------------------------	  		
-
-		
+	
 		
 		//답글		
 		$(document).on("click",".gomodifyReviewReplyform",function(event){
@@ -1448,73 +1525,7 @@
 	
 		})
 				
-		
-		//원글 수정 process
-		$(document).on("click",".modifyReview",function(event){
-			var REVIEW_NUM = $(this).prev().val();
-			
-			//beforeImg 넘겨주기
-			var beforeImg = '';
-			for(var i=0;i<$('.beforeimg').length;i++) {
-				beforeImg += jQuery('.beforeimg').attr("value");
-			}
-			console.log(beforeImg)
-			$("input[type=hidden][name=beforeImg]").val(beforeImg);
 
-			//beforeImg 히든값 설정해줌
-			
-/* 			
-			var a = jQuery('.beforeimg').attr("src");
-			jQuery("#replace-image").attr("src", a);
- 	 */
-			
-			
- 	 // 	document.getElementById(formId).beforeImg.value=beforeImg;
- 	 
- 			var formId = 'modifyReviewForm'+REVIEW_NUM;
-			var form = new FormData(document.getElementById(formId));
-			$.ajax({
-				url : "/NAGAGU/modifyReview.do", 
-				data : form,
-				dataType: 'json',
-				processData : false,
-				contentType : false,
-				type : 'POST',				
-				success:function(retVal) {
-					if(retVal.insertres == "OK") {
-		 				
-						getReviewList();
-					} else {
-						alert("insert 실패!!!");
-					}
-				},
-				error:function() {
-					alert("ajax통신 실패!!!");
-				}
-			});
-			event.preventDefault();				
-			
-			
-			
-			
-			
-			
-			var REVIEW_GRADE = '';
-			var REVIEW_FILE = '';
-			var REVIEW_CONTENT = '';
-			
-			var mod_form = '';			
-			//modifyReviewForm00 폼의 값들 넘겨줌
-			
-		})
-//Review 삭제하기----------------------------------------------------------------------------------------------------	  		
-				
-		$(document).on("click",".deleteReview",function(event){
-			var REVIEW_NUM = $(this).prev().prev().val();
-			console.log("REVIEW_NUM : " + REVIEW_NUM)		
-		})
-		
-		
 		
 
 		
