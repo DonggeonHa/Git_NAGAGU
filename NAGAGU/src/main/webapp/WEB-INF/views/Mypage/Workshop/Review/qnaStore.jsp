@@ -93,14 +93,14 @@
 		<table class="table" id="work_store">
 			<thead>
 			<tr class="text-center">
-			    <th scope="col" class="th2">번호</th>
-			    <th scope="col" class="th3">카테고리</th>
-			    <th scope="col" class="th4">작성자</th>
-			    <th scope="col" class="th5">상품명</th>
-			    <th scope="col" class="th6">문의 내용</th>
-			    <th scope="col" class="th7">작성날짜</th>
-			    <th scope="col" class="th8">답변상태</th>
-			    <th scope="col" class="th9">관리</th>
+			    <th scope="col">번호</th>
+			    <th scope="col">카테고리</th>
+			    <th scope="col">작성자</th>
+			    <th scope="col">상품명</th>
+			    <th scope="col">문의 내용</th>
+			    <th scope="col">작성날짜</th>
+			    <th scope="col">답변상태</th>
+			    <th scope="col">관리</th>
 			</tr>
 			</thead>
 			<tbody id="ProductqnaList"></tbody>

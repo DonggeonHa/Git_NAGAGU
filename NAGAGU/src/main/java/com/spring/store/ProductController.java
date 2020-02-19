@@ -221,13 +221,10 @@ public class ProductController {
 		WorkShopMemberVO workshopVO = productService.selectWorkshop(vo);
 		int WorkshopMatchingNumber = workshopVO.getWORKSHOP_NUM();
 		int WorkshopNum = workshopVO.getWORKSHOP_NUM();
+		String WorkshopPic = workshopVO.getWORKSHOP_PICTURE();
 		model.addAttribute("WorkshopNum",WorkshopNum);
 		model.addAttribute("WorkshopMatchingNumber",WorkshopMatchingNumber);
-//		/*qna 답글 출력시 워크샵 name, pic 필요함*/
-//		String WorkshopName = workshopVO.getWORKSHOP_NAME();
-//		String WorkshopPicture = workshopVO.getWORKSHOP_PICTURE();
-//		model.addAttribute("WorkshopName",WorkshopName);
-//		model.addAttribute("WorkshopPicture",WorkshopPicture);
+		model.addAttribute("WorkshopPic",WorkshopPic);
 
 		
 		

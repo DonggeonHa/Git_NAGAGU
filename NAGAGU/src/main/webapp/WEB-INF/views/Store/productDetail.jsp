@@ -51,7 +51,7 @@
 	//(QNA)글쓴이만 답글 버튼이 보인다. 글쓴이인지 체크하기 위해 이 글의 WORKSHOP_NUM 받아옴
 	int WorkshopMatchingNumber = (int)request.getAttribute("WorkshopMatchingNumber");
 	Integer WORKSHOP_NUM = (Integer)session.getAttribute("WORKSHOP_NUM");
-
+	String WorkshopPic = (String)request.getAttribute("WorkshopPic");
 //	System.out.println("WotkshopMatchingNumber="+WorkshopMatchingNumber);
 
 
@@ -64,15 +64,7 @@
 	String PRODUCT_SIZE = vo.getPRODUCT_SIZE();
 	int bannerImgCount = StringUtils.countOccurrencesOf(vo.getPRODUCT_BANNER(), ",");
 
-/* 	
-	//qna 답글 공방 멤버 관련
-	int WorkshopNum = ((Integer) request.getAttribute("WorkshopNum")).intValue();
-	String WorkshopName = (String)request.getAttribute("WorkshopName");
-	String WorkshopPicture = (String)request.getAttribute("WorkshopPicture");
-//	System.out.println("WorkshopName="+WorkshopName);
-//	System.out.println("WorkshopPicture="+WorkshopPicture);
-	
- */
+
 
 	//날짜 포맷 형식
 	SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
@@ -478,7 +470,7 @@
 			<form name="goodsform" action="#" method="post" id="goodsform">
 				<div class="row pt-4 pl-4">
 					<div class="col-3">
-						<img src="<%=WORKSHOP_PICTURE %>" width="95%">
+						<img src="<%=WorkshopPic %>" width="95%">
 					</div>
 					<hr>
 					<div class="col-9">
