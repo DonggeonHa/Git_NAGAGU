@@ -10,5 +10,8 @@
 	<script src="https://kit.fontawesome.com/74760b5c81.js" crossorigin="anonymous"></script>
 	<script src="https://kit.fontawesome.com/97dbc99ea1.js"	crossorigin="anonymous"></script>
 	
+	<!-- JavaScript -->
+	<script src="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/alertify.min.js"></script>
+
 	
 	
