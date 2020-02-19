@@ -123,7 +123,7 @@
 		                    	<div style="margin: 0 1% 0 0;">
 									<div class="form-group" style="margin-bottom: 0;">
 										<div class="input-group date" id="datetimepicker3" data-target-input="nearest">
-											<input type="text" class="form-control datetimepicker-input" data-target="#datetimepicker3" name="CLASS_DATE_CONFIGURATION_1"/>
+											<input type="text" class="form-control datetimepicker-input" data-target="#datetimepicker3" name="CLASS_DATE_CONFIGURATION_3"/>
 											<div class="input-group-append" data-target="#datetimepicker3" data-toggle="datetimepicker">
 												<div class="input-group-text">
 													<i class="fa fa-calendar"></i>
@@ -138,7 +138,7 @@
 	                   			<div style="margin: 0 1% 0 1%;">
 									<div class="form-group" style="margin-bottom: 0;">
 										<div class="input-group date" id="datetimepicker4" data-target-input="nearest">
-											<input type="text" class="form-control datetimepicker-input" data-target="#datetimepicker4" name="CLASS_DATE_CONFIGURATION_2"/>
+											<input type="text" class="form-control datetimepicker-input" data-target="#datetimepicker4" name="CLASS_DATE_CONFIGURATION_4"/>
 											<div class="input-group-append" data-target="#datetimepicker4" data-toggle="datetimepicker">
 												<div class="input-group-text">
 													<i class="fa fa-calendar"></i>
@@ -160,7 +160,6 @@
 					<div class="row">
 						<div>
 							<select name="CLASS_AREA" class="form-control">
-								<option value="지역" selected>지역</option>
 								<option value="종로구">종로구</option>
 								<option value="중구">중구</option>
 								<option value="용산구">용산구</option>
@@ -197,7 +196,6 @@
 					<div class="row">
 						<div>
 							<select name="CLASS_CATEGORY" class="form-control">
-								<option value="all" selected>전체</option>
 								<option value="table">책상</option>
 								<option value="chair">의자</option>
 								<option value="bookshelf">책장</option>
@@ -329,7 +327,7 @@
 <script src="https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 
 <script>
-	/* 달력 부분 ========== 현재 적용되지 않음 */
+	/* 달력 부분 ========== */
 	$(document).ready(function() {
 		$('#datetimepicker1').datetimepicker({ format: 'L'});
 		$('#datetimepicker2').datetimepicker({

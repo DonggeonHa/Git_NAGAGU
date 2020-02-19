@@ -350,7 +350,7 @@
 		</table>
 		<div class="text-center">
 			<input class="btn btn-outline-dark btn-lg" type="reset" value="취소하기">&nbsp;&nbsp;&nbsp;
-			<input class="btn btn-outline-dark btn-lg" type="submit" value="등록하기">
+			<input class="btn btn-outline-dark btn-lg" type="submit" value="수정하기">
 		</div>
 	</form>
 </div>	

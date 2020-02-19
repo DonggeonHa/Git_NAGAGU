@@ -14,18 +14,21 @@
 	ClassVO classVO = null;
 	String CLASS_CATEGORY = null;
 	String CLASS_NAME = null;
+	String CLASS_AREA = null;
 	int CLASS_NUMBER = 0;
 	if(request.getAttribute("classVO") != null) {	//상품관리 페이지에서 넘어왔다
 		count = (int)request.getAttribute("count");	//
-		classVO = (ClassVO)request.getAttribute("productVO");
+		classVO = (ClassVO)request.getAttribute("classVO");
 		voExist = "Y";
 		CLASS_CATEGORY = classVO.getCLASS_CATEGORY();
 		CLASS_NAME = classVO.getCLASS_NAME();
+		CLASS_AREA = classVO.getCLASS_AREA();
 		System.out.println("VO 존재함 : 강의관리페이지 통해 들어옴");
 	}
 	
 	System.out.println(CLASS_CATEGORY);
 	System.out.println(CLASS_NAME);
+	System.out.println(CLASS_AREA);
 %>
 
 
@@ -45,20 +48,20 @@
 					<div class="d-flex justify-content-start">
 						<div class="select1">
 							<select class="search_hidden_state justify-content-start form-control" id="selectClassType1" name="selectClassType1" onchange="btn_select1()" style="height: 33px;">
-								<option value="all">전체</option>
+								<option value="all">강의상태</option>
 								<option value="inClass">강의중</option>
 								<option value="endClass">강의종료</option>
 							</select>
 						</div>
-						<div class="select2">
+						<div class="select2" style="padding-left:5px">
 							<select class="search_hidden_state justify-content-start form-control" id="selectClassType2" name="selectClassType2" onchange="btn_select2()" style="height: 33px;">
-								<option value="allClass">전체</option>
-								<option value="정규클래스">원데이클래스</option>
+								<option value="allClass">클래스</option>
+								<option value="원데이클래스">원데이클래스</option>
 								<option value="정규클래스">정규클래스</option>
 							</select>
 						</div>
-						<div class="select3">
-							<select class="search_hidden_state justify-content-start form-control"  id="selectCategory" name="selectCategory" onchange="btn_select3()" style="height: 33px;">
+						<div class="select3" style="padding-left:5px">
+							<select class="search_hidden_state justify-content-start form-control"  id="selectCategory1" name="selectCategory1" onchange="btn_select3()" style="height: 33px;">
 								<option value="지역" selected>지역</option>
 								<option value="종로구">종로구</option>
 								<option value="중구">중구</option>
@@ -87,8 +90,21 @@
 								<option value="강동구">강동구</option>	
 							</select>
 						</div>	
-						<div class="select4" style="padding-left:5px">	<!-- 보기 정렬 -->
-							<select class="search_hidden_state justify-content-start form-control" id="selectListAlign" name="selectListAlign" onchange="btn_select4()" style="height: 33px;">
+						<div class="select4" style="padding-left:5px">
+							<select class="search_hidden_state justify-content-start form-control"  id="selectCategory2" name="selectCategory2" onchange="btn_select4()" style="height: 33px;">
+								<option value="all">카테고리</option>
+								<option value="table">책상</option>
+								<option value="chair">의자</option>
+								<option value="bookshelf">책장</option>
+								<option value="bed">침대</option>
+								<option value="drawer">서랍장</option>
+								<option value="sidetable">협탁</option>
+								<option value="dressing_table">화장대</option>
+								<option value="others">기타</option>		
+							</select>
+						</div>	
+						<div class="select5" style="padding-left:5px">	<!-- 보기 정렬 -->
+							<select class="search_hidden_state justify-content-start form-control" id="selectListAlign" name="selectListAlign" onchange="btn_select5()" style="height: 33px;">
 								<option value="review_date">최근 등록순</option>
 								<option value="review_grade">평점순</option>
 							</select>
@@ -97,7 +113,7 @@
 				</div>	
 	            <div class="justify-content-end" style="padding: 0;">
 	            	<div class="d-flex justify-content-end">
-	            	<!-- Example split danger button -->
+	            		<!-- Example split danger button -->
 						<div class="dropdown">
 						    <button class="btn dropbtn btn-sm dropdown-toggle btn-search-mode" type="button" id="searchType" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 						       	 선택
@@ -122,14 +138,17 @@
 		</div>
         <table class="table" id="work_store">
 		    <thead>
-			    <tr>
-			        <th scope="col">번호</th>
-			        <th scope="col">카테고리</th>
-			        <th scope="col">작성자</th>
-			        <th scope="col">강의명</th>
-				    <th scope="col">평점</th>
-				    <th scope="col">후기 내용</th>
-			        <th scope="col">작성날짜</th>
+			    <tr class="text-center">
+					<th scope="col">번호</th>
+					<th scope="col">강의상태</th>
+					<th scope="col">카테고리</th>
+					<th scope="col">지역</th>
+					<th scope="col">클래스</th>
+					<th scope="col">작성자</th>
+					<th scope="col">강의명</th>
+					<th scope="col">평점</th>
+					<th scope="col">후기 내용</th>
+					<th scope="col">작성날짜</th>
 			    </tr>
 		    </thead>
 		    <tbody id="ClassReviewList"></tbody>
@@ -143,19 +162,16 @@
 
 <script>
 	function member_nick() {
-		alert("searchType : onclick=member_nick() 실행")
 		$('#searchType').html('작성자');
 		$('#searchType').val('member_nick');
 	};
 	function class_name() {
-		alert("searchType : onclick=class_name() 실행")
-		$('#searchType').html('상품명');
+		$('#searchType').html('강의명');
 		$('#searchType').val('class_name');
 	}
 	
 	function review_content() {
-		alert("searchType : onclick=review_content() 실행")
-		$('#searchType').html('문의내용');
+		$('#searchType').html('후기내용');
 		$('#searchType').val('review_content');
 	}
 	
@@ -175,9 +191,10 @@
 		$("#keyword").val('');
 		$('#list_none').empty();
 		$("#selectClassType1").val('all').prop("selected", true);
-		$("#selectClassType2").val('all').prop("selected", true);
-		$("#selectCategory").val('all').prop("selected", true);
-		$("#selectListAlign").val('qna_date').prop("selected", true);
+		$("#selectClassType2").val('allClass').prop("selected", true);
+		$("#selectCategory1").val('지역').prop("selected", true);
+		$("#selectCategory2").val('all').prop("selected", true);
+		$("#selectListAlign").val('review_date').prop("selected", true);
 		$('#searchType').text('선택');
 		$("#searchType").val('');
 		$("#keyword").val('');
@@ -186,7 +203,11 @@
 	
 	$("#keyword").keyup(function(event){
 		if (event.keyCode == 13) {
-			event.preventDefault();
+			if(!$('#keyword').val() || !$('#searchType').val()){
+				alert("카테고리 선택, 검색어를 입력하세요!");
+				$('#keyword').focus();
+				return false;
+			}		
 			ClassReviewList(event);
 			$('#list_none').empty();
 			event.preventDefault();
@@ -198,7 +219,6 @@
 
 	/*select1-강의상태 선택*/	
 	function btn_select1() {		
-		alert("btn_select1의 selectClassType1 : " + $("#selectClassType1 option:selected").val());
 		console.log("$('#selectClassType1 option:selected').val() : "+$("#selectClassType1 option:selected").val())
 		$('#ClassReviewList').empty();
 		ClassReviewList();
@@ -206,24 +226,29 @@
 	
 	/*select2-강의타입 선택*/	
 	function btn_select2() {		
-		alert("btn_select2의 selectClassType2 : " + $("#selectClassType2 option:selected").val());
 		console.log("$('#selectClassType2 option:selected').val() : "+$("#selectClassType2 option:selected").val())
 		$('#ClassReviewList').empty();
 		ClassReviewList();
 	}	
 	
-	/*select3-카테고리 선택*/	
+	/*select3-지역 카테고리 선택*/	
 	function btn_select3() {		
-		alert("btn_select3의 selectCategory : " + $("#selectCategory option:selected").val());
-		console.log("$('#selectCategory option:selected').val() : "+$("#selectCategory option:selected").val())
+		console.log("$('#selectCategory1 option:selected').val() : "+$("#selectCategory option:selected").val())
+		
+		$('#ClassReviewList').empty();
+		ClassReviewList();
+	}	
+	
+	/*select4-가구 카테고리 선택*/	
+	function btn_select4() {		
+		console.log("$('#selectCategory2 option:selected').val() : "+$("#selectCategory option:selected").val())
 		
 		$('#ClassReviewList').empty();
 		ClassReviewList();
 	}	
 
-	/*select4-리스트 정렬*/
-	function btn_select4() {		
-		alert("btn_select4의 selectListAlign : " + $("#selectListAlign option:selected").val());
+	/*select5-리스트 정렬*/
+	function btn_select5() {		
 		console.log("$('#selectListAlign option:selected').val() : "+$("#selectListAlign option:selected").val())
 		
 		$('#ClassReviewList').empty();
@@ -249,14 +274,15 @@
 	$(document).ready(function() {
 		if("<%=voExist%>"=="Y") {	//vo 존재한다
 			//vo정보로 검색한다
-			//selectCategory, searchType(상품명), keyword(상품이름)
+			//selectCategory1(지역카테고리), selectCategory2(가구카테고리),searchType(상품명), keyword(상품이름)
 			//qna 있을 경우/없을경우
 			if(<%=count%> != 0) {	//문의 있다
 				$("#selectClassType1").val('all').prop("selected", true);
-				$("#selectClassType2").val('all').prop("selected", true);
-				$("#selectCategory").val('<%=CLASS_CATEGORY%>').prop("selected", true);	
-				$('#searchType').html('상품명');
-				$('#searchType').val('product_title');
+				$("#selectClassType2").val('allClass').prop("selected", true);
+				$("#selectCategory1").val('<%=CLASS_AREA%>').prop("selected", true);	
+				$("#selectCategory2").val('<%=CLASS_CATEGORY%>').prop("selected", true);	
+				$('#searchType').html('강의명');
+				$('#searchType').val('class_name');
 				$("#keyword").val('<%=CLASS_NAME%>');
 			} else if(<%=count%> == 0) {
 				alert('상품 "<%=CLASS_NAME%>" 에 해당하는 문의가 없습니다.');
@@ -276,7 +302,8 @@
 		$('#list_none').empty();
 		var selectClassType1 = $("#selectClassType1 option:selected").val();	//필터 값 가져오기
 		var selectClassType2 = $("#selectClassType2 option:selected").val();	//필터 값 가져오기
-		var selectCategory = $("#selectCategory option:selected").val();	//필터 값 가져오기
+		var selectCategory1 = $("#selectCategory1 option:selected").val();	//필터 값 가져오기
+		var selectCategory2 = $("#selectCategory2 option:selected").val();	//필터 값 가져오기
 		var selectListAlign = $("#selectListAlign option:selected").val();	//필터 값 가져오기
 		var searchType = $("#searchType").val();	//필터 값 가져오기
 		var keyword = ''; 
@@ -285,7 +312,8 @@
 		}
 		console.log("selectClassType1="+selectClassType1)
 		console.log("selectClassType2="+selectClassType2)
-		console.log("selectCategory="+selectCategory)
+		console.log("selectCategory1="+selectCategory1)
+		console.log("selectCategory2="+selectCategory2)
 		console.log("selectListAlign="+selectListAlign)
 		console.log("searchType : " + searchType)
 		console.log("keyword : " + keyword)
@@ -297,7 +325,8 @@
 			type: 'POST',
 			data: {"selectClassType1" : selectClassType1, 
 				"selectClassType2" : selectClassType2,
-				"selectCategory" : selectCategory, 
+				"selectCategory1" : selectCategory1, 
+				"selectCategory2" : selectCategory2, 
 				"selectListAlign" : selectListAlign,
 				"searchType" : searchType,
 				"keyword" : keyword
@@ -308,84 +337,90 @@
 				console.log(reviewList);
 				var output = ' ';	
 				
-				if(qnaList.length!=0) {
+				if(reviewList.length!=0) {
 					$('.listnum_num').text(reviewList.length+"건");
 					var myreply = new Array();
 			     	for(var j=0; j<reviewList.length; j++){
 			      		var CLASS_CATEGORY = reviewList[j].CLASS_CATEGORY;
 			      		switch(CLASS_CATEGORY){
 				      	    case 'table' : 
-				      	    	PRODUCT_CATEGORY = '책상'
+				      	    	CLASS_CATEGORY = '책상'
 				      	        break;
 				      	    case 'chair' : 
-				      	    	PRODUCT_CATEGORY = '의자' 
+				      	    	CLASS_CATEGORY = '의자' 
 				      	        break;  
 				      	    case 'bookshelf' : 
-				      	    	PRODUCT_CATEGORY = '책장'
+				      	    	CLASS_CATEGORY = '책장'
 				      	        break;
 				      	    case 'bed' : 
-				      	    	PRODUCT_CATEGORY = '침대' 
+				      	    	CLASS_CATEGORY = '침대' 
 				      	        break;  
 				      	    case 'drawer' : 
-				      	    	PRODUCT_CATEGORY = '서랍장'
+				      	    	CLASS_CATEGORY = '서랍장'
 				      	        break;
 				      	    case 'sidetable' : 
-				      	    	PRODUCT_CATEGORY = '협탁' 
+				      	    	CLASS_CATEGORY = '협탁' 
 				      	        break;  
 				      	    case 'dressing_table' : 
-				      	    	PRODUCT_CATEGORY = '화장대'
+				      	    	CLASS_CATEGORY = '화장대'
 				      	        break;
 				      	    case 'others' : 
-				      	    	PRODUCT_CATEGORY = '기타' 
+				      	    	CLASS_CATEGORY = '기타' 
 				      	        break;
 			      	    }
-			      		var product_category = qnaList[j].PRODUCT_CATEGORY;
-			      		var MEMBER_NICK = qnaList[j].MEMBER_NICK;
-			    		var PRODUCT_TITLE = qnaList[j].PRODUCT_TITLE;
-			    		var PRODUCT_NUM = qnaList[j].PRODUCT_NUM;
-			    		var QNA_DATE = new Date(qnaList[j].QNA_DATE);
-			    		var date = date_format(QNA_DATE);
-			    		var QNA_CONTENT = qnaList[j].QNA_CONTENT;
-    					var QNA_RE = qnaList[j].QNA_RE;
-    					var QNA_STATUS = qnaList[j].QNA_STATUS;
-
-						output += '<tr>';
+			      		var CLASS_STATUS = reviewList[j].CLASS_STATUS;
+			      		switch(CLASS_STATUS){
+			      	    case 0 : 
+			      	    	CLASS_STATUS = '강의종료'
+			      	        break;
+			      	    case 1 : 
+			      	    	CLASS_STATUS = '강의중' 
+			      	        break;  
+			      	    }
+			      		var class_category = reviewList[j].CLASS_CATEGORY;
+			      		var CLASS_AREA = reviewList[j].CLASS_AREA;
+			      		var CLASS_DIVISION = reviewList[j].CLASS_DIVISION;
+			      		var MEMBER_NICK = reviewList[j].MEMBER_NICK;
+			    		var CLASS_NAME = reviewList[j].CLASS_NAME;
+			    		var CLASS_NUMBER = reviewList[j].CLASS_NUMBER;
+			    		var REVIEW_GRADE = reviewList[j].REVIEW_GRADE;
+			    		var REVIEW_DATE = new Date(reviewList[j].REVIEW_DATE);
+			    		var date = date_format(REVIEW_DATE);
+			    		var REVIEW_CONTENT = reviewList[j].REVIEW_CONTENT;
+    					
+						output += '<tr class="text-center">';
 						output += '<td>' + number + '</td>';
-						output += '<td>' + PRODUCT_CATEGORY + '</td>';
+						output += '<td>' + CLASS_STATUS + '</td>';
+						output += '<td>' + CLASS_CATEGORY + '</td>';
+						output += '<td>' + CLASS_DIVISION + '</td>';
+						output += '<td>' + CLASS_AREA + '</td>';
 						output += '<td>' + MEMBER_NICK + '</td>';
-						if(PRODUCT_TITLE.length >= 14) {
-							PRODUCT_TITLE = PRODUCT_TITLE.substr(0,14)+"...";
+						if(CLASS_NAME.length >= 14) {
+							CLASS_NAME = CLASS_NAME.substr(0,14)+"...";
 						}
-						output += '<td><a href="productdetail.pro?PRODUCT_NUM=' + PRODUCT_NUM + '&PRODUCT_CATEGORY=' + product_category + '">'+PRODUCT_TITLE+'</a></td>';
-						if(QNA_CONTENT.length >= 45) {
-							QNA_CONTENT = QNA_CONTENT.substr(0,45)+"...";
+						output += '<td><a href="classdetail.ac?CLASS_NUMBER=' + CLASS_NUMBER + '">'+CLASS_NAME+'</a></td>';
+						output += '<td>' + REVIEW_GRADE + '</td>';
+						
+						if(REVIEW_CONTENT.length >= 45) {
+							REVIEW_CONTENT = REVIEW_CONTENT.substr(0,45)+"...";
 						}
-						if(QNA_STATUS == 0) {
-							//답변이 달리지 않은 문의
-							output += '<td style="text-align:left;">'+QNA_CONTENT+'</td>';
-							output += '<td>' + date + '</td>';
-							output += '<td>'+'답변 대기'+'</td>';
-							output += '<td><button class="btn_write" onclick="location.href=">' + "작성" + '</button></td>';
-						} else if (QNA_STATUS == 1){
-							//답변이 달린 문의
-							output += '<td style="text-align:left;">'+QNA_CONTENT+'</td>';
-							output += '<td>' + date + '</td>';
-							output += '<td>'+'답변 완료'+'</td>';
-							output += '<td><button class="btn_modify" onclick="location.href=">'+"수정"+'</button></td>';
-						}
-						output += '<td><button class="btn_move" onclick="location.href=">' + "이동" + '</button></td>';
+						
+						output += '<td style="text-align:left;">'+REVIEW_CONTENT+'</td>';
+						output += '<td>' + date + '</td>';
 						output += '</tr>';
 						number += 1;
      				}					
-					$('#ProductqnaList').append(output);
+					$('#ClassReviewList').append(output);
 				} else {
 					output += '검색 결과가 없습니다.';
 					$('.listnum_num').text("0건");
 					$('#list_none').append(output);
 					//검색결과 없을시 select조건들 초기화
-					$("#selectClassType").val('all').prop("selected", true);
-					$("#selectCategory").val('all').prop("selected", true);
-					$("#selectListAlign").val('qna_date').prop("selected", true);
+					$("#selectClassType1").val('all').prop("selected", true);
+					$("#selectClassType2").val('allClass').prop("selected", true);
+					$("#selectCategory1").val('지역').prop("selected", true);
+					$("#selectCategory2").val('all').prop("selected", true);
+					$("#selectListAlign").val('review_date').prop("selected", true);
 					$('#searchType').text('선택');
 					$("#searchType").val('');
 					$("#keyword").val('');
@@ -393,7 +428,7 @@
 				page();
 			},
 			error: function() {
-				alert("QNA List를 띄울 수 없습니다.");
+				alert("Review List를 띄울 수 없습니다.");
 			}
 		});
 	}		
@@ -430,7 +465,7 @@
 				$("#remo").html("");
 	   
 				if (numPages > 1) {     // 한페이지 이상이면
-					if (currentPage < 5 && numPages-currentPage >= 5) {   // 현재 5p 이하이면
+					if (currentPage < 5 && (numPages-currentPage) >= 5) {   // 현재 5p 이하이면
 						nowp = 0;     // 1부터 
 						endp = pagesu;    // 10까지
 					} else {

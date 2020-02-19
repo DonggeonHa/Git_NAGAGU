@@ -4,6 +4,9 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.apache.ibatis.annotations.Param;
+
+import com.spring.academy.ClassVO;
 import com.spring.store.ProductVO;
 
 
@@ -19,4 +22,7 @@ public interface ProductManagementService {
 	ProductVO getProductVoOfWorkshop(HashMap<String, Object> map);
 	int checkQnaCount(HashMap<String, Object> map);
 	int checkReviewCount(HashMap<String, Object> map);
+	
+
+	ProductVO getproductDetail(int PRODUCT_NUM);
 }

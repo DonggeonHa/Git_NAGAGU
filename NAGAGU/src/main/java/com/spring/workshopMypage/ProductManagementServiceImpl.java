@@ -97,5 +97,14 @@ public class ProductManagementServiceImpl implements ProductManagementService {
 		return count;
 	}
 
+	@Override
+	public ProductVO getproductDetail(int PRODUCT_NUM) {
+		ProductVO productVO = null;
+		ProductManagementMapper managementMapper = sqlSession.getMapper(ProductManagementMapper.class);
+		productVO = managementMapper.getproductDetail(PRODUCT_NUM);
+		
+		return productVO;
+	}
+
 
 }

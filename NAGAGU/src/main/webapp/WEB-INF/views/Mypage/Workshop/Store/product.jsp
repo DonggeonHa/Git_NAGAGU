@@ -57,7 +57,7 @@ if (session.getAttribute("WORKSHOP_NUM") == null) {
 						</select>
 					</div>	
 					<div class="select3" style="padding-left:5px">	<!-- 보기 정렬 -->
-						<select class="search_hidden_state justify-content-start" id="selectListAlign" name="selectListAlign" onchange="btn_select3()" style="height: 33px;">
+						<select class="search_hidden_state justify-content-start form-control" id="selectListAlign" name="selectListAlign" onchange="btn_select3()" style="height: 33px;">
 							<option value="product_date">최근 등록순</option>									
 							<option value='product_sales'>판매량순</option>
 							<option value="product_grade">평점순</option>
@@ -89,21 +89,21 @@ if (session.getAttribute("WORKSHOP_NUM") == null) {
 		</div>       
 		<table class="table" id="work_store">
 		    <thead>
-		    <tr>
-		        <th scope="col" class="th1"><input id="all_select" type="checkbox"></th>
-		        <th scope="col" class="th2">번호</th>
-		        <th scope="col" class="th3">상태</th>
-		        <th scope="col" class="th4">카테고리</th>
-		        <th scope="col" class="th5">상품명</th>
-		        <th scope="col" class="th6">판매가</th>
-		        <th scope="col" class="th7">재고량</th>
-		        <th scope="col" class="th8">판매량</th>
-		        <th scope="col" class="th9">평점</th>
-		        <th scope="col" class="th10">조회수</th>
-		        <th scope="col" class="th11">좋아요</th>
-		        <th scope="col" class="th12">작성날짜</th>
-		        <th scope="col" class="th13">관리</th>
-		        <th scope="col" class="th14">이동</th>
+		    <tr class="text-center">
+		        <th scope="col"><input id="all_select" type="checkbox"></th>
+		        <th scope="col">번호</th>
+		        <th scope="col">상태</th>
+		        <th scope="col">카테고리</th>
+		        <th scope="col">상품명</th>
+		        <th scope="col">판매가</th>
+		        <th scope="col">재고량</th>
+		        <th scope="col">판매량</th>
+		        <th scope="col">평점</th>
+		        <th scope="col">조회수</th>
+		        <th scope="col">좋아요</th>
+		        <th scope="col">작성날짜</th>
+		        <th scope="col">관리</th>
+		        <th scope="col">이동</th>
 		    </tr>
 		    </thead>
 		    <tbody id="productList">
@@ -143,7 +143,6 @@ if (session.getAttribute("WORKSHOP_NUM") == null) {
 	
 	//선택한 체크들 상태 변경해주는 함수
 	function modifyProductStatus(to_status, checkBoxArr) {
-		alert("modifyProductStatus 실행!");
 		console.log("to_status : " + to_status)
 		for (i=0;i<checkBoxArr.length;i++) {
 			console.log("checkBoxArr[i] : " + checkBoxArr[i])
@@ -307,7 +306,6 @@ if (session.getAttribute("WORKSHOP_NUM") == null) {
 		
 	/*select1-판매상태 선택*/	
 	function btn_select1() {		
-		alert("btn_select1의 selectClassType : " + $("#selectClassType option:selected").val());
 		console.log("$('#selectClassType option:selected').val() : "+$("#selectClassType option:selected").val())
 		$('#productList').empty();
 		productList();
@@ -315,7 +313,6 @@ if (session.getAttribute("WORKSHOP_NUM") == null) {
 	
 	/*select2-카테고리 선택*/	
 	function btn_select2() {		
-		alert("btn_select2의 selectCategory : " + $("#selectCategory option:selected").val());
 		console.log("$('#selectCategory option:selected').val() : "+$("#selectCategory option:selected").val())
 		
 		$('#productList').empty();
@@ -324,7 +321,6 @@ if (session.getAttribute("WORKSHOP_NUM") == null) {
 
 	/*select3-리스트 정렬*/
 	function btn_select3() {		
-		alert("btn_select3의 selectListAlign : " + $("#selectListAlign option:selected").val());
 		console.log("$('#selectListAlign option:selected').val() : "+$("#selectListAlign option:selected").val())
 		
 		$('#productList').empty();
@@ -454,7 +450,7 @@ if (session.getAttribute("WORKSHOP_NUM") == null) {
 			    		var PRODUCT_DATE = new Date(productList[j].PRODUCT_DATE);
 			    		var date = date_format(PRODUCT_DATE);
 			      
-						output += '<tr>';
+						output += '<tr class="text-center">';
 						output += '<td><input type="checkbox" name="chk" value="'+PRODUCT_NUM+'"></td>';
 						output += '<td>' + number + '</td>';
 						output += '<td>' + PRODUCT_STATUS + '</td>';
@@ -471,7 +467,7 @@ if (session.getAttribute("WORKSHOP_NUM") == null) {
 						output += '<td>' + PRODUCT_LIKE + '</td>';
 						output += '<td>' + date + '</td>';
 
-						output += '<td><button class="btn_modify" onclick="location.href=">' + "수정 " + '</button>&nbsp;';
+						output += '<td><button class="btn_modify" onclick="updateProduct(' + PRODUCT_NUM + ')">' + "수정 " + '</button>&nbsp;';
 						output += '<button class="btn_remove" value="'+PRODUCT_NUM+'">' + "삭제" + '</button></td>';
 						output += '<td><button class="btn_review" value="'+PRODUCT_NUM+'" onclick="goreview(this.value)">' + "후기" + '</button>&nbsp;';
 						output += '<button class="btn_qna" value="'+PRODUCT_NUM+'" onclick="goqna(this.value)">' + "문의" + '</button></td>';
@@ -496,6 +492,13 @@ if (session.getAttribute("WORKSHOP_NUM") == null) {
 			}
 		});
 	}		
+	
+	function updateProduct($PRODUCT_NUM){
+		var PRODUCT_NUM = $PRODUCT_NUM;
+		console.log(PRODUCT_NUM);
+		
+		location.href="./updateProductForm.mywork?PRODUCT_NUM=" + PRODUCT_NUM;
+	}
 	
 	// 만들어진 테이블에 페이지 처리
 	function page() { 	

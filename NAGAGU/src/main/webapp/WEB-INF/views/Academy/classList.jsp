@@ -76,6 +76,17 @@
 	.caption .active {
 		color: rgba(0, 0, 0, 1) !important;
 	}
+
+	
+	/*별 이미지 색상*/
+	.fa-star {
+		color: rgb(239, 144, 14);
+	}	
+	.grade {
+		font-size: small;
+		float: left;
+	}
+				
 </style>
 
 	
@@ -176,12 +187,15 @@
 									</div>
 									<hr style="margin-top: 0; margin-bottom: 0;">
 									<div class="" style="font-szie: 0.8rem; color: #888888; margin: 3% 5% 3% 5%;">
-										<span style="color: black; font-size: 0.9rem;">클래스 기간</span><br>
+										<span style="color: black; font-size: 0.9rem;"><%=cl.getCLASS_DIVISION() %></span><br>
 										<span style="font-size: 0.8rem;"><%=cl.getCLASS_DATE_CONFIGURATION_1()%> ~ <%=cl.getCLASS_DATE_CONFIGURATION_2()%></span>
 									</div>
 									<hr style="margin-top: 0; margin-bottom: 0;">
 									<div style="background-color: #F8F8F8 !important;">
-										<div class="d-flex justify-content-end" style="margin: 0 5% 0 5%;">
+										<div class="d-flex justify-content-between" style="margin: 0 5% 0 5%;">										
+											<p style="color: black; margin: 3% 0 3% 0;">
+												<span class="grade"><i class="fas fa-star"></i><span><%=cl.getCLASS_GRADE()%></span></span>  
+											</p>
 											<p style="color: #DB0000; margin: 3% 0 3% 0;">
 												<fmt:formatNumber type="number" maxFractionDigits="3" value="<%=cl.getCLASS_AMOUNT()%>" />원 <!-- 3자리마다 , 찍기 -->  
 											</p>

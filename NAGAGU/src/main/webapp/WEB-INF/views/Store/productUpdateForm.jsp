@@ -1,15 +1,13 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"	pageEncoding="UTF-8"%>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-<%@ page import="java.util.*"%>
-<%@ page import="com.spring.store.ProductVO" %>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ page import="com.spring.workshopMypage.*" %>
+<%@ page import="com.spring.store.*" %>
 <%
-	if (session.getAttribute("WORKSHOP_NUM") == null) {
-		out.println("<script>");
-		out.println("alert('회원 로그인 해주세요!');");
-		out.println("location.href='./index.ma'");
-		out.println("</script>");	
-	}	
-%>       
+	ProductVO productVO = (ProductVO)request.getAttribute("productVO");
+	//,로 이어진 사이즈, 색상 정보 가져오기
+	String[] sizeArr = productVO.getPRODUCT_SIZE().split(",");
+	String[] colorArr = productVO.getPRODUCT_COLOR().split(",");
+%>
 
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tempusdominus-bootstrap-4/5.0.1/css/tempusdominus-bootstrap-4.min.css" />
 <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.15/dist/summernote.min.css" rel="stylesheet">
@@ -25,19 +23,13 @@
 		color: #e40000;
 		font-size: 14px;
 	}
-	
-
-	#noOptionInfo {
-		color:red;
-		font-size=0.9rem;
-	}
 </style>
-
+		
 <div class="container" style="padding: 3% 0;">
 	<h3>상품페이지 등록</h3>
 	<p>상품을 등록하실 수 있습니다. 해당 항목에 내용을 입력해주세요</p>
 	<p>주의: 반드시 저작권 및 상표권에 문제가 없는 이미지를 사용해 주세요.</p>
-	<form action="./addproduct.pro" method="post" enctype="multipart/form-data">
+	<form action="./updateProduct.mywork" method="post" enctype="multipart/form-data">
 		<table class="table">
 			<colgroup>
 				<col style="width:20%">
@@ -48,7 +40,7 @@
 				<td>
 					<div class="row">
 						<div>
-							<select name="PRODUCT_CATEGORY" class="form-control">
+							<select name="PRODUCT_CATEGORY" id="PRODUCT_CATEGORY" class="form-control">
 								<option value="table">책상</option>
 								<option value="chair">의자</option>
 								<option value="bookshelf">책장</option>
@@ -68,7 +60,7 @@
 				<td>
 				 	<div class="row">
 				 		<div class="input_box" style="width:670px">
-				 			<input class="form-control" type="text" name="PRODUCT_TITLE" placeholder="" value="">		
+				 			<input class="form-control" type="text" name="PRODUCT_TITLE" placeholder="" value="<%=productVO.getPRODUCT_TITLE()%>">		
 				 		</div>
 				 	</div>	
 				</td>
@@ -78,7 +70,7 @@
 				<td>
 				 	<div class="row">
 				 		<div class="input_box" style="width:670px">
-				 			<input class="form-control" type="text" id="lec_intro" name="PRODUCT_BRIEF" placeholder="" value="" maxlength="50">		
+				 			<input class="form-control" type="text" id="lec_intro" name="PRODUCT_BRIEF" placeholder="" value="<%=productVO.getPRODUCT_BRIEF()%>" maxlength="50" >		
 				 		</div>
 				 	</div>	
 				</td>
@@ -88,7 +80,7 @@
 				<td>
 				 	<div class="row">
 				 		<div class="input_box" style="margin-right: 10px;">
-				 			<input class="form-control" type="text" name="PRODUCT_PRICE" placeholder="" value="" style="text-align: right;">		
+				 			<input class="form-control" type="text" name="PRODUCT_PRICE" placeholder="" value="<%=productVO.getPRODUCT_PRICE()%>" style="text-align: right;">		
 				 		</div>
 				 		<div class="d-flex align-items-center">
                    				&nbsp;원&nbsp;
@@ -101,7 +93,7 @@
 				<td>
 				 	<div class="row">
 				 		<div class="input_box" style="margin-right: 10px;">
-				 			<input class="form-control" type="text" name="PRODUCT_STOCK" placeholder="" value="" style="text-align: right;">		
+				 			<input class="form-control" type="text" name="PRODUCT_STOCK" placeholder="" value="<%=productVO.getPRODUCT_STOCK()%>" style="text-align: right;">		
 				 		</div>
 				 		<div class="d-flex align-items-center">
                    				&nbsp;개&nbsp;
@@ -116,12 +108,18 @@
 				</th>
 				<td>
 				 	<div class="row pb-2" id="sizeappend">
+				 	<%
+				 		for(int i=0; i<sizeArr.length; i++) {
+				 	%>
 				 		<div class="input_box" style="margin-right: 10px;" >
-				 			<input class="form-control" type="text" name="PRODUCT_SIZE" placeholder="예시) 1000*50*70" value="" style="text-align: right;">		
+				 			<input class="form-control" type="text" name="PRODUCT_SIZE" placeholder="" value="<%=sizeArr[i] %>" style="text-align: right;">		
 				 		</div>
 				 		<div class="d-flex align-items-center" style="margin-right: 10px;">
                    				&nbsp;cm&nbsp;
                    		</div>
+                   	<%
+				 		}
+                   	%>	
                    	</div>							 	
 				</td>
 			</tr>
@@ -132,9 +130,15 @@
                	</th>
 				<td>
 					<div class="row pb-2" id="colorappend" >
+					<%
+				 		for(int i=0; i<colorArr.length; i++) {
+				 	%>
 				 		<div class="input_box" style="margin-right: 10px;">
-				 			<input class="form-control" type="text" name="PRODUCT_COLOR" value="" style="text-align: right;">		
+				 			<input class="form-control" type="text" name="PRODUCT_COLOR" value="<%=colorArr[i] %>" style="text-align: right;">		
 				 		</div>
+				 	<%
+				 		}
+                   	%>	
                    	</div>                   		
 				</td>
 			</tr>
@@ -142,7 +146,7 @@
 				<th>상품 소개</th>
 				<td>
 					<div class="row">
-						<textarea id="summernote1" name="PRODUCT_INFO"></textarea>
+						<textarea id="summernote1" name="PRODUCT_INFO"><%=productVO.getPRODUCT_INFO()%></textarea>
 					</div>
 				</td>
 			</tr>
@@ -151,7 +155,7 @@
 				<td>
 				 	<div class="row">
 				 		<div class="input_box" style="margin-right: 10px;">
-				 			<input class="form-control" type="text" name="PRODUCT_SHIP_PRICE" placeholder="" value="" style="text-align: right;">		
+				 			<input class="form-control" type="text" name="PRODUCT_SHIP_PRICE" placeholder="" value="<%=productVO.getPRODUCT_SHIP_PRICE()%>" style="text-align: right;">		
 				 		</div>
 				 		<div class="d-flex align-items-center">
 							&nbsp;원&nbsp;
@@ -164,7 +168,7 @@
 				<td>
 				 	<div class="row">
 				 		<div class="input_box" style="margin-right: 10px;">
-				 			<input class="form-control" type="text" name="PRODUCT_SHIP_COMPANY" placeholder="" value="" style="text-align: right;">		
+				 			<input class="form-control" type="text" name="PRODUCT_SHIP_COMPANY" placeholder="" value="<%=productVO.getPRODUCT_SHIP_COMPANY()%>" style="text-align: right;">		
 				 		</div>
 				 	</div>	
 				</td>
@@ -174,7 +178,7 @@
 				<td>
 				 	<div class="row">
 				 		<div class="input_box" style="margin-right: 10px;">
-				 			<input class="form-control" type="text" name="PRODUCT_SHIP_RETURN_PRICE" placeholder="" value="" style="text-align: right;">		
+				 			<input class="form-control" type="text" name="PRODUCT_SHIP_RETURN_PRICE" placeholder="" value="<%=productVO.getPRODUCT_SHIP_RETURN_PRICE()%>" style="text-align: right;">		
 				 		</div>
 				 		<div class="d-flex align-items-center">
                    				&nbsp;원&nbsp;
@@ -187,7 +191,7 @@
 				<td>
 				 	<div class="row">
 				 		<div class="input_box" style="margin-right: 10px;">
-				 			<input class="form-control" type="text" name="PRODUCT_SHIP_CHANGE_PRICE" placeholder="" value="" style="text-align: right;">		
+				 			<input class="form-control" type="text" name="PRODUCT_SHIP_CHANGE_PRICE" placeholder="" value="<%=productVO.getPRODUCT_SHIP_CHANGE_PRICE()%>" style="text-align: right;">		
 				 		</div>
 				 		<div class="d-flex align-items-center">
                    				&nbsp;원&nbsp;
@@ -200,7 +204,7 @@
 				<td>
 				 	<div class="row">
 				 		<div class="input_box" style="margin-right: 10px;">
-				 			<input class="form-control" type="text" name="PRODUCT_SHIP_DAYS" placeholder="" value="" style="text-align: right;">		
+				 			<input class="form-control" type="text" name="PRODUCT_SHIP_DAYS" placeholder="" value="<%=productVO.getPRODUCT_SHIP_DAYS()%>" style="text-align: right;">		
 				 		</div>
 				 		<div class="d-flex align-items-center">
                    				&nbsp;일&nbsp;
@@ -213,7 +217,7 @@
 				<td>
 				 	<div class="row">
 				 		<div class="input_box" style="width:670px">
-				 			<input class="form-control" type="text" name="PRODUCT_SHIP_RETURN_PLACE" placeholder="" value="">		
+				 			<input class="form-control" type="text" name="PRODUCT_SHIP_RETURN_PLACE" placeholder="" value="<%=productVO.getPRODUCT_SHIP_RETURN_PLACE()%>">		
 				 		</div>
 				 	</div>	
 				</td>	
@@ -222,7 +226,7 @@
                    <th>배송 정보</th>
                    <td>
 					<div class="row">
-						<textarea id="summernote2" name="PRODUCT_SHIP_INFO"></textarea>
+						<textarea id="summernote2" name="PRODUCT_SHIP_INFO"><%=productVO.getPRODUCT_SHIP_INFO()%></textarea>
 					</div>
                    </td>
                </tr>
@@ -230,7 +234,7 @@
                    <th>A/S 규정</th>
                    <td>
 					<div class="row">
-						<textarea id="summernote3" name="PRODUCT_AS_INFO"></textarea>
+						<textarea id="summernote3" name="PRODUCT_AS_INFO"><%=productVO.getPRODUCT_AS_INFO()%></textarea>
 					</div>
                    </td>
                </tr>
@@ -238,7 +242,7 @@
                	<th>환불규정</th>
                	<td>
                		<div class="row">
-						<textarea id="summernote4" name="PRODUCT_RETURN_INFO"></textarea>
+						<textarea id="summernote4" name="PRODUCT_RETURN_INFO"><%=productVO.getPRODUCT_RETURN_INFO()%></textarea>
 					</div>
                	</td>
                </tr>
@@ -246,7 +250,7 @@
 				<th>스토어 소개</th>
 				<td>
                		<div class="row">
-						<textarea id="summernote5" name="PRODUCT_STORE_INFO"></textarea>
+						<textarea id="summernote5" name="PRODUCT_STORE_INFO"><%=productVO.getPRODUCT_STORE_INFO()%></textarea>
 					</div>
                	</td>
                </tr>
@@ -260,7 +264,7 @@
 					</div>
 					<div>
 						<div class="preview"></div>
-                    	<p class="noti">* 가로가 긴 이미지 추천, 최대 네 장까지 업로드 가능</p>
+                    	<p class="noti">* 새로운 이미지를 등록하세요.</p>
                     </div>
 				</td>
 			</tr>
@@ -273,7 +277,7 @@
 						</div>
 					</div>
 					<div>
-						<p class="noti">* 정사각형 이미지 추천</p>
+						<p class="noti">* 새로운 이미지를 등록하세요.</p>
 					</div>
 				</td>
 			</tr>
@@ -281,14 +285,44 @@
 		</table>
 		<div class="text-center">
 			<input class="btn btn-outline-dark btn-lg" type="reset" value="취소하기">&nbsp;&nbsp;&nbsp;
-			<input class="btn btn-outline-dark btn-lg" type="submit" value="등록하기">
+			<input class="btn btn-outline-dark btn-lg" type="submit" value="수정하기">
 		</div>
 	</form>
 </div>	
+		
+<!-- Tempus Dominus v5.0.1 -->
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.22.2/moment.min.js"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/tempusdominus-bootstrap-4/5.0.1/js/tempusdominus-bootstrap-4.min.js"></script>
 <!-- include summernote css/js -->
 <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.15/dist/summernote.min.js"></script>
+<!-- 우편번호 API -->
+<script src="https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 
 <script>
+
+	
+	$(document).ready(function() {
+		var category = "<%=productVO.getPRODUCT_CATEGORY()%>";
+		if(category=="table") {
+			$("#PRODUCT_CATEGORY").val("table").attr("selected", "selected");
+		} else if(category=="chair") {
+			$("#PRODUCT_CATEGORY").val("chair").attr("selected", "selected");
+		} else if(category=="bookshelf") {
+			$("#PRODUCT_CATEGORY").val("bookshelf").attr("selected", "selected");
+		} else if(category=="bed") {
+			$("#PRODUCT_CATEGORY").val("bed").attr("selected", "selected");
+		} else if(category=="drawer") {
+			$("#PRODUCT_CATEGORY").val("drawer").attr("selected", "selected");
+		} else if(category=="sidetable") {
+			$("#PRODUCT_CATEGORY").val("sidetable").attr("selected", "selected");
+		} else if(category=="dressing_table") {
+			$("#PRODUCT_CATEGORY").val("dressing_table").attr("selected", "selected");
+		} else if(category=="others") {
+			$("#PRODUCT_CATEGORY").val("others").attr("selected", "selected");
+		}
+	});
+	
+
 	/* 썸머노트 부분 */
 	$(document).ready(function() {
 		$('#summernote1').summernote({
@@ -475,6 +509,8 @@
 		  }
 	});
 	
+	
+	
 	/* File 부분(미리보기) */
 	$(document).ready(function (e){
 	    $("input[type='file']").change(function(e){
@@ -574,18 +610,16 @@
 		$('.addcolor:last').attr( 'id', 'lastaddcolor' );
 		$('#lastaddcolor').remove();       
 	}
-	
-	function addOption() {
-		var optiontxt = $(".addoption").html();
-		var txt = '<div class="addoption mr-3">';
-		txt += optiontxt;
-		txt += '</div>';
-		
-		$('#optionappend').append(txt);
-	}
+
 
 	function deleteOption() {
 		$('.addoption:last').attr( 'id', 'lastaddoption' );
 		$('#lastaddoption').remove();       
 	}
+	
+	
+	
+	
+	
+	
 </script>

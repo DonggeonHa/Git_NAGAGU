@@ -118,7 +118,11 @@
 			<if test="searchType == 'member_nick'"> AND N.MEMBER_NICK LIKE '%'||#{keyword}||'%' </if>
 			<if test="searchType == 'product_title'"> AND P.PRODUCT_TITLE LIKE '%'||#{keyword}||'%' </if>
 			<if test="searchType == 'review_content'"> AND R.REVIEW_CONTENT LIKE '%'||#{keyword}||'%' </if>			
-		ORDER BY R.${selectListAlign} DESC			
+		
+			<if test="selectListAlign == 'review_grade'"> AND R.REVIEW_GRADE != 7 </if>
+		ORDER BY  R.${selectListAlign} DESC	
+			
+				
 				
 	</select>
 
@@ -131,29 +135,16 @@
 		AND W.WORKSHOP_NUM=P.PRODUCT_WORKSHOP
 		AND W.WORKSHOP_NUM=#{WORKSHOP_NUM}
 		AND Q.QNA_MEMBER=N.MEMBER_NUM
-			<if test="selectClassType == 'all'">
-				<if test="selectCategory != 'all'"> AND P.PRODUCT_CATEGORY = #{selectCategory} </if>
-				<if test="searchType == 'member_nick'"> AND N.MEMBER_NICK LIKE '%'||#{keyword}||'%' </if>
-				<if test="searchType == 'product_title'"> AND P.PRODUCT_TITLE LIKE '%'||#{keyword}||'%' </if>
-				<if test="searchType == 'qna_content'"> AND Q.QNA_CONTENT LIKE '%'||#{keyword}||'%' </if>				
-			</if>
 			
-
-			<if test="selectClassType == 'Standby'"> AND Q.QNA_STATUS=0 
-				<if test="selectCategory != 'all'"> AND P.PRODUCT_CATEGORY = #{selectCategory} </if>
-				<if test="searchType == 'member_nick'"> AND N.MEMBER_NICK LIKE '%'||#{keyword}||'%' </if>
-				<if test="searchType == 'product_title'"> AND P.PRODUCT_TITLE LIKE '%'||#{keyword}||'%' </if>
-				<if test="searchType == 'qna_content'"> AND Q.QNA_CONTENT LIKE '%'||#{keyword}||'%' </if>
-			</if>
+		<if test="selectCategory != 'all'"> AND P.PRODUCT_CATEGORY = #{selectCategory} </if>
+		<if test="selectClassType == 'Standby'"> AND Q.QNA_STATUS=0 </if>
+		<if test="selectClassType == 'Completed'"> AND Q.QNA_STATUS=1 </if>
+		<if test="selectCategory != 'all'"> AND P.PRODUCT_CATEGORY = #{selectCategory} </if>
+		<if test="searchType == 'member_nick'"> AND N.MEMBER_NICK LIKE '%'||#{keyword}||'%' </if>
+		<if test="searchType == 'product_title'"> AND P.PRODUCT_TITLE LIKE '%'||#{keyword}||'%' </if>
+		<if test="searchType == 'qna_content'"> AND Q.QNA_CONTENT LIKE '%'||#{keyword}||'%' </if>
 			
-			
-			<if test="selectClassType == 'Completed'"> AND Q.QNA_STATUS=1 
-				<if test="selectCategory != 'all'"> AND P.PRODUCT_CATEGORY = #{selectCategory} </if>
-				<if test="searchType == 'member_nick'"> AND N.MEMBER_NICK LIKE '%'||#{keyword}||'%' </if>
-				<if test="searchType == 'product_title'"> AND P.PRODUCT_TITLE LIKE '%'||#{keyword}||'%' </if>
-				<if test="searchType == 'qna_content'"> AND Q.QNA_CONTENT LIKE '%'||#{keyword}||'%' </if>
-			</if>
-		ORDER BY Q.${selectListAlign} DESC	
+		ORDER BY Q.QNA_DATE DESC	
 	</select>
 
  
@@ -200,4 +191,10 @@
 	<select id="checkReviewCount" parameterType="java.util.HashMap" resultType="int">
 		SELECT count(*) FROM PRODUCT_REVIEW WHERE REVIEW_PRODUCT = #{PRODUCT_NUM} 		
 	</select>	
+	
+	<!-- 상품글 수정 -->
+ 	<select id="getproductDetail" parameterType="int" resultMap="productResultMap"> 
+ 		SELECT * FROM PRODUCT WHERE PRODUCT_NUM = #{PRODUCT_NUM}
+ 	</select>	
+	
 </mapper>

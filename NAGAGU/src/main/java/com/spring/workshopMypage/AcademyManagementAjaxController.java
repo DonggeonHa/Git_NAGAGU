@@ -124,7 +124,7 @@ public class AcademyManagementAjaxController {
 	
 	//---------------------------------------강의 review 관리 페이지 리스트
 	@PostMapping(value="/classReviewList.my" ,produces="application/json;charset=UTF-8")
-	public ArrayList<Map<String, Object>> classReviewList(String selectClassType1, String selectClassType2, String selectCategory, String selectListAlign, String searchType, String keyword, HttpSession session) {
+	public ArrayList<Map<String, Object>> classReviewList(String selectClassType1, String selectClassType2, String selectCategory1, String selectCategory2, String selectListAlign, String searchType, String keyword, HttpSession session) {
 		System.out.println("classReviewList 컨트롤러 start!");
 		
 		Integer WORKSHOP_NUM = (Integer)session.getAttribute("WORKSHOP_NUM");
@@ -132,7 +132,8 @@ public class AcademyManagementAjaxController {
 		map.put("WORKSHOP_NUM", WORKSHOP_NUM);
 		map.put("selectClassType1", selectClassType1);
 		map.put("selectClassType2", selectClassType2);
-		map.put("selectCategory", selectCategory);
+		map.put("selectCategory1", selectCategory1);
+		map.put("selectCategory2", selectCategory2);
 		map.put("selectListAlign", selectListAlign);
 		map.put("searchType", searchType);
 		map.put("keyword", keyword);
@@ -140,7 +141,8 @@ public class AcademyManagementAjaxController {
 		System.out.println("WORKSHOP_NUM="+WORKSHOP_NUM);
 		System.out.println("selectClassType1="+selectClassType1);
 		System.out.println("selectClassType2="+selectClassType2);
-		System.out.println("selectCategory="+selectCategory);
+		System.out.println("selectCategory1="+selectCategory1);
+		System.out.println("selectCategory2="+selectCategory2);
 		System.out.println("selectListAlign="+selectListAlign);
 		System.out.println("searchType="+searchType);
 		System.out.println("keyword="+keyword);
@@ -155,22 +157,26 @@ public class AcademyManagementAjaxController {
 	
 	//---------------------------------------상품 qna 관리 페이지 리스트	
 	@PostMapping(value="/classQnaList.my", produces = "application/json;charset=UTF-8")
-	public ArrayList<Map<String, Object>> productQnaList(String selectClassType, String selectCategory, String selectListAlign, String searchType, String keyword, HttpSession session){
-		System.out.println("getQnaSearchList 컨트롤러 start!");
+	public ArrayList<Map<String, Object>> productQnaList(String selectClassType1, String selectClassType2, String selectClassType3, String selectCategory1, String selectCategory2, String searchType, String keyword, HttpSession session){
+		System.out.println("classQnaList 컨트롤러 start!");
 		
 		Integer WORKSHOP_NUM = (Integer)session.getAttribute("WORKSHOP_NUM");
 		HashMap<String, Object> map = new HashMap<String, Object>();
 		map.put("WORKSHOP_NUM", WORKSHOP_NUM);
-		map.put("selectClassType", selectClassType);
-		map.put("selectCategory", selectCategory);
-		map.put("selectListAlign", selectListAlign);
+		map.put("selectClassType1", selectClassType1);
+		map.put("selectClassType2", selectClassType2);
+		map.put("selectClassType3", selectClassType3);
+		map.put("selectCategory1", selectCategory1);
+		map.put("selectCategory2", selectCategory2);
 		map.put("searchType", searchType);
 		map.put("keyword", keyword);
 
 		System.out.println("WORKSHOP_NUM="+WORKSHOP_NUM);
-		System.out.println("selectClassType="+selectClassType);
-		System.out.println("selectCategory="+selectCategory);
-		System.out.println("selectListAlign="+selectListAlign);
+		System.out.println("selectClassType1="+selectClassType1);
+		System.out.println("selectClassType2="+selectClassType2);
+		System.out.println("selectClassType3="+selectClassType3);
+		System.out.println("selectCategory1="+selectCategory1);
+		System.out.println("selectCategory2="+selectCategory2);
 		System.out.println("searchType="+searchType);
 		System.out.println("keyword="+keyword);
 		
