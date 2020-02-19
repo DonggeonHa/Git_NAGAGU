@@ -106,5 +106,11 @@ public class ProductManagementServiceImpl implements ProductManagementService {
 		return productVO;
 	}
 
+	@Override
+	public int updateProduct(ProductVO productVO) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
 
 }
