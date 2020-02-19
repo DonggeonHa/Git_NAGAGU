@@ -340,7 +340,13 @@
 		</div>
 	</div>
    <!-- container end -->
-   
+<!-- JavaScript -->
+<script src="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/alertify.min.js"></script>
+<!-- CSS -->
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/css/alertify.min.css"/>
+<!-- Default theme -->
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/css/themes/default.min.css"/>
+
 <script type="text/javascript" charset="utf-8">
 	$(document).ready(function(){
 		function getPro(){
@@ -375,15 +381,19 @@
 		}
 		getPro()
 	})
-
-
 	$('.delete-btn').on('click',function(){
-		if(confirm('정말 삭제하시겠습니까?')){
+		alertify.confirm('삭제 확인', '정말 삭제하시겠습니까?', function(){ 
+			alertify.success('Ok') 
 			var url = '${pageContext.request.contextPath}/community_delete.cm'
 				+ '?PICS_NUM='+<%=picsVO.getPICS_NUM()%>
-			location.href=url;			
-		}	
-	});
+			location.href=url;
+			}
+        , function(){ 
+        	alertify.error('Cancel')
+        	}
+        );
+	})
+	
 	$('.update-btn').on('click',function(){
 		var url = '${pageContext.request.contextPath}/community_update.cm' 
 				+ '?PICS_NUM='+<%=picsVO.getPICS_NUM()%>

@@ -185,21 +185,31 @@
 <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.15/dist/summernote.min.js"></script>
 <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+
+
+<!-- JavaScript -->
+<script src="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/alertify.min.js"></script>
+<!-- CSS -->
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/css/alertify.min.css"/>
+<!-- Default theme -->
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/css/themes/default.min.css"/>
 <script>
 	$('.submit-btn').on('click',function(){
+		
+		
 		//유효성 검사
 		if($('#pics_category').val()==0){
-			alert('카테고리를 선택하세요');
+			alertify.alert('카테고리를 선택하세요')
 			$('#pics_category').focus();
 			return false;
 		}
 		if($('#pics_review').val()==0){
-			alert('분류를 선택하세요');
+			alertify.alert('분류를 선택하세요');
 			$('#pics_review').focus();
 			return false;
 		}
 		if($('#uploadFile').val()==''){
-			alert('사진을 넣어주세요');
+			alertify.alert('사진을 넣어주세요');
 			$('#uploadFile').focus();
 			return false;
 		}
@@ -258,15 +268,9 @@
 			 	 }
 			  });
 		  }
-		
-/* 		$('.search_form').keydown(function(){
-			console.log($(this).val());
-		}) */
 	});
 	
 	 $(function(){
-		//var array = Array.from(new Set(arr));
-		//console.log(list[0].PRODUCT_TITLE)
  		$('#search_product').autocomplete({
 			source : function(request,response){
 				 $.ajax({
