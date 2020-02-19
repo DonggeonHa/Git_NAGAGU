@@ -91,7 +91,7 @@
 		</div>
 		<table class="table" id="work_store">
 			<thead>
-				<tr>
+				<tr class="text-center">
 				    <th scope="col">번호</th>
 				    <th scope="col">카테고리</th>
 				    <th scope="col">작성자</th>
@@ -138,7 +138,6 @@
 	}
 	
 	function review_content() {
-		alert("searchType : onclick=review_content() 실행")
 		$('#searchType').html('후기내용');
 		$('#searchType').val('review_content');
 	}
@@ -168,8 +167,12 @@
 	});    
 	
 	$("#keyword").keyup(function(event){
-		if (event.keyCode == 13) {
-			event.preventDefault();
+		if (event.keyCode == 13) {			
+			if(!$('#keyword').val() || !$('#searchType').val()){
+				alert("카테고리 선택, 검색어를 입력하세요!");
+				$('#keyword').focus();
+				return false;
+			}	
 			ProductreviewList(event);
 			$('#list_none').empty();
 			return;
@@ -178,7 +181,6 @@
 	
 	/*select2-카테고리 선택*/	
 	function btn_select2() {		
-		alert("btn_select2의 selectCategory : " + $("#selectCategory option:selected").val());
 		console.log("$('#selectCategory option:selected').val() : "+$("#selectCategory option:selected").val())
 		
 		$('#ProductqnaList').empty();
@@ -187,7 +189,6 @@
 	
 	/*select3-리스트 정렬*/
 	function btn_select3() {		
-		alert("btn_select3의 selectListAlign : " + $("#selectListAlign option:selected").val());
 		console.log("$('#selectListAlign option:selected').val() : "+$("#selectListAlign option:selected").val())
 		
 		$('#ProductqnaList').empty();
@@ -300,7 +301,7 @@
 			    		var date = date_format(REVIEW_DATE);
 			    		var REVIEW_CONTENT = reviewList[j].REVIEW_CONTENT
     		
-						output += '<tr>';
+						output += '<tr class="text-center">';
 						output += '<td>' + number + '</td>';
 						output += '<td>' + PRODUCT_CATEGORY + '</td>';
 						output += '<td>' + MEMBER_NICK + '</td>';

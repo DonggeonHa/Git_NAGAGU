@@ -819,8 +819,15 @@ public class AcademyController {
 		vo.setCLASS_ABRIEF(request.getParameter("CLASS_ABRIEF"));
 		vo.setCLASS_AMOUNT(Integer.parseInt(request.getParameter("CLASS_AMOUNT")));
 		vo.setCLASS_DATE(new Timestamp(System.currentTimeMillis()));
-		vo.setCLASS_DATE_CONFIGURATION_1(request.getParameter("CLASS_DATE_CONFIGURATION_1"));
-		vo.setCLASS_DATE_CONFIGURATION_2(request.getParameter("CLASS_DATE_CONFIGURATION_2"));
+		if(request.getParameter("CLASS_DIVISION").equals("정규클래스")) {
+			System.out.println("정규클래스");
+			vo.setCLASS_DATE_CONFIGURATION_1(request.getParameter("CLASS_DATE_CONFIGURATION_1"));
+			vo.setCLASS_DATE_CONFIGURATION_2(request.getParameter("CLASS_DATE_CONFIGURATION_2"));
+		} else {
+			System.out.println("원데이클래스");
+			vo.setCLASS_DATE_CONFIGURATION_1(request.getParameter("CLASS_DATE_CONFIGURATION_3"));
+			vo.setCLASS_DATE_CONFIGURATION_2(request.getParameter("CLASS_DATE_CONFIGURATION_4"));
+		}
 		vo.setCLASS_AREA(request.getParameter("CLASS_AREA"));
 		vo.setCLASS_CATEGORY(request.getParameter("CLASS_CATEGORY"));
 		vo.setCLASS_INTRODUCTION_1(request.getParameter("CLASS_INTRODUCTION_1"));

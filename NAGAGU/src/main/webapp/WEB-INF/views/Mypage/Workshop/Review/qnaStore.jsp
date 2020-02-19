@@ -25,8 +25,7 @@
 
 	System.out.println(PRODUCT_CATEGORY);
 	System.out.println(PRODUCT_TITLE);
-	
-	
+		
 %>
 
 <div id="page-content-wrapper" style="padding-top: 5%;">
@@ -46,14 +45,14 @@
 					<div class="d-flex justify-content-start">
 						<div class="select1">
 							<select class="search_hidden_state justify-content-start form-control" id="selectClassType" name="selectClassType" onchange="btn_select1()" style="height: 33px;">
-								<option value="all">전체</option>
+								<option value="all">답변상태</option>
 								<option value="Standby">답변대기</option>
 								<option value="Completed">답변완료</option>
 							</select>
 						</div>
 						<div class="select2" style="padding-left:5px">
 							<select class="search_hidden_state justify-content-start form-control"  id="selectCategory" name="selectCategory" onchange="btn_select2()" style="height: 33px;">
-								<option value="all">전체</option>
+								<option value="all">카테고리</option>
 								<option value="table">책상</option>
 								<option value="chair">의자</option>
 								<option value="bookshelf">책장</option>
@@ -64,12 +63,6 @@
 								<option value="others">기타</option>		
 							</select>
 						</div>	
-						<div class="select3" style="padding-left:5px">	<!-- 보기 정렬 -->
-							<select class="search_hidden_state justify-content-start form-control" id="selectListAlign" name="selectListAlign" onchange="btn_select3()" style="height: 33px;">
-								<option value="qna_date">최근 등록순</option>
-							</select>
-						</div>								
-					
 					</div>
 				</div>
 				<div class="justify-content-end" style="padding: 0;">
@@ -99,7 +92,7 @@
 		</div>
 		<table class="table" id="work_store">
 			<thead>
-			<tr>
+			<tr class="text-center">
 			    <th scope="col" class="th2">번호</th>
 			    <th scope="col" class="th3">카테고리</th>
 			    <th scope="col" class="th4">작성자</th>
@@ -108,7 +101,6 @@
 			    <th scope="col" class="th7">작성날짜</th>
 			    <th scope="col" class="th8">답변상태</th>
 			    <th scope="col" class="th9">관리</th>
-			    <th scope="col" class="th10">이동</th>
 			</tr>
 			</thead>
 			<tbody id="ProductqnaList"></tbody>
@@ -122,18 +114,15 @@
 
 <script>
 	function member_nick() {
-		alert("searchType : onclick=member_nick() 실행")
 		$('#searchType').html('작성자');
 		$('#searchType').val('member_nick');
 	};
 	function product_title() {
-		alert("searchType : onclick=product_title() 실행")
 		$('#searchType').html('상품명');
 		$('#searchType').val('product_title');
 	}
 	
 	function qna_content() {
-		alert("searchType : onclick=qna_content() 실행")
 		$('#searchType').html('문의내용');
 		$('#searchType').val('qna_content');
 	}
@@ -155,7 +144,6 @@
 		$('#list_none').empty();
 		$("#selectClassType").val('all').prop("selected", true);
 		$("#selectCategory").val('all').prop("selected", true);
-		$("#selectListAlign").val('qna_date').prop("selected", true);
 		$('#searchType').text('선택');
 		$("#searchType").val('');
 		$("#keyword").val('');
@@ -163,8 +151,12 @@
 	});    
 	
 	$("#keyword").keyup(function(event){
-		if (event.keyCode == 13) {
-			event.preventDefault();
+		if (event.keyCode == 13) {			
+			if(!$('#keyword').val() || !$('#searchType').val()){
+				alert("카테고리 선택, 검색어를 입력하세요!");
+				$('#keyword').focus();
+				return false;
+			}	
 			ProductqnaList(event);
 			$('#list_none').empty();
 			event.preventDefault();
@@ -186,9 +178,8 @@
 */
 
 
-	/*select1-판매상태 선택*/	
+	/*select1-답변상태 선택*/	
 	function btn_select1() {		
-		alert("btn_select1의 selectClassType : " + $("#selectClassType option:selected").val());
 		console.log("$('#selectClassType option:selected').val() : "+$("#selectClassType option:selected").val())
 		$('#ProductqnaList').empty();
 		ProductqnaList();
@@ -196,24 +187,13 @@
 	
 	/*select2-카테고리 선택*/	
 	function btn_select2() {		
-		alert("btn_select2의 selectCategory : " + $("#selectCategory option:selected").val());
 		console.log("$('#selectCategory option:selected').val() : "+$("#selectCategory option:selected").val())
 		
 		$('#ProductqnaList').empty();
 		ProductqnaList();
 	}	
 	
-	/*select3-리스트 정렬*/
-	function btn_select3() {		
-		alert("btn_select3의 selectListAlign : " + $("#selectListAlign option:selected").val());
-		console.log("$('#selectListAlign option:selected').val() : "+$("#selectListAlign option:selected").val())
-		
-		$('#ProductqnaList').empty();
-		ProductqnaList();	
-	}	
 
-	
- 
 	/*날짜 형식 변경*/
 	function date_format(format) {
 		var year = format.getFullYear();
@@ -257,7 +237,6 @@
 		$('#list_none').empty();
 		var selectClassType = $("#selectClassType option:selected").val();	//필터 값 가져오기
 		var selectCategory = $("#selectCategory option:selected").val();	//필터 값 가져오기
-		var selectListAlign = $("#selectListAlign option:selected").val();	//필터 값 가져오기
 		var searchType = $("#searchType").val();	//필터 값 가져오기
 		var keyword = ''; 
 		if ($('#keyword').val() != null) {
@@ -265,7 +244,6 @@
 		}
 		console.log("selectClassType="+selectClassType)
 		console.log("selectCategory="+selectCategory)
-		console.log("selectListAlign="+selectListAlign)
 		console.log("searchType : " + searchType)
 		console.log("keyword : " + keyword)
 		
@@ -276,7 +254,6 @@
 			type: 'POST',
 			data: {"selectClassType" : selectClassType, 
 				"selectCategory" : selectCategory, 
-				"selectListAlign" : selectListAlign,
 				"searchType" : searchType,
 				"keyword" : keyword
 			},
@@ -327,7 +304,7 @@
     					var QNA_RE = qnaList[j].QNA_RE;
     					var QNA_STATUS = qnaList[j].QNA_STATUS;
 
-						output += '<tr>';
+						output += '<tr class="text-center">';
 						output += '<td>' + number + '</td>';
 						output += '<td>' + PRODUCT_CATEGORY + '</td>';
 						output += '<td>' + MEMBER_NICK + '</td>';
@@ -351,7 +328,6 @@
 							output += '<td>'+'답변 완료'+'</td>';
 							output += '<td><button class="btn_modify" onclick="location.href=">'+"수정"+'</button></td>';
 						}
-						output += '<td><button class="btn_move" onclick="location.href=">' + "이동" + '</button></td>';
 						output += '</tr>';
 						number += 1;
      				}					
@@ -363,7 +339,6 @@
 					//검색결과 없을시 select조건들 초기화
 					$("#selectClassType").val('all').prop("selected", true);
 					$("#selectCategory").val('all').prop("selected", true);
-					$("#selectListAlign").val('qna_date').prop("selected", true);
 					$('#searchType').text('선택');
 					$("#searchType").val('');
 					$("#keyword").val('');

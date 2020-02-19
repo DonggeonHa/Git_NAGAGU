@@ -15,4 +15,6 @@ public interface ProductManagementMapper {
 	ProductVO getProductVoOfWorkshop(HashMap<String, Object> map);
 	int checkQnaCount(HashMap<String, Object> map);
 	int checkReviewCount(HashMap<String, Object> map);
+	
+	ProductVO getproductDetail(int PRODUCT_NUM);
 }
