@@ -353,6 +353,8 @@
 			
             return true;
     	}
+    }).keypress(function(event){
+        checkCapslock(event);
     });
     
     $('#pass2').blur(function() {
@@ -382,9 +384,11 @@
         }
         
         return true;
+    }).keypress(function(event){
+        checkCapslock(event);
     });
     
-    $('#pass1').keyup(function (){
+    /* $('#pass1').keyup(function (){
     	var pass1 = $("#pass1").val();
         var pass2 = $("#pass2").val();
         var oMsg = $("#pass2Msg");
@@ -395,8 +399,28 @@
     		 
              return false;
     	}
-    });
+    }); */
     
+    
+    function checkCapslock(e) {
+        var myKeyCode = 0;
+        var myShiftKey = false;
+        if (window.event) { // IE
+            myKeyCode = e.keyCode;
+            myShiftKey = e.shiftKey;
+        } else if (e.which) { // netscape ff opera
+            myKeyCode = e.which;
+            myShiftKey = isShift;
+        }
+        var oMsg = $("#pass1Msg");
+        if ((myKeyCode >= 65 && myKeyCode <= 90) && !myShiftKey) {
+            showErrorMsg(oMsg,"Caps Lock이 켜져 있습니다.");
+        } else if ((myKeyCode >= 97 && myKeyCode <= 122) && myShiftKey) {
+            showErrorMsg(oMsg,"Caps Lock이 켜져 있습니다.");
+        } else {
+            oMsg.hide();
+        }
+    }
     
     $('#WORKSHOP_NAME').blur(function() {
     	var nick = $("#WORKSHOP_NAME").val();
@@ -590,21 +614,23 @@
      var address1 = $('#WORKSHOP_ADDRESS1').val();
      var address2 = $('#WORKSHOP_ADDRESS2').val();
      
-     if(emailcheckBtn == "N") {
+     
+     if(sub_email==false || sub_pw1==false || sub_pw2==false || sub_ceo_name==false || sub_phone==false || sub_license==false || sub_intro==false){
+    	 alert("빈 칸 없이 입력해주세요.")
+     } else if(emailcheckBtn == "N") {
         alert("이메일 중복확인 버튼을 눌러주세요.");
-        $(".WORKSHOP_EMAIL").focus();
+        $("#WORKSHOP_EMAIL").focus();
         
         return false;
      } else if(emailcheckBtn == "Y") {
         if(nicknamecheckBtn == "N"){
            alert("닉네임 중복확인 버튼을 눌러주세요.");
-           $(".WORKSHOP_NAME").focus();
+           $("#WORKSHOP_NAME").focus();
            
            return false;
-     } else if(emailcheckBtn == "Y") {
-	        if(sub_email==false || sub_pw1==false || sub_pw2==false || sub_ceo_name==false || sub_phone==false || sub_license==false || sub_intro==false) {
-	        	alert('하나도 빠짐없이 입력해주세요.');
-	        } else if(zipcode == "" || address1 == "" || address2 == "") {
+     } else if(emailcheckBtn == "Y" && nicknamecheckBtn == "Y") {
+	        
+    	 if(zipcode == "" || address1 == "" || address2 == "") {
 	        	alert('주소를 입력하세요.');
 	        } else if(($('#check_privacy').prop("checked")&&$('#check_service').prop("checked"))== false) {
 	        	alert('약관에 동의해주세요.');

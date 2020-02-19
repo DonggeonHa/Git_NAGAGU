@@ -186,9 +186,9 @@
    	    
    	.fail_message {
    		margin-bottom: -10px;
-  			font-size: 10px;
-  			color: red;
-  			display: none;
+  		font-size: 10px;
+  		color: red;
+  		display: none;
    	}   
    	 
    	@media ( max-width : 375px) {
@@ -445,7 +445,32 @@
 		};
 		searchShow();
 	});
-
+	
+	$("#MEMBER_PASS").keypress(function(event){
+        checkCapslock(event);
+    });
+	function checkCapslock(e) {
+        var myKeyCode = 0;
+        var myShiftKey = false;
+        if (window.event) { // IE
+            myKeyCode = e.keyCode;
+            myShiftKey = e.shiftKey;
+        } else if (e.which) { // netscape ff opera
+            myKeyCode = e.which;
+            myShiftKey = isShift;
+        }
+        var oMsg = $("#fail_message");
+        if ((myKeyCode >= 65 && myKeyCode <= 90) && !myShiftKey) {
+        	$('.fail_message').text('Caps Lock이 켜져 있습니다.');
+			$('.fail_message').css('display', 'block');
+        } else if ((myKeyCode >= 97 && myKeyCode <= 122) && myShiftKey) {
+        	$('.fail_message').text('Caps Lock이 켜져 있습니다.');
+			$('.fail_message').css('display', 'block');
+        } else {
+        	$('.fail_message').css('display', 'none');
+        }
+    }
+	
 	//ajax사용할 때 로그인실패시, 이메일 미인증
 	//ajax사용안할 때 로그인성공시
 	function onclick_btn_login() {

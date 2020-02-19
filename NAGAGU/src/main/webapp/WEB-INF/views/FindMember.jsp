@@ -107,17 +107,17 @@ img {vertical-align:top;}
         <br>
         <br />
    <div class="two_form" style="display: flex;">
-   <form id="find_id_form" action="FindMemberId.ma" method="post">
+   <form id="find_id_form" action="FindMemberEmail.ma" method="post">
     <table class="find_idpw_table">
         <tr>
             <td class="find_idpw_text1">이메일 찾기</td>
         </tr>
         <tr>
             <td>
-                <input type="text" placeholder="이름" name="MEMBER_NAME" id="find_id_name" class="find_idpw_textbox"><br>
-                <input type="text" name="MEMBER_PHONE" STYLE="ime-mode: disabled" placeholder="휴대폰(-)제거 후 입력" id="find_id_email" class="find_idpw_textbox"><br>
+                <input type="text" placeholder="이름" name="MEMBER_NAME" id="name" class="find_idpw_textbox"><br>
+                <input type="text" name="MEMBER_PHONE" STYLE="ime-mode: disabled" placeholder="휴대폰(-)제거 후 입력" id="phone" class="find_idpw_textbox"><br>
                 <p class="text2"> 가입시 입력한 이름과 휴대폰 번호 입력.</p><br>
-                <input type="button" onclick="find_id_btn();" class="find_idpw_button" value="이메일 주소로 아이디 전송">
+                <input type="button" onclick="find_email_btn();" class="find_idpw_button" value="이메일 주소로 아이디 전송">
             </td>
         </tr>
     </table>
@@ -146,6 +146,18 @@ img {vertical-align:top;}
 <script type="text/javascript">
 function find_pw_btn(){
 	document.find_pw_form.submit();
+}
+
+function find_email_btn() {
+	// 팝업을 가운데 위치시키기 위해 아래와 같이 값 구하기
+	var popupX = (window.screen.width / 2) - (450 / 2);
+	var popupY = (window.screen.height / 2) - (250 / 2);
+
+	var pop = window.open('about:blank', 'Info', 'resizable=yes, width=450, height=250, left=' + popupX + ', top=' + popupY);
+	var name = $("#name").val();
+	var phone = $("#phone").val();
+	
+	pop.location.href="FindMemberEmail.ma?MEMBER_NAME=" + name + "&MEMBER_PHONE=" + phone;
 }
 </script>
 </body>
