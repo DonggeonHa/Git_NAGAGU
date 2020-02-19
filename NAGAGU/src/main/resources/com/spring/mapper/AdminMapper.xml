@@ -177,7 +177,7 @@
 		<result property="ESTIMATE_CONTENT" column="ESTIMATE_CONTENT"/> 
 		<result property="ESTIMATE_PAY" column="ESTIMATE_PAY"/> 
 		<result property="ESTIMATE_STATE" column="ESTIMATE_STATE"/>
-		<result property="ESTIMATE_MINPRICE" column="ESTIMATE_MINPRICE"/>
+		<result property="ESTIMATE_AVG" column="ESTIMATE_AVG"/>
 		<result property="ESTIMATE_OFFERCOUNT" column="ESTIMATE_OFFERCOUNT"/>
 	</resultMap>
 	

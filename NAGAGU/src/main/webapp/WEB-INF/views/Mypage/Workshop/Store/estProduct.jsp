@@ -3,9 +3,6 @@
 <%
 	String MEMBER_EMAIL = (String)session.getAttribute("MEMBER_EMAIL");
 %>
-<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
-<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
-<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 <style>
 	#work_store th, td {
 		text-align:center;
@@ -169,12 +166,13 @@
 				async:false,
 				contentType:'application/x-www-form-urlencoded; charset=utf-8',
 				success:function(data) {
+					
 					console.log(data.offerCount);
 					console.log(data.eoList);
 					
 					var output = '';
 					
-					var eoList = data.eoList;
+					var eoList = data.eoList;	
 					var rnum = data.rnum;
 
 		            $('#offer_count').html(eoList.length + '건');
@@ -188,11 +186,11 @@
 						
 						$.each(eoList, function(index, item) {
 							
-							var eo_date = formatDate(item.eo_ORDER_DATE);
+							var eo_date = formatDate(item.ES_ORDER_DATE);
 							
 							var eo_state = '';
 							
-							switch (item.eo_ORDER_STATE) {
+							switch (item.ES_ORDER_STATE) {
 							case 0 :
 								eo_state = '입금대기';
 								break;
@@ -217,14 +215,14 @@
 							}
 
 				            output += '<tr>';
-				            output += '<td scope="col" ><input type="checkbox" class="chk" name="chk" value=' + item.eo_ORDER_NUM + '>';  
-				            output += '<input type="hidden" class="disabled" name="chk2" value=' + item.eo_ORDER_BUYER_MAIL + '></td>';
+				            output += '<td scope="col" ><input type="checkbox" class="chk" name="chk" value=' + item.ES_ORDER_NUM + '>';  
+				            output += '<input type="hidden" class="disabled" name="chk2" value=' + item.ES_ORDER_BUYER_MAIL + '></td>';
 				            output += '<th scope="col" >' + rnum + '</th>';
-				            output += '<td scope="col" >' + item.eo_ORDER_BUYER + '</td>';
-				            output += '<td scope="col" >' + item.eo_ORDER_TITLE + '</td>';
+				            output += '<td scope="col" >' + item.ES_ORDER_BUYER + '</td>';
+				            output += '<td scope="col" >' + item.ES_ORDER_TITLE + '</td>';
 				            output += '<td scope="col" >';
-				            
-				            var category = item.eo_ORDER_CATEGORY;
+
+				            var category = item.ES_ORDER_CATEGORY;
 				            
 				            switch (category) {
 				            case 'table':
@@ -254,7 +252,7 @@
 				            }
 				            
 				            output += '</td>';
-				            output += '<td scope="col" >' + addComma(item.eo_ORDER_PRICE) + '</td>';
+				            output += '<td scope="col" >' + addComma(item.ES_ORDER_PRICE) + '</td>';
 				            output += '<td scope="col" >' + eo_date + '</td>';
 				            output += '<td scope="col" >' + eo_state + '</td>';
 				            output += '<td scope="col">';
@@ -333,7 +331,8 @@
 		}
 
 		function addComma(inputNumber) {
-			   return inputNumber.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+			var num = inputNumber.toString();
+			return num.replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 		}
 
 		function unComma(str) {

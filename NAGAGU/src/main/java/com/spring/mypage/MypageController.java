@@ -257,8 +257,9 @@ public class MypageController {
 	@RequestMapping(value = "/mypage_estimate_payment.my")
 	public String MypageEsOrderPayment(HttpServletRequest request, Model model) {
 		EstimateOrderVO eovo = new EstimateOrderVO();
+		int ES_ORDER_NUM = Integer.parseInt(request.getParameter("ES_ORDER_NUM"));
 		
-		eovo.setES_ORDER_NUM(Integer.parseInt(request.getParameter("ES_ORDER_NUM")));
+		eovo.setES_ORDER_NUM(ES_ORDER_NUM);
 		eovo.setES_ORDER_BUYER_NAME(request.getParameter("ES_ORDER_BUYER_NAME"));
 		eovo.setES_ORDER_BUYER_ZIP(request.getParameter("ES_ORDER_BUYER_ZIP"));
 		eovo.setES_ORDER_BUYER_ADDRESS(request.getParameter("ES_ORDER_BUYER_ADDRESS1") + " " + request.getParameter("ES_ORDER_BUYER_ADDRESS2"));
@@ -272,6 +273,8 @@ public class MypageController {
 		int res = estimateService.esOrderPay(eovo);
 		
 		if (res == 1) {
+			eovo = estimateService.esOrderDetail(ES_ORDER_NUM);
+			
 			model.addAttribute("eovo", eovo);
 			
 			return "Mypage/es_order_success";

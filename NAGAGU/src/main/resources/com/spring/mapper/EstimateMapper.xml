@@ -180,8 +180,11 @@
 	
 	<select id="esOrderList" parameterType="java.util.HashMap" resultMap="orderMap">
 		select * from ESTIMATE_ORDER 
-		<if test="ES_ORDER_BUYER_MAIL!=null">where ES_ORDER_BUYER_MAIL = #{ES_ORDER_BUYER_MAIL}</if>
+		<where>
+		<if test="ES_ORDER_BUYER_MAIL!=null">ES_ORDER_BUYER_MAIL = #{ES_ORDER_BUYER_MAIL}</if>
+		<if test="ES_ORDER_WOKRSHOP!=null">and ES_ORDER_WORKSHOP = #{ES_ORDER_WORKSHOP}</if>
 		<if test="ES_ORDER_STATE!=null">and ES_ORDER_STATE = #{ES_ORDER_STATE}</if>
+		</where>
 	</select>
 	
 	<select id="esOrderTable" parameterType="java.util.HashMap" resultMap="orderMap">

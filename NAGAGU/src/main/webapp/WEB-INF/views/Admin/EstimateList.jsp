@@ -94,7 +94,7 @@
 	        	        break;  
 	 				}
 					
-					output += '<td>' + item.estimate_AVG + '</td>';
+					output += '<td>' + addComma(item.estimate_AVG) + '원</td>';
 					output += '<td>' + item.estimate_OFFERCOUNT + '</td>';
 					
 					if (item.estimate_STATE == 0) {
@@ -103,7 +103,9 @@
 						output += '<td>낙찰</td>';
 					} else if(item.estimate_STATE == 2){
 						output += '<td>유찰</td>';
-					} 
+					} else if(item.estimate_STATE == 3){
+						output += '<td>취소</td>';
+					}
 					
 					output += '<td><a href="./deleteEstimate.ad" class="del_data" ';
 					output += 'ESTIMATE_NUM=' + item.estimate_NUM +  '><i class="fas fa-trash-alt" ></i></a></td>';
@@ -279,5 +281,9 @@
 			$(temp).parent().show();					
 		})
 	})
+	
+	function addComma(inputNumber) {
+		   return inputNumber.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+	}
 </script>
 
