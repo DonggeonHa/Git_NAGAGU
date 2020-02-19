@@ -51,63 +51,10 @@
 	<form id="orderForm" method="POST" action="mypage_estimate_update.my">
 	<input type="hidden" name="ES_ORDER_NUM" value=<%=eovo.getES_ORDER_NUM()%>>
 	<div class="second-container">
-		<div>
-			<div class="row">
-				<div class="col-2">
-					<h5 style="padding-top: 2%;">주문자 정보</h5>
-				</div>
-			</div>
-			<hr>
-				<div class="form-group row">
-					<div class="col-2">
-						<label for="inputAddress">이름</label>
-					</div>
-					<div class="col-5">
-						<input type="text" class="form-control name" name="ES_ORDER_BUYER_NAME" value=<%=eovo.getES_ORDER_BUYER_NAME() %> readonly>
-					</div>
-					<div class="col-5">
-					</div>
-				</div>
-				<div class="form-group row">
-					<div class="col-2">
-						<label for="inputAddress">우편번호</label>
-					</div>
-					<div class="col-3">
-						<input type="text" class="form-control zip" name="ES_ORDER_BUYER_ZIP" value=<%=eovo.getES_ORDER_BUYER_ZIP() %> readonly>
-					</div>
-					<div class="col-7"></div>
-				</div>
-				<div class="form-group row">
-					<div class="col-2">
-						<label for="inputAddress">주소</label>
-					</div>
-					<div class="col-10">
-						<input type="text" class="form-control address1" name="ES_ORDER_BUYER_ADDRESS1" value=<%=eovo.get %>>
-					</div>
-				</div>
-				<div class="form-group row">
-					<div class="col-2">
-					</div>
-					<div class="col-10 input-group">
-						<input type="text" class="form-control address2" name="ES_ORDER_BUYER_ADDRESS2">
-					</div>
-				</div>
-				<div class="form-group row">
-					<div class="col-2">
-						<label for="inputAddress">연락처</label>
-					</div>
-					<div class="col-5">
-						<input type="text" class="form-control phone" name="ES_ORDER_BUYER_PHONE">
-					</div>
-					<div class="col-5">
-					</div>
-				</div> 
-		</div>
-		
 		<div style="padding: 0 0 5% 0;">
 			<div class="row mt-5">
 				<div class="col-2">
-					<h5 style="padding-top: 2%;">배송지</h5>
+					<h5 style="padding-top: 2%;">배송 정보</h5>
 				</div>
 				<div class="col-10">
 					<button type="button" id="getInfo_btn" class="btn btn-outline-dark" ><font size="2">주문자 정보와 동일</button>
