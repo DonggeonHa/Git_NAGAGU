@@ -34,12 +34,20 @@
 					<td><%=memberVO.getWORKSHOP_CEO_NAME()%></td>
 				</tr>
 				<tr>
+					<th scope="row">사업자번호</th>
+					<td><%=memberVO.getWORKSHOP_LICENSE()%></td>
+				</tr>
+				<tr>
 					<th scope="row">핸드폰</th>
 					<td><%=memberVO.getWORKSHOP_PHONE()%></td>
 				</tr>
 				<tr>
 					<th scope="row">이메일</th>
 					<td><%=memberVO.getWORKSHOP_EMAIL()%></td>
+				</tr>
+				<tr>
+					<th scope="row">우편번호</th>
+					<td><%=memberVO.getWORKSHOP_ZIP()%></td>
 				</tr>
 				<tr>
 					<th scope="row">주소</th>
@@ -52,6 +60,10 @@
 				<tr>
 					<th scope="row">가입날짜</th>
 					<td><%=memberVO.getWORKSHOP_DATE()%></td>
+				</tr>
+				<tr>
+					<th scope="row">소개글</th>
+					<td><%=memberVO.getWORKSHOP_INTRO()%></td>
 				</tr>
 			</table>
 			<div class="d-flex justify-content-center">

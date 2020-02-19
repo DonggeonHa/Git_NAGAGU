@@ -4,22 +4,22 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import javax.servlet.http.HttpSession;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.servlet.ModelAndView;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.spring.academy.ClassVO;
+import com.spring.community.PicsCommentDB;
 import com.spring.community.PicsVO;
 import com.spring.estimate.EstimateVO;
 import com.spring.member.MemberVO;
 import com.spring.store.ProductVO;
+import com.spring.store.Product_qnaVO;
+import com.spring.store.Product_reviewVO;
 import com.spring.workshop.WorkShopMemberVO;
 
 @Controller
@@ -272,6 +272,48 @@ public class AdminController {
 		return retVal;
 	}
 	
+	@RequestMapping(value = "/picsCommentList.ad")
+	public String picsCommnetList() {
+		return "Admin/CommunityCommentList";
+	}
+	
+	//produces 속성을 이용해 Response의 Content-Type을 제어할 수 있다
+	@RequestMapping(value = "/picsComment.ad", produces="application/json;charset=UTF-8")
+	@ResponseBody
+	public String picsComment() {
+		List<PicsCommentDB> picsList = adminService.getPICSComment();
+		
+		String str = "";
+		
+		ObjectMapper mapper = new ObjectMapper();
+		try {
+			str = mapper.writeValueAsString(picsList);
+			System.out.println("picsList 변환 : " + str);
+		} catch (Exception e) {
+			System.out.println("first() mapper : " + e.getMessage());
+		}
+		
+		return str;
+	}
+	
+	@RequestMapping(value = "/deleteCommentPICS.ad", produces="application/json; charset=UTF-8", method = {RequestMethod.GET, RequestMethod.POST})
+	@ResponseBody
+	public Map<String, Object> deleteCommentPICS(PicsCommentDB vo) {
+		Map<String, Object> retVal = new HashMap<String, Object>();
+		
+		try {
+			System.out.println("PICS_RE_NUM = " + vo.getPICS_RE_NUM());
+			int res = adminService.deletePICSComment(vo);
+			
+			retVal.put("res", "OK");
+		} catch(Exception e) {
+			retVal.put("res", "FAIL");
+			retVal.put("message", "삭제가 되지 않았습니다.");
+		}
+		
+		return retVal;
+	}
+	
 	/*=========================== 아카데미 관리 ==============================*/
 	@RequestMapping(value = "/academyList.ad")
 	public String academyList() {
@@ -389,6 +431,90 @@ public class AdminController {
 		} catch(Exception e) {
 			retVal.put("res", "FAIL");
 			retVal.put("message", "상세보기가 되지 않았습니다.");
+		}
+		
+		return retVal;
+	}
+	
+	@RequestMapping(value = "/productReviewList.ad")
+	public String productReview() {
+		return "Admin/ProductReview";
+	}
+	
+	//produces 속성을 이용해 Response의 Content-Type을 제어할 수 있다
+	@RequestMapping(value = "/ProductReview.ad", produces="application/json;charset=UTF-8")
+	@ResponseBody
+	public String productReview2() {
+		List<Product_reviewVO> productList = adminService.getProductReview();
+		
+		String str = "";
+		
+		ObjectMapper mapper = new ObjectMapper();
+		try {
+			str = mapper.writeValueAsString(productList);
+			System.out.println("productReviewList 변환 : " + str);
+		} catch (Exception e) {
+			System.out.println("first() mapper : " + e.getMessage());
+		}
+		
+		return str;
+	}
+	
+	@RequestMapping(value = "/deleteProductReview.ad", produces="application/json; charset=UTF-8", method = {RequestMethod.GET, RequestMethod.POST})
+	@ResponseBody
+	public Map<String, Object> deleteProductReview(Product_reviewVO vo) {
+		Map<String, Object> retVal = new HashMap<String, Object>();
+		
+		try {
+			System.out.println("PICS_NUM = " + vo.getREVIEW_NUM());
+			int res = adminService.deleteProductReview(vo);
+			
+			retVal.put("res", "OK");
+		} catch(Exception e) {
+			retVal.put("res", "FAIL");
+			retVal.put("message", "삭제가 되지 않았습니다.");
+		}
+		
+		return retVal;
+	}
+	
+	@RequestMapping(value = "/productQnAList.ad")
+	public String productQnA() {
+		return "Admin/ProductQnA";
+	}
+	
+	//produces 속성을 이용해 Response의 Content-Type을 제어할 수 있다
+	@RequestMapping(value = "/ProductQnA.ad", produces="application/json;charset=UTF-8")
+	@ResponseBody
+	public String productQnA2() {
+		List<Product_qnaVO> productList = adminService.getProductQnA();
+		
+		String str = "";
+		
+		ObjectMapper mapper = new ObjectMapper();
+		try {
+			str = mapper.writeValueAsString(productList);
+			System.out.println("productReviewList 변환 : " + str);
+		} catch (Exception e) {
+			System.out.println("first() mapper : " + e.getMessage());
+		}
+		
+		return str;
+	}
+	
+	@RequestMapping(value = "/deleteProductQnA.ad", produces="application/json; charset=UTF-8", method = {RequestMethod.GET, RequestMethod.POST})
+	@ResponseBody
+	public Map<String, Object> deleteProductQnA(Product_qnaVO vo) {
+		Map<String, Object> retVal = new HashMap<String, Object>();
+		
+		try {
+			System.out.println("QNA_NUM = " + vo.getQNA_NUM());
+			int res = adminService.deleteProductQnA(vo);
+			
+			retVal.put("res", "OK");
+		} catch(Exception e) {
+			retVal.put("res", "FAIL");
+			retVal.put("message", "삭제가 되지 않았습니다.");
 		}
 		
 		return retVal;

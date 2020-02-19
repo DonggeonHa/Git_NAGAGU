@@ -7,11 +7,14 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.spring.community.PicsCommentDB;
 import com.spring.community.PicsVO;
 import com.spring.mapper.AdminMapper;
 import com.spring.member.MemberVO;
 import com.spring.workshop.WorkShopMemberVO;
 import com.spring.store.ProductVO;
+import com.spring.store.Product_qnaVO;
+import com.spring.store.Product_reviewVO;
 import com.spring.estimate.EstimateVO;
 import com.spring.academy.ClassVO;
 
@@ -169,7 +172,22 @@ public class AdminServiceImpl implements AdminService {
 		return memberpics;
 	}
 
-	
+	@Override
+	public List<PicsCommentDB> getPICSComment() {
+		List<PicsCommentDB> picsList = new ArrayList<PicsCommentDB>();
+		AdminMapper adminMapper = sqlSession.getMapper(AdminMapper.class);
+		picsList = adminMapper.getPICSComment();
+		
+		return picsList;
+	}
+
+	@Override
+	public int deletePICSComment(PicsCommentDB vo) {
+		AdminMapper adminMapper = sqlSession.getMapper(AdminMapper.class);
+		int res = adminMapper.deletePICSComment(vo);
+		
+		return res;
+	}
 	/* ================================= 아카데미관리 ======================================*/
 	@Override
 	public List<ClassVO> getAcademy() {
@@ -222,6 +240,40 @@ public class AdminServiceImpl implements AdminService {
 		getProduct = adminMapper.detailProduct(vo);
 		
 		return getProduct;
+	}
+	
+	@Override
+	public List<Product_reviewVO> getProductReview() {
+		List<Product_reviewVO> productList = new ArrayList<Product_reviewVO>();
+		AdminMapper adminMapper = sqlSession.getMapper(AdminMapper.class);
+		productList = adminMapper.getProductReview();
+		
+		return productList;
+	}
+
+	@Override
+	public int deleteProductReview(Product_reviewVO vo) {
+		AdminMapper adminMapper = sqlSession.getMapper(AdminMapper.class);
+		int res = adminMapper.deleteProductReview(vo);
+		
+		return res;
+	}
+	
+	@Override
+	public List<Product_qnaVO> getProductQnA() {
+		List<Product_qnaVO> productList = new ArrayList<Product_qnaVO>();
+		AdminMapper adminMapper = sqlSession.getMapper(AdminMapper.class);
+		productList = adminMapper.getProductQnA();
+		
+		return productList;
+	}
+
+	@Override
+	public int deleteProductQnA(Product_qnaVO vo) {
+		AdminMapper adminMapper = sqlSession.getMapper(AdminMapper.class);
+		int res = adminMapper.deleteProductQnA(vo);
+		
+		return res;
 	}
 
 	/* ================================= 견적관리 ======================================*/

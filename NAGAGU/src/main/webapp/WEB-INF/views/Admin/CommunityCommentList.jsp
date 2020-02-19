@@ -5,7 +5,7 @@
 	<div class="container-fluid">
 		<div class="d-flex bd-highlight mb-3">
 			<div class="mr-auto p-2 bd-highlight align-self-end">
-				<h6>커뮤니티관리 > 게시글관리 </h6>
+				<h6>커뮤니티관리 > 댓글 관리 </h6>
 			</div>
 			<br><br>
 			<div class="input-group p-2 bd-highlight" style="width: 300px !important;">
@@ -17,16 +17,16 @@
 		</div>
 		
 		<div style="height: 550px; overflow-y: auto;">
-			<table class="table table-hover tableCSS" id="community-table"></table>
+			<table class="table table-hover tableCSS" id="comment-table"></table>
 		</div>
 		<div class="d-flex justify-content-center">
-			<nav aria-label="Page navigation example" class="paginated" id="community-page"></nav>
+			<nav aria-label="Page navigation example" class="paginated" id="comment-page"></nav>
 		</div>
 	</div>
 </div>
 <!-- /본문 -->
 
-<!-- CommunityList -->
+<!-- commentList -->
 <script>
    $(document).ready(function() {
 	selectData();
@@ -37,9 +37,9 @@
 function selectData() {
 	$('#remo').remove();
 	// table 내부 내용 모두 제거(초기화)
-	$('#community-table').empty();
+	$('#comment-table').empty();
 	$.ajax({
-		url: './Pics.ad',
+		url: './picsComment.ad',
 		type: 'POST',
 		dataType : "json", //서버에서 보내줄 데이터 타입
 		contentType : 'application/x-www-form-urlencoded; charset=UTF-8',
@@ -47,72 +47,35 @@ function selectData() {
 			var title = '';
 			title += '<thead class="text-center">';
 			title += '<tr>';
-			title += '<th scope="col">번호</th>';
-			title += '<th scope="col">분류</th>';
-			title += '<th scope="col">카테고리</th>';
-			title += '<th scope="col">글쓴이</th>';
-			title += '<th scope="col">태그</th>';
-			title += '<th scope="col">좋아요</th>';
-			title += '<th scope="col">조회수</th>';
-			title += '<th scope="col">관리</th>';
+			title += '<th style="width: 5%;">번호</th>';
+			title += '<th style="width: 10%;">게시글</th>';
+			title += '<th style="width: 10%;"">글쓴이</th>';
+			title += '<th style="width: 15%;">작성일자</th>';
+			title += '<th style="width: 50%;">내용</th>';
+			title += '<th style="width: 10%;">관리</th>';
 			title += '</tr>';
 			title += '</thead>';
-			$('#community-table').append(title);
+			$('#comment-table').append(title);
 			$.each(data, function(index, item) {
 				var output = '';
 				output += '<tbody class="text-center">'
 				output += '<tr>';
-				output += '<td>' + item.pics_NUM + '</td>'; 
-				
-				if (item.pics_REVIEW == 1) {
-					output += '<td>후기</td>';
-				} else {
-					output += '<td>일반</td>';
-				}
-				
-				switch(item.pics_CATEGORY){
-	        	    case 'table' : 
-	        	    	output += '<td>책상</td>';
-	        	        break;
-	        	    case 'chair' : 
-	        	    	output += '<td>의자</td>';
-	        	        break;  
-	        	    case 'bookshelf' : 
-	        	    	output += '<td>책장</td>';
-	        	        break;
-	        	    case 'bed' : 
-	        	    	output += '<td>침대</td>'; 
-	        	        break;  
-	        	    case 'drawer' : 
-	        	    	output += '<td>서랍장</td>';
-	        	        break;
-	        	    case 'sidetable' : 
-	        	    	output += '<td>협탁</td>';
-	        	        break;  
-	        	    case 'dressing_table' : 
-	        	    	output += '<td>화장대</td>';
-	        	        break;
-	        	    case 'others' : 
-	        	    	output += '<td>기타</td>'; 
-	        	        break;  
-     			}
-				
-				output += '<td>' + item.pics_NICK + '</td>';
-				output += '<td><a href="./detailPICS.ad" class="detail_data" '
-				output += 'PICS_NUM=' + item.pics_NUM + '>' + item.pics_TAG + '</a></td>';
-				output += '<td>' + item.pics_LIKE + '</td>';
-				output += '<td>' + item.pics_READ + '</td>';
-				output += '<td><a href="./deletePICS.ad" class="del_data" ';
-				output += 'PICS_NUM=' + item.pics_NUM +  '><i class="fas fa-trash-alt" ></i></a></td>';
+				output += '<td>' + item.pics_RE_NUM + '</td>'; 
+				output += '<td>' + item.pics_RE_PICS + '</td>';
+				output += '<td>' + item.pics_RE_MEMBER + '</td>';
+				output += '<td>' + item.pics_RE_DATE + '</td>';
+				output += '<td>' + item.pics_RE_CONTENT + '</td>';
+				output += '<td><a href="./deleteCommentPICS.ad" class="del_data" ';
+				output += 'PICS_RE_NUM=' + item.pics_RE_NUM + '><i class="fas fa-trash-alt" ></i></a></td>';
 				output += '</tr>';
 				output += '</tbody>'
 				console.dir("output : " + output);
-				$('#community-table').append(output);
+				$('#comment-table').append(output);
 			});
 			page();
 		},
 		error: function(request,status,error) {
-			alert("community list 통신 실패!");
+			alert("comment list 통신 실패!");
 			alert("code:"+request.status+"\n"+"error:"+error);
 		}
 	});
@@ -123,7 +86,7 @@ $(document).on('click', '.del_data', function(event) {
 	jQuery.ajax({
 		url : $(this).attr("href"), //$(this) : //항목을 눌렀을때 그 걸 가르킴 .attr("href") 속성된 이름값중에 "href"을 통해서? 읽어온다??
 		type : 'GET',
-		data : {'PICS_NUM' : $(this).attr("pics_NUM")},
+		data : {'PICS_RE_NUM' : $(this).attr("pics_RE_NUM")},
 		contentType : 'application/x-www-form-urlencoded; charset=UTF-8',
 		dataType : 'json',
 		success : function (retVal) {
@@ -145,28 +108,28 @@ $(document).on('click', '.del_data', function(event) {
 	event.preventDefault();
 });
 
-$(document).on('click', '.detail_data', function(event) {
+// $(document).on('click', '.detail_data', function(event) {
 	
-	jQuery.ajax({
-		url : $(this).attr("href"), //$(this) : //항목을 눌렀을때 그 걸 가르킴 .attr("href") 속성된 이름값중에 "href"을 통해서? 읽어온다??
-		type : 'GET',
-		data : {'PICS_NUM' : $(this).attr("pics_NUM")},
-		contentType : 'application/x-www-form-urlencoded; charset=UTF-8',
-		dataType : 'json',
-		success : function (retVal) {
-			if (retVal.res == "OK") {
-				var pop = window.open('community_detail.cm?PICS_NUM=' + retVal.PicsVO.pics_NUM + '&MEMBER_NUM=' + retVal.MemberVO.member_NUM + '&PICS_MEMBER=' + retVal.PicsVO.pics_MEMBER,'_blank');
-	 		}
-		},
-		error: function(request,status,error) {
-			alert("ajax detailmember 통신 실패!");
-			alert("code:"+request.status+"\n"+"error:"+error);
-		}
-	});
+// 	jQuery.ajax({
+// 		url : $(this).attr("href"), //$(this) : //항목을 눌렀을때 그 걸 가르킴 .attr("href") 속성된 이름값중에 "href"을 통해서? 읽어온다??
+// 		type : 'GET',
+// 		data : {'PICS_NUM' : $(this).attr("pics_NUM")},
+// 		contentType : 'application/x-www-form-urlencoded; charset=UTF-8',
+// 		dataType : 'json',
+// 		success : function (retVal) {
+// 			if (retVal.res == "OK") {
+// 				var pop = window.open('community_detail.cm?PICS_NUM=' + retVal.PicsVO.pics_NUM + '&MEMBER_NUM=' + retVal.MemberVO.member_NUM + '&PICS_MEMBER=' + retVal.PicsVO.pics_MEMBER,'_blank');
+// 	 		}
+// 		},
+// 		error: function(request,status,error) {
+// 			alert("ajax detailmember 통신 실패!");
+// 			alert("code:"+request.status+"\n"+"error:"+error);
+// 		}
+// 	});
 	
-	// 기본 이벤트 제거
-	event.preventDefault();
-});
+// 	// 기본 이벤트 제거
+// 	event.preventDefault();
+// });
 
 // 만들어진 테이블에 페이지 처리
 function page() { 	
@@ -176,8 +139,8 @@ function page() {
 		var pagesu = 10;  //페이지 번호 갯수
   		var currentPage = 0;
   		var numPerPage = 10;  //목록의 수
-  		var $table = $('#community-table');    
-  		var $user = $('#community-page');
+  		var $table = $('#comment-table');    
+  		var $user = $('#comment-page');
   
 		//length로 원래 리스트의 전체길이구함
 		var numRows = $table.find('tbody tr').length;
@@ -270,8 +233,8 @@ function page() {
 $(document).ready(function() {
 	$("#keyword").keyup(function() {
 		var k = $(this).val();
-		$("#community-table > tbody > tr").hide();
-		var temp = $("#community-table > tbody > tr > td:nth-child(10n+3):contains('" + k + "')");
+		$("#comment-table > tbody > tr").hide();
+		var temp = $("#comment-table > tbody > tr > td:nth-child(10n+3):contains('" + k + "')");
 		
 		$(temp).parent().show();					
 	})

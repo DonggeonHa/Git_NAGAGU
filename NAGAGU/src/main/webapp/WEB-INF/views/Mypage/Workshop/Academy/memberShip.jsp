@@ -323,7 +323,7 @@
 				$table.find('tr').hide().slice(currentPage * numPerPage, (currentPage + 1) * numPerPage).show();
 				$("#remo").html("");
 				if (numPages > 1) {     // 한페이지 이상이면
-					if (currentPage < 5 && numPages-currentPage >= 5) {   // 현재 5p 이하이면
+					if (currentPage < 5 && (numPages-currentPage) >= 5) {   // 현재 5p 이하이면
 						nowp = 0;     // 1부터
 						endp = pagesu;    // 10까지
 					} else {

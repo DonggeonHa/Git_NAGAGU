@@ -20,6 +20,7 @@
 <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/css/Store/estimatelist.css">
 <!-- GOOGLE FONT -->
 <link href="https://fonts.googleapis.com/css?family=Do+Hyeon|Jua&display=swap&subset=korean" rel="stylesheet">
+
 <style>
 	.table .es_state_bid {
 		margin:0;
@@ -80,11 +81,11 @@
 	<h1>견적 문의시 이용가이드</h1>
 </div>
 <!-- content start -->
-<div class="container category_st">
+<div class="container">
 	<div>
 		<nav>
 			<div class="nav d-flex justify-content-between shadow p-3 mb5 bg-white rounded" id="nav-tab" role="tablist">
-		    	<a class="nav-item nav-link active" id="nav-waiting-tab" data-toggle="tab" href="#nav-waiting" role="tab" aria-controls="nav-home" aria-selected="true">
+		    	<a class="nav-item nav-link" id="nav-waiting-tab" data-toggle="tab" href="#nav-waiting" role="tab" aria-controls="nav-home" aria-selected="true">
 		    		<dl class="text-center">
 		    			<dd></dd>
 		    			<dt><h5>견적신청</h5></dt>
@@ -134,55 +135,45 @@
 			</div>
 		</nav>
 		<div class="tab-content" id="nav-tabContent">
-			<div class="tab-pane fade show active shadow p-3 mb5 bg-white rounded" id="nav-waiting" role="tabpanel" aria-labelledby="nav-waiting-tab" style="padding-top: 30%;">
-				<hr>
+			<div class="tab-pane fade shadow p-3 mb5 bg-white rounded" id="nav-waiting" role="tabpanel" aria-labelledby="nav-waiting-tab">
 				<div>
-					Lorem ipsum dolor sit amet, consectetur adipisicing elit. Numquam consequatur alias sunt ad maxime provident est aut ea commodi 
-					laboriosam assumenda hic blanditiis, voluptas nobis omnis quam. Corporis asperiores, id at consequatur possimus ipsum magni deserunt 
-					autem sunt, alias labore consectetur iusto quo explicabo quidem omnis distinctio eius vitae optio, totam nobis delectus. Laborum laboriosam 
-					expedita deleniti ad quod nostrum sed esse quo corporis veritatis facilis debitis mollitia obcaecati assumenda animi aut, provident commodi cum, 
-					architecto possimus dicta explicabo asperiores vitae. Voluptates, consequatur, excepturi! Laboriosam qui at, pariatur distinctio consequuntur 
-					tenetur eligendi molestiae, dolorum voluptatem. Eum totam nobis error quae.
+					<p>1. 회원이 아닐경우에는 글쓰기 버튼이 뜨질 않으니 회원 로그인을 해 주시고 글쓰기 버튼을 클릭해서 들어가줍니다.</p>
+					<p>2. 글쓰기 폼의 양식에 맞게 글을 쓴 뒤 신청버튼을 누릅니다.</p>
 				</div>
 				<hr>
 			</div>
 			<div class="tab-pane fade shadow p-3 mb5 bg-white rounded" id="nav-finish" role="tabpanel" aria-labelledby="nav-finish-tab">
-				<hr>
 				<div>
-					Lorem ipsum dolor sit amet, consectetur adipisicing elit.mnis distinctio eius vitae optio, totam nobis delectus. Laborum laboriosam 
-					expedita deleniti ad quod nostrum sed esse quo corporis veritatis facilis debitis mollitia obcaecati assumenda animi aut, provident commodi cum, 
-					architecto possimus dicta explicabo asperiores vitae. Voluptates, consequatur, excepturi! Laboriosam qui at, pariatur distinctio consequuntur 
-					tenetur eligendi molestiae, dolorum voluptatem. Eum totam nobis error quae.
+					<img src="${pageContext.request.contextPath}/resources/images/Estimate/Bidding.jpg" width="100%" height="auto">
+					<div class="d-flex justify-content-center">
+						<p>공방들이 입찰을 해줄 떄 까지 기다립니다..</p>
+					</div>
 				</div>
 				<hr>
 			</div>
 			<div class="tab-pane fade shadow p-3 mb5 bg-white rounded" id="nav-ready" role="tabpanel" aria-labelledby="nav-ready-tab">
-				<hr>
 				<div>
-					Lorem ipsum dolor sit amet, consectetur adipisicing elit. Numquam consequatur alias sunt ad maxime provident est aut ea commodi 
-					laboriosam assumenda hic blanditiis, voluptas nobis omnis quam. Corporis asperiores, id at consequatur possimus ipsum magni deserunt 
-					autem sunt, alias labore consectetur iusto quo explicabo quidem omnis distinctio eius vitae optio, totam nobis delectus. Laborum laboriosam 
-					expedita deleniti ad quod nostrum sed esse quo corporis veritatis facilis debitis mollitia obcaecati assumenda animi aut, provident commodi cum, 
-					architecto possimus dicta explicabo asperiores vitae. Voluptates, 
+					<img src="${pageContext.request.contextPath}/resources/images/Estimate/Bid_confirmation.jpg" width="100%" height="auto">
+					<div class="d-flex justify-content-center">
+						<p>공방들이 입찰을 다 했을 경우 원하는 가격을 선택해 낙찰하기 버튼을 누릅니다.</p>
+					</div>
 				</div>
 				<hr>
 			</div>
 			<div class="tab-pane fade shadow p-3 mb5 bg-white rounded" id="nav-shipping" role="tabpanel" aria-labelledby="nav-shipping-tab">
-				<hr>
 				<div>
-					Lorem ipsum dolor sit amet, consectetur adipisicing elit. Numquam consequatur alias sunt ad maxime provident est aut ea commodi 
-					laboriosam assumenda hic blanditiis, voluptas nobis omnis quam. Corporis asperiores, id at consequatur possimus ipsum magni deserunt 
-					autem sunt, alias labore consectetur iusto quo explicabo quidem omnis  
+					<img src="${pageContext.request.contextPath}/resources/images/Estimate/bid.jpg" width="100%" height="auto">
+					<div class="d-flex justify-content-center">
+						<p>원하는 공방으로 낙찰을 하고 해당 공방과 문의를 하여 상세하게 지정합니다.</p>
+					</div>
 				</div>
 				<hr>
 			</div>
 			<div class="tab-pane fade shadow p-3 mb5 bg-white rounded" id="nav-completed" role="tabpanel" aria-labelledby="nav-completed-tab">
-				<hr>
 				<div>
-					Lorem ipsum dolor sit amet, consectetur adipisicing elit. Numquam consequatur alias sunt ad maxime provident est aut ea commodi 
-					laboriosam assumenda hic blanditiis, voluptas nobis omnis quam. Corporis asperiores, id at consequatur possimus ipsum magni deserunt 
-					autem sunt, alias labore consectetur iusto quo explicabo quidem omnis distinctio eius vitae optio, totam nobis delectus. Laborum laboriosam 
-					expedita deleniti ad quod nostrum sed esse quo corporis veritatis facilis 
+					<div class="d-flex justify-content-start">
+						<p>낙찰 확정 우째함.. ? </p>
+					</div>
 				</div>
 				<hr>
 			</div>

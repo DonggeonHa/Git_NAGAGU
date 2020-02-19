@@ -25,31 +25,29 @@
 				커뮤니티관리
 				<ul>
 					<li><a href="./picsList.ad">게시글 관리</a></li>
+					<li><a href="./picsCommentList.ad">댓글 관리</a></li>
 				</ul>
 			</li>
 			<li class="main text-white">
 				아카데미관리
 				<ul>
-					<li><a href="./academyList.ad">클래스관리</a></li>
+					<li><a href="./academyList.ad">강의 관리</a></li>
+					<li><a href="#">강의리뷰 관리</a></li>
+					<li><a href="#">강의문의 관리</a></li>
 				</ul>
 			</li>
 			<li class="main text-white">
 				상품관리
 				<ul>
 					<li><a href="./productList.ad">판매중인 상품</a></li>
+					<li><a href="./productReviewList.ad">상품리뷰 관리</a></li>
+					<li><a href="./productQnAList.ad">상품문의 관리</a></li>
 				</ul>
 			</li>
 			<li class="main text-white">
 				견적관리
 				<ul>
 					<li><a href="./estimateList.ad">견적관리</a></li>
-				</ul>
-			</li>
-			<li class="main text-white">
-				댓글관리
-				<ul>
-					<li><a href="#">리뷰관리</a></li>
-					<li><a href="#">문의관리</a></li>
 				</ul>
 			</li>
 		</ul>

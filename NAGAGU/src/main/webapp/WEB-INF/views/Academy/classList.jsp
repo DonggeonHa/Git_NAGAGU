@@ -265,7 +265,7 @@
 			<%
 				} else {
 			%>
-					<div class="text-center">
+					<div class="text-center" style="padding-top: 50px;">
 						<p> 현재 진행중인 강의가 없습니다. </p>
 					</div>
 			<%

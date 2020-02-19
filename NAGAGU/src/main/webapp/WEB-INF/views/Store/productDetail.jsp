@@ -510,8 +510,7 @@
 								<td><select name="BASKET_COLOR" size="1"
 									class="form-control BASKET_COLOR">
 										<option value="">선택</option>
-										<c:forTokens var="color" items="<%=PRODUCT_COLOR %>"
-											delims=",">
+										<c:forTokens var="color" items="<%=PRODUCT_COLOR %>" delims=",">
 											<option value="${fn:trim(color)}">${fn:trim(color)}</option>
 										</c:forTokens>
 								</select></td>
@@ -569,38 +568,35 @@
 										<% 
 											} else if(WORKSHOP_CEO_NAME != null) { 
 										%>
-										<%-- 공방 로그인일 때(하트 안 보임) --%>
-										<div style="width: 50%;">
-											<a href="classreservation.ac"
-												class="btn btn-outline-dark btn-lg btn-block disabled"
-												role="button" aria-pressed="true">장바구니</a>
-										</div>
-										<div style="width: 50%;">
-											<a href="#"
-												class="btn btn-outline-dark btn-lg btn-block disabled"
-												role="button" aria-pressed="true">바로구매</a>
-										</div>
+												<%-- 공방 로그인일 때(하트 안 보임) --%>
+												<div style="width: 50%;">
+													<a href="classreservation.ac"
+														class="btn btn-outline-dark btn-lg btn-block disabled"
+														role="button" aria-pressed="true">장바구니</a>
+												</div>
+												<div style="width: 50%;">
+													<a href="#"
+														class="btn btn-outline-dark btn-lg btn-block disabled"
+														role="button" aria-pressed="true">바로구매</a>
+												</div>
 										<% 
-												} else { 
-											%>
-										<%-- 일반회원일때 --%>
-										<div>
-											<a href="#" class="btn btn-outline-dark btn-lg LikeAjax"
-												role="button" aria-pressed="true"> <input
-												type="hidden" name="PRODUCT_NUM" value="<%=PRODUCT_NUM %>">♥
-											</a>
-										</div>
-										<div style="width: 45%;">
-											<a href="#" class="btn btn-outline-dark btn-lg btn-block basket_btn"
-												role="button" aria-pressed="true" id="basket_btn">장바구니</a>
-										</div>
-										<div style="width: 45%;">
-											<a href="#" class="btn btn-outline-dark btn-lg btn-block order_btn"
-												role="button" aria-pressed="true" id="order_btn">바로구매</a>
-										</div>
+											} else { 
+										%>
+												<%-- 일반회원일때 --%>
+												<div>
+													<a href="#" class="btn btn-outline-dark btn-lg LikeAjax" role="button" aria-pressed="true"> 
+														<input type="hidden" name="PRODUCT_NUM" value="<%=PRODUCT_NUM %>">♥
+													</a>
+												</div>
+												<div style="width: 45%;">
+													<a href="#" class="btn btn-outline-dark btn-lg btn-block basket_btn" role="button" aria-pressed="true" id="basket_btn">장바구니</a>
+												</div>
+												<div style="width: 45%;">
+													<a href="#" class="btn btn-outline-dark btn-lg btn-block order_btn"	role="button" aria-pressed="true" id="order_btn">바로구매</a>
+												</div>
 										<% 
 												} 
-											%>
+										%>
 									</div>
 								</td>
 							</tr>
@@ -622,7 +618,7 @@
 			</div>
 			<div class="row sticky">
 				<div class="col-12">
-					<ul class="nav nav-tabs nav-fill h-30">
+					<ul class="nav nav-tabs nav-fill h-30" style="z-index: 99;">
 					   <li class="nav-item">
 					      <a class="nav-link" href="#t1"><h5>상품정보</h5></a>
 					   </li>
@@ -954,17 +950,17 @@
 						<% 
 							if(WORKSHOP_CEO_NAME == null && MEMBER_EMAIL == null) { 
 						%> <%-- 비로그인일 때 --%>
-							<div>
-								<button type="button" class="btn btn-outline-dark btn-lg" data-toggle="modal" data-target="#exampleModalCenter">
-									<input type="hidden" name = "PRODUCT_NUM" value="<%=PRODUCT_NUM %>">♥
-								</button>
-							</div>	
-							<div style="width:45%;">
-								<button type="button" class="btn btn-outline-dark btn-lg btn-block" data-toggle="modal" data-target="#exampleModalCenter" >장바구니</button>
-							</div>
-							<div style="width:45%;">
-								<button type="button" class="btn btn-outline-dark btn-lg btn-block" data-toggle="modal" data-target="#exampleModalCenter" >바로구매</button>
-							</div>
+								<div>
+									<button type="button" class="btn btn-outline-dark btn-lg" data-toggle="modal" data-target="#exampleModalCenter">
+										<input type="hidden" name = "PRODUCT_NUM" value="<%=PRODUCT_NUM %>">♥
+									</button>
+								</div>	
+								<div style="width:45%;">
+									<button type="button" class="btn btn-outline-dark btn-lg btn-block" data-toggle="modal" data-target="#exampleModalCenter" >장바구니</button>
+								</div>
+								<div style="width:45%;">
+									<button type="button" class="btn btn-outline-dark btn-lg btn-block" data-toggle="modal" data-target="#exampleModalCenter" >바로구매</button>
+								</div>
 						<% 
 							} else if(WORKSHOP_CEO_NAME != null) { 
 						%>	<%-- 공방 로그인일 때(하트 안 보임) --%>
@@ -1421,7 +1417,7 @@
 					$("#remo").html("");
 		   
 					if (numPages > 1) {     // 한페이지 이상이면
-						if (currentPage < 5 && numPages-currentPage >= 5) {   // 현재 5p 이하이면
+						if (currentPage < 5 && (numPages-currentPage) >= 5) {   // 현재 5p 이하이면
 							nowp = 0;     // 1부터 
 							endp = pagesu;    // 10까지
 						} else {
@@ -1515,6 +1511,7 @@
 					} else {
 						alert("insert 실패!!!");
 					}
+					review_page();
 				},
 				error:function() {
 					alert("ajax통신 실패!!!");
@@ -1546,6 +1543,7 @@
 					} else {
 						alert("insert 실패!!!");
 					}
+					review_page();
 				},
 				error:function() {
 					alert("ajax통신 실패!!!");
@@ -1645,6 +1643,7 @@
 					} else {
 						alert("수정폼 데이터 가져오기 실패!!!");
 					}
+					review_page();
 				},
 				error:function() {
 					alert("ajax통신 실패!!!");
@@ -1685,6 +1684,7 @@
 					} else {
 						alert("수정 실패!!!");
 					}
+					review_page();
 				},
 				error:function() {
 					alert("ajax통신 실패!!!");
@@ -1716,6 +1716,7 @@
 					} else {
 						alert("수정 실패!!!");
 					}
+					review_page();
 				},
 				error:function() {
 					alert("ajax통신 실패!!!");
@@ -1746,6 +1747,7 @@
 						} else {
 							alert("삭제 실패!");
 						}
+						review_page();
 					},
 					error:function() {
 						alert("ajax통신 실패!!!");
@@ -1777,8 +1779,6 @@
 					console.log("retVal.qnaList : "+retVal.qnaList)
 					console.log("retVal.qna_RE_Count : "+retVal.qna_RE_Count)
 					console.log("retVal.qna_RE_List : "+retVal.qna_RE_List)
-					
-					
 					
 					if(retVal.qnaCount > 0) {
 						for(var i=0; i<retVal.qnaList.length; i++) {	//reviewCount도 상관 없음
@@ -1938,7 +1938,7 @@
 					$("#remo2").html("");
 		   
 					if (numPages > 1) {     // 한페이지 이상이면
-						if (currentPage < 5 && numPages-currentPage >= 5) {   // 현재 5p 이하이면
+						if (currentPage < 5 && (numPages-currentPage) >= 5) {   // 현재 5p 이하이면
 							nowp = 0;     // 1부터 
 							endp = pagesu;    // 10까지
 						} else {
@@ -2032,6 +2032,7 @@
 					} else {
 						alert("qna insert 실패!!!");
 					}
+					qna_page();
 				},
 				error:function() {
 					alert("qna insert ajax통신 실패!!!");
@@ -2062,6 +2063,7 @@
 					} else {
 						alert("qna reply insert 실패!!!");
 					}
+					qna_page();
 				},
 				error:function() {
 					alert("qna reply ajax통신 실패!!!");
@@ -2121,6 +2123,7 @@
 					} else {
 						alert("수정폼 데이터 가져오기 실패!!!");
 					}
+					qna_page();
 				},
 				error:function() {
 					alert("ajax통신 실패!!!");
@@ -2149,10 +2152,12 @@
 					} else {
 						alert("수정 실패!!!");
 					}
+					qna_page();
 				},
 				error:function() {
 					alert("ajax통신 실패!!!");
 				}
+				
 			});
 			event.preventDefault();				
 		})		

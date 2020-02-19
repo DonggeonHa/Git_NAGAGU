@@ -336,7 +336,7 @@
 	<% 
 		} else {
 	%>
-			<div class="text-center">등록된 상품이 없습니다.</div>
+			<div class="text-center" style="padding-top: 50px;">등록된 게시글이 없습니다.</div>
 	<%
 		}
 	%>

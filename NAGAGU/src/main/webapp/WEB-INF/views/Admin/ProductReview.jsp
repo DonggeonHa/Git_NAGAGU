@@ -5,41 +5,40 @@
 	<div class="container-fluid">
 		<div class="d-flex bd-highlight mb-3">
 			<div class="mr-auto p-2 bd-highlight align-self-end">
-				<h6>회원관리 > 일반회원관리 </h6>
+				<h6>상품관리 > 상품리뷰 관리 </h6>
 			</div>
 			<br><br>
 			<div class="input-group p-2 bd-highlight" style="width: 300px !important;">
 				<div class="input-group-prepend">
 					<span class="input-group-text" id="inputGroup-sizing-default"><i class="fas fa-search"></i></span>
 				</div>
-				<input type="text" class="form-control" aria-describedby="inputGroup-sizing-default" placeholder="이름을 입력하세요" id="keyword">
+				<input type="text" class="form-control" aria-describedby="inputGroup-sizing-default" placeholder="글쓴이를 입력하세요" id="keyword">
 			</div>
 		</div>
 		
 		<div style="height: 550px; overflow-y: auto;">
-			<table class="table table-hover tableCSS" id="user-table"></table>
+			<table class="table table-hover tableCSS" id="product-review"></table>
 		</div>
 		<div class="d-flex justify-content-center">
-			<nav aria-label="Page navigation example" class="paginated" id="user-page"></nav>
+			<nav aria-label="Page navigation example" class="paginated" id="productReview-page"></nav>
 		</div>
 	</div>
 </div>
 <!-- /본문 -->
 
-<!-- MemberList -->
+<!-- ProductList -->
 <script>
 	$(document).ready(function() {
 		selectData();
 	});
-  
 
 	// 목록
 	function selectData() {
 		$('#remo').remove();
 		// table 내부 내용 모두 제거(초기화)
-		$('#user-table').empty();
+		$('#product-review').empty();
 		$.ajax({
-			url: './Member.ad',
+			url: './ProductReview.ad',
 			type: 'POST',
 			dataType : "json", //서버에서 보내줄 데이터 타입
 			contentType : 'application/x-www-form-urlencoded; charset=UTF-8',
@@ -48,62 +47,34 @@
 				title += '<thead class="text-center">';
 				title += '<tr>';
 				title += '<th style="width: 5%;">번호</th>';
-				title += '<th style="width: 16%;">이메일</th>';
-				title += '<th style="width: 11%;">이름</th>';
-				title += '<th style="width: 11%;">닉네임</th>';
-				title += '<th style="width: 11%;">핸드폰</th>';
-				title += '<th style="width: 18%;"">주소</th>';
-				title += '<th style="width: 12%;">상세주소</th>';
-				title += '<th style="width: 11%;">상태</th>';
+				title += '<th style="width: 10%;">글쓴이</th>';
+				title += '<th style="width: 10%;">상품</th>';
+				title += '<th style="width: 10%;">등록일자</th>';
+				title += '<th style="width: 60%;">내용</th>';
 				title += '<th style="width: 5%;">관리</th>';
 				title += '</tr>';
 				title += '</thead>';
-				$('#user-table').append(title);
+				$('#product-review').append(title);
 				$.each(data, function(index, item) {
 					var output = '';
 					output += '<tbody class="text-center">'
 					output += '<tr>';
-					output += '<td>' + item.member_NUM + '</td>'; // undefined ㅗ
-					output += '<td><a href="./detailMember.ad" class="detail_data" '
-					output += 'MEMBER_NUM=' + item.member_NUM + '>' + item.member_EMAIL + '</a></td>';
-					output += '<td>' + item.member_NAME + '</td>';
-					output += '<td>' + item.member_NICK + '</td>';
-					
-					if (item.member_PHONE == null) {
-						output += '<td>미입력</td>';
-					} else {
-						output += '<td>' + item.member_PHONE + '</td>';	
-					}
-					
-					if (item.address_ADDRESS1 == null) {
-						output += '<td>미입력</td>';
-					} else {
-						output += '<td>' + item.address_ADDRESS1 + '</td>';	
-					}
-					
-					if (item.address_ADDRESS2 == null) {
-						output += '<td>미입력</td>';
-					} else {
-						output += '<td>' + item.address_ADDRESS2 + '</td>';	
-					}
-					
-					if (item.member_STATUS == 0) {
-						output += '<td>이메일 인증대기</td>';
-					} else {
-						output += '<td>이메일 인증완료</td>';
-					}
-					
-					output += '<td><a href="./deleteMember.ad" class="del_data" ';
-					output += 'MEMBER_NUM=' + item.member_NUM + '><i class="fas fa-trash-alt" ></i></a></td>';
+					output += '<td>' + item.review_NUM + '</td>'; 
+					output += '<td>' + item.review_MEMBER + '</td>';
+					output += '<td>' + item.review_PRODUCT + '</td>';
+					output += '<td>' + item.review_DATE + '</td>';
+					output += '<td>' + item.review_CONTENT + '</td>';
+					output += '<td><a href="./deleteProductReview.ad" class="del_data" ';
+					output += 'REVIEW_NUM=' + item.review_NUM +  '><i class="fas fa-trash-alt" ></i></a></td>';
 					output += '</tr>';
 					output += '</tbody>'
 					console.dir("output : " + output);
-					$('#user-table').append(output);
+					$('#product-review').append(output);
 				});
 				page();
 			},
 			error: function(request,status,error) {
-				alert("ajax memberlist 통신 실패!");
+				alert("ajax productlist 통신 실패!");
 				alert("code:"+request.status+"\n"+"error:"+error);
 			}
 		});
@@ -114,7 +85,7 @@
 		jQuery.ajax({
 			url : $(this).attr("href"), //$(this) : //항목을 눌렀을때 그 걸 가르킴 .attr("href") 속성된 이름값중에 "href"을 통해서? 읽어온다??
 			type : 'GET',
-			data : {'MEMBER_NUM' : $(this).attr("member_NUM")},
+			data : {'REVIEW_NUM' : $(this).attr("review_NUM")},
 			contentType : 'application/x-www-form-urlencoded; charset=UTF-8',
 			dataType : 'json',
 			success : function (retVal) {
@@ -136,30 +107,29 @@
 		event.preventDefault();
 	});
 	
-	$(document).on('click', '.detail_data', function(event) {
-		var popupX = (window.screen.width / 2) - (500 / 2); // 만들 팝업창 좌우 크기의 1/2 만큼 보정값으로 뺴주었음.
-		var popupY = (window.screen.height / 2) - (630 / 2); // 만들 팝업창 상하 크기의 1/2 만큼 보정값으로 뺴주었음
-		var pop = window.open('about:blank', 'Info', 'scrollbars=yes, resizable=yes, width=500, height=630, left=' + popupX + ', top=' + popupY);
-		jQuery.ajax({
-			url : $(this).attr("href"), //$(this) : //항목을 눌렀을때 그 걸 가르킴 .attr("href") 속성된 이름값중에 "href"을 통해서? 읽어온다??
-			type : 'GET',
-			data : {'MEMBER_NUM' : $(this).attr("member_NUM")},
-			contentType : 'application/x-www-form-urlencoded; charset=UTF-8',
-			dataType : 'json',
-			success : function (retVal) {
-				if (retVal.res == "OK") {
-					pop.location.href="memberInfo.ad?MEMBER_NUM=" + retVal.MemberVO.member_NUM;	
-		 		}
-			},
-			error: function(request,status,error) {
-				alert("ajax detailmember 통신 실패!");
-				alert("code:"+request.status+"\n"+"error:"+error);
-			}
-		});
+// 	$(document).on('click', '.detail_data', function(event) {
 		
-		// 기본 이벤트 제거
-		event.preventDefault();
-	});
+// 		jQuery.ajax({
+// 			url : $(this).attr("href"), //$(this) : //항목을 눌렀을때 그 걸 가르킴 .attr("href") 속성된 이름값중에 "href"을 통해서? 읽어온다??
+// 			type : 'GET',
+// 			data : {'PRODUCT_NUM' : $(this).attr("product_NUM")},
+// 			contentType : 'application/x-www-form-urlencoded; charset=UTF-8',
+// 			dataType : 'json',
+// 			success : function (retVal) {
+// 				if (retVal.res == "OK") {
+// 					var pop = window.open('productdetail.pro?PRODUCT_NUM=' + retVal.ProductVO.product_NUM,'_blank');
+// 					// pop.location.href="classdetail.ac?CLASS_NUMBER=" + retVal.ClassVO.class_NUMBER;	
+// 		 		}
+// 			},
+// 			error: function(request,status,error) {
+// 				alert("ajax detailmember 통신 실패!");
+// 				alert("code:"+request.status+"\n"+"error:"+error);
+// 			}
+// 		});
+		
+// 		// 기본 이벤트 제거
+// 		event.preventDefault();
+// 	});
 	
 	// 만들어진 테이블에 페이지 처리
 	function page() { 	
@@ -169,8 +139,8 @@
 			var pagesu = 10;  //페이지 번호 갯수
 	  		var currentPage = 0;
 	  		var numPerPage = 10;  //목록의 수
-	  		var $table = $('#user-table');    
-	  		var $user = $('#user-page');
+	  		var $table = $('#product-review');    
+	  		var $user = $('#productReview-page');
 	  
 			//length로 원래 리스트의 전체길이구함
 			var numRows = $table.find('tbody tr').length;
@@ -263,8 +233,8 @@
 	$(document).ready(function() {
 		$("#keyword").keyup(function() {
 			var k = $(this).val();
-			$("#user-table > tbody > tr").hide();
-			var temp = $("#user-table > tbody > tr > td:nth-child(10n+3):contains('" + k + "')");
+			$("#product-review > tbody > tr").hide();
+			var temp = $("#product-review > tbody > tr > td:nth-child(10n+2):contains('" + k + "')");
 			
 			$(temp).parent().show();					
 		})

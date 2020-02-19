@@ -4,10 +4,13 @@ import java.util.List;
 
 import com.spring.academy.ClassVO;
 import com.spring.admin.AdminMemberVO;
+import com.spring.community.PicsCommentDB;
 import com.spring.community.PicsVO;
 import com.spring.estimate.EstimateVO;
 import com.spring.member.MemberVO;
 import com.spring.store.ProductVO;
+import com.spring.store.Product_qnaVO;
+import com.spring.store.Product_reviewVO;
 import com.spring.workshop.WorkShopMemberVO;
 
 public interface AdminMapper {
@@ -31,6 +34,9 @@ public interface AdminMapper {
 	PicsVO detailPICS(PicsVO vo);
 	MemberVO memberPICS(PicsVO vo);
 	
+	List<PicsCommentDB> getPICSComment();
+	int deletePICSComment(PicsCommentDB vo);
+	
 	/* 아카데미관리 */
 	List<ClassVO> getAcademy();
 	int deleteAcademy(ClassVO vo);
@@ -40,6 +46,11 @@ public interface AdminMapper {
 	List<ProductVO> getProduct();
 	int deleteProduct(ProductVO vo);
 	ProductVO detailProduct(ProductVO vo);
+	
+	List<Product_reviewVO> getProductReview();
+	int deleteProductReview(Product_reviewVO vo);
+	List<Product_qnaVO> getProductQnA();
+	int deleteProductQnA(Product_qnaVO vo);
 	
 	/* 견적관리 */
 	List<EstimateVO> getEstimate();
