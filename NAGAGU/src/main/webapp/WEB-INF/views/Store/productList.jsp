@@ -263,41 +263,48 @@
 	%>
 			<div class="row itemsection py-5">
 	<%
+			//0 - 품절, 1 - 판매중, 2 - 판매완료
 			for (int i = 0; i < productList.size(); i++) {
 				ProductVO pro = productList.get(i);
+					if(pro.getPRODUCT_STATUS() == 0 || pro.getPRODUCT_STATUS() == 1) {
 	%>		
-            	<div class="col-4 h-100 items">
-            		<a href="./productdetail.pro?PRODUCT_NUM=<%=pro.getPRODUCT_NUM()%>&PRODUCT_CATEGORY=<%=pro.getPRODUCT_CATEGORY()%>&page=<%=nowpage%>">	
-						<div class="row">
-		                    <div class="store_item">
-		                        <div class="store_item_image ">
-	                        		<img src="/productupload/image/<%=pro.getPRODUCT_IMAGE()%>" alt="" class="img-responsive image">
-		                        </div>
-		                    </div>
-		                </div>
-		                <div class="row second">
-		                    <div class="store_item_content">
-		                        <!--브랜드이름은 한줄로 제한, 제품이름도 2줄 제한으로(기능)-->
-		                        <div class="store_item_header">
-		                            <span class="store_item_header_brand"><%=pro.getPRODUCT_SHOPNAME()%></span><br>
-		                            <span class="store_item_header_name"><%=pro.getPRODUCT_TITLE()%></span>
-		                        </div>
-		                        
-		                        <div class="align-self-end row mt-2 grade_price">
-		                            <div class="col-8 grade_div">		                            
-		                                <span class="grade"><i class="fas fa-star"></i><span><%=pro.getPRODUCT_GRADE()%></span></span>
-		                            </div>
-		                            <div class="col-4">
-		                                <span class="price">
-		                                	<fmt:formatNumber type="number" maxFractionDigits="3" value="<%=pro.getPRODUCT_PRICE()%>" />&nbsp;원
-		                                </span>
-		                            </div>
-		                        </div>
-		                    </div>
-		                </div>
-		        	</a>        
-				</div>	
+		            	<div class="col-4 h-100 items">
+		            		<a href="./productdetail.pro?PRODUCT_NUM=<%=pro.getPRODUCT_NUM()%>&PRODUCT_CATEGORY=<%=pro.getPRODUCT_CATEGORY()%>&page=<%=nowpage%>">	
+								<div class="row">
+				                    <div class="store_item">
+				                        <div class="store_item_image ">
+			                        		<img src="/productupload/image/<%=pro.getPRODUCT_IMAGE()%>" alt="" class="img-responsive image">
+				                        </div>
+				                    </div>
+				                </div>
+				                <div class="row second">
+				                    <div class="store_item_content">
+				                        <!--브랜드이름은 한줄로 제한, 제품이름도 2줄 제한으로(기능)-->
+				                        <div class="store_item_header">
+				                            <span class="store_item_header_brand"><%=pro.getPRODUCT_SHOPNAME()%></span><br>
+				                            <span class="store_item_header_name"><%=pro.getPRODUCT_TITLE()%></span>
+				                        </div>
+				                        
+				                        <div class="align-self-end row mt-2 grade_price">
+				                            <div class="col-8 grade_div">		                            
+				                                <span class="grade"><i class="fas fa-star"></i><span><%=pro.getPRODUCT_GRADE()%></span></span>
+				                            </div>
+				                            <div class="col-4">
+				                                <span class="price">
+				                                	<% if(pro.getPRODUCT_STATUS() == 1) { %>
+				                                		<fmt:formatNumber type="number" maxFractionDigits="3" value="<%=pro.getPRODUCT_PRICE()%>" />&nbsp;원
+				                                	<% } else { %>
+				                                		<span style="color:red;">품절</span>
+				                                	<% } %>
+				                                </span>
+				                            </div>
+				                        </div>
+				                    </div>
+				                </div>
+				        	</a>        
+						</div>	
 	<%
+					}
 			}
 	%>     
 			</div>		<!-- 사진 상세정보 row1 row2 끝 -->

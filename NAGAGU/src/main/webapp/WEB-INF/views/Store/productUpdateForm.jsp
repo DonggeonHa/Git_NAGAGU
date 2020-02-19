@@ -30,6 +30,7 @@
 	<p>상품을 등록하실 수 있습니다. 해당 항목에 내용을 입력해주세요</p>
 	<p>주의: 반드시 저작권 및 상표권에 문제가 없는 이미지를 사용해 주세요.</p>
 	<form action="./updateProduct.mywork" method="post" enctype="multipart/form-data">
+		<input type="hidden" name="PRODUCT_NUM" value="<%=productVO.getPRODUCT_NUM()%>">
 		<table class="table">
 			<colgroup>
 				<col style="width:20%">
@@ -103,18 +104,18 @@
 			</tr>
 			<tr>
 				<th>사이즈
-                  		<input class="btn btn-outline-dark btn-sm ml-3" type="button" value="추가" onclick="addSize();">
-                  		<input class="btn btn-outline-dark btn-sm ml-3" type="button" value="삭제" onclick="deleteSize();">
+                  		<input class="addSize btn btn-outline-dark btn-sm ml-3" type="button" value="추가">
+                  		<input class="deleteSize btn btn-outline-dark btn-sm ml-3" type="button" value="삭제">
 				</th>
 				<td>
 				 	<div class="row pb-2" id="sizeappend">
 				 	<%
 				 		for(int i=0; i<sizeArr.length; i++) {
 				 	%>
-				 		<div class="input_box" style="margin-right: 10px;" >
+				 		<div class="input_box addsize1" style="margin-right: 10px;" >
 				 			<input class="form-control" type="text" name="PRODUCT_SIZE" placeholder="" value="<%=sizeArr[i] %>" style="text-align: right;">		
 				 		</div>
-				 		<div class="d-flex align-items-center" style="margin-right: 10px;">
+				 		<div class="d-flex align-items-center addsize2" style="margin-right: 10px;">
                    				&nbsp;cm&nbsp;
                    		</div>
                    	<%
@@ -125,15 +126,15 @@
 			</tr>
                <tr>
                	<th>색상
-               		<input class="btn btn-outline-dark btn-sm ml-3" type="button" value="추가" onclick="addColor();">
-                  		<input class="btn btn-outline-dark btn-sm ml-3" type="button" value="삭제" onclick="deleteColor();">
+               		<input class="addColor btn btn-outline-dark btn-sm ml-3" type="button" value="추가">
+            		<input class="deleteColor btn btn-outline-dark btn-sm ml-3" type="button" value="삭제">
                	</th>
 				<td>
 					<div class="row pb-2" id="colorappend" >
 					<%
 				 		for(int i=0; i<colorArr.length; i++) {
 				 	%>
-				 		<div class="input_box" style="margin-right: 10px;">
+				 		<div class="input_box addcolor" style="margin-right: 10px;">
 				 			<input class="form-control" type="text" name="PRODUCT_COLOR" value="<%=colorArr[i] %>" style="text-align: right;">		
 				 		</div>
 				 	<%
@@ -583,7 +584,6 @@
 	});
 	
 	
-	
 	/*size, color, option 추가*/
 	function addSize() {
 		var txt = '<div class="input_box addsize1" style="margin-right: 10px;" >';
@@ -594,6 +594,9 @@
 		
 	}
 	function deleteSize() {
+		if($('.addsize1').length == 1) {
+			return false;
+		}
 		$('.addsize1:last').attr( 'id', 'lastaddsize1' );
 		$('.addsize2:last').attr( 'id', 'lastaddsize2' );
 		$('#lastaddsize1').remove();
@@ -607,16 +610,26 @@
 		$('#colorappend').append(txt);
 	}
 	function deleteColor() {
+		if($('.addcolor').length == 1) {
+			return false;
+		}
 		$('.addcolor:last').attr( 'id', 'lastaddcolor' );
 		$('#lastaddcolor').remove();       
 	}
 
 
-	function deleteOption() {
-		$('.addoption:last').attr( 'id', 'lastaddoption' );
-		$('#lastaddoption').remove();       
-	}
-	
+	$(document).on("click",".addSize",function(event){
+		addSize()
+	});
+	$(document).on("click",".deleteSize",function(event){
+		deleteSize()
+	});
+	$(document).on("click",".addColor",function(event){
+		addColor()
+	});
+	$(document).on("click",".deleteColor",function(event){
+		deleteColor()
+});
 	
 	
 	

@@ -170,13 +170,14 @@ if (session.getAttribute("WORKSHOP_NUM") == null) {
 				$("#selectClassType").val('allProducts').prop("selected", true);
 				$("#selectCategory").val('all').prop("selected", true);
 				$("#selectListAlign").val('product_date').prop("selected", true);
+				productList();
 			},
 			error: function() {
 				alert("실행할 수 없습니다.");
 			}
 		});
 		event.preventDefault();
-		productList();
+		
 	}		
 	
 	

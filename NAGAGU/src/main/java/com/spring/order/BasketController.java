@@ -176,7 +176,7 @@ public class BasketController {
 			model.addAttribute("memberDetail",memberDetail);
 			model.addAttribute("orderList",orderList);
 			return "Mypage/order";
-		}
+	}
 	//결제완료 후 이동 페이지
 	@RequestMapping(value = "/mypage_order_success.my")
 	public String mypage_order_success() {

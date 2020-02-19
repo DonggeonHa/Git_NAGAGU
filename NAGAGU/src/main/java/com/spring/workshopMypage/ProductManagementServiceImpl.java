@@ -108,8 +108,11 @@ public class ProductManagementServiceImpl implements ProductManagementService {
 
 	@Override
 	public int updateProduct(ProductVO productVO) {
-		// TODO Auto-generated method stub
-		return 0;
+		int result = 0;
+		ProductManagementMapper managementMapper = sqlSession.getMapper(ProductManagementMapper.class);
+		result = managementMapper.updateProduct(productVO);
+		
+		return result;
 	}
 
 

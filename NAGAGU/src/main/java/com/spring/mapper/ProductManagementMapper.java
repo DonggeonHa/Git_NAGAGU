@@ -17,4 +17,5 @@ public interface ProductManagementMapper {
 	int checkReviewCount(HashMap<String, Object> map);
 	
 	ProductVO getproductDetail(int PRODUCT_NUM);
+	int updateProduct(ProductVO productVO);
 }

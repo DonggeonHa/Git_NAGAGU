@@ -173,38 +173,40 @@
 			<%
 					for(int i = 0; i < classList.size(); i++) {
 						ClassVO cl = (ClassVO)classList.get(i); // 캐스트 연산 필수
+							if(cl.getCLASS_STATUS() == 1) {
 			%>
-						<div class="col mb-3" style="height: 400px;">
-							<a href="./classdetail.ac?CLASS_NUMBER=<%=cl.getCLASS_NUMBER()%>">
-								<div class="h-50 pic" style="background:url('/communityupload/image/<%=cl.getCLASS_IMAGE()%>') no-repeat center; background-size:cover;"></div>
-								<div style="border: 1px solid #EAEAEA;">
-									<div class="default" style="margin: 0 5% 3% 5%;">
-										<p class="title text-center" style="font-size: 1.5rem;"><%=cl.getCLASS_NAME()%></p>
-										<div class="d-flex bd-highlight" style="font-size: 0.9rem; color: #888888;">
-											<span class="mr-auto bd-highlight"><%=cl.getWORKSHOP_NAME()%></span>
-											<span class="bd-highlight"><%=cl.getCLASS_AREA()%></span>
+								<div class="col mb-3" style="height: 400px;">
+									<a href="./classdetail.ac?CLASS_NUMBER=<%=cl.getCLASS_NUMBER()%>">
+										<div class="h-50 pic" style="background:url('/communityupload/image/<%=cl.getCLASS_IMAGE()%>') no-repeat center; background-size:cover;"></div>
+										<div style="border: 1px solid #EAEAEA;">
+											<div class="default" style="margin: 0 5% 3% 5%;">
+												<p class="title text-center" style="font-size: 1.5rem;"><%=cl.getCLASS_NAME()%></p>
+												<div class="d-flex bd-highlight" style="font-size: 0.9rem; color: #888888;">
+													<span class="mr-auto bd-highlight"><%=cl.getWORKSHOP_NAME()%></span>
+													<span class="bd-highlight"><%=cl.getCLASS_AREA()%></span>
+												</div>
+											</div>
+											<hr style="margin-top: 0; margin-bottom: 0;">
+											<div class="" style="font-szie: 0.8rem; color: #888888; margin: 3% 5% 3% 5%;">
+												<span style="color: black; font-size: 0.9rem;"><%=cl.getCLASS_DIVISION() %></span><br>
+												<span style="font-size: 0.8rem;"><%=cl.getCLASS_DATE_CONFIGURATION_1()%> ~ <%=cl.getCLASS_DATE_CONFIGURATION_2()%></span>
+											</div>
+											<hr style="margin-top: 0; margin-bottom: 0;">
+											<div style="background-color: #F8F8F8 !important;">
+												<div class="d-flex justify-content-between" style="margin: 0 5% 0 5%;">										
+													<p style="color: black; margin: 3% 0 3% 0;">
+														<span class="grade"><i class="fas fa-star"></i><span><%=cl.getCLASS_GRADE()%></span></span>  
+													</p>
+													<p style="color: #DB0000; margin: 3% 0 3% 0;">
+														<fmt:formatNumber type="number" maxFractionDigits="3" value="<%=cl.getCLASS_AMOUNT()%>" />원 <!-- 3자리마다 , 찍기 -->  
+													</p>
+												</div>
+											</div>
 										</div>
-									</div>
-									<hr style="margin-top: 0; margin-bottom: 0;">
-									<div class="" style="font-szie: 0.8rem; color: #888888; margin: 3% 5% 3% 5%;">
-										<span style="color: black; font-size: 0.9rem;"><%=cl.getCLASS_DIVISION() %></span><br>
-										<span style="font-size: 0.8rem;"><%=cl.getCLASS_DATE_CONFIGURATION_1()%> ~ <%=cl.getCLASS_DATE_CONFIGURATION_2()%></span>
-									</div>
-									<hr style="margin-top: 0; margin-bottom: 0;">
-									<div style="background-color: #F8F8F8 !important;">
-										<div class="d-flex justify-content-between" style="margin: 0 5% 0 5%;">										
-											<p style="color: black; margin: 3% 0 3% 0;">
-												<span class="grade"><i class="fas fa-star"></i><span><%=cl.getCLASS_GRADE()%></span></span>  
-											</p>
-											<p style="color: #DB0000; margin: 3% 0 3% 0;">
-												<fmt:formatNumber type="number" maxFractionDigits="3" value="<%=cl.getCLASS_AMOUNT()%>" />원 <!-- 3자리마다 , 찍기 -->  
-											</p>
-										</div>
-									</div>
+									</a>
 								</div>
-							</a>
-						</div>
 			<%
+							}
 					}
 			%>
 					</div>

@@ -478,7 +478,7 @@
 			<form name="goodsform" action="#" method="post" id="goodsform">
 				<div class="row pt-4 pl-4">
 					<div class="col-3">
-						<img src="${pageContext.request.contextPath}/resources/images/Community/peko.png" width="95%">
+						<img src="<%=WORKSHOP_PICTURE %>" width="95%">
 					</div>
 					<hr>
 					<div class="col-9">
@@ -1888,7 +1888,7 @@
 								}
 								output += '</div>';
 							} else {
-								output += '<div class="justify-content-center pt-1 pb-1 mt-5 mb-5 text-center">';
+								output += '<div class="justify-content-center pt-1 pb-1 mt-3 mb-3 text-center">';
 								output += '문의는 작성 회원만 열람 가능합니다.';
 								output += '</div>';
 							}
