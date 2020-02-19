@@ -66,6 +66,14 @@ public class EstimateServiceImpl implements EstimateService {
 	}
 	
 	@Override
+	public int esOrderPay (EstimateOrderVO vo) {
+		EstimateMapper mapper = sqlSession.getMapper(EstimateMapper.class);
+		int res = mapper.esOrderPay(vo);
+		
+		return res;
+	}
+	
+	@Override
 	public int estimateCount (HashMap <String, Object> map) {
 		EstimateMapper mapper = sqlSession.getMapper(EstimateMapper.class);
 		int cnt = mapper.estimateCount(map);
@@ -121,6 +129,10 @@ public class EstimateServiceImpl implements EstimateService {
 		
 		return vo;
 	}
+	
+	
+	/* --------------------- 견적 제안 관련 ---------------------- */
+	
 	
 	@Override
 	public ArrayList<EstimateOfferVO> offerList(int ESTIMATE_NUM, int startpage, int endpage, String OFFER_WORKSHOP) {
@@ -271,6 +283,14 @@ public class EstimateServiceImpl implements EstimateService {
 		ArrayList<EstimateOrderVO> esOrderList = mapper.esOrderList(map);
 		
 		return esOrderList;
+	}
+	
+	@Override
+	public EstimateOrderVO esOrderDetail(int ES_ORDER_NUM) {
+		EstimateMapper mapper = sqlSession.getMapper(EstimateMapper.class);
+		EstimateOrderVO eovo = mapper.esOrderDetail(ES_ORDER_NUM);
+		
+		return eovo;
 	}
 	
 	@Override

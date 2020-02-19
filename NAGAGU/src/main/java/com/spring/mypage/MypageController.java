@@ -10,12 +10,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.spring.academy.AcademyService;
 import com.spring.academy.ClassVO;
+import com.spring.estimate.EstimateOrderVO;
 import com.spring.estimate.EstimateService;
-import com.spring.estimate.EstimateVO;
 import com.spring.member.MemberService;
 import com.spring.member.MemberVO;
 import com.spring.workshop.WorkShopMemberService;
@@ -31,6 +32,9 @@ public class MypageController {
 	
 	@Autowired(required = false)
 	private AcademyService academyService;
+	
+	@Autowired
+	private EstimateService estimateService;
 	
 	@RequestMapping(value = "/mypage.my")
 	public String Mypage(MemberVO memberVO, HttpServletRequest request, HttpSession session) {
@@ -201,5 +205,87 @@ public class MypageController {
 	public String WorkshopStoreproduct() {
 		
 		return "Mypage/Workshop/Store/product";
+	}
+	
+	/* 일반회원 : 의뢰한 견적 리스트 */
+	@RequestMapping(value = "/mypage_estimate.my")
+	public String MypageEsOrderList(HttpSession session, HttpServletRequest request, Model model) {
+		String ES_ORDER_BUYER_MAIL = (String)session.getAttribute("MEMBER_EMAIL");
+
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		map.put("ES_ORDER_BUYER_MAIL", ES_ORDER_BUYER_MAIL);
+		if (request.getParameter("ES_ORDER_STATE") != null) {
+			int ES_ORDER_STATE = Integer.parseInt(request.getParameter("ES_ORDER_STATE"));
+			map.put("ES_ORDER_STATE", ES_ORDER_STATE);
+		}
+		
+		ArrayList<EstimateOrderVO> esOrderList = estimateService.esOrderList(map);
+		
+		for (int i=0; i<7; i++) {
+			HashMap<String, Object> cntmap = new HashMap<String, Object>();
+			cntmap.put("ES_ORDER_STATE", i);
+			cntmap.put("ES_ORDER_BUYER_MAIL", ES_ORDER_BUYER_MAIL);
+			int cnt = estimateService.esOrderCount(cntmap);
+			model.addAttribute("esCount" + i, cnt);
+		}
+		
+		model.addAttribute("esOrderList", esOrderList);
+		
+		return "Mypage/es_order_list";
+	}
+
+	
+	/* 견적 결제 페이지*/
+	@RequestMapping(value = "/mypage_estimate_checkout.my")
+	public String MypageEsOrderCheckout(HttpSession session, HttpServletRequest request, Model model) {
+		String MEMBER_MAIL = (String)session.getAttribute("MEMBER_EMAIL");
+		MemberVO vo = new MemberVO();
+		vo.setMEMBER_EMAIL(MEMBER_MAIL);
+		
+		int ES_ORDER_NUM = Integer.parseInt(request.getParameter("ES_ORDER_NUM"));
+		
+		EstimateOrderVO eovo = estimateService.esOrderDetail(ES_ORDER_NUM);
+		MemberVO memvo = memberService.selectMember(vo);
+		
+		model.addAttribute("eovo", eovo);
+		model.addAttribute("memvo", memvo);
+		
+		return "Mypage/es_order_checkout";
+	}
+	
+	/* 견적 결제 완료 */
+	@RequestMapping(value = "/mypage_estimate_payment.my")
+	public String MypageEsOrderPayment(HttpServletRequest request, Model model) {
+		EstimateOrderVO eovo = new EstimateOrderVO();
+		
+		eovo.setES_ORDER_NUM(Integer.parseInt(request.getParameter("ES_ORDER_NUM")));
+		eovo.setES_ORDER_BUYER_NAME(request.getParameter("ES_ORDER_BUYER_NAME"));
+		eovo.setES_ORDER_BUYER_ZIP(request.getParameter("ES_ORDER_BUYER_ZIP"));
+		eovo.setES_ORDER_BUYER_ADDRESS(request.getParameter("ES_ORDER_BUYER_ADDRESS1") + " " + request.getParameter("ES_ORDER_BUYER_ADDRESS2"));
+		eovo.setES_ORDER_BUYER_PHONE(request.getParameter("ES_ORDER_BUYER_PHONE"));
+		eovo.setES_ORDER_RECEIVER(request.getParameter("ES_ORDER_RECEIVER"));
+		eovo.setES_ORDER_ZIP(request.getParameter("ES_ORDER_ZIP"));
+		eovo.setES_ORDER_ADDRESS(request.getParameter("ES_ORDER_ADDRESS1") + " " + request.getParameter("ES_ORDER_ADDRESS2"));
+		eovo.setES_ORDER_PHONE(request.getParameter("ES_ORDER_PHONE"));
+		eovo.setES_ORDER_MEMO(request.getParameter("ES_ORDER_MEMO"));
+		
+		int res = estimateService.esOrderPay(eovo);
+		
+		if (res == 1) {
+			model.addAttribute("eovo", eovo);
+			
+			return "Mypage/es_order_success";
+		}
+		else {
+			return "Mypage/es_order_fail";
+		}
+	}
+	
+	@RequestMapping(value = "/mypage_estimate_updateForm.my")
+	public String MypageEsOrderUpdateForm(HttpServletRequest request, Model model) {
+		EstimateOrderVO eovo = estimateService.esOrderDetail(Integer.parseInt(request.getParameter("ES_ORDER_NUM")));
+		model.addAttribute("eovo", eovo);
+		
+		return "Mypage/es_order_update";
 	}
 }

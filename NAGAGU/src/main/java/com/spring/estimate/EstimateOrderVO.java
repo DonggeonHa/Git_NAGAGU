@@ -9,17 +9,24 @@ public class EstimateOrderVO {
 	private String ES_ORDER_TITLE;
 	private String ES_ORDER_CATEGORY;
 	private String ES_ORDER_BUYER;
+	private String ES_ORDER_BUYER_NAME;
+	private String ES_ORDER_BUYER_ZIP;
+	private String ES_ORDER_BUYER_ADDRESS;
+	private String ES_ORDER_BUYER_PHONE;
 	private String ES_ORDER_BUYER_MAIL;
 	private String ES_ORDER_WORKSHOP;
 	private String ES_ORDER_PIC;
 	private int ES_ORDER_PRICE;
-	private int ES_ORDER_SHIP;
 	private Date ES_ORDER_DATE;
 	private String ES_ORDER_ZIP;
 	private String ES_ORDER_ADDRESS;
 	private String ES_ORDER_RECEIVER;
+	private String ES_ORDER_PHONE;
 	private int ES_ORDER_TRANSFER;
+	private String ES_ORDER_MEMO;
+	private String ES_ORDER_PAYMENT;
 	private int ES_ORDER_STATE;
+	
 	
 	public int getES_ORDER_NUM() {
 		return ES_ORDER_NUM;
@@ -51,6 +58,13 @@ public class EstimateOrderVO {
 	public void setES_ORDER_BUYER(String eS_ORDER_BUYER) {
 		ES_ORDER_BUYER = eS_ORDER_BUYER;
 	}
+	
+	public String getES_ORDER_BUYER_NAME() {
+		return ES_ORDER_BUYER_NAME;
+	}
+	public void setES_ORDER_BUYER_NAME(String eS_ORDER_BUYER_NAME) {
+		ES_ORDER_BUYER_NAME = eS_ORDER_BUYER_NAME;
+	}
 	public String getES_ORDER_WORKSHOP() {
 		return ES_ORDER_WORKSHOP;
 	}
@@ -68,12 +82,6 @@ public class EstimateOrderVO {
 	}
 	public void setES_ORDER_PRICE(int eS_ORDER_PRICE) {
 		ES_ORDER_PRICE = eS_ORDER_PRICE;
-	}
-	public int getES_ORDER_SHIP() {
-		return ES_ORDER_SHIP;
-	}
-	public void setES_ORDER_SHIP(int eS_ORDER_SHIP) {
-		ES_ORDER_SHIP = eS_ORDER_SHIP;
 	}
 	public Date getES_ORDER_DATE() {
 		return ES_ORDER_DATE;
@@ -123,5 +131,42 @@ public class EstimateOrderVO {
 	public void setES_ORDER_BUYER_MAIL(String eS_ORDER_BUYER_MAIL) {
 		ES_ORDER_BUYER_MAIL = eS_ORDER_BUYER_MAIL;
 	}
+	public String getES_ORDER_BUYER_ZIP() {
+		return ES_ORDER_BUYER_ZIP;
+	}
+	public void setES_ORDER_BUYER_ZIP(String eS_ORDER_BUYER_ZIP) {
+		ES_ORDER_BUYER_ZIP = eS_ORDER_BUYER_ZIP;
+	}
+	public String getES_ORDER_BUYER_ADDRESS() {
+		return ES_ORDER_BUYER_ADDRESS;
+	}
+	public void setES_ORDER_BUYER_ADDRESS(String eS_ORDER_BUYER_ADDRESS) {
+		ES_ORDER_BUYER_ADDRESS = eS_ORDER_BUYER_ADDRESS;
+	}
+	public String getES_ORDER_BUYER_PHONE() {
+		return ES_ORDER_BUYER_PHONE;
+	}
+	public void setES_ORDER_BUYER_PHONE(String eS_ORDER_BUYER_PHONE) {
+		ES_ORDER_BUYER_PHONE = eS_ORDER_BUYER_PHONE;
+	}
+	public String getES_ORDER_PHONE() {
+		return ES_ORDER_PHONE;
+	}
+	public void setES_ORDER_PHONE(String eS_ORDER_PHONE) {
+		ES_ORDER_PHONE = eS_ORDER_PHONE;
+	}
+	public String getES_ORDER_MEMO() {
+		return ES_ORDER_MEMO;
+	}
+	public void setES_ORDER_MEMO(String eS_ORDER_MEMO) {
+		ES_ORDER_MEMO = eS_ORDER_MEMO;
+	}
+	public String getES_ORDER_PAYMENT() {
+		return ES_ORDER_PAYMENT;
+	}
+	public void setES_ORDER_PAYMENT(String eS_ORDER_PAYMENT) {
+		ES_ORDER_PAYMENT = eS_ORDER_PAYMENT;
+	}
+	
 	
 }

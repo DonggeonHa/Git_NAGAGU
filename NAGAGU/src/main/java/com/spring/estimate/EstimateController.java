@@ -427,6 +427,7 @@ public class EstimateController {
 					vo.setES_ORDER_PRICE(offervo.getOFFER_PRICE());
 					vo.setES_ORDER_BUYER_MAIL(esvo.getESTIMATE_MEMBER());
 					vo.setES_ORDER_CATEGORY(esvo.getESTIMATE_CATEGORY());
+					vo.setES_ORDER_PAYMENT(esvo.getESTIMATE_PAY());
 					
 					int res3 = estimateService.esOrderInsert(vo);
 				}
@@ -437,34 +438,6 @@ public class EstimateController {
 		}
 		
 		return redirect;
-	}
-	
-
-	/* 일반회원 : 의뢰한 견적 리스트 */
-	@RequestMapping(value = "/mypage_estimate.my")
-	public String MypageEsOrderDetail(HttpSession session, HttpServletRequest request, Model model) {
-		String ES_ORDER_BUYER_MAIL = (String)session.getAttribute("MEMBER_EMAIL");
-
-		HashMap<String, Object> map = new HashMap<String, Object>();
-		map.put("ES_ORDER_BUYER_MAIL", ES_ORDER_BUYER_MAIL);
-		if (request.getParameter("ES_ORDER_STATE") != null) {
-			int ES_ORDER_STATE = Integer.parseInt(request.getParameter("ES_ORDER_STATE"));
-			map.put("ES_ORDER_STATE", ES_ORDER_STATE);
-		}
-		
-		ArrayList<EstimateOrderVO> esOrderList = estimateService.esOrderList(map);
-		
-		for (int i=0; i<7; i++) {
-			HashMap<String, Object> cntmap = new HashMap<String, Object>();
-			cntmap.put("ES_ORDER_STATE", i);
-			cntmap.put("ES_ORDER_BUYER_MAIL", ES_ORDER_BUYER_MAIL);
-			int cnt = estimateService.esOrderCount(cntmap);
-			model.addAttribute("esCount" + i, cnt);
-		}
-		
-		model.addAttribute("esOrderList", esOrderList);
-		
-		return "Mypage/es_order_list";
 	}
 	
 }

@@ -41,6 +41,10 @@
         <result property="ES_ORDER_CATEGORY" column="ES_ORDER_CATEGORY"/>
         <result property="ES_ORDER_BUYER" column="ES_ORDER_BUYER"/>
         <result property="ES_ORDER_BUYER_MAIL" column="ES_ORDER_BUYER_MAIL"/>
+        <result property="ES_ORDER_BUYER_NAME" column="ES_ORDER_BUYER_NAME"/>
+        <result property="ES_ORDER_BUYER_ZIP" column="ES_ORDER_BUYER_ZIP"/>
+        <result property="ES_ORDER_BUYER_ADDRESS" column="ES_ORDER_BUYER_ADDRESS"/>
+        <result property="ES_ORDER_BUYER_PHONE" column="ES_ORDER_BUYER_PHONE"/>
         <result property="ES_ORDER_WORKSHOP" column="ES_ORDER_WORKSHOP"/>
         <result property="ES_ORDER_PIC" column="ES_ORDER_PIC"/>
         <result property="ES_ORDER_PRICE" column="ES_ORDER_PRICE"/>
@@ -48,7 +52,10 @@
         <result property="ES_ORDER_ZIP" column="ES_ORDER_ZIP"/>
         <result property="ES_ORDER_ADDRESS" column="ES_ORDER_ADDRESS"/>
         <result property="ES_ORDER_RECEIVER" column="ES_ORDER_RECEIVER"/>
+        <result property="ES_ORDER_PHONE" column="ES_ORDER_PHONE"/>
         <result property="ES_ORDER_TRANSFER" column="ES_ORDER_TRANSFER"/>
+        <result property="ES_ORDER_PAYMENT" column="ES_ORDER_PAYMENT"/>
+        <result property="ES_ORDER_MEMO" column="ES_ORDER_MEMO"/>
         <result property="ES_ORDER_STATE" column="ES_ORDER_STATE"/>
     </resultMap>
     
@@ -198,9 +205,9 @@
 	
 	<insert id="esOrderInsert" parameterType="com.spring.estimate.EstimateOrderVO">
 		insert into ESTIMATE_ORDER (ES_ORDER_NUM, ES_ORDER_ESTIMATE, ES_ORDER_OFFER, ES_ORDER_TITLE, ES_ORDER_BUYER, 
-		ES_ORDER_WORKSHOP, ES_ORDER_PIC, ES_ORDER_DATE, ES_ORDER_PRICE, ES_ORDER_STATE, ES_ORDER_CATEGORY, ES_ORDER_BUYER_MAIL)
+		ES_ORDER_WORKSHOP, ES_ORDER_PIC, ES_ORDER_DATE, ES_ORDER_PRICE, ES_ORDER_STATE, ES_ORDER_CATEGORY, ES_ORDER_BUYER_MAIL, ES_ORDER_PAYMENT)
 		values (ESTIMATE_ORDER_SEQ.nextval, #{ES_ORDER_ESTIMATE}, #{ES_ORDER_OFFER}, #{ES_ORDER_TITLE}, #{ES_ORDER_BUYER}, 
-		#{ES_ORDER_WORKSHOP}, #{ES_ORDER_PIC}, sysdate, #{ES_ORDER_PRICE}, 0, #{ES_ORDER_CATEGORY}, #{ES_ORDER_BUYER_MAIL})
+		#{ES_ORDER_WORKSHOP}, #{ES_ORDER_PIC}, sysdate, #{ES_ORDER_PRICE}, 0, #{ES_ORDER_CATEGORY}, #{ES_ORDER_BUYER_MAIL}, #{ES_ORDER_PAYMENT})
 	</insert>
 	
 	<delete id="esOrderDelete" parameterType="int">
@@ -215,6 +222,31 @@
 			<if test="ES_ORDER_STATE!=null">and ES_ORDER_STATE = #{ES_ORDER_STATE}</if>	
 		</where>	
 	</select>
+	
+	<update id="esOrderPay" parameterType="com.spring.estimate.EstimateOrderVO">
+		update ESTIMATE_ORDER set ES_ORDER_BUYER_NAME = #{ES_ORDER_BUYER_NAME}, ES_ORDER_ZIP = #{ES_ORDER_ZIP}, 
+		ES_ORDER_ADDRESS = #{ES_ORDER_ADDRESS}, ES_ORDER_RECEIVER = #{ES_ORDER_RECEIVER}, ES_ORDER_MEMO = #{ES_ORDER_MEMO}, 
+		ES_ORDER_BUYER_ZIP = #{ES_ORDER_BUYER_ZIP}, ES_ORDER_BUYER_ADDRESS = #{ES_ORDER_BUYER_ADDRESS}, 
+		ES_ORDER_BUYER_PHONE = #{ES_ORDER_BUYER_PHONE}, ES_ORDER_PHONE = #{ES_ORDER_PHONE}, ES_ORDER_STATE = 1 
+		where ES_ORDER_NUM = #{ES_ORDER_NUM}
+	</update>
+	
+	<update id="esOrderUpdate" parameterType="com.spring.estimate.EstimateOrderVO">
+		update ESTIMATE_ORDER set ES_ORDER_RECEIVER = #{ES_ORDER_RECEIVER}, ES_ORDER_PHONE = #{ES_ORDER_PHONE}, 
+		ES_ORDER_ZIP = #{ES_ORDER_ZIP}, ES_ORDER_ADDRESS = #{ES_ORDER_ADDRESS}, ES_ORDER_MEMO = #{ES_ORDER_MEMO} 
+		where ES_ORDER_NUM = #{ES_ORDER_NUM}
+	</update>
+	
+	<update id="esOrderPost" parameterType="com.spring.estimate.EstimateOrderVO">
+		update ESTIMATE_ORDER set ES_ORDER_TRANSFER = #{ES_ORDER_TRANSFER}, ES_ORDER_STATE = 3
+		where ES_ORDER_NUM = #{ES_ORDER_NUM}
+	</update>
+	
+	
+	<update id="esOrderState" parameterType="com.spring.estimate.EstimateOrderVO">
+		update ESTIMATE_ORDER set ES_ORDER_STATE = #{ES_ORDER_STATE}
+		where ES_ORDER_NUM = #{ES_ORDER_NUM}
+	</update>
     
     <!--  ///////////////////////  공방 견적 관리 ///////////////////////  -->
     

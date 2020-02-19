@@ -256,7 +256,7 @@
 	<div>
 		<nav>
 			<div class="nav d-flex justify-content-between shadow p-3 mb5 bg-white rounded" id="nav-tab" role="tablist">
-		    	<a class="nav-item nav-link active" id="nav-waiting-tab" data-toggle="tab" href="#nav-waiting" role="tab" aria-controls="nav-home" aria-selected="true">
+		    	<a class="nav-item nav-link active" idx=0 id="nav-waiting-tab" data-toggle="tab" href="#nav-waiting" role="tab" aria-controls="nav-home" aria-selected="true">
 		    		<dl class="text-center">
 		    			<dt>입금대기</dt>
 		    			<dd></dd>
@@ -266,7 +266,7 @@
 				<div class="text-center align-self-center">
 					<i class="far fa-arrow-alt-circle-right" style="font-size: 30px;"></i>
 				</div>
-		    	<a class="nav-item nav-link" id="nav-finish-tab" data-toggle="tab" href="#nav-finish" role="tab" aria-controls="nav-profile" aria-selected="false">
+		    	<a class="nav-item nav-link" idx=1 id="nav-finish-tab" data-toggle="tab" href="#nav-finish" role="tab" aria-controls="nav-profile" aria-selected="false">
 		    		<dl class="text-center">
 		    			<dt>결제완료</dt>
 		    			<dd></dd>
@@ -276,7 +276,7 @@
 		    	<div class="text-center align-self-center">
 					<i class="far fa-arrow-alt-circle-right" style="font-size: 30px;"></i>
 				</div>
-				<a class="nav-item nav-link" id="nav-shipping-tab" data-toggle="tab" href="#nav-shipping" role="tab" aria-controls="nav-contact" aria-selected="false">
+				<a class="nav-item nav-link" idx=2 id="nav-crafting-tab" data-toggle="tab" href="#nav-crafting" role="tab" aria-controls="nav-contact" aria-selected="false">
 					<dl class="text-center">
 		    			<dt>제작중</dt>
 		    			<dd></dd>
@@ -286,7 +286,7 @@
 		    	<div class="text-center align-self-center">
 					<i class="far fa-arrow-alt-circle-right" style="font-size: 30px;"></i>
 				</div>
-		    	<a class="nav-item nav-link" id="nav-ready-tab" data-toggle="tab" href="#nav-ready" role="tab" aria-controls="nav-contact" aria-selected="false">
+		    	<a class="nav-item nav-link" idx=3 id="nav-ready-tab" data-toggle="tab" href="#nav-ready" role="tab" aria-controls="nav-contact" aria-selected="false">
 		    		<dl class="text-center">
 		    			<dt>배송준비</dt>
 		    			<dd></dd>
@@ -296,7 +296,7 @@
 		    	<div class="text-center align-self-center">
 					<i class="far fa-arrow-alt-circle-right" style="font-size: 30px;"></i>
 				</div>
-				<a class="nav-item nav-link" id="nav-shipping-tab" data-toggle="tab" href="#nav-shipping" role="tab" aria-controls="nav-contact" aria-selected="false">
+				<a class="nav-item nav-link" idx=4 id="nav-shipping-tab" data-toggle="tab" href="#nav-shipping" role="tab" aria-controls="nav-contact" aria-selected="false">
 					<dl class="text-center">
 		    			<dt>배송중</dt>
 		    			<dd></dd>
@@ -306,7 +306,7 @@
 				<div class="text-center align-self-center">
 					<i class="far fa-arrow-alt-circle-right" style="font-size: 30px;"></i>
 				</div>
-				<a class="nav-item nav-link" id="nav-completed-tab" data-toggle="tab" href="#nav-completed" role="tab" aria-controls="nav-contact" aria-selected="false">
+				<a class="nav-item nav-link" idx=5 id="nav-completed-tab" data-toggle="tab" href="#nav-completed" role="tab" aria-controls="nav-contact" aria-selected="false">
 					<dl class="text-center">
 		    			<dt>배송완료</dt>
 		    			<dd></dd>
@@ -316,7 +316,7 @@
 				<div class="text-center align-self-center">
 					<i class="far fa-arrow-alt-circle-right" style="font-size: 30px;"></i>
 				</div>
-				<a class="nav-item nav-link" id="nav-confirmation-tab" data-toggle="tab" href="#nav-confirmation" role="tab" aria-controls="nav-contact" aria-selected="false">
+				<a class="nav-item nav-link" idx=6 id="nav-confirmation-tab" data-toggle="tab" href="#nav-confirmation" role="tab" aria-controls="nav-contact" aria-selected="false">
 					<dl class="text-center">
 		    			<dt>구매확정</dt>
 		    			<dd></dd>
@@ -395,11 +395,11 @@
 									<%  
 										if (eoState == 0) { 
 									%>
-									    	<button class="btn btn-outline-dark btn_pay">결제</button>
+									    	<button class="btn btn-outline-dark btn_pay" onclick="location.href='mypage_estimate_checkout.my?ES_ORDER_NUM=<%=vo.getES_ORDER_NUM()%>'">결제</button>
 									<% 	
 										} else if (eoState < 4) { 
 									%>
-											<button class="btn btn-outline-dark btn_modify">배송정보 수정</button>
+											<button class="btn btn-outline-dark btn_modify" onclick="location.href='mypage_estimate_updateForm?ES_ORDER_NUM<%=vo.getES_ORDER_NUM()%>'">배송정보 수정</button>
 									<% 	
 										} 
 										if (eoState < 4) {
@@ -436,4 +436,10 @@
 		}
 		return false;
 	})
+	
+	$('.nav-link').click(function() {
+		var ES_ORDER_STATE = $(this).attr('idx');
+		
+		window.location.href='mypage_estimate.my?ES_ORDER_STATE=' + ES_ORDER_STATE;  
+	});
 </script>
