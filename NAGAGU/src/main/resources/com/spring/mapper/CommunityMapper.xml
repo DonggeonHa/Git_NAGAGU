@@ -14,6 +14,7 @@
 		<result property="PICS_REVIEW" column="PICS_REVIEW" />		
 		<result property="PICS_MAIN_IMAGE" column="PICS_MAIN_IMAGE" />	
 		<result property="PICS_CONTENT" column="PICS_CONTENT" />
+		<result property="PICS_PRODUCT" column="PICS_PRODUCT" />
 	</resultMap>
 
 	<resultMap type="com.spring.community.PicsVO" id="picsResultMap">
@@ -28,6 +29,7 @@
 		<result property="PICS_REVIEW" column="PICS_REVIEW" />		
 		<result property="PICS_MAIN_IMAGE" column="PICS_MAIN_IMAGE" />	
 		<result property="PICS_CONTENT" column="PICS_CONTENT" />
+		<result property="PICS_PRODUCT" column="PICS_PRODUCT" />
 	</resultMap>
 	
 	<select id="getPicsCount" parameterType="java.util.HashMap" resultType="int">
@@ -78,7 +80,7 @@
  	<insert id="insertPics"	parameterType="com.spring.community.PicsVO">
 		INSERT INTO PICS
 	VALUES(SEQ_PICS.NEXTVAL, #{PICS_MEMBER}, #{PICS_NICK}, SYSDATE, #{PICS_CATEGORY}, #{PICS_LIKE, jdbcType=INTEGER}, 
-	#{PICS_TAG}, 0, #{PICS_REVIEW}, #{PICS_MAIN_IMAGE, jdbcType=VARCHAR}, #{PICS_CONTENT, jdbcType=VARCHAR})
+	#{PICS_TAG}, 0, #{PICS_REVIEW}, #{PICS_MAIN_IMAGE, jdbcType=VARCHAR}, #{PICS_CONTENT, jdbcType=VARCHAR}, #{PICS_PRODUCT,jdbcType=INTEGER})
 	</insert> 
 	
 	<delete id="deletePics" parameterType="com.spring.community.PicsVO">	

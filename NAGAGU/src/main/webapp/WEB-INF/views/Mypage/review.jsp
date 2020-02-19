@@ -13,14 +13,12 @@
 		text-decoration: none;
 		color: white !important;
 	} 
-	
 	.card-hover:hover {
 		transition: 1s;
 		transform: scale(1.2);
 		z-index: 1;
 		box-shadow: 10px 15px 7px 0px #333333;
 	}
-	
 	.card {
 		background-color: #1b1b27 !important;
 		margin: 15px 15px 15px 15px;
@@ -31,7 +29,6 @@
 	}
 	.card-wrap{
 		justify-content: center;
-		padding-left:50px; 
 	}
 	@media screen and (max-width: 600px) {
 		.card {
@@ -69,7 +66,7 @@
 	}
 	@media ( min-width : 1200px) {
 		.card {
-			width: 8rem !important;  
+			width: 7.6rem !important;  
 			font-size: 0.7rem;
 		}
 		.card-header, .card-body, .card-footer {
@@ -79,10 +76,6 @@
 	/* --------------------------------------------- */
 	.tab-pane .col-4 {
 		padding-bottom: 50px;
-	}
-	li>.active {
-		background-color: #1b1b27 !important;
-		color: white !important;
 	}
 	.tab-content .tab-pane.active {
 		display: flex;
@@ -95,9 +88,6 @@
 		height: auto;
 	}
 	/* --------------------------------- */
-	.tab-content img {
-		height: auto;
-	}
 	.reply-content {
 		width: 100%;
 	}
@@ -106,6 +96,9 @@
 	}
 	.tab-content img{
 		max-height:250px;
+	}
+	.container_review .nav-item{
+		font-weight:800 !important;  
 	}
 </style>
  
@@ -187,7 +180,7 @@
 	</div>
 </div>
 
-<div class="container">
+<div class="container container_review">
 	<div class="row" style="margin-left: 0px;">
 		<ul class="nav nav-tabs" id="myTab" role="tablist">
 			<li class="nav-item"><a class="nav-link active" id="picTab"
@@ -226,7 +219,6 @@
 		//상품 후기  가져오기 함수 정의
 		function getPics(event){
 			var loginNum = '<%=session.getAttribute("MEMBER_NUM")%>'; 
-			alert('로그인넘버='+loginNum)
 			var category = 'review_store'
 			if(loginNum == 0){
 				return
@@ -271,7 +263,6 @@
 		
 		//누르면 상품댓글 가져오기
 		$(document).on('click','#storeTab',function(){
-			alert('hid')
 			var loginNum = '<%=session.getAttribute("MEMBER_NUM")%>'; 
 			var category = 'review_store'
 			if(loginNum == 0){

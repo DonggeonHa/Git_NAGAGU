@@ -71,6 +71,10 @@
 	.submit-btn-wrap {
 		margin-right: 30px !important;
 	}
+	.category_cm{
+		margin-top:50px;
+		margin-bottom:50px; 
+	}
 </style>
 
 <!-- SECTION: content -->
@@ -94,7 +98,8 @@
 					<td>
 						<div class="row">
 							<div>
-								<select name="PICS_CATEGORY" class="form-control">
+								<select name="PICS_CATEGORY" id="pics_category"class="form-control">
+									<option value="0">선택</option>
 									<option value="table">책상</option>
 									<option value="chair">의자</option>
 									<option value="bookshelf">책장</option>
@@ -114,12 +119,23 @@
 					<td>
 					 	<div class="row">
 					 		<div>
-								<select name="PICS_REVIEW" class="form-control">
+								<select name="PICS_REVIEW" id="pics_review" class="form-control">
+									<option value="0">선택</option> 
 									<option value="1">후기</option>
 									<option value="2">일반</option>
 								</select>
 							</div>
 					 	</div>	
+					 	<div class="row search_tab justify-content-start ">
+					 		<div class="search_form d-flex mr-5">
+						      <input class="form-control " id="search_product" placeholder="검색..." aria-label="Search">
+						      <button class="btn btn-outline-success my-2 my-sm-0">상품명</button>
+						      <input type="hidden" id="product_num" value="" name="PICS_PRODUCT"></button> 
+						    </div>
+						    <div class="search_form d-flex">
+						      <input class="form-control search_form text-center" id="search_gongbang" placeholder="공방명" aria-label="Search" readonly>
+						   	</div> 
+						</div>
 					</td>
 				</tr>
 				<tr>      
@@ -158,7 +174,7 @@
 			</table>
 			<div class="text-center">
 				<input class="btn btn-outline-dark btn-lg" type="reset" value="취소하기">&nbsp;&nbsp;&nbsp;
-				<input class="btn btn-outline-dark btn-lg" type="button" onclick="addboard()" value="등록하기">
+				<input class="btn btn-outline-dark btn-lg submit-btn" type="button" value="등록하기">
 			</div>
 		</form>
 	</div>
@@ -167,29 +183,30 @@
 
 <!-- include summernote css/js -->
 <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.15/dist/summernote.min.js"></script>
+<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 <script>
 	$('.submit-btn').on('click',function(){
 		//유효성 검사
-		if($('#category_select').val()=='카테고리'){
+		if($('#pics_category').val()==0){
 			alert('카테고리를 선택하세요');
-			$('#category_select').focus();
-			e.preventDefault();
+			$('#pics_category').focus();
+			return false;
 		}
-		if($('#review_select').val()=='분류'){
+		if($('#pics_review').val()==0){
 			alert('분류를 선택하세요');
-			$('#review_select').focus();
-			e.preventDefault();
+			$('#pics_review').focus();
+			return false;
 		}
-		if($('#input_imgs1').val()==''){
+		if($('#uploadFile').val()==''){
 			alert('사진을 넣어주세요');
-			$('#input_imgs1').focus();
-			e.preventDefault();
+			$('#uploadFile').focus();
+			return false;
 		}
 		addboard()
-		
 	});
 	
-	function addboard(){
+	function addboard(){	
 		function addTags(){				
 			var	tags_value= '';
 			var tags_children = $('div.tags').children();
@@ -241,5 +258,64 @@
 			 	 }
 			  });
 		  }
+		
+/* 		$('.search_form').keydown(function(){
+			console.log($(this).val());
+		}) */
 	});
+	
+	 $(function(){
+		//var array = Array.from(new Set(arr));
+		//console.log(list[0].PRODUCT_TITLE)
+ 		$('#search_product').autocomplete({
+			source : function(request,response){
+				 $.ajax({
+					 url: "/NAGAGU/getMyPaidOrder.my",
+					 async: false,
+		             type: "POST",
+		             contentType:
+		 				'application/x-www-form-urlencoded; charset=utf-8',
+		             success: function (retVal){
+		       			 	if(retVal.res=="OK"){
+			       			 console.log(retVal.myPaidOrder)
+			       			 response(
+                                $.map(retVal.myPaidOrder, function(item) {    //json[i] 번째 에 있는게 item 임.
+                                    return {
+                                        label: item.PRODUCT_TITLE,     //UI 에서 보여지는 글자, 실제 검색어랑 비교 대상
+                                        number: item.PRODUCT_NUM,   //그냥 사용자 설정값?
+                                        gongbang: item.PRODUCT_SHOPNAME   //그냥 사용자 설정값?
+                                	}
+                                })
+                             )
+							}else{
+								alert("update fail");
+							}  
+						 },
+					 error:function(){
+						alert("ajax통신 실패!!");
+					 }
+				});
+			},
+			select: function(event, ui) {
+	            console.log(ui.item);
+	            $('#search_gongbang').val(ui.item.gongbang)
+	            $('#product_num').val(ui.item.number)
+	        },
+	        focus: function(event, ui) {
+	            return false;
+	        }
+		}) 
+		//처음에 숨기고
+		$('.search_tab').hide().css('margin-top','20px')
+		$('.search_product').css('margin-right','20px')
+		$('select[name=PICS_REVIEW]').on('change',function(){
+			if($(this).val()==1){
+				$('.search_tab').show()	
+			}
+			if($(this).val()!=1){
+				$('.search_tab').hide()	
+			}
+		})
+		 
+	 });
 </script>

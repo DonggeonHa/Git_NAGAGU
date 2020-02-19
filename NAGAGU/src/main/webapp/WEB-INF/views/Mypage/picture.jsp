@@ -1,6 +1,12 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-
+<%
+	//로그인 정보 확인(멤버)
+	int LOGIN_MEMBER_NUM = 0;
+	if(session.getAttribute("MEMBER_NUM")!=null){
+		LOGIN_MEMBER_NUM = (int)session.getAttribute("MEMBER_NUM");
+	}
+%>
 <style>
 	.container-mypage{
 		margin-top: 50px ;
@@ -28,7 +34,6 @@
 	}
 	.card-wrap{
 		justify-content: center;
-		padding-left:50px; 
 	}
 	@media screen and (max-width: 600px) {
 		.card {
@@ -66,7 +71,7 @@
 	}
 	@media ( min-width : 1200px) {
 		.card {
-			width: 8rem !important;  
+			width: 7.6rem !important;  
 			font-size: 0.7rem;
 		}
 		.card-header, .card-body, .card-footer {
@@ -77,15 +82,8 @@
 	.tab-pane .col-4 {
 		padding-bottom: 50px;
 	}
-	li>.active {
-		background-color: #1b1b27 !important;
-		color: white !important;
-	}
 	.tab-content .tab-pane.active {
 		display: flex;
-	}
-	.nav-item a {
-		color: black;
 	}
 	img {
 		width: 100%;
@@ -202,7 +200,7 @@
 	<div class="row mb-2">
 		<div class="col-4"></div>
 		<div class="col-8 d-flex justify-content-end">
-			<button type="button" class="btn btn-outline-secondary">새 글 쓰기</button>
+			<a href="./community_write.cm?MEMBER_NUM=<%=LOGIN_MEMBER_NUM%>"><button type="button" class="btn btn-outline-secondary">새 글 쓰기</button></a>
 		</div>
 	</div>
 	<div class="grid"></div>
@@ -213,7 +211,6 @@
 		//사진 가져오기 함수 정의
 		function getPics(event){
 			var loginNum = '<%=session.getAttribute("MEMBER_NUM")%>'; 
-			alert('로그인넘버='+loginNum)
 			if(loginNum == 0){
 				return
 			}
@@ -222,15 +219,17 @@
 				  url: "/NAGAGU/loginMemberUploadPics.cm",
 	              type: "POST",
 	              data: { 'category' : category},
+	              async: false,
 	              contentType:
 	  				'application/x-www-form-urlencoded; charset=utf-8',
 	              success: function (retVal) {
 	        		if(retVal.res=="OK"){
 	        			var output="";
 			        	for(var j=0; j<retVal.PicsNum.length; j++){
-			        		var imgsrc = retVal.PicsNum[j].pics_FILE_1
-			        		console.log(imgsrc)
-				    		output += '<div class="item"><img src="/communityupload/image/'+imgsrc+'"></div>'
+			        		var imgsrc = retVal.PicsNum[j].pics_MAIN_IMAGE
+			        		console.log(retVal.PicsNum)
+				    		output += '<a href="./community_detail.cm?PICS_NUM='+retVal.PicsNum[j].pics_NUM+'&MEMBER_NUM='+retVal.PicsNum[j].pics_MEMBER+'&PICS_MEMBER='+retVal.PicsNum[j].pics_MEMBER+'" class="item">'
+					        output += '<img src="/communityupload/image/'+imgsrc+'"></a>'
 			        	}
 			        	$('.grid').html(output)
 					}else{ 
@@ -242,11 +241,6 @@
 				}
 			})
 		} 
-		//처음 로드하고 사진 가져오기 호출
-		getPics();
-	})
-	
-	$(document).ready(function() {
 		$(window).resize(function() {
 			var Wid = $(window).width();
 	
@@ -260,18 +254,24 @@
 				$('.card-footer').removeClass("p-1");
 			}
 		})
-	});
-	function SetGridItemHeight() {
-		var grid = document.getElementsByClassName('grid')[0];
-		var rowHeight = parseInt(window.getComputedStyle(grid).getPropertyValue('grid-auto-rows'));
-		var rowGap = parseInt(window.getComputedStyle(grid).getPropertyValue('grid-row-gap'));
-	
-		var item = grid.getElementsByClassName('item');
-		for (let i = 0; i < item.length; ++i) {
-			item[i].style.gridRowEnd = 'span '+ Math.floor((item[i].children[0].offsetHeight) / 25);
+		
+		function SetGridItemHeight() {
+			var grid = document.getElementsByClassName('grid')[0];
+			var rowHeight = parseInt(window.getComputedStyle(grid).getPropertyValue('grid-auto-rows'));
+			var rowGap = parseInt(window.getComputedStyle(grid).getPropertyValue('grid-row-gap'));
+		
+			var item = grid.getElementsByClassName('item');
+			for (let i = 0; i < item.length; ++i) {
+				item[i].style.gridRowEnd = 'span '+ Math.floor((item[i].children[0].offsetHeight) / 25);
+			}
 		}
-	}
-	
-	window.addEventListener("load", SetGridItemHeight); 
-	window.addEventListener("resize", SetGridItemHeight); 
+		
+		window.addEventListener("load", SetGridItemHeight); 
+		window.addEventListener("resize", SetGridItemHeight); 
+		
+		//처음 로드하고 사진 가져오기 호출
+		getPics();
+		SetGridItemHeight();
+	});
+
 </script>

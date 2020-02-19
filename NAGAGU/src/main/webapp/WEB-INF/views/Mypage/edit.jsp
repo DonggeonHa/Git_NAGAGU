@@ -343,7 +343,6 @@
 	}
 	.card-wrap{
 		justify-content: center;
-		padding-left:50px; 
 	}
 	@media screen and (max-width: 600px) {
 		.card {
@@ -381,7 +380,7 @@
 	}
 	@media ( min-width : 1200px) {
 		.card {
-			width: 8rem !important;  
+			width: 7.6rem !important;  
 			font-size: 0.7rem;
 		}
 		.card-header, .card-body, .card-footer {

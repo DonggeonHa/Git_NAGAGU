@@ -206,6 +206,9 @@ public class CommunityController {
 		picsVO.setPICS_CATEGORY(request.getParameter("PICS_CATEGORY"));
 		picsVO.setPICS_REVIEW(request.getParameter("PICS_REVIEW"));
 		picsVO.setPICS_TAG(request.getParameter("PICS_TAG"));
+		if(!request.getParameter("PICS_PRODUCT").equals("")) {
+			picsVO.setPICS_PRODUCT(Integer.parseInt((request.getParameter("PICS_PRODUCT"))));
+		}
 		//파일업로드 시작=-------------------------------------------------
 		String uploadPath="C:\\Project138\\upload\\";
 	    //사진 개수만큼 파일업로드 시작=-------------------------------------------------
@@ -286,6 +289,29 @@ public class CommunityController {
 		communityService.updatePics(picsVO);
 		return "redirect:./community.cm";	
 	}
+	//사진 디테일에서 해당 상품 가져오기
+	@RequestMapping(value = "/getProductInCommunity.cm")
+	public @ResponseBody Map<String, Object> getProductInCommunity(HttpSession session,HttpServletRequest request) {
+		int LIKE_MEMBER = (int)session.getAttribute("MEMBER_NUM");
+		Map<String, Object> retVal = new HashMap<String, Object>();
+		try {
+			int PRODUCT_NUM= Integer.parseInt(request.getParameter("PRODUCT_NUM"));
+			System.out.println("pnum"+PRODUCT_NUM);
+			//멤버가 올린 사진리스트
+			ProductVO vo = productService.getproductVO(PRODUCT_NUM);
+			System.out.println(vo);
+			retVal.put("vo", vo);
+			retVal.put("res", "OK");
+		}catch(Exception e) {
+			retVal.put("res", "FAIL");
+			retVal.put("message", "Failure");
+		}
+		return retVal;
+	}
+	
+	
+	
+	
 	
 	@RequestMapping(value = "/deletePicsFile.cm")
 	public @ResponseBody Map<String, Object> deletePicsFile(PicsVO picsVO,HttpServletRequest request) {

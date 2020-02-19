@@ -3,8 +3,12 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%//날짜 포맷 형식
 	SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+	//로그인 정보 확인(멤버)
+	int LOGIN_MEMBER_NUM = 0;
+	if(session.getAttribute("MEMBER_NUM")!=null){
+		LOGIN_MEMBER_NUM = (int)session.getAttribute("MEMBER_NUM");
+	}
 %>
-
 <style type="text/css">
 	.container-mypage{
 		margin-top: 50px ;
@@ -32,7 +36,6 @@
 	}
 	.card-wrap{
 		justify-content: center;
-		padding-left:50px; 
 	}
 	@media screen and (max-width: 600px) {
 		.card {
@@ -70,7 +73,7 @@
 	}
 	@media ( min-width : 1200px) {
 		.card {
-			width: 8rem !important;  
+			width: 7.6rem !important;  
 			font-size: 0.7rem;
 		}
 		.card-header, .card-body, .card-footer {
@@ -80,30 +83,29 @@
 	/* --------------------------------------------- */
 	.tab-pane .col-4 {
 		padding-bottom: 50px;
-	}
-	li>.active {
-		background-color: #1b1b27 !important;
-		color: white !important;
-	}
+	} 
 	.tab-content .tab-pane.active {
 		display: flex;
 	}
 	.nav-item a {
 		color: black;
 	}
-	img {
-		width: 100%;
-		height: auto;
+	.replyOutput img {
+		width: 50px;
+		height: 50px;
+	}
+	.replyOutput div{
+		margin-bottom:3px; 
 	}
 	/* --------------------------------- */
-	.tab-content img {
-		height: auto;
-	}
 	.reply-content {
 		width: 100%;
 	}
+	.container_reply .nav-item{ 
+		font-weight:800 !important;  
+	}
 </style>	 
-<div class="container-mypage " role="main">
+<div class="container-mypage" role="main">
 	<div class="row card-wrap  text-center">
 		<div class="card card-hover">
 			<a href="mypage_like.my" class="href">
@@ -181,7 +183,7 @@
 	</div>
 </div>
 
-<div class="container">
+<div class="container container_reply">
 	<div class="row" style="margin-left: 0px;">
 		<ul class="nav nav-tabs" id="myTab" role="tablist">
 			<li class="nav-item"><a class="nav-link active" id="picTab"
@@ -220,7 +222,6 @@
 		//사진 댓글  가져오기 함수 정의
 		function getPics(event){
 			var loginNum = '<%=session.getAttribute("MEMBER_NUM")%>'; 
-			alert('로그인넘버='+loginNum)
 			var category = 'reply_pic'
 			if(loginNum == 0){
 				return
@@ -242,7 +243,9 @@
 
 			        		var d_date = new Date(retVal.PicsNum[j].PICS_RE_DATE);
 			        		var date = date_format(d_date);
-				    		output += '<div class="col-1"><img src="${pageContext.request.contextPath}/'+imgsrc+'"></div>'
+				    		output += '<div class="col-1">'
+				    			output += '<a href="./community_detail.cm?PICS_NUM='+retVal.PicsNum[j].PICS_NUM+'&MEMBER_NUM='+retVal.PicsNum[j].MEMBER_NUM+'&PICS_MEMBER='+retVal.PicsNum[j].PICS_MEMBER+'">'
+				    			output += '<img src='+imgsrc+'></a></div>'
 				    		output += '<div class="col-11"><div class="row justify-content-between"><div class="name">'+nickname+'에게 단 댓글</div>'
 				    		output += '<div class="smallfont">'+date+'</div></div><div class="row">'
 				    		output += '<div class="comm_content">'+content+'</div></div></div>'
@@ -264,7 +267,6 @@
 		
 		//누르면 상품댓글 가져오기
 		$(document).on('click','#storeTab',function(){
-			alert('hid')
 			var loginNum = '<%=session.getAttribute("MEMBER_NUM")%>'; 
 			var category = 'reply_store'
 			if(loginNum == 0){
@@ -287,7 +289,9 @@
 			        		var d_date = new Date(retVal.PicsNum[j].PRODUCT_DATE);
 			        		var date = date_format(d_date);
 			        		console.log(imgsrc)
-				    		output += '<div class="col-1"><img src="/productupload/image/'+imgsrc+'"></div>'
+				    		output += '<div class="col-1">'
+			    				output += '<a href="./productdetail.pro?PRODUCT_NUM='+retVal.PicsNum[j].PRODUCT_NUM+'">'
+					    		output += '<img src="/productupload/image/'+imgsrc+'"></a></div>'
 				    		output += '<div class="col-11"><div class="row justify-content-between"><div class="name">'+title+'</div>'
 				    		output += '<div class="smallfont">'+date+'</div></div><div class="row">'
 				    		output += '<div class="comm_content">→'+content+'</div></div></div>'

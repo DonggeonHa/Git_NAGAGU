@@ -206,6 +206,14 @@
 		color: white;
 		margin-left: 5px;
 	}
+	.product{
+		margin-top:50px;
+		font-weight:800;
+		 
+	}
+	.product_text{
+		border-bottom:1px solid grey;
+	}
 </style>
 
 	<div class="container category_cm">
@@ -287,7 +295,10 @@
 	               </a> 
                </div>
                <%} %>
-            </div>
+            	</div>
+            	<div id="product_output">
+            	
+            	</div>
             
             
           	  
@@ -331,6 +342,41 @@
    <!-- container end -->
    
 <script type="text/javascript" charset="utf-8">
+	$(document).ready(function(){
+		function getPro(){
+			var pro_num = '<%=picsVO.getPICS_PRODUCT()%>'
+			
+			 	$.ajax({
+					url: '/NAGAGU/getProductInCommunity.cm',
+					type:'POST',
+					data: {'PRODUCT_NUM':pro_num},
+					contentType:'application/x-www-form-urlencoded; charset=utf-8',
+					success:function(item){
+						console.log(item.vo) 
+						var p_output ='';
+						var imgsrc=item.vo.product_IMAGE;
+						p_output += '<div class="row product">';
+							p_output += '<div class="col-11 text-left product_text mx-3 px-0">관련 상품</div>';    
+								p_output += '<div class="col-4">'
+								p_output += '<a href="./productdetail.pro?PRODUCT_NUM='+item.vo.product_NUM+'">'
+					    		p_output += '<img src="/productupload/image/'+imgsrc+'"></a></div>';
+								p_output += '<div class="row col-8">';
+									p_output += '<div class="title col-12">'+item.vo.product_TITLE+'</div>'; 
+									p_output += '<div class="brief col-12">'+item.vo.product_BRIEF+'</div>';
+							p_output += '</div></div>';
+							
+
+						console.log(p_output)
+						$('#product_output').html(p_output)
+					},error:function(){
+						alert("ajax통신 실패!!");
+					}
+				}); 
+		}
+		getPro()
+	})
+
+
 	$('.delete-btn').on('click',function(){
 		if(confirm('정말 삭제하시겠습니까?')){
 			var url = '${pageContext.request.contextPath}/community_delete.cm'
