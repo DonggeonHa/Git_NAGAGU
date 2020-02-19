@@ -21,7 +21,8 @@ CREATE TABLE ACADEMY (
 	CLASS_ADDRESS varchar2(200),
     CLASS_DETAIL_ADDRESS varchar2(200),
     CLASS_COUNT_MEMBER number default 0,
-    CLASS_STATUS number default 0
+    CLASS_STATUS number default 0,
+	CLASS_GRADE number(2,1)    
 );
 
 create sequence ACADEMY_SEQ

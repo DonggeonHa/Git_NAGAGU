@@ -117,7 +117,7 @@
                   			</div>
                  		</div>
                   			
-                 			<!-- 원데이 클래스 -->
+                 		<!-- 원데이 클래스 -->
                  		<div id="Oneday" style="display: none;">
                  			<div class="row">
 		                    	<div style="margin: 0 1% 0 0;">
