@@ -26,9 +26,12 @@ public interface EstimateMapper {
 	public int offerSetInfo (EstimateVO vo);
 	public int estimateAvgPrice (int OFFER_NUM);
 	public ArrayList<EstimateOrderVO> esOrderList (HashMap<String, Object> map);
-	public EstimateOrderVO esOrserDetail (int ES_ORDER_NUM);
+	public EstimateOrderVO esOrderDetail (int ES_ORDER_NUM);
 	public int esOrderInsert(EstimateOrderVO vo);
 	public int esOrderDelete(int ESTIMATE_NUM);
 	public int esOrderCount(HashMap<String, Object> map);
+	public int esOrderPay (EstimateOrderVO vo);
+	public int esOrderPost (EstimateOrderVO vo);
+	public int esOrderState (EstimateOrderVO vo);
 	public ArrayList<HashMap <String, Object>> workOfferList (HashMap<String, Object> map);
 }

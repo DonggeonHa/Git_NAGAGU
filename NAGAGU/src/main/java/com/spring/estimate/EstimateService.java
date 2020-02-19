@@ -23,8 +23,10 @@ public interface EstimateService {
 	public int offerDelete (int OFFER_NUM);
 	public int offerBidSet (int OFFER_STATE, int OFFER_NUM);
 	public ArrayList<EstimateOrderVO> esOrderList(HashMap<String, Object> map);
+	public EstimateOrderVO esOrderDetail (int ES_ORDER_NUM);
 	public int esOrderInsert (EstimateOrderVO vo);
 	public int esOrderDelete (int ES_ORDER_NUM);
 	public int esOrderCount (HashMap<String, Object> map);
+	public int esOrderPay (EstimateOrderVO vo);
 	public ArrayList<HashMap <String, Object>> workOfferList (HashMap<String, Object> map);
 }
