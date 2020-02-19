@@ -150,10 +150,10 @@ function find_pw_btn(){
 
 function find_email_btn() {
 	// 팝업을 가운데 위치시키기 위해 아래와 같이 값 구하기
-	var popupX = (window.screen.width / 2) - (450 / 2);
-	var popupY = (window.screen.height / 2) - (250 / 2);
+	var popupX = (window.screen.width / 2) - (600 / 2);
+	var popupY = (window.screen.height / 2) - (378 / 2);
 
-	var pop = window.open('about:blank', 'Info', 'resizable=yes, width=450, height=250, left=' + popupX + ', top=' + popupY);
+	var pop = window.open('about:blank', 'Info', 'resizable=yes, width=600, height=378, left=' + popupX + ', top=' + popupY);
 	var name = $("#name").val();
 	var phone = $("#phone").val();
 	

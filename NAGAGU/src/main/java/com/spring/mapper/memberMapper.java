@@ -21,6 +21,7 @@ public interface memberMapper {
 	int findMemberPW(MemberVO memberVO);	//비밀번호 찾기
 	int updateMemberPW(MemberVO memberVO);
 	int lastPwUpdate(@Param("pass1") String pass1, @Param("member_email") String member_email);
+	MemberVO findMemberEmail(MemberVO memberVO);
 	
 	/* 경태 */
 	ArrayList<MemberVO> getMemberList(HashMap<String, Object> map);

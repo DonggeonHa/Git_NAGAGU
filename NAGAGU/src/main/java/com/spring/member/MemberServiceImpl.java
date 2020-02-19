@@ -308,4 +308,21 @@ public class MemberServiceImpl implements MemberService{
 		}
 		return result;
 	}
+
+	@Override
+	public MemberVO findMemberEmail(MemberVO memberVO) {
+		MemberVO member = new MemberVO();
+		
+		try {
+			memberMapper memberMapper = sqlSession.getMapper(memberMapper.class);
+			
+			member = memberMapper.findMemberEmail(memberVO);
+			
+			System.out.println(member.getMEMBER_EMAIL());
+		} catch(Exception e) {
+			System.out.println("아이디 찾기 실패" + e.getMessage());
+		}
+		
+		return member;
+	}
 }

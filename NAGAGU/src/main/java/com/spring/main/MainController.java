@@ -583,12 +583,21 @@ public class MainController {
     }
     
     @RequestMapping(value="/FindMemberEmail.ma", method = RequestMethod.GET)
-    public String findMemberEmail(HttpServletRequest request, MemberVO memberVO) {
+    public ModelAndView findMemberEmail(HttpServletRequest request, MemberVO memberVO) {
+    	MemberVO member = new MemberVO();
+    	ModelAndView mav = new ModelAndView();
     	
-    	System.out.println("값 체크: "+(String)request.getParameter("MEMBER_NAME"));
-//    	memberVO.setMEMBER_NAME((String)request.getParameter("MEMBER_NAME"));
-//    	memberVO.setMEMBER_NAME((String)request.getParameter("MEMBER_NAME"));
+    	System.out.println("값 체크1: "+(String)request.getParameter("MEMBER_NAME"));
+    	System.out.println("값 체크2: "+(String)request.getParameter("MEMBER_PHONE"));
+    	memberVO.setMEMBER_NAME((String)request.getParameter("MEMBER_NAME"));
+    	memberVO.setMEMBER_PHONE((String)request.getParameter("MEMBER_PHONE"));
     	
-    	return null;
+    	member = memberService.findMemberEmail(memberVO);
+    	System.out.println(member.getMEMBER_EMAIL());
+    	
+    	mav.addObject("memberVO", member);
+    	mav.setViewName("Admin/Info/FindEmail");
+    	
+    	return mav;
     }
 }
