@@ -217,20 +217,21 @@
 	// 숫자 정규식
 	var num = /^[0-9]{5}$/;
     
-    var emailFlag = false;
-    var passFlag = false;
-    var nickFlag = false;
-    var submitFlag = false;
-    var termFlag = false;
-    var nameFlag = false;
-    var phoneFlag = false;
-    
+	var sub_email = false;
+	var sub_pw1 = false;
+	var sub_pw2 = false;
+	var sub_name = false;
+	var sub_phone = false;
+	var sub_nick = false;
+	
     function showErrorMsg(obj, msg) {
-    obj.attr("class", "error_next_box");
-    obj.html(msg);
-    obj.show();
+	    obj.attr("class", "error_next_box");
+	    obj.html(msg);
+	    obj.show();
     }
+    
     var isShift = false;
+    
     function checkShiftUp(e) {
         if (e.which && e.which == 16) {
             isShift = false;
@@ -251,7 +252,7 @@
             myKeyCode = e.which;
             myShiftKey = isShift;
         }
-        var oMsg = $("#pswd1Msg");
+        var oMsg = $("#pass1Msg");
         if ((myKeyCode >= 65 && myKeyCode <= 90) && !myShiftKey) {
             showErrorMsg(oMsg,"Caps Lock이 켜져 있습니다.");
         } else if ((myKeyCode >= 97 && myKeyCode <= 122) && myShiftKey) {
@@ -267,16 +268,13 @@
         }
     }
     $("#member_ema").blur(function(){
-        emailFlag=false;
         checkEmail1("first");
     });
     $("#member_name").blur(function(){
-        nameFlag=false;
         checkName();
     });
     
     $("#pass1").blur(function(){
-        passFlag=false;
         checkPass1();
     }).keyup(function(event){
         checkShiftUp(event);
@@ -287,7 +285,6 @@
     });
     
     $("#pass2").blur(function(){
-        passFlag=false;
         checkPass2();
     }).keyup(function(event){
         checkShiftUp(event);
@@ -298,12 +295,10 @@
     }); 
     
     $("#member_nick").blur(function(){
-        nickFlag=false;
         checkNick();
     });
     
     $("#member_phone").blur(function(){
-        phoneFlag=false;
         checkPhone();
     });
     
@@ -314,34 +309,21 @@
         if (member_email=="") {
             showErrorMsg(oMsg, "필수 정보입니다.");
             return false;
-        } else {
-        oMsg.hide();
-        return true;
+        } else if(!mailJ.test(member_email)) {
+			showErrorMsg(oMsg, "이메일 형식을 확인하고 다시 입력해주세요.");
+			$("#member_ema").focus();
+			
+			return false;
+    		
+		} else {
+	        oMsg.hide();
+	        sub_email = true;
+	        
+	        return true;
         }
-        emailFlag = false;
-        return false;
     }
-    function checkEmail2(event) {
-        var email2 = $("#email2").val();
-        var oMsg = $("#emailMsg");
-        var input2 = $("#email2");
-        
-        if (email2=="") {
-            showErrorMsg(oMsg, "필수 정보입니다.");
-            return false;
-        } else {
-        oMsg.hide();
-        if (member_email!="") {
-            emailFlag=true;
-            return true;
-        }
-        return true;
-        }
-        emailFlag = false;
-        return false;
-    }
+    
     function checkPass1(event) {
-        var email = $("#member_email").val();
         var pass1 = $("#pass1").val();
         var oMsg = $("#pass1Msg");
         var oInput = $("#pass1");
@@ -350,13 +332,19 @@
             showErrorMsg(oMsg, "필수 정보입니다.");
             setFocusToInputObject(oInput);
             return false;
-        } else {
-         oMsg.hide();
-         return true;
+        } else if(!pwJ.test(pass1)) {
+			showErrorMsg(oMsg, "8자 이상 영문+숫자+하나 이상의 특수문자를 사용하세요.");
+			oInput.focus();
+			
+			return false;
+    	} else {
+	        oMsg.hide();
+	        sub_pw1 = true;
+	        
+	        return true;
         }
-        passFlag = false;
-        return true;
     }
+    
     function checkPass2(event) {
         var email = $("#member_email").val();
         var pass1 = $("#pass1").val();
@@ -369,7 +357,7 @@
             setFocusToInputObject(oInput);
             return false;
         } else {
-        oMsg.hide();
+        	oMsg.hide();
         }
         
         if (pass1 != pass2) {
@@ -378,11 +366,10 @@
             return false;
         } else {
             oMsg.hide();
-            passFlag = true;
+            sub_pw2 = true;
+            
             return true;
         }
-            passFlag = false;
-        return true;
     }
     
     function checkName(event) {
@@ -392,14 +379,14 @@
     	
     	if(name == "") {
     		showErrorMsg(oMsg, "필수 정보입니다.");
+    		
     		return false;
     	} else {
     		oMsg.hide();
-    		nameFlag = true;
+    		sub_name = true;
+    		
+    		return true;
     	}
-    	
-    	nameFlag = false;
-        return true;
     }
     
     function checkPhone(evnet) {
@@ -411,7 +398,8 @@
             return false;
         }  else if(!phoneJ.test(phone)) {
 			showErrorMsg(oMsg, "올바른 번호를 입력하세요.");
-			phonefocus.focus();
+			$("#member_phone").focus();
+			
 			return false;
     		
 		} else {
@@ -433,19 +421,22 @@
             return false;
         } else {
             oMsg.hide();
-            nickFlag=true;
+            sub_nick = true;
         }
         if (!checkLength.test(nick)) {
             showErrorMsg(oMsg, "별명은 최소 2자, 최대 12자 까지 입력가능 합니다.[특수문자 불가]");
             setFocusToInputObject(oInput);
+            sub_nick = false;
+            
             return false;
         } else {
-        oMsg.hide();
-        return true;
+	        oMsg.hide();
+	        sub_nick = true;
+	        
+	        return true;
         }
-        nickFlag = false;
-        return false;
     }
+    
     function checkterm() {
         var res = true;
         var oMsg = $("#termMsg");
@@ -457,6 +448,7 @@
     }
     return res;
     }
+    
     function mainSubmit() {
         if(emailFlag && passFlag && nickFlag) {
             $("#join_form").submit();
@@ -514,12 +506,21 @@
       
      var nicknamecheckBtn = $("#nick_chk_btn").val();
      var emailcheckBtn = $("#email_chk_btn").val();
-     if(emailcheckBtn == "N") {
+     var email = $("#member_ema").val();
+     var nick = $("#member_nick").val();
+     var pass1 = $("#pass1").val();
+     var pass2 = $("#pass2").val();
+     var name = $("#member_name").val();
+     var phone = $("#member_phone").val();
+     
+     if(email=="" || nick=="" || pass1=="" || pass2=="" || name=="" || phone==""){
+    	 alert("빈 칸 없이 입력해주세요.");
+     }else if(emailcheckBtn == "N") {
         alert("이메일 중복확인 버튼을 눌러주세요.");
-     }else if(nicknamecheckBtn == "Y") {
+     }else if(emailcheckBtn == "Y") {
         if(nicknamecheckBtn == "N"){
            alert("닉네임 중복확인 버튼을 눌러주세요.");
-        }else if(emailcheckBtn == "Y"){
+        }else if(nicknamecheckBtn == "Y"){
            if(($('#check_privacy').prop("checked")&&$('#check_service').prop("checked"))== false) 
            {
             alert('약관에 동의해주세요.');

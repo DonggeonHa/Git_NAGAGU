@@ -422,7 +422,7 @@ public class MainController {
     }
     
     @RequestMapping(value="/FindMemberPw.ma", method = RequestMethod.POST)
-    public String findMemberPw(RedirectAttributes redirect, HttpServletRequest request) {
+    public String findMemberPw(RedirectAttributes redirect, HttpServletRequest request, HttpServletResponse response) {
     	String email = (String)request.getParameter("MEMBER_EMAIL");
     	String password = null;
     	int update_pw = 0;
@@ -464,6 +464,20 @@ public class MainController {
 				redirect.addAttribute("ps", password);
 				
 				return ("redirect:/updateMailSending.ma");
+			}
+			
+		} else {
+			
+			try {
+				response.setCharacterEncoding("utf-8");
+		        response.setContentType("text/html; charset=utf-8");
+		        PrintWriter writer;
+		        writer = response.getWriter();
+		        
+				writer.write("<script>alert('가입한 회원 정보가 없습니다.'); location.href='FindMember.ma';</script>");
+			} catch(Exception e) {
+				System.out.println("비밀번호 찾기 회원정보 보기 실패!");
+				e.getMessage();
 			}
 			
 		}
@@ -566,5 +580,15 @@ public class MainController {
     	
     	return "FindPWForm";
     	
+    }
+    
+    @RequestMapping(value="/FindMemberEmail.ma", method = RequestMethod.GET)
+    public String findMemberEmail(HttpServletRequest request, MemberVO memberVO) {
+    	
+    	System.out.println("값 체크: "+(String)request.getParameter("MEMBER_NAME"));
+//    	memberVO.setMEMBER_NAME((String)request.getParameter("MEMBER_NAME"));
+//    	memberVO.setMEMBER_NAME((String)request.getParameter("MEMBER_NAME"));
+    	
+    	return null;
     }
 }
