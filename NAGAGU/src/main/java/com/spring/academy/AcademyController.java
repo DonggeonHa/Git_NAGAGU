@@ -239,6 +239,26 @@ public class AcademyController {
 			System.out.println("WorkShop 가져오기 실패");
 			return null;
 		}
+		System.out.println("vo.getCLASS_CATEGORY() = " + vo.getCLASS_CATEGORY());
+		
+		if (vo.getCLASS_CATEGORY().equals("table")) {
+			vo.setCLASS_CATEGORY("책상");
+		} else if (vo.getCLASS_CATEGORY().equals("chair")) {
+			vo.setCLASS_CATEGORY("의자");
+		} else if (vo.getCLASS_CATEGORY().equals("bookshelf")) {
+			vo.setCLASS_CATEGORY("책장");
+		} else if (vo.getCLASS_CATEGORY().equals("bed")) {
+			vo.setCLASS_CATEGORY("침대");
+		} else if (vo.getCLASS_CATEGORY().equals("drawer")) {
+			vo.setCLASS_CATEGORY("서랍장");
+		} else if (vo.getCLASS_CATEGORY().equals("sidetable")) {
+			vo.setCLASS_CATEGORY("협탁");
+		} else if (vo.getCLASS_CATEGORY().equals("dressing_table")) {
+			vo.setCLASS_CATEGORY("화장대");
+		} else if (vo.getCLASS_CATEGORY().equals("others")){
+			vo.setCLASS_CATEGORY("기타");
+		}
+		
 		System.out.println("상세보기 성공");
 		
 		//선주 

@@ -58,7 +58,7 @@
 		<div class="modal-content">
 		<%
 			if(WORKSHOP_EMAIL == null && MEMBER_EMAIL == null) {
-				System.out.println("이걸 들어올 수 있을까?");
+				return;
 			} else if (WORKSHOP_EMAIL != null) {
 		%>
 				<div class="modal-header">
