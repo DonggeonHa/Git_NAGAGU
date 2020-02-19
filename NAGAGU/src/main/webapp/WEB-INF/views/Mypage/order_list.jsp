@@ -27,7 +27,6 @@
 	}
 	.card-wrap{
 		justify-content: center;
-		padding-left:50px; 
 	}
 	@media screen and (max-width: 600px) {
 		.card {
@@ -65,7 +64,7 @@
 	}
 	@media ( min-width : 1200px) {
 		.card {
-			width: 8rem !important;  
+			width: 7.6rem !important;  
 			font-size: 0.7rem;
 		}
 		.card-header, .card-body, .card-footer {
@@ -281,17 +280,7 @@
 <div class="container bg-light">
 	<nav>
 		<div class="nav d-flex justify-content-between shadow p-3 mb5 bg-white rounded" id="nav-tab" role="tablist">
- 	        <a href="./mypage_order.my" class="nav-item nav-link" status="0" id="unfinish" role="tab" aria-controls="nav-profile" aria-selected="false"> 
-                <dl class="text-center">
-                    <dt class="unpaid">결제미완료</dt>
-                    <dd></dd>
-                    <dd class="count_unpaid"></dd>
-                </dl>
-            </a>
-            <div class="text-center align-self-center">
-                <i class="far fa-arrow-alt-circle-right" style="font-size: 30px;"></i>
-            </div>
-	    	<a class="nav-item nav-link" status="0" id="nav-finish-tab" data-toggle="tab" href="#nav-finish" role="tab" aria-controls="nav-profile" aria-selected="false">
+	    	<a class="nav-item nav-link" status="0" id="nav-finish-tab" data-toggle="tab" href="#" role="tab" aria-controls="nav-profile" aria-selected="false">
 	    		<dl class="text-center">
 	    			<dt>결제완료</dt>
 	    			<dd></dd>
@@ -301,7 +290,7 @@
 	    	<div class="text-center align-self-center">
 				<i class="far fa-arrow-alt-circle-right" style="font-size: 30px;"></i>
 			</div>
-	    	<a class="nav-item nav-link" status="1" id="nav-ready-tab" data-toggle="tab" href="#nav-ready" role="tab" aria-controls="nav-contact" aria-selected="false">
+	    	<a class="nav-item nav-link" status="1" id="nav-ready-tab" data-toggle="tab" href="#" role="tab" aria-controls="nav-contact" aria-selected="false">
 	    		<dl class="text-center count_ready">
 	    			<dt>배송준비</dt>
 	    			<dd></dd>
@@ -310,7 +299,7 @@
 	    	<div class="text-center align-self-center">
 				<i class="far fa-arrow-alt-circle-right" style="font-size: 30px;"></i>
 			</div>
-			<a class="nav-item nav-link" status="2" id="nav-shipping-tab" data-toggle="tab" href="#nav-shipping" role="tab" aria-controls="nav-contact" aria-selected="false">
+			<a class="nav-item nav-link" status="2" id="nav-shipping-tab" data-toggle="tab" href="#" role="tab" aria-controls="nav-contact" aria-selected="false">
 				<dl class="text-center">
 	    			<dt>배송중</dt>
 	    			<dd></dd>
@@ -320,7 +309,7 @@
 			<div class="text-center align-self-center">
 				<i class="far fa-arrow-alt-circle-right" style="font-size: 30px;"></i>
 			</div>
-			<a class="nav-item nav-link" status="3" id="nav-completed-tab" data-toggle="tab" href="#nav-completed" role="tab" aria-controls="nav-contact" aria-selected="false">
+			<a class="nav-item nav-link" status="3" id="nav-completed-tab" data-toggle="tab" href="#" role="tab" aria-controls="nav-contact" aria-selected="false">
 				<dl class="text-center">
 	    			<dt>배송완료</dt>
 	    			<dd></dd>
@@ -330,7 +319,7 @@
 			<div class="text-center align-self-center">
 				<i class="far fa-arrow-alt-circle-right" style="font-size: 30px;"></i>
 			</div>
-			<a class="nav-item nav-link" status="4" id="nav-confirmation-tab" data-toggle="tab" href="#nav-confirmation" role="tab" aria-controls="nav-contact" aria-selected="false">
+			<a class="nav-item nav-link" status="4" id="nav-confirmation-tab" data-toggle="tab" href="#" role="tab" aria-controls="nav-contact" aria-selected="false">
 				<dl class="text-center">
 	    			<dt>구매확정</dt>
 	    			<dd></dd>
@@ -470,6 +459,14 @@
 					}
 			})
 		}
+
+		//a태그 이동방지()
+		$(document).on('click', 'a[href="#"]', function(e){
+			return
+			e.preventDefault();
+		}); 
+		
+		
 		getBasket()
 	});
 </script>

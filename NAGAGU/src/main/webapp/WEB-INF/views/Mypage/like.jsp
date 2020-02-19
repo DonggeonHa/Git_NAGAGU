@@ -1,6 +1,12 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-
+<%
+	//로그인 정보 확인(멤버)
+	int LOGIN_MEMBER_NUM = 0;
+	if(session.getAttribute("MEMBER_NUM")!=null){
+		LOGIN_MEMBER_NUM = (int)session.getAttribute("MEMBER_NUM");
+	}
+%>
 <style type="text/css">
 	.container-mypage{
 		margin-top: 50px ;
@@ -28,7 +34,6 @@
 	}
 	.card-wrap{
 		justify-content: center;
-		padding-left:50px; 
 	}
 	@media screen and (max-width: 600px) {
 		.card {
@@ -66,7 +71,7 @@
 	}
 	@media ( min-width : 1200px) {
 		.card {
-			width: 8rem !important;  
+			width: 7.6rem !important;       
 			font-size: 0.7rem; 
 		}
 		.card-header, .card-body, .card-footer {
@@ -77,10 +82,6 @@
 	.tab-pane .col-4 {
 		padding-bottom: 50px;
 	}
-	li>.active {
-		background-color: #1b1b27 !important;
-		color: white !important;
-	}
 	.tab-content .tab-pane.active {
 		display: flex;
 	}
@@ -88,8 +89,8 @@
 		color: black;
 	}
 	img {
-	width: 100%;
-	height: auto;
+		width: 100%;
+		height: auto;
 	}
 	.picOutput{
 		padding-left: 0px !important;
@@ -98,7 +99,10 @@
 		min-height:38vh;
 	}
 	.tab-content img{
-		max-height:200px;
+		height:200px;
+	}
+	.container_like .nav-item{
+		font-weight:800 !important;  
 	}
 </style>	 
 <div class="container-mypage " role="main">
@@ -180,7 +184,7 @@
 
 </div>
 
-<div class="container">
+<div class="container container_like">
 	<div class="row">
 		<ul class="nav nav-tabs" id="myTab" role="tablist">
 			<li class="nav-item"><a class="nav-link active" id="picTab"
@@ -221,9 +225,10 @@
 	        		if(retVal.res=="OK"){
 	        			var output="";
 			        	for(var j=0; j<retVal.PicsNum.length; j++){
-			        		var imgsrc = retVal.PicsNum[j].pics_FILE_1
+			        		var imgsrc = retVal.PicsNum[j].pics_MAIN_IMAGE
 			        		console.log(imgsrc)
-				    		output += '<div class="col-4 picOutput">'
+			        		output += '<div class="col-3 picOutput">'
+				        	output += '<a href="./community_detail.cm?PICS_NUM='+retVal.PicsNum[j].pics_NUM+'&MEMBER_NUM='+retVal.PicsNum[j].pics_MEMBER+'&PICS_MEMBER='+retVal.PicsNum[j].pics_MEMBER+'">'
 				    		output += '<img src="/communityupload/image/'+imgsrc+'"></div>'
 			        	}
 			        	$('#picOutput').html(output)
@@ -243,7 +248,6 @@
 		/* ------------------------------------------------- */
 		//누르면 STORE 사진 가져오기
 		$(document).on('click','#storeTab',function(){
-			alert('hid')
 			var loginNum = '<%=session.getAttribute("MEMBER_NUM")%>'; 
 			var category = 'like_product'
 			if(loginNum == 0){
@@ -261,8 +265,10 @@
 	        			if(retVal.length!=0){
 				        	for(var j=0; j<retVal.PicsNum.length; j++){
 				        		var imgsrc = retVal.PicsNum[j].product_IMAGE
-				        		output += '<div class="col-4 picOutput">'
-					    		output += '<img src="/productupload/image/'+imgsrc+'"></div>'
+				        		console.log(retVal.PicsNum)
+				        		output += '<div class="col-3 picOutput">'
+				        		output += '<a href="./productdetail.pro?PRODUCT_NUM='+retVal.PicsNum[j].product_NUM+'">'
+					    		output += '<img src="/productupload/image/'+imgsrc+'"></a></div>'
 				        	}
 	        			}else{
 	        				output += '<div class="col-12 comm_content">좋아하는 상품이 아직 없습니다</div>'	        				

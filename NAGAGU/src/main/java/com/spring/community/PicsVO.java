@@ -14,6 +14,14 @@ public class PicsVO {
 	private String PICS_REVIEW;
 	private String PICS_MAIN_IMAGE;
 	private String PICS_CONTENT;
+	private int PICS_PRODUCT;
+	
+	public int getPICS_PRODUCT() {
+		return PICS_PRODUCT;
+	}
+	public void setPICS_PRODUCT(int pICS_PRODUCT) {
+		PICS_PRODUCT = pICS_PRODUCT;
+	}
 	public int getPICS_NUM() {
 		return PICS_NUM;
 	}
