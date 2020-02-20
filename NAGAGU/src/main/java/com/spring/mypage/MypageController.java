@@ -19,6 +19,8 @@ import com.spring.estimate.EstimateOrderVO;
 import com.spring.estimate.EstimateService;
 import com.spring.member.MemberService;
 import com.spring.member.MemberVO;
+import com.spring.store.ProductService;
+import com.spring.store.ProductVO;
 import com.spring.workshop.WorkShopMemberService;
 import com.spring.workshop.WorkShopMemberVO;
 
@@ -35,6 +37,9 @@ public class MypageController {
 	
 	@Autowired
 	private EstimateService estimateService;
+	
+	@Autowired
+	private ProductService productService;
 	
 	@RequestMapping(value = "/mypage.my")
 	public String Mypage(MemberVO memberVO, HttpServletRequest request, HttpSession session) {
@@ -196,9 +201,17 @@ public class MypageController {
 	
 	//판매된 상품 관리
 	@RequestMapping(value = "/workshop_product_selled.ws")
-	public String WorkshopStoreselled() {
+	public ModelAndView WorkshopStoreselled(HttpSession session) {
+		int WORKSHOP_NUM = (int)session.getAttribute("WORKSHOP_NUM");
+
+
+		ArrayList<ProductVO> WorkshopProoductList = null;
+		WorkshopProoductList = productService.getAllWorkshopProduct(WORKSHOP_NUM);   
 		
-		return "Mypage/Workshop/Store/selled";
+		ModelAndView mav = new ModelAndView();
+		mav.setViewName("Mypage/Workshop/Store/selled");
+		mav.addObject("WorkshopProoductList", WorkshopProoductList);
+		return mav;
 	}
 	//등록된 상품 관리
 	@RequestMapping(value = "/workshop_product_items.ws")

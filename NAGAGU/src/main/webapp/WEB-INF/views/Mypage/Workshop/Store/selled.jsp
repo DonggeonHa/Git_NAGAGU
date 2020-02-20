@@ -1,5 +1,7 @@
+<%@page import="java.util.ArrayList"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@ page import="com.spring.store.ProductVO"%>	
 <%
 	if (session.getAttribute("WORKSHOP_NUM") == null) {
 		out.println("<script>");
@@ -7,6 +9,7 @@
 		out.println("location.href='./index.ma'");
 		out.println("</script>");
 	}
+	ArrayList<ProductVO> WorkshopProoductList = (ArrayList<ProductVO>)request.getAttribute("WorkshopProoductList");
 %>
 
 <div id="page-content-wrapper" style="padding-top: 5%;">
@@ -15,24 +18,17 @@
 			<h1>판매된 상품 관리</h1>
 		</div>
 		<div class="d-flex justify-content-start pb-2">
-			<button type="button" id="listall"
-				class="btn btn-sm btn-outline-dark mr-2">전체표시</button>
-			<button type="button" id="ShippingStandby"
-				class="btn btn-sm btn-outline-dark mr-2">선택 배송대기</button>
-			<button type="button" id="ShippingIng"
-				class="btn btn-sm btn-outline-dark mr-2">선택 배송중</button>
-			<button type="button" id="ShippingCompleted"
-				class="btn btn-sm btn-outline-dark mr-2">선택 배송완료</button>
-			<button type="button" id="OrderConfirm"
-				class="btn btn-sm btn-outline-dark mr-2">선택 구매확정</button>
-			<button type="button" id="RefundRequest"
-				class="btn btn-sm btn-outline-dark mr-2">선택 환불요청</button>
-			<button type="button" id="RefundStandby"
-				class="btn btn-sm btn-outline-dark mr-2">선택 환불대기</button>
-			<button type="button" id="RefundCompleted"
-				class="btn btn-sm btn-outline-dark mr-2">선택 환불완료</button>
-			<span class="listnum_txt pt-2">전체 판매내역</span> <span
-				class="listnum_num pt-2"></span>
+			<button type="button" id="listall" class="to_status btn btn-sm btn-outline-dark mr-2">전체표시</button>
+			<button type="button" id="PaymentCompleted" class="to_status btn btn-sm btn-outline-dark mr-2">선택 결제완료</button>
+			<button type="button" id="ShippingStandby" class="to_status btn btn-sm btn-outline-dark mr-2">선택 배송대기</button>
+			<button type="button" id="ShippingIng" class="to_status btn btn-sm btn-outline-dark mr-2">선택 배송중</button>
+			<button type="button" id="ShippingCompleted" class="to_status btn btn-sm btn-outline-dark mr-2">선택 배송완료</button>
+			<button type="button" id="OrderConfirm" class="to_status btn btn-sm btn-outline-dark mr-2">선택 구매확정</button>
+			<button type="button" id="RefundRequest" class="to_status btn btn-sm btn-outline-dark mr-2">선택 환불요청</button>
+			<button type="button" id="RefundStandby" class="to_status btn btn-sm btn-outline-dark mr-2">선택 환불대기</button>
+			<button type="button" id="RefundCompleted" class="to_status btn btn-sm btn-outline-dark mr-2">선택 환불완료</button>
+			<span class="listnum_txt pt-2">전체 판매내역</span> 
+			<span class="listnum_num pt-2"></span>
 		</div>
 		<div class="d-flex justify-content-between pb-2">
 			<div class="justify-content-start" style="padding: 0;">
@@ -40,16 +36,14 @@
 					<div class="select1">
 						<select class="search_hidden_state justify-content-start form-control" id="selectORDER_STATE" name="selectORDER_STATE" onchange="btn_select1()" style="height: 33px;">
 							<option value="ORDER_STATE">주문상태</option>
-							<option value="PaymentCompleted">결제완료</option>
-							<option value="ShippingStandby">배송대기</option>
-							<option value="ShippingIng">배송중</option>
-							<option value="ShippingCompleted">배송완료</option>
-							<option value="OrderConfirm">구매확정</option>
-							<option value="RefundRequest">환불요청</option>
-							<option value="RefundStandby">환불대기</option>
-							<option value="RefundCompleted">환불완료</option>
-							<option value="pauseSale">품절</option>
-							<option value="endSale">판매종료</option>
+							<option value="0">결제완료</option>
+							<option value="1">배송대기</option>
+							<option value="2">배송중</option>
+							<option value="3">배송완료</option>
+							<option value="4">구매확정</option>
+							<option value="5">환불요청</option>
+							<option value="6">환불대기</option>
+							<option value="7">환불완료</option>
 						</select>
 					</div>
 					<div class="select2" style="padding-left: 5px">
@@ -64,12 +58,14 @@
 					</div>
 					<div class="select3" style="padding-left: 5px">
 						<select class="search_hidden_state justify-content-start form-control" id="selectMYPRODUCT" name="selectMYPRODUCT" onchange="btn_select3()" style="height: 33px;">
-							<option value="selectMYPRODUCT">포함하는 상품</option>
-							<option value="toss">내 상품들 나열할 것임</option>
-							<option value="card">카드</option>
-							<option value="kakao">카카오페이</option>
-							<option value="payco">페이코</option>
-							<option value="samsung">삼성페이</option>
+							<option value="MYPRODUCT">포함하는 상품</option>
+						<%
+							for(int i=0; i<WorkshopProoductList.size(); i++) {
+						%>	
+							<option value="<%=WorkshopProoductList.get(i).getPRODUCT_TITLE() %>"><%=WorkshopProoductList.get(i).getPRODUCT_TITLE() %></option>
+						<%
+							}
+						%>	
 						</select>
 					</div>
 					<div class="select4" style="padding-left: 5px">
@@ -111,6 +107,7 @@
 			<thead>
 				<tr class="text-center">
 					<th scope="col"><input id="all_select" type="checkbox"></th>
+					<th scope="col">번호</th>
 					<th scope="col">주문번호</th>
 					<th scope="col">주문내역</th>
 					<th scope="col">주문상태</th>
@@ -118,7 +115,7 @@
 					<th scope="col">결제금액</th>
 					<th scope="col">주문자</th>
 					<th scope="col">주문일자</th>
-					<th scope="col">상세/수정</th>
+					<th scope="col">상세</th>
 				</tr>
 			</thead>
 			<tbody id="SelledproductList"></tbody>
@@ -132,7 +129,20 @@
 </div>
 
 <script>
-	//검색 카테고리?타입? 선택
+	$(document).ready(function(){
+		var all_check = false;
+		$("#all_select").click(function() {
+			if (all_check == false) {
+				$("input[type=checkbox]").prop("checked",true);
+				all_check = true;
+			}
+			else {
+				$("input[type=checkbox]").prop("checked",false);
+				all_check = false;
+			}
+		});
+	});
+	//검색타입 선택
 	function order_amount() {
 		$('#searchType').html('주문번호');
 		$('#searchType').val('order_amount');
@@ -173,9 +183,9 @@
 	$(document).on('click', '#listall', function(event) {
 		$("#keyword").val('');
 		$('#list_none').empty();
-		$("#selectORDER_STATE").val('selectORDER_STATE').prop("selected", true);
-		$("#selectORDER_METHOD").val('selectORDER_METHOD').prop("selected", true);
-		$("#selectMYPRODUCT").val('selectMYPRODUCT').prop("selected", true);
+		$("#selectORDER_STATE").val('ORDER_STATE').prop("selected", true);
+		$("#selectORDER_METHOD").val('ORDER_METHOD').prop("selected", true);
+		$("#selectMYPRODUCT").val('MYPRODUCT').prop("selected", true);
 		$("#selectListAlign").val('product_date').prop("selected", true);
 		$('#searchType').text('선택');
 		$("#searchType").val('');
@@ -209,7 +219,100 @@
 		}
 		
 	});	
+
+	//상태변경 버튼들
+	$(document).on('click', '.to_status', function(event) {
+		if ($("input[name=chk]:checked").length == 0) {
+			alert('상품을 선택해주세요!');
+			return false;
+		}
+		var state = '';
+		var to_state = 0;
+  		switch($(this).attr('id')){
+  	    case 'PaymentCompleted' : 
+  	    	to_state = 0;
+  	    	state = '결제완료';
+  	        break;
+  	    case 'ShippingStandby' : 
+  	    	to_state = 1;
+  	    	state = '배송대기';
+  	        break;  
+  	    case 'ShippingIng' : 
+  	    	to_state = 2;
+  	    	state = '배송중';
+  	        break;
+  	    case 'ShippingCompleted' : 
+  	    	to_state = 3;
+  	    	state = '배송완료';
+  	        break;
+  	    case 'OrderConfirm' : 
+  	    	to_state = 4;
+  	    	state = '구매확정';
+  	        break;
+  	    case 'RefundRequest' : 
+  	    	to_state = 5;
+  	    	state = '환불요청';
+  	        break;
+  	    case 'RefundStandby' : 
+  	    	to_state = 6;
+  	    	state = '환불대기';
+  	        break;
+  	    case 'RefundCompleted' : 
+  	    	to_state = 7;
+  	    	state = '환불완료';
+  	        break;
+		}			
+
+		alertify.confirm('확인', "선택하신 상품을 " + state + " 상태로 변경하시겠습니까?", function() {
+			var checkBoxArr = [];
+			$("input[name=chk]:checked").each(function(i){
+				var ORDER_AMOUNT = $(this).val(); 
+				checkBoxArr.push(ORDER_AMOUNT);
+				console.log("상태를 " + state + "으로 update할 주문번호 : " + ORDER_AMOUNT)
+			});
+
+			//상태 변경해주는 함수 호출
+			modifyProductStatus(to_state, checkBoxArr);			
+		}, function() {}
+		);
+	});  
+		
 	
+	//선택한 체크들 상태 변경해주는 함수
+	function modifyProductStatus(to_state, checkBoxArr) {
+		console.log("to_state : " + to_state)
+		for (i=0;i<checkBoxArr.length;i++) {
+			console.log("checkBoxArr[i] : " + checkBoxArr[i])
+		} 
+		$.ajax({
+			url: '/NAGAGU/modifySelledProductStatus.my',
+			type: 'POST',
+			data: { "to_state" : to_state, "checkBoxArr" : checkBoxArr },
+			dataType: 'json',
+			contentType: 'application/x-www-form-urlencoded; charset=utf-8',
+			success: function(retVal) {
+				if(retVal.res == "OK") {
+					alertify.alert('확인',"상태변경 완료!");
+				} else {
+					alertify.alert('확인',"상태변경 실패!");
+				}
+				$("#keyword").val('');
+				$('#list_none').empty();
+				$("#selectORDER_STATE").val('ORDER_STATE').prop("selected", true);
+				$("#selectORDER_METHOD").val('ORDER_METHOD').prop("selected", true);
+				$("#selectMYPRODUCT").val('MYPRODUCT').prop("selected", true);
+				$("#selectListAlign").val('product_date').prop("selected", true);
+				$('#searchType').text('선택');
+				$("#searchType").val('');
+				$("#keyword").val('');
+				SelledproductList();
+			},
+			error: function() {
+				alert("실행할 수 없습니다.");
+			}
+		}); 
+		event.preventDefault();	
+	}		
 	
 	/*날짜 형식 변경*/
 	function date_format(format) {
@@ -264,59 +367,65 @@
 				},
 			dataType: 'json',
 			contentType: 'application/x-www-form-urlencoded; charset=utf-8',
-			success: function(productList) {
-				console.log(productList);
+			success: function(selledProductList) {
+				console.log(selledProductList);
 				var output = ' ';	
 				
-				if(productList.length!=0) {
-					$('.listnum_num').text(productList.length+"건");
-			     	for(var j=0; j<productList.length; j++){
-				      	var PRODUCT_STATUS = productList[j].PRODUCT_STATUS;
-			      		switch(PRODUCT_STATUS){
+				if(selledProductList.length!=0) {
+					$('.listnum_num').text(selledProductList.length+"건");
+			     	for(var j=0; j<selledProductList.length; j++){
+			     		var productList = selledProductList[j];
+			     		console.log(productList)	//같은 주문번호를 가지고 있는 상품들 리스트
+			     		var PRODUCT_TITLE = productList[0].PRODUCT_TITLE + ' 외 ' + productList.length + '건';	//상품이름 외 다른 정보들은 다 같으므로 0번째 데이터의 값으로 출력
+						var ORDER_STATE = productList[0].ORDER_STATE;
+			      		switch(ORDER_STATE){
 			      	    case 0 : 
-			      	    	PRODUCT_STATUS = '품절'
+			      	    	ORDER_STATE = '결제완료'
 			      	        break;
 			      	    case 1 : 
-			      	    	PRODUCT_STATUS = '판매중' 
+			      	    	ORDER_STATE = '배송대기' 
 			      	        break;  
 			      	    case 2 : 
-			      	    	PRODUCT_STATUS = '판매 종료'
+			      	    	ORDER_STATE = '배송중'
 			      	        break;
-		   		   	    }
-			    		var PRODUCT_TITLE = productList[j].PRODUCT_TITLE + '외  3건';
-			    		var ORDER_NUM = productList[j].ORDER_NUM;
-			    		var PRODUCT_PRICE = productList[j].PRODUCT_PRICE;
-						var PRODUCT_STOCK = productList[j].PRODUCT_STOCK;
-						var PRODUCT_SALES = productList[j].PRODUCT_SALES;
-						var PRODUCT_GRADE = productList[j].PRODUCT_GRADE;
-						var PRODUCT_READ = productList[j].PRODUCT_READ;
-						var PRODUCT_LIKE = productList[j].PRODUCT_LIKE;
-			    		var ORDER_DATE = new Date(productList[j].ORDER_DATE);
-			    		var date = date_format(ORDER_DATE);
-			      
+			      	    case 3 : 
+			      	    	ORDER_STATE = '배송완료'
+			      	        break;
+			      	    case 4 : 
+			      	    	ORDER_STATE = '구매확정'
+			      	        break;
+			      	    case 5 : 
+			      	    	ORDER_STATE = '환불요청'
+			      	        break;
+			      	    case 6 : 
+			      	    	ORDER_STATE = '환불대기'
+			      	        break;
+			      	    case 7 : 
+			      	    	ORDER_STATE = '환불완료'
+			      	        break;
+		   		   	    }				     		
+			    		var ORDER_NUM = productList[0].ORDER_NUM;
+			    		var ORDER_AMOUNT = productList[0].ORDER_AMOUNT;
+						var ORDER_METHOD = productList[0].ORDER_METHOD;
+						var ORDER_PRICE = productList[0].ORDER_PRICE;
+						var MEMBER_NICK = productList[0].MEMBER_NICK;
+			    		var ORDER_DATE = new Date(productList[0].ORDER_DATE);
+			    		var date = date_format(ORDER_DATE);			      
 						output += '<tr class="text-center">';
-						output += '<td><input type="checkbox" name="chk" value="'+PRODUCT_NUM+'"></td>';
+						output += '<td><input type="checkbox" name="chk" value="'+ORDER_AMOUNT+'"></td>';
 						output += '<td>' + number + '</td>';
-						output += '<td>' + PRODUCT_STATUS + '</td>';
-						output += '<td>' + PRODUCT_CATEGORY + '</td>';
-						if(PRODUCT_TITLE.length >= 14) {
-							PRODUCT_TITLE = PRODUCT_TITLE.substr(0,14)+"...";
-						}
-						output += '<td><a href="productdetail.pro?PRODUCT_NUM=' + PRODUCT_NUM + '&PRODUCT_CATEGORY=' + product_category + '">'+PRODUCT_TITLE+'</a></td>';
-						output += '<td>' + PRODUCT_PRICE + '</td>';
-						output += '<td>' + PRODUCT_STOCK + '</td>';
-						output += '<td>' + PRODUCT_SALES + '</td>';
-						output += '<td>' + PRODUCT_GRADE + '</td>';
-						output += '<td>' + PRODUCT_READ + '</td>';
-						output += '<td>' + PRODUCT_LIKE + '</td>';
+						output += '<td><a href="#">' + ORDER_AMOUNT + '</a></td>';
+						output += '<td>' + PRODUCT_TITLE + '</td>';
+						output += '<td>' + ORDER_STATE + '</td>';
+						output += '<td>' + ORDER_METHOD + '</td>';
+						output += '<td>' + ORDER_PRICE + '</td>';
+						output += '<td>' + MEMBER_NICK + '</td>';
 						output += '<td>' + date + '</td>';
 	
-						output += '<td><button class="btn_modify" onclick="updateProduct(' + PRODUCT_NUM + ')">' + "수정 " + '</button>&nbsp;';
-						output += '<button class="btn_remove" value="'+PRODUCT_NUM+'">' + "삭제" + '</button></td>';
-						output += '<td><button class="btn_review" value="'+PRODUCT_NUM+'" onclick="goreview(this.value)">' + "후기" + '</button>&nbsp;';
-						output += '<button class="btn_qna" value="'+PRODUCT_NUM+'" onclick="goqna(this.value)">' + "문의" + '</button></td>';
+						output += '<td><button class="btn_review" value="'+ORDER_NUM+'" onclick="goreview(this.value)">' + "상세" + '</button></td>';
 						output += '</tr>';
 						number += 1;
+			     		
 	 				}
 					$('#SelledproductList').append(output);
 				} else {
@@ -324,10 +433,13 @@
 					$('.listnum_num').text("0건");
 					$('#list_none').append(output);
 					//검색결과 없을시 select조건들 초기화
-					$("#keyword").val('');
-					$("#selectClassType").val('allProducts').prop("selected", true);
-					$("#selectCategory").val('all').prop("selected", true);
+					$("#selectORDER_STATE").val('ORDER_STATE').prop("selected", true);
+					$("#selectORDER_METHOD").val('ORDER_METHOD').prop("selected", true);
+					$("#selectMYPRODUCT").val('MYPRODUCT').prop("selected", true);
 					$("#selectListAlign").val('product_date').prop("selected", true);
+					$('#searchType').text('선택');
+					$("#searchType").val('');
+					$("#keyword").val('');			
 				}
 				page();
 			},

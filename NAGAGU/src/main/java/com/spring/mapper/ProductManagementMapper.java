@@ -13,6 +13,7 @@ public interface ProductManagementMapper {
 	ArrayList<Map<String, Object>> getSelledproductList(HashMap<String, Object> map);
 	String[] getOrder_amount();
 	int modifyStatus(HashMap<String, Object> map);
+	int modifySelledStatus(HashMap<String, Object> map);
 	int deleteProducts(HashMap<String, Object> map);
 	ProductVO getProductVoOfWorkshop(HashMap<String, Object> map);
 	int checkQnaCount(HashMap<String, Object> map);

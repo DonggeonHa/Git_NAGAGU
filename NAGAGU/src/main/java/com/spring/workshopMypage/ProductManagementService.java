@@ -17,6 +17,7 @@ public interface ProductManagementService {
 	ArrayList<Map<String, Object>> getSelledproductList(HashMap<String, Object> map);	//판매된 상품 관리
 	String[] getOrder_amount();
 	int modifyStatus(HashMap<String, Object> map);
+	int modifySelledStatus(HashMap<String, Object> map);
 	int deleteProducts(HashMap<String, Object> map);
 	ProductVO getProductVoOfWorkshop(HashMap<String, Object> map);
 	int checkQnaCount(HashMap<String, Object> map);
