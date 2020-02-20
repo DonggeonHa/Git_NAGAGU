@@ -10,11 +10,40 @@
 		<result property="MSG_DATE" column="CHAT_DATE"/> 
 	</resultMap>
 	
+	<resultMap type="com.spring.chat.ChatRoomVO" id="chatMap">
+		<result property="CHATROOM_NUM" column="CHATROOM_NUM"/> 
+		<result property="CHATROOM_CUSTOMER" column="CHATROOM_CUSTOMER"/> 
+		<result property="CHATROOM_WORKSHOP" column="CHATROOM_WORKSHOP"/> 
+	</resultMap>
+	
+	<resultMap type="java.util.HashMap" id="chatJoinMap">
+		<result property="CHATROOM_NUM" column="CHATROOM_NUM"/>
+		<result property="MEMBER_NICK" column="MEMBER_NICK"/>
+		<result property="MEMBER_EMAIL" column="MEMBER_EMAIL"/>
+		<result property="WORKSHOP_NAME" column="WORKSHOP_NAME"/>
+		<result property="WORKSHOP_EMAIL" column="WORKSHOP_EMAIL"/>
+	</resultMap>
+	
 	<insert id="insertMsg" parameterType="com.spring.chat.MessageVO">
 		INSERT INTO chat_message VALUES (chat_msg_seq.nextval, #{MSG_CHATROOM_NUM}, #{MSG_CONTENT}, #{MSG_DATE})
 	</insert>
 	
 	<select id="allMsg" parameterType="int" resultMap="msgMap">
-		SELECT * FROM chat_message WHERE chat_chatroom_num = #{MSG_CHATROOM_NUM}
+		select * from CHAT_MESSAGE where CHAT_CHATROOM_NUM = #{MSG_CHATROOM_NUM}
+	</select>
+	
+	<insert id="chatroomCreate" parameterType="com.spring.chat.ChatRoomVO">
+		insert into CHATROOM values (#{CHATROOM_NUM}, #{CHATROOM_CUSTOMER}, #{CHATROOM_WORKSHOP})
+	</insert>
+	
+	<delete id="chatroomDelete" parameterType="int">
+		delete from CHATROOM where CHATROOM_NUM = #{CHATROOM_NUM}
+	</delete>
+	
+	<select id="chatroomDetail" parameterType="com.spring.chat.ChatRoomVO" resultMap="chatJoinMap">
+		select A.CHATROOM_NUM, B.MEMBER_NICK, B.MEMBER_EMAIL, C.WORKSHOP_NAME, C.WORKSHOP_EMAIL from (select * from CHATROOM where CHATROOM_NUM = #{CHATROOM_NUM}) A, 
+		NAGAGU_MEMBER B, NAGAGU_WORKSHOP_MEMBER C
+		where A.CHATROOM_CUSTOMER = B.MEMBER_EMAIL
+		and A.CHATROOM_WORKSHOP = C.WORKSHOP_EMAIL
 	</select>
 </mapper>

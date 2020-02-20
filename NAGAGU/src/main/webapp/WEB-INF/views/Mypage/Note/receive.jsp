@@ -44,6 +44,15 @@
 	ul {
 		list-style: none;
 	}
+
+    a {
+        text-decoration: none;
+    }
+    
+    a:hover {
+        text-decoration: none;
+    }
+	
 	
 	.pop_wrapper {
 		width: 100%;
@@ -168,6 +177,7 @@
 		float: right;
 		color: #666;
 		line-height: 24px;
+		margin-right:10px;
 	}
 	
 	.top_list_info .note_new {
@@ -218,6 +228,11 @@
 		border-top: 1px solid #b3b3b3;
 		text-align: center;
 	}
+    
+    .note_list .note_title {
+    	text-align:left;
+    	padding-left:5px;
+    }
 	
 	.note_list a {
 		font-weight: 600;
@@ -401,7 +416,7 @@
                         		<tr>
                         			<td><input type="checkbox" class="note_chk" name="chk" value=<%=nl.getNOTE_NUM() %>></td>
                         			<td><a href="noteForm.nt?receive_mail=<%=nl.getNOTE_SENDER_MAIL()%>&redirection=<%=redirection%>"><%=nl.getNOTE_SENDER_NICK() %></a></td>
-                        			<td><a href="noteView.nt?note_num=<%=nl.getNOTE_NUM()%>&page=<%=nowpage%>&redirection=<%=redirection%>"><%=nl.getNOTE_TITLE() %></a></td>
+                        			<td class="note_title"><a href="noteView.nt?note_num=<%=nl.getNOTE_NUM()%>&page=<%=nowpage%>&redirection=<%=redirection%>"><%=nl.getNOTE_TITLE() %></a></td>
                         			<td class="note_date"><%=format.format(nl.getNOTE_DATE()) %></td>
                         	<%
                         			if (read == 0) {

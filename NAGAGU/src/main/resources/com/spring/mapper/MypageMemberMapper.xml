@@ -30,13 +30,6 @@
 		<result property="MEMBER_STATUS" column="MEMBER_STATUS" />
 	</resultMap>
 	
-	<resultMap type="com.spring.chat.WorkshopVO" id="workMap">
-		<result property="WORK_MAIL" column="WORKSHOP_EMAIL"/>
-		<result property="WORK_NAME" column="WORKSHOP_NAME"/>
-		<result property="WORK_PIC" column="WORKSHOP_PICTURE"/>
-	</resultMap>
-	
-	
 	<update id="edit_member" parameterType="com.spring.member.MemberVO">
 		update nagagu_member set MEMBER_NICK=#{MEMBER_NICK}, MEMBER_NAME=#{MEMBER_NAME}, 
 		MEMBER_PHONE=#{MEMBER_PHONE}, MEMBER_PICTURE=#{MEMBER_PICTURE}, ADDRESS_ZIP=#{ADDRESS_ZIP}, 

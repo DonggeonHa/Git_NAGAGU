@@ -37,10 +37,6 @@ public class EstimateManagementController {
 		listmap.put("WO_SEARCH", request.getParameter("search_text"));
 		listmap.put("WO_CATEGORY", request.getParameter("wo_category"));
 		listmap.put("WO_STATE", request.getParameter("wo_state"));
-		System.out.println("test : " + listmap.get("WO_SEARCH_CATEGORY"));
-		System.out.println("test : " + listmap.get("WO_SEARCH"));
-		System.out.println("test : " + listmap.get("WO_CATEGORY"));
-		System.out.println("test : " + listmap.get("WO_STATE"));
 		
 		HashMap <String, Object> countMap = new HashMap <String, Object>();
 		countMap.put("OFFER_WORKSHOP", OFFER_WORKSHOP);
@@ -92,6 +88,7 @@ public class EstimateManagementController {
 	@RequestMapping(value = "/workshop_estimate_list.ws")
 	@ResponseBody
 	public HashMap <String, Object> WorkshopEstimateList(HttpServletRequest request, HttpSession session) {
+
 		String ES_ORDER_WORKSHOP = (String)session.getAttribute("WORKSHOP_NAME");
 		
 		HashMap <String, Object> listmap = new HashMap <String, Object>();
@@ -99,10 +96,6 @@ public class EstimateManagementController {
 		listmap.put("EO_SEARCH", request.getParameter("search_text"));
 		listmap.put("EO_CATEGORY", request.getParameter("eo_category"));
 		listmap.put("EO_STATE", request.getParameter("eo_state"));
-		System.out.println("test : " + listmap.get("EO_SEARCH_CATEGORY"));
-		System.out.println("test : " + listmap.get("EO_SEARCH"));
-		System.out.println("test : " + listmap.get("EO_CATEGORY"));
-		System.out.println("test : " + listmap.get("EO_STATE"));
 		
 		HashMap <String, Object> countMap = new HashMap <String, Object>();
 		countMap.put("ES_ORDER_WORKSHOP", ES_ORDER_WORKSHOP);
@@ -130,7 +123,7 @@ public class EstimateManagementController {
 		
 		int rnum = offerCount - (page-1)*limit;
 
-		ArrayList<EstimateOrderVO> eoList = estimateService.esOrderList(listmap);
+		ArrayList<EstimateOrderVO> eoList = estimateService.esOrderTable(listmap);
 		
 		HashMap <String, Object> resMap = new HashMap <String, Object>();
 		resMap.put("page", page);

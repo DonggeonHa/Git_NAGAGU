@@ -20,7 +20,6 @@
 <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/css/Store/estimatelist.css">
 <!-- GOOGLE FONT -->
 <link href="https://fonts.googleapis.com/css?family=Do+Hyeon|Jua&display=swap&subset=korean" rel="stylesheet">
-
 <style>
 	.table .es_state_bid {
 		margin:0;
@@ -81,7 +80,7 @@
 	<h1>견적 문의시 이용가이드</h1>
 </div>
 <!-- content start -->
-<div class="container">
+<div class="container category_st">
 	<div>
 		<nav>
 			<div class="nav d-flex justify-content-between shadow p-3 mb5 bg-white rounded" id="nav-tab" role="tablist">
@@ -214,7 +213,7 @@
 				for (int i=0; i<eList.size(); i++) {
 					EstimateVO el = eList.get(i);
 					
-					if (el.getESTIMATE_STATE() != 0 && MEMBER_EMAIL != el.getESTIMATE_MEMBER()) {
+					if (el.getESTIMATE_STATE() != 0 && !(MEMBER_EMAIL.equals(el.getESTIMATE_MEMBER()))) {
 		%>
 						<tr class="bid">
 		<%

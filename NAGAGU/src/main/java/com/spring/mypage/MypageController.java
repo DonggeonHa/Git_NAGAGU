@@ -10,11 +10,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.spring.academy.AcademyService;
 import com.spring.academy.ClassVO;
+import com.spring.chat.ChatRoomVO;
+import com.spring.chat.ChatService;
 import com.spring.estimate.EstimateOrderVO;
 import com.spring.estimate.EstimateService;
 import com.spring.member.MemberService;
@@ -33,8 +34,11 @@ public class MypageController {
 	@Autowired(required = false)
 	private AcademyService academyService;
 	
-	@Autowired
+	@Autowired(required = false)
 	private EstimateService estimateService;
+
+	@Autowired(required = false)
+	private ChatService chatService;
 	
 	@RequestMapping(value = "/mypage.my")
 	public String Mypage(MemberVO memberVO, HttpServletRequest request, HttpSession session) {
@@ -257,8 +261,9 @@ public class MypageController {
 	@RequestMapping(value = "/mypage_estimate_payment.my")
 	public String MypageEsOrderPayment(HttpServletRequest request, Model model) {
 		EstimateOrderVO eovo = new EstimateOrderVO();
+		int ES_ORDER_NUM = Integer.parseInt(request.getParameter("ES_ORDER_NUM"));
 		
-		eovo.setES_ORDER_NUM(Integer.parseInt(request.getParameter("ES_ORDER_NUM")));
+		eovo.setES_ORDER_NUM(ES_ORDER_NUM);
 		eovo.setES_ORDER_BUYER_NAME(request.getParameter("ES_ORDER_BUYER_NAME"));
 		eovo.setES_ORDER_BUYER_ZIP(request.getParameter("ES_ORDER_BUYER_ZIP"));
 		eovo.setES_ORDER_BUYER_ADDRESS(request.getParameter("ES_ORDER_BUYER_ADDRESS1") + " " + request.getParameter("ES_ORDER_BUYER_ADDRESS2"));
@@ -272,6 +277,17 @@ public class MypageController {
 		int res = estimateService.esOrderPay(eovo);
 		
 		if (res == 1) {
+			EstimateOrderVO vo = estimateService.esOrderDetail(ES_ORDER_NUM);
+			ChatRoomVO chatvo = new ChatRoomVO();
+
+			chatvo.setCHATROOM_NUM(ES_ORDER_NUM);
+			chatvo.setCHATROOM_CUSTOMER(vo.getES_ORDER_BUYER_MAIL());
+			chatvo.setCHATROOM_WORKSHOP(vo.getES_ORDER_WORKSHOP());
+			
+			int res2 = chatService.chatroomCreate(chatvo);
+			
+			eovo = estimateService.esOrderDetail(ES_ORDER_NUM);
+			
 			model.addAttribute("eovo", eovo);
 			
 			return "Mypage/es_order_success";

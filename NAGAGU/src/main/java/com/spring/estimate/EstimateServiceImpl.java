@@ -286,6 +286,14 @@ public class EstimateServiceImpl implements EstimateService {
 	}
 	
 	@Override
+	public ArrayList<EstimateOrderVO> esOrderTable(HashMap<String, Object> map) {
+		EstimateMapper mapper = sqlSession.getMapper(EstimateMapper.class);
+		ArrayList<EstimateOrderVO> esOrderList = mapper.esOrderTable(map);
+		
+		return esOrderList;
+	}
+	
+	@Override
 	public EstimateOrderVO esOrderDetail(int ES_ORDER_NUM) {
 		EstimateMapper mapper = sqlSession.getMapper(EstimateMapper.class);
 		EstimateOrderVO eovo = mapper.esOrderDetail(ES_ORDER_NUM);

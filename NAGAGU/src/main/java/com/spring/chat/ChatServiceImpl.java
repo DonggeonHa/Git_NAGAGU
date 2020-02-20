@@ -1,14 +1,17 @@
 package com.spring.chat;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.spring.mapper.ChatMapper;
+import com.spring.mapper.WorkShopMemberMapper;
 import com.spring.mapper.memberMapper;
 import com.spring.member.MemberVO;
+import com.spring.workshop.WorkShopMemberVO;
 
 @Service
 public class ChatServiceImpl implements ChatService {
@@ -20,11 +23,20 @@ public class ChatServiceImpl implements ChatService {
 	public MemberVO getMember(String MEM_MAIL) {
 		memberMapper mapper = sqlSession.getMapper(memberMapper.class);
 		
-		System.out.println("Service : " + MEM_MAIL);
 		MemberVO membervo = mapper.getMember(MEM_MAIL);
-		System.out.println("Service : " + membervo.getMEMBER_NICK());
 		
 		return membervo;
+	}
+	
+	@Override
+	public WorkShopMemberVO getWorkshop(String MEM_MAIL) {
+		WorkShopMemberMapper mapper = sqlSession.getMapper(WorkShopMemberMapper.class);
+		WorkShopMemberVO wvo = new WorkShopMemberVO();
+		wvo.setWORKSHOP_EMAIL(MEM_MAIL);
+		
+		WorkShopMemberVO vo = mapper.select_workshop_member(wvo);
+		
+		return vo;
 	}
 	
 	@Override
@@ -43,4 +55,28 @@ public class ChatServiceImpl implements ChatService {
 		return res;
 	}
 
+	@Override
+	public int chatroomCreate (ChatRoomVO vo) {
+		ChatMapper mapper = sqlSession.getMapper(ChatMapper.class);
+		int res = mapper.chatroomCreate(vo);
+		
+		return res;
+	}
+	
+	@Override
+	public int chatroomDelete (int CHATROOM_NUM) {
+		ChatMapper mapper = sqlSession.getMapper(ChatMapper.class);
+		int res = mapper.chatroomDelete(CHATROOM_NUM);
+		
+		return res;
+	}
+	
+	@Override
+	public HashMap<String, Object> chatroomDetail (int CHATROOM_NUM) {
+		ChatMapper mapper = sqlSession.getMapper(ChatMapper.class);
+		HashMap<String, Object> map = mapper.chatroomDetail(CHATROOM_NUM);
+		
+		return map;
+		
+	}
 }

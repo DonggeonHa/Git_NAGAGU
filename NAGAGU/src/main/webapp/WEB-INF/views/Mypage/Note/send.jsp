@@ -175,11 +175,14 @@
         float:right;
         color:#666;
         line-height:24px;
+		margin-right:10px;
     }
 
     .top_list_info .note_new {
         color:#ef900e;
     }
+    
+    
 
     .content_list {
         height:450px;
@@ -224,6 +227,10 @@
     .note_list td {
         border-top:1px solid #b3b3b3;
         text-align:center;
+    }
+    .note_list .note_title {
+    	text-align:left;
+    	padding-left:5px;
     }
     
     .note_list a {
@@ -385,7 +392,7 @@
                         		<tr>
                         			<td><input type="checkbox" class="note_chk" name="chk" value=<%=nl.getNOTE_NUM() %>></td>
                         			<td><a href="noteForm.nt?receive_mail=<%=nl.getNOTE_RECEIVER_MAIL()%>&redirection=<%=redirection%>"><%=nl.getNOTE_RECEIVER_NICK() %></a></td>
-                        			<td><a href="noteView.nt?note_num=<%=nl.getNOTE_NUM()%>&page=<%=nowpage%>&redirection=<%=redirection%>"><%=nl.getNOTE_TITLE() %></a></td>
+                        			<td class="note_title"><a href="noteView.nt?note_num=<%=nl.getNOTE_NUM()%>&page=<%=nowpage%>&redirection=<%=redirection%>"><%=nl.getNOTE_TITLE() %></a></td>
                         			<td class="note_date"><%=format.format(nl.getNOTE_DATE()) %></td>
                         	<%
                         			if (read == 0) {

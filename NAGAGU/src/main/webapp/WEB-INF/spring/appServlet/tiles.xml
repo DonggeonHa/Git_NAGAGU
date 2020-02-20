@@ -7,6 +7,10 @@
 	<!-- 메뉴 미표시 --> 
 	<definition name="Empty" template="/WEB-INF/tiles/templateEmpty.jsp">
 	 	<put-attribute name="content" value="" />
+	</definition>
+	
+	<definition name="Mypage/NoTiles/*" extends="Empty">
+		<put-attribute name="content" value="/WEB-INF/views/Mypage/NoTiles/{1}.jsp" /> 
 	</definition> 
 	
 	<definition name="Mypage/Note/*" extends="Empty">

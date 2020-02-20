@@ -2,7 +2,6 @@ package com.spring.note;
 
 import java.util.ArrayList;
 
-import com.spring.chat.WorkshopVO;
 import com.spring.member.MemberVO;
 import com.spring.workshop.WorkShopMemberVO;
 

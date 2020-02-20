@@ -33,12 +33,6 @@
 		<result property="ADDRESS_ADDRESS2" column="ADDRESS_ADDRESS2" />
 	</resultMap>
 	
-	<resultMap type="com.spring.chat.WorkshopVO" id="workMap">
-		<result property="WORK_MAIL" column="WORKSHOP_EMAIL"/>
-		<result property="WORK_NAME" column="WORKSHOP_NAME"/>
-		<result property="WORK_PIC" column="WORKSHOP_PICTURE"/>
-	</resultMap>
-	
 	<resultMap type="com.spring.member.DeleteMemberVO" id="deletememberResultMap">
 		<result property="MEMBER_NUM" column="MEMBER_NUM" />
 		<result property="MEMBER_EMAIL" column="MEMBER_EMAIL" />
@@ -121,10 +115,6 @@
 	<!-- 기재형 쪽 멤버 메퍼 -->
 	<select id="getMember" parameterType="String" resultMap="memberResultMap">
 		select member_email, member_nick, member_picture from nagagu_member where member_email=#{MEMBER_EMAIL}
-	</select>
-
-	<select id="getWorkshop" parameterType="String" resultMap="workMap">
-		select workshop_email, workshop_name, workshop_picture from workshop where workshop_email=#{MEMBER_EMAIL}
 	</select>
 	
 	<select id="countMember" parameterType="String" resultType="int">
