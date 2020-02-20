@@ -292,7 +292,6 @@ public class CommunityController {
 	//사진 디테일에서 해당 상품 가져오기
 	@RequestMapping(value = "/getProductInCommunity.cm")
 	public @ResponseBody Map<String, Object> getProductInCommunity(HttpSession session,HttpServletRequest request) {
-		int LIKE_MEMBER = (int)session.getAttribute("MEMBER_NUM");
 		Map<String, Object> retVal = new HashMap<String, Object>();
 		try {
 			int PRODUCT_NUM= Integer.parseInt(request.getParameter("PRODUCT_NUM"));

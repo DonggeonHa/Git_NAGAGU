@@ -25,7 +25,13 @@
 	</div>
 </div>
 <!-- /본문 -->
-
+<style>
+.short_text{
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+}
+</style>
 <!-- commentList -->
 <script>
    $(document).ready(function() {
@@ -35,6 +41,19 @@
 
 // 목록
 function selectData() {
+	/*날짜 형식 변경*/
+	function date_format(format) {
+	    var year = format.getFullYear();
+	    var month = format.getMonth() + 1;
+	    if(month<10) {
+	       month = '0' + month;
+	    }
+	    var date = format.getDate();
+	    if(date<10) {
+	       date = '0' + date;
+	    }
+	   return year + "-" + month + "-" + date + " " ;
+	}
 	$('#remo').remove();
 	// table 내부 내용 모두 제거(초기화)
 	$('#comment-table').empty();
@@ -49,23 +68,27 @@ function selectData() {
 			title += '<tr>';
 			title += '<th style="width: 5%;">번호</th>';
 			title += '<th style="width: 10%;">게시글</th>';
-			title += '<th style="width: 10%;"">글쓴이</th>';
-			title += '<th style="width: 15%;">작성일자</th>';
+			title += '<th style="width: 5%;">닉네임</th>';
+			title += '<th style="width: 5%;">이름</th>';
 			title += '<th style="width: 50%;">내용</th>';
+			title += '<th style="width: 15%;">작성일자</th>';
 			title += '<th style="width: 10%;">관리</th>';
 			title += '</tr>';
 			title += '</thead>';
 			$('#comment-table').append(title);
 			$.each(data, function(index, item) {
 				console.log(item)
+				var buy_date = new Date(item.PICS_RE_DATE);
+				var date = date_format(buy_date); 
 				var output = '';
 				output += '<tbody class="text-center">'
 				output += '<tr>';
 				output += '<td>' + item.PICS_RE_NUM + '</td>'; 
 				output += '<td>' + item.PICS_RE_PICS + '</td>';
-				output += '<td>' + item.PICS_RE_MEMBER + '</td>';
-				output += '<td>' + item.PICS_RE_DATE + '</td>';
+				output += '<td>' + item.MEMBER_NICK + '</td>';
+				output += '<td>' + item.MEMBER_NAME + '</td>';
 				output += '<td>' + item.PICS_RE_CONTENT + '</td>';
+				output += '<td>' + date + '</td>';
 				output += '<td><a href="./deleteCommentPICS.ad" class="del_data" ';
 				output += 'PICS_RE_NUM=' + item.PICS_RE_NUM + '><i class="fas fa-trash-alt" ></i></a></td>';
 				output += '</tr>';

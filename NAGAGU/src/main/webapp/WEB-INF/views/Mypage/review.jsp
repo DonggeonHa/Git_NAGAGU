@@ -20,12 +20,9 @@
 		box-shadow: 10px 15px 7px 0px #333333;
 	}
 	.card {
-		background-color: #1b1b27 !important;
+		background-color: #1b1b27;
 		margin: 15px 15px 15px 15px;
 		color: white;
-	}
-	.my {
-		background-color: #ef900e !important;
 	}
 	.card-wrap{
 		justify-content: center;
@@ -303,6 +300,6 @@
 		}) 
 		//처음 로드하고 사진 가져오기 호출
 		getPics();
-		$('.card-wrap').children().eq(7).find('div.card-body').css('color','#ef900e')
+		$('.card-wrap').children().eq(7).css('background-color','#ef900e')
 	})
 </script>

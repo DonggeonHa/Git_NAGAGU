@@ -19,12 +19,9 @@
 	}
 	
 	.card {
-		background-color: #1b1b27 !important;
+		background-color: #1b1b27 ;
 		margin: 15px 15px 15px 15px;
 		color: white;
-	}
-	.my {
-		background-color: #ef900e !important;
 	}
 	.card-wrap{
 		justify-content: center;
@@ -178,7 +175,8 @@
 	.order_tab{
 		margin-top: 50px;
 		margin-left: 0px;
-		padding-left: 0px;
+		padding-left: 38px; 
+		padding-right: 25px;
 		/* border-top: 1px solid rgb(0,0,0,1); */ 
 	} 
     .price_wrap div{
@@ -460,6 +458,6 @@
 		
 		
 		getBasket()
-		$('.card-wrap').children().eq(5).find('div.card-body').css('color','#ef900e') 
+		$('.card-wrap').children().eq(5).css('background-color','#ef900e') 
 	});
 </script>
