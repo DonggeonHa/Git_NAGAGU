@@ -82,14 +82,16 @@
 		<result property="MY_CLASS_MEMBERNUM" column="MY_CLASS_MEMBERNUM" />
 		<result property="MY_CLASS_CLASSNUM" column="MY_CLASS_CLASSNUM" />
 		<result property="MY_CLASS_STATUS" column="MY_CLASS_STATUS" />
+		<result property="MY_CLASS_DATE" column="MY_CLASS_DATE" />
+		<result property="MY_CLASS_TICKET" column="MY_CLASS_TICKET" />
 	</resultMap>
 	
 	<insert id="insertClassInfo" parameterType="com.spring.academy.MyClassVO">
 		<selectKey resultType="int" keyProperty="MY_CLASS_NUM" order="BEFORE">
 			SELECT my_class_seq.nextval FROM dual     
 		</selectKey>
- 		INSERT INTO my_class(MY_CLASS_NUM, MY_CLASS_MEMBERNUM, MY_CLASS_CLASSNUM) 
-			 		VALUES(#{MY_CLASS_NUM}, #{MY_CLASS_MEMBERNUM}, #{MY_CLASS_CLASSNUM})
+ 		INSERT INTO my_class(MY_CLASS_NUM, MY_CLASS_MEMBERNUM, MY_CLASS_CLASSNUM, MY_CLASS_DATE, MY_CLASS_TICKET) 
+			 		VALUES(#{MY_CLASS_NUM}, #{MY_CLASS_MEMBERNUM}, #{MY_CLASS_CLASSNUM}, #{MY_CLASS_DATE} , #{MY_CLASS_TICKET})
  	</insert>
 
 	 

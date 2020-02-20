@@ -1,10 +1,14 @@
 package com.spring.academy;
 
+import java.util.Date;
+
 public class MyClassVO {
 	private int MY_CLASS_NUM;
 	private int MY_CLASS_MEMBERNUM;
 	private int MY_CLASS_CLASSNUM;
 	private int MY_CLASS_STATUS;
+	private Date MY_CLASS_DATE;
+	private int MY_CLASS_TICKET;
 	
 	public int getMY_CLASS_NUM() {
 		return MY_CLASS_NUM;
@@ -29,6 +33,18 @@ public class MyClassVO {
 	}
 	public void setMY_CLASS_STATUS(int mY_CLASS_STATUS) {
 		MY_CLASS_STATUS = mY_CLASS_STATUS;
+	}
+	public Date getMY_CLASS_DATE() {
+		return MY_CLASS_DATE;
+	}
+	public void setMY_CLASS_DATE(Date mY_CLASS_DATE) {
+		MY_CLASS_DATE = mY_CLASS_DATE;
+	}
+	public int getMY_CLASS_TICKET() {
+		return MY_CLASS_TICKET;
+	}
+	public void setMY_CLASS_TICKET(int mY_CLASS_TICKET) {
+		MY_CLASS_TICKET = mY_CLASS_TICKET;
 	}
 	
 }

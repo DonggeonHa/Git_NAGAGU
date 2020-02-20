@@ -27,9 +27,6 @@ import org.springframework.web.servlet.view.json.MappingJackson2JsonView;
 import com.spring.member.KakaoController;
 import com.spring.member.MemberVO;
 import com.spring.member.NaverLoginBO;
-import com.spring.store.Product_qnaVO;
-import com.spring.academy.ClassVO;
-import com.spring.academy.Class_reviewVO;
 import com.spring.workshop.WorkShopMemberVO;
 
 @Controller
@@ -904,10 +901,14 @@ public class AcademyController {
 	}
 	
 	@RequestMapping(value = "/ClassInfo.ac")
-	public void ClassInfo(@RequestParam(value="CLASS_NUMBER", required=false) int CLASS_NUMBER, @RequestParam(value="MEMBER_NUM", required=false) int MEMBER_NUM) throws Exception {
-		MyClassVO vo = new MyClassVO();
-		vo.setMY_CLASS_MEMBERNUM(MEMBER_NUM);
-		vo.setMY_CLASS_CLASSNUM(CLASS_NUMBER);
+	@ResponseBody
+	public void ClassInfo(MyClassVO vo) throws Exception {
+		
+		System.out.println("넘어오니 클래스멤버넘버 "+vo.getMY_CLASS_MEMBERNUM());
+		System.out.println("넘어오니 클래스넘버 "+vo.getMY_CLASS_CLASSNUM());
+		System.out.println("넘어오니 데이트  "+vo.getMY_CLASS_DATE());
+		System.out.println("넘어오니 티켓  "+vo.getMY_CLASS_TICKET());
+		
 		
 		boolean result = false;
 		

@@ -206,203 +206,205 @@
 	.star-rating span{ 
 		background-position:left bottom; line-height:0; vertical-align:top; 
 	}   
-		/*리뷰 이미지 호버*/   
-		.img {
-			width:100px;
-		}
-		.review_img_modify {
-			width:100px;
-			height:100px;         
-		}      
-		.addlike {
-			background-color:#23272B !important;
-			color:white !important; 
-		}
-		.row h6{
-			margin-left:30px; 
-		}
-		.row h6 a,.row h6 a:link,.row h6 a:hover{
-			text-decoration: none !important;
-			color: black !important;
-		}		
-		/*input type=file css*/
-		.file_input label {
-			position:relative;
-			cursor:pointer;
-			display:inline-block;
-			vertical-align:middle;
-			overflow:hidden;
-			width:80px;
-			height:30px;
-			background:RGBA(204, 204, 204, 0.5);
-			color:black;
-			text-align:center;
-			line-height:30px;
-			margin-bottom:0;
-			font-size:0.8rem;
-			padding:1px 1px;
-			border-radius:3px;
-		}
-		.file_input label input {
-			position:absolute;
-			width:0;
-			height:0;
-			overflow:hidden;
-		}
-		.file_input input[type=text] {
-			vertical-align:middle;
-			display:inline-block;
-			width:400px;
-			height:28px;
-			line-height:28px;
-			font-size:11px;
-			padding:0;
-			border:0;
-		}
+	/*리뷰 이미지 호버*/   
+	.img {
+		width:100px;
+	}
+	.review_img_modify {
+		width:100px;
+		height:100px;         
+	}      
+	.addlike {
+		background-color:#23272B !important;
+		color:white !important; 
+	}
+	.row h6{
+		margin-left:30px; 
+	}
+	.row h6 a,.row h6 a:link,.row h6 a:hover{
+		text-decoration: none !important;
+		color: black !important;
+	}		
+	/*input type=file css*/
+	.file_input label {
+		position:relative;
+		cursor:pointer;
+		display:inline-block;
+		vertical-align:middle;
+		overflow:hidden;
+		width:80px;
+		height:30px;
+		background:RGBA(204, 204, 204, 0.5);
+		color:black;
+		text-align:center;
+		line-height:30px;
+		margin-bottom:0;
+		font-size:0.8rem;
+		padding:1px 1px;
+		border-radius:3px;
+	}
+	.file_input label input {
+		position:absolute;
+		width:0;
+		height:0;
+		overflow:hidden;
+	}
+	.file_input input[type=text] {
+		vertical-align:middle;
+		display:inline-block;
+		width:400px;
+		height:28px;
+		line-height:28px;
+		font-size:11px;
+		padding:0;
+		border:0;
+	}
 
-		/*댓글 폼 영역*/
-		#ReviewformSection {
-			display:none ;
-			padding:8px 0; 
-			border-bottom:1px solid gray;		
-		}
-		/*ReviewAndReplySum : 리뷰(하나)+리뷰 답글(여러개)이 묶여서 반복되는 영역 - bottom에 회색 구분선*/
-		.ReviewAndReplySum {
-			border-bottom:1px solid RGBA(128, 128, 128, 0.5);	
-			padding-bottom:8px;	
-		}
+	/*댓글 폼 영역*/
+	#ReviewformSection {
+		display:none ;
+		padding:8px 0; 
+		border-bottom:1px solid gray;		
+	}
+	/*ReviewAndReplySum : 리뷰(하나)+리뷰 답글(여러개)이 묶여서 반복되는 영역 - bottom에 회색 구분선*/
+	.ReviewAndReplySum {
+		border-bottom:1px solid RGBA(128, 128, 128, 0.5);	
+		padding-bottom:8px;	
+	}
 
-		
-		.imgs_wrap {
-			display:none;
-		}
-
-		.review_img {
-			width:100px;
-			height:100px;
-		}
-
-		.replytext {	
-			font-size:0.7em; font-weight:bold;	/*답글 버튼*/
-		}
-		
-		.ReviewList {
-			padding-top:8px; 
-			padding-bottom:8px;
-		}		
-		
-		
-
-		/*REVIEW*/
-		#REVIEW_GRADE{
-			width=15px;			/*리뷰 입력폼에서 별점 선택창*/
-		}
-		.insertReview {
-			cursor: pointer;	/*리뷰 입력폼에서 작성버튼*/
-		}
-		.formCancel {
-			cursor: pointer;	/*Review, ReviewReply 입력취소, 수정 취소버튼*/
-		}		
-		
-
-		/*REVIEW_REPLY*/
-
-		.review_replybtn {
-			cursor: pointer;	/*리뷰 리스트에서 답글달기 폼 버튼*/
-		}
-		.gomodifyReviewform {
-			cursor: pointer;	/*리뷰 수정버튼*/
-		}
-		.deleteReview {
-			cursor: pointer;	/*Review, ReviewReply 삭제*/
-		}		
-		
-		
-		.ReviewbeforeControl {
-			font-size:0.7em; 
-			font-weight:bold;
-		}
-		.ReviewafterControl {
-			display:none;	
-			font-size:0.7em; 
-			font-weight:bold;	
-		}
-
-		
-		.ReviewReplyformSection {
-			padding:8px 0;		/*?*/
-		}
-		.afterModifyReviewReply {
-			display:none;		/*리뷰 답글 작성폼*/	
-		}
-				
-		.insertReviewReply {
-			cursor: pointer;	/*리뷰답글 작성*/
-		}
-		.gomodifyReviewReplyform {
-			cursor: pointer;	/*ReviewReply 수정폼 버튼*/
-		}
-
-		.modifyReviewReply {
-			cursor: pointer;	/*ReviewReply 수정버튼*/
-		}
-
-
-
-	/*qna*/
-		#QnaformSection {
-			display:none ;
-			padding:8px 0; 
-			border-bottom:1px solid gray;		
-		}
-		/*QnaAndReplySum : 리뷰(하나)+리뷰 답글(여러개)이 묶여서 반복되는 영역 - bottom에 회색 구분선*/
-		.QnaAndReplySum {
-			border-bottom:1px solid RGBA(128, 128, 128, 0.5);	
-			padding-bottom:8px;	
-		}		
-		.QnaList {
-			padding-top:8px; 
-			padding-bottom:8px;
-		}	
-		.insertQna {
-			cursor: pointer;	/*리뷰 입력폼에서 작성버튼*/
-		}	
-		.qna_replybtn {
-			cursor: pointer;	/*리뷰 리스트에서 답글달기 폼 버튼*/
-		}
-		.gomodifyQnaform {
-			cursor: pointer;	/*리뷰 수정버튼*/
-		}
-		.deleteQna {
-			cursor: pointer;	/*Qna, QnaReply 삭제*/
-		}			
-		.QnaReplyformSection {
-			padding:8px 0;		/*?*/
-		}
-		.afterModifyQnaReply {
-			display:none;		/*리뷰 답글 작성폼*/	
-		}
-				
-		.insertQnaReply {
-			cursor: pointer;	/*리뷰답글 작성*/
-		}
-		.gomodifyQnaReplyform {
-			cursor: pointer;	/*QnaReply 수정폼 버튼*/
-		}	
-		.modifyQnaReply {
-			cursor: pointer;	/*QnaReply 수정버튼*/
-		}	
-			
-		.QnabeforeControl {
-			font-size:0.7em; 
-			font-weight:bold;
-		}
-		.QnaafterControl {
-			display:none;	
-			font-size:0.7em; 
-			font-weight:bold;	
-		}	
 	
+	.imgs_wrap {
+		display:none;
+	}
+
+	.review_img {
+		width:100px;
+		height:100px;
+	}
+
+	.replytext {	
+		font-size:0.7em; font-weight:bold;	/*답글 버튼*/
+	}
+	
+	.ReviewList {
+		padding-top:8px; 
+		padding-bottom:8px;
+	}		
+	
+	
+
+	/*REVIEW*/
+	#REVIEW_GRADE{
+		width=15px;			/*리뷰 입력폼에서 별점 선택창*/
+	}
+	.insertReview {
+		cursor: pointer;	/*리뷰 입력폼에서 작성버튼*/
+	}
+	.formCancel {
+		cursor: pointer;	/*Review, ReviewReply 입력취소, 수정 취소버튼*/
+	}		
+	
+
+	/*REVIEW_REPLY*/
+
+	.review_replybtn {
+		cursor: pointer;	/*리뷰 리스트에서 답글달기 폼 버튼*/
+	}
+	.gomodifyReviewform {
+		cursor: pointer;	/*리뷰 수정버튼*/
+	}
+	.deleteReview {
+		cursor: pointer;	/*Review, ReviewReply 삭제*/
+	}		
+	
+	
+	.ReviewbeforeControl {
+		font-size:0.7em; 
+		font-weight:bold;
+	}
+	.ReviewafterControl {
+		display:none;	
+		font-size:0.7em; 
+		font-weight:bold;	
+	}
+
+	
+	.ReviewReplyformSection {
+		padding:8px 0;		/*?*/
+	}
+	.afterModifyReviewReply {
+		display:none;		/*리뷰 답글 작성폼*/	
+	}
+			
+	.insertReviewReply {
+		cursor: pointer;	/*리뷰답글 작성*/
+	}
+	.gomodifyReviewReplyform {
+		cursor: pointer;	/*ReviewReply 수정폼 버튼*/
+	}
+
+	.modifyReviewReply {
+		cursor: pointer;	/*ReviewReply 수정버튼*/
+	}
+
+
+
+/*qna*/
+	#QnaformSection {
+		display:none ;
+		padding:8px 0; 
+		border-bottom:1px solid gray;		
+	}
+	/*QnaAndReplySum : 리뷰(하나)+리뷰 답글(여러개)이 묶여서 반복되는 영역 - bottom에 회색 구분선*/
+	.QnaAndReplySum {
+		border-bottom:1px solid RGBA(128, 128, 128, 0.5);	
+		padding-bottom:8px;	
+	}		
+	.QnaList {
+		padding-top:8px; 
+		padding-bottom:8px;
+	}	
+	.insertQna {
+		cursor: pointer;	/*리뷰 입력폼에서 작성버튼*/
+	}	
+	.qna_replybtn {
+		cursor: pointer;	/*리뷰 리스트에서 답글달기 폼 버튼*/
+	}
+	.gomodifyQnaform {
+		cursor: pointer;	/*리뷰 수정버튼*/
+	}
+	.deleteQna {
+		cursor: pointer;	/*Qna, QnaReply 삭제*/
+	}			
+	.QnaReplyformSection {
+		padding:8px 0;		/*?*/
+	}
+	.afterModifyQnaReply {
+		display:none;		/*리뷰 답글 작성폼*/	
+	}
+			
+	.insertQnaReply {
+		cursor: pointer;	/*리뷰답글 작성*/
+	}
+	.gomodifyQnaReplyform {
+		cursor: pointer;	/*QnaReply 수정폼 버튼*/
+	}	
+	.modifyQnaReply {
+		cursor: pointer;	/*QnaReply 수정버튼*/
+	}	
+		
+	.QnabeforeControl {
+		font-size:0.7em; 
+		font-weight:bold;
+	}
+	.QnaafterControl {
+		display:none;	
+		font-size:0.7em; 
+		font-weight:bold;	
+	}	
+	.page-link {
+		color : black !important;
+	}
 	
 </style>
 
@@ -1144,13 +1146,15 @@
 		function Payment_Card(){
 			var Amount = $('#Amount').text();
 			var IMP = window.IMP; // 생략가능
+			var ticketNum = $('#sel').val();
+			
 			IMP.init('imp91912911');
 			// 'iamport' 대신 부여받은 "가맹점 식별코드"를 사용
 			// i'mport 관리자 페이지 -> 내정보 -> 가맹점식별코드
 			IMP.request_pay({
 				pg : 'kakaopay', // version 1.1.0부터 지원.
 				pay_method : 'card',
-				merchant_uid : 'merchant_' + new Date().getTime(),
+				merchant_uid : new Date().getTime(),
 				name : 'NAGAGU 결제',
 				//결제창에서 보여질 이름
 				amount : Amount,
@@ -1164,20 +1168,21 @@
 			}, function(rsp) {
 	            if ( rsp.success ) {
 	                //[1] 서버단에서 결제정보 조회를 위해 jQuery ajax로 imp_uid 전달하기
-	                jQuery.ajax({
-	                    url: "./ClassInfo.ac", //cross-domain error가 발생하지 않도록 주의해주세요
+	                $.ajax({
+	                    url: "/NAGAGU/ClassInfo.ac", //cross-domain error가 발생하지 않도록 주의해주세요
 	                    type: 'POST',
 	                    dataType: 'json',
+	                    contentType: 'application/x-www-form-urlencoded; charset=utf-8',
 	                    data: {
-	                        'CLASS_NUMBER' : <%=cl.getCLASS_NUMBER()%>,
-	                		'MEMBER_NUM' : <%=MEMBER_NUM%>
+	                        'MY_CLASS_CLASSNUM' : <%=cl.getCLASS_NUMBER()%>,
+	                		'MY_CLASS_MEMBERNUM' : <%=MEMBER_NUM%>,
+// 	                		'MY_CLASS_DATE' : rsp.merchant_uid,
+  	                		'MY_CLASS_TICKET' : ticketNum
 	                        //기타 필요한 데이터가 있으면 추가 전달
 	                    }
-	                }).done(function(data) {
-	                    
 	                });
 	                //성공시 이동할 페이지
-	                location.href='./success.ac?CLASS_NUMBER=<%=cl.getCLASS_NUMBER()%>&amount5=' + Amount;
+	                location.href = './success.ac?CLASS_NUMBER=<%=cl.getCLASS_NUMBER()%>&amount5=' + Amount;
 	            } else {
 	                msg = '결제에 실패하였습니다.';
 	                msg += '에러내용 : ' + rsp.error_msg;

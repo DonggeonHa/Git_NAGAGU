@@ -32,8 +32,8 @@
 				아카데미관리
 				<ul>
 					<li><a href="./academyList.ad">강의 관리</a></li>
-					<li><a href="#">강의리뷰 관리</a></li>
-					<li><a href="#">강의문의 관리</a></li>
+					<li><a href="./academyReviewList.ad">강의리뷰 관리</a></li>
+					<li><a href="./academyQnAList.ad">강의문의 관리</a></li>
 				</ul>
 			</li>
 			<li class="main text-white">

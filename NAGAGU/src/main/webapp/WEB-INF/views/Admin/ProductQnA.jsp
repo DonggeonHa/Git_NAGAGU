@@ -5,7 +5,7 @@
 	<div class="container-fluid">
 		<div class="d-flex bd-highlight mb-3">
 			<div class="mr-auto p-2 bd-highlight align-self-end">
-				<h6>상품관리 > 상품리뷰 관리 </h6>
+				<h6>상품관리 > 상품문의 관리 </h6>
 			</div>
 			<br><br>
 			<div class="input-group p-2 bd-highlight" style="width: 300px !important;">
@@ -47,8 +47,8 @@
 				title += '<thead class="text-center">';
 				title += '<tr>';
 				title += '<th style="width: 5%;">번호</th>';
-				title += '<th style="width: 10%;">글쓴이</th>';
 				title += '<th style="width: 10%;">상품</th>';
+				title += '<th style="width: 10%;">글쓴이</th>';
 				title += '<th style="width: 10%;">등록일자</th>';
 				title += '<th style="width: 60%;">내용</th>';
 				title += '<th style="width: 5%;">관리</th>';
@@ -59,9 +59,9 @@
 					var output = '';
 					output += '<tbody class="text-center">'
 					output += '<tr>';
-					output += '<td>' + item.qna_NUM + '</td>'; 
-					output += '<td>' + item.qna_MEMBER + '</td>';
+					output += '<td>' + item.qna_NUM + '</td>';
 					output += '<td>' + item.qna_PRODUCT + '</td>';
+					output += '<td>' + item.qna_MEMBER + '</td>';
 					output += '<td>' + item.qna_DATE + '</td>';
 					output += '<td>' + item.qna_CONTENT + '</td>';
 					output += '<td><a href="./deleteProductQnA.ad" class="del_data" ';

@@ -13,6 +13,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.spring.academy.ClassVO;
+import com.spring.academy.Class_qnaVO;
+import com.spring.academy.Class_reviewVO;
 import com.spring.community.PicsCommentDB;
 import com.spring.community.PicsVO;
 import com.spring.estimate.EstimateVO;
@@ -209,6 +211,7 @@ public class AdminController {
 	
 	
 	/*=========================== 커뮤니티관리 ==============================*/
+	
 	@RequestMapping(value = "/picsList.ad")
 	public String picsList() {
 		return "Admin/CommunityList";
@@ -370,6 +373,90 @@ public class AdminController {
 		} catch(Exception e) {
 			retVal.put("res", "FAIL");
 			retVal.put("message", "상세보기가 되지 않았습니다.");
+		}
+		
+		return retVal;
+	}
+	
+	@RequestMapping(value = "/academyReviewList.ad")
+	public String academyReview() {
+		return "Admin/AcademyReview";
+	}
+	
+	//produces 속성을 이용해 Response의 Content-Type을 제어할 수 있다
+	@RequestMapping(value = "/AcademyReview.ad", produces="application/json;charset=UTF-8")
+	@ResponseBody
+	public String academyReview2() {
+		List<Class_reviewVO> academyList = adminService.getAcademyReview();
+		
+		String str = "";
+		
+		ObjectMapper mapper = new ObjectMapper();
+		try {
+			str = mapper.writeValueAsString(academyList);
+			System.out.println("productReviewList 변환 : " + str);
+		} catch (Exception e) {
+			System.out.println("first() mapper : " + e.getMessage());
+		}
+		
+		return str;
+	}
+	
+	@RequestMapping(value = "/deleteAcademyReview.ad", produces="application/json; charset=UTF-8", method = {RequestMethod.GET, RequestMethod.POST})
+	@ResponseBody
+	public Map<String, Object> deleteAcademyReview(Class_reviewVO vo) {
+		Map<String, Object> retVal = new HashMap<String, Object>();
+		
+		try {
+			System.out.println("REVIEW_NUM = " + vo.getREVIEW_NUM());
+			int res = adminService.deleteAcademyReview(vo);
+			
+			retVal.put("res", "OK");
+		} catch(Exception e) {
+			retVal.put("res", "FAIL");
+			retVal.put("message", "삭제가 되지 않았습니다.");
+		}
+		
+		return retVal;
+	}
+	
+	@RequestMapping(value = "/academyQnAList.ad")
+	public String academyQnA() {
+		return "Admin/AcademyQnA";
+	}
+	
+	//produces 속성을 이용해 Response의 Content-Type을 제어할 수 있다
+	@RequestMapping(value = "/AcademyQnA.ad", produces="application/json;charset=UTF-8")
+	@ResponseBody
+	public String academyQnA2() {
+		List<Class_qnaVO> productList = adminService.getAcademyQnA();
+		
+		String str = "";
+		
+		ObjectMapper mapper = new ObjectMapper();
+		try {
+			str = mapper.writeValueAsString(productList);
+			System.out.println("academyReviewList 변환 : " + str);
+		} catch (Exception e) {
+			System.out.println("first() mapper : " + e.getMessage());
+		}
+		
+		return str;
+	}
+	
+	@RequestMapping(value = "/deleteAcademyQnA.ad", produces="application/json; charset=UTF-8", method = {RequestMethod.GET, RequestMethod.POST})
+	@ResponseBody
+	public Map<String, Object> deleteAcademyQnA(Class_qnaVO vo) {
+		Map<String, Object> retVal = new HashMap<String, Object>();
+		
+		try {
+			System.out.println("QNA_NUM = " + vo.getQNA_NUM());
+			int res = adminService.deleteAcademyQnA(vo);
+			
+			retVal.put("res", "OK");
+		} catch(Exception e) {
+			retVal.put("res", "FAIL");
+			retVal.put("message", "삭제가 되지 않았습니다.");
 		}
 		
 		return retVal;

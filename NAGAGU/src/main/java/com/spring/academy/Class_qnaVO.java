@@ -10,6 +10,7 @@ public class Class_qnaVO {
 	private String QNA_CONTENT;
 	private int QNA_RE;
 	private int QNA_STATUS;
+	
 	public int getQNA_NUM() {
 		return QNA_NUM;
 	}

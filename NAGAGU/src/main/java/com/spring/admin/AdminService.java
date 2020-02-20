@@ -3,6 +3,8 @@ package com.spring.admin;
 import java.util.List;
 
 import com.spring.academy.ClassVO;
+import com.spring.academy.Class_qnaVO;
+import com.spring.academy.Class_reviewVO;
 import com.spring.community.PicsCommentDB;
 import com.spring.community.PicsVO;
 import com.spring.estimate.EstimateVO;
@@ -40,6 +42,11 @@ public interface AdminService {
 	public List<ClassVO> getAcademy();
 	public int deleteAcademy(ClassVO vo);
 	public ClassVO detailAcademy(ClassVO vo);
+	
+	public List<Class_reviewVO> getAcademyReview();
+	public int deleteAcademyReview(Class_reviewVO vo);
+	public List<Class_qnaVO> getAcademyQnA();
+	public int deleteAcademyQnA(Class_qnaVO vo);
 	
 	/* 상품관리 */
 	public List<ProductVO> getProduct();

@@ -103,6 +103,27 @@
 		<result property="CLASS_STATUS" column="CLASS_STATUS" />
 	</resultMap>
 	
+	<resultMap type="com.spring.academy.Class_qnaVO" id="academyQnAResultMap">
+		<result property="QNA_NUM" column="QNA_NUM" />	
+		<result property="QNA_MEMBER" column="QNA_MEMBER" />
+		<result property="QNA_CLASS" column="QNA_CLASS" />
+		<result property="QNA_DATE" column="QNA_DATE" />
+		<result property="QNA_CONTENT" column="QNA_CONTENT" />	
+		<result property="QNA_RE" column="QNA_RE" />	
+		<result property="QNA_STATUS" column="QNA_STATUS" />	
+	</resultMap>	
+	
+	<resultMap type="com.spring.academy.Class_reviewVO" id="academyReviewResultMap">
+		<result property="REVIEW_NUM" column="REVIEW_NUM" />	
+		<result property="REVIEW_MEMBER" column="REVIEW_MEMBER" />
+		<result property="REVIEW_CLASS" column="REVIEW_CLASS" />
+		<result property="REVIEW_DATE" column="REVIEW_DATE" />
+		<result property="REVIEW_FILE" column="REVIEW_FILE" />	
+		<result property="REVIEW_CONTENT" column="REVIEW_CONTENT" />	
+		<result property="REVIEW_GRADE" column="REVIEW_GRADE" />	
+		<result property="REVIEW_RE" column="REVIEW_RE" />	
+	</resultMap>
+	
 	<!-- 상품관리 -->
 	<resultMap type="com.spring.store.ProductVO" id="productResultMap">
 		<result property="PRODUCT_NUM" column="PRODUCT_NUM" />	
@@ -274,6 +295,7 @@
  	<delete id="deletePICSComment" parameterType="com.spring.community.PicsCommentDB">
  		delete from PICS_COMMENT where PICS_RE_NUM = #{PICS_RE_NUM}
  	</delete>
+ 	
  	<!-- 아카데미 관리 -->
  	<select id="getAcademy" parameterType="int" resultMap="classResultMap"> <!-- 이거 처리한 결과물을 list 타입으로 만들어주면 된다. select id은 내용을 호출 함. -->
 		select *
@@ -291,6 +313,30 @@
  	<select id="detailAcademy" parameterType="com.spring.academy.ClassVO" resultMap="classResultMap">
  		select * from ACADEMY where CLASS_NUMBER = #{CLASS_NUMBER}
  	</select>
+ 	
+ 	<select id="getAcademyReview" parameterType="int" resultMap="academyReviewResultMap"> <!-- 이거 처리한 결과물을 list 타입으로 만들어주면 된다. select id은 내용을 호출 함. -->
+		select *
+		from (select rownum rnum, REVIEW_NUM, REVIEW_MEMBER, REVIEW_CLASS, REVIEW_DATE, REVIEW_FILE, REVIEW_CONTENT, REVIEW_GRADE, REVIEW_RE
+			  from(select * 
+			  	   from CLASS_REVIEW
+			  	   order by REVIEW_CLASS ASC , REVIEW_NUM ASC))
+ 	</select>
+ 	
+ 	<delete id="deleteAcademyReview" parameterType="com.spring.academy.Class_reviewVO">
+ 		delete from CLASS_REVIEW where REVIEW_NUM = #{REVIEW_NUM}
+ 	</delete>
+ 	
+ 	<select id="getAcademyQnA" parameterType="int" resultMap="academyQnAResultMap"> <!-- 이거 처리한 결과물을 list 타입으로 만들어주면 된다. select id은 내용을 호출 함. -->
+		select *
+		from (select rownum rnum, QNA_NUM, QNA_MEMBER, QNA_CLASS, QNA_DATE, QNA_CONTENT, QNA_RE, QNA_STATUS
+			  from(select * 
+			  	   from CLASS_QNA
+			  	   order by QNA_CLASS ASC , QNA_NUM ASC))
+ 	</select>
+ 	
+ 	<delete id="deleteAcademyQnA" parameterType="com.spring.academy.Class_qnaVO">
+ 		delete from CLASS_QNA where QNA_NUM = #{QNA_NUM}
+ 	</delete>
  	
  	<!-- 상품관리 -->
  	<select id="getProduct" parameterType="int" resultMap="productResultMap"> <!-- 이거 처리한 결과물을 list 타입으로 만들어주면 된다. select id은 내용을 호출 함. -->
@@ -314,7 +360,7 @@
 		from (select rownum rnum, REVIEW_NUM, REVIEW_MEMBER, REVIEW_PRODUCT, REVIEW_DATE, REVIEW_FILE, REVIEW_CONTENT, REVIEW_GRADE, REVIEW_RE
 			  from(select * 
 			  	   from PRODUCT_REVIEW
-			  	   order by REVIEW_DATE ASC , REVIEW_NUM ASC))
+			  	   order by REVIEW_PRODUCT ASC , REVIEW_NUM ASC))
  	</select>
  	
  	<delete id="deleteProductReview" parameterType="com.spring.store.Product_reviewVO">
@@ -326,7 +372,7 @@
 		from (select rownum rnum, QNA_NUM, QNA_MEMBER, QNA_PRODUCT, QNA_DATE, QNA_CONTENT, QNA_RE, QNA_STATUS
 			  from(select * 
 			  	   from PRODUCT_QNA
-			  	   order by QNA_DATE ASC , QNA_NUM ASC))
+			  	   order by QNA_PRODUCT ASC , QNA_NUM ASC))
  	</select>
  	
  	<delete id="deleteProductQnA" parameterType="com.spring.store.Product_qnaVO">
