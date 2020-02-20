@@ -126,8 +126,8 @@
 		text-align: center;
 	}
 	.each-row img {
-		width: 150px; 
-		height: 130px;
+		width: 100%; 
+		height: 150px;
 	}
 </style> 
 
@@ -215,9 +215,6 @@
 			<li class="nav-item"><a class="nav-link active" id="toclass"
 				data-toggle="tab" href="#home" role="tab" aria-controls="home"
 				aria-selected="true">예약 강의</a></li>
-			<li class="nav-item"><a class="nav-link" id="profile-tab"
-				data-toggle="tab" href="#profile" role="tab"
-				aria-controls="profile" aria-selected="false">지난 강의</a></li>
 		</ul>
 	</div>
 	<div class="tab-content" id="myTabContent">
@@ -281,9 +278,9 @@ $(document).ready(function(){
 	        		var c_date = date_format(class_date); 
 		    		
 		    		//본문
-	        		output += '<div class="col-12 d-flex each-row" id="'+retVal.classList[j].CLASS_NUMBER+'">'
-   					output += '<div class="col-2 text-center"><a href="'+url+retVal.classList[j].CLASS_NUMBER+'">'
-		    		output += '<img src="/productupload/image/'+imgsrc+'"></a></div>'
+	        		output += '<div class="col-12 d-flex each-row" style="padding-left : 0 !important;" id="'+retVal.classList[j].CLASS_NUMBER+'">'
+   					output += '<div class="col-2" style="padding-left : 0 !important;"><a href="'+url+retVal.classList[j].CLASS_NUMBER+'">'
+		    		output += '<img src="/productupload/image/'+imgsrc+'" style="width:100%;"></a></div>'
 		    		output += '<div class="col-10">'
 	    				output += '<div class="row category">'
 	    					output += '<div class="col-2">강의</div>'
