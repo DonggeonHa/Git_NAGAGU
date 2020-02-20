@@ -18,7 +18,7 @@
 			<h1>판매된 상품 관리</h1>
 		</div>
 		<div class="d-flex justify-content-start pb-2">
-			<button type="button" id="listall" class="to_status btn btn-sm btn-outline-dark mr-2">전체표시</button>
+			<button type="button" id="listall" class="btn btn-sm btn-outline-dark mr-2">전체표시</button>
 			<button type="button" id="PaymentCompleted" class="to_status btn btn-sm btn-outline-dark mr-2">선택 결제완료</button>
 			<button type="button" id="ShippingStandby" class="to_status btn btn-sm btn-outline-dark mr-2">선택 배송대기</button>
 			<button type="button" id="ShippingIng" class="to_status btn btn-sm btn-outline-dark mr-2">선택 배송중</button>
@@ -372,8 +372,13 @@
 				var output = ' ';	
 				
 				if(selledProductList.length!=0) {
+					
+					
 					$('.listnum_num').text(selledProductList.length+"건");
 			     	for(var j=0; j<selledProductList.length; j++){
+			     		if(!selledProductList[j].isEmpty()) {
+			     		console.log('졸려')
+			     		
 			     		var productList = selledProductList[j];
 			     		console.log(productList)	//같은 주문번호를 가지고 있는 상품들 리스트
 			     		var PRODUCT_TITLE = productList[0].PRODUCT_TITLE + ' 외 ' + productList.length + '건';	//상품이름 외 다른 정보들은 다 같으므로 0번째 데이터의 값으로 출력
@@ -425,9 +430,14 @@
 						output += '<td><button class="btn_review" value="'+ORDER_NUM+'" onclick="goreview(this.value)">' + "상세" + '</button></td>';
 						output += '</tr>';
 						number += 1;
-			     		
+			     	
+						
+			     		}
+						
 	 				}
 					$('#SelledproductList').append(output);
+					
+					
 				} else {
 					output += '검색 결과가 없습니다.';
 					$('.listnum_num').text("0건");

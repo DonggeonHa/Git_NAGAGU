@@ -63,8 +63,10 @@
 	String PRODUCT_COLOR = vo.getPRODUCT_COLOR();
 	String PRODUCT_SIZE = vo.getPRODUCT_SIZE();
 	int bannerImgCount = StringUtils.countOccurrencesOf(vo.getPRODUCT_BANNER(), ",");
-
-
+	
+	//품절일 경우 빨갛게 표시
+	//1 판매중 2판매완료 0품절
+	int PRODUCT_STATUS = vo.getPRODUCT_STATUS();
 
 	//날짜 포맷 형식
 	SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
@@ -2599,5 +2601,29 @@
 			$('#QnaafterControl'+QNA_NUM).css('display', 'block'); 	//수정,취소버튼 보임
 	
 		})
+	
+		$(document).ready(function(){
+			console.log('ㅁ'+<%=PRODUCT_STATUS%>)
+			if(<%=PRODUCT_STATUS%> == 0) {
+				console.log('품절된 상품')
+				$('.basket_btn').addClass('disabled');
+				$('.order_btn').addClass('disabled');
+		//		$('#goodsform').find('thead').css('visibility', 'hidden')
+		/*		for(var i=0;i<7;i++) {
+					var trs = $('#goodsform').find('tr')[i];
+					$(trs).css('visibility', 'hidden');
+					if(i=3) {
+						$(trs).html('<td>안녕</td>');
+					}	
+		//			$(trs).empty();
+				}*/
+			} else {
+				console.log('품절 아닌 상품')
+				$('.basket_btn').removeClass('disabled');
+				$('.order_btn').removeClass('disabled');
+			}
+			
+		}) 
+	
 				
 </script>

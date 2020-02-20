@@ -21,4 +21,6 @@ public interface ProductManagementMapper {
 	
 	ProductVO getproductDetail(int PRODUCT_NUM);
 	int updateProduct(ProductVO productVO);
+	
+	ArrayList<Map<String, Object>> getabc(HashMap<String, Object> map);
 }
