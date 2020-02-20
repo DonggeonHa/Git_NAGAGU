@@ -652,7 +652,25 @@
 		$(document).delegate('.btn_bid_cancel', 'click', function() {
 			var OFFER_NUM = $(this).attr('value');
 			alertify.confirm("낙찰 취소", "정말 취소하시겠습니까?", function() {
-				location.href='offer_bid.es?OFFER_STATE=3&ESTIMATE_NUM=' + es_num + '&OFFER_NUM=' + OFFER_NUM + '&redirect=estimate_detail.es?ESTIMATE_NUM=' + es_num;
+				var redirect = '&redirect=estimate_detail.es?ESTIMATE_NUM=' + es_num;
+				
+				var params = {"OFFER_STATE" : 3, "OFFER_NUM" : OFFER_NUM, "ESTIMATE_NUM" : es_num, "redirect" : redirect }
+				console.log(params);
+				$.ajax ({
+					url:"/NAGAGU/offer_bid.es",
+					type:"POST",
+					data:params,
+					contentType:'application/x-www-form-urlencoded; charset=utf-8',
+					success: function(data) {
+							getOfferList();
+							alertify.success('낙찰이 취소되었습니다.');
+					},
+					error: function(data) {
+						console.log(data.res);
+				}
+				});
+			}, function() {
+			});
 			}, function() {
 				
 			});
