@@ -181,6 +181,9 @@
 	
 	
 <script type="text/javascript">
+
+var output = $('#output');
+
 	$(function(){
 		$('#input').keydown(function(key){
 			if(key.keyCode == 13){
@@ -240,8 +243,9 @@
 			msgEnd = "<div class='chat-box'>" + receive_header + "<div class='chat'>" + receive_content + "</div><div class='chat-info'>"+ dateInfo +"</div></div>";
 		}
 		var chat = "<div class='chat-box'>" + receive_header + "<div class='chat'>" + receive_content + "</div><div class='chat-info'>"+ dateInfo +"</div></div>";
-		$('#output').append(msgEnd);
 		
+		output.append(msgEnd);
+		output.scrollTop(output[0].scrollHeight);
 	}
 	
 	w.onclose = function(e) {
@@ -335,5 +339,7 @@
 		<%
 			}
 		%>
+		
+		output.scrollTop(output[0].scrollHeight);
 	});
 </script>

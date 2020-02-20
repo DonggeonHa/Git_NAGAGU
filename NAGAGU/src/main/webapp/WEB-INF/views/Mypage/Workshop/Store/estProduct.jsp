@@ -223,6 +223,7 @@
 				            output += '<td scope="col" >';
 
 				            var category = item.es_ORDER_CATEGORY;
+				            console.log(category);
 				            
 				            switch (category) {
 				            case 'table':
@@ -259,7 +260,8 @@
 				            output += '<button class="btn_detail" value=' + item.es_ORDER_ESTIMATE + '>보기</button>';
 				            output += '</td>';
 				            output += '<td scope="col">';
-				            output += '<button class="btn_chat" value=' + item.es_ORDER_NUM + '>쪽지</button>';
+				            output += '<button class="btn_note" value=' + item.es_ORDER_BUYER_MAIL + '>쪽지</button>';
+				            output += '<button class="btn_chat" value=' + item.es_ORDER_NUM + '>채팅</button>';
 				            output += '</td>';
 				            output += '</tr>';
 				            
@@ -341,10 +343,18 @@
 		}
 		
 		/* 쪽지 보내기 */
-		$(document).delegate('.btn_chat', 'click', function() {
-			var chatroom_num = $(this).attr("value");
+		$(document).delegate('.btn_note', 'click', function() {
+			var send_address = $(this).attr("value");
 			console.log(send_address);
-			window.open('/NAGAGU/chatRoom.ch?ES_ORDER_NUM=' + chatroom_num, "1:1 채팅방", "width=400 height=600");
+			window.open('/NAGAGU/noteForm.nt?receive_mail=' + send_address, "쪽지 보내기", "width=600 height=700");
+			return false;
+		});
+		
+		/* 채팅창 열기 */
+		$(document).delegate('.btn_chat', 'click', function() {
+			var address = '/NAGAGU/chatRoom.ch?ES_ORDER_NUM=';
+			address += $(this).attr("value");
+			window.open(address, "1:1 채팅방", "width=400 height=740");
 			return false;
 		});
 		

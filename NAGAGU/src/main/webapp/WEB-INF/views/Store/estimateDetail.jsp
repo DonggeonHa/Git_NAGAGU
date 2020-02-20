@@ -617,20 +617,45 @@
 		/* 낙찰하기 */
 		
 		$(document).delegate('.btn_bid', 'click', function() {
-			if (confirm("낙찰하시겠습니까?")) {
-				var OFFER_NUM = $(this).attr('value');
-				location.href='offer_bid.es?OFFER_STATE=1&ESTIMATE_NUM=' + es_num + '&OFFER_NUM=' + OFFER_NUM + '&redirect=estimate_detail.es?ESTIMATE_NUM=' + es_num;
-			}
-			return false;
+			var OFFER_NUM = $(this).attr('value');
+			alertify.confirm("낙찰", "낙찰하시겠습니까?", function() {
+				var redirect = '&redirect=estimate_detail.es?ESTIMATE_NUM=' + es_num;
+				
+				var params = {"OFFER_STATE" : 1, "OFFER_NUM" : OFFER_NUM, "ESTIMATE_NUM" : es_num, "redirect" : redirect }
+				console.log(params);
+				$.ajax ({
+					url:"/NAGAGU/offer_bid.es",
+					type:"POST",
+					data:params,
+					contentType:'application/x-www-form-urlencoded; charset=utf-8',
+					success: function(data) {
+						alertify.confirm("낙찰 완료", "바로 결제창으로 이동하시겠습니까?", function() {
+							location.href='mypage_estimate_checkout.my?ES_ORDER_NUM=' + es_num;
+						}, function() {	
+							var info_text = data.workshop_name + ' 공방의 제안이 ' + addComma(data.offer_price) + '원에 낙찰되었습니다.';
+							alertify.success(info_text);
+							getOfferList();
+						});
+						
+						
+					},
+					error: function(data) {
+						console.log(data.res);
+				}
+				});
+			}, function() {
+			});
 		});
 		
 		/* 낙찰 취소하기 */
 		
 		$(document).delegate('.btn_bid_cancel', 'click', function() {
-			if (confirm("정말 취소하시겠습니까?")) {
-				var OFFER_NUM = $(this).attr('value');
+			var OFFER_NUM = $(this).attr('value');
+			alertify.confirm("낙찰 취소", "정말 취소하시겠습니까?", function() {
 				location.href='offer_bid.es?OFFER_STATE=3&ESTIMATE_NUM=' + es_num + '&OFFER_NUM=' + OFFER_NUM + '&redirect=estimate_detail.es?ESTIMATE_NUM=' + es_num;
-			}
+			}, function() {
+				
+			});
 			return false;
 		});
 		

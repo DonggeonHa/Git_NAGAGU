@@ -402,13 +402,20 @@ public class EstimateController {
 	}
 	
 	/* 견적 낙찰 */
-	@RequestMapping(value = "/offer_bid.es")
-	public String offerBid (HttpServletRequest request) {
+	@RequestMapping(value = "/offer_bid.es", produces="application/json; charset=UTF-8")
+	@ResponseBody
+	public HashMap<String, Object> offerBid (HttpServletRequest request) {
+		System.out.println("TEST1 : " + request.getParameter("ESTIMATE_NUM"));
 		int ESTIMATE_NUM = Integer.parseInt(request.getParameter("ESTIMATE_NUM"));
+		System.out.println("TEST2 : " + request.getParameter("OFFER_NUM"));
 		int OFFER_NUM = Integer.parseInt(request.getParameter("OFFER_NUM"));
+		System.out.println("TEST3 : " + request.getParameter("OFFER_STATE"));
 		int OFFER_STATE = Integer.parseInt(request.getParameter("OFFER_STATE"));
+		System.out.println("TEST4 : " + request.getParameter("redirect"));
 		String redirect = "redirect:/";
 		redirect += request.getParameter("redirect");
+		
+		HashMap<String, Object> resMap = new HashMap<String, Object>();
 		
 		int res1 = estimateService.offerBidSet(OFFER_STATE, OFFER_NUM);
 		if (res1 == 1) {
@@ -433,15 +440,20 @@ public class EstimateController {
 					vo.setES_ORDER_CATEGORY(esvo.getESTIMATE_CATEGORY());
 					vo.setES_ORDER_PAYMENT(esvo.getESTIMATE_PAY());
 					
+					resMap.put("workshop_name", offervo.getOFFER_WORKSHOP());
+					resMap.put("offer_price", offervo.getOFFER_PRICE());
+					
 					int res3 = estimateService.esOrderInsert(vo);
 				}
 				else {
 					int res3 = estimateService.esOrderDelete(ESTIMATE_NUM);
 				}
+				
+				resMap.put("redirection", redirect);
 			}
 		}
 		
-		return redirect;
+		return resMap;
 	}
 	
 }

@@ -436,10 +436,10 @@
 									} else if (eoState < 4) {
 								%>
 								<button class="btn btn-outline-dark btn_modify"
-									onclick="location.href='mypage_estimate_updateForm.es?ES_ORDER_NUM<%=vo.getES_ORDER_NUM()%>'">배송정보
+									onclick="location.href='mypage_estimate_updateForm.my?ES_ORDER_NUM=<%=vo.getES_ORDER_NUM()%>'">배송정보
 									수정</button> 
 								<button class="btn btn-outline-dark btn_modify"
-									onclick="window.open('/NAGAGU/chatRoom.ch?ES_ORDER_NUM=<%=vo.getES_ORDER_NUM()%>', '1:1채팅방', 'width=400 height=600')">1:1 채팅</button> <%
+									onclick="window.open('/NAGAGU/chatRoom.ch?ES_ORDER_NUM=<%=vo.getES_ORDER_NUM()%>', '1:1채팅방', 'width=400 height=740')">1:1 채팅</button> <%
  	}
  			if (eoState < 4) {
  %>

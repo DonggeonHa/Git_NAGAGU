@@ -19,8 +19,16 @@ public class HandshakeInterceptor extends HttpSessionHandshakeInterceptor {
 		ServletServerHttpRequest ssreq = (ServletServerHttpRequest) request;
 		System.out.println("URI:" + request.getURI());
 		
+		String mem_mail = null;
+		
 		HttpServletRequest req = ssreq.getServletRequest();
-		String mem_mail = (String)req.getSession().getAttribute("MEMBER_EMAIL");
+		if ((String)req.getSession().getAttribute("MEMBER_EMAIL") != null) {
+			mem_mail = (String)req.getSession().getAttribute("MEMBER_EMAIL");
+		}
+		else if ((String)req.getSession().getAttribute("WORKSHOP_EMAIL") != null) {
+			mem_mail = (String)req.getSession().getAttribute("WORKSHOP_EMAIL");
+		}
+		
 		map.put("userMail", mem_mail);
 		System.out.println("HttpSession에 저장된 닉네임 : " + mem_mail);
 		
