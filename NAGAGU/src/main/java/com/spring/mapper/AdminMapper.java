@@ -3,6 +3,8 @@ package com.spring.mapper;
 import java.util.List;
 
 import com.spring.academy.ClassVO;
+import com.spring.academy.Class_qnaVO;
+import com.spring.academy.Class_reviewVO;
 import com.spring.admin.AdminMemberVO;
 import com.spring.community.PicsCommentDB;
 import com.spring.community.PicsVO;
@@ -41,6 +43,11 @@ public interface AdminMapper {
 	List<ClassVO> getAcademy();
 	int deleteAcademy(ClassVO vo);
 	ClassVO detailAcademy(ClassVO vo);
+	
+	List<Class_reviewVO> getAcademyReview();
+	int deleteAcademyReview(Class_reviewVO vo);
+	List<Class_qnaVO> getAcademyQnA();
+	int deleteAcademyQnA(Class_qnaVO vo);
 	
 	/* 상품관리 */
 	List<ProductVO> getProduct();

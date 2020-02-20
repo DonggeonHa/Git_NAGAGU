@@ -11,6 +11,7 @@ public class Class_reviewVO {
 	private String REVIEW_CONTENT;
 	private double REVIEW_GRADE;
 	private int REVIEW_RE;
+	
 	public int getREVIEW_NUM() {
 		return REVIEW_NUM;
 	}

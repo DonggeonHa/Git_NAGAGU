@@ -5,7 +5,7 @@
 	<div class="container-fluid">
 		<div class="d-flex bd-highlight mb-3">
 			<div class="mr-auto p-2 bd-highlight align-self-end">
-				<h6>상품관리 > 상품리뷰 관리 </h6>
+				<h6>아카데미관리 > 강의리뷰 관리 </h6>
 			</div>
 			<br><br>
 			<div class="input-group p-2 bd-highlight" style="width: 300px !important;">
@@ -17,10 +17,10 @@
 		</div>
 		
 		<div style="height: 550px; overflow-y: auto;">
-			<table class="table table-hover tableCSS" id="product-review"></table>
+			<table class="table table-hover tableCSS" id="academy-review"></table>
 		</div>
 		<div class="d-flex justify-content-center">
-			<nav aria-label="Page navigation example" class="paginated" id="productReview-page"></nav>
+			<nav aria-label="Page navigation example" class="paginated" id="academyReview-page"></nav>
 		</div>
 	</div>
 </div>
@@ -36,9 +36,9 @@
 	function selectData() {
 		$('#remo').remove();
 		// table 내부 내용 모두 제거(초기화)
-		$('#product-review').empty();
+		$('#academy-review').empty();
 		$.ajax({
-			url: './ProductReview.ad',
+			url: './AcademyReview.ad',
 			type: 'POST',
 			dataType : "json", //서버에서 보내줄 데이터 타입
 			contentType : 'application/x-www-form-urlencoded; charset=UTF-8',
@@ -47,29 +47,29 @@
 				title += '<thead class="text-center">';
 				title += '<tr>';
 				title += '<th style="width: 5%;">번호</th>';
+				title += '<th style="width: 10%;">강의</th>';
 				title += '<th style="width: 10%;">글쓴이</th>';
-				title += '<th style="width: 10%;">상품</th>';
 				title += '<th style="width: 10%;">등록일자</th>';
 				title += '<th style="width: 60%;">내용</th>';
 				title += '<th style="width: 5%;">관리</th>';
 				title += '</tr>';
 				title += '</thead>';
-				$('#product-review').append(title);
+				$('#academy-review').append(title);
 				$.each(data, function(index, item) {
 					var output = '';
 					output += '<tbody class="text-center">'
 					output += '<tr>';
-					output += '<td>' + item.review_NUM + '</td>'; 
+					output += '<td>' + item.review_NUM + '</td>';
+					output += '<td>' + item.review_CLASS + '</td>';
 					output += '<td>' + item.review_MEMBER + '</td>';
-					output += '<td>' + item.review_PRODUCT + '</td>';
 					output += '<td>' + item.review_DATE + '</td>';
 					output += '<td>' + item.review_CONTENT + '</td>';
-					output += '<td><a href="./deleteProductReview.ad" class="del_data" ';
+					output += '<td><a href="./deleteAcademyReview.ad" class="del_data" ';
 					output += 'REVIEW_NUM=' + item.review_NUM +  '><i class="fas fa-trash-alt" ></i></a></td>';
 					output += '</tr>';
 					output += '</tbody>'
 					console.dir("output : " + output);
-					$('#product-review').append(output);
+					$('#academy-review').append(output);
 				});
 				page();
 			},
@@ -139,8 +139,8 @@
 			var pagesu = 10;  //페이지 번호 갯수
 	  		var currentPage = 0;
 	  		var numPerPage = 10;  //목록의 수
-	  		var $table = $('#product-review');    
-	  		var $user = $('#productReview-page');
+	  		var $table = $('#academy-review');    
+	  		var $user = $('#academyReview-page');
 	  
 			//length로 원래 리스트의 전체길이구함
 			var numRows = $table.find('tbody tr').length;
@@ -233,8 +233,8 @@
 	$(document).ready(function() {
 		$("#keyword").keyup(function() {
 			var k = $(this).val();
-			$("#product-review > tbody > tr").hide();
-			var temp = $("#product-review > tbody > tr > td:nth-child(10n+2):contains('" + k + "')");
+			$("#academy-review > tbody > tr").hide();
+			var temp = $("#academy-review > tbody > tr > td:nth-child(10n+2):contains('" + k + "')");
 			
 			$(temp).parent().show();					
 		})

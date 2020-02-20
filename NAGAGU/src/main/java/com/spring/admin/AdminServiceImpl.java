@@ -17,6 +17,8 @@ import com.spring.store.Product_qnaVO;
 import com.spring.store.Product_reviewVO;
 import com.spring.estimate.EstimateVO;
 import com.spring.academy.ClassVO;
+import com.spring.academy.Class_qnaVO;
+import com.spring.academy.Class_reviewVO;
 
 @Service
 public class AdminServiceImpl implements AdminService {
@@ -213,6 +215,40 @@ public class AdminServiceImpl implements AdminService {
 		getClass = adminMapper.detailAcademy(vo);
 		
 		return getClass;
+	}
+	
+	@Override
+	public List<Class_reviewVO> getAcademyReview() {
+		List<Class_reviewVO> AcademyReview = new ArrayList<Class_reviewVO>();
+		AdminMapper adminMapper = sqlSession.getMapper(AdminMapper.class);
+		AcademyReview = adminMapper.getAcademyReview();
+		
+		return AcademyReview;
+	}
+
+	@Override
+	public int deleteAcademyReview(Class_reviewVO vo) {
+		AdminMapper adminMapper = sqlSession.getMapper(AdminMapper.class);
+		int res = adminMapper.deleteAcademyReview(vo);
+		
+		return res;
+	}
+
+	@Override
+	public List<Class_qnaVO> getAcademyQnA() {
+		List<Class_qnaVO> AcademyQnA = new ArrayList<Class_qnaVO>();
+		AdminMapper adminMapper = sqlSession.getMapper(AdminMapper.class);
+		AcademyQnA = adminMapper.getAcademyQnA();
+		
+		return AcademyQnA;
+	}
+
+	@Override
+	public int deleteAcademyQnA(Class_qnaVO vo) {
+		AdminMapper adminMapper = sqlSession.getMapper(AdminMapper.class);
+		int res = adminMapper.deleteAcademyQnA(vo);
+		
+		return res;
 	}
 	
 	/* ================================= 상품관리 ======================================*/

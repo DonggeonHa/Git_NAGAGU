@@ -47,8 +47,8 @@
 				title += '<thead class="text-center">';
 				title += '<tr>';
 				title += '<th style="width: 5%;">번호</th>';
-				title += '<th style="width: 10%;">글쓴이</th>';
 				title += '<th style="width: 10%;">상품</th>';
+				title += '<th style="width: 10%;">글쓴이</th>';
 				title += '<th style="width: 10%;">등록일자</th>';
 				title += '<th style="width: 60%;">내용</th>';
 				title += '<th style="width: 5%;">관리</th>';
@@ -59,9 +59,9 @@
 					var output = '';
 					output += '<tbody class="text-center">'
 					output += '<tr>';
-					output += '<td>' + item.review_NUM + '</td>'; 
-					output += '<td>' + item.review_MEMBER + '</td>';
+					output += '<td>' + item.review_NUM + '</td>';
 					output += '<td>' + item.review_PRODUCT + '</td>';
+					output += '<td>' + item.review_MEMBER + '</td>';
 					output += '<td>' + item.review_DATE + '</td>';
 					output += '<td>' + item.review_CONTENT + '</td>';
 					output += '<td><a href="./deleteProductReview.ad" class="del_data" ';

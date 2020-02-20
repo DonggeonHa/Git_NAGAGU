@@ -28,9 +28,6 @@ import org.springframework.web.servlet.view.json.MappingJackson2JsonView;
 import com.spring.member.KakaoController;
 import com.spring.member.MemberVO;
 import com.spring.member.NaverLoginBO;
-import com.spring.store.Product_qnaVO;
-import com.spring.academy.ClassVO;
-import com.spring.academy.Class_reviewVO;
 import com.spring.workshop.WorkShopMemberVO;
 
 @Controller
@@ -240,6 +237,26 @@ public class AcademyController {
 			System.out.println("WorkShop 가져오기 실패");
 			return null;
 		}
+		System.out.println("vo.getCLASS_CATEGORY() = " + vo.getCLASS_CATEGORY());
+		
+		if (vo.getCLASS_CATEGORY().equals("table")) {
+			vo.setCLASS_CATEGORY("책상");
+		} else if (vo.getCLASS_CATEGORY().equals("chair")) {
+			vo.setCLASS_CATEGORY("의자");
+		} else if (vo.getCLASS_CATEGORY().equals("bookshelf")) {
+			vo.setCLASS_CATEGORY("책장");
+		} else if (vo.getCLASS_CATEGORY().equals("bed")) {
+			vo.setCLASS_CATEGORY("침대");
+		} else if (vo.getCLASS_CATEGORY().equals("drawer")) {
+			vo.setCLASS_CATEGORY("서랍장");
+		} else if (vo.getCLASS_CATEGORY().equals("sidetable")) {
+			vo.setCLASS_CATEGORY("협탁");
+		} else if (vo.getCLASS_CATEGORY().equals("dressing_table")) {
+			vo.setCLASS_CATEGORY("화장대");
+		} else if (vo.getCLASS_CATEGORY().equals("others")){
+			vo.setCLASS_CATEGORY("기타");
+		}
+		
 		System.out.println("상세보기 성공");
 		
 		//선주 
@@ -886,11 +903,6 @@ public class AcademyController {
 	
 	@RequestMapping(value = "/ClassInfo.ac")
 	public void ClassInfo(HttpServletRequest request,MyClassVO vo) throws Exception {
-		System.out.println("1"+vo.getMY_CLASS_CLASSNUM());
-		System.out.println("2"+vo.getMY_CLASS_MEMBERNUM());
-		System.out.println("3"+vo.getMY_CLASS_TICKET());
-		System.out.println("4"+vo.getMY_CLASS_DATE());
-		
 		boolean result = false;
 		
 		result = academyService.insertClassInfo(vo);
