@@ -22,16 +22,11 @@
 	}
 	
 	.card {
-		background-color: #1b1b27 !important;
+		background-color: #1b1b27; 
 		margin: 15px 15px 15px 15px;
 		width: 10rem;
 		color: white;
 	}
-	
-	.my {
-		background-color: #ef900e !important;
-	}
-	
 	.container-mypage {
 		margin-top: 50px;
 		margin-bottom: 50px;
@@ -334,12 +329,9 @@
 	}
 	
 	.card {
-		background-color: #1b1b27 !important;
+		background-color: #1b1b27 ;
 		margin: 15px 15px 15px 15px;
 		color: white;
-	}
-	.my {
-		background-color: #ef900e !important;
 	}
 	.card-wrap{
 		justify-content: center;
@@ -829,9 +821,9 @@
 			} else {
 				document.edit_member_form.submit();
 			}
-		});
-		
-		$('.card-wrap').children().eq(2).find('div.card-body').css('color','#ef900e')
+		}); 
+		 
+		$('.card-wrap').children().eq(2).css('background-color','#ef900e') 
 	});
 	
 	function cancel() {

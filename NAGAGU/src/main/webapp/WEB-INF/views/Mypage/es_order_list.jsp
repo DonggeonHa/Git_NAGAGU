@@ -43,7 +43,7 @@
 		color: white !important;
 	} 
 	
-          .card-hover:hover {
+    .card-hover:hover {
 		transition: 1s;
 		transform: scale(1.2);
 		z-index: 1;
@@ -51,14 +51,10 @@
 	}
 	
 	.card {
-		background-color: #1b1b27 !important;
+		background-color: #1b1b27;
 		margin: 15px 15px 15px 15px;
 		color: white;
 	}
-	.my {
-		background-color: #ef900e !important;
-	}
-	
 	.card-wrap{
 		justify-content: center;
 		padding-left:50px; 
@@ -443,6 +439,6 @@
 		window.location.href='mypage_estimate.my?ES_ORDER_STATE=' + ES_ORDER_STATE;  
 	});
 	$(document).ready(function(){
-		$('.card-wrap').children().eq(8).find('div.card-body').css('color','#ef900e')
+		$('.card-wrap').children().eq(8).css('background-color','#ef900e')
 	})
 </script>
