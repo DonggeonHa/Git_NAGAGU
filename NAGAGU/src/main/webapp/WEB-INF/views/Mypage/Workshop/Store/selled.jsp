@@ -270,38 +270,7 @@
 				
 				if(productList.length!=0) {
 					$('.listnum_num').text(productList.length+"건");
-					var myreply = new Array();
 			     	for(var j=0; j<productList.length; j++){
-			      		var PRODUCT_CATEGORY = productList[j].PRODUCT_CATEGORY
-			      		switch(PRODUCT_CATEGORY){
-				      	    case 'table' : 
-				      	    	PRODUCT_CATEGORY = '책상'
-				      	        break;
-				      	    case 'chair' : 
-				      	    	PRODUCT_CATEGORY = '의자' 
-				      	        break;  
-				      	    case 'bookshelf' : 
-				      	    	PRODUCT_CATEGORY = '책장'
-				      	        break;
-				      	    case 'bed' : 
-				      	    	PRODUCT_CATEGORY = '침대' 
-				      	        break;  
-				      	    case 'drawer' : 
-				      	    	PRODUCT_CATEGORY = '서랍장'
-				      	        break;
-				      	    case 'sidetable' : 
-				      	    	PRODUCT_CATEGORY = '협탁' 
-				      	        break;  
-				      	    case 'dressing_table' : 
-				      	    	PRODUCT_CATEGORY = '화장대'
-				      	        break;
-				      	    case 'others' : 
-				      	    	PRODUCT_CATEGORY = '기타' 
-				      	        break;
-			      	    }
-	
-			      		
-				      	var product_category = productList[j].PRODUCT_CATEGORY;
 				      	var PRODUCT_STATUS = productList[j].PRODUCT_STATUS;
 			      		switch(PRODUCT_STATUS){
 			      	    case 0 : 
@@ -314,16 +283,16 @@
 			      	    	PRODUCT_STATUS = '판매 종료'
 			      	        break;
 		   		   	    }
-			    		var PRODUCT_TITLE = productList[j].PRODUCT_TITLE;
-			    		var PRODUCT_NUM = productList[j].PRODUCT_NUM;
+			    		var PRODUCT_TITLE = productList[j].PRODUCT_TITLE + '외  3건';
+			    		var ORDER_NUM = productList[j].ORDER_NUM;
 			    		var PRODUCT_PRICE = productList[j].PRODUCT_PRICE;
 						var PRODUCT_STOCK = productList[j].PRODUCT_STOCK;
 						var PRODUCT_SALES = productList[j].PRODUCT_SALES;
 						var PRODUCT_GRADE = productList[j].PRODUCT_GRADE;
 						var PRODUCT_READ = productList[j].PRODUCT_READ;
 						var PRODUCT_LIKE = productList[j].PRODUCT_LIKE;
-			    		var PRODUCT_DATE = new Date(productList[j].PRODUCT_DATE);
-			    		var date = date_format(PRODUCT_DATE);
+			    		var ORDER_DATE = new Date(productList[j].ORDER_DATE);
+			    		var date = date_format(ORDER_DATE);
 			      
 						output += '<tr class="text-center">';
 						output += '<td><input type="checkbox" name="chk" value="'+PRODUCT_NUM+'"></td>';
