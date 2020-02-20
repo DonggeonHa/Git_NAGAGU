@@ -214,6 +214,18 @@
     	border-bottom:1px solid #b3b3b3;
     }
     
+    .note_view .note_label {
+    	width:50px;
+    	font-weight:700;
+    	border-right:1px solid #b1b1b1;
+    }
+    
+    .note_view .note_title {
+    	text-align:left;
+    	font-size:1.05rem;
+    	padding-left:10px;
+    }
+    
     .note_view .note_sender {
     	float:left;
     }
@@ -278,9 +290,11 @@
             <div class="pop_content">
                 <div class="content_top">
                     <div class="top_list_opt">
+                    <% if (!redirection.equals("boxedList.nt")) {%>
                         <button type="button" class="btn_note" id="btn_boxing" onclick="location.href='noteBoxing.nt?note_num=<%= note_num %>&redirection=<%=redirection%>&page=<%=nowpage%>'">
                             보관
                         </button>
+                    <% } %>
                         <button type="button" class="btn_note" id="btn_delete" onclick="location.href='noteDelete.nt?note_num=<%= note_num %>&redirection=<%=redirection%>&page=<%=nowpage%>'">
                             삭제
                         </button>
@@ -295,18 +309,19 @@
                     <table class="note_view">
                         <thead>
                             <tr>
+                            	<th class="note_label"> 제목 </th>
                                 <th class="note_title"><%=notevo.getNOTE_TITLE() %></th>
                             </tr>
                         </thead>
                         <tbody>
                         	<tr>
-                        		<td class="note_info">
+                        		<td class="note_info" colspan=2>
                         			<div class="note_sender"><a href="noteForm.nt?receiver_mail=<%=notevo.getNOTE_SENDER_MAIL()%>&redirection='noteView.nt'"><%=notevo.getNOTE_SENDER_NICK() %></a></div>
                         			<div class="note_date"><%=format.format(notevo.getNOTE_DATE()) %></div>
                         		</td>
                         	</tr>
                             <tr>
-                           		<td class="note_content">
+                           		<td class="note_content" colspan=2>
                            			<div class="note_content">
                            				<%=notevo.getNOTE_CONTENT() %>
                            			</div>

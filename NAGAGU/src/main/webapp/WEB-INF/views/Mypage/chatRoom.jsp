@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ page import = "java.util.*" %>
 <%@ page import = "com.spring.chat.MessageVO" %>
+<%@ page import = "com.spring.chat.ChatRoomVO" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page session="true" %>
 <% 
@@ -10,6 +11,8 @@
 	int chatroom_num = (int)request.getAttribute("CHATROOM_NUM");
 	System.out.println("chat.jsp & " + chatroom_num);
 	ArrayList<MessageVO> msgList = (ArrayList<MessageVO>)request.getAttribute("MSGLIST");
+	ChatRoomVO chatvo = (ChatRoomVO)request.getAttribute("chatvo");
+	
 %>
 
 <style>
@@ -32,16 +35,22 @@
 	}
 	
 	#main-container{
-		width:300px;
-		height:400px;
+		width:400px;
+		height:700px;
 		display: inline-block;
 	}
 	
+	#chat-container {
+		width:400px;
+		height:700px;
+		max-height:1024px;
+	}
+	
 	#output{
-		min-height:200px;
-		max-height:800px;
+		max-height:1024px;
 		display: inline-block;
 		width:100%;
+		height:100%;
 		overflow: hidden;
 		vertical-align: bottom;
 		min-height: 400px;
@@ -191,7 +200,7 @@
 	
 	w = new WebSocket("ws://localhost:8000/NAGAGU/broadcasting.do");
 	w.onopen = function() {
-		alert("WebSocket Conneted!!!");
+		alertify.alert("채팅방에 입장했습니다.");
 	}
 	
 	w.onmessage = function(e) {

@@ -186,11 +186,11 @@
 						
 						$.each(eoList, function(index, item) {
 							
-							var eo_date = formatDate(item.ES_ORDER_DATE);
+							var eo_date = formatDate(item.es_ORDER_DATE);
 							
 							var eo_state = '';
 							
-							switch (item.ES_ORDER_STATE) {
+							switch (item.es_ORDER_STATE) {
 							case 0 :
 								eo_state = '입금대기';
 								break;
@@ -215,14 +215,14 @@
 							}
 
 				            output += '<tr>';
-				            output += '<td scope="col" ><input type="checkbox" class="chk" name="chk" value=' + item.ES_ORDER_NUM + '>';  
-				            output += '<input type="hidden" class="disabled" name="chk2" value=' + item.ES_ORDER_BUYER_MAIL + '></td>';
+				            output += '<td scope="col" ><input type="checkbox" class="chk" name="chk" value=' + item.es_ORDER_NUM + '>';  
+				            output += '<input type="hidden" class="disabled" name="chk2" value=' + item.es_ORDER_BUYER_MAIL + '></td>';
 				            output += '<th scope="col" >' + rnum + '</th>';
-				            output += '<td scope="col" >' + item.ES_ORDER_BUYER + '</td>';
-				            output += '<td scope="col" >' + item.ES_ORDER_TITLE + '</td>';
+				            output += '<td scope="col" >' + item.es_ORDER_BUYER + '</td>';
+				            output += '<td scope="col" >' + item.es_ORDER_TITLE + '</td>';
 				            output += '<td scope="col" >';
 
-				            var category = item.ES_ORDER_CATEGORY;
+				            var category = item.es_ORDER_CATEGORY;
 				            
 				            switch (category) {
 				            case 'table':
@@ -252,14 +252,14 @@
 				            }
 				            
 				            output += '</td>';
-				            output += '<td scope="col" >' + addComma(item.ES_ORDER_PRICE) + '</td>';
+				            output += '<td scope="col" >' + addComma(item.es_ORDER_PRICE) + '</td>';
 				            output += '<td scope="col" >' + eo_date + '</td>';
 				            output += '<td scope="col" >' + eo_state + '</td>';
 				            output += '<td scope="col">';
-				            output += '<button class="btn_detail" value=' + item.ES_ORDER_ESTIMATE + '>보기</button>';
+				            output += '<button class="btn_detail" value=' + item.es_ORDER_ESTIMATE + '>보기</button>';
 				            output += '</td>';
 				            output += '<td scope="col">';
-				            output += '<button class="btn_note" value=' + item.ES_ORDER_ESTIMATE + '>쪽지</button>';
+				            output += '<button class="btn_chat" value=' + item.es_ORDER_NUM + '>쪽지</button>';
 				            output += '</td>';
 				            output += '</tr>';
 				            
@@ -331,7 +331,7 @@
 		}
 
 		function addComma(inputNumber) {
-			var num = inputNumber.toString();
+			var num = "" + inputNumber;
 			return num.replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 		}
 
@@ -341,10 +341,10 @@
 		}
 		
 		/* 쪽지 보내기 */
-		$(document).delegate('.btn_note', 'click', function() {
-			var send_address = $(this).attr("value");
+		$(document).delegate('.btn_chat', 'click', function() {
+			var chatroom_num = $(this).attr("value");
 			console.log(send_address);
-			window.open('/NAGAGU/noteForm.nt?receive_mail=' + send_address, "쪽지 보내기", "width=600 height=700");
+			window.open('/NAGAGU/chatRoom.ch?ES_ORDER_NUM=' + chatroom_num, "1:1 채팅방", "width=400 height=600");
 			return false;
 		});
 		

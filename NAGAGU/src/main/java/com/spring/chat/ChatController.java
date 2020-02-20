@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.spring.member.MemberVO;
+import com.spring.workshop.WorkShopMemberVO;
 
 /**
  * Handles requests for the application home page.
@@ -28,16 +29,24 @@ public class ChatController {
 	
 	@RequestMapping(value="chatRoom.ch")
 	public String enterChatRoom(HttpServletRequest request, HttpSession session, Model model) {
+		MemberVO vo = new MemberVO();
+		WorkShopMemberVO wvo = new WorkShopMemberVO();
 		
-		MemberVO vo = chatService.getMember((String)session.getAttribute("MEMBER_EMAIL"));
-		System.out.println(vo.getMEMBER_EMAIL());
-		System.out.println(vo.getMEMBER_NICK());
-		System.out.println(vo.getMEMBER_PICTURE());
-		model.addAttribute("MEMBER_NICK", vo.getMEMBER_NICK());
-		model.addAttribute("MEMBER_PICTURE", vo.getMEMBER_PICTURE());
+		if (session.getAttribute("MEMBER_EMAIL") != null) {
+			vo = chatService.getMember((String)session.getAttribute("MEMBER_EMAIL"));
+			model.addAttribute("MEMBER_NICK", vo.getMEMBER_NICK());
+			model.addAttribute("MEMBER_PICTURE", vo.getMEMBER_PICTURE());
+		}
+		else if (session.getAttribute("WORKSHOP_EMAIL") != null) {
+			wvo = chatService.getWorkshop((String)session.getAttribute("WORKSHOP_EMAIL"));
+			model.addAttribute("MEMBER_NICK", wvo.getWORKSHOP_NAME());
+			model.addAttribute("MEMBER_PICTURE", wvo.getWORKSHOP_PICTURE());
+		}
 		
 		int MSG_CHATROOM_NUM = Integer.parseInt(request.getParameter("ES_ORDER_NUM"));
 		ArrayList<MessageVO> msgList = chatService.getChatMsg(MSG_CHATROOM_NUM);
+		HashMap <String, Object> chatMap = chatService.chatroomDetail(MSG_CHATROOM_NUM);
+		
 		model.addAttribute("MSGLIST", msgList);
 		model.addAttribute("CHATROOM_NUM", MSG_CHATROOM_NUM);
 		

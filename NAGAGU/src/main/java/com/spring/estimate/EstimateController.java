@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
+import com.spring.chat.ChatService;
 import com.spring.member.KakaoController;
 import com.spring.member.NaverLoginBO;
 
@@ -30,6 +31,9 @@ public class EstimateController {
 
 	@Autowired
 	EstimateService estimateService;
+	
+	@Autowired(required = false)
+	ChatService chatService;
 	
 	@RequestMapping(value = "/estimate.es")
 	public String estimate(HttpServletRequest request, Model model, HttpSession session) {

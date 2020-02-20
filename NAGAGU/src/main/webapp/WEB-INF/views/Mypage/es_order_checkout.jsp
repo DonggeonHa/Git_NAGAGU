@@ -485,7 +485,6 @@
 				if ( rsp.success ){
 					var id= rsp.merchant_uid;
 					console.log(id);
-					console.log($('#orderForm'));
 					$('#orderForm').submit();
 				} else {
 				 	  //[3] 아직 제대로 결제가 되지 않았습니다.

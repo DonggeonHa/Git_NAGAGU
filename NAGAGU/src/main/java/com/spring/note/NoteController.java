@@ -169,11 +169,17 @@ public class NoteController {
 	}
 	
 	@RequestMapping(value="noteView.nt", method=RequestMethod.GET) 
-	public String noteView (HttpServletRequest request, Model model) throws Exception {
+	public String noteView (HttpServletRequest request, HttpSession session, Model model) throws Exception {
 		int note_num = Integer.parseInt(request.getParameter("note_num"));
+		String reader = "";
+		if (session.getAttribute("MEMBER_EMAIL") != null)
+			reader = (String)session.getAttribute("MEMBER_EMAIL");
+		else if (session.getAttribute("WORKSHOP_EMAIL") != null)
+			reader = (String)session.getAttribute("WORKSHOP_EMAIL");
+		
 		NoteVO notevo = noteService.noteView(note_num);
 		
-		if (notevo.getNOTE_READCOUNT() == 0 ) {
+		if (notevo.getNOTE_READCOUNT() == 0 && notevo.getNOTE_RECEIVER_MAIL().equals(reader) ) {
 			int res = noteService.increaseReadcount(note_num);
 		}
 		

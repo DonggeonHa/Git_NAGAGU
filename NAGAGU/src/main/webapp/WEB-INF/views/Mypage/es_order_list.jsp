@@ -370,7 +370,7 @@
 					</div>
 					<div class="col-5 d-flex justify-content-end">
 						<a
-							href="./es_order_detail.my?ES_ORDER_NUM=<%=vo.getES_ORDER_NUM()%>"><font
+							href="./estimate_detail.my?ESTIMATE_NUM=<%=vo.getES_ORDER_ESTIMATE()%>"><font
 							size="2">상세보기 </font></a>
 					</div>
 				</div>
@@ -440,8 +440,10 @@
 									} else if (eoState < 4) {
 								%>
 								<button class="btn btn-outline-dark btn_modify"
-									onclick="location.href='mypage_estimate_updateForm?ES_ORDER_NUM<%=vo.getES_ORDER_NUM()%>'">배송정보
-									수정</button> <%
+									onclick="location.href='mypage_estimate_updateForm.es?ES_ORDER_NUM<%=vo.getES_ORDER_NUM()%>'">배송정보
+									수정</button> 
+								<button class="btn btn-outline-dark btn_modify"
+									onclick="window.open('/NAGAGU/chatRoom.ch?ES_ORDER_NUM=<%=vo.getES_ORDER_NUM()%>', '1:1채팅방', 'width=400 height=600')">1:1 채팅</button> <%
  	}
  			if (eoState < 4) {
  %>

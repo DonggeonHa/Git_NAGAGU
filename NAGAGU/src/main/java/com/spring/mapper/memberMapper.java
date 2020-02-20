@@ -5,8 +5,8 @@ import java.util.HashMap;
 
 import org.apache.ibatis.annotations.Param;
 
-import com.spring.chat.WorkshopVO;
 import com.spring.member.MemberVO;
+import com.spring.workshop.WorkShopMemberVO;
 
 public interface memberMapper {
 	MemberVO nickname_chk(MemberVO memberVO);	//별명 중복체크
@@ -30,7 +30,7 @@ public interface memberMapper {
 	
 	/* 기재 */
 	MemberVO getMember(String MEM_MAIL);
-	WorkshopVO getWorkshop(String MEM_MAIL);
+	WorkShopMemberVO getWorkshop(String MEM_MAIL);
 	int countMember(String MEM_MAIL);
 	int countWorkshop(String MEM_MAIL);
 
