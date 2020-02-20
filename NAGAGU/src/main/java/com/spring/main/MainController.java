@@ -561,12 +561,12 @@ public class MainController {
         return mav;
     }
     
-    @RequestMapping(value="/FindPw.ma", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
+    @RequestMapping(value="/FindPw.ma", method = RequestMethod.POST)
     public String findPw(Model model, HttpServletRequest request, MemberVO memberVO) {
     	String pass2 = (String)request.getParameter("MEMBER_PASS2");
     	String email = (String)request.getParameter("MEMBER_EMAIL");
     	int result = 0;
-    	
+    	System.out.println(123);
     	memberVO.setMEMBER_PASS(pass2);
     	memberVO.setMEMBER_EMAIL(email);
     	

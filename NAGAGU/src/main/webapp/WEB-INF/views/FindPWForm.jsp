@@ -95,7 +95,6 @@ function pw_btn() {
 	    contentType : 'application/x-www-form-urlencoded; charset=utf-8',
 	    success : function(retVal) {
 	       if (retVal.res == "chk_pw_success") {
-	    	   alert("네!");
 	    	   chage_pw();
 	       } else { // 실패했다면
 	          alert("임시 비밀번호를 다시 한번 확인해주세요.");
@@ -151,6 +150,7 @@ $(document).ready(function(){
 	         return false;
 		}else {
 			oMsg.hide();
+			sub_pw1 = true;
 	        sub_pw2 = true;
 		}
 	});
@@ -176,16 +176,20 @@ $(document).ready(function(){
 			oMsg.hide();
 			oMsg2.hide();
 	        sub_pw1 = true;
+	        
+	        return true;
 		}
 	});
 	
 });
 
 function chage_pw() {
-	if(sub_pw2==true || sub_pw1==true){
+	
+	console.log(sub_pw2);
+	console.log(sub_pw1);
+	if(sub_pw2==true && sub_pw1==true){
 		document.pw_form.submit();
 	}
-	
 }
 </script>
 </head>
@@ -198,7 +202,7 @@ function chage_pw() {
             </p>
         </div>
 	<div style="margin: 0 auto;">
-		<form id="pw_form" name="pw_form" action="FindPw.ma" method="post" onsubmit="false">
+		<form name="pw_form" action="FindPw.ma" method="post">
 	    <table class="pw_table">
 	        <tr>
 	        	<td class="text2"><span>임시 비밀번호</span></td>

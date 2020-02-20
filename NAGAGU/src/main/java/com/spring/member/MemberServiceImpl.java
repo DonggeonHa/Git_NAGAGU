@@ -307,6 +307,8 @@ public class MemberServiceImpl implements MemberService{
 			
 			result = memberMapper.lastPwUpdate(pass1, member_email);
 			
+			System.out.println("비밀번호 업데이트 result 값은: " + result);
+			
 		} catch (Exception e) {
 			System.out.println("비밀번호 확인 실패!" + e.getMessage());
 		}
