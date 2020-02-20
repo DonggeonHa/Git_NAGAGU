@@ -314,8 +314,8 @@
 		<hr />
 		<h3 >REPLY</h3>
 		<!-- 로그인 해야 댓글 창 보임 -->
-		<c:set var="num" value="<%=MEMBER_NUM%>" />
-		<c:if test="${num != 0}">
+		<%-- <c:set var="num" value="<%=MEMBER_NUM%>" />
+		<c:if test="${num != 0}"> --%>
 			<form id="insert_form" class="row justify-content-between"
 				name="commentForm" action="/NAGAGU/insertComment.cm" method="post">
 				<div class="col-1"></div>
@@ -330,7 +330,7 @@
 					<button type="button" value="등록" id="input_data_jsp">등록</button>
 				</div>
 			</form>
-		</c:if>
+		<%-- </c:if> --%>
 		<!-- 댓글 테이블 끝 -->
 		
 		<div class="comments_table" id="output" style="color: #212529;">
@@ -340,18 +340,11 @@
 		</div>
 	</div>
    <!-- container end -->
-<!-- JavaScript -->
-<script src="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/alertify.min.js"></script>
-<!-- CSS -->
-<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/css/alertify.min.css"/>
-<!-- Default theme -->
-<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/css/themes/default.min.css"/>
 
 <script type="text/javascript" charset="utf-8">
 	$(document).ready(function(){
 		function getPro(){
 			var pro_num = '<%=picsVO.getPICS_PRODUCT()%>'
-			
 			 	$.ajax({
 					url: '/NAGAGU/getProductInCommunity.cm',
 					type:'POST',
@@ -382,7 +375,7 @@
 		getPro()
 	})
 	$('.delete-btn').on('click',function(){
-		alertify.confirm('삭제 확인', '정말 삭제하시겠습니까?', function(){ 
+		alertify.confirm('확인', '정말 삭제하시겠습니까?', function(){ 
 			alertify.success('Ok') 
 			var url = '${pageContext.request.contextPath}/community_delete.cm'
 				+ '?PICS_NUM='+<%=picsVO.getPICS_NUM()%>
@@ -463,8 +456,6 @@
 						$('#output').append(output);
 						$('.re_reply_line').css('display','none') 
 					}
-					
-					
 				},
 				error:function(){
 					alert("ajax통신 실패!!");
@@ -540,8 +531,13 @@
 		});
 		//댓글 입력
 		$(document).on('click','#input_data_jsp',function(event){
+			var	MEMBER_NUM = '<%=MEMBER_NUM%>';
+			if(MEMBER_NUM==0){
+				alertify.alert('확인','로그인 하세요') 
+				return				
+			} 
 			if ($('#text').val()=="") {
-				alert("글 내용을 입력해주세요.");
+				alertify.alert('확인',"글 내용을 입력해주세요.");
 				$('#text').focus();
 				return;
 			}			
@@ -577,7 +573,6 @@
 				return;
 			} 
 			var delNum = $(event.target).attr('num')
-			console.log(delNum);
 			jQuery.ajax({
 				url: '/NAGAGU/deleteComment.cm',
 				type: 'POST',
@@ -692,11 +687,11 @@
 		 var toNum = this.id
 		 var fromNum = '<%=MEMBER_NUM%>';
 		 if(fromNum==0){ 
-			alert('로그인 하세요') 
+			alertify.alert('확인','로그인 하세요') 
 			return				
 		 }
 		 if(fromNum==toNum){
-			alert('본인이네요') 
+			 alertify.alert('확인','본인이시네요')
 			return				
 		 } 
 			 
@@ -767,7 +762,7 @@
 	  $(document).on("click","#far",function getLike(){
 	    var	MEMBER_NUM = '<%=MEMBER_NUM%>';
 		if(MEMBER_NUM==0){
-			alert('로그인 하세요') 
+			alertify.alert('확인','로그인 하세요') 
 			return				
 		} 
 		var category = 'like_pic'
