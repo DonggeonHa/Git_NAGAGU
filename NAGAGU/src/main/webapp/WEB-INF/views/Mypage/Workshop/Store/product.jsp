@@ -294,9 +294,11 @@ if (session.getAttribute("WORKSHOP_NUM") == null) {
 	
 	$("#keyword").keyup(function(event){
 		if (event.keyCode == 13) {
-			event.preventDefault();
-	//		$("#selectClassType option:selected").val('all');
-	//		$("#selectClassType").val('all').prop("selected", true);
+			if(!$('#keyword').val() || !$('#searchType').val()){
+				alert("카테고리 선택, 검색어를 입력하세요!");
+				$('#keyword').focus();
+				return false;
+			}	
 			productList(event);
 			$('#list_none').empty();
 			event.preventDefault();
@@ -494,6 +496,7 @@ if (session.getAttribute("WORKSHOP_NUM") == null) {
 		});
 	}		
 	
+	//상품페이지 수정
 	function updateProduct($PRODUCT_NUM){
 		var PRODUCT_NUM = $PRODUCT_NUM;
 		console.log(PRODUCT_NUM);

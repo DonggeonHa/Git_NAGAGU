@@ -152,6 +152,9 @@
         UPDATE PRODUCT SET PRODUCT_GRADE = #{PRODUCT_GRADE} WHERE PRODUCT_NUM=#{PRODUCT_NUM}
 	</update>	
 	
+	<update id="updateSales" parameterType="java.util.HashMap">
+UPDATE PRODUCT SET PRODUCT_SALES = (PRODUCT_SALES+1) WHERE PRODUCT_NUM= (select BASKET_PRODUCT from BASKET where BASKET_NUM =#{BASKET_NUM})	</update>	
+	
 	<update id="updateProductLike" parameterType="java.util.HashMap">
 		UPDATE PRODUCT SET
 			<if test="count == 'plus'">PRODUCT_LIKE = PRODUCT_LIKE +1 </if>

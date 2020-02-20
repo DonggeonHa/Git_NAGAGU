@@ -168,7 +168,28 @@
 			</if>
 		ORDER BY ${selectListAlign} DESC	
 	</select>
-
+<!-- 
+	<select id="getSelledproductList" parameterType="java.util.HashMap" resultMap="productListResultMap">
+		SELECT * FROM PRODUCT WHERE PRODUCT_WORKSHOP = #{WORKSHOP_NUM} 
+			<if test="selectClassType == 'allProducts'"> 
+				<if test="selectCategory != 'all'"> AND PRODUCT_CATEGORY = #{selectCategory} </if>
+				<if test="keyword != null"> AND PRODUCT_TITLE LIKE '%'||#{keyword}||'%' </if>	
+			</if>
+			<if test="selectClassType == 'ingSale'"> AND PRODUCT_STATUS = 1  
+				<if test="selectCategory != 'all'"> AND PRODUCT_CATEGORY = #{selectCategory} </if>
+				<if test="keyword != null"> AND PRODUCT_TITLE LIKE '%'||#{keyword}||'%' </if>
+			</if>
+			<if test="selectClassType == 'pauseSale'"> AND PRODUCT_STATUS = 0 
+				<if test="selectCategory != 'all'"> AND PRODUCT_CATEGORY = #{selectCategory} </if>
+				<if test="keyword != null"> AND PRODUCT_TITLE LIKE '%'||#{keyword}||'%' </if>
+			</if>
+			<if test="selectClassType == 'endSale'"> AND PRODUCT_STATUS = 2 
+				<if test="selectCategory != 'all'"> AND PRODUCT_CATEGORY = #{selectCategory} </if>
+				<if test="keyword != null"> AND PRODUCT_TITLE LIKE '%'||#{keyword}||'%' </if>
+			</if>
+		ORDER BY ${selectListAlign} DESC	
+	</select>
+ -->
 
 	<update id="modifyStatus" parameterType="java.util.HashMap">  
 		UPDATE PRODUCT 

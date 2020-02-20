@@ -210,7 +210,35 @@ public class ProductManagementAjaxController {
 	}
 	
 	
+	//---------------------------------------판매된 상품 관리 페이지 리스트
+	@ResponseBody
+	@PostMapping(value="/SelledproductsList.my" ,produces="application/json;charset=UTF-8")
+	public ArrayList<Map<String, Object>> SelledproductsList(String selectORDER_STATE, String selectORDER_METHOD, String selectMYPRODUCT, String selectListAlign, String searchType, String keyword, HttpSession session) {
+		System.out.println("SelledproductsList 컨트롤러 start!");
+		
+		Integer WORKSHOP_NUM = (Integer)session.getAttribute("WORKSHOP_NUM");
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		map.put("WORKSHOP_NUM", WORKSHOP_NUM);
+		map.put("selectORDER_STATE", selectORDER_STATE);
+		map.put("selectORDER_METHOD", selectORDER_METHOD);
+		map.put("selectMYPRODUCT", selectMYPRODUCT);
+		map.put("selectListAlign", selectListAlign);
+		map.put("searchType", searchType);
+		map.put("keyword", keyword);
+
+		System.out.println("WORKSHOP_NUM="+WORKSHOP_NUM);
+		System.out.println("selectORDER_STATE="+selectORDER_STATE);
+		System.out.println("selectORDER_METHOD="+selectORDER_METHOD);
+		System.out.println("selectMYPRODUCT="+selectMYPRODUCT);
+		System.out.println("selectListAlign="+selectListAlign);
+		System.out.println("searchType="+searchType);
+		System.out.println("keyword="+keyword);
+		ArrayList<Map<String, Object>> productList = productManagementService.getSelledproductList(map);
 	
+		System.out.println("SelledproductList의 size : " +productList.size());
+		
+		return productList;
+	}	
 	
 	
 }

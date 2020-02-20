@@ -48,6 +48,16 @@ public class ProductManagementServiceImpl implements ProductManagementService {
 		
 		return productList;
 	}
+	
+	@Override
+	public ArrayList<Map<String, Object>> getSelledproductList(HashMap<String, Object> map) {
+		ArrayList<Map<String, Object>> productList = null;
+		
+		ProductManagementMapper managementMapper = sqlSession.getMapper(ProductManagementMapper.class);
+		productList = managementMapper.getSelledproductList(map);
+		
+		return productList;
+	}
 
 
 	@Override
@@ -114,6 +124,7 @@ public class ProductManagementServiceImpl implements ProductManagementService {
 		
 		return result;
 	}
+
 
 
 }

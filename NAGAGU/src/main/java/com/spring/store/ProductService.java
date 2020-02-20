@@ -3,6 +3,7 @@ package com.spring.store;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import com.spring.order.ProductOrderVO;
 import com.spring.workshop.WorkShopMemberVO;
 
 public interface ProductService {
@@ -22,5 +23,7 @@ public interface ProductService {
 	HashMap<String, Object> insertProductLike(HashMap<String, Object> map);	//ProductDetail-좋아요
 	int getProductLike(HashMap<String, Object> map);	//ProductDetail-좋아요 list뿌리기
 	ArrayList<ProductVO> getMemberLikeProduct(HashMap<String, Object> map);//좋아요 사진 리스트
+	
 
+	int updateSales(HashMap<String, Object> map);		//결제완료되면 판매량+1해줌
 }
