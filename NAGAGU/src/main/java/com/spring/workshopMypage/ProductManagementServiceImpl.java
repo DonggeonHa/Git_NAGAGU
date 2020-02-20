@@ -59,6 +59,14 @@ public class ProductManagementServiceImpl implements ProductManagementService {
 		return productList;
 	}
 
+	@Override
+	public String[] getOrder_amount() {
+		ProductManagementMapper managementMapper = sqlSession.getMapper(ProductManagementMapper.class);
+		
+		String[] order_amount = managementMapper.getOrder_amount(); 
+	//	System.out.println("order_amount="+order_amount);
+		return order_amount;
+	}
 
 	@Override
 	public int modifyStatus(HashMap<String, Object> map) {
@@ -124,6 +132,7 @@ public class ProductManagementServiceImpl implements ProductManagementService {
 		
 		return result;
 	}
+
 
 
 

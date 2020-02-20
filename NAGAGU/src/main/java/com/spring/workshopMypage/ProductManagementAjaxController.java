@@ -213,7 +213,7 @@ public class ProductManagementAjaxController {
 	//---------------------------------------판매된 상품 관리 페이지 리스트
 	@ResponseBody
 	@PostMapping(value="/SelledproductsList.my" ,produces="application/json;charset=UTF-8")
-	public ArrayList<Map<String, Object>> SelledproductsList(String selectORDER_STATE, String selectORDER_METHOD, String selectMYPRODUCT, String selectListAlign, String searchType, String keyword, HttpSession session) {
+	public ArrayList<ArrayList<Map<String, Object>>> SelledproductsList(String selectORDER_STATE, String selectORDER_METHOD, String selectMYPRODUCT, String selectListAlign, String searchType, String keyword, HttpSession session) {
 		System.out.println("SelledproductsList 컨트롤러 start!");
 		
 		Integer WORKSHOP_NUM = (Integer)session.getAttribute("WORKSHOP_NUM");
@@ -233,12 +233,30 @@ public class ProductManagementAjaxController {
 		System.out.println("selectListAlign="+selectListAlign);
 		System.out.println("searchType="+searchType);
 		System.out.println("keyword="+keyword);
-		ArrayList<Map<String, Object>> productList = productManagementService.getSelledproductList(map);
-	
-		System.out.println("SelledproductList의 size : " +productList.size());
 		
-		return productList;
+		String[] order_amount= productManagementService.getOrder_amount();
+		System.out.println("order_amount.length="+order_amount.length);
+		for(int i=0;i<order_amount.length; i++) {
+			System.out.println(order_amount[i]);
+		}
+	
+		ArrayList<Map<String, Object>> listbyOrder_amount = null;
+
+		ArrayList<ArrayList<Map<String, Object>>> selledProductList = new ArrayList<ArrayList<Map<String, Object>>>();
+		for(int i=0; i<order_amount.length; i++) {
+			map.put("order_amount", order_amount[i]);
+			System.out.println("order_amount["+i+"]="+order_amount[i]);
+			listbyOrder_amount = productManagementService.getSelledproductList(map);			
+			selledProductList.add(i, listbyOrder_amount);
+	
+		}
+	
+		System.out.println("SelledproductList의 size : " +selledProductList.size());
+		
+		return selledProductList;
 	}	
+	
+	
 	
 	
 }
