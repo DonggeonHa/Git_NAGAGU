@@ -278,6 +278,9 @@ public class MemberServiceImpl implements MemberService{
 			memberMapper memberMapper = sqlSession.getMapper(memberMapper.class);
 			System.out.println("findmemberPW Impl: " + memberVO.getMEMBER_EMAIL() + memberVO.getMEMBER_NAME());
 			res = memberMapper.findMemberPW(memberVO);
+			
+			System.out.println("findMemberPW impl 결과값: " + res);
+			
 		} catch (Exception e) {
 			System.out.println("회원정보 조회 실패!" + e.getMessage());
 		}
@@ -303,9 +306,26 @@ public class MemberServiceImpl implements MemberService{
 			memberMapper memberMapper = sqlSession.getMapper(memberMapper.class);
 			
 			result = memberMapper.lastPwUpdate(pass1, member_email);
+			
 		} catch (Exception e) {
 			System.out.println("비밀번호 확인 실패!" + e.getMessage());
 		}
 		return result;
+	}
+
+	@Override
+	public MemberVO findMemberEmail(MemberVO memberVO) {
+		MemberVO member = new MemberVO();
+		
+		try {
+			memberMapper memberMapper = sqlSession.getMapper(memberMapper.class);
+			
+			member = memberMapper.findMemberEmail(memberVO);
+			
+		} catch(Exception e) {
+			System.out.println("아이디 찾기 실패" + e.getMessage());
+		}
+		
+		return member;
 	}
 }

@@ -3,6 +3,8 @@ package com.spring.main;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Random;
 
 import javax.mail.internet.MimeMessage;
@@ -473,8 +475,10 @@ public class MainController {
 		        response.setContentType("text/html; charset=utf-8");
 		        PrintWriter writer;
 		        writer = response.getWriter();
-		        
-				writer.write("<script>alert('가입한 회원 정보가 없습니다.'); location.href='FindMember.ma';</script>");
+		        System.out.println("결과값이 0 인데 왜 alert창이 실행 안됨?");
+				writer.println("<script>alert('가입한 회원 정보가 없습니다.'); location.href='FindMember.ma';</script>");
+				writer.flush();
+				
 			} catch(Exception e) {
 				System.out.println("비밀번호 찾기 회원정보 보기 실패!");
 				e.getMessage();
@@ -482,7 +486,7 @@ public class MainController {
 			
 		}
 		
-		return("redirect:/FindMember.ma");	//실패시 회원가입 창으로 이동
+		return null;	//실패시 회원가입 창으로 이동
     }
     
  // mailSending 코드
@@ -545,7 +549,7 @@ public class MainController {
         
         try {
            writer = response.getWriter();
-           writer.write("<script>alert('이메일을 확인 해주세요.');</script>");
+           writer.write("<script>alertify.alert('이메일을 확인 해주세요.');</script>");
            redirect.addAttribute("MEMBER_EMAIL", request.getParameter("mm"));
            mav.addObject("memberVO", memberVO);
            mav.setViewName("FindPWForm");
@@ -557,7 +561,7 @@ public class MainController {
         return mav;
     }
     
-    @RequestMapping(value="/FindPw.ma", method = RequestMethod.POST)
+    @RequestMapping(value="/FindPw.ma", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
     public String findPw(Model model, HttpServletRequest request, MemberVO memberVO) {
     	String pass2 = (String)request.getParameter("MEMBER_PASS2");
     	String email = (String)request.getParameter("MEMBER_EMAIL");
@@ -583,12 +587,22 @@ public class MainController {
     }
     
     @RequestMapping(value="/FindMemberEmail.ma", method = RequestMethod.GET)
-    public String findMemberEmail(HttpServletRequest request, MemberVO memberVO) {
+    public ModelAndView findMemberEmail(HttpServletRequest request, MemberVO memberVO, HttpServletResponse response) {
+    	MemberVO member = new MemberVO();
+    	ModelAndView mav = new ModelAndView();
+        
+    	System.out.println("값 체크1: "+(String)request.getParameter("MEMBER_NAME"));
+    	System.out.println("값 체크2: "+(String)request.getParameter("MEMBER_PHONE"));
+    	memberVO.setMEMBER_NAME((String)request.getParameter("MEMBER_NAME"));
+    	memberVO.setMEMBER_PHONE((String)request.getParameter("MEMBER_PHONE"));
     	
-    	System.out.println("값 체크: "+(String)request.getParameter("MEMBER_NAME"));
-//    	memberVO.setMEMBER_NAME((String)request.getParameter("MEMBER_NAME"));
-//    	memberVO.setMEMBER_NAME((String)request.getParameter("MEMBER_NAME"));
+    	member = memberService.findMemberEmail(memberVO);
+        System.out.println(member);
+        	
+        mav.addObject("memberVO", member);
+        mav.setViewName("Admin/Info/FindEmail");
     	
-    	return null;
+    	
+    	return mav;
     }
 }

@@ -65,6 +65,9 @@
 </style>
 <script>
 
+var sub_pw2 = false;
+var sub_pw1 = false;
+
 $(document).ready(function(e){
 	/* e.preventdefault(); */
 });
@@ -92,6 +95,7 @@ function pw_btn() {
 	    contentType : 'application/x-www-form-urlencoded; charset=utf-8',
 	    success : function(retVal) {
 	       if (retVal.res == "chk_pw_success") {
+	    	   alert("네!");
 	    	   chage_pw();
 	       } else { // 실패했다면
 	          alert("임시 비밀번호를 다시 한번 확인해주세요.");
@@ -103,12 +107,12 @@ function pw_btn() {
 	 });
 }
 
+
 $(document).ready(function(){
 	// 비밀번호 정규식(특수문자 / 문자 / 숫자 포함 형태의 8~15자리 이내의 암호 정규식)
 	var pwJ = /^.*(?=^.{8,15}$)(?=.*\d)(?=.*[a-zA-Z])(?=.*[!@#$%^&+=]).*$/;
 	
-	var sub_pw2 = false;
-	var sub_pw1 = false;
+	
 	
 	function showErrorMsg(obj, msg) {
         obj.attr("class", "error_next_box");
@@ -178,7 +182,7 @@ $(document).ready(function(){
 });
 
 function chage_pw() {
-	if(sub_pw2==true && sub_pw1==true){
+	if(sub_pw2==true || sub_pw1==true){
 		document.pw_form.submit();
 	}
 	

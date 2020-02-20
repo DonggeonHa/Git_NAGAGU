@@ -23,7 +23,7 @@ public interface MemberService {
 	public int findMemberPW(MemberVO memberVO);
 	public int updateMemberPW(MemberVO memberVO);
 	int lastPwUpdate(@Param("pass1") String pass1, @Param("member_email") String member_email);
-	
+	MemberVO findMemberEmail(MemberVO memberVO);
 	
 	/* 회원 탈퇴 */
 	public int deleteMember(MemberVO memberVO);
