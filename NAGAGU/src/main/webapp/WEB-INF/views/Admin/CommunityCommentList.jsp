@@ -57,16 +57,17 @@ function selectData() {
 			title += '</thead>';
 			$('#comment-table').append(title);
 			$.each(data, function(index, item) {
+				console.log(item)
 				var output = '';
 				output += '<tbody class="text-center">'
 				output += '<tr>';
-				output += '<td>' + item.pics_RE_NUM + '</td>'; 
-				output += '<td>' + item.pics_RE_PICS + '</td>';
-				output += '<td>' + item.pics_RE_MEMBER + '</td>';
-				output += '<td>' + item.pics_RE_DATE + '</td>';
-				output += '<td>' + item.pics_RE_CONTENT + '</td>';
+				output += '<td>' + item.PICS_RE_NUM + '</td>'; 
+				output += '<td>' + item.PICS_RE_PICS + '</td>';
+				output += '<td>' + item.PICS_RE_MEMBER + '</td>';
+				output += '<td>' + item.PICS_RE_DATE + '</td>';
+				output += '<td>' + item.PICS_RE_CONTENT + '</td>';
 				output += '<td><a href="./deleteCommentPICS.ad" class="del_data" ';
-				output += 'PICS_RE_NUM=' + item.pics_RE_NUM + '><i class="fas fa-trash-alt" ></i></a></td>';
+				output += 'PICS_RE_NUM=' + item.PICS_RE_NUM + '><i class="fas fa-trash-alt" ></i></a></td>';
 				output += '</tr>';
 				output += '</tbody>'
 				console.dir("output : " + output);

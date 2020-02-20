@@ -82,14 +82,18 @@
 		<result property="MY_CLASS_MEMBERNUM" column="MY_CLASS_MEMBERNUM" />
 		<result property="MY_CLASS_CLASSNUM" column="MY_CLASS_CLASSNUM" />
 		<result property="MY_CLASS_STATUS" column="MY_CLASS_STATUS" />
+		<result property="MY_CLASS_AMOUNT" column="MY_CLASS_AMOUNT" />
+		<result property="MY_CLASS_DATE" column="MY_CLASS_DATE" />
+		<result property="MY_CLASS_TICKET" column="MY_CLASS_TICKET" />
 	</resultMap>
+	
 	
 	<insert id="insertClassInfo" parameterType="com.spring.academy.MyClassVO">
 		<selectKey resultType="int" keyProperty="MY_CLASS_NUM" order="BEFORE">
 			SELECT my_class_seq.nextval FROM dual     
 		</selectKey>
- 		INSERT INTO my_class(MY_CLASS_NUM, MY_CLASS_MEMBERNUM, MY_CLASS_CLASSNUM) 
-			 		VALUES(#{MY_CLASS_NUM}, #{MY_CLASS_MEMBERNUM}, #{MY_CLASS_CLASSNUM})
+ 		INSERT INTO my_class(MY_CLASS_NUM, MY_CLASS_MEMBERNUM, MY_CLASS_CLASSNUM,MY_CLASS_AMOUNT,MY_CLASS_DATE,MY_CLASS_TICKET) 
+			 		VALUES(#{MY_CLASS_NUM}, #{MY_CLASS_MEMBERNUM}, #{MY_CLASS_CLASSNUM},#{MY_CLASS_AMOUNT},#{MY_CLASS_DATE},#{MY_CLASS_TICKET})
  	</insert>
 
 	 
@@ -139,7 +143,7 @@
 	</update>
 	
 	<!-- 경태 마이페이지 내강의 목록 -->
-	<select id="getLoginMemberClass" parameterType="java.util.HashMap" resultMap="classResultMap">
+	<select id="getLoginMemberClass" parameterType="java.util.HashMap" resultMap="hashmapVO">
 		SELECT * FROM ACADEMY, MY_CLASS
 		WHERE MY_CLASS_MEMBERNUM = #{MEMBER_NUM} AND MY_CLASS_CLASSNUM=CLASS_NUMBER
 	</select>

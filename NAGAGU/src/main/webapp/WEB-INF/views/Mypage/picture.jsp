@@ -272,6 +272,7 @@
 		//처음 로드하고 사진 가져오기 호출
 		getPics();
 		SetGridItemHeight();
+		$('.card-wrap').children().eq(1).find('div.card-body').css('color','#ef900e')
 	});
 
 </script>

@@ -1139,13 +1139,15 @@
 		function Payment_Card(){
 			var Amount = $('#Amount').text();
 			var IMP = window.IMP; // 생략가능
+			var ticketNum = $('#sel').val()*1
+			console.log(typeof(ticketNum))
 			IMP.init('imp91912911');
 			// 'iamport' 대신 부여받은 "가맹점 식별코드"를 사용
 			// i'mport 관리자 페이지 -> 내정보 -> 가맹점식별코드
 			IMP.request_pay({
 				pg : 'kakaopay', // version 1.1.0부터 지원.
 				pay_method : 'card',
-				merchant_uid : 'merchant_' + new Date().getTime(),
+				merchant_uid : new Date().getTime(),
 				name : 'NAGAGU 결제',
 				//결제창에서 보여질 이름
 				amount : Amount,
@@ -1156,22 +1158,30 @@
 	            buyer_addr : '서울 백악관',
 	            buyer_postcode : '123-456'
 				
-			}, function(rsp) {
-	            if ( rsp.success ) {
+			},function(rsp) {
+	            if ( rsp.success ){
+	            	console.log(Amount)
+                	console.log(rsp.merchant_uid)
+                	console.log(<%=cl.getCLASS_NUMBER()%>)
+                	console.log(<%=MEMBER_NUM%>)
+                	console.log(typeof(rsp.merchant_uid));
+	            	var id = rsp.merchant_uid; 
 	                //[1] 서버단에서 결제정보 조회를 위해 jQuery ajax로 imp_uid 전달하기
-	                jQuery.ajax({
+	                $.ajax({
 	                    url: "./ClassInfo.ac", //cross-domain error가 발생하지 않도록 주의해주세요
 	                    type: 'POST',
 	                    dataType: 'json',
 	                    data: {
-	                        'CLASS_NUMBER' : <%=cl.getCLASS_NUMBER()%>,
-	                		'MEMBER_NUM' : <%=MEMBER_NUM%>
+	                        'MY_CLASS_CLASSNUM' : <%=cl.getCLASS_NUMBER()%>,
+	                		'MY_CLASS_MEMBERNUM' : <%=MEMBER_NUM%>,
+	                		'MY_CLASS_DATE': id,
+	                		'MY_CLASS_TICKET': ticketNum,
+	                		'MY_CLASS_AMOUNT' : Amount
 	                        //기타 필요한 데이터가 있으면 추가 전달
-	                    }
+	                    },
+	                    contentType: 'application/x-www-form-urlencoded; charset=utf-8'
 	                }).done(function(data) {
-	                    
 	                });
-	                //성공시 이동할 페이지
 	                location.href='./success.ac?CLASS_NUMBER=<%=cl.getCLASS_NUMBER()%>&amount5=' + Amount;
 	            } else {
 	                msg = '결제에 실패하였습니다.';

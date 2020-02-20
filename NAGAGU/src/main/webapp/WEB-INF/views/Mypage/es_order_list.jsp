@@ -442,4 +442,7 @@
 		
 		window.location.href='mypage_estimate.my?ES_ORDER_STATE=' + ES_ORDER_STATE;  
 	});
+	$(document).ready(function(){
+		$('.card-wrap').children().eq(8).find('div.card-body').css('color','#ef900e')
+	})
 </script>

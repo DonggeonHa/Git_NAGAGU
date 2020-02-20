@@ -277,7 +277,7 @@
 		       			 	if(retVal.res=="OK"){
 			       			 console.log(retVal.myPaidOrder)
 			       			 response(
-                                $.map(retVal.myPaidOrder, function(item) {    //json[i] 번째 에 있는게 item 임.
+                                $.map(retVal.myPaidOrder, function(item){    //json[i] 번째 에 있는게 item 임.
                                     return {
                                         label: item.PRODUCT_TITLE,     //UI 에서 보여지는 글자, 실제 검색어랑 비교 대상
                                         number: item.PRODUCT_NUM,   //그냥 사용자 설정값?

@@ -590,6 +590,8 @@
 			}, function(rsp) {
 				if ( rsp.success ){
 					var id= rsp.merchant_uid;
+					console.log(typeof(rsp.merchant_uid));
+					return
 					for(var i=0; i<$('.BASKET_NUM').length;i++){
 						var BASKET_NUM = $('input[name=BASKET_NUM]')[i].value
 						var PRODUCT_NUM = $('input[name=PRODUCT_NUM]')[i].value
@@ -601,7 +603,7 @@
 					            	 'ORDER_PHONE':ORDER_PHONE,'ORDER_MEMO':ORDER_MEMO,'ORDER_AMOUNT': id, 'ORDER_METHOD' : card},
 					             contentType:
 					 				'application/x-www-form-urlencoded; charset=utf-8'
-					 		});
+				 		});
 					}
 					var arr = new Array();
 					$('.BASKET_NUM').each(function (index,item){

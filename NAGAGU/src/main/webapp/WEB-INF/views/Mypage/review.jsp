@@ -303,5 +303,6 @@
 		}) 
 		//처음 로드하고 사진 가져오기 호출
 		getPics();
+		$('.card-wrap').children().eq(7).find('div.card-body').css('color','#ef900e')
 	})
 </script>

@@ -830,6 +830,8 @@
 				document.edit_member_form.submit();
 			}
 		});
+		
+		$('.card-wrap').children().eq(2).find('div.card-body').css('color','#ef900e')
 	});
 	
 	function cancel() {

@@ -184,7 +184,7 @@
 				<a href="./index.ma" class="btn btn-outline-dark btn-lg w-100" role="button" aria-pressed="true">메인으로</a>
 			</div>
 			<div class="col-6">
-				<a href="./order_vbank.my" class="btn btn-outline-warning btn-lg w-100" role="button" aria-pressed="true">구매현황으로</a>
+				<a href="./mypage_class.my" class="btn btn-outline-warning btn-lg w-100" role="button" aria-pressed="true">구매현황으로</a>
 			</div>
 		</div>
 	</div>		

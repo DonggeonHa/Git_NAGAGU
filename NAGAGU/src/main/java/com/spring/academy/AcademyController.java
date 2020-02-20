@@ -3,6 +3,7 @@ package com.spring.academy;
 import java.io.File;
 import java.sql.Timestamp;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -884,10 +885,11 @@ public class AcademyController {
 	}
 	
 	@RequestMapping(value = "/ClassInfo.ac")
-	public void ClassInfo(@RequestParam(value="CLASS_NUMBER", required=false) int CLASS_NUMBER, @RequestParam(value="MEMBER_NUM", required=false) int MEMBER_NUM) throws Exception {
-		MyClassVO vo = new MyClassVO();
-		vo.setMY_CLASS_MEMBERNUM(MEMBER_NUM);
-		vo.setMY_CLASS_CLASSNUM(CLASS_NUMBER);
+	public void ClassInfo(HttpServletRequest request,MyClassVO vo) throws Exception {
+		System.out.println("1"+vo.getMY_CLASS_CLASSNUM());
+		System.out.println("2"+vo.getMY_CLASS_MEMBERNUM());
+		System.out.println("3"+vo.getMY_CLASS_TICKET());
+		System.out.println("4"+vo.getMY_CLASS_DATE());
 		
 		boolean result = false;
 		

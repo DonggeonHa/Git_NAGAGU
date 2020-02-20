@@ -180,6 +180,8 @@
 		<result property="ESTIMATE_MINPRICE" column="ESTIMATE_MINPRICE"/>
 		<result property="ESTIMATE_OFFERCOUNT" column="ESTIMATE_OFFERCOUNT"/>
 	</resultMap>
+	<resultMap type="java.util.HashMap" id="hashmapVO">
+	</resultMap>
 	
 	<!-- 어드민 -->
 	<insert id="insert_admin" parameterType="com.spring.admin.AdminMemberVO">
@@ -263,7 +265,7 @@
  		select * from NAGAGU_MEMBER where MEMBER_NUM = #{PICS_MEMBER}
  	</select>
  	
- 	<select id="getPICSComment" parameterType="int" resultMap="commentResultMap"> <!-- 이거 처리한 결과물을 list 타입으로 만들어주면 된다. select id은 내용을 호출 함. -->
+ 	<select id="getPICSComment" parameterType="int" resultMap="hashmapVO"> <!-- 이거 처리한 결과물을 list 타입으로 만들어주면 된다. select id은 내용을 호출 함. -->
 		select *
 		from (select rownum rnum, PICS_RE_NUM, PICS_RE_PICS, PICS_RE_MEMBER, PICS_RE_DATE, PICS_RE_CONTENT, PICS_RE_REF, PICS_RE_STEP, PICS_RE_LEVEL
 			  from(select * 

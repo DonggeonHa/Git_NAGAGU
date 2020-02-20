@@ -2,10 +2,9 @@
 
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.2/animate.css">
 <style>
-	.container-mypage{
-		margin-top: 50px ;
-		margin-bottom: 50px ;				 
-	}		
+	.container{
+		margin-bottom: 100px;
+	}
 	.container-mypage a,.container-mypage  a:link,.container-mypage  a:hover {
 		text-decoration: none;
 		color: white !important;
@@ -103,10 +102,19 @@
 	width: 100px;
 	height: 100px;
 	}
+	.imgsize {
+		width: 120px;
+		height: 120px;
+	}
 	.card, .card a:link, .card a:visited, .card.my a {
 		color: white;
 		text-decoration: none;
 	}
+	
+	.container-mypage{
+		margin-top: 50px ;
+		margin-bottom: 50px ;				 
+	}		
 	/* kt */
 	a dl.text-center { 
 		color: black;
@@ -129,6 +137,7 @@
 		margin-top: 15px;
 	}
 	.each-row {
+		margin-bottom: 15px;
 		border-bottom: 1px solid grey;
 		border-color: rgba(0, 0, 0, 0.2);
 	}
@@ -154,6 +163,7 @@
 		padding-top: 10px; */
 		/* background-color: rgba(239,144,14,0.3); */
 		border-bottom: 1px solid rgba(239,144,14,0.3);
+		border-top: 1px solid rgba(239,144,14,0.3);
 		color: rgb(0, 0, 0, 0.2) !important;
 	}.category *{
 		align-items: baseline;
@@ -189,7 +199,7 @@
     }
 </style>
 
-<div class="container container-mypage" role="main">
+<div class="container-mypage" role="main">
 	<div class="row card-wrap  text-center">
 		<div class="card card-hover">
 			<a href="mypage_like.my" class="href">
@@ -267,7 +277,7 @@
 	</div>
 </div>
 		
-<div class="container container-mypage bg-light">
+<div class="container bg-light">
 	<nav>
 		<div class="nav d-flex justify-content-between shadow p-3 mb5 bg-white rounded" id="nav-tab" role="tablist">
 	    	<a class="nav-item nav-link" status="0" id="nav-finish-tab" data-toggle="tab" href="#" role="tab" aria-controls="nav-profile" aria-selected="false">
@@ -460,6 +470,5 @@
 		
 		
 		getBasket()
-		$('.card-wrap').children().eq(5).find('div.card-body').css('color','#ef900e') 
 	});
 </script>
