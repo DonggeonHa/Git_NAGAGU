@@ -3,6 +3,7 @@ package com.spring.mapper;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import com.spring.order.ProductOrderVO;
 import com.spring.store.ProductVO;
 import com.spring.workshop.WorkShopMemberVO;
 
@@ -19,4 +20,7 @@ public interface ProductMapper {
 	int updateProductLike(HashMap<String, Object> map);
 	int getProductLike(HashMap<String, Object> map);	//ProductDetail-좋아요 list뿌리기
 	ArrayList<ProductVO> getMemberLikeProduct(HashMap<String, Object> map);
+	
+	int updateSales(HashMap<String, Object> map);
+	
 }

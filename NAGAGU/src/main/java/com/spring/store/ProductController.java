@@ -221,13 +221,10 @@ public class ProductController {
 		WorkShopMemberVO workshopVO = productService.selectWorkshop(vo);
 		int WorkshopMatchingNumber = workshopVO.getWORKSHOP_NUM();
 		int WorkshopNum = workshopVO.getWORKSHOP_NUM();
+		String WorkshopPic = workshopVO.getWORKSHOP_PICTURE();
 		model.addAttribute("WorkshopNum",WorkshopNum);
 		model.addAttribute("WorkshopMatchingNumber",WorkshopMatchingNumber);
-//		/*qna 답글 출력시 워크샵 name, pic 필요함*/
-//		String WorkshopName = workshopVO.getWORKSHOP_NAME();
-//		String WorkshopPicture = workshopVO.getWORKSHOP_PICTURE();
-//		model.addAttribute("WorkshopName",WorkshopName);
-//		model.addAttribute("WorkshopPicture",WorkshopPicture);
+		model.addAttribute("WorkshopPic",WorkshopPic);
 
 		
 		
@@ -743,10 +740,10 @@ public class ProductController {
 	  vo.setPRODUCT_BRIEF(request.getParameter("PRODUCT_BRIEF"));
 	  vo.setPRODUCT_CATEGORY(request.getParameter("PRODUCT_CATEGORY"));
 	  vo.setPRODUCT_PRICE(Integer.parseInt(request.getParameter("PRODUCT_PRICE")));
-	  vo.setPRODUCT_GRADE(0);   //review 평점 업로드시 update 해주기. (오케이)
-	  vo.setPRODUCT_READ(0);   //detail 들어갈 시 update 해주기. (오케이)
-	  vo.setPRODUCT_SALES(0);   //결제시 update 해주기
-	  vo.setPRODUCT_LIKE(0);   //실시간 update 해주기      (오케이)
+	  vo.setPRODUCT_GRADE(0);   //review 평점 업로드시 update 해주기. (OK)
+	  vo.setPRODUCT_READ(0);   //detail 들어갈 시 update 해주기. (OK)
+	  vo.setPRODUCT_SALES(0);   //결제시 update 해주기 (OK)
+	  vo.setPRODUCT_LIKE(0);   //실시간 update 해주기      (OK)
 	  vo.setPRODUCT_SIZE(PRODUCT_SIZE);
 	  vo.setPRODUCT_COLOR(PRODUCT_COLOR);
 	  vo.setPRODUCT_INFO(request.getParameter("PRODUCT_INFO"));

@@ -132,12 +132,11 @@ public class ProductManagementController {
 			return null;
 		}
 
-		vo.setPRODUCT_DATE(new Timestamp(System.currentTimeMillis()));
+		vo.setPRODUCT_NUM(Integer.parseInt(request.getParameter("PRODUCT_NUM")));
 		vo.setPRODUCT_TITLE(request.getParameter("PRODUCT_TITLE"));
 		vo.setPRODUCT_BRIEF(request.getParameter("PRODUCT_BRIEF"));
 		vo.setPRODUCT_CATEGORY(request.getParameter("PRODUCT_CATEGORY"));
 		vo.setPRODUCT_PRICE(Integer.parseInt(request.getParameter("PRODUCT_PRICE")));
-
 		vo.setPRODUCT_SIZE(PRODUCT_SIZE);
 		vo.setPRODUCT_COLOR(PRODUCT_COLOR);
 		vo.setPRODUCT_INFO(request.getParameter("PRODUCT_INFO"));
@@ -154,19 +153,18 @@ public class ProductManagementController {
 		vo.setPRODUCT_BANNER(str);
 		vo.setPRODUCT_STOCK(Integer.parseInt(request.getParameter("PRODUCT_STOCK")));
 
-		ModelAndView mav = new ModelAndView();
-		mav.setViewName("redirect:productlist.pro?PRODUCT_CATEGORY=all");
-		mav.addObject("ProductVO", vo);
-
-		// result = productService.insertProduct(vo);
+		
 		int result = productManagementService.updateProduct(vo);
-
 		if(result == 0) {
 			System.out.println("상품 수정 실패!");
 			return null;
 		}
 		System.out.println("상품 수정 완료!");
 
+		
+		ModelAndView mav = new ModelAndView();
+		mav.setViewName("redirect:productlist.pro?PRODUCT_CATEGORY=all");
+		mav.addObject("ProductVO", vo);
 		return mav;
 	}
 

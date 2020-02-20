@@ -72,6 +72,22 @@
 		<result property="PRODUCT_STATUS" column="PRODUCT_STATUS" />
 		<result property="PRODUCT_STOCK" column="PRODUCT_STOCK" />
 	</resultMap>
+
+	<resultMap type="java.util.HashMap" id="SelledproductListResultMap">
+		<result property="ORDER_NUM" column="ORDER_NUM" />	
+		<result property="ORDER_MEMBER" column="ORDER_MEMBER" />	
+		<result property="ORDER_PRICE" column="ORDER_PRICE" />	
+		<result property="ORDER_DATE" column="ORDER_DATE" />	
+		<result property="ORDER_AMOUNT" column="ORDER_AMOUNT" />	
+		<result property="ORDER_PERSON" column="ORDER_PERSON" />	
+		<result property="ORDER_MEMO" column="ORDER_MEMO" />
+		<result property="ORDER_METHOD" column="ORDER_METHOD" />		
+		<result property="ORDER_STATE" column="ORDER_STATE" />		
+		<result property="ORDER_ADDRESS" column="ORDER_ADDRESS" />
+		<result property="ORDER_PHONE" column="ORDER_PHONE" />		
+		<result property="PRODUCT_TITLE" column="PRODUCT_TITLE" />	
+		<result property="PRODUCT_NUM" column="PRODUCT_NUM" />		
+	</resultMap>
 	
 	<resultMap type="com.spring.store.ProductVO" id="productResultMap">
 		<result property="PRODUCT_NUM" column="PRODUCT_NUM" />	
@@ -169,7 +185,22 @@
 		ORDER BY ${selectListAlign} DESC	
 	</select>
 
+	<select id="getSelledproductList" parameterType="java.util.HashMap" resultMap="SelledproductListResultMap">
+		SELECT O.ORDER_NUM, O.ORDER_MEMBER, O.ORDER_PRICE, O.ORDER_DATE, O.ORDER_AMOUNT, O.ORDER_PERSON, 
+		O.ORDER_MEMO, O.ORDER_METHOD, O.ORDER_STATE, O.ORDER_ADDRESS, O.ORDER_PHONE, 
+		P.PRODUCT_TITLE, P.PRODUCT_NUM
+			FROM PRODUCT_ORDER O, PRODUCT P, NAGAGU_WORKSHOP_MEMBER W, BASKET B
+				WHERE W.WORKSHOP_NUM = #{WORKSHOP_NUM}
+				AND B.BASKET_PRODUCT= P.PRODUCT_NUM 
+				AND B.BASKET_NUM = O.ORDER_NUM
+				AND O.ORDER_AMOUNT = #{order_amount, jdbcType=VARCHAR}
+		ORDER BY ORDER_DATE DESC
+	</select>
 
+	<select id="getOrder_amount" resultType="String">
+		SELECT DISTINCT ORDER_AMOUNT FROM PRODUCT_ORDER
+	</select>	
+	
 	<update id="modifyStatus" parameterType="java.util.HashMap">  
 		UPDATE PRODUCT 
 			SET PRODUCT_STATUS = #{to_status}
@@ -188,13 +219,20 @@
 		SELECT count(*) FROM PRODUCT_QNA WHERE QNA_PRODUCT = #{PRODUCT_NUM} 		
 	</select>	
 
-	<select id="checkReviewCount" parameterType="java.util.HashMap" resultType="int">
-		SELECT count(*) FROM PRODUCT_REVIEW WHERE REVIEW_PRODUCT = #{PRODUCT_NUM} 		
-	</select>	
 	
 	<!-- 상품글 수정 -->
  	<select id="getproductDetail" parameterType="int" resultMap="productResultMap"> 
  		SELECT * FROM PRODUCT WHERE PRODUCT_NUM = #{PRODUCT_NUM}
  	</select>	
-	
+ 	<update id="updateProduct" parameterType="com.spring.store.ProductVO">
+ 		update PRODUCT set 
+ 			PRODUCT_TITLE=#{PRODUCT_TITLE}, PRODUCT_BRIEF=#{PRODUCT_BRIEF}, PRODUCT_CATEGORY=#{PRODUCT_CATEGORY}, PRODUCT_PRICE=#{PRODUCT_PRICE}, 
+	 		PRODUCT_SIZE=#{PRODUCT_SIZE}, PRODUCT_COLOR=#{PRODUCT_COLOR}, PRODUCT_INFO=#{PRODUCT_INFO}, PRODUCT_SHIP_PRICE=#{PRODUCT_SHIP_PRICE}, 
+	 		PRODUCT_SHIP_COMPANY=#{PRODUCT_SHIP_COMPANY}, PRODUCT_SHIP_RETURN_PRICE=#{PRODUCT_SHIP_RETURN_PRICE}, PRODUCT_SHIP_CHANGE_PRICE=#{PRODUCT_SHIP_CHANGE_PRICE}, 
+	 		PRODUCT_SHIP_RETURN_PLACE=#{PRODUCT_SHIP_RETURN_PLACE}, PRODUCT_SHIP_DAYS=#{PRODUCT_SHIP_DAYS}, PRODUCT_SHIP_INFO=#{PRODUCT_SHIP_INFO}, 
+	 		PRODUCT_AS_INFO=#{PRODUCT_AS_INFO}, PRODUCT_RETURN_INFO=#{PRODUCT_RETURN_INFO},
+	 		PRODUCT_STORE_INFO=#{PRODUCT_STORE_INFO}, PRODUCT_BANNER=#{PRODUCT_BANNER}, PRODUCT_STOCK=#{PRODUCT_STOCK}, PRODUCT_IMAGE=#{PRODUCT_IMAGE}
+ 		where PRODUCT_NUM=#{PRODUCT_NUM} 
+ 	</update>
+ 		
 </mapper>

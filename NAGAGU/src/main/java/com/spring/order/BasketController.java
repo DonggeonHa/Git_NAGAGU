@@ -19,6 +19,7 @@ import com.spring.member.MemberService;
 import com.spring.member.MemberVO;
 import com.spring.order.BasketService;
 import com.spring.order.BasketVO;
+import com.spring.store.ProductService;
 import com.spring.store.ProductVO;
 
 @Controller
@@ -27,7 +28,8 @@ public class BasketController {
 	private BasketService basketService;
 	@Autowired
 	private MemberService memberService;
-	
+	@Autowired
+	private ProductService productService;
 	//폼에서 받아와서 장바구니페이지(이동)
 	@RequestMapping(value = "/mypage_basket.my")
 	public String MypageBasket() {
@@ -155,6 +157,9 @@ public class BasketController {
 					map.put("BASKET_NUM", Integer.parseInt(arr[i]));
 					//basketVO.setBASKET_NUM(Integer.parseInt(arr[i]));
 					int result = basketService.updateCheck(map);
+					
+					//선주-결제되면 PRODUCT 테이블에서 PRODUCT_SALES+1해줌(판매량+1)
+					productService.updateSales(map);
 				}
 			}
 			retVal.put("res", "OK");
@@ -176,7 +181,7 @@ public class BasketController {
 			model.addAttribute("memberDetail",memberDetail);
 			model.addAttribute("orderList",orderList);
 			return "Mypage/order";
-		}
+	}
 	//결제완료 후 이동 페이지
 	@RequestMapping(value = "/mypage_order_success.my")
 	public String mypage_order_success() {
@@ -220,6 +225,7 @@ public class BasketController {
 		System.out.println("insertOrderProduct 컨트롤러");
 		try {
 			basketService.insertOrder(productOrderVO);
+
 			retVal.put("res", "OK");
 		}catch(Exception e) {
 			retVal.put("res", "FAIL");

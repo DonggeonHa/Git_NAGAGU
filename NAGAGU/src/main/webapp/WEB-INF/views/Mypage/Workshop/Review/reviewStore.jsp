@@ -45,7 +45,7 @@
 					<div class="d-flex justify-content-start">
 						<div class="select2">
 							<select class="search_hidden_state justify-content-start form-control"  id="selectCategory" name="selectCategory" onchange="btn_select2()" style="height: 33px;">
-								<option value="all">전체</option>
+								<option value="all">카테고리</option>
 								<option value="table">책상</option>
 								<option value="chair">의자</option>
 								<option value="bookshelf">책장</option>

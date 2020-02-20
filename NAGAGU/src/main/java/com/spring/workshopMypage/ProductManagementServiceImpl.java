@@ -48,7 +48,25 @@ public class ProductManagementServiceImpl implements ProductManagementService {
 		
 		return productList;
 	}
+	
+	@Override
+	public ArrayList<Map<String, Object>> getSelledproductList(HashMap<String, Object> map) {
+		ArrayList<Map<String, Object>> productList = null;
+		
+		ProductManagementMapper managementMapper = sqlSession.getMapper(ProductManagementMapper.class);
+		productList = managementMapper.getSelledproductList(map);
+		
+		return productList;
+	}
 
+	@Override
+	public String[] getOrder_amount() {
+		ProductManagementMapper managementMapper = sqlSession.getMapper(ProductManagementMapper.class);
+		
+		String[] order_amount = managementMapper.getOrder_amount(); 
+	//	System.out.println("order_amount="+order_amount);
+		return order_amount;
+	}
 
 	@Override
 	public int modifyStatus(HashMap<String, Object> map) {
@@ -108,9 +126,14 @@ public class ProductManagementServiceImpl implements ProductManagementService {
 
 	@Override
 	public int updateProduct(ProductVO productVO) {
-		// TODO Auto-generated method stub
-		return 0;
+		int result = 0;
+		ProductManagementMapper managementMapper = sqlSession.getMapper(ProductManagementMapper.class);
+		result = managementMapper.updateProduct(productVO);
+		
+		return result;
 	}
+
+
 
 
 }

@@ -1,6 +1,7 @@
 package com.spring.store;
 
 import java.util.ArrayList;
+
 import java.util.HashMap;
 
 import org.apache.ibatis.session.SqlSession;
@@ -9,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 import com.spring.mapper.MemberLikeMapper;
 import com.spring.mapper.ProductMapper;
+import com.spring.order.ProductOrderVO;
 import com.spring.workshop.WorkShopMemberVO;
 
 @Service
@@ -166,6 +168,15 @@ public class ProductServiceImpl implements ProductService{
 			e.printStackTrace();
 		}  
 		return vo;
+	}
+
+	@Override
+	public int updateSales(HashMap<String, Object> map) {
+		int res;
+		ProductMapper productMapper = sqlSession.getMapper(ProductMapper.class);
+
+		res = productMapper.updateSales(map);
+		return res;
 	}
 
 
