@@ -1,6 +1,7 @@
 package com.spring.mapper;
 
 import java.util.List;
+import java.util.Map;
 
 import com.spring.academy.ClassVO;
 import com.spring.academy.Class_qnaVO;

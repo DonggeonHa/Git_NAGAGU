@@ -201,7 +201,9 @@
 		<result property="ESTIMATE_AVG" column="ESTIMATE_AVG"/>
 		<result property="ESTIMATE_OFFERCOUNT" column="ESTIMATE_OFFERCOUNT"/>
 	</resultMap>
+	
 	<resultMap type="java.util.HashMap" id="hashmapVO">
+	
 	</resultMap>
 	
 	<!-- 어드민 -->
@@ -287,7 +289,10 @@
  	</select>
  	
  	<select id="getPICSComment" parameterType="int" resultMap="hashmapVO"> <!-- 이거 처리한 결과물을 list 타입으로 만들어주면 된다. select id은 내용을 호출 함. -->
-		SELECT * FROM PICS_COMMENT,NAGAGU_MEMBER PICS WHERE MEMBER_NUM=PICS_RE_MEMBER ORDER BY PICS_RE_DATE ASC , PICS_RE_NUM ASC
+		SELECT * 
+		FROM PICS_COMMENT , NAGAGU_MEMBER PICS 
+		WHERE MEMBER_NUM = PICS_RE_MEMBER 
+		ORDER BY PICS_RE_DATE ASC , PICS_RE_NUM ASC
  	</select>
  	
  	<delete id="deletePICSComment" parameterType="com.spring.community.PicsCommentDB">
@@ -312,24 +317,24 @@
  		select * from ACADEMY where CLASS_NUMBER = #{CLASS_NUMBER}
  	</select>
  	
- 	<select id="getAcademyReview" parameterType="int" resultMap="academyReviewResultMap"> <!-- 이거 처리한 결과물을 list 타입으로 만들어주면 된다. select id은 내용을 호출 함. -->
-		select *
-		from (select rownum rnum, REVIEW_NUM, REVIEW_MEMBER, REVIEW_CLASS, REVIEW_DATE, REVIEW_FILE, REVIEW_CONTENT, REVIEW_GRADE, REVIEW_RE
-			  from(select * 
-			  	   from CLASS_REVIEW
-			  	   order by REVIEW_CLASS ASC , REVIEW_NUM ASC))
+ 	<select id="getAcademyReview" parameterType="int" resultMap="hashmapVO"> <!-- 이거 처리한 결과물을 list 타입으로 만들어주면 된다. select id은 내용을 호출 함. -->
+		SELECT *
+		FROM ACADEMY A, CLASS_REVIEW R, nagagu_member N
+		WHERE A.CLASS_NUMBER = R.REVIEW_CLASS        
+		AND R.REVIEW_MEMBER = N.MEMBER_NUM
+		ORDER BY REVIEW_CLASS ASC , REVIEW_NUM ASC
  	</select>
  	
  	<delete id="deleteAcademyReview" parameterType="com.spring.academy.Class_reviewVO">
  		delete from CLASS_REVIEW where REVIEW_NUM = #{REVIEW_NUM}
  	</delete>
  	
- 	<select id="getAcademyQnA" parameterType="int" resultMap="academyQnAResultMap"> <!-- 이거 처리한 결과물을 list 타입으로 만들어주면 된다. select id은 내용을 호출 함. -->
-		select *
-		from (select rownum rnum, QNA_NUM, QNA_MEMBER, QNA_CLASS, QNA_DATE, QNA_CONTENT, QNA_RE, QNA_STATUS
-			  from(select * 
-			  	   from CLASS_QNA
-			  	   order by QNA_CLASS ASC , QNA_NUM ASC))
+ 	<select id="getAcademyQnA" parameterType="int" resultMap="hashmapVO"> <!-- 이거 처리한 결과물을 list 타입으로 만들어주면 된다. select id은 내용을 호출 함. -->
+		SELECT *
+		FROM ACADEMY A, CLASS_QNA Q, nagagu_member N
+		WHERE A.CLASS_NUMBER = Q.QNA_CLASS        
+		AND Q.QNA_MEMBER = N.MEMBER_NUM
+		ORDER BY QNA_CLASS ASC , QNA_NUM ASC
  	</select>
  	
  	<delete id="deleteAcademyQnA" parameterType="com.spring.academy.Class_qnaVO">
@@ -353,24 +358,24 @@
  		select * from PRODUCT where PRODUCT_NUM = #{PRODUCT_NUM}
  	</select>
  	
- 	<select id="getProductReview" parameterType="int" resultMap="productVOReviewResultMap"> <!-- 이거 처리한 결과물을 list 타입으로 만들어주면 된다. select id은 내용을 호출 함. -->
-		select *
-		from (select rownum rnum, REVIEW_NUM, REVIEW_MEMBER, REVIEW_PRODUCT, REVIEW_DATE, REVIEW_FILE, REVIEW_CONTENT, REVIEW_GRADE, REVIEW_RE
-			  from(select * 
-			  	   from PRODUCT_REVIEW
-			  	   order by REVIEW_PRODUCT ASC , REVIEW_NUM ASC))
+ 	<select id="getProductReview" parameterType="int" resultMap="hashmapVO"> <!-- 이거 처리한 결과물을 list 타입으로 만들어주면 된다. select id은 내용을 호출 함. -->
+		SELECT *
+		FROM PRODUCT P, PRODUCT_REVIEW R, nagagu_member N
+		WHERE P.PRODUCT_NUM = R.REVIEW_PRODUCT        
+		AND R.REVIEW_MEMBER = N.MEMBER_NUM
+		ORDER BY R.REVIEW_PRODUCT ASC , R.REVIEW_NUM ASC
  	</select>
  	
  	<delete id="deleteProductReview" parameterType="com.spring.store.Product_reviewVO">
  		delete from PRODUCT_REVIEW where REVIEW_NUM = #{REVIEW_NUM}
  	</delete>
  	
- 	<select id="getProductQnA" parameterType="int" resultMap="productVOQnaResultMap"> <!-- 이거 처리한 결과물을 list 타입으로 만들어주면 된다. select id은 내용을 호출 함. -->
-		select *
-		from (select rownum rnum, QNA_NUM, QNA_MEMBER, QNA_PRODUCT, QNA_DATE, QNA_CONTENT, QNA_RE, QNA_STATUS
-			  from(select * 
-			  	   from PRODUCT_QNA
-			  	   order by QNA_PRODUCT ASC , QNA_NUM ASC))
+ 	<select id="getProductQnA" parameterType="int" resultMap="hashmapVO"> <!-- 이거 처리한 결과물을 list 타입으로 만들어주면 된다. select id은 내용을 호출 함. -->
+		SELECT *
+		FROM PRODUCT P, PRODUCT_QNA Q, nagagu_member N
+		WHERE P.PRODUCT_NUM = Q.QNA_PRODUCT
+		AND Q.QNA_MEMBER = N.MEMBER_NUM
+		ORDER BY Q.QNA_PRODUCT ASC , Q.QNA_NUM ASC
  	</select>
  	
  	<delete id="deleteProductQnA" parameterType="com.spring.store.Product_qnaVO">

@@ -34,6 +34,19 @@
 
 	// 목록
 	function selectData() {
+		/*날짜 형식 변경*/
+		function date_format(format) {
+		    var year = format.getFullYear();
+		    var month = format.getMonth() + 1;
+		    if(month<10) {
+		       month = '0' + month;
+		    }
+		    var date = format.getDate();
+		    if(date<10) {
+		       date = '0' + date;
+		    }
+		   return year + "-" + month + "-" + date + " " ;
+		}
 		$('#remo').remove();
 		// table 내부 내용 모두 제거(초기화)
 		$('#product-qna').empty();
@@ -56,16 +69,19 @@
 				title += '</thead>';
 				$('#product-qna').append(title);
 				$.each(data, function(index, item) {
+					console.log(item)
+					var qna_date = new Date(item.QNA_DATE);
+					var date = date_format(qna_date); 
 					var output = '';
 					output += '<tbody class="text-center">'
 					output += '<tr>';
-					output += '<td>' + item.qna_NUM + '</td>';
-					output += '<td>' + item.qna_PRODUCT + '</td>';
-					output += '<td>' + item.qna_MEMBER + '</td>';
-					output += '<td>' + item.qna_DATE + '</td>';
-					output += '<td>' + item.qna_CONTENT + '</td>';
+					output += '<td>' + item.QNA_NUM + '</td>';
+					output += '<td>' + item.PRODUCT_TITLE + '</td>';
+					output += '<td>' + item.MEMBER_NICK + '</td>';
+					output += '<td>' + date + '</td>';
+					output += '<td>' + item.QNA_CONTENT + '</td>';
 					output += '<td><a href="./deleteProductQnA.ad" class="del_data" ';
-					output += 'QNA_NUM=' + item.qna_NUM +  '><i class="fas fa-trash-alt" ></i></a></td>';
+					output += 'QNA_NUM=' + item.QNA_NUM +  '><i class="fas fa-trash-alt"></i></a></td>';
 					output += '</tr>';
 					output += '</tbody>'
 					console.dir("output : " + output);

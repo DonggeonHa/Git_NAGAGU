@@ -34,6 +34,19 @@
 
 	// 목록
 	function selectData() {
+		/*날짜 형식 변경*/
+		function date_format(format) {
+		    var year = format.getFullYear();
+		    var month = format.getMonth() + 1;
+		    if(month<10) {
+		       month = '0' + month;
+		    }
+		    var date = format.getDate();
+		    if(date<10) {
+		       date = '0' + date;
+		    }
+		   return year + "-" + month + "-" + date + " " ;
+		}
 		$('#remo').remove();
 		// table 내부 내용 모두 제거(초기화)
 		$('#academy-review').empty();
@@ -47,25 +60,28 @@
 				title += '<thead class="text-center">';
 				title += '<tr>';
 				title += '<th style="width: 5%;">번호</th>';
-				title += '<th style="width: 10%;">강의</th>';
+				title += '<th style="width: 20%;">강의</th>';
 				title += '<th style="width: 10%;">글쓴이</th>';
 				title += '<th style="width: 10%;">등록일자</th>';
-				title += '<th style="width: 60%;">내용</th>';
+				title += '<th style="width: 50%;">내용</th>';
 				title += '<th style="width: 5%;">관리</th>';
 				title += '</tr>';
 				title += '</thead>';
 				$('#academy-review').append(title);
 				$.each(data, function(index, item) {
+					console.log(item)
+					var review_date = new Date(item.REVIEW_DATE);
+					var date = date_format(review_date); 
 					var output = '';
 					output += '<tbody class="text-center">'
 					output += '<tr>';
-					output += '<td>' + item.review_NUM + '</td>';
-					output += '<td>' + item.review_CLASS + '</td>';
-					output += '<td>' + item.review_MEMBER + '</td>';
-					output += '<td>' + item.review_DATE + '</td>';
-					output += '<td>' + item.review_CONTENT + '</td>';
+					output += '<td>' + item.REVIEW_NUM + '</td>';
+					output += '<td>' + item.CLASS_NAME + '</td>';
+					output += '<td>' + item.MEMBER_NICK + '</td>';
+					output += '<td>' + date + '</td>';
+					output += '<td>' + item.REVIEW_CONTENT + '</td>';
 					output += '<td><a href="./deleteAcademyReview.ad" class="del_data" ';
-					output += 'REVIEW_NUM=' + item.review_NUM +  '><i class="fas fa-trash-alt" ></i></a></td>';
+					output += 'REVIEW_NUM=' + item.REVIEW_NUM +  '><i class="fas fa-trash-alt"></i></a></td>';
 					output += '</tr>';
 					output += '</tbody>'
 					console.dir("output : " + output);

@@ -429,14 +429,14 @@ public class AdminController {
 	@RequestMapping(value = "/AcademyQnA.ad", produces="application/json;charset=UTF-8")
 	@ResponseBody
 	public String academyQnA2() {
-		List<Class_qnaVO> productList = adminService.getAcademyQnA();
+		List<Class_qnaVO> QnAList = adminService.getAcademyQnA();
 		
 		String str = "";
 		
 		ObjectMapper mapper = new ObjectMapper();
 		try {
-			str = mapper.writeValueAsString(productList);
-			System.out.println("academyReviewList 변환 : " + str);
+			str = mapper.writeValueAsString(QnAList);
+			System.out.println("picsList 변환 : " + str);
 		} catch (Exception e) {
 			System.out.println("first() mapper : " + e.getMessage());
 		}
