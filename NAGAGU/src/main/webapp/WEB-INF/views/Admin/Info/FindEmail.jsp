@@ -89,7 +89,7 @@
 	</div>
 	<div class="find_footer">
 		<p class="find_footer_desc"><i></i>비밀번호가 기억나지 않는 경우에는 <a href="./FindMember.ma">비밀번호 찾기</a>를 이용해 주세요.</p>
-	   	<div style="text-align: center; margin-top: 22px;"><input class="btn_enter" type="button" value="확인"></div>
+	   	<div style="text-align: center; margin-top: 22px;"><input class="btn_enter" type="button" value="확인" onclick="window.close();"></div>
 	</div>
 </div>
 <div id="js_result_fail" style="display:none;">	
@@ -103,5 +103,6 @@
 	    <a id="btnFailConfrim" class="find_footer_btn" style="cursor:pointer"><span>확인</span></a>
 	</div>
 </div>
+
 </body>
 </html>

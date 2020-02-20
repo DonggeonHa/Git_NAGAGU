@@ -3,11 +3,14 @@ package com.spring.member;
 import java.util.HashMap;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -168,4 +171,26 @@ public class MemberAjaxController {
 		
 		return retVal;
 	}
+	
+	@PostMapping(value="/CheckIdPhone.su" ,  produces = "application/json;charset=UTF-8")
+    public Map<String, Object> checkIdPhone(HttpServletRequest request, MemberVO memberVO){
+    	MemberVO member = new MemberVO();
+    	Map<String, Object> retVal = new HashMap<String, Object>(); // 리턴값 저장
+    	System.out.println("값 체크check1: "+(String)request.getParameter("MEMBER_NAME"));
+    	System.out.println("값 체크check2: "+(String)request.getParameter("MEMBER_PHONE"));
+    	
+    	memberVO.setMEMBER_NAME((String)request.getParameter("MEMBER_NAME"));
+    	memberVO.setMEMBER_PHONE((String)request.getParameter("MEMBER_PHONE"));
+    	
+    	member = memberService.findMemberEmail(memberVO);
+    	
+    	if(member == null) {
+    		retVal.put("res", "fail");
+    	} else {
+    		retVal.put("res", "success");
+    	}
+    	
+    	return retVal;
+    }
+	
 }

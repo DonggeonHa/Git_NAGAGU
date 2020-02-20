@@ -153,11 +153,34 @@ function find_email_btn() {
 	var popupX = (window.screen.width / 2) - (600 / 2);
 	var popupY = (window.screen.height / 2) - (378 / 2);
 
-	var pop = window.open('about:blank', 'Info', 'resizable=yes, width=600, height=378, left=' + popupX + ', top=' + popupY);
 	var name = $("#name").val();
 	var phone = $("#phone").val();
 	
-	pop.location.href="FindMemberEmail.ma?MEMBER_NAME=" + name + "&MEMBER_PHONE=" + phone;
+	jQuery.ajax({
+		url: '/NAGAGU/CheckIdPhone.su',
+		type: "post",
+		dataType: "json",
+		data: {
+			MEMBER_NAME: $("#name").val(),
+			MEMBER_PHONE: $("#phone").val()
+		},
+		contentType: 'application/x-www-form-urlencoded; charset=utf-8',
+		
+		success: function(retVal) {
+			if(retVal.res == "success"){
+				var pop = window.open('about:blank', 'Info', 'resizable=yes, width=600, height=378, left=' + popupX + ', top=' + popupY);
+				pop.location.href="FindMemberEmail.ma?MEMBER_NAME=" + name + "&MEMBER_PHONE=" + phone;
+				
+			} else{
+				alertify.alert("입력한 정보로 아이디를 찾은 결과, 일치하는 아이디가 없습니다.");
+			}
+		},
+		error : function() {
+			alert("ajax통신 실패!!!");
+	    }
+	});
+	
+	
 }
 </script>
 </body>
