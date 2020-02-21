@@ -29,7 +29,6 @@
 	}
 	.container-mypage {
 		margin-top: 50px;
-		margin-bottom: 50px;
 	}
 	
 	.container-mypage>.row {
@@ -112,7 +111,7 @@
 		margin: 0 auto;
 		width: 40%;
 		min-width: 400px !important;
-		margin-top: 136px;
+		margin-top: 100px;
 	    margin-bottom: 136px;
 	}
 	
@@ -372,7 +371,7 @@
 	}
 	@media ( min-width : 1200px) {
 		.card {
-			width: 7.6rem !important;  
+			width: 9rem !important;  
 			font-size: 0.7rem;
 		}
 		.card-header, .card-body, .card-footer {
@@ -381,7 +380,7 @@
 	} 
 </style>
 
-<div class="container-mypage" role="main">
+<div class="container-mypage container" role="main">
 	<div class="row card-wrap  text-center">
 		<div class="card card-hover">
 			<a href="mypage_like.my" class="href">
@@ -417,13 +416,6 @@
 				</div>
 			</a>
 		</div>
-
-		<div class="card my">
-			<div class="card-header">MY</div>
-			<div class="card-body">
-				<i class="far fa-user-circle fa-4x"></i>
-			</div>
-		</div>
 		<div class="card card-hover">
 			<a href="order_list.my" class="href">
 				<div class="card-header">ORDER</div>
@@ -450,7 +442,7 @@
 		</div>
 		<div class="card card-hover ">
 			<a href="mypage_estimate.my" class="href">
-				<div class="card-header">견적</div>
+				<div class="card-header">CUSTOM</div>
 				<div class="card-body">
 					<i class="fas fa-keyboard fa-4x"></i>
 				</div>

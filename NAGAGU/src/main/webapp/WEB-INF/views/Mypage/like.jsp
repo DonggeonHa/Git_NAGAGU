@@ -81,6 +81,7 @@
 	}
 	.tab-content .tab-pane.active {
 		display: flex;
+		margin-left:0;
 	}
 	.nav-item a {
 		color: black;
@@ -91,6 +92,9 @@
 	}
 	.picOutput{
 		padding-left: 0px !important;
+	}
+	.picOutput img{
+		margin-top: 30px;
 	}
 	.tab-content{
 		min-height:38vh;
@@ -166,7 +170,7 @@
 		</div>
 		<div class="card card-hover ">
 			<a href="mypage_estimate.my" class="href">
-				<div class="card-header">견적</div>
+				<div class="card-header">CUSTOM</div>
 				<div class="card-body">
 					<i class="fas fa-keyboard fa-4x"></i>
 				</div>
@@ -177,7 +181,7 @@
 </div>
 
 <div class="container container_like">
-	<div class="row">
+	<div class="d-flex">
 		<ul class="nav nav-tabs" id="myTab" role="tablist">
 			<li class="nav-item"><a class="nav-link active" id="picTab"
 				data-toggle="tab" href="#home" role="tab" aria-controls="home"
@@ -191,9 +195,6 @@
 			<div class="tab-pane fade show active row text-center" id="picOutput"
 				role="tabpanel" aria-labelledby="picTab">
 				<!-- 사진 뿌려지는 장소 -->
-				<!-- <div class="col-4 picOutput">
-	    		<img src="/communityupload/image/''">
-	    		</div> -->
 			</div>
 		</div>
 </div>
