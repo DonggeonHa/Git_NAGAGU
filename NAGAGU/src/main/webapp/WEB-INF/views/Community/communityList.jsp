@@ -207,7 +207,7 @@
 		    <button class="btn btn-outline-dark btn-md my-2 my-sm-0" type="submit" onclick="location.href='community_write.cm?MEMBER_NUM=<%=LOGIN_MEMBER_NUM%>'">글쓰기</button>
 		</c:if>
 		<c:if test="${name == 0}">
-		    <button class="btn btn-outline-dark btn-md my-2 my-sm-0" type="submit" onclick="alert('로그인 해주세요')">글쓰기</button>
+            <button class="btn btn-outline-dark btn-md my-2 my-sm-0 " type="submit" onclick="alertify.alert('확인','로그인 해주세요')">글쓰기</button>  
 		</c:if>
 	</div>
 	<!-- images start -->
@@ -379,7 +379,7 @@
 	  $(document).on("click","#far",function getLike(){
 	    var	MEMBER_NUM = '<%=LOGIN_MEMBER_NUM%>';
 		if(MEMBER_NUM==0){
-			alert('로그인 하세요') 
+            alertify.alert('확인','로그인 하세요')  
 			return				
 		} 
 		var category = 'like_pic'
@@ -456,11 +456,11 @@
 			var toNum = this.id
 			var fromNum = '<%=LOGIN_MEMBER_NUM%>';
 			if(fromNum==0){ 
-				alert('로그인 하세요') 
+                alertify.alert('확인','로그인 하세요')  
 				return				
 			}
 			if(fromNum==toNum){
-				alert('본인이네요') 
+                alertify.alert('확인','본인이시네요') 
 				return				
 			} 
 			 
@@ -481,7 +481,6 @@
 			        		$('.flw_btn'+toNum).text('follow');
 			        		$('.flw_btn'+toNum).removeClass('flw_btn_active')
 			        	}
-							alert("성공");
 					} else {
 							alert("update fail");
 					} 
@@ -528,7 +527,7 @@
 		var keywordVal= $keyword.val();
 		var search_option = $('#search_option').val();
 		if(!keywordVal){
-			alert('검색어를 입력하세요');
+            alertify.alert('확인','검색어를 입력하세요');
 			$('#keyword').focus();
 			return
 		}
