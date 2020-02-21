@@ -391,7 +391,7 @@
 									<dl>
 										<dt><%=vo.getES_ORDER_TITLE()%></dt>
 										<dd>
-											<a href=""><%=vo.getES_ORDER_WORKSHOP()%>
+											<a href="workshop_page.my?ES_ORDER_WORKSHOP=<%=vo.getES_ORDER_WORKSHOP()%>"><%=vo.getES_ORDER_WORKSHOP()%>
 										</dd>
 									</dl>
 								</div>
@@ -456,7 +456,7 @@
 									offer_num=<%=vo.getES_ORDER_OFFER()%>>취소</button> <%
  	} else if (eoState >= 4) {
  %>
-								<button class="btn btn-outline-dark btn_return">>A/S</button>
+								<button class="btn btn-outline-dark btn_return">A/S</button>
 								<button class="btn btn-outline-dark btn_return">반품</button> <%
  	}
  %>

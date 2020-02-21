@@ -7,6 +7,7 @@ public interface WorkShopMemberService {
 	public int workshop_email_chk(WorkShopMemberVO workshopVO);
 	public WorkShopMemberVO select_workshop_member(WorkShopMemberVO workshopVO);
 	public WorkShopMemberVO selectwmember(WorkShopMemberVO workshopVO);
+	public WorkShopMemberVO selectByName (String WORKSHOP_NAME);
 	
 	/* 회원 탈퇴 */
 	public int deleteWMember(WorkShopMemberVO workshopVO);

@@ -11,9 +11,11 @@ public interface WorkShopMemberMapper {
 	WorkShopMemberVO select_workshop_member(WorkShopMemberVO workshopVO);
 	WorkShopMemberVO selectwmember(WorkShopMemberVO workshopVO);
 	int name_cnt(String WORKSHOP_NAME);
+	WorkShopMemberVO selectByName (String WORKSHOP_NAME);
 	
 	/* 회원 탈퇴 */
 	int deleteWMember(WorkShopMemberVO workshopVO);
 	int duplicateWMember(WorkShopMemberVO workshopVO);
 	int sysdateWMember(WorkShopMemberVO workshopVO);
+	
 }

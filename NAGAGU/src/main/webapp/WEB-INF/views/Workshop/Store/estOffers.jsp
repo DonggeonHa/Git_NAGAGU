@@ -370,7 +370,7 @@
 		$(document).delegate('.btn_note', 'click', function() {
 			var send_address = $(this).attr("value");
 			console.log(send_address);
-			window.open('/NAGAGU/noteForm.nt?receive_mail=' + send_address, "쪽지 보내기", "width=600 height=700");
+			window.open('/NAGAGU/noteForm.nt?receive_mail=' + send_address, "쪽지 보내기", "width=440 height=580");
 			return false;
 		});
 		

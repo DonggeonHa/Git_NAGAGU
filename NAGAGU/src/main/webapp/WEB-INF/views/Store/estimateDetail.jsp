@@ -613,7 +613,7 @@
 			return false;
 		});
 		
-		/* 낙찰하기 ..*/
+		/* 낙찰하기 */
 		
 		$(document).delegate('.btn_bid', 'click', function() {
 			var OFFER_NUM = $(this).attr('value');
