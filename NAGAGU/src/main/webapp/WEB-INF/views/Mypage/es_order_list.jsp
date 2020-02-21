@@ -129,10 +129,18 @@
 	}
           
           /* ----------------------------------------------------------- */
-          
-          .container {
-          	margin-top:30px;
-          }
+       
+    #nav-tab .nav-item {
+    	color:black;
+    }
+    
+    #nav-tab .nav-item:hover {
+    	color:#737373;
+    }
+       
+    .container {
+        margin-top:30px;
+    }
           
 	.thumbImg {
 		width:256px;
@@ -345,7 +353,7 @@
 			<div class="tab-pane fade show active shadow p-3 mb5 bg-white"
 				id="nav-waiting" role="tabpanel" aria-labelledby="nav-waiting-tab"
 				style="padding-top: 30%;">
-				<div class="no_list">주문한 수제 가구가 없습니다.</div>
+				<div class="no_list">등록된 주문이 없습니다.</div>
 			</div>
 		</div>
 		<%
@@ -436,16 +444,16 @@
 									} else if (eoState < 4) {
 								%>
 								<button class="btn btn-outline-dark btn_modify"
-									onclick="location.href='mypage_estimate_updateForm.es?ES_ORDER_NUM<%=vo.getES_ORDER_NUM()%>'">배송정보
+									onclick="location.href='mypage_estimate_updateForm.my?ES_ORDER_NUM=<%=vo.getES_ORDER_NUM()%>'">배송정보
 									수정</button> 
 								<button class="btn btn-outline-dark btn_modify"
-									onclick="window.open('/NAGAGU/chatRoom.ch?ES_ORDER_NUM=<%=vo.getES_ORDER_NUM()%>', '1:1채팅방', 'width=400 height=600')">1:1 채팅</button> <%
+									onclick="window.open('/NAGAGU/chatRoom.ch?ES_ORDER_NUM=<%=vo.getES_ORDER_NUM()%>', '1:1채팅방', 'width=400 height=740')">1:1 채팅</button> <%
  	}
  			if (eoState < 4) {
  %>
 								<button class="btn btn-outline-dark btn_cancel"
 									es_num=<%=vo.getES_ORDER_ESTIMATE()%>
-									offer_num=<%=vo.getES_ORDER_OFFER()%>>주문취소</button> <%
+									offer_num=<%=vo.getES_ORDER_OFFER()%>>취소</button> <%
  	} else if (eoState >= 4) {
  %>
 								<button class="btn btn-outline-dark btn_return">>A/S</button>
@@ -467,11 +475,25 @@
 
 <script>	
 	$(document).delegate('.btn_cancel', 'click', function() {
-		if (confirm("정말 취소하시겠습니까?")) {
 			var OFFER_NUM = $(this).attr('offer_num');
-			var ES_NUM = $(this).attr('es_num');
-			location.href='offer_bid.es?OFFER_STATE=3&ESTIMATE_NUM=' + ES_NUM + '&OFFER_NUM=' + OFFER_NUM + '&redirect=mypage_estimate.my';
-		}
+			var es_num = $(this).attr('es_num');
+			alertify.confirm("낙찰 취소", "정말 취소하시겠습니까?", function() {
+				var params = {"OFFER_STATE" : 3, "OFFER_NUM" : OFFER_NUM, "ESTIMATE_NUM" : es_num}
+				console.log(params);
+				$.ajax ({
+					url:"/NAGAGU/offer_bid.es",
+					type:"POST",
+					data:params,
+					contentType:'application/x-www-form-urlencoded; charset=utf-8',
+					success: function(data) {
+						location.href='mypage_estimate.my';
+					},
+					error: function(data) {
+						console.log(data.res);
+				}
+				});
+			}, function() {
+			});
 		return false;
 	})
 	

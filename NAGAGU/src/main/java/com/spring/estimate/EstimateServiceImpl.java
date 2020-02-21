@@ -49,8 +49,9 @@ public class EstimateServiceImpl implements EstimateService {
 		EstimateMapper mapper = sqlSession.getMapper(EstimateMapper.class);
 		int res = 0;
 		
-		HashMap <String, Object> map = new HashMap<String, Object>();
-		map.put("ESTIMATE_NUM", ESTIMATE_NUM);
+        HashMap <String, Object> map = new HashMap <String, Object>();
+        map.put("ESTIMATE_NUM", ESTIMATE_NUM);
+        
 		int offerCnt = mapper.offerCount(map);
 		if (offerCnt > 0) {
 			int delOffer = mapper.offerDeleteAll(ESTIMATE_NUM);
@@ -165,7 +166,6 @@ public class EstimateServiceImpl implements EstimateService {
     @Override
     public int offerCount (HashMap <String, Object> map) {
         EstimateMapper mapper = sqlSession.getMapper(EstimateMapper.class);
-		System.out.println("OFFER_WORKSHOP :: " + map.get("OFFER_WORKSHOP"));
         
         int cnt = mapper.offerCount(map);
         
@@ -183,13 +183,14 @@ public class EstimateServiceImpl implements EstimateService {
 			int ESTIMATE_NUM = vo.getOFFER_ESTIMATE();
 			int ESTIMATE_AVG = mapper.estimateAvgPrice(ESTIMATE_NUM);
 			
+			HashMap <String, Object> map = new HashMap <String, Object>();
+            map.put("ESTIMATE_NUM", ESTIMATE_NUM);
+            
+			int ESTIMATE_OFFERCOUNT = mapper.offerCount(map);
+			
 			EstimateVO estimatevo = new EstimateVO();
 			estimatevo.setESTIMATE_NUM(ESTIMATE_NUM);
 			estimatevo.setESTIMATE_AVG(ESTIMATE_AVG);
-			
-			HashMap <String, Object> map = new HashMap <String, Object>();
-			map.put("ESTIMATE_NUM", ESTIMATE_NUM);
-			int ESTIMATE_OFFERCOUNT = mapper.offerCount(map);
 			estimatevo.setESTIMATE_OFFERCOUNT(ESTIMATE_OFFERCOUNT);
 			
 			res = mapper.offerSetInfo(estimatevo);
@@ -204,13 +205,19 @@ public class EstimateServiceImpl implements EstimateService {
 		int res = 0;
 		
 		int res1 = mapper.offerModify(vo);
-		if (res1 == 1) {
+		if (res1 == 1) {    
 			int ESTIMATE_NUM = vo.getOFFER_ESTIMATE();
-			int ESTIMATE_AVG = mapper.estimateAvgPrice(ESTIMATE_NUM);
+			
+			HashMap <String, Object> map = new HashMap <String, Object>();
+            map.put("ESTIMATE_NUM", ESTIMATE_NUM);
+            
+			int ESTIMATE_AVG = mapper.estimateAvgPrice(ESTIMATE_NUM);        
+            int ESTIMATE_OFFERCOUNT = mapper.offerCount(map);
 
 			EstimateVO estimatevo = new EstimateVO();
 			estimatevo.setESTIMATE_NUM(ESTIMATE_NUM);
 			estimatevo.setESTIMATE_AVG(ESTIMATE_AVG);
+			estimatevo.setESTIMATE_OFFERCOUNT(ESTIMATE_OFFERCOUNT);
 			
 			res = mapper.offerSetInfo(estimatevo);
 		}
@@ -228,10 +235,10 @@ public class EstimateServiceImpl implements EstimateService {
 		
 		int res1 = mapper.offerDelete(OFFER_NUM);
 		
-		if (res1 == 1) {
+		if (res1 == 1) {            
 			HashMap <String, Object> map = new HashMap <String, Object>();
-			map.put("ESTIMATE_NUM", ESTIMATE_NUM);
-			int ESTIMATE_OFFERCOUNT = mapper.offerCount(map);
+	        map.put("ESTIMATE_NUM", ESTIMATE_NUM);
+	        int ESTIMATE_OFFERCOUNT = mapper.offerCount(map);
 			int ESTIMATE_AVG = 0;
 			
 			if (ESTIMATE_OFFERCOUNT > 0) {
@@ -323,6 +330,14 @@ public class EstimateServiceImpl implements EstimateService {
 		int cnt = mapper.esOrderCount(map);
 		
 		return cnt;
+	}
+	
+	@Override
+	public int getEsOrderNum (int ESTIMATE_NUM) {
+		EstimateMapper mapper = sqlSession.getMapper(EstimateMapper.class);
+		int ES_ORDER_NUM = mapper.getEsOrderNum(ESTIMATE_NUM);
+		
+		return ES_ORDER_NUM;
 	}
 
 	/* !----- 공방 회원 : 견적 제안 댓글 리스트 -----! */

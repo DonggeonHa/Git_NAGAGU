@@ -67,6 +67,8 @@ public class EstimateController {
 		model.addAttribute("endpage", endRow);
 		model.addAttribute("estimateCount", estimateCount);
 		model.addAttribute("rnum", rnum);
+		model.addAttribute("ES_CATEGORY", request.getParameter("category"));
+		model.addAttribute("ES_SEARCH", request.getParameter("search_text"));
 		model.addAttribute("eList", eList);
 		
 		String naverAuthUrl = naverLoginBO.getAuthorizationUrl(session);
@@ -285,7 +287,6 @@ public class EstimateController {
 		
 		int offer_page = 1;
 		int offer_limit = 10;
-		System.out.println("test!!!!!");
         int offerCount = estimateService.offerCount(countMap);
 		
 		if (request.getParameter("OFFER_PAGE") != null) {
@@ -402,13 +403,14 @@ public class EstimateController {
 	}
 	
 	/* 견적 낙찰 */
-	@RequestMapping(value = "/offer_bid.es")
-	public String offerBid (HttpServletRequest request) {
+	@RequestMapping(value = "/offer_bid.es", produces="application/json; charset=UTF-8")
+	@ResponseBody
+	public HashMap<String, Object> offerBid (HttpServletRequest request) {
 		int ESTIMATE_NUM = Integer.parseInt(request.getParameter("ESTIMATE_NUM"));
 		int OFFER_NUM = Integer.parseInt(request.getParameter("OFFER_NUM"));
 		int OFFER_STATE = Integer.parseInt(request.getParameter("OFFER_STATE"));
-		String redirect = "redirect:/";
-		redirect += request.getParameter("redirect");
+		
+		HashMap<String, Object> resMap = new HashMap<String, Object>();
 		
 		int res1 = estimateService.offerBidSet(OFFER_STATE, OFFER_NUM);
 		if (res1 == 1) {
@@ -433,6 +435,9 @@ public class EstimateController {
 					vo.setES_ORDER_CATEGORY(esvo.getESTIMATE_CATEGORY());
 					vo.setES_ORDER_PAYMENT(esvo.getESTIMATE_PAY());
 					
+					resMap.put("workshop_name", offervo.getOFFER_WORKSHOP());
+					resMap.put("offer_price", offervo.getOFFER_PRICE());
+					
 					int res3 = estimateService.esOrderInsert(vo);
 				}
 				else {
@@ -441,7 +446,7 @@ public class EstimateController {
 			}
 		}
 		
-		return redirect;
+		return resMap;
 	}
 	
 }

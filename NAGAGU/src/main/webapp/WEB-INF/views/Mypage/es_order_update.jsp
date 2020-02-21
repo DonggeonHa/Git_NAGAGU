@@ -57,7 +57,6 @@
 					<h5 style="padding-top: 2%;">배송 정보</h5>
 				</div>
 				<div class="col-10">
-					<button type="button" id="getInfo_btn" class="btn btn-outline-dark" ><font size="2">주문자 정보와 동일</button>
 				</div>
 			</div>
 			<hr>

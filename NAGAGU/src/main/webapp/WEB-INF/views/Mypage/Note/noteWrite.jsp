@@ -104,19 +104,20 @@
         bottom:0;
         background-color: #1B1B27;
         border-top: 1px solid #ef900e;
-        line-height: 20px;
+        line-height: 32px;
         height:38px;
     }
 
     .pop_footer #btn_submit {
         float:left;
-        width:36px;
-        height:20px;
+        width:56px;
+        height:28px;
+        line-height:28px;
         color:white;
 	    background: #ef900e;
         border:1px solid #ef900e;
         border-radius: 4px;
-        padding: 3px 10px;  
+        padding: 0 8px;  
         margin:5px;
         font-size: 12px;
         cursor:pointer;
@@ -127,8 +128,8 @@
 
     .pop_footer #btn_return {
         float:left;
-        width:26px;
-        height:20px;
+        width:34px;
+        height:28px;
         color:white;
 	    background: #ef900e;
         border:1px solid #ef900e;
@@ -146,9 +147,10 @@
         float:right;
         position:relative;
         color:white;
-        height:20px;
-        margin:10px;
+        height:24px;
+        margin:7px;
         transition:color 0.2s;
+        line-height:24px;
         z-index:2;
     }
 
