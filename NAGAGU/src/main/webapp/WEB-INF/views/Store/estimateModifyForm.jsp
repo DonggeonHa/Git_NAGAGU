@@ -137,7 +137,7 @@
 	}
 </style>
 
-<div class="container category_st">
+<div class="container category_cs">
 	<form id="estimate" name="store_estimateform" class="store_estimateform"
 		action="./estimate_update.es" method="post"
 		enctype="multipart/form-data">

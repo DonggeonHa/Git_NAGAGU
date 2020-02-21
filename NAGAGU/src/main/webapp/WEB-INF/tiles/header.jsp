@@ -275,10 +275,10 @@
 								<a class="nav-link header_nav" id="header_ac" href="./classlist.ac">ACADEMY</a>
 							</li>
 							<li class="nav-item">
-								<a class="nav-link header_nav" id="header_sj" href="./productcategory.pro">STORE</a>
+								<a class="nav-link header_nav" id="header_st" href="./productcategory.pro">STORE</a>
 							</li>
 							<li class="nav-item">
-								<a class="nav-link header_nav" id="header_kj" href="./estimate.es">CUSTOM</a>
+								<a class="nav-link header_nav" id="header_cs" href="./estimate.es">CUSTOM</a>
 							</li>
 						</ul>
 					</div>
@@ -529,19 +529,30 @@
 	});
 
 	$(document).ready(function(){
-		var a = $('.category_cm')
-		console.log(a)
 		if($('.category_cm').length==1){
+			var a = $('.category_cm')
+			console.log(a)
 			$('.header_nav').removeClass('active');
 			$('#header_cm').addClass('active');
 		}
 		if($('.category_ac').length==1){
+			var a = $('.category_ac')
+			console.log(a)
 			$('.header_nav').removeClass('active');
 			$('#header_ac').addClass('active');
 		}
 		if($('.category_st').length==1){
+			var a = $('.category_st')
+			console.log(a)
 			$('.header_nav').removeClass('active');
 			$('#header_st').addClass('active');
 		}
+		if($('.category_cs').length==1){
+			var a = $('.category_cs')
+			console.log(a)
+			$('.header_nav').removeClass('active');
+			$('#header_cs').addClass('active');
+		}
+		
 	});
 </script>

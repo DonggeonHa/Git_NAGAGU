@@ -92,8 +92,6 @@ public class MypageController {
 		WorkShopMemberVO wsMemberDetail = workShopMemberService.selectwmember(wsMemberVO);
 		int WORKSHOP_NUM = Integer.parseInt(request.getParameter("WORKSHOP_NUM"));
 		wsMemberVO.setWORKSHOP_NUM(WORKSHOP_NUM);
-		
-		
 		//멤버가 올린 강의 리스트
 		HashMap<String, Object> map = new HashMap<String, Object>();
 		map.put("WORKSHOP_NUM", WORKSHOP_NUM);

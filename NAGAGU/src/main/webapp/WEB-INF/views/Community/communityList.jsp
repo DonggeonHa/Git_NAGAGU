@@ -23,6 +23,7 @@
 	String PICS_CATEGORY = (String)request.getAttribute("pics_category");
 	String PICS_REVIEW= (String)request.getAttribute("pics_review");
 	String sort = (String)request.getAttribute("sort");
+    String keyword = (String)request.getAttribute("keyword");
 %> 
 
 <style>
@@ -295,7 +296,7 @@
 						if (a == nowpage) {
 				%><!-- 현재 보고있는 페이지에는 링크를 걸지 않겠다. -->
 							<li class="page-item list active">
-								<span class="page-link">
+								<span class="page-link" style="border-color:#dee2e6;">
 									<%=a%>
 								</span>
 							</li>
@@ -543,13 +544,55 @@
 		var url = '${pageContext.request.contextPath}/community.cm'
 			+ '?keyword='+search_text
 			+ '&search_option=tag';
-			
 		location.href=url;
 	})
 	//a태그 이동방지()
 	$(document).on('click', 'a[href="#"]', function(e){
 		e.preventDefault();
 	});
+	//검색어 색깔 표시 기능
+    $(document).ready(function(){
+        var word = '<%=keyword%>'
+        console.log(word) 
+        if(word!=''){
+            $('b:contains('+word+')').each(function() {
+                var text = $(this).text();
+                var b = text.replace(''+word+'','<span style="color:red;">'+word+'</span>');
+                console.log('b'+b)
+                $('b:contains('+word+')').html(b);    
+            })
+            $('span:contains('+word+')').each(function() {
+                var text = $(this).text();
+                var b = text.replace(''+word+'','<span style="color:red;">'+word+'</span>');
+                console.log('b'+b)
+                $('span:contains('+word+')').html(b);    
+            })
+            $('p:contains('+word+')').each(function() {
+                var text = $(this).text();
+                var b = text.replace(''+word+'','<span style="color:red;">'+word+'</span>');
+                console.log('b'+b)
+                $('p:contains('+word+')').html(b);    
+            })
+        }
+		//엔터검색
+        $('#keyword').keypress(function (e) {
+        	var keywordVal = $(this).val();
+    		if(!keywordVal){
+                alertify.alert('확인','검색어를 입력하세요');
+    			$('#keyword').focus();
+    			return
+    		}
+    		var key = e.which;
+            var search_option = $('#search_option').val();
+            if(key == 13)  {
+                var url = './community.cm'
+    				+ '?keyword='+keywordVal
+    				+ '&search_option='+search_option;
+    			location.href=url;
+                return false;  
+            }    
+        });   
+    })
 	
 	//카테고리 카테고리 css활성화
 	$(document).ready(function(){
