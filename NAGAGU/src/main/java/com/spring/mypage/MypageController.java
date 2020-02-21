@@ -2,7 +2,6 @@ package com.spring.mypage;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -12,7 +11,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.spring.academy.AcademyService;
@@ -105,7 +103,7 @@ public class MypageController {
 		}
 
 		WorkShopMemberVO wsMemberDetail = workShopMemberService.selectwmember(wsMemberVO);
-		
+
 		//멤버가 올린 강의 리스트
 		HashMap<String, Object> map = new HashMap<String, Object>();
 		map.put("WORKSHOP_NUM", WORKSHOP_NUM);

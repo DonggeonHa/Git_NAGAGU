@@ -209,7 +209,10 @@
 	.product{
 		margin-top:50px;
 		font-weight:800;
-		 
+	}
+	.product img{
+		width:100px;
+		height:100px;
 	}
 	.product_text{
 		border-bottom:1px solid grey;
@@ -356,10 +359,10 @@
 						var imgsrc=item.vo.product_IMAGE;
 						p_output += '<div class="row product">';
 							p_output += '<div class="col-11 text-left product_text mx-3 px-0">관련 상품</div>';    
-								p_output += '<div class="col-4">'
+								p_output += '<div class="col-5">'
 								p_output += '<a href="./productdetail.pro?PRODUCT_NUM='+item.vo.product_NUM+'">'
 					    		p_output += '<img src="/productupload/image/'+imgsrc+'"></a></div>';
-								p_output += '<div class="row col-8">';
+								p_output += '<div class="row col-7 text-center">';
 									p_output += '<div class="title col-12">'+item.vo.product_TITLE+'</div>'; 
 									p_output += '<div class="brief col-12">'+item.vo.product_BRIEF+'</div>';
 							p_output += '</div></div>';

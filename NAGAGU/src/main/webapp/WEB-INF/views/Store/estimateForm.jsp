@@ -136,7 +136,7 @@
 	}
 </style>
 
-<div class="container" style="margin-top: 30px; margin-bottom: 30px;">
+<div class="container category_cs" style="margin-top: 30px; margin-bottom: 30px;">
 	<div class="text-center">
 		<h1>견적 등록</h1>
 		<hr style="width:800px;">

@@ -111,7 +111,7 @@ body {
 
 .path-slider path {
   stroke-width: 1px;
-  stroke: none;
+  /* stroke: none; */
   fill: none;
 }
 
@@ -136,6 +136,8 @@ body {
 }
 .path-slider__item:hover .item__circle, .path-slider__item:focus .item__circle {
   background-color: #ef900e;
+  transform: scale(1.2);
+  transition: 0.5s;
 }
 
 .item__circle {

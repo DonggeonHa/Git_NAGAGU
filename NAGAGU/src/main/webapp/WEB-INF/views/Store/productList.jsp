@@ -334,7 +334,7 @@
 					if (a == nowpage) {
 			%><!-- 현재 보고있는 페이지에는 링크를 걸지 않겠다. --> 
 						<li class="page-item list active">
-							<span class="page-link">
+							<span class="page-link" style="border-color:#dee2e6;">
 								<%=a%>
 							</span>
 						</li>

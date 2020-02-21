@@ -236,7 +236,7 @@
 	}
 </style>
 <!-- content starts -->
-<div class="container" style="margin-top: 30px; margin-bottom: 30px;">
+<div class="container category_cs" style="margin-top: 30px; margin-bottom: 30px;">
 	<div class="justify-content-between title">
 		<div class="col-10 page-tap">
 			<h6><a href="estimate.es">STORE 견적 문의</a> > 상세보기 </h6>
