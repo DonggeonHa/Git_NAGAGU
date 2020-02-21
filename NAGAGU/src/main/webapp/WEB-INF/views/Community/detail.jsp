@@ -475,7 +475,7 @@
 		$(document).on('click','.re_reply',function(event){
 			var	loginNum = '<%=MEMBER_NUM%>';
 			if(loginNum == 0){
-				alert('로그인해주세요') 
+                alertify.alert('확인','로그인해주세요') 
 				return
 			}
 			if($('.re_insert_form').length==1){
@@ -499,7 +499,7 @@
 		//대댓글 입력
 		$(document).on('click','#input_data',function(event){
  			if ($(this).parent().prev().find('textarea').val()=="") {
-				alert("글 내용을 입력해주세요.");
+                alertify.alert('확인',"글 내용을 입력해주세요.");
 				$(this).parent().prev().find('textarea').focus();
 				return;
 			}
@@ -569,29 +569,33 @@
 	
 		//삭제
 		$(document).on('click','#deleteForm',function(event){
-			if (!confirm("삭제하시겠습니까?")) {
-				return;
-			} 
-			var delNum = $(event.target).attr('num')
-			jQuery.ajax({
-				url: '/NAGAGU/deleteComment.cm',
-				type: 'POST',
-				data: {'delNum': delNum},
-				contentType: 'application/x-www-form-urlencoded; charset=utf-8',
-				dataType: 'json',
-				success: function(retVal){
-					if(retVal.res == "OK"){
-						select();
+            alertify.confirm('확인', '정말 삭제하시겠습니까?', function(){
+                alertify.success('Ok') 
+                var delNum = $(event.target).attr('num')
+                jQuery.ajax({
+                    url: '/NAGAGU/deleteComment.cm',
+                    type: 'POST',
+                    data: {'delNum': delNum},
+                    contentType: 'application/x-www-form-urlencoded; charset=utf-8',
+                    dataType: 'json',
+                    success: function(retVal){
+                        if(retVal.res == "OK"){
+                            select();
+                        }
+                        else{
+                            alert("Delete Fail!!!");
+                        }
+                    },
+                    error:function(){
+                        alert("ajax통신 실패!!");
 					}
-					else{
-						alert("Delete Fail!!!");
-					}
-				},
-				error:function(){
-					alert("ajax통신 실패!!");
-				}
-			});
-			event.preventDefault();
+				});
+				event.preventDefault();
+            }
+            , function(){
+                alertify.error('Cancel')
+                }
+            );
 		}); 
 		//수정 버튼 누르면 입력창으로 바뀜
 		$(document).on('click','.update_form',function(event){
