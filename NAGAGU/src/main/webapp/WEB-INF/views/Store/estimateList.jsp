@@ -5,13 +5,25 @@
 <%@ page import ="java.text.SimpleDateFormat" %>
 <%@ page import ="java.text.DecimalFormat" %>
 <%
-	System.out.println("---------------------------------------");
 	ArrayList<EstimateVO> eList = (ArrayList<EstimateVO>)request.getAttribute("eList");
 	int nowpage = ((Integer) request.getAttribute("page")).intValue();
 	int maxpage = ((Integer) request.getAttribute("maxpage")).intValue();
 	int rnum = ((Integer) request.getAttribute("rnum")).intValue();
 	int estimateCount = ((Integer) request.getAttribute("estimateCount")).intValue();
-	String MEMBER_EMAIL = (String)session.getAttribute("MEMBER_EMAIL");
+	String ES_SEARCH = "";
+	String ES_CATEGORY = "";
+	
+	if (request.getAttribute("ES_SEARCH") != null) {
+		request.getAttribute("ES_SEARCH").toString();
+	}
+	if (request.getAttribute("ES_CATEGORY") != null) {
+		request.getAttribute("ES_CATEGORY").toString();
+	}
+	
+	String MEMBER_EMAIL = "";
+	if (session.getAttribute("MEMBER_EMAIL") != null) {
+		MEMBER_EMAIL = session.getAttribute("MEMBER_EMAIL").toString();
+	}
 	
 	SimpleDateFormat df = new SimpleDateFormat("yyyy.MM.dd hh:mm");
 	DecimalFormat dfmp = new DecimalFormat("#,###원");
@@ -208,11 +220,22 @@
 					<th width="60" style="text-align: center;">진행상황</th>
 				</tr>
 		<%
-			if (estimateCount > 0 ) {
-				System.out.println(eList.size());
+			if (eList.size() > 0 ) {
 				for (int i=0; i<eList.size(); i++) {
 					EstimateVO el = eList.get(i);
+
+					String category = "";
 					
+					if (el.getESTIMATE_CATEGORY().equals("table")) { category = "책상"; }
+					else if (el.getESTIMATE_CATEGORY().equals("chair")) {category = "의자";}
+					else if (el.getESTIMATE_CATEGORY().equals("bookshelf")) {category = "책장";}
+					else if (el.getESTIMATE_CATEGORY().equals("bed")) {category = "침대";}
+					else if (el.getESTIMATE_CATEGORY().equals("drawer")) {category = "서랍장";}
+					else if (el.getESTIMATE_CATEGORY().equals("sidetable")) {category = "협탁";}
+					else if (el.getESTIMATE_CATEGORY().equals("dressing_table")) {category = "화장대";}
+					else {category = "기타";}
+					
+					System.out.println("TESTTEXT : " + MEMBER_EMAIL);
 					if (el.getESTIMATE_STATE() != 0 && !(MEMBER_EMAIL.equals(el.getESTIMATE_MEMBER()))) {
 		%>
 						<tr class="bid">
@@ -226,7 +249,7 @@
 					<td><%=rnum %></td>
 					<td><%=el.getESTIMATE_NICK() %></td>
 					<td class="es_title"><%=el.getESTIMATE_TITLE() %></td>
-					<td><%=el.getESTIMATE_CATEGORY() %>
+					<td><%=category %>
 					<td class="addComma"><%=dfmp.format(el.getESTIMATE_AVG())%></td>
 					<td><%=el.getESTIMATE_OFFERCOUNT()%></td>
 					<td><%=df.format(el.getESTIMATE_DATE()) %></td>
@@ -295,6 +318,9 @@
 <!-- content 끝 -->
 
 <script>
+	var ES_CATEGORY = '<%=ES_CATEGORY%>';
+	var ES_SEARCH = '<%=ES_SEARCH%>';
+	
 	$('#btn_search').click(function() {
 		var category = $('#category').val();
 		if (category == "") {
@@ -374,6 +400,6 @@
 	/* 페이지 이동 */
 	$(document).delegate('.pagelink', 'click', function(){
 		var pageNum = $(this).attr("value");
-		location.href = 'estimate.es?page=' + pageNum;
+		location.href = 'estimate.es?page=' + pageNum + '&category=' + ES_CATEGORY + '&search_text=' + ES_SEARCH;
 	});
 </script>

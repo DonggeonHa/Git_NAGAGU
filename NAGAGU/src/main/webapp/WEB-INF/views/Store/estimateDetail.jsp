@@ -476,7 +476,6 @@
 				async:false,
 				contentType:'application/x-www-form-urlencoded; charset=utf-8',
 				success:function(data) {
-					console.log(data.offerCount);
 					console.log(data.offerList);
 					
 					var output = '';
@@ -487,7 +486,7 @@
 					var ol = data.offerList;
 					var rnum = data.offer_rnum;
 					
-					if (data.offerCount == 0) {
+					if (ol.length == 0) {
 						output += '<tr><td colspan="5" class="list_caution">등록된 제안이 없습니다</td><tr>';
 					}
 					
@@ -619,7 +618,7 @@
 		$(document).delegate('.btn_bid', 'click', function() {
 			var OFFER_NUM = $(this).attr('value');
 			alertify.confirm("낙찰", "낙찰하시겠습니까?", function() {
-				var redirect = '&redirect=estimate_detail.es?ESTIMATE_NUM=' + es_num;
+				var redirect = 'estimate_detail.es?ESTIMATE_NUM=' + es_num;
 				
 				var params = {"OFFER_STATE" : 1, "OFFER_NUM" : OFFER_NUM, "ESTIMATE_NUM" : es_num, "redirect" : redirect }
 				console.log(params);
@@ -630,7 +629,7 @@
 					contentType:'application/x-www-form-urlencoded; charset=utf-8',
 					success: function(data) {
 						alertify.confirm("낙찰 완료", "바로 결제창으로 이동하시겠습니까?", function() {
-							location.href='mypage_estimate_checkout.my?ES_ORDER_NUM=' + es_num;
+							location.href='mypage_estimate_checkout.my?ESTIMATE_NUM=' + es_num;
 						}, function() {	
 							var info_text = data.workshop_name + ' 공방의 제안이 ' + addComma(data.offer_price) + '원에 낙찰되었습니다.';
 							alertify.success(info_text);
@@ -651,8 +650,9 @@
 		
 		$(document).delegate('.btn_bid_cancel', 'click', function() {
 			var OFFER_NUM = $(this).attr('value');
+			
 			alertify.confirm("낙찰 취소", "정말 취소하시겠습니까?", function() {
-				var redirect = '&redirect=estimate_detail.es?ESTIMATE_NUM=' + es_num;
+				var redirect = 'estimate_detail.es?ESTIMATE_NUM=' + es_num;
 				
 				var params = {"OFFER_STATE" : 3, "OFFER_NUM" : OFFER_NUM, "ESTIMATE_NUM" : es_num, "redirect" : redirect }
 				console.log(params);
@@ -671,9 +671,7 @@
 				});
 			}, function() {
 			});
-			}, function() {
-				
-			});
+			
 			return false;
 		});
 		

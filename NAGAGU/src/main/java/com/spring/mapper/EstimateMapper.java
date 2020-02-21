@@ -34,5 +34,6 @@ public interface EstimateMapper {
 	public int esOrderPay (EstimateOrderVO vo);
 	public int esOrderPost (EstimateOrderVO vo);
 	public int esOrderState (EstimateOrderVO vo);
+	public int getEsOrderNum (int ESTIMATE_NUM);
 	public ArrayList<HashMap <String, Object>> workOfferList (HashMap<String, Object> map);
 }

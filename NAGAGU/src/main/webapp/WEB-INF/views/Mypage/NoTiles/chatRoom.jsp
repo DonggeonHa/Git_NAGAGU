@@ -188,11 +188,17 @@ var output = $('#output');
 		$('#input').keydown(function(key){
 			if(key.keyCode == 13){
 				$('#input').focus();
+				if ($('#input').val() == "") {
+					return false;
+				}
 				send();
 			}
 		});
 		
 		$('#btn_submit').click(function(){
+			if ($('#input').val() == "") {
+				return false;
+			}
 			send();
 			$('#input').focus();
 		});

@@ -245,8 +245,14 @@ public class MypageController {
 		String MEMBER_MAIL = (String)session.getAttribute("MEMBER_EMAIL");
 		MemberVO vo = new MemberVO();
 		vo.setMEMBER_EMAIL(MEMBER_MAIL);
+		int ES_ORDER_NUM = 0;
 		
-		int ES_ORDER_NUM = Integer.parseInt(request.getParameter("ES_ORDER_NUM"));
+		if (request.getParameter("ES_ORDER_NUM") != null) { 	/* 낙찰하기 */
+			ES_ORDER_NUM = Integer.parseInt(request.getParameter("ES_ORDER_NUM"));
+		}
+		else if (request.getParameter("ESTIMATE_NUM") != null) {	/* 낙찰후 바로 결제하기 했을 경우 */
+			ES_ORDER_NUM = estimateService.getEsOrderNum(Integer.parseInt(request.getParameter("ESTIMATE_NUM")));
+		}
 		
 		EstimateOrderVO eovo = estimateService.esOrderDetail(ES_ORDER_NUM);
 		MemberVO memvo = memberService.selectMember(vo);

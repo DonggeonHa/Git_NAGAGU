@@ -67,6 +67,8 @@ public class EstimateController {
 		model.addAttribute("endpage", endRow);
 		model.addAttribute("estimateCount", estimateCount);
 		model.addAttribute("rnum", rnum);
+		model.addAttribute("ES_CATEGORY", request.getParameter("category"));
+		model.addAttribute("ES_SEARCH", request.getParameter("search_text"));
 		model.addAttribute("eList", eList);
 		
 		String naverAuthUrl = naverLoginBO.getAuthorizationUrl(session);
@@ -285,7 +287,6 @@ public class EstimateController {
 		
 		int offer_page = 1;
 		int offer_limit = 10;
-		System.out.println("test!!!!!");
         int offerCount = estimateService.offerCount(countMap);
 		
 		if (request.getParameter("OFFER_PAGE") != null) {
@@ -405,15 +406,9 @@ public class EstimateController {
 	@RequestMapping(value = "/offer_bid.es", produces="application/json; charset=UTF-8")
 	@ResponseBody
 	public HashMap<String, Object> offerBid (HttpServletRequest request) {
-		System.out.println("TEST1 : " + request.getParameter("ESTIMATE_NUM"));
 		int ESTIMATE_NUM = Integer.parseInt(request.getParameter("ESTIMATE_NUM"));
-		System.out.println("TEST2 : " + request.getParameter("OFFER_NUM"));
 		int OFFER_NUM = Integer.parseInt(request.getParameter("OFFER_NUM"));
-		System.out.println("TEST3 : " + request.getParameter("OFFER_STATE"));
 		int OFFER_STATE = Integer.parseInt(request.getParameter("OFFER_STATE"));
-		System.out.println("TEST4 : " + request.getParameter("redirect"));
-		String redirect = "redirect:/";
-		redirect += request.getParameter("redirect");
 		
 		HashMap<String, Object> resMap = new HashMap<String, Object>();
 		
@@ -448,8 +443,6 @@ public class EstimateController {
 				else {
 					int res3 = estimateService.esOrderDelete(ESTIMATE_NUM);
 				}
-				
-				resMap.put("redirection", redirect);
 			}
 		}
 		
