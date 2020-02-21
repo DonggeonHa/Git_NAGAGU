@@ -65,7 +65,7 @@
 	}
 </style>
 
-<!-- 작업 구역.. -->
+<!-- 작업 구역. -->
 <div id="page-content-wrapper" style="">
 	<div class="container-fluid" style="background-color: #EAEAEA; min-height: calc(100vh);">
 		<div class="d-flex justify-content-between col-12" style="padding-top: 10px;">
