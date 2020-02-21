@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.spring.mapper.AcademyMapper;
+import com.spring.mapper.ChartMapper;
 import com.spring.mapper.ProductMapper;
 import com.spring.store.ProductVO;
 import com.spring.workshop.WorkShopMemberVO;
@@ -126,6 +127,36 @@ public class AcademyServiceImpl implements AcademyService {
 		AcademyMapper classMapper = sqlSession.getMapper(AcademyMapper.class); 
 		res = classMapper.updateGrade(vo);
 		return res;
+	}
+
+	@Override
+	public ArrayList<ClassVO> myClassList(int WORKSHOP_NUM) throws Exception{
+		ArrayList<ClassVO> myClassList = null;
+		
+		try {
+			ChartMapper chartMapper = sqlSession.getMapper(ChartMapper.class);
+			
+			myClassList = chartMapper.myClassList(WORKSHOP_NUM);
+		} catch (Exception e) {
+			throw new Exception("chart 인기 class impl 에러", e);
+		}
+		
+		return myClassList;
+	}
+
+	@Override
+	public ArrayList<ProductVO> productSellList(int WORKSHOP_NUM) throws Exception{
+		ArrayList<ProductVO> productSellList = null;
+		
+		try {
+			ChartMapper chartMapper = sqlSession.getMapper(ChartMapper.class);
+			
+			productSellList = chartMapper.productSellList(WORKSHOP_NUM);
+		} catch (Exception e) {
+			throw new Exception("chart 인기 상품 impl 에러", e);
+		}
+		
+		return productSellList;
 	}
 
 }

@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import org.apache.ibatis.annotations.Param;
 
 import com.spring.academy.ClassVO;
+import com.spring.store.ProductVO;
 
 public interface ChartMapper {
 	
@@ -14,4 +15,8 @@ public interface ChartMapper {
 	int insertWSMemberCount(@Param("selectDate")String selectDate);	//공방 회원가입 수
 	int deleteMemberCount(@Param("selectDate")String selectDate);
 	int deleteWSMemberCount(@Param("selectDate")String selectDate);
+
+	//대시보드
+	ArrayList<ClassVO> myClassList(@Param("WORKSHOP_NUM")int WORKSHOP_NUM);
+	ArrayList<ProductVO> productSellList(@Param("WORKSHOP_NUM")int WORKSHOP_NUM);
 }

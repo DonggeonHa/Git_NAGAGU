@@ -74,12 +74,14 @@
 				<div style="padding: 10px;">
 					<table style="width: 50%; font-size: 12px;">
 						<tr>
-							<td>입금대기&nbsp;&nbsp;<span id="store_num">1</span></td>
-							<td>입금완료&nbsp;&nbsp;<span id="store_num">2</span></td>
-							<td>배송준비&nbsp;&nbsp;<span id="store_num">3</span></td>
-							<td>배송중&nbsp;&nbsp;<span id="store_num">4</span></td>
-							<td>배송완료&nbsp;&nbsp;<span id="store_num">5</span></td>
-							<td>구매확정&nbsp;&nbsp;<span id="store_num">6</span></td>
+							<td>결제완료&nbsp;&nbsp;<span id="store_num">${order_state0}</span></td>
+							<td>배송대기&nbsp;&nbsp;<span id="store_num">${order_state1}</span></td>
+							<td>배송중&nbsp;&nbsp;<span id="store_num">${order_state2}</span></td>
+							<td>배송완료&nbsp;&nbsp;<span id="store_num">${order_state3}</span></td>
+							<td>구매확정&nbsp;&nbsp;<span id="store_num">${order_state4}</span></td>
+							<td>환불요청&nbsp;&nbsp;<span id="store_num">${order_state5}</span></td>
+							<td>환불대기&nbsp;&nbsp;<span id="store_num">${order_state6}</span></td>
+							<td>환불완료&nbsp;&nbsp;<span id="store_num">${order_state7}</span></td>
 						</tr>
 					</table>
 				</div>
@@ -186,11 +188,11 @@ var config1 = {
 	data: {
 		datasets: [{
 			data: [
-				randomScalingFactor(),
-				randomScalingFactor(),
-				randomScalingFactor(),
-				randomScalingFactor(),
-				randomScalingFactor(),
+				'${class_count_member0}',
+				'${class_count_member1}',
+				'${class_count_member2}',
+				'${class_count_member3}',
+				'${class_count_member4}',
 			],
 			backgroundColor: [
 				window.chartColors.member,
@@ -202,11 +204,11 @@ var config1 = {
 			label: 'Dataset 1'
 		}],
 		labels: [
-			'Red',
-			'Orange',
-			'Yellow',
-			'Green',
-			'Blue'
+			'1st Class'+ '-\n '+'${class_name0}',
+			'2st Class'+ '-\n '+'${class_name1}',
+			'3st Class'+ '-\n '+'${class_name2}',
+			'4St Class'+ '-\n '+'${class_name3}',
+			'5st Class'+ '-\n '+'${class_name4}'
 		]
 	},
 	options: {
@@ -230,11 +232,11 @@ var config2 = {
 		data: {
 			datasets: [{
 				data: [
-					randomScalingFactor(),
-					randomScalingFactor(),
-					randomScalingFactor(),
-					randomScalingFactor(),
-					randomScalingFactor(),
+					'${product_sales0}',
+					'${product_sales1}',
+					'${product_sales2}',
+					'${product_sales3}',
+					'${product_sales4}',
 				],
 				backgroundColor: [
 					window.chartColors.red,
@@ -246,11 +248,11 @@ var config2 = {
 				label: 'Dataset 1'
 			}],
 			labels: [
-				'Red',
-				'Orange',
-				'Yellow',
-				'Green',
-				'Blue'
+				'1st Product'+ '-\n '+'${product_title0}'+ '-\n '+'${product_category0}',
+				'2st Product'+ '-\n '+'${product_title1}'+ '-\n '+'${product_category1}',
+				'3st Product'+ '-\n '+'${product_title2}'+ '-\n '+'${product_category2}',
+				'4St Product'+ '-\n '+'${product_title3}'+ '-\n '+'${product_category3}',
+				'5st Product'+ '-\n '+'${product_title4}'+ '-\n '+'${product_category4}'
 			]
 		},
 		options: {
@@ -404,7 +406,7 @@ function getReviewList() {
 						output += '<div class="ReviewSum" id="ReviewSum'+ REVIEW_NUM +'">';
 							output += '<div class="ReviewList pb-3" id="ReviewList'+ REVIEW_NUM +'">';
 									output += '<div class="row justify-content-center">';
-										output += '<div class="col-1 justify-content-end" style="padding: 5px;"><img src="'+ MEMBER_PICTURE +'" alt="" class="rounded-circle"></div>';
+									output += '<div class="col-1 justify-content-end"><img src="'+ MEMBER_PICTURE +'" alt="" class="rounded-circle"></div>';
 										output += '<div class="col-11">';
 											output += '<div class="row pb-1">';
 												output += '<div class="col-2 justify-content-end name">'+ MEMBER_NICK +'</div>';
@@ -432,7 +434,6 @@ function getReviewList() {
 				var output = '<div class="justify-content-center pt-3 pb-1" style="text-align:center;">등록된 댓글이 없습니다.</div>';
 				$('#ReviewtableSection').append(output);	//이상한데...!?!?!?
 			}
-			review_page();
           },
           error:function() {
              alert("getReviewList ajax통신 실패!!!");

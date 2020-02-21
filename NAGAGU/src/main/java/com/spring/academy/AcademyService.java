@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.apache.ibatis.annotations.Param;
+
 import com.spring.store.ProductVO;
 import com.spring.workshop.WorkShopMemberVO;
 
@@ -21,4 +23,8 @@ public interface AcademyService {
 	ArrayList<ClassVO> getClassListOfMember(HashMap<String, Object> map) throws Exception;
 	//선주
 	int updateGrade(ClassVO vo);
+	
+	//대시보드
+	ArrayList<ClassVO> myClassList(@Param("WORKSHOP_NUM")int WORKSHOP_NUM) throws Exception;
+	ArrayList<ProductVO> productSellList(@Param("WORKSHOP_NUM")int WORKSHOP_NUM) throws Exception;
 }
