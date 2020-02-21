@@ -25,8 +25,6 @@ public class ProductManagementAjaxController {
 	@Autowired(required = false)
 	private ProductManagementService productManagementService;
 
-	@Autowired
-	private SqlSession sqlSession;
 	//---------------------------------------상품 review 관리 페이지 리스트
 	@PostMapping(value="/productReviewList.my" ,produces="application/json;charset=UTF-8")
 	public ArrayList<Map<String, Object>> productReviewList(String selectCategory, String selectListAlign, String searchType, String keyword, HttpSession session) {
@@ -235,64 +233,21 @@ public class ProductManagementAjaxController {
 		System.out.println("keyword="+keyword);
 		
 		String[] order_amount= productManagementService.getOrder_amount();	//주문번호들 담은 배열
-
 		ArrayList<Map<String, Object>> listbyOrder_amount = null; 		//주문번호당 결제정보들을 가져옴 
-
-		ArrayList<ArrayList<Map<String, Object>>> selledProductList = new ArrayList<ArrayList<Map<String, Object>>>(); 
-		ProductManagementMapper managementMapper = sqlSession.getMapper(ProductManagementMapper.class);
-		;	
-		ArrayList<Map<String, Object>> testlist = null;
-		testlist =  managementMapper.getabc(map);
-		System.out.println("test"+testlist);
-		if(testlist == null) {
-			System.out.println("널");
-		} else {
-			System.out.println("널아님");
-		}
-
-		if(testlist.isEmpty()) {
-			System.out.println("sjf");
-		} else {
-			System.out.println("sdfdsd");
-		}
+		ArrayList<ArrayList<Map<String, Object>>> selledProductList = new ArrayList<ArrayList<Map<String, Object>>>();
 		
-		System.out.println("aaaaa");
-		System.out.println("aa"+listbyOrder_amount);
-		System.out.println("aa!"+selledProductList);
-		System.out.println("sfd");
 		for(int i=0; i<order_amount.length; i++) {
-			System.out.println("i"+i);
 			map.put("order_amount", order_amount[i]);
 //			System.out.println("order_amount["+i+"]="+order_amount[i]);
 			
 			listbyOrder_amount = productManagementService.getSelledproductList(map); 
-			System.out.println("adsasda");
-			System.out.println(listbyOrder_amount);
-			System.out.println("bb");
-			System.out.println("bb1"+listbyOrder_amount);
-			if(listbyOrder_amount != null) {
-				System.out.println("?");
-				System.out.println(i);
-				System.out.println(listbyOrder_amount);
-				selledProductList.add(i, listbyOrder_amount);
-				
-				System.out.println("56+"+selledProductList);
-				System.out.println("??");
-			} else {
-				System.out.println("널이다");
-			}
-			System.out.println("-----");
-			
-			System.out.println("졸려");
-//			System.out.println(selledProductList[i]);
-//			if(selledProductList[i].get) {
-//				
-//			}
-			
+			selledProductList.add(i, listbyOrder_amount);
 		}
 		
+		
+		
 		System.out.println("SelledproductList의 size : " + selledProductList.size());
-		return selledProductList;	//반환타입을 ArrayList<ArrayList<Map<String, Object>>> 로 바꿔줘야함, jsp에서도 다 바꿔줘야함
+		return selledProductList;
 	}	
 	
 	

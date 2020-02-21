@@ -2,6 +2,7 @@ package com.spring.mypage;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -10,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -19,8 +21,11 @@ import com.spring.estimate.EstimateOrderVO;
 import com.spring.estimate.EstimateService;
 import com.spring.member.MemberService;
 import com.spring.member.MemberVO;
+import com.spring.store.ProductQnaService;
+import com.spring.store.ProductReviewService;
 import com.spring.store.ProductService;
 import com.spring.store.ProductVO;
+import com.spring.store.Product_qnaVO;
 import com.spring.workshop.WorkShopMemberService;
 import com.spring.workshop.WorkShopMemberVO;
 
@@ -40,6 +45,12 @@ public class MypageController {
 	
 	@Autowired
 	private ProductService productService;
+	
+	@Autowired
+	private ProductReviewService productreviewService;
+	
+	@Autowired
+	private ProductQnaService productqnaService;
 	
 	@RequestMapping(value = "/mypage.my")
 	public String Mypage(MemberVO memberVO, HttpServletRequest request, HttpSession session) {
@@ -186,6 +197,38 @@ public class MypageController {
 		
 		return "Mypage/Workshop/Review/qnaStore";
 	}
+	
+	@RequestMapping(value = "/detailSqna.my", produces="application/json; charset=UTF-8", method = {RequestMethod.GET, RequestMethod.POST})
+	@ResponseBody
+	public Map<String, Object> detailSqna(Product_qnaVO vo) {
+		Map<String, Object> retVal = new HashMap<String, Object>();
+	
+		try {
+			vo = productqnaService.getQnaVO(vo);
+			
+			retVal.put("res", "OK");
+			retVal.put("qnaVO", vo);
+		} catch(Exception e) {
+			retVal.put("res", "FAIL");
+			retVal.put("message", "상세보기가 되지 않았습니다.");
+		}
+		
+		return retVal;
+	}
+	
+	@RequestMapping(value = "/SqnaInfo.my", method = {RequestMethod.GET, RequestMethod.POST})
+	public String WMemberInfo(Product_qnaVO vo, Model model) {
+		try {
+			vo = productqnaService.getQnaVO(vo);
+			
+			model.addAttribute("qnaVO", vo);
+			
+		} catch(Exception e) {
+			System.out.println("QnaInfo : " + e.getMessage());
+		}		
+		return "Mypage/Workshop/Review/Info/SqnaInfo";
+	}
+	
 	
 	@RequestMapping(value = "/workshop_review_Academy.ws")
 	public String WorkshopReviewAcademy() {

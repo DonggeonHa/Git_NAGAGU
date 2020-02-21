@@ -71,8 +71,8 @@
 					<div class="select4" style="padding-left: 5px">
 						<!-- 보기 정렬 -->
 						<select class="search_hidden_state justify-content-start form-control" id="selectListAlign" name="selectListAlign" onchange="btn_select4()" style="height: 33px;">
-							<option value="product_date">최근 판매순</option>
-							<option value='product_sales'>결제 금액순</option>
+							<option value="order_date">최근 판매순</option>
+							<option value='order_price'>결제 금액순</option>
 						</select>
 					</div>
 				</div>
@@ -186,7 +186,7 @@
 		$("#selectORDER_STATE").val('ORDER_STATE').prop("selected", true);
 		$("#selectORDER_METHOD").val('ORDER_METHOD').prop("selected", true);
 		$("#selectMYPRODUCT").val('MYPRODUCT').prop("selected", true);
-		$("#selectListAlign").val('product_date').prop("selected", true);
+		$("#selectListAlign").val('order_date').prop("selected", true);
 		$('#searchType').text('선택');
 		$("#searchType").val('');
 		$("#keyword").val('');
@@ -301,7 +301,7 @@
 				$("#selectORDER_STATE").val('ORDER_STATE').prop("selected", true);
 				$("#selectORDER_METHOD").val('ORDER_METHOD').prop("selected", true);
 				$("#selectMYPRODUCT").val('MYPRODUCT').prop("selected", true);
-				$("#selectListAlign").val('product_date').prop("selected", true);
+				$("#selectListAlign").val('order_date').prop("selected", true);
 				$('#searchType').text('선택');
 				$("#searchType").val('');
 				$("#keyword").val('');
@@ -372,73 +372,64 @@
 				var output = ' ';	
 				
 				if(selledProductList.length!=0) {
-					
-					
 					$('.listnum_num').text(selledProductList.length+"건");
 			     	for(var j=0; j<selledProductList.length; j++){
-			     		if(!selledProductList[j].isEmpty()) {
-			     		console.log('졸려')
-			     		
-			     		var productList = selledProductList[j];
-			     		console.log(productList)	//같은 주문번호를 가지고 있는 상품들 리스트
-			     		var PRODUCT_TITLE = productList[0].PRODUCT_TITLE + ' 외 ' + productList.length + '건';	//상품이름 외 다른 정보들은 다 같으므로 0번째 데이터의 값으로 출력
-						var ORDER_STATE = productList[0].ORDER_STATE;
-			      		switch(ORDER_STATE){
-			      	    case 0 : 
-			      	    	ORDER_STATE = '결제완료'
-			      	        break;
-			      	    case 1 : 
-			      	    	ORDER_STATE = '배송대기' 
-			      	        break;  
-			      	    case 2 : 
-			      	    	ORDER_STATE = '배송중'
-			      	        break;
-			      	    case 3 : 
-			      	    	ORDER_STATE = '배송완료'
-			      	        break;
-			      	    case 4 : 
-			      	    	ORDER_STATE = '구매확정'
-			      	        break;
-			      	    case 5 : 
-			      	    	ORDER_STATE = '환불요청'
-			      	        break;
-			      	    case 6 : 
-			      	    	ORDER_STATE = '환불대기'
-			      	        break;
-			      	    case 7 : 
-			      	    	ORDER_STATE = '환불완료'
-			      	        break;
-		   		   	    }				     		
-			    		var ORDER_NUM = productList[0].ORDER_NUM;
-			    		var ORDER_AMOUNT = productList[0].ORDER_AMOUNT;
-						var ORDER_METHOD = productList[0].ORDER_METHOD;
-						var ORDER_PRICE = productList[0].ORDER_PRICE;
-						var MEMBER_NICK = productList[0].MEMBER_NICK;
-			    		var ORDER_DATE = new Date(productList[0].ORDER_DATE);
-			    		var date = date_format(ORDER_DATE);			      
-						output += '<tr class="text-center">';
-						output += '<td><input type="checkbox" name="chk" value="'+ORDER_AMOUNT+'"></td>';
-						output += '<td>' + number + '</td>';
-						output += '<td><a href="#">' + ORDER_AMOUNT + '</a></td>';
-						output += '<td>' + PRODUCT_TITLE + '</td>';
-						output += '<td>' + ORDER_STATE + '</td>';
-						output += '<td>' + ORDER_METHOD + '</td>';
-						output += '<td>' + ORDER_PRICE + '</td>';
-						output += '<td>' + MEMBER_NICK + '</td>';
-						output += '<td>' + date + '</td>';
-	
-						output += '<td><button class="btn_review" value="'+ORDER_NUM+'" onclick="goreview(this.value)">' + "상세" + '</button></td>';
-						output += '</tr>';
-						number += 1;
-			     	
-						
-			     		}
-						
+			     		if(selledProductList[j].length != 0) {
+				     		console.log('졸려')
+				     		var productList = selledProductList[j];
+				     		console.log(productList)	//같은 주문번호를 가지고 있는 상품들 리스트
+				     		var PRODUCT_TITLE = productList[0].PRODUCT_TITLE + ' 외 ' + (productList.length-1) + '건';	//상품이름 외 다른 정보들은 다 같으므로 0번째 데이터의 값으로 출력
+							var ORDER_STATE = productList[0].ORDER_STATE;
+				      		switch(ORDER_STATE){
+				      	    case 0 : 
+				      	    	ORDER_STATE = '결제완료'
+				      	        break;
+				      	    case 1 : 
+				      	    	ORDER_STATE = '배송대기' 
+				      	        break;  
+				      	    case 2 : 
+				      	    	ORDER_STATE = '배송중'
+				      	        break;
+				      	    case 3 : 
+				      	    	ORDER_STATE = '배송완료'
+				      	        break;
+				      	    case 4 : 
+				      	    	ORDER_STATE = '구매확정'
+				      	        break;
+				      	    case 5 : 
+				      	    	ORDER_STATE = '환불요청'
+				      	        break;
+				      	    case 6 : 
+				      	    	ORDER_STATE = '환불대기'
+				      	        break;
+				      	    case 7 : 
+				      	    	ORDER_STATE = '환불완료'
+				      	        break;
+			   		   	    }				     		
+				    		var ORDER_NUM = productList[0].ORDER_NUM;
+				    		var ORDER_AMOUNT = productList[0].ORDER_AMOUNT;
+							var ORDER_METHOD = productList[0].ORDER_METHOD;
+							var ORDER_PRICE = productList[0].ORDER_PRICE;
+							var MEMBER_NICK = productList[0].MEMBER_NICK;
+				    		var ORDER_DATE = new Date(productList[0].ORDER_DATE);
+				    		var date = date_format(ORDER_DATE);			      
+							output += '<tr class="text-center">';
+							output += '<td><input type="checkbox" name="chk" value="'+ORDER_AMOUNT+'"></td>';
+							output += '<td>' + number + '</td>';
+							output += '<td><a href="#">' + ORDER_AMOUNT + '</a></td>';
+							output += '<td>' + PRODUCT_TITLE + '</td>';
+							output += '<td>' + ORDER_STATE + '</td>';
+							output += '<td>' + ORDER_METHOD + '</td>';
+							output += '<td>' + ORDER_PRICE + '</td>';
+							output += '<td>' + MEMBER_NICK + '</td>';
+							output += '<td>' + date + '</td>';
+							output += '<td><button class="btn_review" value="'+ORDER_NUM+'" onclick="goreview(this.value)">' + "상세" + '</button></td>';
+							output += '</tr>';
+							number += 1;
+			     		} 
 	 				}
 					$('#SelledproductList').append(output);
-					
-					
-				} else {
+				} else {	//판매된 상품이 아예 없을 경우
 					output += '검색 결과가 없습니다.';
 					$('.listnum_num').text("0건");
 					$('#list_none').append(output);
@@ -446,11 +437,27 @@
 					$("#selectORDER_STATE").val('ORDER_STATE').prop("selected", true);
 					$("#selectORDER_METHOD").val('ORDER_METHOD').prop("selected", true);
 					$("#selectMYPRODUCT").val('MYPRODUCT').prop("selected", true);
-					$("#selectListAlign").val('product_date').prop("selected", true);
+					$("#selectListAlign").val('order_date').prop("selected", true);
 					$('#searchType').text('선택');
 					$("#searchType").val('');
-					$("#keyword").val('');			
-				}
+					$("#keyword").val('');		
+				} 
+				
+		     	if(output.length == 1) {	//검색 결과가 없을 때
+		     		output += '검색 결과가 없습니다.';
+					$('.listnum_num').text("0건");
+					$('#list_none').append(output);
+					//검색결과 없을시 select조건들 초기화
+					$("#selectORDER_STATE").val('ORDER_STATE').prop("selected", true);
+					$("#selectORDER_METHOD").val('ORDER_METHOD').prop("selected", true);
+					$("#selectMYPRODUCT").val('MYPRODUCT').prop("selected", true);
+					$("#selectListAlign").val('order_date').prop("selected", true);
+					$('#searchType').text('선택');
+					$("#searchType").val('');
+					$("#keyword").val('');					     		
+		     	} 
+				
+				
 				page();
 			},
 			error: function() {
