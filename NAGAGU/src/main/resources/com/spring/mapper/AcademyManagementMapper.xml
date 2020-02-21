@@ -133,6 +133,38 @@
 		<result property="MEMBER_PICTURE" column="MEMBER_PICTURE" />		
 	</resultMap>
 	
+	<resultMap type="com.spring.store.ProductVO" id="productResultMap">
+		<result property="PRODUCT_NUM" column="PRODUCT_NUM" />	
+		<result property="PRODUCT_WORKSHOP" column="PRODUCT_WORKSHOP" />	
+		<result property="PRODUCT_SHOPNAME" column="PRODUCT_SHOPNAME" />	
+		<result property="PRODUCT_DATE" column="PRODUCT_DATE" />	
+		<result property="PRODUCT_TITLE" column="PRODUCT_TITLE" />	
+		<result property="PRODUCT_BRIEF" column="PRODUCT_BRIEF" />	
+		<result property="PRODUCT_CATEGORY" column="PRODUCT_CATEGORY" />
+		<result property="PRODUCT_PRICE" column="PRODUCT_PRICE" />		
+		<result property="PRODUCT_GRADE" column="PRODUCT_GRADE" />		
+		<result property="PRODUCT_READ" column="PRODUCT_READ" />
+		<result property="PRODUCT_SALES" column="PRODUCT_SALES" />		
+		<result property="PRODUCT_LIKE" column="PRODUCT_LIKE" />	
+		<result property="PRODUCT_COLOR" column="PRODUCT_COLOR" />			
+		<result property="PRODUCT_SIZE" column="PRODUCT_SIZE" />		
+		<result property="PRODUCT_INFO" column="PRODUCT_INFO" />		
+		<result property="PRODUCT_SHIP_PRICE" column="PRODUCT_SHIP_PRICE" />		
+		<result property="PRODUCT_SHIP_COMPANY" column="PRODUCT_SHIP_COMPANY" />		
+		<result property="PRODUCT_SHIP_RETURN_PRICE" column="PRODUCT_SHIP_RETURN_PRICE" />		
+		<result property="PRODUCT_SHIP_CHANGE_PRICE" column="PRODUCT_SHIP_CHANGE_PRICE" />		
+		<result property="PRODUCT_SHIP_RETURN_PLACE" column="PRODUCT_SHIP_RETURN_PLACE" />		
+		<result property="PRODUCT_SHIP_DAYS" column="PRODUCT_SHIP_DAYS" />		
+		<result property="PRODUCT_SHIP_INFO" column="PRODUCT_SHIP_INFO" />		
+		<result property="PRODUCT_AS_INFO" column="PRODUCT_AS_INFO" />		
+		<result property="PRODUCT_RETURN_INFO" column="PRODUCT_RETURN_INFO" />		
+		<result property="PRODUCT_STORE_INFO" column="PRODUCT_STORE_INFO" />		
+		<result property="PRODUCT_BANNER" column="PRODUCT_BANNER" />		
+		<result property="PRODUCT_IMAGE" column="PRODUCT_IMAGE" />	
+		<result property="PRODUCT_STATUS" column="PRODUCT_STATUS" />
+		<result property="PRODUCT_STOCK" column="PRODUCT_STOCK" />
+	</resultMap>
+	
 	
 	<select id="getManagementClassList" resultMap="classResultMap">
 	    select * from (select CLASS_NUMBER, CLASS_STATUS, CLASS_AREA, CLASS_AMOUNT, CLASS_DIVISION, CLASS_NAME, CLASS_CATEGORY, 
@@ -256,7 +288,10 @@
 			MEMBER_NICK, MEMBER_PICTURE FROM  
 				(SELECT R.*, N.MEMBER_NICK, N.MEMBER_PICTURE FROM PRODUCT_REVIEW R, NAGAGU_MEMBER N 
 				WHERE R.REVIEW_PRODUCT=#{PRODUCT_NUM} AND R.REVIEW_MEMBER=N.MEMBER_NUM AND R.REVIEW_RE=0 ORDER BY R.REVIEW_DATE DESC)) 
-           
+	</select>
+	
+	<select id="countOrderState" parameterType="int" resultType="int">
+		select count(order_state) from product_order where order_state = #{number} and product_workshop={WORKSHOP_NUM}
 	</select>
 	
 </mapper>

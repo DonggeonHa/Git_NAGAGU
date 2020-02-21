@@ -148,6 +148,16 @@ public class AcademyManagementServiceImpl implements AcademyManagementService {
 		return qnaList;
 	}
 
+	@Override
+	public int countOrderState(int number, int WORKSHOP_NUM) {
+		int count = 0;
+		
+		AcademyManagementMapper managementMapper = sqlSession.getMapper(AcademyManagementMapper.class);
+		count = managementMapper.countOrderState(number, WORKSHOP_NUM);
+		
+		return count;
+	}
+
 	
 	
 }
