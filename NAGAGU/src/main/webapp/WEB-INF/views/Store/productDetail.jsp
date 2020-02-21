@@ -63,8 +63,10 @@
 	String PRODUCT_COLOR = vo.getPRODUCT_COLOR();
 	String PRODUCT_SIZE = vo.getPRODUCT_SIZE();
 	int bannerImgCount = StringUtils.countOccurrencesOf(vo.getPRODUCT_BANNER(), ",");
-
-
+	
+	//품절일 경우 빨갛게 표시
+	//1 판매중 2판매완료 0품절
+	int PRODUCT_STATUS = vo.getPRODUCT_STATUS();
 
 	//날짜 포맷 형식
 	SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
@@ -467,7 +469,7 @@
 			</div>
 		</div>
 		<div class="col-5">
-			<form name="goodsform" action="#" method="post" id="goodsform">
+			<form name="goodsform" action="#" method="post" id="goodsform" class="goodsform">
 				<div class="row pt-4 pl-4">
 					<div class="col-3">
 						<img src="<%=WorkshopPic %>" width="95%">
@@ -500,7 +502,7 @@
 							<tr>
 								<th scope="row">색상선택</th>
 								<td><select name="BASKET_COLOR" size="1"
-									class="form-control BASKET_COLOR">
+									class="pauseSale form-control BASKET_COLOR">
 										<option value="">선택</option>
 										<c:forTokens var="color" items="<%=PRODUCT_COLOR %>" delims=",">
 											<option value="${fn:trim(color)}">${fn:trim(color)}</option>
@@ -549,12 +551,12 @@
 												</div>
 												<div style="width: 45%;">
 													<button type="button"
-														class="btn btn-outline-dark btn-lg btn-block"
+														class="pauseSale btn btn-outline-dark btn-lg btn-block"
 														data-toggle="modal" data-target="#exampleModalCenter">장바구니</button>
 												</div>
 												<div style="width: 45%;">
 													<button type="button"
-														class="btn btn-outline-dark btn-lg btn-block"
+														class="pauseSale btn btn-outline-dark btn-lg btn-block"
 														data-toggle="modal" data-target="#exampleModalCenter">바로구매</button>
 												</div>
 										<% 
@@ -581,10 +583,10 @@
 													</a>
 												</div>
 												<div style="width: 45%;">
-													<a href="#" class="btn btn-outline-dark btn-lg btn-block basket_btn" role="button" aria-pressed="true" id="basket_btn">장바구니</a>
+													<a href="#" class="pauseSale btn btn-outline-dark btn-lg btn-block basket_btn" role="button" aria-pressed="true" id="basket_btn">장바구니</a>
 												</div>
 												<div style="width: 45%;">
-													<a href="#" class="btn btn-outline-dark btn-lg btn-block order_btn"	role="button" aria-pressed="true" id="order_btn">바로구매</a>
+													<a href="#" class="pauseSale btn btn-outline-dark btn-lg btn-block order_btn"	role="button" aria-pressed="true" id="order_btn">바로구매</a>
 												</div>
 										<% 
 												} 
@@ -874,7 +876,7 @@
 		</div>
 		<div class="col-4">
         	<div class="sticky2" style="border: 1px solid #EAEAEA;">
-            	<form name="goodsform" action="#" method="post" id="goodsform">
+            	<form name="goodsform" action="#" method="post" id="goodsform" class="goodsform">
                 	<div>
                     	<table class="table table-borderless">
                         	<tbody>
@@ -948,10 +950,10 @@
 									</button>
 								</div>	
 								<div style="width:45%;">
-									<button type="button" class="btn btn-outline-dark btn-lg btn-block" data-toggle="modal" data-target="#exampleModalCenter" >장바구니</button>
+									<button type="button" class="pauseSale btn btn-outline-dark btn-lg btn-block" data-toggle="modal" data-target="#exampleModalCenter" >장바구니</button>
 								</div>
 								<div style="width:45%;">
-									<button type="button" class="btn btn-outline-dark btn-lg btn-block" data-toggle="modal" data-target="#exampleModalCenter" >바로구매</button>
+									<button type="button" class="pauseSale btn btn-outline-dark btn-lg btn-block" data-toggle="modal" data-target="#exampleModalCenter" >바로구매</button>
 								</div>
 						<% 
 							} else if(WORKSHOP_CEO_NAME != null) { 
@@ -971,10 +973,10 @@
 									</a>
 								</div>
 								<div style="width:45%;">
-									<a href="#" class="btn btn-outline-dark btn-lg btn-block basket_btn" role="button" aria-pressed="true" id="basket_btn">장바구니</a>
+									<a href="#" class="pauseSale btn btn-outline-dark btn-lg btn-block basket_btn" role="button" aria-pressed="true" id="basket_btn">장바구니</a>
 								</div>
 								<div style="width:45%;">
-									<a href="#" class="btn btn-outline-dark btn-lg btn-block order_btn" role="button" aria-pressed="true" id="order_btn">바로구매</a>
+									<a href="#" class="pauseSale btn btn-outline-dark btn-lg btn-block order_btn" role="button" aria-pressed="true" id="order_btn">바로구매</a>
 								</div>
 						<% 
 							} 
@@ -2599,5 +2601,21 @@
 			$('#QnaafterControl'+QNA_NUM).css('display', 'block'); 	//수정,취소버튼 보임
 	
 		})
+	
+		$(document).ready(function(){
+			console.log('ㅁ'+<%=PRODUCT_STATUS%>)
+			if(<%=PRODUCT_STATUS%> == 0) {
+				console.log('품절된 상품')
+				$('.pauseSale').addClass('disabled');
+				
+				$('.goodsform').find('td.total').text('품절된 상품').css('color', 'red');
+
+			} else {
+				console.log('품절 아닌 상품')
+				$('.pauseSale').removeClass('disabled');
+			}
+			
+		}) 
+	
 				
 </script>

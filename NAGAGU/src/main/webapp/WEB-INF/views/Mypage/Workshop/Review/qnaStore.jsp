@@ -100,7 +100,7 @@
 			    <th scope="col">문의 내용</th>
 			    <th scope="col">작성날짜</th>
 			    <th scope="col">답변상태</th>
-			    <th scope="col">관리</th>
+			    <th scope="col">상세</th>
 			</tr>
 			</thead>
 			<tbody id="ProductqnaList"></tbody>
@@ -193,6 +193,31 @@
 		ProductqnaList();
 	}	
 	
+	
+	/*qna 상세보기*/
+	$(document).on('click', '.btn_detail', function(event) {
+		var popupX = (window.screen.width / 2) - (500 / 2); // 만들 팝업창 좌우 크기의 1/2 만큼 보정값으로 뺴주었음
+		var popupY = (window.screen.height / 2) - (630 / 2); // 만들 팝업창 상하 크기의 1/2 만큼 보정값으로 뺴주었음
+		var pop = window.open('about:blank', 'Info', 'scrollbars=yes, resizable=yes, width=500, height=630, left=' + popupX + ', top=' + popupY);
+ 		jQuery.ajax({
+			url : './detailSqna.my',
+			type : 'GET',
+			data : {'QNA_NUM' : $(this).attr("value")},
+			contentType : 'application/x-www-form-urlencoded; charset=UTF-8',
+			dataType : 'json',
+			success : function (retVal) {
+				if (retVal.res == "OK") {
+					pop.location.href="SqnaInfo.my?QNA_NUM=" + retVal.qnaVO.qna_NUM;	
+		 		}
+			},
+			error: function(request,status,error) {
+				alert("ajax detailqna 통신 실패!");
+				alert("code:"+request.status+"\n"+"error:"+error);
+			}
+		});		
+
+		
+	});
 
 	/*날짜 형식 변경*/
 	function date_format(format) {
@@ -303,6 +328,7 @@
 			    		var QNA_CONTENT = qnaList[j].QNA_CONTENT;
     					var QNA_RE = qnaList[j].QNA_RE;
     					var QNA_STATUS = qnaList[j].QNA_STATUS;
+    					var QNA_NUM = qnaList[j].QNA_NUM;
 
 						output += '<tr class="text-center">';
 						output += '<td>' + number + '</td>';
@@ -320,14 +346,15 @@
 							output += '<td style="text-align:left;">'+QNA_CONTENT+'</td>';
 							output += '<td>' + date + '</td>';
 							output += '<td>'+'답변 대기'+'</td>';
-							output += '<td><button class="btn_write" onclick="location.href=">' + "작성" + '</button></td>';
+					//		output += '<td><button class="btn_write" onclick="location.href=">' + "작성" + '</button></td>';
 						} else if (QNA_STATUS == 1){
 							//답변이 달린 문의
 							output += '<td style="text-align:left;">'+QNA_CONTENT+'</td>';
 							output += '<td>' + date + '</td>';
 							output += '<td>'+'답변 완료'+'</td>';
-							output += '<td><button class="btn_modify" onclick="location.href=">'+"수정"+'</button></td>';
+					//		output += '<td><button class="btn_modify" onclick="location.href=">'+"수정"+'</button></td>';
 						}
+						output += '<td><button class="btn_detail" value="'+QNA_NUM+'">' + "상세" + '</button></td>';
 						output += '</tr>';
 						number += 1;
      				}					

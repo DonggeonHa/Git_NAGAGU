@@ -75,7 +75,7 @@
 
 	<resultMap type="java.util.HashMap" id="SelledproductListResultMap">
 		<result property="ORDER_NUM" column="ORDER_NUM" />	
-		<result property="ORDER_MEMBER" column="ORDER_MEMBER" />	
+		<result property="MEMBER_NICK" column="MEMBER_NICK" />	
 		<result property="ORDER_PRICE" column="ORDER_PRICE" />	
 		<result property="ORDER_DATE" column="ORDER_DATE" />	
 		<result property="ORDER_AMOUNT" column="ORDER_AMOUNT" />	
@@ -186,16 +186,34 @@
 	</select>
 
 	<select id="getSelledproductList" parameterType="java.util.HashMap" resultMap="SelledproductListResultMap">
-		SELECT O.ORDER_NUM, O.ORDER_MEMBER, O.ORDER_PRICE, O.ORDER_DATE, O.ORDER_AMOUNT, O.ORDER_PERSON, 
+		SELECT O.ORDER_NUM, M.MEMBER_NICK, O.ORDER_PRICE, O.ORDER_DATE, O.ORDER_AMOUNT, O.ORDER_PERSON, 
 		O.ORDER_MEMO, O.ORDER_METHOD, O.ORDER_STATE, O.ORDER_ADDRESS, O.ORDER_PHONE, 
 		P.PRODUCT_TITLE, P.PRODUCT_NUM
-			FROM PRODUCT_ORDER O, PRODUCT P, NAGAGU_WORKSHOP_MEMBER W, BASKET B
+			FROM PRODUCT_ORDER O, PRODUCT P, NAGAGU_WORKSHOP_MEMBER W, BASKET B, NAGAGU_MEMBER M
 				WHERE W.WORKSHOP_NUM = #{WORKSHOP_NUM}
 				AND B.BASKET_PRODUCT= P.PRODUCT_NUM 
 				AND B.BASKET_NUM = O.ORDER_NUM
 				AND O.ORDER_AMOUNT = #{order_amount, jdbcType=VARCHAR}
-		ORDER BY ORDER_DATE DESC
+				AND O.ORDER_MEMBER = M.MEMBER_NUM
+				
+				<if test="selectORDER_STATE != 'ORDER_STATE'"> AND O.ORDER_STATE = #{selectORDER_STATE} </if>
+				<if test="selectORDER_METHOD != 'ORDER_METHOD'"> AND O.ORDER_METHOD = #{selectORDER_METHOD} </if>
+				<if test="selectMYPRODUCT != 'MYPRODUCT'"> AND P.PRODUCT_TITLE LIKE '%'||#{selectMYPRODUCT}||'%' </if>
+				<if test="searchType == 'order_amount'"> AND O.ORDER_AMOUNT LIKE '%'||#{keyword}||'%' </if>
+				<if test="searchType == 'member_nick'"> AND M.MEMBER_NICK LIKE '%'||#{keyword}||'%' </if>
+				<if test="searchType == 'product_title'"> AND P.PRODUCT_TITLE LIKE '%'||#{keyword}||'%' </if>
+				
+		<!-- 
+				
+				
+				<if test="searchType == 'member_nick'"> AND N.MEMBER_NICK LIKE '%'||#{keyword}||'%' </if>
+				<if test="searchType == 'member_nick'"> AND N.MEMBER_NICK LIKE '%'||#{keyword}||'%' </if>
+				<if test="searchType == 'product_title'"> AND P.PRODUCT_TITLE LIKE '%'||#{keyword}||'%' </if>
+		 -->
+				
+		ORDER BY O.ORDER_DATE DESC
 	</select>
+
 
 	<select id="getOrder_amount" resultType="String">
 		SELECT DISTINCT ORDER_AMOUNT FROM PRODUCT_ORDER
@@ -205,6 +223,12 @@
 		UPDATE PRODUCT 
 			SET PRODUCT_STATUS = #{to_status}
 		WHERE PRODUCT_NUM=#{PRODUCT_NUM}	
+	</update>
+	
+	<update id="modifySelledStatus" parameterType="java.util.HashMap">  
+		UPDATE PRODUCT_ORDER 
+			SET ORDER_STATE = #{to_state}
+		WHERE ORDER_AMOUNT=#{ORDER_AMOUNT}	
 	</update>
 	
 	<delete id="deleteProducts" parameterType="java.util.HashMap">	

@@ -84,7 +84,6 @@ create sequence store_review_seq
 		<result property="REVIEW_CONTENT" column="REVIEW_CONTENT" />	
 		<result property="REVIEW_FILE" column="REVIEW_FILE" />	
 		<result property="REVIEW_GRADE" column="REVIEW_GRADE" />	
-		
 		<result property="PRODUCT_IMAGE" column="PRODUCT_IMAGE" />
 		<result property="PRODUCT_TITLE" column="PRODUCT_TITLE" />
 	</resultMap>

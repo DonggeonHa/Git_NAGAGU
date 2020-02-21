@@ -7,14 +7,15 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.spring.mapper.ProductManagementMapper;
 import com.spring.store.ProductVO;
 
 
@@ -24,7 +25,6 @@ public class ProductManagementAjaxController {
 	@Autowired(required = false)
 	private ProductManagementService productManagementService;
 
-	
 	//---------------------------------------상품 review 관리 페이지 리스트
 	@PostMapping(value="/productReviewList.my" ,produces="application/json;charset=UTF-8")
 	public ArrayList<Map<String, Object>> productReviewList(String selectCategory, String selectListAlign, String searchType, String keyword, HttpSession session) {
@@ -161,11 +161,8 @@ public class ProductManagementAjaxController {
 				}				
 			}
 	 		
-	 		
 		}catch(Exception e) {
-			
 		}
-
 
 		return res;
 	}
@@ -211,9 +208,10 @@ public class ProductManagementAjaxController {
 	
 	
 	//---------------------------------------판매된 상품 관리 페이지 리스트
+	@SuppressWarnings("null")
 	@ResponseBody
 	@PostMapping(value="/SelledproductsList.my" ,produces="application/json;charset=UTF-8")
-	public ArrayList<Map<String, Object>> SelledproductsList(String selectORDER_STATE, String selectORDER_METHOD, String selectMYPRODUCT, String selectListAlign, String searchType, String keyword, HttpSession session) {
+	public ArrayList<ArrayList<Map<String, Object>>> SelledproductsList(String selectORDER_STATE, String selectORDER_METHOD, String selectMYPRODUCT, String selectListAlign, String searchType, String keyword, HttpSession session) {
 		System.out.println("SelledproductsList 컨트롤러 start!");
 		
 		Integer WORKSHOP_NUM = (Integer)session.getAttribute("WORKSHOP_NUM");
@@ -235,50 +233,50 @@ public class ProductManagementAjaxController {
 		System.out.println("keyword="+keyword);
 		
 		String[] order_amount= productManagementService.getOrder_amount();	//주문번호들 담은 배열
-		System.out.println("order_amount.length="+order_amount.length);
-		for(int i=0;i<order_amount.length; i++) {
-			System.out.println(order_amount[i]);
-		}
-
+		ArrayList<Map<String, Object>> listbyOrder_amount = null; 		//주문번호당 결제정보들을 가져옴 
+		ArrayList<ArrayList<Map<String, Object>>> selledProductList = new ArrayList<ArrayList<Map<String, Object>>>();
 		
-		//방법 1 - 테이블 출력할 때는 0번째 데이터만 있어도 된다(상품명 외 다른 컬럼들은 동일한 값)
-		ArrayList<Map<String, Object>> selledProductList = new ArrayList<Map<String, Object>>();	//주문번호당 결제정보들을 가져옴
 		for(int i=0; i<order_amount.length; i++) {
 			map.put("order_amount", order_amount[i]);
-			System.out.println("order_amount["+i+"]="+order_amount[i]);
+//			System.out.println("order_amount["+i+"]="+order_amount[i]);
 			
-			System.out.println(productManagementService.getSelledproductList(map).get(0));
-			
-			selledProductList.add(i, productManagementService.getSelledproductList(map).get(0));
-	
-		}
-	
-
-		return selledProductList;
-		
-		
-/*
-		//방법2 - 전체 데이터 다 보내기 
-		ArrayList<Map<String, Object>> listbyOrder_amount = new ArrayList<Map<String, Object>>(); 
-		//주문번호당 결제정보들을 가져옴 //
-		ArrayList<ArrayList<Map<String, Object>>> selledProductList = new ArrayList<ArrayList<Map<String, Object>>>(); 
-		for(int i=0; i<order_amount.length; i++) { 
-			map.put("order_amount", order_amount[i]);
-			System.out.println("order_amount["+i+"]="+order_amount[i]);
-			System.out.println(productManagementService.getSelledproductList(map).get(0));
-			listbyOrder_amount.add(i, productManagementService.getSelledproductList(map).get(0)); 
+			listbyOrder_amount = productManagementService.getSelledproductList(map); 
 			selledProductList.add(i, listbyOrder_amount);
 		}
-  
+		
+		
+		
 		System.out.println("SelledproductList의 size : " + selledProductList.size());
-
-		return selledProductList;	//반환타입을 ArrayList<ArrayList<Map<String, Object>>> 로 바꿔줘야함, jsp에서도 다 바꿔줘야함
-*/		 
-		
-		
+		return selledProductList;
 	}	
 	
 	
+	
+	//---------------------------------------상품 관리 페이지 판매상태 update
+	@ResponseBody
+	@PostMapping(value="/modifySelledProductStatus.my" ,produces="application/json;charset=UTF-8")
+	public Map<String, Object> modifySelledProductStatus(int to_state, HttpServletRequest request, HttpSession session) {
+		System.out.println("modifySelledProductStatus 컨트롤러 start!");
+		Integer WORKSHOP_NUM = (Integer)session.getAttribute("WORKSHOP_NUM");
+		String[] checkBoxArr = request.getParameterValues("checkBoxArr[]");
+		System.out.println("WORKSHOP_NUM = "+ WORKSHOP_NUM);
+		System.out.println("to_state = "+ to_state);
+		
+		HashMap<String, Object> map = new HashMap<String, Object>();	//맵퍼 실행 위한
+		Map<String, Object> retVal = new HashMap<String, Object>();		//리턴 위한
+		map.put("to_state", to_state);
+		try {
+			for(int i=0; i<checkBoxArr.length; i++) {
+				map.put("ORDER_AMOUNT", checkBoxArr[i]);
+				int res = productManagementService.modifySelledStatus(map);
+				
+				retVal.put("res", "OK");
+			}	
+		} catch(Exception e) {
+			retVal.put("res", "Fail");
+		}
+		return retVal;
+	}
 	
 	
 }

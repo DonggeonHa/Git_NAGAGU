@@ -31,6 +31,10 @@
 	
 	<definition name="Admin/Info/*" extends="Empty"> 
  		<put-attribute name="content" value="/WEB-INF/views/Admin/Info/{1}.jsp" />
+ 	</definition>
+ 	  
+	<definition name="Mypage/Workshop/Review/Info/*" extends="Empty"> 
+ 		<put-attribute name="content" value="/WEB-INF/views/Mypage/Workshop/Review/Info/{1}.jsp" />
  	</definition>  
 
 	<!-- Main 쪽 --> 
@@ -74,7 +78,7 @@
 		<put-attribute name="Aindex" value="/WEB-INF/views/Admin/{1}.jsp" /> 
 	</definition>
 	
-	<!-- Admin 쪽 -->
+	<!-- Workshop 쪽 -->
 	<definition name="Workshop" template="/WEB-INF/tiles/Workshop/layouts.jsp"> 
 		<put-attribute name="Wsidebar" value="/WEB-INF/tiles/Workshop/sidebar.jsp" />
 		<put-attribute name="css" value="/WEB-INF/tiles/Workshop/css.jsp" />
@@ -90,8 +94,8 @@
 		<put-attribute name="Windex" value="/WEB-INF/views/Mypage/Workshop/{1}/{2}.jsp" /> 
 	</definition> 
 	
-	<definition name="Mypage/Workshop/*/*/*" extends="Workshop">
-		<put-attribute name="Windex" value="/WEB-INF/views/Mypage/Workshop/{1}/{2}/{3}.jsp" />
-	</definition>
+<!-- 	<definition name="Mypage/Workshop/*/*/*" extends="Workshop"> -->
+<!-- 		<put-attribute name="Windex" value="/WEB-INF/views/Mypage/Workshop/{1}/{2}/{3}.jsp" /> -->
+<!-- 	</definition> -->
 	
 </tiles-definitions>

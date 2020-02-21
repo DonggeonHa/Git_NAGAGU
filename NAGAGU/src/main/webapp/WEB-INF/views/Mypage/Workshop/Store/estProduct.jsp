@@ -45,7 +45,7 @@
 
 	<div class="container-fluid">
         <div class="pb-5">
-            <h1>수제가구 주문 관리</h1>
+            <h1>견적 주문 관리</h1>
         </div>
         <div class="d-flex justify-content-between pb-2">
 	        <div class="justify-content-start">
