@@ -15,8 +15,8 @@
 		<result property="ESTIMATE_COLOR" column="ESTIMATE_COLOR"/> 
 		<result property="ESTIMATE_COAT" column="ESTIMATE_COAT"/> 
 		<result property="ESTIMATE_SIZE" column="ESTIMATE_SIZE"/> 
-		<result property="ESTIMATE_FILE" column="ESTIMATE_FILE"/> 
-		<result property="ESTIMATE_CONTENT" column="ESTIMATE_CONTENT"/> 
+		<result property="ESTIMATE_FILE" column="ESTIMATE_FILE" jdbcType="CLOB" javaType="java.lang.String"/> 
+		<result property="ESTIMATE_CONTENT" column="ESTIMATE_CONTENT" jdbcType="CLOB" javaType="java.lang.String"/> 
 		<result property="ESTIMATE_PAY" column="ESTIMATE_PAY"/> 
 		<result property="ESTIMATE_STATE" column="ESTIMATE_STATE"/>
 		<result property="ESTIMATE_AVG" column="ESTIMATE_AVG"/>

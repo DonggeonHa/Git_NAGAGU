@@ -155,7 +155,7 @@ public class MypageController {
 	@RequestMapping(value = "/workshop.ws")
 	public String Workshopadmin() {
 		
-		return "Mypage/Workshop/main";
+		return "Workshop/main";
 	}
 	
 	@RequestMapping(value = "/workshop_modify.ws")
@@ -168,7 +168,7 @@ public class MypageController {
 		System.out.println(workshopVO.getWORKSHOP_ADDRESS2());
 		
 		mav.addObject("WorkShopMemberVO", workshopVO);
-		mav.setViewName("Mypage/Workshop/modify");
+		mav.setViewName("Workshop/modify");
 		
 		return mav;
 	}
@@ -176,31 +176,31 @@ public class MypageController {
 	@RequestMapping(value = "/workshop_academy_Registration.ws")
 	public String WorkshopAcademyRegistration() {
 		
-		return "Mypage/Workshop/Academy/courseRegistration";
+		return "Workshop/Academy/courseRegistration";
 	}
 	
 	@RequestMapping(value = "/workshop_academy_Management.ws")
 	public String WorkshopAcademyManagement() {
 		
-		return "Mypage/Workshop/Academy/lectureManagement";
+		return "Workshop/Academy/lectureManagement";
 	}
 	
 	@RequestMapping(value = "/workshop_academy_Membership.ws")
 	public String WorkshopAcademyMembership() {
 		
-		return "Mypage/Workshop/Academy/memberShip";
+		return "Workshop/Academy/memberShip";
 	}
 	
 	@RequestMapping(value = "/workshop_review_qnaAcademy")
 	public String WorkshopReviewreqAcademy() {
 		
-		return "Mypage/Workshop/Review/qnaAcademy";
+		return "Workshop/Review/qnaAcademy";
 	}
 	
 	@RequestMapping(value = "/workshop_review_qnaStore.ws")
 	public String WorkshopReviewreqStore() {
 		
-		return "Mypage/Workshop/Review/qnaStore";
+		return "Workshop/Review/qnaStore";
 	}
 	
 	@RequestMapping(value = "/detailSqna.my", produces="application/json; charset=UTF-8", method = {RequestMethod.GET, RequestMethod.POST})
@@ -231,20 +231,20 @@ public class MypageController {
 		} catch(Exception e) {
 			System.out.println("QnaInfo : " + e.getMessage());
 		}		
-		return "Mypage/Workshop/Review/Info/SqnaInfo";
+		return "Workshop/Review/Info/SqnaInfo";
 	}
 	
 	
 	@RequestMapping(value = "/workshop_review_Academy.ws")
 	public String WorkshopReviewAcademy() {
 		
-		return "Mypage/Workshop/Review/reviewAcademy";
+		return "Workshop/Review/reviewAcademy";
 	}
 	
 	@RequestMapping(value = "/workshop_review_Store.ws")
 	public String WorkshopReviewStore() {
 		
-		return "Mypage/Workshop/Review/reviewStore";
+		return "Workshop/Review/reviewStore";
 	}
 	
 	//판매된 상품 관리
@@ -257,7 +257,7 @@ public class MypageController {
 		WorkshopProoductList = productService.getAllWorkshopProduct(WORKSHOP_NUM);   
 		
 		ModelAndView mav = new ModelAndView();
-		mav.setViewName("Mypage/Workshop/Store/selled");
+		mav.setViewName("Workshop/Store/selled");
 		mav.addObject("WorkshopProoductList", WorkshopProoductList);
 		return mav;
 	}
@@ -265,7 +265,7 @@ public class MypageController {
 	@RequestMapping(value = "/workshop_product_items.ws")
 	public String WorkshopStoreproduct() {
 		
-		return "Mypage/Workshop/Store/product";
+		return "Workshop/Store/product";
 	}
 	
 	/* 일반회원 : 의뢰한 견적 리스트 */

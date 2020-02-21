@@ -406,6 +406,9 @@
 		color : black !important;
 	}
 	
+	.nav-item .nav-link a {
+		background-color: black;
+	}
 </style>
 
 <div class="container class-detail-container category_ac">

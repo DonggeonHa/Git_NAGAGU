@@ -24,7 +24,7 @@ public class EstimateManagementController {
 	@RequestMapping(value = "/workshop_estimate_offers.ws")
 	public String WorkshopStoreestOffers(HttpSession session) {
 		
-		return "Mypage/Workshop/Store/estOffers";
+		return "Workshop/Store/estOffers";
 	}
 	
 	@RequestMapping(value = "/workshop_offer_list.ws")
@@ -82,7 +82,7 @@ public class EstimateManagementController {
 	@RequestMapping(value = "/workshop_estimate_product.ws")
 	public String WorkshopStoreestProduct() {
 		
-		return "Mypage/Workshop/Store/estProduct";
+		return "Workshop/Store/estProduct";
 	}
 	
 	@RequestMapping(value = "/workshop_estimate_list.ws")

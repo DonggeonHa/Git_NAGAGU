@@ -68,7 +68,7 @@
 	}
 	@media ( min-width : 1200px) {
 		.card {
-			width: 7.6rem !important;       
+			width: 9rem !important;       
 			font-size: 0.7rem; 
 		}
 		.card-header, .card-body, .card-footer {
@@ -102,8 +102,9 @@
 		font-weight:800 !important;  
 	}
 </style>	 
-<div class="container-mypage " role="main">
-	<div class="row card-wrap  text-center">
+
+<div class="container container-mypage " role="main">
+	<div class="d-flex justify-content-center card-wrap  text-center" style="width: 100%">
 		<div class="card card-hover">
 			<a href="mypage_like.my" class="href">
 				<div class="card-header">Like</div>
@@ -139,12 +140,6 @@
 			</a>
 		</div>
 
-		<div class="card my">
-			<div class="card-header">MY</div>
-			<div class="card-body">
-				<i class="far fa-user-circle fa-4x"></i>
-			</div>
-		</div>
 		<div class="card card-hover">
 			<a href="order_list.my" class="href">
 				<div class="card-header">ORDER</div>

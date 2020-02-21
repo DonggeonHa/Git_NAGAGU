@@ -13,7 +13,7 @@
 		<result property="PICS_READ" column="PICS_READ" />
 		<result property="PICS_REVIEW" column="PICS_REVIEW" />		
 		<result property="PICS_MAIN_IMAGE" column="PICS_MAIN_IMAGE" />	
-		<result property="PICS_CONTENT" column="PICS_CONTENT" />
+		<result property="PICS_CONTENT" column="PICS_CONTENT" jdbcType="CLOB" javaType="java.lang.String" />
 		<result property="PICS_PRODUCT" column="PICS_PRODUCT" />
 	</resultMap>
 
@@ -28,7 +28,7 @@
 		<result property="PICS_READ" column="PICS_READ" />
 		<result property="PICS_REVIEW" column="PICS_REVIEW" />		
 		<result property="PICS_MAIN_IMAGE" column="PICS_MAIN_IMAGE" />	
-		<result property="PICS_CONTENT" column="PICS_CONTENT" />
+		<result property="PICS_CONTENT" column="PICS_CONTENT" jdbcType="CLOB" javaType="java.lang.String" />
 		<result property="PICS_PRODUCT" column="PICS_PRODUCT" />
 	</resultMap>
 	

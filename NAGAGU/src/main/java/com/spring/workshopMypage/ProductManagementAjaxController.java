@@ -193,10 +193,10 @@ public class ProductManagementAjaxController {
 		if(GO.equals("QNA")) {
 			//해당 상품글에 문의가 있는지 확인(없으면 따로 알람창 띄우기)
 			count = productManagementService.checkQnaCount(map);
-			url = "Mypage/Workshop/Review/qnaStore";
+			url = "Workshop/Review/qnaStore";
 		} else if (GO.equals("REVIEW")) {
 			count = productManagementService.checkReviewCount(map);
-			url = "Mypage/Workshop/Review/reviewStore";
+			url = "Workshop/Review/reviewStore";
 		}
 
 		

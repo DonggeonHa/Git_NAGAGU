@@ -334,7 +334,7 @@
 	<% 
 		} 
 	%>
-		<button class="btn btn-dark btn-md" onclick="location.href='estimate.es?page=<%=nowpage%>'">목록보기</button>
+		<button class="btn btn-dark btn-md" onclick="location.href='estimate.es?page=<%=nowpage%>'">목록</button>
 	</div>
 	
 	<form id="offer_data">
@@ -635,8 +635,6 @@
 							alertify.success(info_text);
 							getOfferList();
 						});
-						
-						
 					},
 					error: function(data) {
 						console.log(data.res);
