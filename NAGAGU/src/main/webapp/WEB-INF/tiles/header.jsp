@@ -5,6 +5,9 @@
 	String MEMBER_NAME = (String)session.getAttribute("MEMBER_NAME");
 	String MEMBER_EMAIL = (String)session.getAttribute("MEMBER_EMAIL");
 	String WORKSHOP_NAME = (String)session.getAttribute("WORKSHOP_NAME");
+	String MEMBER_NICK = (String)session.getAttribute("MEMBER_NICK");
+	
+	System.out.println(MEMBER_NAME);
 %>
 <style>
 	.bg {
@@ -289,10 +292,15 @@
 						%>
 								<li style="color: white"><p data-toggle="modal" data-target="#exampleModalCenter" style="cursor: pointer;">Sign in</p></li>
 						<%
-							} else if(MEMBER_EMAIL != null){ 
+							} else if(MEMBER_EMAIL != null){
+								if(MEMBER_NAME == null) {
+						%>
+								<li style="color: white"><%=MEMBER_NICK%>&nbsp;님 환영합니다</li>
+						<%
+								}else {
 						%>
 								<li style="color: white"><%=MEMBER_NAME%>&nbsp;님 환영합니다</li>
-						<%	
+						<%		}	
 							} else {
 						%>
 								<li style="color: white"><%=WORKSHOP_NAME%>&nbsp;님 환영합니다</li>

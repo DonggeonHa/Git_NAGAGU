@@ -18,6 +18,10 @@ Drop table ACADEMY;
 Drop sequence ACADEMY_SEQ;
 Drop table my_class;
 Drop sequence my_class_seq;
+Drop table CLASS_REVIEW;
+Drop sequence class_review_seq;
+Drop table CLASS_QNA;
+Drop sequence class_qna_seq;
 
 select * from academy;
 select * from my_class;

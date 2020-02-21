@@ -121,7 +121,6 @@
 	</resultMap>	
 	
 	
-	
 	<select id="getManagementClassList" resultMap="classResultMap">
 	    select * from (select CLASS_NUMBER, CLASS_STATUS, CLASS_AREA, CLASS_AMOUNT, CLASS_DIVISION, CLASS_NAME, CLASS_CATEGORY, 
 	    CLASS_DATE_CONFIGURATION_1, CLASS_DATE_CONFIGURATION_2, CLASS_COUNT_MEMBER from (select * from ACADEMY where
@@ -203,8 +202,7 @@
 		ORDER BY R.${selectListAlign} DESC			
 				
 	</select>
-
-
+	
 	<select id="getclassQnaList" parameterType="java.util.HashMap" resultMap="classQnaResultMap">
 		SELECT A.CLASS_CATEGORY, A.CLASS_AREA, A.CLASS_DIVISION, A.CLASS_NAME, A.CLASS_NUMBER, A.CLASS_STATUS, N.MEMBER_NICK, Q.QNA_NUM, Q.QNA_MEMBER, Q.QNA_CLASS, Q.QNA_DATE, 
 		Q.QNA_CONTENT, Q.QNA_RE, Q.QNA_STATUS
@@ -226,5 +224,17 @@
 		ORDER BY Q.QNA_DATE DESC			
 	</select>
 
+
+	<!-- 대시보드 qna 리스트 띄우기 -->
+	<select id="getDashboardQna" resultMap="classQnaResultMap" parameterType="int">
+		SELECT A.CLASS_CATEGORY, A.CLASS_AREA, A.CLASS_DIVISION, A.CLASS_NAME, A.CLASS_NUMBER, A.CLASS_STATUS, N.MEMBER_NICK, Q.QNA_NUM, Q.QNA_MEMBER, Q.QNA_CLASS, Q.QNA_DATE, 
+		Q.QNA_CONTENT, Q.QNA_RE, Q.QNA_STATUS
+		FROM ACADEMY A, CLASS_QNA Q, nagagu_workshop_member W, nagagu_member N
+		WHERE A.CLASS_NUMBER =Q.QNA_CLASS
+		AND W.WORKSHOP_NUM=A.WORKSHOP_NUM
+		AND W.WORKSHOP_NUM=#{WORKSHOP_NUM}
+		AND Q.QNA_MEMBER=N.MEMBER_NUM
+		ORDER BY Q.QNA_DATE DESC
+	</select>
 	
 </mapper>

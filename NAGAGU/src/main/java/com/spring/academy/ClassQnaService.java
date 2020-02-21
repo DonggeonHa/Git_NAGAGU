@@ -4,6 +4,8 @@ import java.util.ArrayList;
 
 import java.util.HashMap;
 
+import org.apache.ibatis.annotations.Param;
+
 
 public interface ClassQnaService {
 	int getQnaCount(HashMap<String, Object> map);
@@ -16,4 +18,5 @@ public interface ClassQnaService {
 	int modifyQna(Class_qnaVO qnaVO);
 	int findChildrenRE(Class_qnaVO qnaVO);
 	int deleteQna(Class_qnaVO qnaVO);
+	
 }
