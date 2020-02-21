@@ -11,10 +11,11 @@
 		border-bottom: 4px solid #ef900e;
 		background-color: #1B1B27;
 	}
-	.dropdown-menu .dropdown-item a{
+	.dropdown-menu .dropdown-item a {
            text-decoration: none;
            color: black; 
-        }
+    }
+    
 	.header_util>ul>li {
 		float: left;
 		display: inline-block;
@@ -271,13 +272,10 @@
 								<a class="nav-link header_nav" id="header_ac" href="./classlist.ac">ACADEMY</a>
 							</li>
 							<li class="nav-item">
-								<div class="dropdown">
-									<a class="nav-link" href="#" id="header_st">STORE</a>
-									<div class="dropdown-content">
-										<a href="./productcategory.pro" class="header_nav" id="header_sj" style="text-decoration: none;">수제가구</a>
-										<a href="./estimate.es" class="header_nav" id="header_kj" style="text-decoration: none;">견적문의</a>
-									</div>
-								</div>
+								<a class="nav-link header_nav" id="header_sj" href="./productcategory.pro">STORE</a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link header_nav" id="header_kj" href="./estimate.es">CUSTOM</a>
 							</li>
 						</ul>
 					</div>
