@@ -2,7 +2,6 @@ package com.spring.mypage;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -11,8 +10,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.spring.academy.AcademyService;
@@ -23,11 +20,6 @@ import com.spring.estimate.EstimateOrderVO;
 import com.spring.estimate.EstimateService;
 import com.spring.member.MemberService;
 import com.spring.member.MemberVO;
-import com.spring.store.ProductQnaService;
-import com.spring.store.ProductReviewService;
-import com.spring.store.ProductService;
-import com.spring.store.ProductVO;
-import com.spring.store.Product_qnaVO;
 import com.spring.workshop.WorkShopMemberService;
 import com.spring.workshop.WorkShopMemberVO;
 
@@ -47,15 +39,6 @@ public class MypageController {
 
 	@Autowired(required = false)
 	private ChatService chatService;
-	
-	@Autowired
-	private ProductService productService;
-	
-	@Autowired
-	private ProductReviewService productreviewService;
-	
-	@Autowired
-	private ProductQnaService productqnaService;
 	
 	@RequestMapping(value = "/mypage.my")
 	public String Mypage(MemberVO memberVO, HttpServletRequest request, HttpSession session) {
@@ -89,10 +72,17 @@ public class MypageController {
 	public String MypageClass(WorkShopMemberVO wsMemberVO, Model model, HttpServletRequest request) throws Exception {
 		System.out.println("컨트롤러");
 		//마이페이지 멤버
+		int WORKSHOP_NUM = 0;
+		if (request.getParameter("WORKSHOP_NUM") != null) {
+			WORKSHOP_NUM = Integer.parseInt(request.getParameter("WORKSHOP_NUM"));
+			wsMemberVO.setWORKSHOP_NUM(WORKSHOP_NUM);
+		}
+		else if (request.getParameter("ES_ORDER_WORKSHOP") != null) {
+			wsMemberVO = workShopMemberService.selectByName(request.getParameter("ES_ORDER_WORKSHOP").toString());
+			wsMemberVO.getWORKSHOP_NUM();
+		}
+
 		WorkShopMemberVO wsMemberDetail = workShopMemberService.selectwmember(wsMemberVO);
-		int WORKSHOP_NUM = Integer.parseInt(request.getParameter("WORKSHOP_NUM"));
-		wsMemberVO.setWORKSHOP_NUM(WORKSHOP_NUM);
-		
 		
 		//멤버가 올린 강의 리스트
 		HashMap<String, Object> map = new HashMap<String, Object>();
@@ -203,38 +193,6 @@ public class MypageController {
 		return "Mypage/Workshop/Review/qnaStore";
 	}
 	
-	@RequestMapping(value = "/detailSqna.my", produces="application/json; charset=UTF-8", method = {RequestMethod.GET, RequestMethod.POST})
-	@ResponseBody
-	public Map<String, Object> detailSqna(Product_qnaVO vo) {
-		Map<String, Object> retVal = new HashMap<String, Object>();
-	
-		try {
-			vo = productqnaService.getQnaVO(vo);
-			
-			retVal.put("res", "OK");
-			retVal.put("qnaVO", vo);
-		} catch(Exception e) {
-			retVal.put("res", "FAIL");
-			retVal.put("message", "상세보기가 되지 않았습니다.");
-		}
-		
-		return retVal;
-	}
-	
-	@RequestMapping(value = "/SqnaInfo.my", method = {RequestMethod.GET, RequestMethod.POST})
-	public String WMemberInfo(Product_qnaVO vo, Model model) {
-		try {
-			vo = productqnaService.getQnaVO(vo);
-			
-			model.addAttribute("qnaVO", vo);
-			
-		} catch(Exception e) {
-			System.out.println("QnaInfo : " + e.getMessage());
-		}		
-		return "Mypage/Workshop/Review/Info/SqnaInfo";
-	}
-	
-	
 	@RequestMapping(value = "/workshop_review_Academy.ws")
 	public String WorkshopReviewAcademy() {
 		
@@ -249,17 +207,9 @@ public class MypageController {
 	
 	//판매된 상품 관리
 	@RequestMapping(value = "/workshop_product_selled.ws")
-	public ModelAndView WorkshopStoreselled(HttpSession session) {
-		int WORKSHOP_NUM = (int)session.getAttribute("WORKSHOP_NUM");
-
-
-		ArrayList<ProductVO> WorkshopProoductList = null;
-		WorkshopProoductList = productService.getAllWorkshopProduct(WORKSHOP_NUM);   
+	public String WorkshopStoreselled() {
 		
-		ModelAndView mav = new ModelAndView();
-		mav.setViewName("Mypage/Workshop/Store/selled");
-		mav.addObject("WorkshopProoductList", WorkshopProoductList);
-		return mav;
+		return "Mypage/Workshop/Store/selled";
 	}
 	//등록된 상품 관리
 	@RequestMapping(value = "/workshop_product_items.ws")
@@ -348,6 +298,7 @@ public class MypageController {
 			chatvo.setCHATROOM_WORKSHOP(vo.getES_ORDER_WORKSHOP());
 			
 			int res2 = chatService.chatroomCreate(chatvo);
+			int res3 = estimateService.estimateBidSet(4, vo.getES_ORDER_ESTIMATE());
 			
 			eovo = estimateService.esOrderDetail(ES_ORDER_NUM);
 			

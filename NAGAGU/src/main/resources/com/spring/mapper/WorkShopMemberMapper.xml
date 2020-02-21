@@ -81,6 +81,10 @@
 		select count(*) from nagagu_workshop_member where WORKSHOP_NAME = #{WORKSHOP_NAME}
 	</select>
 	
+	<select id="selectByName" parameterType="String" resultMap="workshopMemberResultMap">
+		select * from nagagu_workshop_member where WORKSHOP_NAME = #{WORKSHOP_NAME}
+	</select>
+	
 	<!-- 회원탈퇴용 매퍼 -->
 	<insert id="duplicateWMember" parameterType="com.spring.workshop.WorkShopMemberVO">
 		INSERT INTO delete_workshop_member(WORKSHOP_NUM, WORKSHOP_EMAIL, WORKSHOP_PASS, WORKSHOP_NAME, WORKSHOP_CEO_NAME, WORKSHOP_PHONE, WORKSHOP_ZIP, WORKSHOP_ADDRESS1, WORKSHOP_ADDRESS2,

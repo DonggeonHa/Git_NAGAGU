@@ -25,7 +25,7 @@
 		MEMBER_EMAIL = session.getAttribute("MEMBER_EMAIL").toString();
 	}
 	
-	SimpleDateFormat df = new SimpleDateFormat("yyyy.MM.dd hh:mm");
+	SimpleDateFormat df = new SimpleDateFormat("yyyy.MM.dd HH:mm");
 	DecimalFormat dfmp = new DecimalFormat("#,###원");
 %>
 
@@ -259,7 +259,7 @@
 		%>
 						<p class="es_state_bid">진행중</p>
 		<%
-					} else if (el.getESTIMATE_STATE() == 1) {
+					} else if (el.getESTIMATE_STATE() == 1 || el.getESTIMATE_STATE() == 4) {
 		%>
 						<p class="es_state_successful">낙찰</p>
 		<%

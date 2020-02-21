@@ -183,4 +183,14 @@ public class WorkShopMemberServiceImpl implements WorkShopMemberService {
 		
 		return res;
 	}
+	
+	/* 기재 */
+	
+	@Override
+	public WorkShopMemberVO selectByName (String WORKSHOP_NAME) {
+		WorkShopMemberMapper workshopMapper = sqlSession.getMapper(WorkShopMemberMapper.class);
+		WorkShopMemberVO wsvo = workshopMapper.selectByName(WORKSHOP_NAME);
+		
+		return wsvo;
+	}
 }
