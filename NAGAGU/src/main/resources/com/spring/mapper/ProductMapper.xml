@@ -18,19 +18,19 @@
 		<result property="PRODUCT_LIKE" column="PRODUCT_LIKE" />	
 		<result property="PRODUCT_COLOR" column="PRODUCT_COLOR" />			
 		<result property="PRODUCT_SIZE" column="PRODUCT_SIZE" />		
-		<result property="PRODUCT_INFO" column="PRODUCT_INFO" jdbcType="CLOB" javaType="java.lang.String" />		
+		<result property="PRODUCT_INFO" column="PRODUCT_INFO"  />		
 		<result property="PRODUCT_SHIP_PRICE" column="PRODUCT_SHIP_PRICE" />		
 		<result property="PRODUCT_SHIP_COMPANY" column="PRODUCT_SHIP_COMPANY" />		
 		<result property="PRODUCT_SHIP_RETURN_PRICE" column="PRODUCT_SHIP_RETURN_PRICE" />		
 		<result property="PRODUCT_SHIP_CHANGE_PRICE" column="PRODUCT_SHIP_CHANGE_PRICE" />		
 		<result property="PRODUCT_SHIP_RETURN_PLACE" column="PRODUCT_SHIP_RETURN_PLACE" />		
 		<result property="PRODUCT_SHIP_DAYS" column="PRODUCT_SHIP_DAYS" />		
-		<result property="PRODUCT_SHIP_INFO" column="PRODUCT_SHIP_INFO" jdbcType="CLOB" javaType="java.lang.String"/>		
-		<result property="PRODUCT_AS_INFO" column="PRODUCT_AS_INFO" jdbcType="CLOB" javaType="java.lang.String"/>		
-		<result property="PRODUCT_RETURN_INFO" column="PRODUCT_RETURN_INFO" jdbcType="CLOB" javaType="java.lang.String" />		
-		<result property="PRODUCT_STORE_INFO" column="PRODUCT_STORE_INFO" jdbcType="CLOB" javaType="java.lang.String"/>		
-		<result property="PRODUCT_BANNER" column="PRODUCT_BANNER" jdbcType="CLOB" javaType="java.lang.String"/>		
-		<result property="PRODUCT_IMAGE" column="PRODUCT_IMAGE" jdbcType="CLOB" javaType="java.lang.String" />		
+		<result property="PRODUCT_SHIP_INFO" column="PRODUCT_SHIP_INFO" />		
+		<result property="PRODUCT_AS_INFO" column="PRODUCT_AS_INFO" />		
+		<result property="PRODUCT_RETURN_INFO" column="PRODUCT_RETURN_INFO" />		
+		<result property="PRODUCT_STORE_INFO" column="PRODUCT_STORE_INFO" />		
+		<result property="PRODUCT_BANNER" column="PRODUCT_BANNER" />		
+		<result property="PRODUCT_IMAGE" column="PRODUCT_IMAGE" />		
 		<result property="PRODUCT_STATUS" column="PRODUCT_STATUS" />		
 		<result property="PRODUCT_STOCK" column="PRODUCT_STOCK" />		
 	</resultMap>
@@ -50,19 +50,19 @@
 		<result property="PRODUCT_LIKE" column="PRODUCT_LIKE" />	
 		<result property="PRODUCT_COLOR" column="PRODUCT_COLOR" />			
 		<result property="PRODUCT_SIZE" column="PRODUCT_SIZE" />		
-		<result property="PRODUCT_INFO" column="PRODUCT_INFO" jdbcType="CLOB" javaType="java.lang.String" />		
+		<result property="PRODUCT_INFO" column="PRODUCT_INFO"/>		
 		<result property="PRODUCT_SHIP_PRICE" column="PRODUCT_SHIP_PRICE" />		
 		<result property="PRODUCT_SHIP_COMPANY" column="PRODUCT_SHIP_COMPANY" />		
 		<result property="PRODUCT_SHIP_RETURN_PRICE" column="PRODUCT_SHIP_RETURN_PRICE" />		
 		<result property="PRODUCT_SHIP_CHANGE_PRICE" column="PRODUCT_SHIP_CHANGE_PRICE" />		
 		<result property="PRODUCT_SHIP_RETURN_PLACE" column="PRODUCT_SHIP_RETURN_PLACE" />		
 		<result property="PRODUCT_SHIP_DAYS" column="PRODUCT_SHIP_DAYS" />		
-		<result property="PRODUCT_SHIP_INFO" column="PRODUCT_SHIP_INFO" jdbcType="CLOB" javaType="java.lang.String" />		
-		<result property="PRODUCT_AS_INFO" column="PRODUCT_AS_INFO" jdbcType="CLOB" javaType="java.lang.String" />		
-		<result property="PRODUCT_RETURN_INFO" column="PRODUCT_RETURN_INFO" jdbcType="CLOB" javaType="java.lang.String" />		
-		<result property="PRODUCT_STORE_INFO" column="PRODUCT_STORE_INFO" jdbcType="CLOB" javaType="java.lang.String" />		
-		<result property="PRODUCT_BANNER" column="PRODUCT_BANNER" jdbcType="CLOB" javaType="java.lang.String" />		
-		<result property="PRODUCT_IMAGE" column="PRODUCT_IMAGE" jdbcType="CLOB" javaType="java.lang.String" />	
+		<result property="PRODUCT_SHIP_INFO" column="PRODUCT_SHIP_INFO"/>		
+		<result property="PRODUCT_AS_INFO" column="PRODUCT_AS_INFO"  />		
+		<result property="PRODUCT_RETURN_INFO" column="PRODUCT_RETURN_INFO" />		
+		<result property="PRODUCT_STORE_INFO" column="PRODUCT_STORE_INFO"  />		
+		<result property="PRODUCT_BANNER" column="PRODUCT_BANNER" />		
+		<result property="PRODUCT_IMAGE" column="PRODUCT_IMAGE" />	
 		<result property="PRODUCT_STATUS" column="PRODUCT_STATUS" />
 		<result property="PRODUCT_STOCK" column="PRODUCT_STOCK" />
 	</resultMap>

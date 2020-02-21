@@ -463,7 +463,7 @@
 			</div>
 			<div class="row sticky">
 				<div class="col-12">
-					<ul class="nav nav-tabs nav-fill" style="z-index: 99;">
+					<ul class="nav nav-tabs nav-fill" id="list-example" style="z-index: 99;">
 						<li class="nav-item">
 							<a class="nav-link" href="#t1"><h5>공방소개</h5></a>
 						</li>
@@ -480,69 +480,71 @@
 				</div>
 			</div>
 			<!-- 공방소개 시작 -->
-			<span id="t1"></span>
-			<div class="row">
-				<div class="col-12">
-				<!-- 주문 주의사항 -->
-					<div class="mainText">
-						<br/> <!-- 상세 설명 -->
-						<dt id="subject">
-							<br><br>
-							<strong>공방을 소개해요</strong>
-						</dt> <br/>
-						<dl>
-							<dd><%=cl.getCLASS_INTRODUCTION_1()%></dd>
-						</dl>
-						<dt id="subject">
-							<strong>이렇게 진행해요</strong>
-						</dt> <br/>
-						<dl>
-							<dd><%=cl.getCLASS_INTRODUCTION_2()%></dd>
-						</dl>
-						<dt id="subject">
-							<strong>함께하고 싶어요</strong>
-						</dt> <br/>
-						<dl>
-							<dd><%=cl.getCLASS_INTRODUCTION_3()%></dd>
-						</dl>
-						<dt id="subject">
-							<strong>환불규정</strong>
-						</dt> <br/>
-						<dl>
-							<dd>
-								<div style="width:690px; font-size:12pt;line-height:16pt;">
-		                			<p>NAGAGU의 결제 취소 및 환불 규정은 관련 법령인 &lt;학원의 설립ㆍ운영 및 과외교습에 관한 법률 시행령 [별표4] [시행 2017.3.21.]&gt;의 &lt;교습비 등 반환기준(제18조 제3항 관련)&gt;을 준수합니다.</p>
-		                			
-		                			<p><strong>1. 클래스 수업 기간이 1개월 이내인 경우 환불 기준</strong>&nbsp;</p>
-		                			<p>① 클래스 시작 전 - 이미 납부한 교습비 등의 전액&nbsp;</p>
-		                			<p>② 총 클래스 수업시간의 1/3 경과 전 - 이미 납부한 교습비 등의 2/3에 해당하는 금액&nbsp;</p>
-		                			<p>③ 총 클래스 수업시간의 1/2 경과 전 - 이미 납부한 교습비 등의 1/2에 해당하는 금액&nbsp;</p>
-		                			<p>④ 총 클래스 수업시간의 1/2 경과 후 - 반환하지 않음&nbsp;</p>
-		                			
-		                			<p><strong>2. 클래스 수업 기간이 1개월을 초과하는 경우</strong>&nbsp;</p>
-		                			<p>① 클래스 수업 시작 전 - 이미 납부한 교습비 등의 전액&nbsp;</p>
-		                			<p>② 클래스 수업 시작 후 - 환불사유가 발생한 해당 월의 환불 대상 교습비 등 (클래스 수업 기간이</p>
-		                			<p>1개월 이내인 경우의 기준에 따라 산출한 금액을 말한다)과 나머지 월의 교습비 등의 전액을 합산한 금액&nbsp;</p>
-		                			
-		                			<p>단 클래스의 특성상 사전 준비(수업재료 준비, 장소 및 식사 사전예약 등)과정에서 불가피하게 손해비용 및 위약금 발생이 예상되는 경우, 마스터는 법령에서 제시한 내용 외에 별도의 환불규정을 수강생에게 고지할 수 있고, 수강생은 마스터가 고지한 환불수수료를 제외한 금액을 환불받을 수 있습니다.</p>
-		                		</div>
-							</dd>
-						</dl>
-						<dt id="subject">
-							<strong>기타사항</strong>
-						</dt><span id="t2"></span><br/>
-						<dl>
-							<dd><%=cl.getCLASS_ETC()%></dd>
-						</dl>
-						<dt id="subject" >
-							<strong>공방 장소</strong>
-						</dt> <br/>
-						<dl>
-							<dd>
-								<p class="text-left"><%=cl.getCLASS_ADDRESS()%>&nbsp;&nbsp;<%=cl.getCLASS_DETAIL_ADDRESS()%></p>
-								<div id="map" style="width:675px;height:500px;"></div>
-							</dd>
-						</dl>
+			<div data-spy="scroll" data-target="#list-example" data-offset="0">
+				<span id="t1"></span>
+				<div class="row">
+					<div class="col-12">
+					<!-- 주문 주의사항 -->
+						<div class="mainText">
+							<br/> <!-- 상세 설명 -->
+							<dt id="subject">
+								<br><br>
+								<strong>공방을 소개해요</strong>
+							</dt> <br/>
+							<dl>
+								<dd><%=cl.getCLASS_INTRODUCTION_1()%></dd>
+							</dl>
+							<dt id="subject">
+								<strong>이렇게 진행해요</strong>
+							</dt> <br/>
+							<dl>
+								<dd><%=cl.getCLASS_INTRODUCTION_2()%></dd>
+							</dl>
+							<dt id="subject">
+								<strong>함께하고 싶어요</strong>
+							</dt> <br/>
+							<dl>
+								<dd><%=cl.getCLASS_INTRODUCTION_3()%></dd>
+							</dl>
+							<dt id="subject">
+								<strong>환불규정</strong>
+							</dt> <br/>
+							<dl>
+								<dd>
+									<div style="width:690px; font-size:12pt;line-height:16pt;">
+			                			<p>NAGAGU의 결제 취소 및 환불 규정은 관련 법령인 &lt;학원의 설립ㆍ운영 및 과외교습에 관한 법률 시행령 [별표4] [시행 2017.3.21.]&gt;의 &lt;교습비 등 반환기준(제18조 제3항 관련)&gt;을 준수합니다.</p>
+			                			
+			                			<p><strong>1. 클래스 수업 기간이 1개월 이내인 경우 환불 기준</strong>&nbsp;</p>
+			                			<p>① 클래스 시작 전 - 이미 납부한 교습비 등의 전액&nbsp;</p>
+			                			<p>② 총 클래스 수업시간의 1/3 경과 전 - 이미 납부한 교습비 등의 2/3에 해당하는 금액&nbsp;</p>
+			                			<p>③ 총 클래스 수업시간의 1/2 경과 전 - 이미 납부한 교습비 등의 1/2에 해당하는 금액&nbsp;</p>
+			                			<p>④ 총 클래스 수업시간의 1/2 경과 후 - 반환하지 않음&nbsp;</p>
+			                			
+			                			<p><strong>2. 클래스 수업 기간이 1개월을 초과하는 경우</strong>&nbsp;</p>
+			                			<p>① 클래스 수업 시작 전 - 이미 납부한 교습비 등의 전액&nbsp;</p>
+			                			<p>② 클래스 수업 시작 후 - 환불사유가 발생한 해당 월의 환불 대상 교습비 등 (클래스 수업 기간이</p>
+			                			<p>1개월 이내인 경우의 기준에 따라 산출한 금액을 말한다)과 나머지 월의 교습비 등의 전액을 합산한 금액&nbsp;</p>
+			                			
+			                			<p>단 클래스의 특성상 사전 준비(수업재료 준비, 장소 및 식사 사전예약 등)과정에서 불가피하게 손해비용 및 위약금 발생이 예상되는 경우, 마스터는 법령에서 제시한 내용 외에 별도의 환불규정을 수강생에게 고지할 수 있고, 수강생은 마스터가 고지한 환불수수료를 제외한 금액을 환불받을 수 있습니다.</p>
+			                		</div>
+								</dd>
+							</dl>
+							<dt id="subject">
+								<strong>기타사항</strong>
+							</dt><span id="t2"></span><br/>
+							<dl>
+								<dd><%=cl.getCLASS_ETC()%></dd>
+							</dl>
+							<dt id="subject">
+								<strong>공방 장소</strong>
+							</dt> <br/>
+							<dl>
+								<dd>
+									<p class="text-left"><%=cl.getCLASS_ADDRESS()%>&nbsp;&nbsp;<%=cl.getCLASS_DETAIL_ADDRESS()%></p>
+									<div id="map" style="width:675px;height:500px;"></div>
+								</dd>
+							</dl>
+						</div>
 					</div>
 				</div>
 			</div>
@@ -827,7 +829,7 @@
 									<td></td>
 									<th scope="row">구매 수량</th>
 									<td class="d-flex justify-content-between">
-										<select name="sel" id="sel" class="form-control" style="width: 100px">
+										<select name="sel" id="sel" class="form-control toNumber" style="width: 100px">
 											<option value="" selected>선택</option>
 											<option value="1">1</option>
 											<option value="2">2</option>
@@ -992,7 +994,7 @@
 						</li>
 					</ul>
 					<div class="tab-content" id="pills-tabContent">
-						<div class="tab-pane fade active show" id="pills-card" role="tabpanel" aria-labelledby="pills-card-tab" style="padding-left: 3%;">
+						<div class="tab-pane fade show" id="pills-card" role="tabpanel" aria-labelledby="pills-card-tab" style="padding-left: 3%;">
 							<dl>
 								<dt>
 									<input type="checkbox" class="custom-control-input"	id="cardControlInline"> 
@@ -1004,8 +1006,8 @@
 							</dl>
 							
 							<div class="center" style="padding-bottom: 2rem;">
-								<button type="button" id="Payment_Card" class="btn btn-outline-dark mr-4">예약 신청하기</button>
-								<button type="button" id="btn" class="btn btn-outline-dark">뒤로</button>
+								<a class="btn btn-outline-dark mr-4 IMP_pay" role="button" aria-pressed="true">예약 신청하기</a>
+								<button type="button" id="btn" class="btn btn-outline-dark" data-dismiss="modal">닫기</button>
 							</div>
 						</div>
 						<div class="tab-pane fade" id="pills-vbank" role="tabpanel"	aria-labelledby="pills-vbank-tab" style="padding-left: 3%;">
@@ -1020,8 +1022,8 @@
 							</dl>
 							
 							<div class="center" style="padding-bottom: 2rem;">
-								<button type="button" id="btn" class="btn btn-outline-dark mr-4">예약 신청하기</button>
-								<button type="button" id="btn" class="btn btn-outline-dark">뒤로</button>
+								<a class="btn btn-outline-dark mr-4 IMP_pay" role="button" aria-pressed="true">예약 신청하기</a>
+								<button type="button" id="btn" class="btn btn-outline-dark" data-dismiss="modal">닫기</button>
 							</div>
 						</div>
 						<div class="tab-pane fade" id="pills-phone" role="tabpanel" aria-labelledby="pills-phone-tab" style="padding-left: 3%;">
@@ -1036,8 +1038,8 @@
 							</dl>
 							
 							<div class="center" style="padding-bottom: 2rem;">
-								<button type="button" id="btn" class="btn btn-outline-dark mr-4">예약 신청하기</button>
-								<button type="button" id="btn" class="btn btn-outline-dark">뒤로</button>
+								<a class="btn btn-outline-dark mr-4 IMP_pay" role="button" aria-pressed="true">예약 신청하기</a>
+								<button type="button" id="btn" class="btn btn-outline-dark" data-dismiss="modal">닫기</button>
 							</div>
 						</div>
 						<div class="tab-pane fade" id="pills-toss" role="tabpanel" aria-labelledby="pills-toss-tab">
@@ -1062,8 +1064,8 @@
 								</dl>
 								
 								<div class="center" style="padding-bottom: 2rem;">
-									<button type="button" id="btn" class="btn btn-outline-dark mr-4">예약 신청하기</button>
-									<button type="button" id="btn" class="btn btn-outline-dark">뒤로</button>
+									<a class="btn btn-outline-dark mr-4 IMP_pay" role="button" aria-pressed="true">예약 신청하기</a>
+									<button type="button" id="btn" class="btn btn-outline-dark" data-dismiss="modal">닫기</button>
 								</div>
 							</div>
 						</div>
@@ -1079,8 +1081,8 @@
 							</dl>
 							
 							<div class="center" style="padding-bottom: 2rem;">
-								<button type="button" id="btn" class="btn btn-outline-dark mr-4">예약 신청하기</button>
-								<button type="button" id="btn" class="btn btn-outline-dark">뒤로</button>
+								<a class="btn btn-outline-dark mr-4 IMP_pay" role="button" aria-pressed="true">예약 신청하기</a>
+								<button type="button" id="btn" class="btn btn-outline-dark" data-dismiss="modal">닫기</button>
 							</div>
 						</div>
 						<div class="tab-pane fade" id="pills-kakao" role="tabpanel" aria-labelledby="pills-kakao-tab" style="padding-left: 3%;">
@@ -1095,8 +1097,8 @@
 							</dl>
 							
 							<div class="center" style="padding-bottom: 2rem;">
-								<button type="button" id="Payment_Card" class="btn btn-outline-dark mr-4" onclick="Payment_Card()">예약 신청하기</button>
-								<button type="button" id="btn" class="btn btn-outline-dark">뒤로</button>
+								<a class="btn btn-outline-dark mr-4 IMP_pay" role="button" aria-pressed="true">예약 신청하기</a>
+								<button type="button" id="btn" class="btn btn-outline-dark" data-dismiss="modal">닫기</button>
 							</div>
 						</div>
 					</div>
@@ -1146,7 +1148,15 @@
 		    } 
 		});
 		
-		function Payment_Card(){
+		$(document).on('click','.IMP_pay',function(){
+			if($('.toNumber').val()==''){
+				alertify.alert('갯수를 채워주세요'); 
+				return
+			}
+			if(!$('.active').find('input').is(':checked')){
+				alertify.alert('동의란에 체크주세요'); 
+				return
+			}
 			var Amount = $('#Amount').text();
 			var IMP = window.IMP; // 생략가능
 			var ticketNum = $('#sel').val()*1
@@ -1199,10 +1209,10 @@
 	                msg += '에러내용 : ' + rsp.error_msg;
 	                //실패시 이동할 페이지
 	                location.href="./index.ma";
-	                alert(msg);
+	                alertify.alert(msg);
 	            }
 	        });
-	    }
+	    });
 
 //선주(ready 안)		
 
@@ -1328,7 +1338,7 @@
 			var index = 0;
 			filesArr.forEach(function(f) {
 				if(!f.type.match("image.*")) {
-					alert("확장자는 이미지 확장자만 가능합니다.");
+					alertify.alert("확장자는 이미지 확장자만 가능합니다.");
 					return;
 				}
           
@@ -1373,7 +1383,7 @@
 			var index = 0;
 			filesArr.forEach(function(f) {
 				if(!f.type.match("image.*")) {
-					alert("확장자는 이미지 확장자만 가능합니다.");
+					alertify.alert("확장자는 이미지 확장자만 가능합니다.");
 					return;
 				}
 			
@@ -1418,9 +1428,9 @@
 		$(document).on("click",".review_btn",function(event){
 			if(<%=MEMBER_STATUS%> == 100){
 				if(<%=WORKSHOP_STATUS%> == 100) {
-					alert('로그인 해주세요!');					
+					alertify.alert('로그인 해주세요!');					
 				} else {
-					alert('회원만 작성 가능합니다.');
+					alertify.alert('회원만 작성 가능합니다.');
 				}
 				return;
 			}
@@ -1434,9 +1444,9 @@
 		$(document).on("click",".review_replybtn",function(event){
 			if(<%=MEMBER_STATUS%> == 100){
 				if(<%=WORKSHOP_STATUS%> == 100) {
-					alert('로그인 해주세요!');					
+					alertify.alert('로그인 해주세요!');					
 				} else {
-					alert('회원만 작성 가능합니다.');
+					alertify.alert('회원만 작성 가능합니다.');
 				}
 				return;
 			}
@@ -1504,9 +1514,9 @@
 		$(document).on("click",".qna_btn",function(event){
 			if(<%=MEMBER_STATUS%> == 100){
 				if(<%=WORKSHOP_STATUS%> == 100) {
-					alert('로그인 해주세요!');					
+					alertify.alert('로그인 해주세요!');					
 				} else {
-					alert('회원만 작성 가능합니다.');
+					alertify.alert('회원만 작성 가능합니다.');
 				}
 				return;
 			}
@@ -2095,7 +2105,7 @@
 							if(retVal.res == "OK") {
 								getReviewList();
 							} else if(retVal.res == "Children"){
-								alert("답글이 존재하는 댓글은 삭제할 수 없습니다.");
+								alertify.alert("답글이 존재하는 댓글은 삭제할 수 없습니다.");
 							} else {
 								alert("삭제 실패!");
 							}
@@ -2562,7 +2572,7 @@
 							if(retVal.res == "OK") {
 								getQnaList();
 							} else if(retVal.res == "Children"){
-								alert("답변이 존재하는 문의는 삭제할 수 없습니다.");
+								alertify.alert("답변이 존재하는 문의는 삭제할 수 없습니다.");
 							} else {
 								alert("삭제 실패!");
 							}

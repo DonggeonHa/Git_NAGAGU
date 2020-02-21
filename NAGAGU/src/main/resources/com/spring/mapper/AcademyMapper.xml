@@ -17,9 +17,9 @@
 		<result property="CLASS_DATE_CONFIGURATION_2" column="CLASS_DATE_CONFIGURATION_2" />	
 		<result property="CLASS_AREA" column="CLASS_AREA" />	
 		<result property="CLASS_CATEGORY" column="CLASS_CATEGORY" />	
-		<result property="CLASS_INTRODUCTION_1" column="CLASS_INTRODUCTION_1" jdbcType="CLOB" javaType="java.lang.String"/>	
-		<result property="CLASS_INTRODUCTION_2" column="CLASS_INTRODUCTION_2" jdbcType="CLOB" javaType="java.lang.String"/>	
-		<result property="CLASS_INTRODUCTION_3" column="CLASS_INTRODUCTION_3" jdbcType="CLOB" javaType="java.lang.String"/>	
+		<result property="CLASS_INTRODUCTION_1" column="CLASS_INTRODUCTION_1" />	
+		<result property="CLASS_INTRODUCTION_2" column="CLASS_INTRODUCTION_2" />	
+		<result property="CLASS_INTRODUCTION_3" column="CLASS_INTRODUCTION_3" />	
 		<result property="CLASS_ETC" column="CLASS_ETC" />	
 		<result property="CLASS_BANNER" column="CLASS_BANNER" />	
 		<result property="CLASS_IMAGE" column="CLASS_IMAGE" />
@@ -44,9 +44,9 @@
 		<result property="CLASS_DATE_CONFIGURATION_2" column="CLASS_DATE_CONFIGURATION_2" />	
 		<result property="CLASS_AREA" column="CLASS_AREA" />	
 		<result property="CLASS_CATEGORY" column="CLASS_CATEGORY" />	
-		<result property="CLASS_INTRODUCTION_1" column="CLASS_INTRODUCTION_1" jdbcType="CLOB" javaType="java.lang.String"/>	
-		<result property="CLASS_INTRODUCTION_2" column="CLASS_INTRODUCTION_2" jdbcType="CLOB" javaType="java.lang.String"/>	
-		<result property="CLASS_INTRODUCTION_3" column="CLASS_INTRODUCTION_3" jdbcType="CLOB" javaType="java.lang.String"/>	
+		<result property="CLASS_INTRODUCTION_1" column="CLASS_INTRODUCTION_1" />	
+		<result property="CLASS_INTRODUCTION_2" column="CLASS_INTRODUCTION_2" />	
+		<result property="CLASS_INTRODUCTION_3" column="CLASS_INTRODUCTION_3" />	
 		<result property="CLASS_ETC" column="CLASS_ETC" />	
 		<result property="CLASS_BANNER" column="CLASS_BANNER" />	
 		<result property="CLASS_IMAGE" column="CLASS_IMAGE" />	

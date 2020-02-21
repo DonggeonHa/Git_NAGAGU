@@ -56,7 +56,7 @@
 		<result property="PRODUCT_LIKE" column="PRODUCT_LIKE" />	
 		<result property="PRODUCT_COLOR" column="PRODUCT_COLOR" />			
 		<result property="PRODUCT_SIZE" column="PRODUCT_SIZE" />		
-		<result property="PRODUCT_INFO" column="PRODUCT_INFO" />		
+		<result property="PRODUCT_INFO" column="PRODUCT_INFO"/>		
 		<result property="PRODUCT_SHIP_PRICE" column="PRODUCT_SHIP_PRICE" />		
 		<result property="PRODUCT_SHIP_COMPANY" column="PRODUCT_SHIP_COMPANY" />		
 		<result property="PRODUCT_SHIP_RETURN_PRICE" column="PRODUCT_SHIP_RETURN_PRICE" />		
@@ -104,7 +104,7 @@
 		<result property="PRODUCT_LIKE" column="PRODUCT_LIKE" />	
 		<result property="PRODUCT_COLOR" column="PRODUCT_COLOR" />			
 		<result property="PRODUCT_SIZE" column="PRODUCT_SIZE" />		
-		<result property="PRODUCT_INFO" column="PRODUCT_INFO" />		
+		<result property="PRODUCT_INFO" column="PRODUCT_INFO"/>		
 		<result property="PRODUCT_SHIP_PRICE" column="PRODUCT_SHIP_PRICE" />		
 		<result property="PRODUCT_SHIP_COMPANY" column="PRODUCT_SHIP_COMPANY" />		
 		<result property="PRODUCT_SHIP_RETURN_PRICE" column="PRODUCT_SHIP_RETURN_PRICE" />		
