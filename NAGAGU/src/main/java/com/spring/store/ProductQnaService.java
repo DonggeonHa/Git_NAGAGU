@@ -16,4 +16,6 @@ public interface ProductQnaService {
 	int modifyQna(Product_qnaVO qnaVO);
 	int findChildrenRE(Product_qnaVO qnaVO);
 	int deleteQna(Product_qnaVO qnaVO);
+	
+	HashMap<String, Object> getQnaInfo(Product_qnaVO qnaVO);
 }

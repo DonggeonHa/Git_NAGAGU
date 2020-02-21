@@ -99,6 +99,7 @@
 				    <th scope="col">평점</th>
 				    <th scope="col">후기 내용</th>
 				    <th scope="col">작성날짜</th>
+				    <th scope="col">상세</th>
 				</tr>
 			</thead>
 		    <tbody id="ProductreviewList"></tbody>
@@ -195,6 +196,15 @@
 		ProductreviewList();	
 	}	
 	
+	/*review 상세보기*/
+	$(document).on('click', '.btn_detail', function(event) {
+		var REVIEW_NUM = $(this).attr("value");
+		var popupX = (window.screen.width / 2) - (500 / 2); // 만들 팝업창 좌우 크기의 1/2 만큼 보정값으로 뺴주었음
+		var popupY = (window.screen.height / 2) - (630 / 2); // 만들 팝업창 상하 크기의 1/2 만큼 보정값으로 뺴주었음
+		var pop = window.open('about:blank', 'Info', 'scrollbars=yes, resizable=yes, width=500, height=630, left=' + popupX + ', top=' + popupY);
+		pop.location.href="SreviewInfo.my?REVIEW_NUM=" + REVIEW_NUM;
+	});
+	
     /*날짜 형식 변경*/
 	function date_format(format) {
 		var year = format.getFullYear();
@@ -220,9 +230,7 @@
 				$('#searchType').html('상품명');
 				$('#searchType').val('product_title');
 				$("#keyword").val('<%=PRODUCT_TITLE%>');
-				console.log('??')
 			} else if(<%=count%> == 0) {
-				console.log('??ㅠ')
 				alert('상품 "<%=PRODUCT_TITLE%>" 에 해당하는 후기가 없습니다.');
 				location.href='./workshop_product_items.ws';
 			}
@@ -294,12 +302,13 @@
 			      	    }
 				      	var product_category = reviewList[j].PRODUCT_CATEGORY;
 				      	var MEMBER_NICK = reviewList[j].MEMBER_NICK;
-			    		var PRODUCT_TITLE = reviewList[j].PRODUCT_TITLE
-			    		var PRODUCT_NUM = reviewList[j].PRODUCT_NUM
-			    		var REVIEW_GRADE = reviewList[j].REVIEW_GRADE
+			    		var PRODUCT_TITLE = reviewList[j].PRODUCT_TITLE;
+			    		var PRODUCT_NUM = reviewList[j].PRODUCT_NUM;
+			    		var REVIEW_GRADE = reviewList[j].REVIEW_GRADE;
 			    		var REVIEW_DATE = new Date(reviewList[j].REVIEW_DATE);
 			    		var date = date_format(REVIEW_DATE);
-			    		var REVIEW_CONTENT = reviewList[j].REVIEW_CONTENT
+			    		var REVIEW_CONTENT = reviewList[j].REVIEW_CONTENT;
+			    		var REVIEW_NUM = reviewList[j].REVIEW_NUM;
     		
 						output += '<tr class="text-center">';
 						output += '<td>' + number + '</td>';
@@ -316,6 +325,7 @@
 						}
 						output += '<td style="text-align:left;">' + REVIEW_CONTENT + '</td>';
 						output += '<td>' + date + '</td>';
+						output += '<td><button class="btn_detail" value="'+REVIEW_NUM+'">' + "상세" + '</button></td>';
 						output += '</tr>';
 						number += 1;
      				}					

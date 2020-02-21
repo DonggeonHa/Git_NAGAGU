@@ -8,14 +8,24 @@
 <%
 	SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 
-	HashMap<String, Object> qnaVO = (HashMap<String, Object>)request.getAttribute("qnaVOmap");
-	String PRODUCT_TITLE = (String)qnaVO.get("PRODUCT_TITLE");
-	String MEMBER_NICK = (String)qnaVO.get("MEMBER_NICK");
-	String MEMBER_PICTURE = (String)qnaVO.get("MEMBER_PICTURE");
-	String QNA_PROUDCT = (String)qnaVO.get("QNA_PROUDCT");
-	String QNA_DATE = sdf.format((Date)qnaVO.get("QNA_DATE"));
-	String QNA_CONTENT = (String)qnaVO.get("QNA_CONTENT");
-	System.out.println("QNA_PROUDCT");
+	HashMap<String, Object> reviewVO = (HashMap<String, Object>)request.getAttribute("reviewVOmap");
+	String PRODUCT_TITLE = (String)reviewVO.get("PRODUCT_TITLE");
+	String MEMBER_NICK = (String)reviewVO.get("MEMBER_NICK");
+	String MEMBER_PICTURE = (String)reviewVO.get("MEMBER_PICTURE");
+	String REVIEW_PROUDCT = (String)reviewVO.get("REVIEW_PROUDCT");
+	String REVIEW_DATE = sdf.format((Date)reviewVO.get("REVIEW_DATE"));
+	String REVIEW_CONTENT = (String)reviewVO.get("REVIEW_CONTENT");
+	String REVIEW_FILE = (String)reviewVO.get("REVIEW_FILE");
+	
+	String imagesExist = "N";
+	String[] imgArr;
+	int size = 0;
+	if(!REVIEW_FILE.equals("#")) {
+		imgArr = REVIEW_FILE.split(",");
+		size = imgArr.length;
+		imagesExist = "Y";
+	}
+	//이미지 출력 시간 없어서 미룸.............
 	
 %>
 <!DOCTYPE html>
@@ -51,48 +61,41 @@
 				</tr>
 				<tr>
 					<th scope="row">작성 날짜</th>
-					<td><%=QNA_DATE %></td>
+					<td><%=REVIEW_DATE %></td>
 				</tr>
 				<tr style="height:50px;">
-					<th scope="row">문의 내용</th>
-					<td><%=QNA_CONTENT %></td>
+					<th scope="row">후기 내용</th>
+					<td><%=REVIEW_CONTENT %></td>
+				</tr>
+<%-- 				<tr>
+					<th scope="row">후기 이미지</th>
+					<td></td>
 				</tr>
 				<tr>
-					<th scope="row">답변</th>
-					<td><%=QNA_CONTENT %></td>
-				</tr>
-				<!-- 
-				<tr>
-					<th scope="row">핸드폰</th>
-					<td><=memberVO.getWORKSHOP_PHONE()%></td>
-				</tr>
-				<tr>
-					<th scope="row">이메일</th>
-					<td><=memberVO.getWORKSHOP_EMAIL()%></td>
-				</tr>
-				<tr>
-					<th scope="row">우편번호</th>
-					<td><=memberVO.getWORKSHOP_ZIP()%></td>
-				</tr>
-				<tr>
-					<th scope="row">주소</th>
-					<td><=memberVO.getWORKSHOP_ADDRESS1()%></td>
-				</tr>
-				<tr>
-					<th scope="row">상세주소</th>
-					<td><=memberVO.getWORKSHOP_ADDRESS2()%></td>
-				</tr>
-				<tr>
-					<th scope="row">가입날짜</th>
-					<td><=memberVO.getWORKSHOP_DATE()%></td>
-				</tr>
-				<tr>
-					<th scope="row">소개글</th>
-					<td><=memberVO.getWORKSHOP_INTRO()%></td>
-				</tr> -->
+				<%
+				if(imagesExist.equals("N")) {
+				%>	
+					<td>
+				<% 
+					for(int i=0;i<size; i++) {
+				%>		
+					REVIEW_FILE
+				<%
+					}
+				%>
+					</td>
+				<%	
+				} else {
+				%>
+					<td>업로드한 이미지가 없습니다.</td>
+				<%
+				}
+				%>
+				</tr> --%>
+				
 			</table>
 			<div class="d-flex justify-content-center">
-				<button type="button" class="btn btn-outline-dark btn-lg" onclick="window.close();">닫기</button>
+				<button type="button" class="btn btn-outline-dark btn-sm" onclick="window.close();">닫기</button>
 			</div>	
 		</div>					
 		

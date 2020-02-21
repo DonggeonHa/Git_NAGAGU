@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.spring.mapper.ProductManagementMapper;
+import com.spring.order.ProductOrderVO;
 import com.spring.store.ProductVO;
 
 
@@ -149,6 +150,14 @@ public class ProductManagementServiceImpl implements ProductManagementService {
 		
 		return result;
 	}
+	@Override
+	public HashMap<String, Object> getSelledInfo(ProductOrderVO productOrderVO) {
+		ProductManagementMapper managementMapper = sqlSession.getMapper(ProductManagementMapper.class);
+		HashMap<String, Object> map = null;
+		map = managementMapper.getSelledInfo(productOrderVO);
+		return map;
+	}
 
+	
 
 }

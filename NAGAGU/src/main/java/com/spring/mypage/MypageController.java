@@ -21,14 +21,17 @@ import com.spring.estimate.EstimateOrderVO;
 import com.spring.estimate.EstimateService;
 import com.spring.member.MemberService;
 import com.spring.member.MemberVO;
+import com.spring.order.ProductOrderVO;
 import com.spring.store.ProductQnaService;
 import com.spring.store.ProductReviewService;
 import com.spring.store.ProductService;
 import com.spring.store.ProductVO;
 import com.spring.store.Product_qnaVO;
+import com.spring.store.Product_reviewVO;
 import com.spring.workshop.WorkShopMemberService;
 import com.spring.workshop.WorkShopMemberVO;
 import com.spring.workshopMypage.AcademyManagementService;
+import com.spring.workshopMypage.ProductManagementService;
 
 @Controller
 public class MypageController {
@@ -58,7 +61,9 @@ public class MypageController {
 	
 	@Autowired(required = false)
 	private AcademyManagementService academyManagementService;
-	
+
+	@Autowired(required = false)
+	private ProductManagementService productManagementService;
 
 	@RequestMapping(value = "/mypage.my")
 	public String Mypage(MemberVO memberVO, HttpServletRequest request, HttpSession session) {
@@ -303,11 +308,10 @@ public class MypageController {
 	}
 	
 	@RequestMapping(value = "/SqnaInfo.my", method = {RequestMethod.GET, RequestMethod.POST})
-	public String WMemberInfo(Product_qnaVO vo, Model model) {
+	public String SqnaInfo(Product_qnaVO vo, Model model) {
 		try {
-			vo = productqnaService.getQnaVO(vo);
-			
-			model.addAttribute("qnaVO", vo);
+			HashMap<String, Object> qnaVOmap = productqnaService.getQnaInfo(vo);
+			model.addAttribute("qnaVOmap", qnaVOmap);
 			
 		} catch(Exception e) {
 			System.out.println("QnaInfo : " + e.getMessage());
@@ -328,21 +332,52 @@ public class MypageController {
 		return "Workshop/Review/reviewStore";
 	}
 	
-//	//판매된 상품 관리
-//	@RequestMapping(value = "/workshop_product_selled.ws")
-//	public String WorkshopStoreselled() {
-//		ModelAndView mav = new ModelAndView();
-//		mav.setViewName("Workshop/Store/selled");
-//		mav.addObject("WorkshopProoductList", WorkshopProoductList);
-//		return mav;
-//	}
+	@RequestMapping(value = "/SreviewInfo.my", method = {RequestMethod.GET, RequestMethod.POST})
+	public String SReviewInfo(Product_reviewVO vo, Model model) {
+		try {
+			HashMap<String, Object> reviewVOmap = productreviewService.getReviewInfo(vo);	
+			model.addAttribute("reviewVOmap", reviewVOmap);
+			
+		} catch(Exception e) {
+			System.out.println("ReviewInfo : " + e.getMessage());
+		}		
+		return "Workshop/Review/Info/SreviewInfo";
+	}
 	
+	//판매된 상품 관리
+	@RequestMapping(value = "/workshop_product_selled.ws")
+	public ModelAndView WorkshopStoreselled(HttpSession session) {
+		int WORKSHOP_NUM = (int)session.getAttribute("WORKSHOP_NUM");
+
+
+		ArrayList<ProductVO> WorkshopProoductList = null;
+		WorkshopProoductList = productService.getAllWorkshopProduct(WORKSHOP_NUM);   
+		
+		ModelAndView mav = new ModelAndView();
+		mav.setViewName("Workshop/Store/selled");
+		mav.addObject("WorkshopProoductList", WorkshopProoductList);
+		return mav;
+	}
 	//등록된 상품 관리
 	@RequestMapping(value = "/workshop_product_items.ws")
 	public String WorkshopStoreproduct() {
 		
 		return "Workshop/Store/product";
 	}
+	
+	//selled 페이지에서 주문번호에 해당하는 상세보기 페이지
+	@RequestMapping(value = "/SproductSelledInfo.my", method = {RequestMethod.GET, RequestMethod.POST})
+	public String SproductSelledInfo(ProductOrderVO vo, Model model) {
+		try {
+			HashMap<String, Object> proVOmap = productManagementService.getSelledInfo(vo);
+			
+			model.addAttribute("proVOmap", proVOmap);
+			
+		} catch(Exception e) {
+			System.out.println("ReviewInfo : " + e.getMessage());
+		}		
+		return "Mypage/Workshop/Review/Info/SproductSelledInfo";
+	}	
 	
 	/* 일반회원 : 의뢰한 견적 리스트 */
 	@RequestMapping(value = "/mypage_estimate.my")

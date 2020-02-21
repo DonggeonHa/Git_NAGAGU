@@ -87,6 +87,15 @@ public class ProductReviewServiceImpl implements ProductReviewService {
 	}
 
 	@Override
+	public HashMap<String, Object> getReviewInfo(Product_reviewVO reviewVO) {
+		ProductReviewMapper reviewMapper = sqlSession.getMapper(ProductReviewMapper.class);
+		HashMap<String, Object> map = null;
+		map = reviewMapper.getReviewInfo(reviewVO);
+		return map;
+	}
+
+
+	@Override
 	public int findChildrenRE(int REVIEW_NUM) {
 		ProductReviewMapper reviewMapper = sqlSession.getMapper(ProductReviewMapper.class);
 		int count;
@@ -152,7 +161,6 @@ public class ProductReviewServiceImpl implements ProductReviewService {
 		System.out.println("getLoginMemberReview Impl결과="+reviewList);
 		return reviewList;
 	}
-
 
 
 

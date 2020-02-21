@@ -32,4 +32,5 @@ public interface ProductReviewMapper {
 	public ArrayList<Map<String, Object>> getLoginMemberReply(HashMap<String, Object> map);
 	public ArrayList<Map<String, Object>> getLoginMemberReview(HashMap<String, Object> map);
 	
+	HashMap<String, Object> getReviewInfo(Product_reviewVO reviewVO);	//공방 관리자페이지
 }

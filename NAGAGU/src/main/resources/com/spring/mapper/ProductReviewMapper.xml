@@ -64,7 +64,18 @@ create sequence store_review_seq
 		<result property="MEMBER_NICK" column="MEMBER_NICK" />		
 		<result property="MEMBER_PICTURE" column="MEMBER_PICTURE" />		
 	</resultMap>
-
+	
+	<resultMap id="productReviewInfoResultMap" type="java.util.HashMap">
+		<result column="REVIEW_NUM" property="REVIEW_NUM"/>
+		<result column="REVIEW_MEMBER" property="REVIEW_MEMBER"/>
+		<result column="REVIEW_PRODUCT" property="REVIEW_PRODUCT"/>
+		<result column="REVIEW_DATE" property="REVIEW_DATE"/>
+		<result column="REVIEW_CONTENT" property="REVIEW_CONTENT"/>
+		<result column="REVIEW_RE" property="REVIEW_RE"/>
+		<result column="MEMBER_NICK" property="MEMBER_NICK"/>
+		<result column="MEMBER_PICTURE" property="MEMBER_PICTURE"/>
+	</resultMap>
+	
 	<resultMap type="com.spring.member.MemberVO" id="memberReviewResultMap">
 		<result property="MEMBER_NUM" column="MEMBER_NUM" />	
 		<result property="MEMBER_EMAIL" column="MEMBER_EMAIL" />	
@@ -151,7 +162,15 @@ create sequence store_review_seq
 	<select id="getReviewVO" parameterType="java.util.HashMap" resultMap="productVOReviewResultMap">
 		SELECT * FROM PRODUCT_REVIEW WHERE REVIEW_NUM=#{REVIEW_NUM}
 	</select>
-
+	
+	<select id="getReviewInfo" resultMap="productReviewInfoResultMap" parameterType="com.spring.store.Product_reviewVO">
+		SELECT R.REVIEW_NUM, R.REVIEW_MEMBER, R.REVIEW_PRODUCT, R.REVIEW_DATE, R.REVIEW_CONTENT, R.REVIEW_FILE, R.REVIEW_RE, M.MEMBER_NICK, M.MEMBER_PICTURE, P.PRODUCT_TITLE
+			FROM PRODUCT_REVIEW R, NAGAGU_MEMBER M, PRODUCT P 
+		WHERE R.REVIEW_MEMBER = M.MEMBER_NUM
+        AND P.PRODUCT_NUM = R.REVIEW_PRODUCT
+        AND R.REVIEW_MEMBER = M.MEMBER_NUM
+        AND R.REVIEW_NUM=#{REVIEW_NUM}  
+	</select>
 
 	<update id="modifyReview" parameterType="com.spring.store.Product_reviewVO">
 		UPDATE PRODUCT_REVIEW SET 
