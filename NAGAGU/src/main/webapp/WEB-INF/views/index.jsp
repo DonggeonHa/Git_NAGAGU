@@ -121,7 +121,6 @@ body {
 
 .path-slider__path {
   stroke: rgba(255, 255, 255, 0.5);
-  
 }
 
 .path-slider__item {
@@ -172,10 +171,10 @@ body {
 
 .path-slider__current-item .item__circle {
   background-color: #ef900e;
-  transform: scale(1.5);
+  transform: scale(1.7);
 }
 .path-slider__current-item .item__title {
-  font-size: 25px;
+  font-size: 3rem !important;
   opacity: 1;
   transform: translate(-50%, -20px);
 }
@@ -225,7 +224,7 @@ body {
 				<h1>COMMUNITY</h1>
 				구경하고 뽐내고 싶은 사진이 있다면<br/>
 				"커뮤니티" 메뉴에 사진을 올려보세요.<br/>
-				좋아요와 팔로우 등 다양한 사람들과 소통할 수 있습니다.</br>
+				좋아요 팔로우 등 다양한 사람들과 소통할 수 있습니다.</br> 
 			</header>
 							<!-- SVG icons -->		
 			<svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
@@ -267,19 +266,19 @@ body {
 			        <!-- Slider items -->
 			        <a href="#cm" class="path-slider__item" id="cm_slider">
 			            <div class="item__circle"><svg class="item__icon"><use xlink:href="#cm"/></svg></div>
-			            <div class="item__title"><h2>COMMUNITY</h2></div>
+			            <div class="item__title">COMMUNITY</div>   
 			        </a>
 			         <a href="#store" class="path-slider__item" id="store_slider">
 			            <div class="item__circle"><svg class="item__icon"><use xlink:href="#store"/></svg></div>
-			            <div class="item__title"><h2>STORE</h2></div> 
+			            <div class="item__title">STORE</div> 
 			        </a>
 			        <a href="#academy" class="path-slider__item" id="academy_slider">
 			            <div class="item__circle"><svg class="item__icon"><use xlink:href="#academy"/></svg></div>
-			            <div class="item__title"><h2>ACADEMY</h2></div>
+			            <div class="item__title">ACADEMY</div>
 			        </a>
 			        <a href="#custom" class="path-slider__item" id="custom_slider">
 			            <div class="item__circle"><svg class="item__icon"><use xlink:href="#custom"/></svg></div> 
-			            <div class="item__title"><h2>CUSTOM</h2></div> 
+			            <div class="item__title">CUSTOM</div> 
 			        </a>
 			        <div class="name_container">
 			        	<a href="community.cm"><p class="pn">MORE</p></a>

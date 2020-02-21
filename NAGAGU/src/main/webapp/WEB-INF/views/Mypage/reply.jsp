@@ -70,7 +70,7 @@
 	}
 	@media ( min-width : 1200px) {
 		.card {
-			width: 7.6rem !important;  
+			width: 9rem !important;  
 			font-size: 0.7rem;
 		}
 		.card-header, .card-body, .card-footer {
@@ -102,8 +102,8 @@
 		font-weight:800 !important;  
 	}
 </style>	 
-<div class="container-mypage" role="main">
-	<div class="row card-wrap  text-center">
+<div class="container-mypage container" role="main">
+	<div class="d-flex card-wrap  text-center">
 		<div class="card card-hover">
 			<a href="mypage_like.my" class="href">
 				<div class="card-header">Like</div>
@@ -138,13 +138,6 @@
 				</div>
 			</a>
 		</div>
-
-		<div class="card my">
-			<div class="card-header">MY</div>
-			<div class="card-body">
-				<i class="far fa-user-circle fa-4x"></i>
-			</div>
-		</div>
 		<div class="card card-hover">
 			<a href="order_list.my" class="href">
 				<div class="card-header">ORDER</div>
@@ -171,7 +164,7 @@
 		</div>
 		<div class="card card-hover ">
 			<a href="mypage_estimate.my" class="href">
-				<div class="card-header">견적</div>
+				<div class="card-header">CUSTOM</div>
 				<div class="card-body">
 					<i class="fas fa-keyboard fa-4x"></i>
 				</div>
@@ -249,10 +242,10 @@
 			        	}
 			        	$('.replyOutput').html(output)
 					}else{
-						alert("update fail");
+						alertify.error('작성한 댓글이 없습니다');
 					}  
 				 },
-				error:function(){
+				error:function(){ 
 					alert("ajax통신 실패!!");
 				}
 			})
@@ -291,20 +284,20 @@
 					    		output += '<img src="/productupload/image/'+imgsrc+'"></a></div>'
 				    		output += '<div class="col-11"><div class="row justify-content-between"><div class="name">'+title+'</div>'
 				    		output += '<div class="smallfont">'+date+'</div></div><div class="row">'
-				    		output += '<div class="comm_content">→'+content+'</div></div></div>'
+				    		output += '<div class="comm_content">'+content+'</div></div></div>'
 			        	}
 			        	$('.replyOutput').html(output)
 					}else{
-						alert("update fail");
+						alertify.error('작성한 댓글이 없습니다');
 					}  
 				 },
 				error:function(){
-					alert("ajax통신 실패!!");
+					alertify.error("통신 실패");
 				}
 			})
 		}) 
 		//처음 로드하고 사진 가져오기 호출
 		getPics();
-		$('.card-wrap').children().eq(6).css('background-color','#ef900e')
+		$('.card-wrap').children().eq(5).css('background-color','#ef900e')
 	})
 </script>

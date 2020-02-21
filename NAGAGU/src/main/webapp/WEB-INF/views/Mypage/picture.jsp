@@ -68,7 +68,7 @@
 	}
 	@media ( min-width : 1200px) {
 		.card {
-			width: 7.6rem !important;  
+			width: 9rem !important;  
 			font-size: 0.7rem;
 		}
 		.card-header, .card-body, .card-footer {
@@ -79,43 +79,37 @@
 	.tab-pane .col-4 {
 		padding-bottom: 50px;
 	}
-	.tab-content .tab-pane.active {
-		display: flex;
-	}
 	img {
 		width: 100%;
 		height: auto;
 	}
+	/* ------------------------------------------------------------------공통적용 */
+	.tab-content .tab-pane.active {
+		display: flex;
+		margin-left:0;
+	}
+	.nav-item a {
+		color: black;
+	}
 	.picOutput{
 		padding-left: 0px !important;
 	}
-	/* ------------------------------------------------------------------공통적용 */
-	.grid {
-		display: grid;
-		background: black;
-		min-height: 400px;
-		grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-		grid-auto-rows: 20px;
-		grid-gap: 5px; 
+	.picOutput img{
+		margin-top: 30px;
 	}
-	.item {
-		overflow: hidden;
-		position: relative;
+	.tab-content{
+		min-height:38vh;
 	}
-	.item>img {
-		width: 100%;
-		position: absolute;
-		left: 50%;
-		top: 50%;
-		transform: translate(-50%, -50%);
+	.tab-content img{
+		height:200px;
 	}
-	.container-pic {
-		margin-bottom: 100px;
+	.container_like .nav-item{
+		font-weight:800 !important;  
 	}
 </style>
 	 
-<div class="container-mypage " role="main">
-	<div class="row card-wrap  text-center">
+<div class="container-mypage container" role="main">
+	<div class="d-flex card-wrap  text-center">
 		<div class="card card-hover">
 			<a href="mypage_like.my" class="href">
 				<div class="card-header">Like</div>
@@ -150,13 +144,6 @@
 				</div>
 			</a>
 		</div>
-
-		<div class="card my">
-			<div class="card-header">MY</div>
-			<div class="card-body">
-				<i class="far fa-user-circle fa-4x"></i>
-			</div>
-		</div>
 		<div class="card card-hover">
 			<a href="order_list.my" class="href">
 				<div class="card-header">ORDER</div>
@@ -175,7 +162,7 @@
 		</div>
 		<div class="card card-hover ">
 			<a href="mypage_review_product.my" class="href">
-				<div class="card-header">상품 REVIEW</div>
+				<div class="card-header">REVIEW</div>
 				<div class="card-body">
 					<i class="fas fa-keyboard fa-4x"></i>
 				</div>
@@ -183,7 +170,7 @@
 		</div>
 		<div class="card card-hover ">
 			<a href="mypage_review_class.my" class="href">
-				<div class="card-header">클래스 REVIEW</div>
+				<div class="card-header">CUSTOM</div>
 				<div class="card-body">
 					<i class="fas fa-keyboard fa-4x"></i>
 				</div>
@@ -200,7 +187,12 @@
 			<a href="./community_write.cm?MEMBER_NUM=<%=LOGIN_MEMBER_NUM%>"><button type="button" class="btn btn-outline-secondary">새 글 쓰기</button></a>
 		</div>
 	</div>
-	<div class="grid"></div>
+	<div class="tab-content" id="myTabContent">
+		<div class="tab-pane fade show active row text-center" id="picOutput"
+			role="tabpanel" aria-labelledby="picTab">
+			<!-- 사진 뿌려지는 장소 -->
+		</div>
+	</div>
 </div>
 
 <script>
@@ -225,10 +217,11 @@
 			        	for(var j=0; j<retVal.PicsNum.length; j++){
 			        		var imgsrc = retVal.PicsNum[j].pics_MAIN_IMAGE
 			        		console.log(retVal.PicsNum)
-				    		output += '<a href="./community_detail.cm?PICS_NUM='+retVal.PicsNum[j].pics_NUM+'&MEMBER_NUM='+retVal.PicsNum[j].pics_MEMBER+'&PICS_MEMBER='+retVal.PicsNum[j].pics_MEMBER+'" class="item">'
-					        output += '<img src="/communityupload/image/'+imgsrc+'"></a>'
+				    		output += '<div class="col-3 picOutput">'
+			        		output += '<a href="./community_detail.cm?PICS_NUM='+retVal.PicsNum[j].pics_NUM+'&MEMBER_NUM='+retVal.PicsNum[j].pics_MEMBER+'&PICS_MEMBER='+retVal.PicsNum[j].pics_MEMBER+'" class="item">'
+					        output += '<img src="/communityupload/image/'+imgsrc+'"></a></div>'
 			        	}
-			        	$('.grid').html(output)
+			        	$('#picOutput').html(output)
 					}else{ 
 						alert("update fail");
 					}  
@@ -238,37 +231,8 @@
 				}
 			})
 		} 
-		$(window).resize(function() {
-			var Wid = $(window).width();
-	
-			if (Wid < 700) {
-				$('.card-header').addClass("p-1");
-				$('.card-body').addClass("p-1");
-				$('.card-footer').addClass("p-1");
-			} else {
-				$('.card-header').removeClass("p-1");
-				$('.card-body').removeClass("p-1");
-				$('.card-footer').removeClass("p-1");
-			}
-		})
-		
-		function SetGridItemHeight() {
-			var grid = document.getElementsByClassName('grid')[0];
-			var rowHeight = parseInt(window.getComputedStyle(grid).getPropertyValue('grid-auto-rows'));
-			var rowGap = parseInt(window.getComputedStyle(grid).getPropertyValue('grid-row-gap'));
-		
-			var item = grid.getElementsByClassName('item');
-			for (let i = 0; i < item.length; ++i) {
-				item[i].style.gridRowEnd = 'span '+ Math.floor((item[i].children[0].offsetHeight) / 25);
-			}
-		}
-		
-		window.addEventListener("load", SetGridItemHeight); 
-		window.addEventListener("resize", SetGridItemHeight); 
-		
 		//처음 로드하고 사진 가져오기 호출
 		getPics();
-		SetGridItemHeight();
 		$('.card-wrap').children().eq(1).css('background-color','#ef900e')
 	});
 

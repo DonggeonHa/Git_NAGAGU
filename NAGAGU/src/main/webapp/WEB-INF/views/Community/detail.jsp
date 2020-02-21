@@ -44,9 +44,6 @@
         margin-top: 15px;
         height: auto;
 	}
-	.img-wrap p{
-		display: flex;
-	}
  	.detailmain { 
   	   width: 70%;  
   	   height: auto;  
@@ -348,6 +345,7 @@
 	$(document).ready(function(){
 		function getPro(){
 			var pro_num = '<%=picsVO.getPICS_PRODUCT()%>'
+	            if(pro_num!=null){
 			 	$.ajax({
 					url: '/NAGAGU/getProductInCommunity.cm',
 					type:'POST',
@@ -374,6 +372,7 @@
 						alert("ajax통신 실패!!");
 					}
 				}); 
+            }
 		}
 		getPro()
 	})

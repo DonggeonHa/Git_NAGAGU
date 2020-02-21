@@ -201,7 +201,7 @@
 		
 	function addboard(){
 		if($('#uploadFile').val()==''){
-			alert('사진을 넣어주세요');
+            alertify.alert('확인','사진을 넣어주세요');
 			return
 		}
 		function addTags(){				
@@ -215,7 +215,6 @@
 				}
 			}
 			$('#pics_tags').val(tags_value);
-			alert("확인!!!!!!" + $('#pics_tags').val());
 		}
 		addTags();			
 		document.writeForm.submit();

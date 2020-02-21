@@ -590,8 +590,6 @@
 			}, function(rsp) {
 				if ( rsp.success ){
 					var id= rsp.merchant_uid;
-					console.log(typeof(rsp.merchant_uid));
-					return
 					for(var i=0; i<$('.BASKET_NUM').length;i++){
 						var BASKET_NUM = $('input[name=BASKET_NUM]')[i].value
 						var PRODUCT_NUM = $('input[name=PRODUCT_NUM]')[i].value

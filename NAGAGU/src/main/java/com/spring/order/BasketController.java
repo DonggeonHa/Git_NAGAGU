@@ -159,7 +159,7 @@ public class BasketController {
 					int result = basketService.updateCheck(map);
 					
 					//선주-결제되면 PRODUCT 테이블에서 PRODUCT_SALES+1해줌(판매량+1)
-					productService.updateSales(map);
+					/* productService.updateSales(map); */
 				}
 			}
 			retVal.put("res", "OK");
