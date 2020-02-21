@@ -8,15 +8,16 @@
 <%
 	SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 
-	HashMap<String, Object> qnaVO = (HashMap<String, Object>)request.getAttribute("qnaVOmap");
-	String PRODUCT_TITLE = (String)qnaVO.get("PRODUCT_TITLE");
-	String MEMBER_NICK = (String)qnaVO.get("MEMBER_NICK");
-	String MEMBER_PICTURE = (String)qnaVO.get("MEMBER_PICTURE");
-	String QNA_PROUDCT = (String)qnaVO.get("QNA_PROUDCT");
-	String QNA_DATE = sdf.format((Date)qnaVO.get("QNA_DATE"));
-	String QNA_CONTENT = (String)qnaVO.get("QNA_CONTENT");
-	System.out.println("QNA_PROUDCT");
-	
+	HashMap<String, Object> proVOmap = (HashMap<String, Object>)request.getAttribute("proVOmap");
+
+	/* 
+	String MEMBER_NICK = (String)reviewVO.get("MEMBER_NICK");
+	String MEMBER_PICTURE = (String)reviewVO.get("MEMBER_PICTURE");
+	String REVIEW_PROUDCT = (String)reviewVO.get("REVIEW_PROUDCT");
+	String REVIEW_DATE = sdf.format((Date)reviewVO.get("REVIEW_DATE"));
+	String REVIEW_CONTENT = (String)reviewVO.get("REVIEW_CONTENT");
+
+ */	
 %>
 <!DOCTYPE html>
 <html>
@@ -25,8 +26,8 @@
 		<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
 		<style>
 			img {
-			   width: 50px;
-			   height: 50px;
+			   max-width: 100%;
+			   height: auto;
 			}
 		</style>
 	</head>
@@ -37,30 +38,20 @@
 					<col style="width:30%">
 					<col style="width:70%">
 				</colgroup>
-				<tr>
-					<th scope="row">상품 후기 상세</th>
-					<td></td>
-				</tr>
-				<tr>
-					<th scope="row">상품명</th>
-					<td><%=PRODUCT_TITLE %></td>
-				</tr>
-				<tr>
-					<th scope="row">닉네임</th>
-					<td><%=MEMBER_NICK %></td>
+	<%-- 			<tr>
+					<th scope="row"><img src="<%=MEMBER_PICTURE %>" style="max-height: 100%; width: auto;"></th>
+					<td>
+						<%=MEMBER_NICK %>
+					</td>
 				</tr>
 				<tr>
 					<th scope="row">작성 날짜</th>
-					<td><%=QNA_DATE %></td>
-				</tr>
-				<tr style="height:50px;">
-					<th scope="row">문의 내용</th>
-					<td><%=QNA_CONTENT %></td>
+					<td><%=REVIEW_DATE %></td>
 				</tr>
 				<tr>
-					<th scope="row">답변</th>
-					<td><%=QNA_CONTENT %></td>
-				</tr>
+					<th scope="row">후기 내용</th>
+					<td><%=REVIEW_CONTENT %></td>
+				</tr> --%>
 				<!-- 
 				<tr>
 					<th scope="row">핸드폰</th>

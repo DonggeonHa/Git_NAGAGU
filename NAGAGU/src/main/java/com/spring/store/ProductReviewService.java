@@ -31,6 +31,7 @@ public interface ProductReviewService {
 	ArrayList<Map<String, Object>> getLoginMemberReply(HashMap<String, Object> map);
 	ArrayList<Map<String, Object>> getLoginMemberReview(HashMap<String, Object> map);
 	
+	HashMap<String, Object> getReviewInfo(Product_reviewVO reviewVO);	//공방 관리자페이지
 //	public ArrayList<CommentVO> getComment(int num);
 //	public int commentDelete(int comment_num);
 //	public String getPass(int comment_num);

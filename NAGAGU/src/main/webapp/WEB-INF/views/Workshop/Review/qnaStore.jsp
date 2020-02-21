@@ -1,3 +1,6 @@
+<%@page import="java.util.Date"%>
+<%@page import="java.util.HashMap"%>
+<%@page import="java.text.SimpleDateFormat"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ page import="com.spring.store.ProductVO"%>
 <%
@@ -7,6 +10,7 @@
 		out.println("location.href='./index.ma'");
 		out.println("</script>");	
 	} 
+
 
 	String voExist = "N";
 	int count = 0;
@@ -23,9 +27,7 @@
 		System.out.println("VO 존재함 : 상품관리페이지 통해 들어옴");
 	}
 
-	System.out.println(PRODUCT_CATEGORY);
-	System.out.println(PRODUCT_TITLE);
-		
+
 %>
 
 <div id="page-content-wrapper" style="padding-top: 5%;">
@@ -196,27 +198,13 @@
 	
 	/*qna 상세보기*/
 	$(document).on('click', '.btn_detail', function(event) {
+		var QNA_NUM = $(this).attr("value");
 		var popupX = (window.screen.width / 2) - (500 / 2); // 만들 팝업창 좌우 크기의 1/2 만큼 보정값으로 뺴주었음
 		var popupY = (window.screen.height / 2) - (630 / 2); // 만들 팝업창 상하 크기의 1/2 만큼 보정값으로 뺴주었음
 		var pop = window.open('about:blank', 'Info', 'scrollbars=yes, resizable=yes, width=500, height=630, left=' + popupX + ', top=' + popupY);
- 		jQuery.ajax({
-			url : './detailSqna.my',
-			type : 'GET',
-			data : {'QNA_NUM' : $(this).attr("value")},
-			contentType : 'application/x-www-form-urlencoded; charset=UTF-8',
-			dataType : 'json',
-			success : function (retVal) {
-				if (retVal.res == "OK") {
-					pop.location.href="SqnaInfo.my?QNA_NUM=" + retVal.qnaVO.qna_NUM;	
-		 		}
-			},
-			error: function(request,status,error) {
-				alert("ajax detailqna 통신 실패!");
-				alert("code:"+request.status+"\n"+"error:"+error);
-			}
-		});		
 
-		
+		pop.location.href="SqnaInfo.my?QNA_NUM=" + QNA_NUM;	
+
 	});
 
 	/*날짜 형식 변경*/
@@ -345,14 +333,12 @@
 							//답변이 달리지 않은 문의
 							output += '<td style="text-align:left;">'+QNA_CONTENT+'</td>';
 							output += '<td>' + date + '</td>';
-							output += '<td>'+'답변 대기'+'</td>';
-					//		output += '<td><button class="btn_write" onclick="location.href=">' + "작성" + '</button></td>';
+							output += '<td>답변 대기&nbsp;<button class="btn_detail" value="'+QNA_NUM+'">작성</button></td>';
 						} else if (QNA_STATUS == 1){
 							//답변이 달린 문의
 							output += '<td style="text-align:left;">'+QNA_CONTENT+'</td>';
 							output += '<td>' + date + '</td>';
-							output += '<td>'+'답변 완료'+'</td>';
-					//		output += '<td><button class="btn_modify" onclick="location.href=">'+"수정"+'</button></td>';
+							output += '<td>답변 완료&nbsp;<button class="btn_detail" value="'+QNA_NUM+'">수정</button></td>';
 						}
 						output += '<td><button class="btn_detail" value="'+QNA_NUM+'">' + "상세" + '</button></td>';
 						output += '</tr>';

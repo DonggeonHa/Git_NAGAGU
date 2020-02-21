@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.spring.academy.ClassVO;
-import com.spring.academy.Class_qnaVO;
 
 @RestController
 public class AcademyManagementAjaxController {
@@ -94,7 +93,7 @@ public class AcademyManagementAjaxController {
 	@PostMapping(value="/updateStauts.my", produces = "application/json;charset=UTF-8")
 	public Map<String, Object> updateStauts(@RequestParam(value="checkArray[]") List<Integer> updateList) {
 		Map<String, Object> retVal = new HashMap<String, Object>();
-		System.out.println("강의종료 컨트롤러");
+		
 		try {
 			ArrayList<Integer> updateArray = new ArrayList<Integer>();
 			
@@ -188,20 +187,7 @@ public class AcademyManagementAjaxController {
 		return searchList;
 	}
 	
-	//---------------------------------------상품 qna 관리 페이지 리스트	
-	@PostMapping(value="/dashboardQnaList.my", produces = "application/json;charset=UTF-8")
-	public ArrayList<Map<String, Object>> productQnaList(HttpSession session){
-		System.out.println("classQnaList 컨트롤러 start!");
-		
-		int WORKSHOP_NUM = (int)session.getAttribute("WORKSHOP_NUM");
-		System.out.println("WORKSHOP_NUM="+WORKSHOP_NUM);
-		
-		ArrayList<Map<String, Object>> qnaList = null;
-		qnaList = academyManagementService.getDashboardQna(WORKSHOP_NUM);
-		
-		
-		return qnaList;
-	}
+	
 	
 	
 	

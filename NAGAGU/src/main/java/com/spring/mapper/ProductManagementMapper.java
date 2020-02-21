@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
+import com.spring.order.ProductOrderVO;
 import com.spring.store.ProductVO;
 
 public interface ProductManagementMapper {
@@ -23,4 +24,7 @@ public interface ProductManagementMapper {
 	int updateProduct(ProductVO productVO);
 	
 	ArrayList<Map<String, Object>> getabc(HashMap<String, Object> map);
+	HashMap<String, Object> getSelledInfo(ProductOrderVO productOrderVO);	//판매된 상품 관리 페이지에서 상세보기
+
+
 }

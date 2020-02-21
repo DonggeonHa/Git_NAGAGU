@@ -4,9 +4,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.apache.ibatis.annotations.Param;
-
-import com.spring.academy.ClassVO;
+import com.spring.order.ProductOrderVO;
 import com.spring.store.ProductVO;
 
 
@@ -27,4 +25,6 @@ public interface ProductManagementService {
 	//상품 수정
 	ProductVO getproductDetail(int PRODUCT_NUM);
 	int updateProduct(ProductVO productVO);
+	
+	HashMap<String, Object> getSelledInfo(ProductOrderVO productOrderVO);	//판매된 상품 관리 페이지에서 상세보기O
 }

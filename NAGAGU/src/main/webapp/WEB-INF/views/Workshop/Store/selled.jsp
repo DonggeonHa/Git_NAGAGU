@@ -313,7 +313,16 @@
 		}); 
 		event.preventDefault();	
 	}		
-	
+	/*구매내역 상세보기*/
+	$(document).on('click', '.btn_detail', function(event) {
+		var ORDER_AMOUNT = $(this).attr("value");
+		var popupX = (window.screen.width / 2) - (500 / 2); // 만들 팝업창 좌우 크기의 1/2 만큼 보정값으로 뺴주었음
+		var popupY = (window.screen.height / 2) - (630 / 2); // 만들 팝업창 상하 크기의 1/2 만큼 보정값으로 뺴주었음
+		var pop = window.open('about:blank', 'Info', 'scrollbars=yes, resizable=yes, width=500, height=630, left=' + popupX + ', top=' + popupY);
+
+		pop.location.href="SproductSelledInfo.my?ORDER_AMOUNT=" + ORDER_AMOUNT;	
+
+	});	
 	/*날짜 형식 변경*/
 	function date_format(format) {
 		var year = format.getFullYear();
@@ -423,7 +432,7 @@
 							output += '<td>' + ORDER_PRICE + '</td>';
 							output += '<td>' + MEMBER_NICK + '</td>';
 							output += '<td>' + date + '</td>';
-							output += '<td><button class="btn_review" value="'+ORDER_NUM+'" onclick="goreview(this.value)">' + "상세" + '</button></td>';
+							output += '<td><button class="btn_detail" value="'+ORDER_AMOUNT+'">' + "상세" + '</button></td>';
 							output += '</tr>';
 							number += 1;
 			     		} 
