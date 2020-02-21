@@ -8,6 +8,23 @@
 	int WORKSHOP_NUM = (int)session.getAttribute("WORKSHOP_NUM");
 %>
 <style>
+	img {
+	   max-width: 100%;
+	   height: auto;
+	}
+	
+ 	/*별점주기*/
+	.star-rating { 
+		width:52px; 
+	}
+	.star-rating,.star-rating span { 
+		display:inline-block; height:10px; overflow:hidden; background:url('${pageContext.request.contextPath}/resources/images/star_2.png') no-repeat; 
+	}
+	.star-rating span{ 
+		background-position:left bottom; line-height:0; vertical-align:top; 
+	}   		 
+	
+	
 	#page-content-wrapper {
 		padding: 0 !important;
 	}
@@ -70,21 +87,15 @@
 		</div>
 		<div class="d-flex justify-content-between col-12">
 			<div class="col-6 justify-content-start p-2 box" style="background-color: white; padding-left: 20px;"> 
-				<div class="title"><span>상품 문의 내역</span><a id="qna" href="workshop_review_qnaAcademy.ws"><span style="font-size: 12px;">더보기</span></a></div>
-				<table id="ClassQnaTable">
-					<thead class="dashboardQna">
-					<tr>
-						<th>번호</th>
-						<th>카테고리</th>
-						<th>작성자</th>
-						<th>상품명</th>
-						<th>문의내용</th>
-					</tr>
-					</thead>
-					<tbody id="ClassQnaList">
-					</tbody>
-				</table>
-				<div id="list_none"></div>
+				<div class="title"><span>상품 후기</span><a id="qna" href="workshop_review_qnaAcademy.ws"><span style="font-size: 12px;">더보기</span></a></div>
+			<div id="ReviewSection">
+				<div id="ReviewWrapSection" class="pb-1">
+					<div id="ReviewtableSection" class="pb-2">
+					</div>
+				</div>
+			</div>		
+			
+			
 			</div>
 			<div class="col-6 justify-content-end p-2 box" style="background-color: white;"> 
 				<canvas id="chart-area2"></canvas>
@@ -264,6 +275,7 @@ window.onload = function() {
 
 $(document).ready(function() {
 	ClassQnaList();
+	getReviewList();
 });
 
 function ClassQnaList() {
@@ -343,6 +355,90 @@ function ClassQnaList() {
 	});
 }	
 
+/*날짜 형식 변경*/
+function date_format(format) {
+	var year = format.getFullYear();
+	var month = format.getMonth() + 1;
+	if(month<10) {
+		month = '0' + month;
+	}
+	var date = format.getDate();
+	if(date<10) {
+		date = '0' + date;
+	}
+	
+	return year + "-" + month + "-" + date + " " ;
+}		
+
+function getReviewList() {
+	$('#remo').empty();
+	$('#ReviewtableSection').empty();	//table 내부 내용을 제거(초기화)
+	$.ajax({
+		url:'/NAGAGU/getReviewList.pro',
+		type:'POST',
+		data : { 'PRODUCT_NUM' : 1 },
+		dataType : "json", // 서버에서 보내줄 데이터 타입
+		contentType : 'application/x-www-form-urlencoded; charset=UTF-8',
+		success:function(retVal) {
+			var reviewCount = retVal.reviewCount;
+			console.log(retVal.reviewList)
+			console.log("retVal.reviewCount : "+retVal.reviewCount)
+			console.log("retVal.reviewList : "+retVal.reviewList)
+			console.log("retVal.review_RE_Count : "+retVal.review_RE_Count)
+			console.log("retVal.review_RE_List : "+retVal.review_RE_List)
+			
+			if(retVal.reviewCount > 0) {
+				for(var i=0; i<retVal.reviewList.length; i++) {	//reviewCount도 상관 없음
+					var output='';
+					var REVIEW_NUM = retVal.reviewList[i].REVIEW_NUM;
+					var MEMBER_PICTURE = retVal.reviewList[i].MEMBER_PICTURE;
+					var MEMBER_NICK = retVal.reviewList[i].MEMBER_NICK;
+					var REVIEW_DATE = new Date(retVal.reviewList[i].REVIEW_DATE);
+					var date = date_format(REVIEW_DATE);
+					var REVIEW_GRADE = retVal.reviewList[i].REVIEW_GRADE;
+					var rate = 20*retVal.reviewList[i].REVIEW_GRADE;
+					var REVIEW_FILE = retVal.reviewList[i].REVIEW_FILE;
+					var REVIEW_CONTENT = retVal.reviewList[i].REVIEW_CONTENT;
+
+					output += '<div class="ReviewAndReplySum pt-2 pb-1" id="ReviewAndReplySum'+ REVIEW_NUM +'">';
+						output += '<div class="ReviewSum" id="ReviewSum'+ REVIEW_NUM +'">';
+							output += '<div class="ReviewList pb-3" id="ReviewList'+ REVIEW_NUM +'">';
+									output += '<div class="row justify-content-center">';
+										output += '<div class="col-1 justify-content-end" style="padding: 5px;"><img src="'+ MEMBER_PICTURE +'" alt="" class="rounded-circle"></div>';
+										output += '<div class="col-11">';
+											output += '<div class="row pb-1">';
+												output += '<div class="col-2 justify-content-end name">'+ MEMBER_NICK +'</div>';
+												output += '<div class="col-8 justify-content-center"></div>';
+												output += '<div class="col-2 justify-content-center smallfont">'+ date +'</div>';
+											output += '</div>';
+											output += '<div class="row pb-2">';
+												output += '<div class="col-12" style="font-size:0.7em; font-weight:bold;">'+REVIEW_GRADE+' &nbsp;';
+													output += '<span class="star-rating">';
+														output += '<span style ="width:'+rate+'%"></span>';
+													output += '</span>';
+												output += '</div>';
+											output += '</div>';
+											output += '<div class="row pb-2">';
+												output += '<div class="col-11 pr-0">' + REVIEW_CONTENT + '</div>';
+											output += '</div>';
+										output += '</div>'; // <div class="col-11">
+									output += '</div>'; // <div class="row justify-content-center">
+							output += '</div>'; // <div class="ReviewList pb-3" id="ReviewList'+REVIEW_NUM+'">
+						output += '</div>'; // <div class="ReviewSum" id="ReviewSum'+REVIEW_NUM+'">
+					output += '</div>'; // <div class="ReviewAndReplySum pt-2 pb-1" id="ReviewAndReplySum'+REVIEW_NUM+'">
+					$('#ReviewtableSection').append(output);				
+				}					
+			} else {
+				var output = '<div class="justify-content-center pt-3 pb-1" style="text-align:center;">등록된 댓글이 없습니다.</div>';
+				$('#ReviewtableSection').append(output);	//이상한데...!?!?!?
+			}
+			review_page();
+          },
+          error:function() {
+             alert("getReviewList ajax통신 실패!!!");
+          }
+   });
+}
 </script>
 <!-- Font Awesome CSS-->
     <link rel="stylesheet" href="https://d19m59y37dris4.cloudfront.net/dashboard-premium/1-4-5/vendor/font-awesome/css/font-awesome.min.css">

@@ -120,6 +120,19 @@
 		<result property="QNA_STATUS" column="QNA_STATUS" />	
 	</resultMap>	
 	
+	<resultMap type="java.util.HashMap" id="productReviewResultMap">
+		<result property="REVIEW_NUM" column="REVIEW_NUM" />	
+		<result property="REVIEW_MEMBER" column="REVIEW_MEMBER" />	
+		<result property="REVIEW_PRODUCT" column="REVIEW_PRODUCT" />	
+		<result property="REVIEW_DATE" column="REVIEW_DATE" />	
+		<result property="REVIEW_FILE" column="REVIEW_FILE" />	
+		<result property="REVIEW_CONTENT" column="REVIEW_CONTENT" />	
+		<result property="REVIEW_GRADE" column="REVIEW_GRADE" />	
+		<result property="REVIEW_RE" column="REVIEW_RE" />		
+		<result property="MEMBER_NICK" column="MEMBER_NICK" />		
+		<result property="MEMBER_PICTURE" column="MEMBER_PICTURE" />		
+	</resultMap>
+	
 	
 	<select id="getManagementClassList" resultMap="classResultMap">
 	    select * from (select CLASS_NUMBER, CLASS_STATUS, CLASS_AREA, CLASS_AMOUNT, CLASS_DIVISION, CLASS_NAME, CLASS_CATEGORY, 
@@ -235,6 +248,15 @@
 		AND W.WORKSHOP_NUM=#{WORKSHOP_NUM}
 		AND Q.QNA_MEMBER=N.MEMBER_NUM
 		ORDER BY Q.QNA_DATE DESC
+	</select>
+	
+	<select id="getDashboardReviewList" parameterType="java.util.HashMap" resultMap="productReviewResultMap">
+		SELECT * FROM
+			(SELECT rownum rnum, REVIEW_NUM, REVIEW_MEMBER, REVIEW_PRODUCT, REVIEW_DATE, REVIEW_FILE, REVIEW_CONTENT, REVIEW_GRADE, REVIEW_RE,
+			MEMBER_NICK, MEMBER_PICTURE FROM  
+				(SELECT R.*, N.MEMBER_NICK, N.MEMBER_PICTURE FROM PRODUCT_REVIEW R, NAGAGU_MEMBER N 
+				WHERE R.REVIEW_PRODUCT=#{PRODUCT_NUM} AND R.REVIEW_MEMBER=N.MEMBER_NUM AND R.REVIEW_RE=0 ORDER BY R.REVIEW_DATE DESC)) 
+           
 	</select>
 	
 </mapper>
