@@ -22,8 +22,32 @@
 		<script src="https://kit.fontawesome.com/b74b42490f.js" crossorigin="anonymous"></script>
 		<script src="https://kit.fontawesome.com/74760b5c81.js" crossorigin="anonymous"></script>
 		<script src="https://kit.fontawesome.com/97dbc99ea1.js"	crossorigin="anonymous"></script>
+		<style type="text/css">
+			@font-face {
+				font-family: 'KOMACON';
+				src:
+					url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_seven@1.2/KOMACON.woff')
+					format('woff');
+				font-weight: normal;
+				font-style: normal;
+			}
+			
+			@font-face {
+				font-family: 'BBTreeGR';
+				src:
+					url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_nine_@1.1/BBTreeGR.woff')
+					format('woff');
+				font-weight: normal;
+				font-style: normal;
+			}
+			
+			.order-body {
+				font-family: '만화진흥원체', 'KOMACON', KOMACON;
+				font-size: 15px;
+			}
+</style>
 	</head> 
-	<body> 
+	<body class="order-body"> 
 		<tiles:insertAttribute name="content" ignore="true" /> 
 	</body>
 </html>
