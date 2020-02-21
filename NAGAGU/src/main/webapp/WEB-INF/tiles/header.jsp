@@ -329,7 +329,7 @@
 												<a href="./mypage_edit.my" style="text-decoration: none;">내정보수정</a>
 												<a href="./mypage_like.my" style="text-decoration: none;">좋아요</a>
 												<a href="./chatRoom.ch?ES_ORDER_NUM=1" style="text-decoration: none;">채팅</a>
-												<a href="#" onclick="window.open('receiveList.nt', 'new', 'scrollbars=yes, resizable=yes, width=600, height=700, left=0, top=0');" style="text-decoration: none;">쪽지</a>
+												<a href="#" onclick="window.open('receiveList.nt', 'new', 'scrollbars=yes, resizable=yes, width=520, height=600, left=0, top=0');" style="text-decoration: none;">쪽지</a>
 											</div>
 										</div>
 									</li>

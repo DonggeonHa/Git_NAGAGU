@@ -110,7 +110,7 @@
 
     .pop_footer #btn_submit {
         float:left;
-        width:56px;
+        width:50px;
         height:28px;
         line-height:28px;
         color:white;
@@ -128,13 +128,14 @@
 
     .pop_footer #btn_return {
         float:left;
-        width:34px;
+        width:42px;
         height:28px;
+        line-height:28px;
         color:white;
 	    background: #ef900e;
         border:1px solid #ef900e;
         border-radius: 4px;
-        padding: 3px 10px;  
+        padding: 0 8px;  
         margin:5px;
         font-size: 12px;
         cursor:pointer;
