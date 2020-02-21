@@ -229,10 +229,9 @@
 		var title = "";
 		
 		$('#academyList').empty();
-		alert(searchType + keyword);
 		
 		if(!keyword || !searchType){
-			alert("카테고리 선택, 검색어를 입력하세요.");
+			alertify.alert("카테고리 선택, 검색어를 입력하세요.");
 			classList();
 			return false;
 		}
@@ -320,10 +319,9 @@
 		$('#remo').remove();
 		
 		$('#academyList').empty();
-		alert(searchType + keyword);
 		
 		if(!keyword || !searchType){
-			alert("카테고리 선택,검색어를 입력하세요.");
+			alertify.alert("카테고리 선택,검색어를 입력하세요.");
 			classList();
 			return false;
 		}
@@ -386,19 +384,19 @@
 	     });
 		 
 		 if(checkArray.length ==  0) {
-			 alert("삭제할 강의를 선택하세요.");
+			 alertify.alert("종료할 강의를 선택하세요.");
 		 } else {
-			 if (confirm("삭제하시겠습니까?") == true){
+			 if (confirm("종료하시겠습니까?") == true){
 				 $.ajax({
 					 type : 'POST',
 		             url : './updateStauts.my',
 		             data : { 0:0, checkArray : checkArray},
 		             success: function(retVal){
 		            	 if (retVal.res == "OK") {
-		            	 	alert("선택된 강의가 종료되었습니다.");
+		            		alertify.alert("선택된 강의가 종료되었습니다.");
 		            	 	classList();
 		            	 } else{
-		            		 alert("삭제 실패!");
+		            		 alertify.alert("삭제 실패!");
 		            	 }
 		             },
 		             error:function(request,status,error){

@@ -8,6 +8,7 @@ import java.util.Map;
 import org.apache.ibatis.annotations.Param;
 
 import com.spring.academy.ClassVO;
+import com.spring.academy.Class_qnaVO;
 import com.spring.workshop.WorkShopMemberVO;
 import com.spring.workshopMypage.WsMemberVO;
 
@@ -30,4 +31,7 @@ public interface AcademyManagementMapper {
 	//선주 리뷰,문의
 	ArrayList<Map<String, Object>> getclassReviewList(HashMap<String, Object> map);
 	ArrayList<Map<String, Object>> getclassQnaList(HashMap<String, Object> map);
+	
+	//대시보드
+	ArrayList<Map<String, Object>> getDashboardQna(@Param("WORKSHOP_NUM")int WORKSHOP_NUM);
 }

@@ -161,6 +161,11 @@ public class MainController {
 				}
 			} else {	//등록된 회원
 				session.setAttribute("MEMBER_EMAIL", memberVO.getMEMBER_EMAIL());
+				session.setAttribute("MEMBER_NICK", memberVO.getMEMBER_NICK());
+				session.setAttribute("MEMBER_NAME", memberVO.getMEMBER_NAME());
+				session.setAttribute("MEMBER_NUM", memberVO.getMEMBER_NUM());
+				
+				System.out.println("sns 등록된 회원 이름" + memberVO.getMEMBER_NAME());
 				
 			}
 			
@@ -232,6 +237,9 @@ public class MainController {
 				}
 			} else {	//등록된 회원
 				session.setAttribute("MEMBER_EMAIL", memberVO.getMEMBER_EMAIL());
+				session.setAttribute("MEMBER_NICK", memberVO.getMEMBER_NICK());
+				session.setAttribute("MEMBER_NAME", memberVO.getMEMBER_NAME());
+				session.setAttribute("MEMBER_NUM", memberVO.getMEMBER_NUM());
 				
 			}
 			

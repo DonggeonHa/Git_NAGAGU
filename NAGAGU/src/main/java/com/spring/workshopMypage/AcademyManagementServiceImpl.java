@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.spring.academy.ClassVO;
+import com.spring.academy.Class_qnaVO;
 import com.spring.mapper.AcademyManagementMapper;
 import com.spring.mapper.AcademyMapper;
 import com.spring.mapper.ProductManagementMapper;
@@ -135,6 +136,16 @@ public class AcademyManagementServiceImpl implements AcademyManagementService {
 		searchList = managementMapper.getclassQnaList(map);
 		
 		return searchList;
+	}
+
+	@Override
+	public ArrayList<Map<String, Object>> getDashboardQna(int WORKSHOP_NUM) {
+		ArrayList<Map<String, Object>> qnaList = null;
+		
+		AcademyManagementMapper managementMapper = sqlSession.getMapper(AcademyManagementMapper.class);
+		qnaList = managementMapper.getDashboardQna(WORKSHOP_NUM);
+		
+		return qnaList;
 	}
 
 	
