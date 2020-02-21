@@ -51,7 +51,7 @@
 <!-- 작업 구역. -->
 <div id="page-content-wrapper" style="">
 	<div class="container-fluid" style="background-color: #EAEAEA; min-height: calc(100vh);">
-		<div class="d-flex justify-content-between col-12" style="padding-top: 30px;">
+		<div class="d-flex justify-content-between col-12" style="padding-top: 10px;">
 			<div class="col-12 justify-content-start p-2 box" style="background-color: white; padding-left: 20px;">
 				<div class="title-1">오늘의 상품 관리</div>
 				<div style="padding: 10px;">
@@ -68,7 +68,7 @@
 				</div>
 			</div>
 		</div>
-		<div class="d-flex justify-content-between col-12">
+		<div class="d-flex justify-content-between col-12" style="padding-top: 0; padding-bottom: 0;">
 			<div class="col-6 justify-content-start p-2 box" style="background-color: white; padding-left: 20px;"> 
 				<div class="title"><span>상품 문의 내역</span><a id="qna" href="workshop_review_qnaAcademy.ws"><span style="font-size: 12px;">더보기</span></a></div>
 				<table id="ClassQnaTable">
@@ -344,7 +344,7 @@ function ClassQnaList() {
 }	
 
 </script>
-<!-- Font Awesome CSS-->
+	<!-- Font Awesome CSS-->
     <link rel="stylesheet" href="https://d19m59y37dris4.cloudfront.net/dashboard-premium/1-4-5/vendor/font-awesome/css/font-awesome.min.css">
     <!-- Fontastic Custom icon font-->
     <link rel="stylesheet" href="https://d19m59y37dris4.cloudfront.net/dashboard-premium/1-4-5/css/fontastic.css">
