@@ -380,7 +380,7 @@
   	  				            		var output ='';
   	  				            		//헤드
   	  	  								output += '<div class="col-12 row justify-content-between order_tab">'
- 	    				        			output += '<div><b>주문번호 '+ORDER_AMOUNT+'    주문 날짜 '+date+'</b></div>' 
+ 	    				        			output += '<div><b>주문번호 '+ORDER_AMOUNT+' / 주문 날짜 '+date+'</b></div>' 
  	    				        			output += '<div><a href="./order_detail.my?order_amount='+ORDER_AMOUNT+'">상세보기</a></div></div>'
   	  				            				
   	  				            		for(var j=0; j<retVal.myPaidOrder.length; j++){
