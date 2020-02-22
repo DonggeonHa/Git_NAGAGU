@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 import com.spring.academy.Class_qnaVO;
+import com.spring.store.Product_qnaVO;
 
 public interface ClassQnaMapper {
 	int getQnaCount(HashMap<String, Object> map);
@@ -20,4 +21,6 @@ public interface ClassQnaMapper {
 	int getqnaReCount(Class_qnaVO vo);
 	int MinusQnaStatus(Class_qnaVO vo);	//qna 답변 delete시 원글의 status 수정해줘야함
 
+	HashMap<String, Object> getQnaInfo(Class_qnaVO qnaVO);	//공방 관리자페이지
+	Class_qnaVO getQnaReplyInfo(Class_qnaVO qnaVO);
 }

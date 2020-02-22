@@ -6,6 +6,8 @@ import java.util.HashMap;
 
 import org.apache.ibatis.annotations.Param;
 
+import com.spring.store.Product_qnaVO;
+
 
 public interface ClassQnaService {
 	int getQnaCount(HashMap<String, Object> map);
@@ -18,5 +20,7 @@ public interface ClassQnaService {
 	int modifyQna(Class_qnaVO qnaVO);
 	int findChildrenRE(Class_qnaVO qnaVO);
 	int deleteQna(Class_qnaVO qnaVO);
-	
+
+	HashMap<String, Object> getQnaInfo(Class_qnaVO qnaVO);
+	Class_qnaVO getQnaReplyInfo(Class_qnaVO qnaVO);
 }

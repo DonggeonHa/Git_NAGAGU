@@ -6,7 +6,7 @@
 <%
 	if (session.getAttribute("WORKSHOP_NUM") == null) {
 		out.println("<script>");
-		out.println("alert('로그인 해주세요!');");
+		out.println("alertify.alert('확인','로그인 해주세요!');");
 		out.println("location.href='./index.ma'");
 		out.println("</script>");	
 	} 
@@ -37,14 +37,13 @@
 				<h1 class="header2_adj">상품 문의</h1>
 			</div>
 			<div class="d-flex justify-content-start pb-2">
-				<button type="button" id="listall" class="btn btn-sm btn-outline-dark mr-2">전체표시</button>                        
 				<span class="listnum_txt pt-2">전체 문의내역</span>
 				<span class="listnum_num pt-2"></span>
 			</div>   
-			 
 			<div class="d-flex justify-content-between pb-2">
 				<div class="justify-content-start" style="padding: 0;">
 					<div class="d-flex justify-content-start">
+						<button type="button" id="listall" class="btn btn-sm btn-outline-dark mr-2">전체표시</button>
 						<div class="select1">
 							<select class="search_hidden_state justify-content-start form-control" id="selectClassType" name="selectClassType" onchange="btn_select1()" style="height: 33px;">
 								<option value="all">답변상태</option>
@@ -131,7 +130,7 @@
 
 	$(document).on('click', '#btn_search', function(event) {
 		if(!$('#keyword').val() || !$('#searchType').val()){
-			alert("카테고리 선택, 검색어를 입력하세요!");
+			alertify.alert('확인',"카테고리 선택, 검색어를 입력하세요!");
 			$('#keyword').focus();
 			return false;
 		}		
@@ -155,7 +154,7 @@
 	$("#keyword").keyup(function(event){
 		if (event.keyCode == 13) {			
 			if(!$('#keyword').val() || !$('#searchType').val()){
-				alert("카테고리 선택, 검색어를 입력하세요!");
+				alertify.alert('확인',"카테고리 선택, 검색어를 입력하세요!");
 				$('#keyword').focus();
 				return false;
 			}	
@@ -325,7 +324,7 @@
 						if(PRODUCT_TITLE.length >= 14) {
 							PRODUCT_TITLE = PRODUCT_TITLE.substr(0,14)+"...";
 						}
-						output += '<td><a href="productdetail.pro?PRODUCT_NUM=' + PRODUCT_NUM + '&PRODUCT_CATEGORY=' + product_category + '">'+PRODUCT_TITLE+'</a></td>';
+						output += '<td><a href="productdetail.pro?PRODUCT_NUM=' + PRODUCT_NUM + '&PRODUCT_CATEGORY=' + product_category + '" target="_blank">'+PRODUCT_TITLE+'</a></td>';
 						if(QNA_CONTENT.length >= 45) {
 							QNA_CONTENT = QNA_CONTENT.substr(0,45)+"...";
 						}
@@ -333,12 +332,12 @@
 							//답변이 달리지 않은 문의
 							output += '<td style="text-align:left;">'+QNA_CONTENT+'</td>';
 							output += '<td>' + date + '</td>';
-							output += '<td>답변 대기&nbsp;<button class="btn_detail" value="'+QNA_NUM+'">작성</button></td>';
+							output += '<td>답변 대기</td>';
 						} else if (QNA_STATUS == 1){
 							//답변이 달린 문의
 							output += '<td style="text-align:left;">'+QNA_CONTENT+'</td>';
 							output += '<td>' + date + '</td>';
-							output += '<td>답변 완료&nbsp;<button class="btn_detail" value="'+QNA_NUM+'">수정</button></td>';
+							output += '<td>답변 완료</td>';
 						}
 						output += '<td><button class="btn_detail" value="'+QNA_NUM+'">' + "상세" + '</button></td>';
 						output += '</tr>';
@@ -359,7 +358,7 @@
 				page();
 			},
 			error: function() {
-				alert("QNA List를 띄울 수 없습니다.");
+				alertify.alert('확인',"QNA List를 띄울 수 없습니다.");
 			}
 		});
 	}		

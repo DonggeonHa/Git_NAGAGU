@@ -81,6 +81,14 @@ public class ProductQnaServiceImpl implements ProductQnaService{
 	}
 
 	@Override
+	public Product_qnaVO getQnaReplyInfo(Product_qnaVO qnaVO) {
+		ProductQnaMapper qnaMapper = sqlSession.getMapper(ProductQnaMapper.class);
+		Product_qnaVO vo = null;
+		vo = qnaMapper.getQnaReplyInfo(qnaVO);		
+		return vo;
+	}
+	
+	@Override
 	public int modifyQna(Product_qnaVO qnaVO) {
 		ProductQnaMapper qnaMapper = sqlSession.getMapper(ProductQnaMapper.class);
 		int res;
@@ -118,6 +126,7 @@ public class ProductQnaServiceImpl implements ProductQnaService{
 		}			
 		return res;
 	}
+
 
 	
 

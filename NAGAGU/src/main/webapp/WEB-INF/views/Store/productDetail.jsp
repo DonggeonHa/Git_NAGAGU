@@ -54,8 +54,6 @@
 	String WorkshopPic = (String)request.getAttribute("WorkshopPic");
 //	System.out.println("WotkshopMatchingNumber="+WorkshopMatchingNumber);
 
-
-	
 	//상품상세 관련
 	ProductVO vo = (ProductVO)request.getAttribute("productVO");
 	String PRODUCT_CATEGORY = (String)request.getAttribute("PRODUCT_CATEGORY");
@@ -77,10 +75,6 @@
 	String images = vo.getPRODUCT_BANNER();
 	String[] imgArr = images.split(",");
 %>  
-
-
-
-
 
 <style>
 	@charset "UTF-8";
@@ -336,10 +330,6 @@
 		cursor: pointer;	/*ReviewReply 수정버튼*/
 	}
 
-
-
-
-
 	/* 상품 이미지 관련*/
 	.thumbMain {
 		width: 510px;
@@ -381,9 +371,6 @@
 		transform: scale(1.05);
 		cursor: pointer;
 	}
-
-
-
 
 /*qna*/
 	#QnaformSection {
@@ -735,8 +722,6 @@
 					</div>
 				</div>
 			</div>
-
-                 
 			<!-- 리뷰 페이지네이션 -->
 			<br/>
 			<div class="d-flex justify-content-center">
@@ -745,7 +730,6 @@
 			<br />
 			<!-- 리뷰 페이지네이션 끝 -->
 
-
 	
 			<span id="t3"></span>
 			<br /><br /><hr />
@@ -753,7 +737,6 @@
 			<!-- Q&A 테이블 시작 -->
 			<h3 id="qna_scroll">Q&A</h3>
 			<br /><br />
-
            
 			<div id="QnaSection">
 				<div id="QnaButtonSection">	
@@ -801,7 +784,6 @@
 				</div>
 			</div>
 		
-		
 			<!-- Q&A pagenation -->
 			<br/>
 			<div class="d-flex justify-content-center">
@@ -811,12 +793,6 @@
 			<br />
 			<!-- Q&A pagenation 끝 -->			
 		
-		
-		
-		
-		
-			<!-- Q&A 테이블 끝 -->
-			
 			<br /><br /><hr />
 
       
@@ -993,11 +969,11 @@
 <script>
    	$('.basket_btn').on('click',function(){
    		if($('.BASKET_COLOR').val()==''){
-   			alert('색상을 선택해주세요') 
+   			alertify.alert('확인','색상을 선택해주세요') 
    			return
    		}
    		if($('.BASKET_SIZE').val()==''){
-   			alert('사이즈를 선택해주세요') 
+   			alertify.alert('확인','사이즈를 선택해주세요') 
    			return
    		}
    		insert_basket()
@@ -1023,15 +999,15 @@
         			if(confirm('장바구니로 이동하시겠습니까?')){
         				location.href= './mypage_basket.my'
         			}else{
-        				alert("장바구니에 담겼습니다")
+        				alertify.alert('확인',"장바구니에 담겼습니다")
         			}
         			return 
 				}else{
-					alert("update fail");
+					alertify.alert('확인',"update fail");
 				}  
 			 },
 			error:function(){
-				alert("ajax통신 실패!!");
+				alertify.alert('확인',"ajax통신 실패!!");
 			}
 		})
 		return list
@@ -1053,7 +1029,7 @@
 					location.href = url
 				},
 				error:function(){
-					alert("ajax통신 실패!!");
+					alertify.alert('확인',"ajax통신 실패!!");
 				} 
 			});		
 		}	
@@ -1099,7 +1075,6 @@
 		getPrice()
 	})
 
-
       
 	//좋아요 기능
 	$(document).ready(function(){  
@@ -1123,42 +1098,34 @@
 					}
 				},
 				error:function(){
-					alert("heart_check ajax통신 실패!!");
+					alertify.alert('확인',"heart_check ajax통신 실패!!");
 				}
 			})
 		}
 		heart_check()
          
-         
 		//좋아요 누르는 기능
 		$(document).on("click",".LikeAjax",function getLike(){
 			if(<%=MEMBER_STATUS%> == 100){
-				alert('로그인 해주세요!');
+				alertify.alert('확인','로그인 해주세요!');
 				return
 			}
 			var MEMBER_NUM = <%=MEMBER_NUM%>;
-			alert(MEMBER_NUM);		
-			
             var PRODUCT_NUM = $(this).children('input').val();
-            alert(PRODUCT_NUM);
 			$.ajax({
 				url: "/NAGAGU/insertProLike.pro",
 				type: "POST",
 				data: { 'MEMBER_NUM' : MEMBER_NUM , 'PRODUCT_NUM' : PRODUCT_NUM},
 				contentType: 'application/x-www-form-urlencoded; charset=utf-8',
 				success: function (retVal) {
-					alert(retVal.cnt);
 					if(retVal.cnt=='0') {
-					   
 						$('.LikeAjax').addClass('addlike');                     
 					} else {
 						$('.LikeAjax').removeClass('addlike');
-					   
 					}
-				     
 				},
 				error:function(){
-					alert("LikeAjax ajax통신 실패!!");   
+					alertify.alert('확인',"LikeAjax ajax통신 실패!!");   
 				}
 			})
 			event.preventDefault();
@@ -1184,20 +1151,12 @@
 		} <% } %>
 	});
 	 
-	 
-
 	
 	$(document).ready(function() {
-		
-//		pageMove(1);	//페이지에 처음 들어올 경우 고려
-
-		/*댓글 등록할 때 사진 여러개일 때 쪼개주는 함수*/
-		function splitImg(REVIEW_FILE) {		// , 가 몇 개 있는지만 구하면 된다
+		function splitImg(REVIEW_FILE) {
 			var reviewImgArray = REVIEW_FILE.split(',');
 			return reviewImgArray;
 		}    
-
-		
 		/*날짜 형식 변경*/
 		function date_format(format) {
 			var year = format.getFullYear();
@@ -1209,10 +1168,8 @@
 			if(date<10) {
 				date = '0' + date;
 			}
-			
 			return year + "-" + month + "-" + date + " " ;
 		}		
-		
 
 		function getReviewList() {
 			$('#remo').empty();
@@ -1230,7 +1187,7 @@
 					console.log("retVal.reviewList : "+retVal.reviewList)
 					console.log("retVal.review_RE_Count : "+retVal.review_RE_Count)
 					console.log("retVal.review_RE_List : "+retVal.review_RE_List)
-					
+
 					if(retVal.reviewCount > 0) {
 						for(var i=0; i<retVal.reviewList.length; i++) {	//reviewCount도 상관 없음
 							var output='';
@@ -1268,10 +1225,9 @@
 														if(REVIEW_FILE == '#') {
 															output += '<img src="#" class="review_img"  style="display:none;">   &nbsp;&nbsp;';            
 														} else {
-															//split함수 호출 //, 가 몇 개 있는지 구해서 //for문으로 그 개수만큼 돌림...review_file[i]
 															var reviewImgArray = splitImg(REVIEW_FILE);
 															for(var k=0;k<reviewImgArray.length;k++) {
-																output += '<img src="/productupload/image/' + reviewImgArray[k] + '" class="review_img">&nbsp;';                        
+																output += '<a href="/productupload/image/'+reviewImgArray[k]+'" target="_blank"><img src="/productupload/image/' + reviewImgArray[k] + '" class="review_img"></a>&nbsp;';                        
 															}               
 														}
 														output += '</div>';
@@ -1375,7 +1331,7 @@
 					review_page();
 		          },
 		          error:function() {
-		             alert("getReviewList ajax통신 실패!!!");
+		        	  alertify.alert('확인',"getReviewList ajax통신 실패!!!");
 		          }
 	       });
 		}
@@ -1503,14 +1459,13 @@
 						$("#ReviewButtonSection").show();
 						getReviewList();
 					} else {
-						alert("insert 실패!!!");
+						alertify.alert('확인',"insert 실패!!!");
 					}
 					review_page();
 				},
 				error:function() {
-					alert("ajax통신 실패!!!");
+					alertify.alert('확인',"ajax통신 실패!!!");
 				}
-				
 			});
 			event.preventDefault();		
 		})
@@ -1532,21 +1487,18 @@
 				type : 'POST',				
 				success:function(retVal) {
 					if(retVal.insertres == "OK") {
-		 				
 						getReviewList();
 					} else {
-						alert("insert 실패!!!");
+						alertify.alert('확인',"insert 실패!!!");
 					}
 					review_page();
 				},
 				error:function() {
-					alert("ajax통신 실패!!!");
+					alertify.alert('확인',"ajax통신 실패!!!");
 				}
 			});
 			event.preventDefault();			
-
 		})
-		
 		
 //Review 수정하기----------------------------------------------------------------------------------------------------	  		
 			
@@ -1556,7 +1508,6 @@
 			console.log("REVIEW_NUM : " + REVIEW_NUM)
 			
 			$('#beforeModifyReview'+REVIEW_NUM).css('display', 'none');
-			
 
 			$.ajax({
 				url : "/NAGAGU/gomodifyReviewform.do", 
@@ -1635,17 +1586,16 @@
 		 				$('#afterModifyReview'+REVIEW_NUM).append(output);
 		 				$("#REVIEW_GRADE"+REVIEW_NUM).val(+REVIEW_GRADE).prop("selected", true); //원래 평점을 set해줌
 					} else {
-						alert("수정폼 데이터 가져오기 실패!!!");
+						alertify.alert('확인',"수정폼 데이터 가져오기 실패!!!");
 					}
 					review_page();
 				},
 				error:function() {
-					alert("ajax통신 실패!!!");
+					alertify.alert('확인',"ajax통신 실패!!!");
 				}
 			});
 			event.preventDefault();		
 		})		
-		
 		
 		
 		//review 수정 process (원글)
@@ -1676,12 +1626,12 @@
 					if(retVal.res == "OK") {
 						getReviewList();
 					} else {
-						alert("수정 실패!!!");
+						alertify.alert('확인',"수정 실패!!!");
 					}
 					review_page();
 				},
 				error:function() {
-					alert("ajax통신 실패!!!");
+					alertify.alert('확인',"ajax통신 실패!!!");
 				}
 			});
 			event.preventDefault();				
@@ -1708,18 +1658,17 @@
 					if(retVal.res == "OK") {
 						getReviewList();
 					} else {
-						alert("수정 실패!!!");
+						alertify.alert('확인',"수정 실패!!!");
 					}
 					review_page();
 				},
 				error:function() {
-					alert("ajax통신 실패!!!");
+					alertify.alert('확인',"ajax통신 실패!!!");
 				}
 			});
 			event.preventDefault();				
 		})				
 //Review 삭제하기----------------------------------------------------------------------------------------------------	  
-
 		//원글, 답글 same
 		$(document).on("click",".deleteReview",function(event){
 			var REVIEW_NUM = $(this).prev().prev().val();
@@ -1737,22 +1686,19 @@
 						if(retVal.res == "OK") {
 							getReviewList();
 						} else if(retVal.res == "Children"){
-							alert("답글이 존재하는 댓글은 삭제할 수 없습니다.");
+							alertify.alert('확인',"답글이 존재하는 댓글은 삭제할 수 없습니다.");
 						} else {
-							alert("삭제 실패!");
+							alertify.alert('확인',"삭제 실패!");
 						}
 						review_page();
 					},
 					error:function() {
-						alert("ajax통신 실패!!!");
+						alertify.alert('확인',"ajax통신 실패!!!");
 					}
 				});
 				event.preventDefault();					
 			}
 		})				
-		
-
-		
 		
 //QNA----------------------------------------------------------------------------------------------------	 		
 //QNA----------------------------------------------------------------------------------------------------	 		
@@ -1784,10 +1730,8 @@
 							var date = date_format(QNA_DATE);
 							var QNA_CONTENT = retVal.qnaList[i].QNA_CONTENT;
 
-							
 							output += '<div class="QnaAndReplySum pt-2 pb-1" id="QnaAndReplySum'+QNA_NUM+'">';
 							
-							//if
 							if((<%=WORKSHOP_NUM%> == <%=WorkshopMatchingNumber%>) || ('<%=MEMBER_NICK%>' == MEMBER_NICK)) {
 								output += '<div class="QnaSum" id="QnaSum'+QNA_NUM+'">';
 								output += '<div class="QnaList pb-3" id="QnaList'+QNA_NUM+'">';
@@ -1896,7 +1840,7 @@
 					qna_page();
 		          },
 		          error:function() {
-		             alert("getQnaList ajax통신 실패!!!");
+		        	  alertify.alert('확인',"getQnaList ajax통신 실패!!!");
 		          }
 	       });
 		}		
@@ -2024,14 +1968,13 @@
 						$("#QnaButtonSection").show();
 						getQnaList();
 					} else {
-						alert("qna insert 실패!!!");
+						alertify.alert('확인',"qna insert 실패!!!");
 					}
 					qna_page();
 				},
 				error:function() {
-					alert("qna insert ajax통신 실패!!!");
+					alertify.alert('확인',"qna insert ajax통신 실패!!!");
 				}
-				
 			});
 			event.preventDefault();		
 		})
@@ -2052,15 +1995,14 @@
 				type : 'POST',				
 				success:function(retVal) {
 					if(retVal.res == "OK") {
-		 				
 						getQnaList();
 					} else {
-						alert("qna reply insert 실패!!!");
+						alertify.alert('확인',"qna reply insert 실패!!!");
 					}
 					qna_page();
 				},
 				error:function() {
-					alert("qna reply ajax통신 실패!!!");
+					alertify.alert('확인',"qna reply ajax통신 실패!!!");
 				}
 			});
 			event.preventDefault();			
@@ -2068,7 +2010,6 @@
 		})
 				
 //Qna 수정하기----------------------------------------------------------------------------------------------------	  		
-			
 		//qna 수정 폼 (원글)
 		$(document).on("click",".gomodifyQnaform",function(event){
 			var QNA_NUM = $(this).prev().val();
@@ -2115,12 +2056,12 @@
 		 				
 		 				$('#afterModifyQna'+QNA_NUM).append(output);
 					} else {
-						alert("수정폼 데이터 가져오기 실패!!!");
+						alertify.alert('확인',"수정폼 데이터 가져오기 실패!!!");
 					}
 					qna_page();
 				},
 				error:function() {
-					alert("ajax통신 실패!!!");
+					alertify.alert('확인',"ajax통신 실패!!!");
 				}
 			});
 			event.preventDefault();		
@@ -2144,14 +2085,13 @@
 					if(retVal.res == "OK") {
 						getQnaList();
 					} else {
-						alert("수정 실패!!!");
+						alertify.alert('확인',"수정 실패!!!");
 					}
 					qna_page();
 				},
 				error:function() {
-					alert("ajax통신 실패!!!");
+					alertify.alert('확인',"ajax통신 실패!!!");
 				}
-				
 			});
 			event.preventDefault();				
 		})		
@@ -2176,11 +2116,11 @@
 					if(retVal.res == "OK") {
 						getQnaList();
 					} else {
-						alert("수정 실패!!!");
+						alertify.alert('확인',"수정 실패!!!");
 					}
 				},
 				error:function() {
-					alert("ajax통신 실패!!!");
+					alertify.alert('확인',"ajax통신 실패!!!");
 				}
 			});
 			event.preventDefault();				
@@ -2188,7 +2128,6 @@
 		
 
 //Qna 삭제하기----------------------------------------------------------------------------------------------------	  
-
 		//원글, 답글 same
 		$(document).on("click",".deleteQna",function(event){
 			var QNA_NUM = $(this).prev().prev().val();
@@ -2206,22 +2145,18 @@
 						if(retVal.res == "OK") {
 							getQnaList();
 						} else if(retVal.res == "Children"){
-							alert("답변이 존재하는 문의는 삭제할 수 없습니다.");
+							alertify.alert('확인',"답변이 존재하는 문의는 삭제할 수 없습니다.");
 						} else {
-							alert("삭제 실패!");
+							alertify.alert('확인',"삭제 실패!");
 						}
 					},
 					error:function() {
-						alert("ajax통신 실패!!!");
+						alertify.alert('확인',"ajax통신 실패!!!");
 					}
 				});
 				event.preventDefault();					
 			}
 		})						
-		
-		
-		
-		
 		
 	//ready 끝	
 	getReviewList();
@@ -2246,7 +2181,6 @@
 			} 
 			else if(formType=='reviewModify') {	//리뷰 수정폼에서 취소
 				var REVIEW_NUM = $(this).prev().prev().val();
-	
 				$('#beforeModifyReview'+REVIEW_NUM).css('display', 'block');	//수정,삭제버튼 보임
 				$('#afterModifyReview'+REVIEW_NUM).empty();
 
@@ -2256,11 +2190,9 @@
 				console.log(REVIEW_NUM)
 				$("#review_replybtn"+REVIEW_NUM).css('display','block');	//답글버튼 보임
 				$("#ReviewReplyformSection"+REVIEW_NUM).empty();	//답글 지움
-
 			}
 			else if(formType=='reviewReplyModify') {	//답글 수정 취소
 				var REVIEW_NUM = $(this).prev().prev().val();
-
 				$('#beforeModifyReviewReply'+REVIEW_NUM).css('display', 'block');
 				$('#afterModifyReviewReply'+REVIEW_NUM).css('display', 'none'); 
 				$('#ReviewbeforeControl'+REVIEW_NUM).css('display', 'block');	//수정,삭제버튼 보임
@@ -2281,18 +2213,15 @@
 				var QNA_NUM = $(this).prev().prev().val();
 				$('#beforeModifyQna'+QNA_NUM).css('display', 'block');	//수정,삭제버튼 보임
 				$('#afterModifyQna'+QNA_NUM).empty();
-
 			}
 			else if(formType=='qnaReply') {	//답글 입력 취소
 				var QNA_NUM = $(this).prev().prev().val();
 				console.log(QNA_NUM)
 				$("#qna_replybtn"+QNA_NUM).css('display','block');	//답글버튼 보임
 				$("#QnaReplyformSection"+QNA_NUM).empty();	//답글 지움
-
 			}
 			else if(formType=='qnaReplyModify') {	//답글 수정 취소
 				var QNA_NUM = $(this).prev().prev().val();
-
 				$('#beforeModifyQnaReply'+QNA_NUM).css('display', 'block');
 				$('#afterModifyQnaReply'+QNA_NUM).css('display', 'none'); 
 				$('#QnabeforeControl'+QNA_NUM).css('display', 'block');	//수정,삭제버튼 보임
@@ -2302,13 +2231,8 @@
 					this.reset();  
 				});  
 			}			
-			
-			
 			event.preventDefault();	
 		});
-
-
-
 
 
 //input type=file 이미지 업로드/수정----------------------------------------------------------------------------------------------------	    	
@@ -2325,16 +2249,13 @@
 			}
 		});
 		$('.file_input [id="modify_input_imgs"]').change(function() {
-			alert('ccc')
 			var fileName = $(this).val();
 			var fileCount = $(this).get(0).files.length;
 			var tmpvar = $('.file_input input[type=text]')[1];
 			if($(this).get(0).files.length == 1){
 				$(tmpvar).val(fileName);
-				alert('bbbbb')
 			}
 			else {
-				alert('aaaa')
 				$(tmpvar).val('추가 업로드 파일 '+fileCount+'개');
 			}
 		});
@@ -2358,10 +2279,9 @@
 			var index = 0;
 			filesArr.forEach(function(f) {
 				if(!f.type.match("image.*")) {
-					alert("확장자는 이미지 확장자만 가능합니다.");
+					alertify.alert('확인',"확장자는 이미지 확장자만 가능합니다.");
 					return;
 				}
-          
 				sel_files.push(f);
 				
 				var reader = new FileReader();
@@ -2403,10 +2323,9 @@
 			var index = 0;
 			filesArr.forEach(function(f) {
 				if(!f.type.match("image.*")) {
-					alert("확장자는 이미지 확장자만 가능합니다.");
+					alertify.alert('확인',"확장자는 이미지 확장자만 가능합니다.");
 					return;
 				}
-			
 				sel_files.push(f);
 			          
 				var reader = new FileReader();
@@ -2429,8 +2348,6 @@
 				
 				var img_id = "#beforeimg_id_" + index;
 				console.log("#beforeimg_id_+index : " + img_id);
-		
-					
 				
 				var deleteImg=$("input[type=hidden][name=deleteImg]").val();	//기본은 ""
 				deleteImg += $(img_id).children().attr('value')+',';	//삭제할 때마다 deleteImg의 value에 추가됨
@@ -2439,13 +2356,10 @@
 					
 				$(img_id).remove();
 				
-				
 				console.log("sel_files : " + sel_files);            
 			} 
 		}
 
-
-		
 		
 //Review 등록하기----------------------------------------------------------------------------------------------------	    
 
@@ -2453,25 +2367,23 @@
 		$(document).on("click",".review_btn",function(event){
 			if(<%=MEMBER_STATUS%> == 100){
 				if(<%=WORKSHOP_STATUS%> == 100) {
-					alert('로그인 해주세요!');					
+					alertify.alert('확인','로그인 해주세요!');					
 				} else {
-					alert('회원만 작성 가능합니다.');
+					alertify.alert('확인','회원만 작성 가능합니다.');
 				}
 				return;
 			}
-			   
 			$("#ReviewformSection").css('display','block');
 			$("#ReviewButtonSection").css('display','none');	//댓글달기버튼영역 숨김
-			
 		})
 		
 		//ReviewReplyform폼 버튼	//답글 버튼 (reply)
 		$(document).on("click",".review_replybtn",function(event){
 			if(<%=MEMBER_STATUS%> == 100){
 				if(<%=WORKSHOP_STATUS%> == 100) {
-					alert('로그인 해주세요!');					
+					alertify.alert('확인','로그인 해주세요!');					
 				} else {
-					alert('회원만 작성 가능합니다.');
+					alertify.alert('확인','회원만 작성 가능합니다.');
 				}
 				return;
 			}
@@ -2504,7 +2416,6 @@
 			replyform += '</div></div></div></div></form>';
 			
 			$('#ReviewReplyformSection'+REVIEW_NUM).append(replyform);
-			
 		})
 
 		//afterModifyReviewReply 답글수정폼 (reply)		
@@ -2516,43 +2427,25 @@
 			$('#afterModifyReviewReply'+REVIEW_NUM).css('display', 'block'); 
 			$('#ReviewbeforeControl'+REVIEW_NUM).css('display', 'none');	//수정,삭제버튼 숨김
 			$('#ReviewafterControl'+REVIEW_NUM).css('display', 'block'); 	//수정,취소버튼 보임
-	
 		})
 				
-
-		
-
-		
-		//왜 안 돼..............?????????????????????????????????????????????
-		//리뷰 이미지를 클릭하면 원본 사이즈로 커짐(기본은 100)
-		$(".review_img").click(function(){
-			if($(this).css('width') != '100px' ) {
-				$(this).css({'width':'100','height':'100'});
-			} else {
-				$(this).css({'width':'100%','height':'100%'});
-			}
-		})	
-		
 
 //-----------------------------------------------------------------------------
 //QNA--------------------------------------------------------------------------
 //-----------------------------------------------------------------------------
 //Review 등록하기----------------------------------------------------------------------------------------------------	    
-
 		//Qna폼 버튼 (qna)
 		$(document).on("click",".qna_btn",function(event){
 			if(<%=MEMBER_STATUS%> == 100){
 				if(<%=WORKSHOP_STATUS%> == 100) {
-					alert('로그인 해주세요!');					
+					alertify.alert('확인','로그인 해주세요!');					
 				} else {
-					alert('회원만 작성 가능합니다.');
+					alertify.alert('확인','회원만 작성 가능합니다.');
 				}
 				return;
 			}
-			   
 			$("#QnaformSection").css('display','block');
 			$("#QnaButtonSection").css('display','none');	//댓글달기버튼영역 숨김
-			
 		})
 		
 		//QnaReplyform폼 버튼	//답글 버튼 (reply)
@@ -2587,34 +2480,27 @@
 			replyform += '</div></div></div></div></form>';
 			
 			$('#QnaReplyformSection'+QNA_NUM).append(replyform);
-			
 		})
 
 		//afterModifyQnaReply 답글수정폼 (reply)		
 		$(document).on("click",".gomodifyQnaReplyform",function(event){
 			var QNA_NUM = $(this).prev().val();
 			console.log("QNA_NUM : " + QNA_NUM)
-			
 			$('#beforeModifyQnaReply'+QNA_NUM).css('display', 'none');
 			$('#afterModifyQnaReply'+QNA_NUM).css('display', 'block'); 
 			$('#QnabeforeControl'+QNA_NUM).css('display', 'none');	//수정,삭제버튼 숨김
 			$('#QnaafterControl'+QNA_NUM).css('display', 'block'); 	//수정,취소버튼 보임
-	
 		})
 	
 		$(document).ready(function(){
-			console.log('ㅁ'+<%=PRODUCT_STATUS%>)
 			if(<%=PRODUCT_STATUS%> == 0) {
 				console.log('품절된 상품')
 				$('.pauseSale').addClass('disabled');
-				
-				$('.goodsform').find('td.total').text('품절된 상품').css('color', 'red');
-
+				$('.goodsform').find('td.total').text('품절된 상품').css('color', 'red')
 			} else {
 				console.log('품절 아닌 상품')
 				$('.pauseSale').removeClass('disabled');
 			}
-			
 		}) 
 	
 				

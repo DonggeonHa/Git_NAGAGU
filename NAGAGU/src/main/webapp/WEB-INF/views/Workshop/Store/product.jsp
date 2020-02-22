@@ -22,7 +22,6 @@ if (session.getAttribute("WORKSHOP_NUM") == null) {
            </div>
             
 		<div class="d-flex justify-content-start pb-2">
-		    <button type="button" id="listall" class="btn btn-sm btn-outline-dark mr-2">전체표시</button>
 		    <button type="button" id="to_ingSale" class="btn btn-sm btn-outline-dark mr-2">선택 판매중</button>  
 		    <button type="button" id="to_pauseSale" class="btn btn-sm btn-outline-dark mr-2">선택 품절</button>  
 		    <button type="button" id="to_endSale" class="btn btn-sm btn-outline-dark mr-2">선택 판매종료</button>                              
@@ -30,11 +29,10 @@ if (session.getAttribute("WORKSHOP_NUM") == null) {
 		    <span class="listnum_txt pt-2">전체 상품내역</span>
 		    <span class="listnum_num pt-2"></span>
 		</div>
-                
-                
 		<div class="d-flex justify-content-between pb-2">
 			<div class="justify-content-start" style="padding: 0;">
 				<div class="d-flex justify-content-start">
+					<button type="button" id="listall" class="btn btn-sm btn-outline-dark mr-2">전체표시</button>
 					<div class="select1">
 						<select class="search_hidden_state justify-content-start form-control" id="selectClassType" name="selectClassType" onchange="btn_select1()" style="height: 33px;">
 							<option value="allProducts">전체</option>
@@ -72,7 +70,7 @@ if (session.getAttribute("WORKSHOP_NUM") == null) {
 				<div class="d-flex justify-content-end">
 					<!-- Example split danger button -->
 					<div class="dropdown">
-						<button class="btn btn-sm btn_search " type="button" id="searchType" disabled="disabled">
+						<button class="btn btn-sm " type="button" id="searchType" disabled="disabled">
 					        상품명
 					    </button>
 					</div>								
@@ -280,10 +278,12 @@ if (session.getAttribute("WORKSHOP_NUM") == null) {
 	
 
 	$(document).on('click', '#btn_search', function(event) {
-		if ($('#keyword').val() == null) {
+		if ($('#keyword') == null) {
 			alert("검색어를 입력하세요!");
 			$('#keyword').focus();
 			return false;
+		} else {
+			console.log('aa');
 		}
 		productList();
 		$('#list_none').empty();
@@ -360,6 +360,13 @@ if (session.getAttribute("WORKSHOP_NUM") == null) {
 		return year + "-" + month + "-" + date + " " ;
 	}
 	
+    function changeComma(){ 
+        $('.price').each(function (index,item){
+            var price = $(item).text()*1
+            $(item).text(price.toLocaleString()+'원')    
+        })
+    }
+	
 	$(document).ready(function() {
 		productList();
 	});
@@ -428,7 +435,6 @@ if (session.getAttribute("WORKSHOP_NUM") == null) {
 				      	        break;
 			      	    }
 
-			      		
 				      	var product_category = productList[j].PRODUCT_CATEGORY;
 				      	var PRODUCT_STATUS = productList[j].PRODUCT_STATUS;
 			      		switch(PRODUCT_STATUS){
@@ -462,7 +468,7 @@ if (session.getAttribute("WORKSHOP_NUM") == null) {
 							PRODUCT_TITLE = PRODUCT_TITLE.substr(0,14)+"...";
 						}
 						output += '<td><a href="productdetail.pro?PRODUCT_NUM=' + PRODUCT_NUM + '&PRODUCT_CATEGORY=' + product_category + '">'+PRODUCT_TITLE+'</a></td>';
-						output += '<td>' + PRODUCT_PRICE + '</td>';
+						output += '<td class="price">' + PRODUCT_PRICE + '</td>';
 						output += '<td>' + PRODUCT_STOCK + '</td>';
 						output += '<td>' + PRODUCT_SALES + '</td>';
 						output += '<td>' + PRODUCT_GRADE + '</td>';
@@ -488,6 +494,7 @@ if (session.getAttribute("WORKSHOP_NUM") == null) {
 					$("#selectCategory").val('all').prop("selected", true);
 					$("#selectListAlign").val('product_date').prop("selected", true);
 				}
+				changeComma();
 				page();
 			},
 			error: function() {

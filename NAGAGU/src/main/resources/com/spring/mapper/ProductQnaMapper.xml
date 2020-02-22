@@ -60,15 +60,18 @@ create sequence store_qna_seq
 	</resultMap>
 	
 	<resultMap id="productQnaInfoResultMap" type="java.util.HashMap">
-		<result column="QNA_NUM" property="QNA_NUM"/>
+		<result column="QNA_NUM" property="QNA_NUM" javaType="java.lang.Integer"/>
 		<result column="QNA_MEMBER" property="QNA_MEMBER"/>
 		<result column="QNA_PRODUCT" property="QNA_PRODUCT"/>
 		<result column="QNA_DATE" property="QNA_DATE"/>
 		<result column="QNA_CONTENT" property="QNA_CONTENT"/>
 		<result column="QNA_RE" property="QNA_RE"/>
-		<result column="QNA_STATUS" property="QNA_STATUS"/>
+		<result column="QNA_STATUS" property="QNA_STATUS" javaType="java.lang.Integer"/>
 		<result column="MEMBER_NICK" property="MEMBER_NICK"/>
 		<result column="MEMBER_PICTURE" property="MEMBER_PICTURE"/>
+		<result column="PRODUCT_TITLE" property="PRODUCT_TITLE"/>
+		<result column="PRODUCT_NUM" property="PRODUCT_NUM" javaType="java.lang.Integer"/>
+		<result column="PRODUCT_CATEGORY" property="PRODUCT_CATEGORY"/>
 	</resultMap>
 	
 	<resultMap type="com.spring.member.MemberVO" id="memberqnaResultMap">
@@ -130,13 +133,19 @@ create sequence store_qna_seq
 	<select id="getQnaVO" parameterType="com.spring.store.Product_qnaVO" resultMap="productVOQnaResultMap">
 		SELECT * FROM PRODUCT_QNA WHERE QNA_NUM=#{QNA_NUM} 
 	</select>	 
+	
 	<select id="getQnaInfo" parameterType="com.spring.store.Product_qnaVO" resultMap="productQnaInfoResultMap">
-		SELECT Q.QNA_NUM, Q.QNA_MEMBER, Q.QNA_PRODUCT, Q.QNA_DATE, Q.QNA_CONTENT, Q.QNA_RE, Q.QNA_STATUS,M.MEMBER_NICK, M.MEMBER_PICTURE , P.PRODUCT_TITLE 
+		SELECT Q.QNA_NUM, Q.QNA_MEMBER, Q.QNA_PRODUCT, Q.QNA_DATE, Q.QNA_CONTENT, Q.QNA_RE, Q.QNA_STATUS,
+		M.MEMBER_NICK, M.MEMBER_PICTURE , P.PRODUCT_TITLE, P.PRODUCT_NUM, P.PRODUCT_CATEGORY 
 			FROM PRODUCT_QNA Q, NAGAGU_MEMBER M , PRODUCT P 
 		WHERE Q.QNA_MEMBER = M.MEMBER_NUM 
 		AND P.PRODUCT_NUM = Q.QNA_PRODUCT
         AND Q.QNA_MEMBER = M.MEMBER_NUM
 		AND Q.QNA_NUM=#{QNA_NUM} 
+	</select>	 
+	
+	<select id="getQnaReplyInfo" parameterType="com.spring.store.Product_qnaVO" resultMap="productVOQnaResultMap">
+		SELECT * FROM PRODUCT_QNA WHERE QNA_RE=#{QNA_NUM}  
 	</select>	 
 	
 	<update id="modifyQna" parameterType="com.spring.store.Product_qnaVO">

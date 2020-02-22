@@ -11,7 +11,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.spring.mapper.ClassReviewMapper;
+import com.spring.mapper.ProductReviewMapper;
 import com.spring.member.MemberVO;
+import com.spring.store.Product_reviewVO;
 import com.spring.academy.Class_reviewVO;
 
 @Service
@@ -98,6 +100,14 @@ public class ClassReviewServiceImpl implements ClassReviewService {
 		return reviewVO;
 	}
 
+	@Override
+	public HashMap<String, Object> getReviewInfo(Class_reviewVO reviewVO) {
+		ClassReviewMapper reviewMapper = sqlSession.getMapper(ClassReviewMapper.class);
+		HashMap<String, Object> map = null;
+		map = reviewMapper.getReviewInfo(reviewVO);
+		return map;
+	}
+	
 	@Override
 	public int findChildrenRE(int REVIEW_NUM) {
 		ClassReviewMapper reviewMapper = sqlSession.getMapper(ClassReviewMapper.class);

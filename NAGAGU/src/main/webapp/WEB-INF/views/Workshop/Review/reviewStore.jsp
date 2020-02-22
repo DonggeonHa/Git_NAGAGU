@@ -4,11 +4,11 @@
 <%
 	if (session.getAttribute("WORKSHOP_NUM") == null) {
 		out.println("<script>");
-		out.println("alert('회원 로그인 해주세요!');");
+		out.println("alertify.alert('확인','로그인 해주세요!');");
 		out.println("location.href='./index.ma'");
 		out.println("</script>");	
 	} 
-
+	System.out.println("상품리뷰페이지 검색 옴");
 	String voExist = "N";
 	int count = 0;
 	ProductVO productVO = null;
@@ -36,13 +36,13 @@
 			    <h1 class="">상품 후기</h1>
 			</div>
 			<div class="d-flex justify-content-start pb-2">
-			    <button type="button" id="listall" class="btn btn-sm btn-outline-dark mr-2">전체표시</button>
 			    <span class="listnum_txt pt-2">전체 후기내역</span>
 			    <span class="listnum_num pt-2"></span>
 			</div>
 			<div class="d-flex justify-content-between pb-2">
 				<div class="justify-content-start" style="padding: 0;">
 					<div class="d-flex justify-content-start">
+						<button type="button" id="listall" class="btn btn-sm btn-outline-dark mr-2">전체표시</button>
 						<div class="select2">
 							<select class="search_hidden_state justify-content-start form-control"  id="selectCategory" name="selectCategory" onchange="btn_select2()" style="height: 33px;">
 								<option value="all">카테고리</option>
@@ -146,7 +146,7 @@
     
 	$(document).on('click', '#btn_search', function(event) {
 		if(!$('#keyword').val() || !$('#searchType').val()){
-			alert("카테고리 선택, 검색어를 입력하세요!");
+			alertify.alert('확인',"카테고리 선택, 검색어를 입력하세요!");
 			$('#keyword').focus();
 			return false;
 		}		
@@ -170,7 +170,7 @@
 	$("#keyword").keyup(function(event){
 		if (event.keyCode == 13) {			
 			if(!$('#keyword').val() || !$('#searchType').val()){
-				alert("카테고리 선택, 검색어를 입력하세요!");
+				alertify.alert('확인',"카테고리 선택, 검색어를 입력하세요!");
 				$('#keyword').focus();
 				return false;
 			}	
@@ -231,6 +231,8 @@
 				$('#searchType').val('product_title');
 				$("#keyword").val('<%=PRODUCT_TITLE%>');
 			} else if(<%=count%> == 0) {
+<%-- 				alertify.alert('확인','상품 "<%=PRODUCT_TITLE%>" 에 해당하는 후기가 없습니다.');
+ --%>				
 				alert('상품 "<%=PRODUCT_TITLE%>" 에 해당하는 후기가 없습니다.');
 				location.href='./workshop_product_items.ws';
 			}
@@ -309,6 +311,7 @@
 			    		var date = date_format(REVIEW_DATE);
 			    		var REVIEW_CONTENT = reviewList[j].REVIEW_CONTENT;
 			    		var REVIEW_NUM = reviewList[j].REVIEW_NUM;
+			    	
     		
 						output += '<tr class="text-center">';
 						output += '<td>' + number + '</td>';
@@ -317,9 +320,12 @@
 						if(PRODUCT_TITLE.length >= 14) {
 							PRODUCT_TITLE = PRODUCT_TITLE.substr(0,14)+"...";
 						}
-						output += '<td><a href="productdetail.pro?PRODUCT_NUM=' + PRODUCT_NUM + '&PRODUCT_CATEGORY=' + product_category + '">'+PRODUCT_TITLE+'</a></td>';
-						output += '<td>' + REVIEW_GRADE + '</td>';
-
+						output += '<td><a href="productdetail.pro?PRODUCT_NUM=' + PRODUCT_NUM + '&PRODUCT_CATEGORY=' + product_category + '" target="_blank">'+PRODUCT_TITLE+'</a></td>';
+						if(REVIEW_GRADE != 7) {
+							output += '<td>' + REVIEW_GRADE + '점</td>';
+						} else {
+							output += '<td>-</td>';
+						}
 						if(REVIEW_CONTENT.length >= 45) {
 							REVIEW_CONTENT = REVIEW_CONTENT.substr(0,45)+"...";
 						}
@@ -344,7 +350,7 @@
 				page();
 			},
 			error: function() {
-				alert("Review List를 띄울 수 없습니다.");
+				alertify.alert('확인',"Review List를 띄울 수 없습니다.");
 			}
 		});
 	}	

@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import com.spring.member.MemberVO;
+import com.spring.store.Product_reviewVO;
 import com.spring.academy.Class_reviewVO;
 
 public interface ClassReviewMapper {
@@ -26,6 +27,6 @@ public interface ClassReviewMapper {
 	int findChildrenRE(int REVIEW_NUM);
 	int deleteReview(int REVIEW_NUM);
 	
-	
 	int modifyReviewReply(Class_reviewVO reviewVO);
+	HashMap<String, Object> getReviewInfo(Class_reviewVO reviewVO);	//공방 관리자페이지
 }

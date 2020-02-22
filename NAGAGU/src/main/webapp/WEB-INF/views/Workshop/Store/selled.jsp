@@ -1,3 +1,4 @@
+<%@page import="java.util.HashMap"%>
 <%@page import="java.util.ArrayList"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
@@ -5,11 +6,12 @@
 <%
 	if (session.getAttribute("WORKSHOP_NUM") == null) {
 		out.println("<script>");
-		out.println("alert('로그인 해주세요!');");
+		out.println("alertify.alert('확인','로그인 해주세요!')");
 		out.println("location.href='./index.ma'");
 		out.println("</script>");
 	}
 	ArrayList<ProductVO> WorkshopProoductList = (ArrayList<ProductVO>)request.getAttribute("WorkshopProoductList");
+	
 %>
 
 <div id="page-content-wrapper" style="padding-top: 5%;">
@@ -18,7 +20,6 @@
 			<h1>판매된 상품 관리</h1>
 		</div>
 		<div class="d-flex justify-content-start pb-2">
-			<button type="button" id="listall" class="btn btn-sm btn-outline-dark mr-2">전체표시</button>
 			<button type="button" id="PaymentCompleted" class="to_status btn btn-sm btn-outline-dark mr-2">선택 결제완료</button>
 			<button type="button" id="ShippingStandby" class="to_status btn btn-sm btn-outline-dark mr-2">선택 배송대기</button>
 			<button type="button" id="ShippingIng" class="to_status btn btn-sm btn-outline-dark mr-2">선택 배송중</button>
@@ -33,6 +34,7 @@
 		<div class="d-flex justify-content-between pb-2">
 			<div class="justify-content-start" style="padding: 0;">
 				<div class="d-flex justify-content-start">
+					<button type="button" id="listall" class="btn btn-sm btn-outline-dark mr-2">전체표시</button>
 					<div class="select1">
 						<select class="search_hidden_state justify-content-start form-control" id="selectORDER_STATE" name="selectORDER_STATE" onchange="btn_select1()" style="height: 33px;">
 							<option value="ORDER_STATE">주문상태</option>
@@ -223,7 +225,7 @@
 	//상태변경 버튼들
 	$(document).on('click', '.to_status', function(event) {
 		if ($("input[name=chk]:checked").length == 0) {
-			alert('상품을 선택해주세요!');
+			alertify.alert("확인",'상품을 선택해주세요!');
 			return false;
 		}
 		var state = '';
@@ -270,8 +272,6 @@
 				checkBoxArr.push(ORDER_AMOUNT);
 				console.log("상태를 " + state + "으로 update할 주문번호 : " + ORDER_AMOUNT)
 			});
-
-			//상태 변경해주는 함수 호출
 			modifyProductStatus(to_state, checkBoxArr);			
 		}, function() {}
 		);
@@ -308,7 +308,7 @@
 				SelledproductList();
 			},
 			error: function() {
-				alert("실행할 수 없습니다.");
+				alertify.alert("확인","실행할 수 없습니다.");
 			}
 		}); 
 		event.preventDefault();	
@@ -319,7 +319,7 @@
 		var popupX = (window.screen.width / 2) - (500 / 2); // 만들 팝업창 좌우 크기의 1/2 만큼 보정값으로 뺴주었음
 		var popupY = (window.screen.height / 2) - (630 / 2); // 만들 팝업창 상하 크기의 1/2 만큼 보정값으로 뺴주었음
 		var pop = window.open('about:blank', 'Info', 'scrollbars=yes, resizable=yes, width=500, height=630, left=' + popupX + ', top=' + popupY);
-
+		
 		pop.location.href="SproductSelledInfo.my?ORDER_AMOUNT=" + ORDER_AMOUNT;	
 
 	});	
@@ -337,6 +337,13 @@
 		return year + "-" + month + "-" + date + " " ;
 	}
 	
+    function changeComma(){ 
+        $('.price').each(function (index,item){
+            var price = $(item).text()*1
+            $(item).text(price.toLocaleString()+'원')    
+        })
+    }
+    
 	$(document).ready(function() {
 		SelledproductList();
 	});
@@ -418,6 +425,9 @@
 				    		var ORDER_NUM = productList[0].ORDER_NUM;
 				    		var ORDER_AMOUNT = productList[0].ORDER_AMOUNT;
 							var ORDER_METHOD = productList[0].ORDER_METHOD;
+							if(ORDER_METHOD == 'kakao') {
+								ORDER_METHOD = '카카오페이';
+							}
 							var ORDER_PRICE = productList[0].ORDER_PRICE;
 							var MEMBER_NICK = productList[0].MEMBER_NICK;
 				    		var ORDER_DATE = new Date(productList[0].ORDER_DATE);
@@ -425,11 +435,11 @@
 							output += '<tr class="text-center">';
 							output += '<td><input type="checkbox" name="chk" value="'+ORDER_AMOUNT+'"></td>';
 							output += '<td>' + number + '</td>';
-							output += '<td><a href="#">' + ORDER_AMOUNT + '</a></td>';
+							output += '<td>' + ORDER_AMOUNT + '</td>';
 							output += '<td>' + PRODUCT_TITLE + '</td>';
 							output += '<td>' + ORDER_STATE + '</td>';
 							output += '<td>' + ORDER_METHOD + '</td>';
-							output += '<td>' + ORDER_PRICE + '</td>';
+							output += '<td class="price">' + ORDER_PRICE + '</td>';
 							output += '<td>' + MEMBER_NICK + '</td>';
 							output += '<td>' + date + '</td>';
 							output += '<td><button class="btn_detail" value="'+ORDER_AMOUNT+'">' + "상세" + '</button></td>';
@@ -466,11 +476,11 @@
 					$("#keyword").val('');					     		
 		     	} 
 				
-				
+		     	changeComma();
 				page();
 			},
 			error: function() {
-				alert("productList를 띄울 수 없습니다.");
+				alertify.alert("확인","productList를 띄울 수 없습니다.");
 			}
 		});
 	}		

@@ -1,13 +1,14 @@
 package com.spring.workshopMypage;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
-import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -15,7 +16,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.spring.mapper.ProductManagementMapper;
 import com.spring.store.ProductVO;
 
 
@@ -186,7 +186,7 @@ public class ProductManagementAjaxController {
 		ProductVO productVO = null;
 		productVO = productManagementService.getProductVoOfWorkshop(map);
 		String a =productVO.getPRODUCT_CATEGORY();
-		System.out.println("dsdf"+a);
+		System.out.println("category"+a);
 		ModelAndView mav = new ModelAndView();
 		String url = "";
 		int count = 0;
@@ -232,7 +232,8 @@ public class ProductManagementAjaxController {
 		System.out.println("searchType="+searchType);
 		System.out.println("keyword="+keyword);
 		
-		String[] order_amount= productManagementService.getOrder_amount();	//주문번호들 담은 배열
+		String[] order_amount= productManagementService.getOrder_amount(map);	//주문번호들 담은 배열
+		Arrays.sort(order_amount, Collections.reverseOrder());	//최신순으로 정렬(배열 내림차순 정렬인데 order amount가 최신순으로 들어가므로 일단은 최신순 정렬은 이렇게라도 쓰자ㅜ)
 		ArrayList<Map<String, Object>> listbyOrder_amount = null; 		//주문번호당 결제정보들을 가져옴 
 		ArrayList<ArrayList<Map<String, Object>>> selledProductList = new ArrayList<ArrayList<Map<String, Object>>>();
 		
@@ -242,9 +243,11 @@ public class ProductManagementAjaxController {
 			
 			listbyOrder_amount = productManagementService.getSelledproductList(map); 
 			selledProductList.add(i, listbyOrder_amount);
+			
+			for(int j=0;j<listbyOrder_amount.size();j++) {
+				System.out.println(j+"번째 date : "+listbyOrder_amount.get(j).get("ORDER_DATE"));
+			}
 		}
-		
-		
 		
 		System.out.println("SelledproductList의 size : " + selledProductList.size());
 		return selledProductList;

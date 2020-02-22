@@ -22,4 +22,5 @@ public interface ProductQnaMapper {
 	int MinusQnaStatus(Product_qnaVO vo);	//qna 답변 delete시 원글의 status 수정해줘야함
 	
 	HashMap<String, Object> getQnaInfo(Product_qnaVO qnaVO);	//공방 관리자페이지
+	Product_qnaVO getQnaReplyInfo(Product_qnaVO qnaVO);
 }

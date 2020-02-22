@@ -1,10 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<!-- 
-
--->
-
 
 <!-- 이 xml문서와 맵핑할 인터페이스 경로, 이름 -->
 <mapper namespace="com.spring.mapper.ClassReviewMapper">
@@ -44,7 +40,24 @@
 		<result property="MEMBER_NICK" column="MEMBER_NICK" />		
 		<result property="MEMBER_PICTURE" column="MEMBER_PICTURE" />		
 	</resultMap>
-
+	
+	<resultMap id="classReviewInfoResultMap" type="java.util.HashMap">
+		<result column="REVIEW_NUM" property="REVIEW_NUM"/>
+		<result column="REVIEW_MEMBER" property="REVIEW_MEMBER"/>
+		<result column="REVIEW_PRODUCT" property="REVIEW_PRODUCT"/>
+		<result column="REVIEW_DATE" property="REVIEW_DATE"/>
+		<result column="REVIEW_CONTENT" property="REVIEW_CONTENT"/>
+		<result column="REVIEW_FILE" property="REVIEW_FILE"/>
+		<result column="REVIEW_GRADE" property="REVIEW_GRADE" jdbcType="DOUBLE" javaType="java.lang.Double"/> <!-- 타입 지정 안 하니까 bigDemical로 반환돼서(캐스트 연산이 안 됨) 타입 꼭 써줘야 했음  -->
+		<result column="REVIEW_RE" property="REVIEW_RE" javaType="java.lang.Integer"/>
+		<result column="MEMBER_NICK" property="MEMBER_NICK"/>
+		<result column="MEMBER_PICTURE" property="MEMBER_PICTURE"/>
+		<result column="CLASS_NAME" property="CLASS_NAME"/>
+		<result column="CLASS_NUMBER" property="CLASS_NUMBER" javaType="java.lang.Integer"/>
+		<result column="CLASS_CATEGORY" property="CLASS_CATEGORY"/>
+		<result column="CLASS_DIVISION" property="CLASS_DIVISION"/>
+	</resultMap>
+	
 	<resultMap type="com.spring.member.MemberVO" id="memberReviewResultMap">
 		<result property="MEMBER_NUM" column="MEMBER_NUM" />	
 		<result property="MEMBER_EMAIL" column="MEMBER_EMAIL" />	
@@ -93,16 +106,6 @@
            
 	</select>
 
-
-<!--  
-
-			SELECT * 
-		FROM TB_PTFOLIO_BOARDS
-		WHERE 1 = 1 
-		ORDER BY BOARD_SORT, BOARD_DATE DESC, BOARD_SEQ DESC
-		LIMIT #{startRow}, #{perPgLine}
--->
-
  
 	<insert id="insertReview" parameterType="com.spring.academy.Class_reviewVO">
 		<selectKey keyProperty="REVIEW_NUM" resultType="int" order="BEFORE">
@@ -122,6 +125,16 @@
 	</select>
 
 
+	<select id="getReviewInfo" resultMap="classReviewInfoResultMap" parameterType="com.spring.academy.Class_reviewVO">
+		SELECT R.REVIEW_NUM, R.REVIEW_MEMBER, R.REVIEW_CLASS, R.REVIEW_DATE, R.REVIEW_CONTENT, R.REVIEW_FILE, 
+		R.REVIEW_RE, R.REVIEW_GRADE, M.MEMBER_NICK, M.MEMBER_PICTURE, A.CLASS_NAME, A.CLASS_NUMBER, A.CLASS_CATEGORY, A.CLASS_DIVISION 
+			FROM CLASS_REVIEW R, NAGAGU_MEMBER M, ACADEMY A 
+		WHERE R.REVIEW_MEMBER = M.MEMBER_NUM
+        AND A.CLASS_NUMBER = R.REVIEW_CLASS
+        AND R.REVIEW_MEMBER = M.MEMBER_NUM
+        AND R.REVIEW_NUM=#{REVIEW_NUM}  
+	</select>
+	
 	<update id="modifyReview" parameterType="com.spring.academy.Class_reviewVO">
 		UPDATE CLASS_REVIEW SET 
 			REVIEW_DATE=#{REVIEW_DATE}, REVIEW_FILE=#{REVIEW_FILE},

@@ -549,7 +549,6 @@
 				</div>
 			</div>
 			
-			<!-- 댓글 테이블 시작 -->
 			<span id="t3"></span>
 			<br /><br /><hr />
            
@@ -633,7 +632,6 @@
 						</form>		
 					</div>
 					<div id="ReviewtableSection" class="pb-2">
-					
 						
 					</div>
 				</div>
@@ -646,13 +644,6 @@
 			<br />
 			<!-- 리뷰 페이지네이션 끝 -->			
 			
-			
-			<!-- 댓글 테이블 끝 -->
-			
-			
-			
-			
-			<!-- Q&A 테이블 시작 -->
 	
 			<span id="t4"></span>
 			<br /><br /><hr />
@@ -705,8 +696,6 @@
 					</div>
 				</div>
 			</div>
-		
-		
 			<!-- Q&A pagenation -->
 			<br/>
 			<div class="d-flex justify-content-center">
@@ -714,12 +703,7 @@
 			</div>
 			<br />
 			<!-- Q&A pagenation 끝 -->		
-
-	
-	
-	
 			
-			<!-- Q&A 테이블 끝 -->
 		</div>
 		<div class="col-4">
 			<div class="sticky2" style="border: 1px solid #EAEAEA; padding-top: 5%;">
@@ -1217,7 +1201,6 @@
 //선주(ready 안)		
 
 //취소버튼들
-		//Review입력폼 / Qna입력폼
 		$(document).on("click",".formCancel",function(event){
 			console.log(this)
 			console.log($(this).attr('value'))
@@ -1233,21 +1216,17 @@
 			} 
 			else if(formType=='reviewModify') {	//리뷰 수정폼에서 취소
 				var REVIEW_NUM = $(this).prev().prev().val();
-	
 				$('#beforeModifyReview'+REVIEW_NUM).css('display', 'block');	//수정,삭제버튼 보임
 				$('#afterModifyReview'+REVIEW_NUM).empty();
-
 			}
 			else if(formType=='reviewReply') {	//답글 입력 취소
 				var REVIEW_NUM = $(this).prev().prev().val();
 				console.log(REVIEW_NUM)
 				$("#review_replybtn"+REVIEW_NUM).css('display','block');	//답글버튼 보임
 				$("#ReviewReplyformSection"+REVIEW_NUM).empty();	//답글 지움
-
 			}
 			else if(formType=='reviewReplyModify') {	//답글 수정 취소
 				var REVIEW_NUM = $(this).prev().prev().val();
-
 				$('#beforeModifyReviewReply'+REVIEW_NUM).css('display', 'block');
 				$('#afterModifyReviewReply'+REVIEW_NUM).css('display', 'none'); 
 				$('#ReviewbeforeControl'+REVIEW_NUM).css('display', 'block');	//수정,삭제버튼 보임
@@ -1268,18 +1247,15 @@
 				var QNA_NUM = $(this).prev().prev().val();
 				$('#beforeModifyQna'+QNA_NUM).css('display', 'block');	//수정,삭제버튼 보임
 				$('#afterModifyQna'+QNA_NUM).empty();
-
 			}
 			else if(formType=='qnaReply') {	//답글 입력 취소
 				var QNA_NUM = $(this).prev().prev().val();
 				console.log(QNA_NUM)
 				$("#qna_replybtn"+QNA_NUM).css('display','block');	//답글버튼 보임
 				$("#QnaReplyformSection"+QNA_NUM).empty();	//답글 지움
-
 			}
 			else if(formType=='qnaReplyModify') {	//답글 수정 취소
 				var QNA_NUM = $(this).prev().prev().val();
-
 				$('#beforeModifyQnaReply'+QNA_NUM).css('display', 'block');
 				$('#afterModifyQnaReply'+QNA_NUM).css('display', 'none'); 
 				$('#QnabeforeControl'+QNA_NUM).css('display', 'block');	//수정,삭제버튼 보임
@@ -1291,7 +1267,6 @@
 			}			
 			event.preventDefault();	
 		});
-
 
 
 //input type=file 이미지 업로드/수정----------------------------------------------------------------------------------------------------	    	
@@ -1319,7 +1294,6 @@
 			}
 		});
 		
-		
 		//입력-------------------------------------------------------------
 		//ReviewForm 다중이미지 업로드
 		$('#input_imgs').on("change", handleImgFileSelect);
@@ -1341,7 +1315,6 @@
 					alertify.alert("확장자는 이미지 확장자만 가능합니다.");
 					return;
 				}
-          
 				sel_files.push(f);
 				
 				var reader = new FileReader();
@@ -1386,7 +1359,6 @@
 					alertify.alert("확장자는 이미지 확장자만 가능합니다.");
 					return;
 				}
-			
 				sel_files.push(f);
 			          
 				var reader = new FileReader();
@@ -1420,7 +1392,6 @@
 				console.log("sel_files : " + sel_files);            
 			} 
 		}
-
 		
 //Review 등록하기----------------------------------------------------------------------------------------------------	    
 
@@ -1434,7 +1405,6 @@
 				}
 				return;
 			}
-			   
 			$("#ReviewformSection").css('display','block');
 			$("#ReviewButtonSection").css('display','none');	//댓글달기버튼영역 숨김
 			
@@ -1493,23 +1463,11 @@
 			$('#ReviewafterControl'+REVIEW_NUM).css('display', 'block'); 	//수정,취소버튼 보임
 	
 		})
-		
-		//왜 안 돼..............?????????????????????????????????????????????
-		//리뷰 이미지를 클릭하면 원본 사이즈로 커짐(기본은 100)
-		$(".review_img").click(function(){
-			if($(this).css('width') != '100px' ) {
-				$(this).css({'width':'100','height':'100'});
-			} else {
-				$(this).css({'width':'100%','height':'100%'});
-			}
-		})	
-		
 
 //-----------------------------------------------------------------------------
 //QNA--------------------------------------------------------------------------
 //-----------------------------------------------------------------------------
 //Review 등록하기----------------------------------------------------------------------------------------------------	    
-
 		//Qna폼 버튼 (qna)
 		$(document).on("click",".qna_btn",function(event){
 			if(<%=MEMBER_STATUS%> == 100){
@@ -1520,10 +1478,8 @@
 				}
 				return;
 			}
-			   
 			$("#QnaformSection").css('display','block');
 			$("#QnaButtonSection").css('display','none');	//댓글달기버튼영역 숨김
-			
 		})
 		
 		//QnaReplyform폼 버튼	//답글 버튼 (reply)
@@ -1569,11 +1525,7 @@
 			$('#afterModifyQnaReply'+QNA_NUM).css('display', 'block'); 
 			$('#QnabeforeControl'+QNA_NUM).css('display', 'none');	//수정,삭제버튼 숨김
 			$('#QnaafterControl'+QNA_NUM).css('display', 'block'); 	//수정,취소버튼 보임
-	
 		})
-				
-
-		
 		
 		
 		$(document).ready(function() {
@@ -1583,8 +1535,7 @@
 				$('#Amount').html(amount.toLocaleString()+"원");
 			});
 			//선주
-			/*댓글 등록할 때 사진 여러개일 때 쪼개주는 함수*/
-			function splitImg(REVIEW_FILE) {		// , 가 몇 개 있는지만 구하면 된다
+			function splitImg(REVIEW_FILE) {		
 				var reviewImgArray = REVIEW_FILE.split(',');
 				return reviewImgArray;
 			}    			
@@ -1599,7 +1550,6 @@
 				if(date<10) {
 					date = '0' + date;
 				}
-				
 				return year + "-" + month + "-" + date + " " ;
 			}			
 		
@@ -1654,10 +1604,9 @@
 								if(REVIEW_FILE == '#') {
 									output += '<img src="#" class="review_img"  style="display:none;">   &nbsp;&nbsp;';            
 								} else {
-									//split함수 호출 //, 가 몇 개 있는지 구해서 //for문으로 그 개수만큼 돌림...review_file[i]
 									var reviewImgArray = splitImg(REVIEW_FILE);
 									for(var k=0;k<reviewImgArray.length;k++) {
-										output += '<img src="/productupload/image/' + reviewImgArray[k] + '" class="review_img">&nbsp;';                        
+										output += '<a href="/productupload/image/'+reviewImgArray[k]+'" target="_blank"><img src="/productupload/image/' + reviewImgArray[k] + '" class="review_img"></a>&nbsp;';                        
 									}               
 								}
 								output += '</div></div>';
@@ -1718,7 +1667,6 @@
 											output += '<div class="col-8 justify-content-center"></div>';
 											//작성 본인만 수정,삭제버튼 보인다
 											if('<%=MEMBER_NICK%>' == REPLY_NICK) {
-											
 												output += '<div class="col-2 ReviewbeforeControl justify-content-center pl-1" id="ReviewbeforeControl'+REPLY_NUM+'">';								
 												output += '<input type="hidden" name="REVIEW_NUM" value="'+REPLY_NUM+'">';
 												output += '<a class="gomodifyReviewReplyform">수정</a> &nbsp;';
@@ -1880,11 +1828,9 @@
 					error:function() {
 						alert("ajax통신 실패!!!");
 					}
-					
 				});
 				event.preventDefault();		
 			})
-
 
 			//Review 등록하기 버튼(insert) //답글
 			$(document).on("click",".insertReviewReply",function(event){
@@ -1914,7 +1860,6 @@
 					}
 				});
 				event.preventDefault();			
-
 			})		
 		
 			
@@ -1926,7 +1871,6 @@
 				
 				$('#beforeModifyReview'+REVIEW_NUM).css('display', 'none');
 				
-
 				$.ajax({
 					url : "/NAGAGU/gomodifyReviewform.acdo", 
 					data : { 'REVIEW_NUM' : REVIEW_NUM },
@@ -2015,8 +1959,6 @@
 				event.preventDefault();		
 			})		
 			
-			
-			
 			//review 수정 process (원글)
 			$(document).on("click",".modifyReview",function(event){
 				var REVIEW_NUM = $(this).prev().val();
@@ -2060,7 +2002,6 @@
 			$(document).on("click",".modifyReviewReply",function(event){
 				var REVIEW_NUM = $(this).prev().val();
 				console.log("REVIEW_NUM"+REVIEW_NUM)
-
 
 	 			var formId = 'modifyReviewFormReply'+REVIEW_NUM;
 				console.log("formId"+formId)
@@ -2118,7 +2059,6 @@
 					event.preventDefault();					
 				}
 			})				
-					
 
 //QNA----------------------------------------------------------------------------------------------------	 		
 //QNA----------------------------------------------------------------------------------------------------	 		
@@ -2140,7 +2080,6 @@
 					console.log("retVal.qna_RE_Count : "+retVal.qna_RE_Count)
 					console.log("retVal.qna_RE_List : "+retVal.qna_RE_List)
 					
-					
 					if(retVal.qnaCount > 0) {
 						for(var i=0; i<retVal.qnaList.length; i++) {	//reviewCount도 상관 없음
 							var output='';
@@ -2152,8 +2091,6 @@
 							var QNA_CONTENT = retVal.qnaList[i].QNA_CONTENT;
 		
 							output += '<div class="QnaAndReplySum pt-2 pb-1" id="QnaAndReplySum'+QNA_NUM+'">';
-
-							//if
 							if((<%=WORKSHOP_NUM%> == <%=WorkshopMatchingNumber%>) || ('<%=MEMBER_NICK%>' == MEMBER_NICK)) {
 								output += '<div class="QnaSum" id="QnaSum'+QNA_NUM+'">';
 								output += '<div class="QnaList pb-3" id="QnaList'+QNA_NUM+'">';
@@ -2202,7 +2139,6 @@
 											var REPLY_CONTENT = retVal.qna_RE_List[j].QNA_CONTENT;
 											var REPLY_DATE = new Date(retVal.qna_RE_List[j].QNA_DATE);
 											var replydate = date_format(REPLY_DATE);
-		
 											//리뷰 출력
 											output += '<div class="QnaReplyList pb-2" id="QnaReplyList'+REPLY_NUM+'">';
 											output += '<div class="row justify-content-center">';
@@ -2228,7 +2164,6 @@
 											output += '<div class="row">';
 											output += '<div class="col-2 replytext justify-content-center"></div>';
 											output += '<div class="col-8 justify-content-center"></div>';
-											
 											//수정 삭제 버튼은 작성한 워크샵만 보인다
 											if(<%=WORKSHOP_NUM%> == <%=WorkshopMatchingNumber%>) {
 													output += '<div class="col-2 QnabeforeControl justify-content-center pl-1" id="QnabeforeControl'+REPLY_NUM+'">';								
@@ -2366,7 +2301,6 @@
 				});
 			}
 			
-			
 			//Qna 등록하기 버튼(insert) //원글
 			$(document).on("click",".insertQna",function(event){
 				var formId = 'QnaForm';
@@ -2397,7 +2331,6 @@
 					error:function() {
 						alert("qna insert ajax통신 실패!!!");
 					}
-					
 				});
 				event.preventDefault();		
 			})
@@ -2430,7 +2363,6 @@
 					}
 				});
 				event.preventDefault();			
-		
 			})
 					
 		//Qna 수정하기----------------------------------------------------------------------------------------------------	  		
@@ -2496,9 +2428,8 @@
 			$(document).on("click",".modifyQna",function(event){
 				var QNA_NUM = $(this).prev().val();
 				console.log("QNA_NUM"+QNA_NUM)
-		
-					var formId = 'modifyQnaForm'+QNA_NUM;
-			 		var form = new FormData(document.getElementById(formId));
+				var formId = 'modifyQnaForm'+QNA_NUM;
+		 		var form = new FormData(document.getElementById(formId));
 				$.ajax({
 					url : "/NAGAGU/modifyQna.acdo", 
 					data : form,
@@ -2525,10 +2456,9 @@
 			$(document).on("click",".modifyQnaReply",function(event){
 				var QNA_NUM = $(this).prev().val();
 				console.log("QNA_NUM"+QNA_NUM)
-		
-					var formId = 'modifyQnaFormReply'+QNA_NUM;
+				var formId = 'modifyQnaFormReply'+QNA_NUM;
 				console.log("formId"+formId)
-			 		var form = new FormData(document.getElementById(formId));
+			 	var form = new FormData(document.getElementById(formId));
 			 		
 				$.ajax({
 					url : "/NAGAGU/modifyQna.acdo", 
@@ -2552,9 +2482,7 @@
 				event.preventDefault();				
 			})			
 			
-		
 		//Qna 삭제하기----------------------------------------------------------------------------------------------------	  
-		
 			//원글, 답글 same
 			$(document).on("click",".deleteQna",function(event){
 				var QNA_NUM = $(this).prev().prev().val();

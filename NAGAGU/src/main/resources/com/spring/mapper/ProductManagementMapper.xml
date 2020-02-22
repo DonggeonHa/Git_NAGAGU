@@ -76,17 +76,20 @@
 	<resultMap type="java.util.HashMap" id="SelledproductListResultMap">
 		<result property="ORDER_NUM" column="ORDER_NUM" />	
 		<result property="MEMBER_NICK" column="MEMBER_NICK" />	
-		<result property="ORDER_PRICE" column="ORDER_PRICE" />	
+		<result property="ORDER_PRICE" column="ORDER_PRICE" javaType="java.lang.Integer" />	
 		<result property="ORDER_DATE" column="ORDER_DATE" />	
 		<result property="ORDER_AMOUNT" column="ORDER_AMOUNT" />	
 		<result property="ORDER_PERSON" column="ORDER_PERSON" />	
 		<result property="ORDER_MEMO" column="ORDER_MEMO" />
 		<result property="ORDER_METHOD" column="ORDER_METHOD" />		
-		<result property="ORDER_STATE" column="ORDER_STATE" />		
+		<result property="ORDER_STATE" column="ORDER_STATE"  javaType="java.lang.Integer"/>		
 		<result property="ORDER_ADDRESS" column="ORDER_ADDRESS" />
 		<result property="ORDER_PHONE" column="ORDER_PHONE" />		
 		<result property="PRODUCT_TITLE" column="PRODUCT_TITLE" />	
-		<result property="PRODUCT_NUM" column="PRODUCT_NUM" />		
+		<result property="PRODUCT_NUM" column="PRODUCT_NUM" javaType="java.lang.Integer" />		
+		<result property="PRODUCT_COLOR" column="PRODUCT_COLOR" />		
+		<result property="PRODUCT_SIZE" column="PRODUCT_SIZE"  />		
+		<result property="BASKET_AMOUNT" column="BASKET_AMOUNT" javaType="java.lang.Integer" />		
 	</resultMap>
 	
 	<resultMap type="com.spring.store.ProductVO" id="productResultMap">
@@ -121,7 +124,6 @@
 		<result property="PRODUCT_STOCK" column="PRODUCT_STOCK" />
 	</resultMap>
 
-
 	<select id="getproductReviewList" parameterType="java.util.HashMap" resultMap="productReviewResultMap">
 		SELECT P.PRODUCT_CATEGORY, P.PRODUCT_TITLE, P.PRODUCT_NUM, N.MEMBER_NICK, R.REVIEW_NUM, R.REVIEW_MEMBER, R.REVIEW_PRODUCT, R.REVIEW_DATE, 
 		R.REVIEW_FILE, R.REVIEW_CONTENT, R.REVIEW_GRADE, R.REVIEW_RE
@@ -137,9 +139,6 @@
 		
 			<if test="selectListAlign == 'review_grade'"> AND R.REVIEW_GRADE != 7 </if>
 		ORDER BY  R.${selectListAlign} DESC	
-			
-				
-				
 	</select>
 
 
@@ -203,19 +202,27 @@
 				<if test="searchType == 'member_nick'"> AND M.MEMBER_NICK LIKE '%'||#{keyword}||'%' </if>
 				<if test="searchType == 'product_title'"> AND P.PRODUCT_TITLE LIKE '%'||#{keyword}||'%' </if>
 				
-		<!-- 
-				
-				
-				<if test="searchType == 'member_nick'"> AND N.MEMBER_NICK LIKE '%'||#{keyword}||'%' </if>
-				<if test="searchType == 'member_nick'"> AND N.MEMBER_NICK LIKE '%'||#{keyword}||'%' </if>
-				<if test="searchType == 'product_title'"> AND P.PRODUCT_TITLE LIKE '%'||#{keyword}||'%' </if>
-		 -->
-				
+		ORDER BY O.${selectListAlign} DESC
+	</select>
+	<!-- 판매된 상세 정보 -->
+	<select id="getSelledInfo" parameterType="java.util.HashMap" resultMap="SelledproductListResultMap">
+		SELECT O.ORDER_NUM, M.MEMBER_NICK, O.ORDER_PRICE, O.ORDER_DATE, O.ORDER_AMOUNT, O.ORDER_PERSON, 
+		O.ORDER_MEMO, O.ORDER_METHOD, O.ORDER_STATE, O.ORDER_ADDRESS, O.ORDER_PHONE, 
+		P.PRODUCT_TITLE, P.PRODUCT_NUM, P.PRODUCT_SIZE, P.PRODUCT_COLOR, B.BASKET_AMOUNT
+			FROM PRODUCT_ORDER O, PRODUCT P, NAGAGU_WORKSHOP_MEMBER W, BASKET B, NAGAGU_MEMBER M
+				WHERE W.WORKSHOP_NUM = #{WORKSHOP_NUM}
+				AND B.BASKET_PRODUCT= P.PRODUCT_NUM 
+				AND B.BASKET_NUM = O.ORDER_NUM
+				AND O.ORDER_AMOUNT = #{ORDER_AMOUNT}
+				AND O.ORDER_MEMBER = M.MEMBER_NUM
 		ORDER BY O.ORDER_DATE DESC
 	</select>
+<!-- 
+SELECT DISTINCT ORDER_AMOUNT, ORDER_PRICE FROM PRODUCT_ORDER ORDER BY ORDER_PRICE DESC;
 
-
-	<select id="getOrder_amount" resultType="String">
+ -->
+	<!-- 구매번호 중복 제거하여 구함(주문번호 수만큼 for문 돌려서 이 구매번호에 해당하는 상품 리스트 구함) -->
+	<select id="getOrder_amount" parameterType="java.util.HashMap" resultType="String">
 		SELECT DISTINCT ORDER_AMOUNT FROM PRODUCT_ORDER
 	</select>	
 	
@@ -239,6 +246,10 @@
 		SELECT * FROM PRODUCT WHERE PRODUCT_NUM = #{PRODUCT_NUM} AND PRODUCT_WORKSHOP = #{WORKSHOP_NUM}			
 	</select>	
 
+	<select id="checkReviewCount" parameterType="java.util.HashMap" resultType="int">
+		SELECT count(*) FROM PRODUCT_REVIEW WHERE REVIEW_PRODUCT = #{PRODUCT_NUM} 		
+	</select>	
+	
 	<select id="checkQnaCount" parameterType="java.util.HashMap" resultType="int">
 		SELECT count(*) FROM PRODUCT_QNA WHERE QNA_PRODUCT = #{PRODUCT_NUM} 		
 	</select>	

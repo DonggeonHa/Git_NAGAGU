@@ -1,10 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<!-- 
-
-
--->
 
 <!-- 이 xml문서와 맵핑할 인터페이스 경로, 이름 -->
 <mapper namespace="com.spring.mapper.ClassQnaMapper">
@@ -43,6 +39,21 @@
 	</resultMap>
 
 	
+	<resultMap id="classQnaInfoResultMap" type="java.util.HashMap">
+		<result column="QNA_NUM" property="QNA_NUM" javaType="java.lang.Integer"/>
+		<result column="QNA_MEMBER" property="QNA_MEMBER"/>
+		<result column="QNA_CLASS" property="QNA_CLASS"/>
+		<result column="QNA_DATE" property="QNA_DATE"/>
+		<result column="QNA_CONTENT" property="QNA_CONTENT"/>
+		<result column="QNA_RE" property="QNA_RE"/>
+		<result column="QNA_STATUS" property="QNA_STATUS" javaType="java.lang.Integer"/>
+		<result column="MEMBER_NICK" property="MEMBER_NICK"/>
+		<result column="MEMBER_PICTURE" property="MEMBER_PICTURE"/>
+		<result column="CLASS_NAME" property="CLASS_NAME"/>
+		<result column="CLASS_NUMBER" property="CLASS_NUMBER" javaType="java.lang.Integer"/>
+		<result column="CLASS_CATEGORY" property="CLASS_CATEGORY"/>
+	</resultMap>
+		
 	<!-- 원글이 존재하는지 확인하기 위한 -->
 	<select id="getQnaCount" parameterType="java.util.HashMap" resultType="int">
 		SELECT count(*) FROM CLASS_QNA WHERE QNA_CLASS=#{CLASS_NUMBER} AND QNA_RE = 0
@@ -90,7 +101,20 @@
 	<select id="getQnaVO" parameterType="com.spring.academy.Class_qnaVO" resultMap="classVOQnaResultMap">
 		SELECT * FROM CLASS_QNA WHERE QNA_NUM=#{QNA_NUM} 
 	</select>	 
-	 
+	
+	<select id="getQnaInfo" parameterType="com.spring.academy.Class_qnaVO" resultMap="classQnaInfoResultMap">
+		SELECT Q.QNA_NUM, Q.QNA_MEMBER, Q.QNA_CLASS, Q.QNA_DATE, Q.QNA_CONTENT, Q.QNA_RE, Q.QNA_STATUS,
+		M.MEMBER_NICK, M.MEMBER_PICTURE , A.CLASS_NAME, A.CLASS_NUMBER, A.CLASS_CATEGORY, A.CLASS_DIVISION  
+			FROM CLASS_QNA Q, NAGAGU_MEMBER M , ACADEMY A 
+		WHERE Q.QNA_MEMBER = M.MEMBER_NUM 
+		AND A.CLASS_NUMBER = Q.QNA_CLASS
+        AND Q.QNA_MEMBER = M.MEMBER_NUM
+		AND Q.QNA_NUM=#{QNA_NUM} 
+	</select>	 
+	
+	<select id="getQnaReplyInfo" parameterType="com.spring.academy.Class_qnaVO" resultMap="classVOQnaResultMap">
+		SELECT * FROM CLASS_QNA WHERE QNA_RE=#{QNA_NUM}  
+	</select>	 	 
 	
 	<update id="modifyQna" parameterType="com.spring.academy.Class_qnaVO">
 		UPDATE CLASS_QNA SET 
@@ -120,20 +144,5 @@
 		WHERE QNA_NUM =#{QNA_RE} 
 
 	</update>
-<!-- 
-		UPDATE PRODUCT_QNA 
-			SET QNA_STATUS=0
-		WHERE ((SELECT QNA_STATUS FROM PRODUCT_QNA WHERE QNA_NUM=#{QNA_NUM}) = -1 )
-		AND QNA_NUM = (SELECT QNA_RE FROM PRODUCT_QNA WHERE QNA_NUM=#{QNA_NUM} )
-
- -->	
-	
-<!--  
-		UPDATE PRODUCT_QNA 
-			SET QNA_STATUS=0
-		WHERE QNA_STATUS = 1 
-		AND QNA_NUM = (SELECT QNA_RE FROM PRODUCT_QNA WHERE QNA_NUM=#{QNA_NUM} )
-
--->
 	 
 </mapper>

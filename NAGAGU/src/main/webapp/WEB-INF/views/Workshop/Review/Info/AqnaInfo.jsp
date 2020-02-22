@@ -1,7 +1,7 @@
 <%@page import="java.util.Date"%>
 <%@page import="java.text.SimpleDateFormat"%>
 <%@page import="java.util.HashMap"%>
-<%@page import="com.spring.store.Product_qnaVO"%>
+<%@page import="com.spring.academy.Class_qnaVO"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
@@ -9,9 +9,8 @@
 	SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 
 	HashMap<String, Object> qnaVO = (HashMap<String, Object>)request.getAttribute("qnaVOmap");
-	String PRODUCT_TITLE = (String)qnaVO.get("PRODUCT_TITLE");
-	String PRODUCT_CATEGORY = (String)qnaVO.get("PRODUCT_CATEGORY");
-	int PRODUCT_NUM = (int)qnaVO.get("PRODUCT_NUM");
+	String CLASS_NAME = (String)qnaVO.get("CLASS_NAME");
+	int CLASS_NUMBER = (int)qnaVO.get("CLASS_NUMBER");
 	String MEMBER_NICK = (String)qnaVO.get("MEMBER_NICK");
 	String MEMBER_PICTURE = (String)qnaVO.get("MEMBER_PICTURE");
 	String QNA_DATE = sdf.format((Date)qnaVO.get("QNA_DATE"));
@@ -19,16 +18,16 @@
 	int QNA_STATUS = (int)qnaVO.get("QNA_STATUS");
 	int QNA_NUM = (int)qnaVO.get("QNA_NUM");
 	
-	Product_qnaVO replyVO = null;
+	Class_qnaVO replyVO = null;
 	String replyQna = null;
 	int QNA_RE_NUM = 0;
 	if(request.getAttribute("replyVO") != null) {
-		replyVO = (Product_qnaVO)request.getAttribute("replyVO");
+		replyVO = (Class_qnaVO)request.getAttribute("replyVO");
 		replyQna = replyVO.getQNA_CONTENT();
 		QNA_RE_NUM = replyVO.getQNA_NUM();
 	}
-	
 %>
+
 <!DOCTYPE html>
 <html>
 	<head>
@@ -66,7 +65,7 @@
 					<col style="width:35%">
 				</colgroup>
 				<tr>
-					<th colspan="4" scope="colgroup">상품 문의 상세</th>
+					<th colspan="4" scope="colgroup">강의 후기 상세</th>
 				</tr>
 				<tr>
 					<th scope="col">작성자</th>
@@ -75,8 +74,8 @@
 					<td scope="col"><%=QNA_DATE %></td>
 				</tr>	
 				<tr>
-					<th scope="col">상품명</th>
-					<td scope="col"><a href="productdetail.pro?PRODUCT_NUM=<%=PRODUCT_NUM %>&PRODUCT_CATEGORY=<%=PRODUCT_CATEGORY%>" target="_blank"><%=PRODUCT_TITLE %></a></td>
+					<th scope="col">강의명</th>
+					<td scope="col"><a href="classdetail.ac?CLASS_NUMBER=<%=CLASS_NUMBER %>" target="_blank"><%=CLASS_NAME %></a></td>
 					<th scope="col">답변상태</th>
 					<td scope="col">
 						<% if(QNA_STATUS == 0) { %>답변 대기
@@ -121,19 +120,19 @@
 		});
 		$(document).on("click",".btn_insert",function(event){
 			var QNA_NUM = <%=QNA_NUM%>;
-			var PRODUCT_NUM = <%=PRODUCT_NUM%>;
+			var CLASS_NUMBER = <%=CLASS_NUMBER%>;
 			var QNA_CONTENT = $('.replyContent').val();
 			$.ajax({
-				url : "/NAGAGU/insertQna.do", 
+				url : "/NAGAGU/insertQna.acdo", 
 				data : {'QNA_RE' : QNA_NUM,
-						'PRODUCT_NUM' : PRODUCT_NUM,
+						'CLASS_NUMBER' : CLASS_NUMBER,
 						'QNA_CONTENT' : QNA_CONTENT},
 				datatype: 'json',
 				contentType: 'application/x-www-form-urlencoded; charset=utf-8',
 				type : 'POST',				
 				success:function(retVal) {
 					if(retVal.res == "OK") {
-						location.href='./SqnaInfo.my?QNA_NUM='+QNA_NUM;
+						location.href='./AqnaInfo.my?QNA_NUM='+QNA_NUM;
 					} else {
 						alertify.alert('확인',"답변 등록 실패!!!");
 					}
@@ -157,7 +156,7 @@
 			var QNA_RE_NUM = $('.replyContent').attr('value');	//수정할 qna 번호
 			var QNA_CONTENT = $('.replyContent').val();
 			$.ajax({
-				url : "/NAGAGU/modifyQna.do", 
+				url : "/NAGAGU/modifyQna.acdo", 
 				data : {'QNA_NUM' : QNA_RE_NUM,
 						'QNA_CONTENT' : QNA_CONTENT},
 				datatype: 'json',
@@ -165,13 +164,13 @@
 				type : 'POST',				
 				success:function(retVal) {
 					if(retVal.res == "OK") {
-						location.href='./SqnaInfo.my?QNA_NUM='+QNA_NUM;
+						location.href='./AqnaInfo.my?QNA_NUM='+QNA_NUM;
 					} else {
-						alert("답변 등록 실패!!!");
+						alertify.alert('확인',"답변 등록 실패!!!");
 					}
 				},
 				error:function() {
-					alert("qna reply ajax통신 실패!!!");
+					alertify.alert('확인',"qna reply ajax통신 실패!!!");
 				}
 			});			
 		});

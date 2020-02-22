@@ -6,6 +6,7 @@
 
 <%
 	ArrayList<Map<String, Object>> orderList = (ArrayList<Map<String, Object>>) request.getAttribute("orderList");
+	int TOTAL_PRICE = 0;
 %>
 
 <link rel="stylesheet" type="text/css" href="./resources/css/Mypage/order.css">
@@ -488,11 +489,13 @@
 		var totalPrice=0;
 		var totalShipPrice=0;
 		var totalPayPrice=0;
+		
+        var sum_PayPrice=0;	//총 결제금액
 		function getTotalPrice(){
 	 		//오른쪽 상품금액 + 배송비 + 결제금액 구해서 뿌리기
             var sum_price=0;
             var sum_shipPrice=0;
-            var sum_PayPrice=0;
+
 			$('.price').each(function (index,item){
                 var amount =  $(item).parent().parent().find('.amount').text()
 				var price = $(item).text()
@@ -507,7 +510,11 @@
             $('.totalPrice').text(sum_price.toLocaleString()).append('원')
             $('.totalShipPrice').text('+'+sum_shipPrice.toLocaleString()).append('원')
             $('.totalPayPrice').text('총 결제금액 : '+sum_PayPrice.toLocaleString()).append('원')  
-            
+            console.log("sum_PayPrice : "+sum_PayPrice)
+        <%--  
+            <%=TOTAL_PRICE%> = $('.totalPayPrice');
+            console.log('디비에 들어갈 가격:'+<%=TOTAL_PRICE%>)
+             --%>
 		}
         getTotalPrice();
         
@@ -565,8 +572,8 @@
 			}
 			var ORDER_PERSON = $('.toName').val();
 			var ORDER_ADDRESS = $('.toZip').val();
-				ORDER_ADDRESS += $('.toAddress1').val();
-				ORDER_ADDRESS += $('.toAddress2').val();
+				ORDER_ADDRESS += '&nbsp' + $('.toAddress1').val();
+				ORDER_ADDRESS += '&nbsp' + $('.toAddress2').val();
 			var ORDER_PHONE= $('.toPhone').val();
 			var ORDER_MEMO= '없음';
 			if($('.memo').val()!=null){
@@ -597,7 +604,7 @@
 						$.ajax({
 							  url: "/NAGAGU/insertOrderProduct.my", 
 					             type: "POST",
-					             data: {'ORDER_PRICE':PRODUCT_NUM,'ORDER_NUM':BASKET_NUM,'ORDER_PERSON' : ORDER_PERSON, 'ORDER_ADDRESS':ORDER_ADDRESS, 
+					             data: {'ORDER_PRICE' :sum_PayPrice,'ORDER_NUM':BASKET_NUM,'ORDER_PERSON' : ORDER_PERSON, 'ORDER_ADDRESS':ORDER_ADDRESS, 
 					            	 'ORDER_PHONE':ORDER_PHONE,'ORDER_MEMO':ORDER_MEMO,'ORDER_AMOUNT': id, 'ORDER_METHOD' : card},
 					             contentType:
 					 				'application/x-www-form-urlencoded; charset=utf-8'

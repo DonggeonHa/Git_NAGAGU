@@ -64,16 +64,21 @@ create sequence store_review_seq
 		<result property="MEMBER_NICK" column="MEMBER_NICK" />		
 		<result property="MEMBER_PICTURE" column="MEMBER_PICTURE" />		
 	</resultMap>
-	
+
 	<resultMap id="productReviewInfoResultMap" type="java.util.HashMap">
 		<result column="REVIEW_NUM" property="REVIEW_NUM"/>
 		<result column="REVIEW_MEMBER" property="REVIEW_MEMBER"/>
 		<result column="REVIEW_PRODUCT" property="REVIEW_PRODUCT"/>
 		<result column="REVIEW_DATE" property="REVIEW_DATE"/>
 		<result column="REVIEW_CONTENT" property="REVIEW_CONTENT"/>
-		<result column="REVIEW_RE" property="REVIEW_RE"/>
+		<result column="REVIEW_FILE" property="REVIEW_FILE"/>
+		<result column="REVIEW_GRADE" property="REVIEW_GRADE" jdbcType="DOUBLE" javaType="java.lang.Double"/> <!-- 타입 지정 안 하니까 bigDemical로 반환돼서(캐스트 연산이 안 됨) 타입 꼭 써줘야 했음  -->
+		<result column="REVIEW_RE" property="REVIEW_RE" javaType="java.lang.Integer"/>
 		<result column="MEMBER_NICK" property="MEMBER_NICK"/>
 		<result column="MEMBER_PICTURE" property="MEMBER_PICTURE"/>
+		<result column="PRODUCT_TITLE" property="PRODUCT_TITLE"/>
+		<result column="PRODUCT_NUM" property="PRODUCT_NUM" javaType="java.lang.Integer"/>
+		<result column="PRODUCT_CATEGORY" property="PRODUCT_CATEGORY"/>
 	</resultMap>
 	
 	<resultMap type="com.spring.member.MemberVO" id="memberReviewResultMap">
@@ -164,7 +169,8 @@ create sequence store_review_seq
 	</select>
 	
 	<select id="getReviewInfo" resultMap="productReviewInfoResultMap" parameterType="com.spring.store.Product_reviewVO">
-		SELECT R.REVIEW_NUM, R.REVIEW_MEMBER, R.REVIEW_PRODUCT, R.REVIEW_DATE, R.REVIEW_CONTENT, R.REVIEW_FILE, R.REVIEW_RE, M.MEMBER_NICK, M.MEMBER_PICTURE, P.PRODUCT_TITLE
+		SELECT R.REVIEW_NUM, R.REVIEW_MEMBER, R.REVIEW_PRODUCT, R.REVIEW_DATE, R.REVIEW_CONTENT, R.REVIEW_FILE, 
+		R.REVIEW_RE, R.REVIEW_GRADE, M.MEMBER_NICK, M.MEMBER_PICTURE, P.PRODUCT_TITLE, P.PRODUCT_NUM, P.PRODUCT_CATEGORY
 			FROM PRODUCT_REVIEW R, NAGAGU_MEMBER M, PRODUCT P 
 		WHERE R.REVIEW_MEMBER = M.MEMBER_NUM
         AND P.PRODUCT_NUM = R.REVIEW_PRODUCT

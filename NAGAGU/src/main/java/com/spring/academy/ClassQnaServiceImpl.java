@@ -11,6 +11,8 @@ import org.springframework.stereotype.Service;
 
 import com.spring.academy.Class_qnaVO;
 import com.spring.mapper.ClassQnaMapper;
+import com.spring.mapper.ProductQnaMapper;
+import com.spring.store.Product_qnaVO;
 
 
 
@@ -75,6 +77,22 @@ public class ClassQnaServiceImpl implements ClassQnaService{
 		return vo;
 	}
 
+	@Override
+	public HashMap<String, Object> getQnaInfo(Class_qnaVO qnaVO) {
+		ClassQnaMapper qnaMapper = sqlSession.getMapper(ClassQnaMapper.class);
+		HashMap<String, Object> map = null;
+		map = qnaMapper.getQnaInfo(qnaVO);
+		return map;
+	}
+
+	@Override
+	public Class_qnaVO getQnaReplyInfo(Class_qnaVO qnaVO) {
+		ClassQnaMapper qnaMapper = sqlSession.getMapper(ClassQnaMapper.class);
+		Class_qnaVO vo = null;
+		vo = qnaMapper.getQnaReplyInfo(qnaVO);		
+		return vo;
+	}
+	
 	@Override
 	public int modifyQna(Class_qnaVO qnaVO) {
 		ClassQnaMapper qnaMapper = sqlSession.getMapper(ClassQnaMapper.class);

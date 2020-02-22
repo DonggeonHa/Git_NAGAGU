@@ -12,7 +12,9 @@ public interface ProductManagementMapper {
 	ArrayList<Map<String, Object>> getproductQnaList(HashMap<String, Object> map);
 	ArrayList<Map<String, Object>> getproductList(HashMap<String, Object> map);
 	ArrayList<Map<String, Object>> getSelledproductList(HashMap<String, Object> map);
-	String[] getOrder_amount();
+	ArrayList<Map<String, Object>> getSelledInfo(HashMap<String, Object> map);	//판매된 상품 관리 페이지에서 상세보기
+
+	String[] getOrder_amount(HashMap<String, Object> map);
 	int modifyStatus(HashMap<String, Object> map);
 	int modifySelledStatus(HashMap<String, Object> map);
 	int deleteProducts(HashMap<String, Object> map);
@@ -23,8 +25,6 @@ public interface ProductManagementMapper {
 	ProductVO getproductDetail(int PRODUCT_NUM);
 	int updateProduct(ProductVO productVO);
 	
-	ArrayList<Map<String, Object>> getabc(HashMap<String, Object> map);
-	HashMap<String, Object> getSelledInfo(ProductOrderVO productOrderVO);	//판매된 상품 관리 페이지에서 상세보기
-
+	
 
 }

@@ -4,7 +4,7 @@
 <%
 	if (session.getAttribute("WORKSHOP_NUM") == null) {
 		out.println("<script>");
-		out.println("alert('회원 로그인 해주세요!');");
+		out.println("alertify.alert('확인','로그인 해주세요!');");
 		out.println("location.href='./index.ma'");
 		out.println("</script>");	
 	} 
@@ -25,7 +25,6 @@
 		CLASS_AREA = classVO.getCLASS_AREA();
 		System.out.println("VO 존재함 : 강의관리페이지 통해 들어옴");
 	}
-	
 	System.out.println(CLASS_CATEGORY);
 	System.out.println(CLASS_NAME);
 	System.out.println(CLASS_AREA);
@@ -39,13 +38,13 @@
 		        <h1 class="header2_adj">강의 후기</h1>
 		    </div>
 	        <div class="d-flex justify-content-start pb-2">
-	            <button type="button" id="listall" class="btn btn-sm btn-outline-dark mr-2">전체표시</button>                        
 	            <span class="listnum_txt pt-2">전체 문의내역</span>
 	            <span class="listnum_num pt-2"></span>
 	        </div>
 	        <div class="d-flex justify-content-between pb-2">
 	        	<div class="justify-content-start" style="padding: 0;">
 					<div class="d-flex justify-content-start">
+						<button type="button" id="listall" class="btn btn-sm btn-outline-dark mr-2">전체표시</button> 
 						<div class="select1">
 							<select class="search_hidden_state justify-content-start form-control" id="selectClassType1" name="selectClassType1" onchange="btn_select1()" style="height: 33px;">
 								<option value="all">강의상태</option>
@@ -149,6 +148,7 @@
 					<th scope="col">평점</th>
 					<th scope="col">후기 내용</th>
 					<th scope="col">작성날짜</th>
+					<th scope="col">상세</th>
 			    </tr>
 		    </thead>
 		    <tbody id="ClassReviewList"></tbody>
@@ -177,7 +177,7 @@
 	
 	$(document).on('click', '#btn_search', function(event) {
 		if(!$('#keyword').val() || !$('#searchType').val()){
-			alert("카테고리 선택, 검색어를 입력하세요!");
+			alertify.alert('확인',"카테고리 선택, 검색어를 입력하세요!");
 			$('#keyword').focus();
 			return false;
 		}		
@@ -204,7 +204,7 @@
 	$("#keyword").keyup(function(event){
 		if (event.keyCode == 13) {
 			if(!$('#keyword').val() || !$('#searchType').val()){
-				alert("카테고리 선택, 검색어를 입력하세요!");
+				alertify.alert('확인',"카테고리 선택, 검색어를 입력하세요!");
 				$('#keyword').focus();
 				return false;
 			}		
@@ -256,7 +256,15 @@
 	}	
 
 	
- 
+	/*review 상세보기*/
+	$(document).on('click', '.btn_detail', function(event) {
+		var REVIEW_NUM = $(this).attr("value");
+		var popupX = (window.screen.width / 2) - (500 / 2); // 만들 팝업창 좌우 크기의 1/2 만큼 보정값으로 뺴주었음
+		var popupY = (window.screen.height / 2) - (630 / 2); // 만들 팝업창 상하 크기의 1/2 만큼 보정값으로 뺴주었음
+		var pop = window.open('about:blank', 'Info', 'scrollbars=yes, resizable=yes, width=500, height=630, left=' + popupX + ', top=' + popupY);
+		pop.location.href="AreviewInfo.my?REVIEW_NUM=" + REVIEW_NUM;
+	});
+	
 	/*날짜 형식 변경*/
 	function date_format(format) {
 		var year = format.getFullYear();
@@ -285,10 +293,9 @@
 				$('#searchType').val('class_name');
 				$("#keyword").val('<%=CLASS_NAME%>');
 			} else if(<%=count%> == 0) {
-				alert('상품 "<%=CLASS_NAME%>" 에 해당하는 문의가 없습니다.');
+				alertify.alert('확인','상품 "<%=CLASS_NAME%>" 에 해당하는 문의가 없습니다.');
 				location.href='./workshop_academy_Management.ws';
 			}
-	
 		} 
 		
 		ClassReviewList();
@@ -387,7 +394,8 @@
 			    		var REVIEW_DATE = new Date(reviewList[j].REVIEW_DATE);
 			    		var date = date_format(REVIEW_DATE);
 			    		var REVIEW_CONTENT = reviewList[j].REVIEW_CONTENT;
-    					
+			    		var REVIEW_NUM = reviewList[j].REVIEW_NUM;
+			    		
 						output += '<tr class="text-center">';
 						output += '<td>' + number + '</td>';
 						output += '<td>' + CLASS_STATUS + '</td>';
@@ -398,15 +406,18 @@
 						if(CLASS_NAME.length >= 14) {
 							CLASS_NAME = CLASS_NAME.substr(0,14)+"...";
 						}
-						output += '<td><a href="classdetail.ac?CLASS_NUMBER=' + CLASS_NUMBER + '">'+CLASS_NAME+'</a></td>';
-						output += '<td>' + REVIEW_GRADE + '</td>';
-						
+						output += '<td><a href="classdetail.ac?CLASS_NUMBER=' + CLASS_NUMBER + '" target="_blank">'+CLASS_NAME+'</a></td>';
+						if(REVIEW_GRADE != 7) {
+							output += '<td>' + REVIEW_GRADE + '점</td>';
+						} else {
+							output += '<td>-</td>';
+						}
 						if(REVIEW_CONTENT.length >= 45) {
 							REVIEW_CONTENT = REVIEW_CONTENT.substr(0,45)+"...";
 						}
-						
 						output += '<td style="text-align:left;">'+REVIEW_CONTENT+'</td>';
 						output += '<td>' + date + '</td>';
+						output += '<td><button class="btn_detail" value="'+REVIEW_NUM+'">' + "상세" + '</button></td>';						
 						output += '</tr>';
 						number += 1;
      				}					
@@ -428,7 +439,7 @@
 				page();
 			},
 			error: function() {
-				alert("Review List를 띄울 수 없습니다.");
+				alertify.alert('확인',"Review List를 띄울 수 없습니다.");
 			}
 		});
 	}		

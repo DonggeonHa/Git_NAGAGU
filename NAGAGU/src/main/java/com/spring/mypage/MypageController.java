@@ -2,6 +2,7 @@ package com.spring.mypage;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -14,7 +15,11 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.spring.academy.AcademyService;
+import com.spring.academy.ClassQnaService;
+import com.spring.academy.ClassReviewService;
 import com.spring.academy.ClassVO;
+import com.spring.academy.Class_qnaVO;
+import com.spring.academy.Class_reviewVO;
 import com.spring.chat.ChatRoomVO;
 import com.spring.chat.ChatService;
 import com.spring.estimate.EstimateOrderVO;
@@ -64,6 +69,12 @@ public class MypageController {
 
 	@Autowired(required = false)
 	private ProductManagementService productManagementService;
+	
+	@Autowired(required = false)
+	private ClassReviewService classreviewService;
+	
+	@Autowired(required = false)
+	private ClassQnaService classqnaService;
 
 	@RequestMapping(value = "/mypage.my")
 	public String Mypage(MemberVO memberVO, HttpServletRequest request, HttpSession session) {
@@ -301,23 +312,42 @@ public class MypageController {
 		return "Workshop/Review/qnaAcademy";
 	}
 	
+	//강의 문의 상세
+	@RequestMapping(value = "/AqnaInfo.my", method = {RequestMethod.GET, RequestMethod.POST})
+	public String AqnaInfo(Class_qnaVO vo, Model model) {
+		try {
+			HashMap<String, Object> qnaVOmap = classqnaService.getQnaInfo(vo);
+			Class_qnaVO replyVO = classqnaService.getQnaReplyInfo(vo);
+			model.addAttribute("qnaVOmap", qnaVOmap);
+			model.addAttribute("replyVO", replyVO);
+			
+		} catch(Exception e) {
+			System.out.println("QnaInfo : " + e.getMessage());
+		}		
+		return "Workshop/Review/Info/AqnaInfo";
+	}
+	
 	@RequestMapping(value = "/workshop_review_qnaStore.ws")
 	public String WorkshopReviewreqStore() {
 		
 		return "Workshop/Review/qnaStore";
 	}
 	
+	//스토어 문의 상세
 	@RequestMapping(value = "/SqnaInfo.my", method = {RequestMethod.GET, RequestMethod.POST})
 	public String SqnaInfo(Product_qnaVO vo, Model model) {
 		try {
 			HashMap<String, Object> qnaVOmap = productqnaService.getQnaInfo(vo);
+			Product_qnaVO replyVO = productqnaService.getQnaReplyInfo(vo);
 			model.addAttribute("qnaVOmap", qnaVOmap);
+			model.addAttribute("replyVO", replyVO);
 			
 		} catch(Exception e) {
 			System.out.println("QnaInfo : " + e.getMessage());
 		}		
 		return "Workshop/Review/Info/SqnaInfo";
 	}
+
 	
 
 	@RequestMapping(value = "/workshop_review_Academy.ws")
@@ -326,18 +356,30 @@ public class MypageController {
 		return "Workshop/Review/reviewAcademy";
 	}
 	
+	//강의 후기 상세
+	@RequestMapping(value = "/AreviewInfo.my", method = {RequestMethod.GET, RequestMethod.POST})
+	public String AreviewInfo(Class_reviewVO vo, Model model) {
+		try {
+			HashMap<String, Object> reviewVOmap = classreviewService.getReviewInfo(vo);
+			model.addAttribute("reviewVOmap", reviewVOmap);
+		} catch(Exception e) {
+			System.out.println("ReviewInfo : " + e.getMessage());
+		}		
+		return "Workshop/Review/Info/AreviewInfo";
+	}
+
 	@RequestMapping(value = "/workshop_review_Store.ws")
 	public String WorkshopReviewStore() {
 		
 		return "Workshop/Review/reviewStore";
 	}
 	
+	//스토어 후기 상세
 	@RequestMapping(value = "/SreviewInfo.my", method = {RequestMethod.GET, RequestMethod.POST})
 	public String SReviewInfo(Product_reviewVO vo, Model model) {
 		try {
 			HashMap<String, Object> reviewVOmap = productreviewService.getReviewInfo(vo);	
 			model.addAttribute("reviewVOmap", reviewVOmap);
-			
 		} catch(Exception e) {
 			System.out.println("ReviewInfo : " + e.getMessage());
 		}		
@@ -348,7 +390,6 @@ public class MypageController {
 	@RequestMapping(value = "/workshop_product_selled.ws")
 	public ModelAndView WorkshopStoreselled(HttpSession session) {
 		int WORKSHOP_NUM = (int)session.getAttribute("WORKSHOP_NUM");
-
 
 		ArrayList<ProductVO> WorkshopProoductList = null;
 		WorkshopProoductList = productService.getAllWorkshopProduct(WORKSHOP_NUM);   
@@ -365,18 +406,32 @@ public class MypageController {
 		return "Workshop/Store/product";
 	}
 	
-	//selled 페이지에서 주문번호에 해당하는 상세보기 페이지
+	//selled 페이지에서 주문번호에 해당하는 상세보기 페이지	
 	@RequestMapping(value = "/SproductSelledInfo.my", method = {RequestMethod.GET, RequestMethod.POST})
-	public String SproductSelledInfo(ProductOrderVO vo, Model model) {
+	public String SproductSelledInfo(ProductOrderVO vo, Model model, HttpSession session, HttpServletRequest request) {
+		System.out.println("SproductSelledInfo.my 컨트롤러 시작");
+		Integer WORKSHOP_NUM = (Integer)session.getAttribute("WORKSHOP_NUM");
+		String ORDER_AMOUNT = request.getParameter("ORDER_AMOUNT");
+		System.out.println(ORDER_AMOUNT);
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		map.put("WORKSHOP_NUM", WORKSHOP_NUM);
+		map.put("ORDER_AMOUNT", ORDER_AMOUNT);
+
+		ArrayList<Map<String, Object>> selledInfoList = null;
 		try {
-			HashMap<String, Object> proVOmap = productManagementService.getSelledInfo(vo);
-			
-			model.addAttribute("proVOmap", proVOmap);
-			
+			selledInfoList = productManagementService.getSelledInfo(map); 
+			System.out.println(selledInfoList);
+			model.addAttribute("selledInfo", selledInfoList);
+			if(selledInfoList.isEmpty()) {
+				System.out.println("empty");
+			} else {
+				System.out.println("비어있지 않음");
+			}
+			System.out.println(selledInfoList.get(0).get("ORDER_AMOUNT"));			
 		} catch(Exception e) {
 			System.out.println("ReviewInfo : " + e.getMessage());
 		}		
-		return "Mypage/Workshop/Review/Info/SproductSelledInfo";
+		return "Workshop/Review/Info/SproductSelledInfo";
 	}	
 	
 	/* 일반회원 : 의뢰한 견적 리스트 */
