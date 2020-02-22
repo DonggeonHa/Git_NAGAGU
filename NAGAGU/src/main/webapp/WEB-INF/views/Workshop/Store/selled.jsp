@@ -106,16 +106,16 @@
 		<table class="table" id="work_store">
 			<thead>
 				<tr class="text-center">
-					<th scope="col"><input id="all_select" type="checkbox"></th>
-					<th scope="col">번호</th>
-					<th scope="col">주문번호</th>
-					<th scope="col">주문내역</th>
-					<th scope="col">주문상태</th>
-					<th scope="col">결제수단</th>
-					<th scope="col">결제금액</th>
-					<th scope="col">주문자</th>
-					<th scope="col">주문일자</th>
-					<th scope="col">상세</th>
+					<th style="width: 5%;"><input id="all_select" type="checkbox"></th>
+					<th style="width: 10%;">번호</th>
+					<th style="width: 20%;">주문번호</th>
+					<th style="width: 15%;">주문내역</th>
+					<th style="width: 10%;">주문상태</th>
+					<th style="width: 10%;">결제수단</th>
+					<th style="width: 10%;">결제금액</th>
+					<th style="width: 5%;">주문자</th>
+					<th style="width: 10%;">주문일자</th>
+					<th style="width: 5%;">상세</th>
 				</tr>
 			</thead>
 			<tbody id="SelledproductList"></tbody>

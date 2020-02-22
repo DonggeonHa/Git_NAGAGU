@@ -90,20 +90,20 @@ if (session.getAttribute("WORKSHOP_NUM") == null) {
 		<table class="table" id="work_store">
 		    <thead>
 		    <tr class="text-center">
-		        <th scope="col"><input id="all_select" type="checkbox"></th>
-		        <th scope="col">번호</th>
-		        <th scope="col">상태</th>
-		        <th scope="col">카테고리</th>
-		        <th scope="col">상품명</th>
-		        <th scope="col">판매가</th>
-		        <th scope="col">재고량</th>
-		        <th scope="col">판매량</th>
-		        <th scope="col">평점</th>
-		        <th scope="col">조회수</th>
-		        <th scope="col">좋아요</th>
-		        <th scope="col">작성날짜</th>
-		        <th scope="col">관리</th>
-		        <th scope="col">이동</th>
+		        <th style="width: 3%;"><input id="all_select" type="checkbox"></th>
+		        <th style="width: 5%;">번호</th>
+		        <th style="width: 5%;">상태</th>
+		        <th style="width: 9%;">카테고리</th>
+		        <th style="width: 18%;">상품명</th>
+		        <th style="width: 5%;">판매가</th>
+		        <th style="width: 5%;">재고량</th>
+		        <th style="width: 5%;">판매량</th>
+		        <th style="width: 5%;">평점</th>
+		        <th style="width: 5%;">조회수</th>
+		        <th style="width: 5%;">좋아요</th>
+		        <th style="width: 10%;">작성날짜</th>
+		        <th style="width: 10%;">관리</th>
+		        <th style="width: 10%;">이동</th>
 		    </tr>
 		    </thead>
 		    <tbody id="productList">

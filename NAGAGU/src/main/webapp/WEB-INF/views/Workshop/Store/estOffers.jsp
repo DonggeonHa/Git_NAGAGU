@@ -110,16 +110,16 @@
 	    <table class="table" id="work_store">
 	        <thead>
 	            <tr>
-	                <th scope="col" class="th1" ><input id="all_select" type="checkbox"></th>      
-	                <th scope="col" class="th2">번호</th>            
-	                <th scope="col" class="th3">작성자</th>
-	                <th scope="col" class="th4">게시물 제목</th>
-	                <th scope="col" class="th6">카테고리</th>
-	                <th scope="col" class="th7">제안가격</th>
-	                <th scope="col" class="th5">제안날짜</th>
-	                <th scope="col" class="th8">상태</th>
-	                <th scope="col" class="th9">관리</th>
-	                <th scope="col" class="th10">문의</th>
+	                <th style="width: 5%;" class="th1" ><input id="all_select" type="checkbox"></th>      
+	                <th style="width: 5%;" class="th2">번호</th>            
+	                <th style="width: 5%;" class="th3">작성자</th>
+	                <th style="width: 30%;" class="th4">게시물 제목</th>
+	                <th style="width: 10%;" class="th6">카테고리</th>
+	                <th style="width: 10%;" class="th7">제안가격</th>
+	                <th style="width: 10%;" class="th5">제안날짜</th>
+	                <th style="width: 5%;" class="th8">상태</th>
+	                <th style="width: 15%;" class="th9">관리</th>
+	                <th style="width: 5%;" class="th10">문의</th>
 	            </tr>
 	        </thead>
 	        <tbody>

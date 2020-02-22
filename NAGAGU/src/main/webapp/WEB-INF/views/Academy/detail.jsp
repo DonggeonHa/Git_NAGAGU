@@ -419,7 +419,7 @@
 	}
 </style>
 
-<div class="container class-detail-container category_ac" >
+<div class="container class-detail-container category_ac" style="word-break:break-all;">
 	<div class="text-center" style="padding-bottom: 5%;">
 		<div id="carouselExampleFade" class="carousel slide carousel-fade" data-ride="carousel">
 				<div class="carousel-inner text-center">
@@ -552,26 +552,28 @@
 			</div>
 			
 			<!-- 댓글 테이블 시작 -->
-			<span id="t3"></span>
-			<br /><br /><hr />
-           
+			<span id="t3" ></span>
+			<hr/>
 			<!-- 리뷰 테이블 시작 -->
-			<h3 id="review_scroll"><strong>Review</strong></h3>
-			<br /><br />	
 			<div id="ReviewSection">
-				<div id="ReviewButtonSection">	
-					<div class="row justify-content-center pt-3 pb-3"> <!-- 리뷰 댓글달기 버튼 -->
-						<%
-							if(MEMBER_STATUS == 100 && WORKSHOP_STATUS == 100) {
-						%>
-								<button class="btn btn-dark btn-sm" data-toggle="modal" data-target="#exampleModalCenter">후기 등록</button>
-						<%
-							} else {
-						%>
-								<button class="btn btn-dark btn-sm review_btn">후기 등록</button>
-						<%
-							}
-						%>
+				<div id="ReviewButtonSection">
+					<div class="d-flex justify-content-between pb-3 pt-2">	
+						<div class="justify-content-start">
+							<h3 id="review_scroll"><strong>Review</strong></h3>
+						</div>
+						<div class="justify-content-end"> <!-- 리뷰 댓글달기 버튼 -->
+							<%
+								if(MEMBER_STATUS == 100 && WORKSHOP_STATUS == 100) {
+							%>
+									<button class="btn btn-dark btn-sm" data-toggle="modal" data-target="#exampleModalCenter">리뷰쓰기</button>
+							<%
+								} else {
+							%>
+									<button class="btn btn-dark btn-sm review_btn">리뷰쓰기</button>
+							<%
+								}
+							%>
+						</div>
 					</div>
 				</div>
 				<div id="ReviewWrapSection" class="pb-1">
@@ -670,23 +672,26 @@
 			<br /><br /><hr />
 			
 			<!-- Q&A 테이블 시작 -->
-			<h3 id="qna_scroll"><strong>Q&A</strong></h3>
-			<br /><br />	
+		
 			<div id="QnaSection">
 				<div id="QnaButtonSection">	
-					<div class="row justify-content-center pt-3 pb-3"> <!-- 리뷰 댓글달기 버튼 -->
-					<%
-						if(MEMBER_STATUS == 100 && WORKSHOP_STATUS == 100) {
-					%>
-							<button class="btn btn-dark btn-sm" data-toggle="modal" data-target="#exampleModalCenter">문의하기</button>
-					<%
-						} else {
-					%>
-							<button class="btn btn-dark btn-sm qna_btn">문의하기</button>
-					<%
-						}
-					%>
-						
+					<div class="d-flex justify-content-between pb-3 pt-2">	
+						<div class="justify-content-start">
+								<h3 id="qna_scroll"><strong>Q&A</strong></h3>
+						</div>
+						<div class="justify-content-end"> <!-- 리뷰 댓글달기 버튼 -->
+							<%
+								if(MEMBER_STATUS == 100 && WORKSHOP_STATUS == 100) {
+							%>
+									<button class="btn btn-dark btn-sm" data-toggle="modal" data-target="#exampleModalCenter">문의하기</button>
+							<%
+								} else {
+							%>
+									<button class="btn btn-dark btn-sm qna_btn">문의하기</button>
+							<%
+								}
+							%>
+						</div>
 					</div>
 				</div>
 				<div id="QnaWrapSection" class="pb-1">

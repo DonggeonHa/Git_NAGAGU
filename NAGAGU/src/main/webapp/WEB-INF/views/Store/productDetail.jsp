@@ -621,13 +621,13 @@
 					      <a class="nav-link" href="#t1"><h5 style="margin-top: .5rem;">상품정보</h5></a>
 					   </li>
 					   <li class="nav-item">
+					      <a class="nav-link" href="#t4"><h5 style="margin-top: .5rem;">배송/환불</h5></a>
+					   </li>
+					   <li class="nav-item">
 					      <a class="nav-link" href="#t2"><h5 style="margin-top: .5rem;">리뷰</h5></a>
 					   </li>
 					   <li class="nav-item">
 					      <a class="nav-link" href="#t3"><h5 style="margin-top: .5rem;">Q&A</h5></a>
-					   </li>
-					   <li class="nav-item">
-					      <a class="nav-link" href="#t4"><h5 style="margin-top: .5rem;">배송/환불</h5></a>
 					   </li>
 					</ul>
 			</div>
@@ -714,23 +714,25 @@
 			<br /><br /><hr />
            
 			<!-- 리뷰 테이블 시작 -->
-			<h3 id="review_scroll" >Review</h3>
-			<br /><br />
-			
 			<div id="ReviewSection">
 				<div id="ReviewButtonSection">	
-					<div class="row justify-content-center pt-3 pb-3"> <!-- 리뷰 댓글달기 버튼 -->
-						<%
-							if(MEMBER_STATUS == 100 && WORKSHOP_STATUS == 100) {
-						%>
-								<button class="btn btn-dark btn-sm" data-toggle="modal" data-target="#exampleModalCenter">후기 등록</button>
-						<%
-							} else {
-						%>
-								<button class="btn btn-dark btn-sm review_btn">후기 등록</button>
-						<%
-							}
-						%>
+					<div class="d-flex justify-content-between pb-3 pt-2">	
+						<div class="justify-content-start">
+							<h3 id="review_scroll"><strong>Review</strong></h3>
+						</div>
+						<div class="justify-content-end"> <!-- 리뷰 댓글달기 버튼 -->
+							<%
+								if(MEMBER_STATUS == 100 && WORKSHOP_STATUS == 100) {
+							%>
+									<button class="btn btn-dark btn-sm" data-toggle="modal" data-target="#exampleModalCenter">리뷰쓰기</button>
+							<%
+								} else {
+							%>
+									<button class="btn btn-dark btn-sm review_btn">리뷰쓰기</button>
+							<%
+								}
+							%>
+						</div>
 					</div>
 				</div>
 				<div id="ReviewWrapSection" class="pb-1">
@@ -822,24 +824,25 @@
 			<br /><br /><hr />
 			
 			<!-- Q&A 테이블 시작 -->
-			<h3 id="qna_scroll">Q&A</h3>
-			<br /><br />
-
-           
 			<div id="QnaSection">
 				<div id="QnaButtonSection">	
-					<div class="row justify-content-center pt-3 pb-3"> <!-- 리뷰 댓글달기 버튼 -->
-						<%
-						if(MEMBER_STATUS == 100 && WORKSHOP_STATUS == 100) {
-						%>
-								<button class="btn btn-dark btn-sm" data-toggle="modal" data-target="#exampleModalCenter">문의하기</button>
-						<%
-							} else {
-						%>
-								<button class="btn btn-dark btn-sm qna_btn">문의하기</button>
-						<%
-							}
-						%>
+					<div class="d-flex justify-content-between pb-3 pt-2">	
+						<div class="justify-content-start">
+								<h3 id="qna_scroll"><strong>Q&A</strong></h3>
+						</div>
+						<div class="justify-content-end"> <!-- 리뷰 댓글달기 버튼 -->
+							<%
+								if(MEMBER_STATUS == 100 && WORKSHOP_STATUS == 100) {
+							%>
+									<button class="btn btn-dark btn-sm" data-toggle="modal" data-target="#exampleModalCenter">문의하기</button>
+							<%
+								} else {
+							%>
+									<button class="btn btn-dark btn-sm qna_btn">문의하기</button>
+							<%
+								}
+							%>
+						</div>
 					</div>
 				</div>
 				<div id="QnaWrapSection" class="pb-1">
@@ -887,16 +890,8 @@
 				<nav aria-label="Page navigation example" class="qna_paginated" id="qna-page"></nav>
 			</div>
 			
-			<br />
 			<!-- Q&A pagenation 끝 -->			
-		
-		
-		
-		
-		
 			<!-- Q&A 테이블 끝 -->
-			
-			<br /><br /><hr />
 		</div>
 		<div class="col-4">
         	<div class="sticky2" style="border: 1px solid #EAEAEA;">
