@@ -162,6 +162,14 @@
     	color:red;
     }
     
+	.mem_pic {
+		width:30px;
+		height:30px;
+		display:inline-block;
+	    border:1px solid #E6E9ED;
+	    border-radius:50%;
+	    padding:2px;
+	}
 </style>
 <script src="https://kit.fontawesome.com/b74b42490f.js" crossorigin="anonymous"></script>
 <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
@@ -189,7 +197,7 @@
                         		for (int i=0; i<rl.size(); i++) {
                         			MemberVO vo = rl.get(i);
                         	%>
-                        		<img src="<%=vo.getMEMBER_PICTURE()%>" width="30" height="30">&nbsp;<%=vo.getMEMBER_NICK() %><br/>
+                        		<img src="<%=vo.getMEMBER_PICTURE()%>" class="mem_pic">&nbsp;<%=vo.getMEMBER_NICK() %><br/>
                         	<%
                         		}
                         	%>
