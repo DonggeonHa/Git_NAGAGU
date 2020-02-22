@@ -209,7 +209,7 @@
 		var _str1 = $("#WORKSHOP_EMAIL").val();
 		
 		if(_str1==""){
-			alert("이메일을 입력하세요.");
+			alertify.alert("이메일을 입력하세요.");
 			
 			return false;
 		}
@@ -226,9 +226,9 @@
 	         success : function(retVal) {
 	            if (retVal.res == "OK") {
 	            	$("#email_chk_btn").attr("value", "Y");
-	               alert("사용가능한 이메일입니다.");
+	               alertify.alert("사용가능한 이메일입니다.");
 	            } else { // 실패했다면
-	               alert("중복된 이메일입니다.");
+	               alertify.alert("중복된 이메일입니다.");
 	            }
 	         },
 	         error : function() {
@@ -240,7 +240,6 @@
 	
 	function name_chk(){
 		var _str2 = $("#WORKSHOP_NAME").val();
-	      /* alert(_str2); */
 	      
 	      jQuery.ajax({
 	         url : '/NAGAGU/workshopNicknameChk.ws',
@@ -254,9 +253,9 @@
 	         success : function(retVal) {
 	            if (retVal.res == "OK") {
 	               $("#nick_chk_btn").attr("value", "Y");
-	               alert("사용가능한 별명입니다.");
+	               alertify.alert("사용가능한 별명입니다.");
 	            } else { // 실패했다면
-	               alert("중복된 별명입니다.");
+	               alertify.alert("중복된 별명입니다.");
 	            }
 	         },
 	         error : function() {
@@ -616,24 +615,24 @@
      
      
      if(sub_email==false || sub_pw1==false || sub_pw2==false || sub_ceo_name==false || sub_phone==false || sub_license==false || sub_intro==false){
-    	 alert("빈 칸 없이 입력해주세요.")
+    	 alertify.alert("빈 칸 없이 입력해주세요.")
      } else if(emailcheckBtn == "N") {
-        alert("이메일 중복확인 버튼을 눌러주세요.");
+        alertify.alert("이메일 중복확인 버튼을 눌러주세요.");
         $("#WORKSHOP_EMAIL").focus();
         
         return false;
      } else if(emailcheckBtn == "Y") {
         if(nicknamecheckBtn == "N"){
-           alert("닉네임 중복확인 버튼을 눌러주세요.");
+           alertify.alert("닉네임 중복확인 버튼을 눌러주세요.");
            $("#WORKSHOP_NAME").focus();
            
            return false;
      } else if(emailcheckBtn == "Y" && nicknamecheckBtn == "Y") {
 	        
     	 if(zipcode == "" || address1 == "" || address2 == "") {
-	        	alert('주소를 입력하세요.');
+	        	alertify.alert('주소를 입력하세요.');
 	        } else if(($('#check_privacy').prop("checked")&&$('#check_service').prop("checked"))== false) {
-	        	alert('약관에 동의해주세요.');
+	        	alertify.alert('약관에 동의해주세요.');
 	        } else {
 	          	document.workshop_signup_form.submit();
            	}

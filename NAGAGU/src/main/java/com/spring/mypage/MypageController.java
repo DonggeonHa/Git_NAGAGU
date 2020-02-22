@@ -247,12 +247,11 @@ public class MypageController {
 				
 			}
 			
-//			for(int number=0 ; number < 8; i++) {
-//				System.out.println("worknum: " + WORKSHOP_NUM + "number: " + number);
-//				order_state = academyManagementService.countOrderState(WORKSHOP_NUM, number);
-//				
-//				mav.addObject("order_state"+number, order_state);
-//			}
+			for(int number=0 ; number < 8; number++) {
+				System.out.println("worknum: " + WORKSHOP_NUM + "number: " + number);
+				order_state = academyManagementService.countOrderState(number, WORKSHOP_NUM);				
+				mav.addObject("order_state"+number, order_state);
+			}
 		} catch(Exception e) {
 			System.out.println("대시보드 컨트롤러 차트 에러" + e.getMessage());
 		}

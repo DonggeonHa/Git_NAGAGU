@@ -148,15 +148,41 @@ public class AcademyManagementServiceImpl implements AcademyManagementService {
 		return qnaList;
 	}
 
-//	@Override
-//	public int countOrderState(int number, int WORKSHOP_NUM) {
-//		int count = 0;
-//		
-//		AcademyManagementMapper managementMapper = sqlSession.getMapper(AcademyManagementMapper.class);
-//		count = managementMapper.countOrderState(number, WORKSHOP_NUM);
-//		
-//		return count;
-//	}
+	@Override
+	public int countOrderState(int number, int WORKSHOP_NUM) {
+		int count = 0;
+		
+		System.out.println("number은 " + number + "workshop_num이 왜 안넘어와?" + WORKSHOP_NUM);
+		
+		AcademyManagementMapper managementMapper = sqlSession.getMapper(AcademyManagementMapper.class);
+		count = managementMapper.countOrderState(number, WORKSHOP_NUM);
+		
+		return count;
+	}
+
+	@Override
+	public ArrayList<Map<String, Object>> getDashboardReviewList(int WORKSHOP_NUM) {
+		ArrayList<Map<String, Object>> reviewList = null;
+		
+		AcademyManagementMapper managementMapper = sqlSession.getMapper(AcademyManagementMapper.class);
+		reviewList = managementMapper.getDashboardReviewList(WORKSHOP_NUM);
+		
+		return reviewList;
+	}
+
+	@Override
+	public int selectDeleteMember(ArrayList<Integer> deleteArray) {
+		AcademyManagementMapper managementMapper = sqlSession.getMapper(AcademyManagementMapper.class);
+		int result = 0;
+		
+		for(int i=0; i<deleteArray.size(); i++) {
+			int MY_CLASS_MEMBERNUM = deleteArray.get(i);
+			
+			result = managementMapper.deleteManagementMember(MY_CLASS_MEMBERNUM);
+		}
+		
+		return result;
+	}
 
 	
 	

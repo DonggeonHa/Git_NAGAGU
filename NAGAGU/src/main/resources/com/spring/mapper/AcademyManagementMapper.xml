@@ -282,16 +282,26 @@
 		ORDER BY Q.QNA_DATE DESC
 	</select>
 	
-	<select id="getDashboardReviewList" parameterType="java.util.HashMap" resultMap="productReviewResultMap">
+	<select id="getDashboardReviewList" parameterType="int" resultMap="productReviewResultMap">
 		SELECT * FROM
 			(SELECT rownum rnum, REVIEW_NUM, REVIEW_MEMBER, REVIEW_PRODUCT, REVIEW_DATE, REVIEW_FILE, REVIEW_CONTENT, REVIEW_GRADE, REVIEW_RE,
-			MEMBER_NICK, MEMBER_PICTURE FROM  
-				(SELECT R.*, N.MEMBER_NICK, N.MEMBER_PICTURE FROM PRODUCT_REVIEW R, NAGAGU_MEMBER N 
-				WHERE R.REVIEW_PRODUCT=#{PRODUCT_NUM} AND R.REVIEW_MEMBER=N.MEMBER_NUM AND R.REVIEW_RE=0 ORDER BY R.REVIEW_DATE DESC)) 
+			MEMBER_NICK, MEMBER_PICTURE FROM 
+				(SELECT R.*, N.MEMBER_NICK, N.MEMBER_PICTURE FROM PRODUCT P, PRODUCT_REVIEW R, nagagu_workshop_member W, nagagu_member N
+		WHERE P.PRODUCT_NUM =R.REVIEW_PRODUCT
+		AND W.WORKSHOP_NUM=P.PRODUCT_WORKSHOP
+		AND W.WORKSHOP_NUM=#{WORKSHOP_NUM}
+		AND R.REVIEW_MEMBER=N.MEMBER_NUM ORDER BY R.REVIEW_DATE DESC))
 	</select>
 	
-<!-- 	<select id="countOrderState" parameterType="int" resultType="int"> -->
-<!-- 		select count(order_state) from product_order where order_state = #{number} and product_workshop={WORKSHOP_NUM} -->
-<!-- 	</select> -->
+ 	<select id="countOrderState" parameterType="int" resultType="int">
+ 		SELECT count(O.order_state)
+			FROM PRODUCT_ORDER O, PRODUCT P, NAGAGU_WORKSHOP_MEMBER W, BASKET B, NAGAGU_MEMBER M
+				WHERE W.WORKSHOP_NUM = #{WORKSHOP_NUM}
+                and O.order_state = #{number}
+				AND B.BASKET_PRODUCT= P.PRODUCT_NUM 
+				AND B.BASKET_NUM = O.ORDER_NUM
+				AND O.ORDER_MEMBER = M.MEMBER_NUM
+				and w.workshop_num = B.BASKET_NUM
+ 	</select>
 	
 </mapper>

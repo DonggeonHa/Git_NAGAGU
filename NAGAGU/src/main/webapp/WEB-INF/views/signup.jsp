@@ -144,10 +144,9 @@
   //이메일 중복체크
 	function email_chk(){
 		var _str1 = $("#member_ema").val();
-	      /* alert(_str1); */
 	      
 		if(_str1==""){
-			alert("이메일을 입력하세요.");
+			alertify.alert("이메일을 입력하세요.");
 			
 			return false;
 		}
@@ -164,9 +163,9 @@
 	         success : function(retVal) {
 	            if (retVal.res == "OK") {
 	            	$("#email_chk_btn").attr("value", "Y");
-	               alert("사용가능한 이메일입니다.");
+	            	alertify.alert("사용가능한 이메일입니다.");
 	            } else { // 실패했다면
-	               alert("중복된 이메일입니다.");
+	            	alertify.alert("중복된 이메일입니다.");
 	            }
 	         },
 	         error : function() {
@@ -178,7 +177,6 @@
 	
 	function nickname_chk(){
 		var _str2 = $("#member_nick").val();
-	      /* alert(_str2); */
 	      
 	      jQuery.ajax({
 	         url : '/NAGAGU/nicknameChk.su',
@@ -192,9 +190,9 @@
 	         success : function(retVal) {
 	            if (retVal.res == "OK") {
 	               $("#nick_chk_btn").attr("value", "Y");
-	               alert("사용가능한 별명입니다.");
+	               alertify.alert("사용가능한 별명입니다.");
 	            } else { // 실패했다면
-	               alert("중복된 별명입니다.");
+	            	alertify.alert("중복된 별명입니다.");
 	            }
 	         },
 	         error : function() {
@@ -514,16 +512,16 @@
      var phone = $("#member_phone").val();
      
      if(email=="" || nick=="" || pass1=="" || pass2=="" || name=="" || phone==""){
-    	 alert("빈 칸 없이 입력해주세요.");
+    	 alertify.alert("빈 칸 없이 입력해주세요.");
      }else if(emailcheckBtn == "N") {
-        alert("이메일 중복확인 버튼을 눌러주세요.");
+    	 alertify.alert("이메일 중복확인 버튼을 눌러주세요.");
      }else if(emailcheckBtn == "Y") {
         if(nicknamecheckBtn == "N"){
-           alert("닉네임 중복확인 버튼을 눌러주세요.");
+        	alertify.alert("닉네임 중복확인 버튼을 눌러주세요.");
         }else if(nicknamecheckBtn == "Y"){
            if(($('#check_privacy').prop("checked")&&$('#check_service').prop("checked"))== false) 
            {
-            alert('약관에 동의해주세요.');
+        	   alertify.alert('약관에 동의해주세요.');
            } else  {
               document.signup_form.submit();
            }

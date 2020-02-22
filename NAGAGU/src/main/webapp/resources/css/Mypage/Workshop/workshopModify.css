@@ -135,7 +135,7 @@
 
 .image-upload .image-edit input+label:after, .image-upload .image-edit input+label:after
 	{
-	content: "\f040";
+	content: "\f083";
 	font-family: "FontAwesome";
 	color: #757575;
 	position: absolute;

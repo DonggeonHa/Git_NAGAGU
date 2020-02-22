@@ -9,10 +9,10 @@
 	    <div class="d-flex justify-content-between pb-2">
 	        <div class="d-flex flex-row bd-highlight mb-3">
 	            <button type="button" id="all_select" class="btn btn-sm btn-outline-dark mr-2">전체표시</button> 
-	            <button type="button" id="all_select" class="btn btn-sm btn-outline-dark mr-2">선택 삭제</button> 
+	            <button type="button" id="selectMember" class="btn btn-sm btn-outline-dark mr-2">선택 삭제</button> 
 	            <button type="button" id="all_select" class="btn btn-sm btn-outline-dark mr-2">선택 쪽지</button>                        
-	            <span class="listnum_txt pt-2 bd-highlight">전체 회원 수</span>
-	            <span class="listnum_num pt-2 bd-highlight">194명</span>
+	            <span class="listnum_txt pt-2 bd-highlight">전체 회원 수</span>&nbsp;
+	            <span class="listnum_num pt-2 bd-highlight">0명</span>
 	        </div>
 	
 	        <div class="d-flex justify-content-end">
@@ -27,7 +27,7 @@
 	               </div>
 	           </div>
 	           <!-- search -->
-	           <nav class="navbar-light bg-light">
+	           <nav class="navbar-light">
 	             <form class="form-inline" onsubmit="return false">
 	               <input class="form-control mr-sm-2" id="keyword" type="search" aria-label="Search" style="height:90%">
 	                <button class="btn btn_search btn-sm my-2 my-sm-0" type="button" id="btn_search">검색</button>
@@ -50,13 +50,52 @@
 				</thead>
 			    <tbody id="memberList"></tbody>
 			</table>
+			<div id="list_none"></div>
 		</div>
 		<div class="d-flex justify-content-center">
 			<nav aria-label="Page navigation example" class="paginated" id="user-page"></nav>
 		</div>
     </div>
 </div>
-
+<style>
+		.btn_search {
+	    width:55px;
+	    border-radius: 4px;
+	    border:1px solid orangered;
+	    color:orangered; 
+	}
+	
+	
+	.btn_search:hover {
+	    color: #1b1b27;
+	    background-color: #ef902e;
+	    box-shadow: 200px 0 0 0 #ef902e inset,
+	                -200px 0 0 0 #ef902e inset;
+	}
+	.dropdown{
+		padding: 2px 4px;
+	}
+	.dropbtn {
+	    width:68px;
+	    border-radius: 4px;
+	    border:1px solid orangered;
+	    color:orangered;    
+	}
+	
+	.dropbtn:hover {
+	    color: #1b1b27;
+	    background-color: #ef902e;
+	    box-shadow: 200px 0 0 0 #ef902e inset,
+	                -200px 0 0 0 #ef902e inset;
+	}
+	.btn_modify {
+	    border-radius: 4px;
+	    border: 1px solid orangered;
+	    color: orangered;
+	    font-size: 14px;
+	    background: white;
+	}
+</style>
 <script>
 	$(document).ready(function(){
 	    var all_check = false;
@@ -81,18 +120,26 @@
 	function member_name() {
 		$('#searchType').html('회원이름');
 		$('#searchType').val('memberName');
-		$('#searchType').css('width', '77px');
+		$('#searchType').css('width', '83px');
 	}
 	function member_phone() {
 		$('#searchType').html('전화번호');
 		$('#searchType').val('memberPhone');
-		$('#searchType').css('width', '77px');
+		$('#searchType').css('width', '83px');
 	}
 	
 	$("#keyword").keyup(function(event){
+		var searchType = $('#searchType').val();
+		var keyword = $('#keyword').val();
+		
 		if (event.keyCode == 13) {
+			if(!keyword || !searchType){
+				alert("카테고리 선택, 검색어를 입력하세요.");
+				memberList();
+				return false;
+			}
 			event.preventDefault();
-			keyupSearch(event);
+			Search(event);
 			return;
 		}
 	});
@@ -105,8 +152,10 @@
 	function memberList() {
 		$('#remo').remove();
 		$('#memberList').empty();
-		var title = "";
+		$('#list_none').empty();
 		
+		var title = "";
+		var output = '';
 		$.ajax({
 			url: '/NAGAGU/classMemberManagementList.my',
 			type: 'POST',
@@ -114,36 +163,40 @@
 			contentType: 'application/x-www-form-urlencoded; charset=utf-8',
 			success: function(data) {
 				$('.listnum_num').text(data.length+"명");
-				console.log(data);
-				$.each(data, function(index, item) {
-					
-					var output = ' ';
-					output += '<tr>';
-					output += '<td><input type="checkbox"></td>';
-					output += '<td>' + item.class_DIVISION + '</td>';
-					
-					if(item.class_NAME.length >= 14) {
-						title = item.class_NAME.substr(0,14)+"...";
+				console.log(data.length);
+				if(data.length != 0){
+					$.each(data, function(index, item) {
 						
-						output += '<td><a href="classdetail.ac?CLASS_NUMBER=' + item.my_CLASS_CLASSNUM + '">' + title + '</a></td>';
-					} else {
-						output += '<td><a href="classdetail.ac?CLASS_NUMBER=' + item.my_CLASS_CLASSNUM + '">' + item.class_NAME + '<a/></td>';
-					}
-					
-					output += '<td>' + item.member_NAME + '</td>';
-					
-					if(item.member_PHONE==null){
-						output += '<td>미입력 상태</td>';
-					} else {
-						output += '<td>' + item.member_PHONE + '</td>';
-					}
-					
-					output += '<td>' + item.member_EMAIL + '</td>';
-					output += '<td><button class="btn_modify" onclick="btn_delete('+ item.my_CLASS_MEMBERNUM +')">삭제</button></td>';
-					output += '</tr>';
-					
-					$('#memberList').append(output);
-				});
+						output += '<tr>';
+						output += '<td><input type="checkbox" name="chk_status" value="'+ item.my_CLASS_MEMBERNUM +'"></td>';
+						output += '<td>' + item.class_DIVISION + '</td>';
+						
+						if(item.class_NAME.length >= 14) {
+							title = item.class_NAME.substr(0,14)+"...";
+							
+							output += '<td><a href="classdetail.ac?CLASS_NUMBER=' + item.my_CLASS_CLASSNUM + '">' + title + '</a></td>';
+						} else {
+							output += '<td><a href="classdetail.ac?CLASS_NUMBER=' + item.my_CLASS_CLASSNUM + '">' + item.class_NAME + '<a/></td>';
+						}
+						
+						output += '<td>' + item.member_NAME + '</td>';
+						
+						if(item.member_PHONE==null){
+							output += '<td>미입력 상태</td>';
+						} else {
+							output += '<td>' + item.member_PHONE + '</td>';
+						}
+						
+						output += '<td>' + item.member_EMAIL + '</td>';
+						output += '<td><button class="btn_modify" onclick="btn_delete('+ item.my_CLASS_MEMBERNUM +')">삭제</button></td>';
+						output += '</tr>';
+						
+						$('#memberList').append(output);
+					});
+				} else{
+					output += '등록된 회원이 없습니다.';
+					$('#list_none').append(output);
+				}
 				page();
 			},
 			error: function() {
@@ -153,76 +206,28 @@
 	}
 	
 	$(document).on('click', '#btn_search', function(event) {
-		$('#remo').remove();
-		$('#memberList').empty();
 		var searchType = $('#searchType').val();
 		var keyword = $('#keyword').val();
-		var title = "";
 		
 		if(!keyword || !searchType){
 			alert("카테고리 선택, 검색어를 입력하세요.");
 			memberList();
 			return false;
 		}
-		
-		$.ajax({
-			url: '/NAGAGU/searchMemberManagementList.my',
-			type: 'POST',
-			data: {"searchType" : searchType, "keyword" : keyword},
-			dataType: 'json',
-			contentType: 'application/x-www-form-urlencoded; charset=utf-8',
-			success: function(data) {
-				$('.listnum_num').text(data.length+"명");
-				console.log(data);
-				$.each(data, function(index, item) {
-					
-					var output = ' ';
-					output += '<tr>';
-					output += '<td><input type="checkbox"></td>';
-					output += '<td>' + item.class_DIVISION + '</td>';
-					
-					if(item.class_NAME.length >= 14) {
-						title = item.class_NAME.substr(0,14)+"...";
-						
-						output += '<td><a href="classdetail.ac?CLASS_NUMBER=' + item.my_CLASS_CLASSNUM + '">' + title + '</a></td>';
-					} else {
-						output += '<td><a href="classdetail.ac?CLASS_NUMBER=' + item.my_CLASS_CLASSNUM + '">' + item.class_NAME + '<a/></td>';
-					}
-					
-					output += '<td>' + item.member_NAME + '</td>';
-					
-					if(item.member_PHONE==null){
-						output += '<td>미입력 상태</td>';
-					} else {
-						output += '<td>' + item.member_PHONE + '</td>';
-					}
-					
-					output += '<td>' + item.member_EMAIL + '</td>';
-					output += '<td><button class="btn_modify" onclick="btn_delete('+ item.my_CLASS_MEMBERNUM +')">삭제</button></td>';
-					output += '</tr>';
-					
-					$('#memberList').append(output);
-				});
-				page();
-			},
-			error: function() {
-				alert("ajax 통신 실패!");
-			}
-		});
+		event.preventDefault();
+		Search(event);
+		return;
 	});
 	
-	function keyupSearch(event) {
+	function Search(event) {
 		$('#remo').remove();
 		$('#memberList').empty();
+		$('#list_none').empty();
+		
 		var searchType = $('#searchType').val();
 		var keyword = $('#keyword').val();
 		var title = "";
-		
-		if(!keyword || !searchType){
-			alert("카테고리 선택, 검색어를 입력하세요.");
-			memberList();
-			return false;
-		}
+		var output = '';
 		
 		$.ajax({
 			url: '/NAGAGU/searchMemberManagementList.my',
@@ -233,35 +238,39 @@
 			success: function(data) {
 				$('.listnum_num').text(data.length+"명");
 				console.log(data);
-				$.each(data, function(index, item) {
-					
-					var output = ' ';
-					output += '<tr>';
-					output += '<td><input type="checkbox"></td>';
-					output += '<td>' + item.class_DIVISION + '</td>';
-					
-					if(item.class_NAME.length >= 14) {
-						title = item.class_NAME.substr(0,14)+"...";
+				if(data.length != 0){
+					$.each(data, function(index, item) {
 						
-						output += '<td><a href="classdetail.ac?CLASS_NUMBER=' + item.my_CLASS_CLASSNUM + '">' + title + '</a></td>';
-					} else {
-						output += '<td><a href="classdetail.ac?CLASS_NUMBER=' + item.my_CLASS_CLASSNUM + '">' + item.class_NAME + '<a/></td>';
-					}
-					
-					output += '<td>' + item.member_NAME + '</td>';
-					
-					if(item.member_PHONE==null){
-						output += '<td>미입력 상태</td>';
-					} else {
-						output += '<td>' + item.member_PHONE + '</td>';
-					}
-					
-					output += '<td>' + item.member_EMAIL + '</td>';
-					output += '<td><button class="btn_modify" onclick="btn_delete('+ item.my_CLASS_MEMBERNUM +')">삭제</button></td>';
-					output += '</tr>';
-					
-					$('#memberList').append(output);
-				});
+						output += '<tr>';
+						output += '<td><input type="checkbox"></td>';
+						output += '<td>' + item.class_DIVISION + '</td>';
+						
+						if(item.class_NAME.length >= 14) {
+							title = item.class_NAME.substr(0,14)+"...";
+							
+							output += '<td><a href="classdetail.ac?CLASS_NUMBER=' + item.my_CLASS_CLASSNUM + '">' + title + '</a></td>';
+						} else {
+							output += '<td><a href="classdetail.ac?CLASS_NUMBER=' + item.my_CLASS_CLASSNUM + '">' + item.class_NAME + '<a/></td>';
+						}
+						
+						output += '<td>' + item.member_NAME + '</td>';
+						
+						if(item.member_PHONE==null){
+							output += '<td>미입력 상태</td>';
+						} else {
+							output += '<td>' + item.member_PHONE + '</td>';
+						}
+						
+						output += '<td>' + item.member_EMAIL + '</td>';
+						output += '<td><button class="btn_modify" onclick="btn_delete('+ item.my_CLASS_MEMBERNUM +')">삭제</button></td>';
+						output += '</tr>';
+						
+						$('#memberList').append(output);
+					});
+				} else{
+					output += '검색 결과가 없습니다.';
+					$('#list_none').append(output);
+				}
 				page();
 			},
 			error: function() {
@@ -283,10 +292,10 @@
 		        contentType: 'application/x-www-form-urlencoded; charset=utf-8',
 		        success: function(retVal) {
 		        	if (retVal.res == "OK") {
-		        		alert("삭제되었습니다.");
+		        		alertify.alert("삭제되었습니다.");
 		                memberList();
 		            } else {
-		            	alert("삭제 실패");
+		            	alertify.alert("삭제 실패");
 		            }
 	
 		        },
@@ -296,6 +305,38 @@
 			});
 		}
 	}
+	
+	$(document).on('click', '#selectMember', function(event) {
+		var checkArray = new Array();
+		 
+		 $("input[name=chk_status]:checked").each(function(i){   //jQuery로 for문 돌면서 check 된값 배열에 담는다
+			 checkArray.push($(this).val());
+	     });
+		 
+		 if(checkArray.length ==  0) {
+			 alertify.alert("삭제할 회원을 선택하세요.");
+		 } else {
+			 if (confirm("삭제하시겠습니까?") == true){
+				 $.ajax({
+					 type : 'POST',
+		             url : './deleteClassMember.my',
+		             data : { 0:0, checkArray : checkArray},
+		             success: function(retVal){
+		            	 if (retVal.res == "OK") {
+		            		alertify.alert("선택된 회원이 삭제되었습니다.");
+		            		memberList();
+		            	 } else{
+		            		 alertify.alert("삭제 실패!");
+		            	 }
+		             },
+		             error:function(request,status,error){
+		            	 alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+		             }
+		        });
+		        checkArray= new Array();
+		    }
+		 }
+	});
 	
 	// 만들어진 테이블에 페이지 처리
 	function page() { 	
