@@ -22,13 +22,15 @@
 }
 
 .page-item.active .page-link {
+	z-index: 0 !important;
 	background-color: #ef900e !important;
-	border-color: none !important;
+	border-color: #dee2e6 !important;
 	color : white !important;
 }
 
 .page-item2.active .page-link {
+	z-index: 0 !important;
 	background-color: #ef900e !important;
-	border-color: none !important;
+	border-color: #dee2e6 !important;
 	color : white !important;
 }

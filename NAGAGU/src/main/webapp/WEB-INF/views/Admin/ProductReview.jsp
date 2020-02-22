@@ -105,7 +105,7 @@
 			contentType : 'application/x-www-form-urlencoded; charset=UTF-8',
 			dataType : 'json',
 			success : function (retVal) {
-				alert("삭제 성공");
+				alertify.alert("삭제 성공");
 				if (retVal.res == "OK") {
 					// 데이터 성공할 때 이벤트 작성
 					selectData();
@@ -122,30 +122,6 @@
 		// 기본 이벤트 제거
 		event.preventDefault();
 	});
-	
-// 	$(document).on('click', '.detail_data', function(event) {
-		
-// 		jQuery.ajax({
-// 			url : $(this).attr("href"), //$(this) : //항목을 눌렀을때 그 걸 가르킴 .attr("href") 속성된 이름값중에 "href"을 통해서? 읽어온다??
-// 			type : 'GET',
-// 			data : {'PRODUCT_NUM' : $(this).attr("product_NUM")},
-// 			contentType : 'application/x-www-form-urlencoded; charset=UTF-8',
-// 			dataType : 'json',
-// 			success : function (retVal) {
-// 				if (retVal.res == "OK") {
-// 					var pop = window.open('productdetail.pro?PRODUCT_NUM=' + retVal.ProductVO.product_NUM,'_blank');
-// 					// pop.location.href="classdetail.ac?CLASS_NUMBER=" + retVal.ClassVO.class_NUMBER;	
-// 		 		}
-// 			},
-// 			error: function(request,status,error) {
-// 				alert("ajax detailmember 통신 실패!");
-// 				alert("code:"+request.status+"\n"+"error:"+error);
-// 			}
-// 		});
-		
-// 		// 기본 이벤트 제거
-// 		event.preventDefault();
-// 	});
 	
 	// 만들어진 테이블에 페이지 처리
 	function page() { 	

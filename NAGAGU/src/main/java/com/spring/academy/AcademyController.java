@@ -135,21 +135,9 @@ public class AcademyController {
 	@RequestMapping(value = "/getReviewList.acdo", method = RequestMethod.POST, produces="application/json;charset=UTF-8")
 	@ResponseBody
 	public HashMap<String, Object> getReviewList(ClassVO classVO, MemberVO memberVO, Model model, HttpServletRequest request, HttpSession session) {
-		System.out.println("getReviewList.acdo 컨트롤러 start!");
-		
-		/*리뷰 리스트*/
-		int limit = 5; //한 페이지당 출력할 글의 수
-		int reviewpage = 1;
-		if(request.getParameter("reviewpage") != null) {
-			reviewpage = Integer.parseInt(request.getParameter("reviewpage"));
-		}
-		int startrow = (reviewpage - 1) * 5 + 1; // 읽기 시작할 row 번호.
-		int endrow = startrow + limit - 1; //읽을 마지막 row 번호.
 		int CLASS_NUMBER= Integer.parseInt(request.getParameter("CLASS_NUMBER"));
 		
 		HashMap<String, Object> map = new HashMap<String, Object>();
-		map.put("startrow", startrow);
-		map.put("endrow", endrow);
 		map.put("CLASS_NUMBER", CLASS_NUMBER);
 		
 		int reviewCount;	
@@ -174,21 +162,10 @@ public class AcademyController {
 	@RequestMapping(value = "/getQnaList.acdo", method = RequestMethod.POST, produces="application/json;charset=UTF-8")
 	@ResponseBody
 	public HashMap<String, Object> getQnaList(ClassVO classVO, MemberVO memberVO, Model model, HttpServletRequest request, HttpSession session) {
-		System.out.println("getQnaList.acdo 컨트롤러 start!");
 		
-		/*리뷰 리스트*/
-		int limit = 5; //한 페이지당 출력할 글의 수
-		int qnapage = 1;
-		if(request.getParameter("qnapage") != null) {
-			qnapage = Integer.parseInt(request.getParameter("qnapage"));
-		}
-		int startrow = (qnapage - 1) * 5 + 1; // 읽기 시작할 row 번호.
-		int endrow = startrow + limit - 1; //읽을 마지막 row 번호.
 		int CLASS_NUMBER= Integer.parseInt(request.getParameter("CLASS_NUMBER"));
 		
 		HashMap<String, Object> map = new HashMap<String, Object>();
-		map.put("startrow", startrow);
-		map.put("endrow", endrow);
 		map.put("CLASS_NUMBER", CLASS_NUMBER);
 		
 		int qnaCount;	

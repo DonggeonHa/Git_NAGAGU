@@ -78,10 +78,6 @@
 	String[] imgArr = images.split(",");
 %>  
 
-
-
-
-
 <style>
 	@charset "UTF-8";
 	
@@ -439,6 +435,15 @@
 	.page-link {
 		color: black !important;
 	}
+	
+	.nav-item .active {
+		color : white !important;
+		background-color : #1B1B27 !important;
+	}
+	
+	li.nav-item a.nav-link {
+		color: black; 
+	}
 </style>
 
 <div class="container class-detail-container category_st">
@@ -602,52 +607,108 @@
 			</form>
 		</div>
 	</div>
-	<div class="row" style="padding: 15px 15px;">
+	<div class="d-flex justify-content-between" style="padding: 15px 0;">
 		<div class="col-8">
-			<div style="line-height: 0.5em;" id="t1">
+			<div style="line-height: 0.5em;">
 				<dl>
 					<dt><h3><%=vo.getPRODUCT_TITLE() %></h3><br></dt>
 					<dl><h5><%=vo.getPRODUCT_BRIEF() %></h5></dl>
 				</dl>
 			</div>
-			<div class="row sticky">
-				<div class="col-12">
-					<ul class="nav nav-tabs nav-fill h-30" style="z-index: 99;">
+			<div class="sticky">
+					<ul class="nav nav-tabs nav-fill d-flex justify-content-between" style="z-index: 10;">
 					   <li class="nav-item">
-					      <a class="nav-link" href="#t1"><h5>상품정보</h5></a>
+					      <a class="nav-link" href="#t1"><h5 style="margin-top: .5rem;">상품정보</h5></a>
 					   </li>
 					   <li class="nav-item">
-					      <a class="nav-link" href="#t2"><h5>리뷰</h5></a>
+					      <a class="nav-link" href="#t2"><h5 style="margin-top: .5rem;">리뷰</h5></a>
 					   </li>
 					   <li class="nav-item">
-					      <a class="nav-link" href="#t3"><h5>Q&A</h5></a>
+					      <a class="nav-link" href="#t3"><h5 style="margin-top: .5rem;">Q&A</h5></a>
 					   </li>
 					   <li class="nav-item">
-					      <a class="nav-link" href="#t4"><h5>배송/환불</h5></a>
+					      <a class="nav-link" href="#t4"><h5 style="margin-top: .5rem;">배송/환불</h5></a>
 					   </li>
 					</ul>
+			</div>
+			<div>
+				<div id="t1">
+				<% 
+					if (vo.getPRODUCT_INFO() != null) { 
+				%>
+						<dl >
+							<dd><%=vo.getPRODUCT_INFO() %></dd>
+							<br /><br />
+						</dl>
+				<% 
+					} else { 
+				%>
+						<!-- vo.getPRODUCT_INFO() = 없는 경우-->
+						<table width="50%" border="0" cellpadding="0" cellspacing="0" align="center" valign="middle">
+							<tr align="center" valign="middle">
+								<td align="right"><font size=2>상세 정보가 없습니다.</font></td>
+							</tr>
+						</table>
+				<% 
+					} 
+				%>
+				</div>
+				<!-- 상세 사진정보 끝 -->
+	      
+	            <!-- 배송 및 환불 시작 -->
+	      
+	            <h3 id="t4">배송 및 환불</h3>
+	            <br /><br />
+				<div class="ship_info" style="width: 100%; margin: 0 auto; font-size: 0.9em; color: #212529;">
+					<div class="row_ship_info">
+				    	<h5>배송정보</h5>
+						모든 제품은 메이킹퍼니처 직원이 직접 배송하며 배송비는 고객 부담입니다. 지역, 제품 수량 또는 설치 여부에 따라 주문 시
+						배송비를 미리 안내해드립니다. 기본 배송비 외에 사다리차, 엘레베이터, 주차비 사용료 등 추가 비용이 발생 시 고객님
+						부담입니다.
+						<%=vo.getPRODUCT_SHIP_INFO() %>
+					</div>
+					<div class="row_ship_info">
+						<h5>배송정보</h5>
+						모든 제품은 메이킹퍼니처 직원이 직접 배송하며 배송비는 고객 부담입니다. 지역, 제품 수량 또는 설치 여부에 따라 주문 시
+						배송비를 미리 안내해드립니다. 기본 배송비 외에 사다리차, 엘레베이터, 주차비 사용료 등 추가 비용이 발생 시 고객님
+						부담입니다.
+						반품 배송지 : <%=vo.getPRODUCT_SHIP_RETURN_PLACE() %>
+					</div>
+					<br />
+					
+					<div class="row_ship_info">
+						<h5>A/S</h5>
+						핸드메이드 제품으로 나뭇결, 무늬, 옹이의 형태나 파임, 칠과 색상이 다를 수 있고 약간의 흠집이나 찍힘(표면의 크랙 또는
+						뜯김)이 있을 수 있으며, 100% 원목으로 기후변화에 따른 수축, 팽창으로 인한 휘어짐(상판), 갈라짐(마구리면)이
+						발생할 수 있습니다. 이런 자연스러운 현상들은 교체 및 교환 대상이 아니며 무상 A/S 사유가 되지 않습니다. 구매 전 꼭
+						참고해주시기 바랍니다.
+						<%=vo.getPRODUCT_AS_INFO() %>
+					</div>
+					<br />
+					
+					<div class="row_ship_info">
+						<h5>Wood Furniture</h5>
+						원목가구의 수축 및 팽창은 원목만의 자연스러운 특징입니다.<br /> -지나치게 건조한 곳, 습한 곳은 피하세요. -가구의
+						수평을 유지해주세요.(수평이 안 맞게 되면 가구가 뒤틀려버립니다.) -가구에 화학약품(신나, 메니큐어 등)이 닿지 않게
+						해주세요. -평소에는 물걸레 청소하시면 됩니다. -뜨거운 냄비와 같은 고온의 뜨거운 물체에 직접 닿는 것은 피하시기
+						바랍니다. -한 달에 1~2번 가구용 왁스로 닦아주세요. -원목가구는 수축기와 팽창기(계절의 변화)에 따라 갈라짐이나
+						미세한 크랙이 발생할 수 있으며, 시간이 경과하면 원상회복이 될 수 있습니다. 이는 원목가구만의 자연스러운 현상이며 제품의
+						하자가 아닙니다.
+						<%=vo.getPRODUCT_STORE_INFO() %>
+					</div>
+					<br />
+					
+					<div class="row_ship_info">
+						<h5>A/S규정[1년 무상]</h5>
+						무상 A/S -보증기간 이내의 제품으로 정상적인 상태에서 제조상의 결함 제품 -원/부나내의 결함이 발생된 경우
+						-메이킹퍼니처의 귀책 사유로 인한 결함 발생 제품
+						<%=vo.getPRODUCT_RETURN_INFO() %>
+					</div>
+					<div class="row_ship_info">
+						유상 A/S -고객의 취급 부주의 및 고의적 훼손 경우 -고객 임의 개조에 의한 파손의 경우나 타 업체에서 수리해 변경된 경우 -유상 서비스 요금은 [수리비+부품비+출장비+기타실 비용] 등이 포함됩니다.
+					</div>
 				</div>
 			</div>
-			<div class="row justify-content-center">
-			<% 
-				if (vo.getPRODUCT_INFO() != null) { 
-			%>
-					<%=vo.getPRODUCT_INFO() %>
-					<br /><br />
-			<% 
-				} else { 
-			%>
-					<!-- vo.getPRODUCT_INFO() = 없는 경우-->
-					<table width="50%" border="0" cellpadding="0" cellspacing="0" align="center" valign="middle">
-						<tr align="center" valign="middle">
-							<td align="right"><font size=2>상세 정보가 없습니다.</font></td>
-						</tr>
-					</table>
-			<% 
-				} 
-			%>
-			</div>
-			<!-- 상세 사진정보 끝 -->
 			
 			<span id="t2"></span>
 			<br /><br /><hr />
@@ -659,7 +720,17 @@
 			<div id="ReviewSection">
 				<div id="ReviewButtonSection">	
 					<div class="row justify-content-center pt-3 pb-3"> <!-- 리뷰 댓글달기 버튼 -->
-						<button class="btn btn-dark btn-sm review_btn">댓글 달기</button>
+						<%
+							if(MEMBER_STATUS == 100 && WORKSHOP_STATUS == 100) {
+						%>
+								<button class="btn btn-dark btn-sm" data-toggle="modal" data-target="#exampleModalCenter">후기 등록</button>
+						<%
+							} else {
+						%>
+								<button class="btn btn-dark btn-sm review_btn">후기 등록</button>
+						<%
+							}
+						%>
 					</div>
 				</div>
 				<div id="ReviewWrapSection" class="pb-1">
@@ -758,7 +829,17 @@
 			<div id="QnaSection">
 				<div id="QnaButtonSection">	
 					<div class="row justify-content-center pt-3 pb-3"> <!-- 리뷰 댓글달기 버튼 -->
-						<button class="btn btn-dark btn-sm qna_btn">문의하기</button>
+						<%
+						if(MEMBER_STATUS == 100 && WORKSHOP_STATUS == 100) {
+						%>
+								<button class="btn btn-dark btn-sm" data-toggle="modal" data-target="#exampleModalCenter">문의하기</button>
+						<%
+							} else {
+						%>
+								<button class="btn btn-dark btn-sm qna_btn">문의하기</button>
+						<%
+							}
+						%>
 					</div>
 				</div>
 				<div id="QnaWrapSection" class="pb-1">
@@ -795,8 +876,6 @@
 						</form>		
 					</div>
 					<div id="QnatableSection" class="pb-2">
-					
-						
 					</div>
 				</div>
 			</div>
@@ -818,61 +897,6 @@
 			<!-- Q&A 테이블 끝 -->
 			
 			<br /><br /><hr />
-
-      
-            <!-- 배송 및 환불 시작 -->
-      
-            <h3 id="t4">배송 및 환불</h3>
-            <br /><br />
-			<div class="ship_info" style="width: 100%; margin: 0 auto; font-size: 0.9em; color: #212529;">
-				<div class="row_ship_info">
-			    	<h5>배송정보</h5>
-					모든 제품은 메이킹퍼니처 직원이 직접 배송하며 배송비는 고객 부담입니다. 지역, 제품 수량 또는 설치 여부에 따라 주문 시
-					배송비를 미리 안내해드립니다. 기본 배송비 외에 사다리차, 엘레베이터, 주차비 사용료 등 추가 비용이 발생 시 고객님
-					부담입니다.
-					<%=vo.getPRODUCT_SHIP_INFO() %>
-				</div>
-				<div class="row_ship_info">
-					<h5>배송정보</h5>
-					모든 제품은 메이킹퍼니처 직원이 직접 배송하며 배송비는 고객 부담입니다. 지역, 제품 수량 또는 설치 여부에 따라 주문 시
-					배송비를 미리 안내해드립니다. 기본 배송비 외에 사다리차, 엘레베이터, 주차비 사용료 등 추가 비용이 발생 시 고객님
-					부담입니다.
-					반품 배송지 : <%=vo.getPRODUCT_SHIP_RETURN_PLACE() %>
-				</div>
-				<br />
-				
-				<div class="row_ship_info">
-					<h5>A/S</h5>
-					핸드메이드 제품으로 나뭇결, 무늬, 옹이의 형태나 파임, 칠과 색상이 다를 수 있고 약간의 흠집이나 찍힘(표면의 크랙 또는
-					뜯김)이 있을 수 있으며, 100% 원목으로 기후변화에 따른 수축, 팽창으로 인한 휘어짐(상판), 갈라짐(마구리면)이
-					발생할 수 있습니다. 이런 자연스러운 현상들은 교체 및 교환 대상이 아니며 무상 A/S 사유가 되지 않습니다. 구매 전 꼭
-					참고해주시기 바랍니다.
-					<%=vo.getPRODUCT_AS_INFO() %>
-				</div>
-				<br />
-				
-				<div class="row_ship_info">
-					<h5>Wood Furniture</h5>
-					원목가구의 수축 및 팽창은 원목만의 자연스러운 특징입니다.<br /> -지나치게 건조한 곳, 습한 곳은 피하세요. -가구의
-					수평을 유지해주세요.(수평이 안 맞게 되면 가구가 뒤틀려버립니다.) -가구에 화학약품(신나, 메니큐어 등)이 닿지 않게
-					해주세요. -평소에는 물걸레 청소하시면 됩니다. -뜨거운 냄비와 같은 고온의 뜨거운 물체에 직접 닿는 것은 피하시기
-					바랍니다. -한 달에 1~2번 가구용 왁스로 닦아주세요. -원목가구는 수축기와 팽창기(계절의 변화)에 따라 갈라짐이나
-					미세한 크랙이 발생할 수 있으며, 시간이 경과하면 원상회복이 될 수 있습니다. 이는 원목가구만의 자연스러운 현상이며 제품의
-					하자가 아닙니다.
-					<%=vo.getPRODUCT_STORE_INFO() %>
-				</div>
-				<br />
-				
-				<div class="row_ship_info">
-					<h5>A/S규정[1년 무상]</h5>
-					무상 A/S -보증기간 이내의 제품으로 정상적인 상태에서 제조상의 결함 제품 -원/부나내의 결함이 발생된 경우
-					-메이킹퍼니처의 귀책 사유로 인한 결함 발생 제품
-					<%=vo.getPRODUCT_RETURN_INFO() %>
-				</div>
-				<div class="row_ship_info">
-					유상 A/S -고객의 취급 부주의 및 고의적 훼손 경우 -고객 임의 개조에 의한 파손의 경우나 타 업체에서 수리해 변경된 경우 -유상 서비스 요금은 [수리비+부품비+출장비+기타실 비용] 등이 포함됩니다.
-				</div>
-			</div>
 		</div>
 		<div class="col-4">
         	<div class="sticky2" style="border: 1px solid #EAEAEA;">
@@ -1481,6 +1505,7 @@
 	
 		//Review 등록하기 버튼(insert) //원글
 		$(document).on("click",".insertReview",function(event){
+			$('#remo').remove();
 			var formId = 'ReviewForm';
 			var REVIEW_RE = 0;	//원글
 			
@@ -1518,6 +1543,7 @@
 
 		//Review 등록하기 버튼(insert) //답글
 		$(document).on("click",".insertReviewReply",function(event){
+			$('#remo').remove();
 			var REVIEW_NUM = $(this).prev().val();	//원글번호(review_re로 저장할 것)
 			console.log("REVIEW_NUM : " + REVIEW_NUM)
 			
@@ -1552,6 +1578,7 @@
 			
 		//review 수정 폼 (원글)
 		$(document).on("click",".gomodifyReviewform",function(event){
+			$('#remo').remove();
 			var REVIEW_NUM = $(this).prev().val();
 			console.log("REVIEW_NUM : " + REVIEW_NUM)
 			
@@ -1650,6 +1677,7 @@
 		
 		//review 수정 process (원글)
 		$(document).on("click",".modifyReview",function(event){
+			$('#remo').remove();
 			var REVIEW_NUM = $(this).prev().val();
 			console.log("REVIEW_NUM"+REVIEW_NUM)
 			
@@ -1689,6 +1717,7 @@
 		
 		//review 수정 process (답글)
 		$(document).on("click",".modifyReviewReply",function(event){
+			$('#remo').remove();
 			var REVIEW_NUM = $(this).prev().val();
 			console.log("REVIEW_NUM"+REVIEW_NUM)
 
@@ -1722,6 +1751,7 @@
 
 		//원글, 답글 same
 		$(document).on("click",".deleteReview",function(event){
+			$('#remo').remove();
 			var REVIEW_NUM = $(this).prev().prev().val();
 			console.log("REVIEW_NUM : " + REVIEW_NUM)
 			var delete_confirm = confirm("삭제하시겠습니까?");
@@ -2003,6 +2033,7 @@
 		
 		//Qna 등록하기 버튼(insert) //원글
 		$(document).on("click",".insertQna",function(event){
+			$('#remo2').remove();
 			var formId = 'QnaForm';
 			var QNA_RE = 0;	//원글
 		
@@ -2038,6 +2069,7 @@
 		
 		//qna 등록하기 버튼(insert) //답글
 		$(document).on("click",".insertQnaReply",function(event){
+			$('#remo2').remove();
 			var QNA_NUM = $(this).prev().val();	//원글번호(qna_re로 저장할 것)
 			console.log("QNA_NUM : " + QNA_NUM)
 			
@@ -2071,6 +2103,7 @@
 			
 		//qna 수정 폼 (원글)
 		$(document).on("click",".gomodifyQnaform",function(event){
+			$('#remo2').remove();
 			var QNA_NUM = $(this).prev().val();
 			console.log("QNA_NUM : " + QNA_NUM)
 			
@@ -2128,6 +2161,7 @@
 		
 		//qna 수정 process (원글)
 		$(document).on("click",".modifyQna",function(event){
+			$('#remo2').remove();
 			var QNA_NUM = $(this).prev().val();
 			console.log("QNA_NUM"+QNA_NUM)
 
@@ -2158,6 +2192,7 @@
 		
 		//qna 수정 process (답글)
 		$(document).on("click",".modifyQnaReply",function(event){
+			$('#remo2').remove();
 			var QNA_NUM = $(this).prev().val();
 			console.log("QNA_NUM"+QNA_NUM)
 
@@ -2178,6 +2213,7 @@
 					} else {
 						alert("수정 실패!!!");
 					}
+					qna_page();
 				},
 				error:function() {
 					alert("ajax통신 실패!!!");
@@ -2191,6 +2227,7 @@
 
 		//원글, 답글 same
 		$(document).on("click",".deleteQna",function(event){
+			$('#remo2').remove();
 			var QNA_NUM = $(this).prev().prev().val();
 			console.log("QNA_NUM : " + QNA_NUM)
 			var delete_confirm = confirm("삭제하시겠습니까?");
@@ -2210,6 +2247,7 @@
 						} else {
 							alert("삭제 실패!");
 						}
+						qna_page();
 					},
 					error:function() {
 						alert("ajax통신 실패!!!");

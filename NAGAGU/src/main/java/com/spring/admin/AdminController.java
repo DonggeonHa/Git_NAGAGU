@@ -166,7 +166,6 @@ public class AdminController {
 		Map<String, Object> retVal = new HashMap<String, Object>();
 		
 		try {
-			System.out.println("WORKSHOP_NUM = " + vo.getWORKSHOP_NUM());
 			int res = adminService.deleteWMember(vo);
 			
 			retVal.put("res", "OK");

@@ -2,13 +2,16 @@
 
 Drop table nagagu_member;
 Drop sequence nagagu_member_seq;
+Drop table delete_member;
 
 Select * from nagagu_member;
+Select * from delete_member;
 
 /**************************** WORKSHOP_MEMBER *******************/
 
 Drop table nagagu_workshop_member;
 Drop sequence nagagu_workshop_member_seq;
+Drop table delete_wrokshop_member;
 
 select * from nagagu_workshop_member;
 

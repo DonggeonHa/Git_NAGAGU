@@ -1,11 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<!-- 
-
-
--->
-
 <!-- 이 xml문서와 맵핑할 인터페이스 경로, 이름 -->
 <mapper namespace="com.spring.mapper.ClassQnaMapper">
 	<resultMap type="java.util.HashMap" id="hashmapVO">
@@ -58,7 +53,6 @@
 			MEMBER_NICK, MEMBER_PICTURE FROM 
 				(SELECT Q.*, N.MEMBER_NICK, N.MEMBER_PICTURE FROM CLASS_QNA Q, NAGAGU_MEMBER N
 				WHERE Q.QNA_CLASS=#{CLASS_NUMBER} AND Q.QNA_MEMBER=N.MEMBER_NUM AND Q.QNA_RE=0 ORDER BY Q.QNA_DATE DESC))
-			<![CDATA[ WHERE rnum >= #{startrow} AND rnum <= #{endrow} ]]>
 	</select>
 
 	<select id="getQna_RE_List" parameterType="java.util.HashMap" resultMap="classQnaResultMap">
@@ -67,7 +61,6 @@
 			WORKSHOP_NAME, WORKSHOP_PICTURE FROM 
 				(SELECT Q.*, N.WORKSHOP_NAME, N.WORKSHOP_PICTURE FROM CLASS_QNA Q, NAGAGU_WORKSHOP_MEMBER N
 				WHERE Q.QNA_CLASS=#{CLASS_NUMBER} AND Q.QNA_MEMBER=N.WORKSHOP_NUM AND Q.QNA_RE!=0 ORDER BY Q.QNA_DATE DESC))
-                <![CDATA[ WHERE rnum >= #{startrow} AND rnum <= #{endrow} ]]>
 	</select>
 	
 	
