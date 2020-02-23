@@ -224,7 +224,7 @@ public class AcademyManagementAjaxController {
 		
 		ArrayList<Map<String, Object>> qnaList = null;
 		qnaList = academyManagementService.getDashboardQna(WORKSHOP_NUM);
-		
+		System.out.println(qnaList);
 		
 		return qnaList;
 	}

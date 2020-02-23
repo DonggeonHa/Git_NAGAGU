@@ -292,11 +292,18 @@ function ClassQnaList() {
 		dataType: 'json',
 		contentType: 'application/x-www-form-urlencoded; charset=utf-8',
 		success: function(qnaList) {
+
 			console.log(qnaList);
 			var output = ' ';	
+			if(qnaList.length<5){
+				leng = qnaList.length;
+			}else{
+				leng = 5;				
+			}
 			
 			if(qnaList.length!=0) {
-				for(var j=0; j<5; j++){
+				for(var j=0; j<leng; j++){
+					console.log(qnaList[0].CLASS_CATEGORY)
 					
 					output += '<tr class="text-center">';
 					output += '<td>' + number + '</td>';

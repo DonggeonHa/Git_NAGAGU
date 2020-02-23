@@ -43,9 +43,7 @@
 				font-weight: bold;
 				text-decoration: none;
 			}
-			td {
-				border-right: 1px solid black;
-			}	
+
 			.btn_write {
 				margin-left:10px;
 				margin-top:10px;
@@ -54,11 +52,18 @@
 				margin-left:10px;
 				margin-top:10px;
 			}
+			.bgcolor {
+				background-color:#F2F2F2;
+			}			
+			.bgcolor2 {
+				background-color:#1B1B27;
+				color:white;
+			}			
 		</style>
 	</head>
 	<body>
 		<div>
-			<table class="table table-striped">
+			<table class="table bgcolor">
 				<colgroup>
 					<col style="width:15%">
 					<col style="width:35%">
@@ -66,7 +71,7 @@
 					<col style="width:35%">
 				</colgroup>
 				<tr>
-					<th colspan="4" scope="colgroup">상품 문의 상세</th>
+					<th colspan="4" scope="colgroup" class="bgcolor2">상품 문의 상세</th>
 				</tr>
 				<tr>
 					<th scope="col">작성자</th>

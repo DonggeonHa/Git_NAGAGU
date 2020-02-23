@@ -317,7 +317,7 @@
 		var ORDER_AMOUNT = $(this).attr("value");
 		var popupX = (window.screen.width / 2) - (500 / 2); // 만들 팝업창 좌우 크기의 1/2 만큼 보정값으로 뺴주었음
 		var popupY = (window.screen.height / 2) - (630 / 2); // 만들 팝업창 상하 크기의 1/2 만큼 보정값으로 뺴주었음
-		var pop = window.open('about:blank', 'Info', 'scrollbars=yes, resizable=yes, width=500, height=630, left=' + popupX + ', top=' + popupY);
+		var pop = window.open('about:blank', 'Info', 'scrollbars=yes, resizable=yes, width=1200, height=630, left=' + popupX + ', top=' + popupY);
 		
 		pop.location.href="SproductSelledInfo.my?ORDER_AMOUNT=" + ORDER_AMOUNT;	
 
