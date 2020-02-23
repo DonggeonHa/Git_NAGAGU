@@ -141,11 +141,9 @@
     }
           
 	.thumbImg {
-		width:128px;
-		height:128px;
+		width:96px;
+		height:96px;
 		overflow:hidden;
-		display:block;
-		margin-right:10px;
 	}
 	
 	.thumbImg img {
@@ -183,6 +181,22 @@
 	.each-row, .each-row div{
 		padding-left: 8px;
 	} 
+	
+	.category {
+    border-bottom: 1px solid rgba(239,144,14,0.3);
+    color: rgb(0, 0, 0, 0.2) !important;
+    height:36px;
+    line-height:36px;
+	}
+	
+	.price_wrap {
+		font-size:1.1rem;
+	}	
+	
+	.col-1, .col-2 {
+		padding-right:13px;
+		padding-left:13px;
+	}
 </style>
 	<div class="container-mypage " role="main">
 		<div class="row card-wrap  text-center">
@@ -378,8 +392,7 @@
  	    			</div>
 				<br>
 				<div class="row">
-								<div class="row">
-									<div class="col-2"><a href="<%=vo.getES_ORDER_PIC()%>">
+									<div class="col-2 thumbImg"><a href="<%=vo.getES_ORDER_PIC()%>">
 							    		<img src="<%=vo.getES_ORDER_PIC()%>"></a></div>
 							    		<div class="col-10">
 						    				<div class="row category">
@@ -388,14 +401,13 @@
 						    					<div class="col-1">종류</div>
 				    							<div class="col-1">결제수단</div>
 			    								<div class="col-2">상태</div>
-			    								<div class="col-2 text-right">금액</div>
+			    								<div class="col-2">금액</div>
 			    								<div class="col-2">기타</div>
 			                                </div>
 			                              	<div class="row values">
-			  			    					<a href="'+url+retVal.myPaidOrder[j].PRODUCT_NUM+'">
-			  			    					<div class="col-2"><b><%=vo.getES_ORDER_TITLE()%></b>
-			  				    					 <p><%=vo.getES_ORDER_MEMO()%></p></a></div>
-			  				    				<div class="col-2"><a href="workshop_page.my?ES_ORDER_WORKSHOP=<%=vo.getES_ORDER_WORKSHOP()%>">vo.getES_ORDER_WORKSHOP()</a></div>
+			  			    					<a href="estimate_detail.es?ESTIMATE_NUM=<%=vo.getES_ORDER_ESTIMATE()%>">
+			  			    					<div class="col-2"><b><%=vo.getES_ORDER_TITLE()%></b></a><p><%=vo.getES_ORDER_MEMO()%></p></div>
+			  				    				<div class="col-2"><a href="workshop_page.my?ES_ORDER_WORKSHOP=<%=vo.getES_ORDER_WORKSHOP()%>"><%=vo.getES_ORDER_WORKSHOP()%></a></div>
 			  				    				<div class="col-1"><%=vo.getES_ORDER_CATEGORY() %></div>
 			  				    				<div class="col-1"><%=vo.getES_ORDER_PAYMENT() %></div>
 			  				    				<div class="col-2">
@@ -431,43 +443,41 @@
 														}
 												%>			
 												</div>
-			  				    				<div class="price_wrap col-2">
-			  				    					<span><%=vo.getES_ORDER_PRICE() %>원</span></b>  
-								    			</div>
+			  				    				<div class="price_wrap col-2"><span><%=dfmp.format(vo.getES_ORDER_PRICE()) %></span></div>
 								    			<div class="col-2">
 								    			
-											<%
-												if (eoState == 0) {
-											%>
-											<button class="btn btn-outline-dark btn_pay"
-												onclick="location.href='mypage_estimate_checkout.my?ES_ORDER_NUM=<%=vo.getES_ORDER_NUM()%>'">결제</button>
-											<%
-												} else if (eoState < 4) {
-											%>
-											<button class="btn btn-outline-dark btn_modify"
-												onclick="location.href='mypage_estimate_updateForm.my?ES_ORDER_NUM=<%=vo.getES_ORDER_NUM()%>'">배송정보
-												수정</button> 
-											<button class="btn btn-outline-dark btn_modify"
-												onclick="window.open('/NAGAGU/chatRoom.ch?ES_ORDER_NUM=<%=vo.getES_ORDER_NUM()%>', '1:1채팅방', 'width=400 height=740')">1:1 채팅</button> <%
-											 	}
-											 			if (eoState < 4) {
-											 %>
-																			<button class="btn btn-outline-dark btn_cancel"
-																				es_num=<%=vo.getES_ORDER_ESTIMATE()%>
-																				offer_num=<%=vo.getES_ORDER_OFFER()%>>취소</button> <%
-											 	} else if (eoState >= 4) {
-											 %>
-																			<button class="btn btn-outline-dark btn_return">A/S</button>
-																			<button class="btn btn-outline-dark btn_return">반품</button> <%
-											 	}
-											 %>
-											</div>
-						    				</div></div>
+												<%
+													if (eoState == 0) {
+												%>
+												<button class="btn btn-outline-dark btn_pay"
+													onclick="location.href='mypage_estimate_checkout.my?ES_ORDER_NUM=<%=vo.getES_ORDER_NUM()%>'">결제</button>
+												<%
+													} else if (eoState < 4) {
+												%>
+												<button class="btn btn-outline-dark btn_modify"
+													onclick="location.href='mypage_estimate_updateForm.my?ES_ORDER_NUM=<%=vo.getES_ORDER_NUM()%>'">배송정보
+													수정</button> 
+												<button class="btn btn-outline-dark btn_modify"
+													onclick="window.open('/NAGAGU/chatRoom.ch?ES_ORDER_NUM=<%=vo.getES_ORDER_NUM()%>', '1:1채팅방', 'width=400 height=740')">1:1 채팅</button> <%
+												 	}
+												 			if (eoState < 4) {
+												 %>
+																				<button class="btn btn-outline-dark btn_cancel"
+																					es_num=<%=vo.getES_ORDER_ESTIMATE()%>
+																					offer_num=<%=vo.getES_ORDER_OFFER()%>>취소</button> <%
+												 	} else if (eoState >= 4) {
+												 %>
+																				<button class="btn btn-outline-dark btn_return">A/S</button>
+																				<button class="btn btn-outline-dark btn_return">반품</button> <%
+												 	}
+												 %>
+												</div>
 						    				</div>
-			</div>
-		</div>
+						    			</div>
+								</div>
+				</div>
 		<%
-			}
+				}
 			}
 		%>
 			
