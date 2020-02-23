@@ -36,6 +36,7 @@
 	<input type="hidden" id="search_category" name="search_category">
 	<input type="hidden" id="wo_category" name="wo_category">
 	<input type="hidden" id="wo_state" name="wo_state">
+	<input type="hidden" id="wo_page" name="page">
 </form>
 
 <!-- 리스트 폼 끝 -->
@@ -271,6 +272,7 @@
 				            	break;	
 				            }
 				            
+				            
 				            output += '</td>';
 				            output += '<td id="offer_price_' + item.OFFER_NUM + '" scope="col" >' + addComma(item.OFFER_PRICE) + '</td>';
 				            output += '<td scope="col" >' + es_date + '</td>';
@@ -290,6 +292,27 @@
 						});
 						
 						/* 페이지네이션 */
+						
+				            var nowpage = item.page;
+				            var maxpage = item.maxpage;
+				            var startpage = item.startpage;
+				            var endpage = item.endpage;
+				            var startRow = item.startRow;
+				            var endRow = item.endRow;
+				            
+							pagination += '<li class="page-item" cursor: "pointer" value=0><a class="page-link" href="#">처음</a></li>';
+							pagination += '<li class="page-item" cursor: "pointer" value=' + Num(startpage - 1) + '><a class="page-link" href="#">이전</a></li>';
+							
+							for (var page = startpage; page < endpage; page++) {
+								pagination += '<li class="page-item';
+								if (page == nowpage) {
+									pagination += ' currentPage';
+								}
+								pagination += '" cursor: "pointer" value=' + page + '><a class="page-link" href="#">' + Num(page + 1) + '</a></li>';
+							}
+							
+							pagination += '<li class="page-item" cursor: "pointer"><a class="page-link" href="#">다음</a></li>';
+							pagination += '<li class="page-item" cursor: "pointer"><a class="page-link" href="#">끝</a></li>';
 					}
 					
 					$('#work_store > tbody').html(output);
@@ -301,6 +324,12 @@
 				}
 			});
 		}
+		
+		$(document).delegate('.page-item','click' , function() {
+			var pageLink = $(this).attr('value');
+			$('#wo_page').val(pageLink);
+			getList();
+		});
 		
 		
 	    function setSelect() {
