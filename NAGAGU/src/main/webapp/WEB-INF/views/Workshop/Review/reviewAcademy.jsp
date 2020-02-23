@@ -138,16 +138,17 @@
         <table class="table" id="work_store">
 		    <thead>
 			    <tr class="text-center">
-					<th style="width: 5%;">번호</th>
+					<th style="width: 3%;">번호</th>
 					<th style="width: 5%;">상태</th>
 					<th style="width: 7%;">카테고리</th>
 					<th style="width: 10%;">클래스</th>
 					<th style="width: 5%;">지역</th>
-					<th style="width: 5%;">작성자</th>
-					<th style="width: 15%;">강의명</th>
+					<th style="width: 10%;">작성자</th>
+					<th style="width: 18%;">강의명</th>
 					<th style="width: 5%;">평점</th>
-					<th style="width: 33%;">후기 내용</th>
+					<th style="width: 22%;">후기 내용</th>
 					<th style="width: 10%;">작성날짜</th>
+					<th style="width: 5%;">상세</th>
 			    </tr>
 		    </thead>
 		    <tbody id="ClassReviewList"></tbody>

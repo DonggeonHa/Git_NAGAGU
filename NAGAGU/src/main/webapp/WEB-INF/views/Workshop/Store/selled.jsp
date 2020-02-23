@@ -109,8 +109,8 @@
 			<thead>
 				<tr class="text-center">
 					<th style="width: 5%;"><input id="all_select" type="checkbox"></th>
-					<th style="width: 10%;">번호</th>
-					<th style="width: 15%;">주문번호</th>
+					<th style="width: 5%;">번호</th>
+					<th style="width: 20%;">주문번호</th>
 					<th style="width: 15%;">주문내역</th>
 					<th style="width: 10%;">주문상태</th>
 					<th style="width: 10%;">결제수단</th>

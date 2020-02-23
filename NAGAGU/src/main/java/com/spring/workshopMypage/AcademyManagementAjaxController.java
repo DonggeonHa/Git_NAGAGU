@@ -117,7 +117,32 @@ public class AcademyManagementAjaxController {
 		return retVal;
 	}
 	
-	
+	@PostMapping(value="/deleteClassMember.my", produces = "application/json;charset=UTF-8")
+	public Map<String, Object> deleteClassMember(@RequestParam(value="checkArray[]") List<Integer> deleteList) {
+		Map<String, Object> retVal = new HashMap<String, Object>();
+		
+		try {
+			ArrayList<Integer> deleteArray = new ArrayList<Integer>();
+			
+			for(int i=0; i<deleteList.size(); i++) {
+				deleteArray.add(deleteList.get(i));
+				System.out.println(deleteList.get(i));
+			}
+			
+			int result = academyManagementService.selectDeleteMember(deleteArray);
+			
+			if(result != 0) {
+				retVal.put("res", "OK");
+			} else {
+				retVal.put("res", "FAIL");
+			}
+		} catch (Exception e) {
+			retVal.put("res", "FAIL");
+			e.getMessage();
+		}
+		
+		return retVal;
+	}
 	
 	
 //-------------------------------------강의 리뷰 ,문의
@@ -189,8 +214,33 @@ public class AcademyManagementAjaxController {
 	
 	
 	
+	//대시보드
+	@PostMapping(value="/dashboardQnaList.my", produces = "application/json;charset=UTF-8")
+	public ArrayList<Map<String, Object>> productQnaList(HttpSession session){
+		System.out.println("classQnaList 컨트롤러 start!");
+		
+		int WORKSHOP_NUM = (int)session.getAttribute("WORKSHOP_NUM");
+		System.out.println("WORKSHOP_NUM="+WORKSHOP_NUM);
+		
+		ArrayList<Map<String, Object>> qnaList = null;
+		qnaList = academyManagementService.getDashboardQna(WORKSHOP_NUM);
+		
+		
+		return qnaList;
+	}
 	
-	
+	@PostMapping(value="getDashBoardReviewList.my", produces = "application/json;charset=UTF-8")
+	public ArrayList<Map<String, Object>> reviewList(HttpSession session){
+		int WORKSHOP_NUM = (int)session.getAttribute("WORKSHOP_NUM");
+		ArrayList<Map<String, Object>> reviewList = null;
+		
+		reviewList = academyManagementService.getDashboardReviewList(WORKSHOP_NUM);
+		
+		System.out.println(reviewList.size());
+		
+		return reviewList;
+		
+	}
 	
 	
 	

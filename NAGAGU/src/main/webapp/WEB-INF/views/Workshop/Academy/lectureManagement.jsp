@@ -10,13 +10,12 @@
 
 %>
 <style>
-	   .btn_search {
-       width:55px;
-       border-radius: 4px;
-       border:1px solid orangered;
-       color:orangered; 
+   .btn_search {
+      width:55px;
+      border-radius: 4px;
+      border:1px solid orangered;
+      color:orangered; 
    }
-   
    
    .btn_search:hover {
        color: #1b1b27;
@@ -62,7 +61,6 @@
 		</div>
 
 		<div class="d-flex justify-content-start pb-2">
-		    <button type="button" id="selectall" class="btn btn-sm btn-outline-dark mr-2">전체표시</button>        
 		    <button type="button" id="selectClass" class="btn btn-sm btn-outline-dark mr-2">선택 강의종료</button>                
 		    <span class="listnum_txt pt-2">전체 문의내역</span>
 		    <span class="listnum_num pt-2"></span>
@@ -71,14 +69,17 @@
 		
 		<div class="d-flex justify-content-between pb-2">
 			<div class="justify-content-start" style="padding: 0;">
-				<div class="">
-					<select class="search_hidden_state form-control" id="selectClassType" name="selectClassType" onchange="btn_select()" style="height: 100%;">
-						<option value="allClass">전체</option>
-						<option value="inClass">강의중</option>
-						<option value="endClass">강의종료</option>
-						<option value="onedayClass">원데이클래스</option>
-						<option value="regularClass">정규클래스</option>
-			    	</select>
+				<div class="d-flex justify-content-start">
+					<button type="button" id="all_select" class="btn btn-sm btn-outline-dark mr-2">전체표시</button>
+					<div class="select1">
+						<select class="search_hidden_state form-control" id="selectClassType" name="selectClassType" onchange="btn_select()"  style="height: 33px;">
+							<option value="allClass">전체</option>
+							<option value="inClass">강의중</option>
+							<option value="endClass">강의종료</option>
+							<option value="onedayClass">원데이클래스</option>
+							<option value="regularClass">정규클래스</option>
+				    	</select>
+			    	</div>
 				</div>
 			</div>
 			<div class="justify-content-end" style="padding: 0;">
@@ -109,16 +110,16 @@
             <table class="table table-hover" id="work_store">
                 <thead>
 	                <tr>
-	                    <th style="width: 5%;" class="th1"><input id="all_select" type="checkbox"></th>
-	                    <th style="width: 5%;" class="th3">상태</th>
-	                    <th style="width: 5%;" class="th4">지역</th>
-	                    <th style="width: 10%;" class="th5">가격</th>
-						<th style="width: 10%;" class="th11">클래스</th>
-	                    <th style="width: 30%;" class="th6">강의명</th>
-	                    <th style="width: 10%;" class="th7">카테고리</th>
-	                    <th style="width: 15%;" class="th8">일시</th>
-	                    <th style="width: 5%;" class="th9">회원수</th>
-	                    <th style="width: 5%;" class="th10">관리</th>                    
+	                    <th style="width: 5%;"><input id="all_select" type="checkbox"></th>
+	                    <th style="width: 5%;">상태</th>
+	                    <th style="width: 5%;" >지역</th>
+	                    <th style="width: 10%;">가격</th>
+						<th style="width: 10%;" >클래스</th>
+	                    <th style="width: 30%;">강의명</th>
+	                    <th style="width: 10%;">카테고리</th>
+	                    <th style="width: 15%;">일시</th>
+	                    <th style="width: 5%;">회원수</th>
+	                    <th style="width: 5%;">관리</th>                    
 	                </tr>
                 </thead>
                 <tbody id="academyList">
@@ -131,19 +132,57 @@
 		</div>
 	</div>
 </div>
-
+<style>
+	.btn_search {
+	    width:55px;
+	    border-radius: 4px;
+	    border:1px solid orangered;
+	    color:orangered; 
+	}
+	
+	
+	.btn_search:hover {
+	    color: #1b1b27;
+	    background-color: #ef902e;
+	    box-shadow: 200px 0 0 0 #ef902e inset,
+	                -200px 0 0 0 #ef902e inset;
+	}
+	.dropdown{
+		padding: 2px 4px;
+	}
+	.dropbtn {
+	    width:68px;
+	    border-radius: 4px;
+	    border:1px solid orangered;
+	    color:orangered;    
+	}
+	
+	.dropbtn:hover {
+	    color: #1b1b27;
+	    background-color: #ef902e;
+	    box-shadow: 200px 0 0 0 #ef902e inset,
+	                -200px 0 0 0 #ef902e inset;
+	}
+	.btn_modify {
+	    border-radius: 4px;
+	    border: 1px solid orangered;
+	    color: orangered;
+	    font-size: 14px;
+	    background: white;
+	}
+</style>
 <script>
 	$(document).ready(function(){
-	    var all_check = false;
-	
+		var all_check = false;
+		
 	    $("#all_select").click(function() {
 	        if (all_check == false) {
-	                $("input[type=checkbox]").prop("checked",true);
-	                all_check = true;
+                $("input[type=checkbox]").prop("checked",true);
+                all_check = true;
 	        }
 	        else {
-	                $("input[type=checkbox]").prop("checked",false);
-	                all_check = false;
+                $("input[type=checkbox]").prop("checked",false);
+                all_check = false;
 	        }
 	        
 	    });
@@ -160,14 +199,23 @@
 	function category() {
 		$('#searchType').html('카테고리');
 		$('#searchType').val('category');
-		$('#searchType').css('width','80px');
+		$('#searchType').css('width','83px');
 	}
     
 	
 	$("#keyword").keyup(function(event){
+		var searchType = $('#searchType').val();
+		var keyword = $('#keyword').val();
+		
 		if (event.keyCode == 13) {
+			if(!keyword || !searchType){
+				alertify.alert("카테고리 선택,검색어를 입력하세요.");
+				classList();
+				return false;
+			}
+			
 			event.preventDefault();
-			keyupSearch(event);
+			search(event);
 			return;
 		}
 	});
@@ -184,8 +232,12 @@
 	function classList() {
 		$('#remo').remove();
 		$('#academyList').empty();
+		$('#list_none').empty();
+		
 		var selectClassType = $("#selectClassType option:selected").val();	//필터 값 가져오기
 		var title = "";
+		var output = '';
+		
 		$.ajax({
 			url: '/NAGAGU/classManagementList.my',
 			type: 'POST',
@@ -195,63 +247,68 @@
 			success: function(data) {
 				$('.listnum_num').text(data.length+"건");
 				console.log(data);
-				$.each(data, function(index, item) {
-					var output = ' ';
-					output += '<tr>';
-					output += '<td><input type="checkbox" name="chk_status" value="'+ item.class_NUMBER + '"></td>';
-					
-					if(item.class_STATUS == 0) {
-						output += '<td>' + "강의종료" + '</td>';
-					} else if(item.class_STATUS == 1) {
-						output += '<td>' + "강의중" + '</td>';
-					}
-					
-					output += '<td>' + item.class_AREA + '</td>';
-					output += '<td>' + item.class_AMOUNT + '</td>';
-					output += '<td>' + item.class_DIVISION + '</td>';
-					
-					if(item.class_NAME.length >= 14) {
-						title = item.class_NAME.substr(0,14)+"...";
+				if(data.length != 0) {
+					$.each(data, function(index, item) {
 						
-						output += '<td><a href="classdetail.ac?CLASS_NUMBER=' + item.class_NUMBER + '">' + title + '</a></td>';
-					} else {
-						output += '<td><a href="classdetail.ac?CLASS_NUMBER=' + item.class_NUMBER + '">' + item.class_NAME + '<a/></td>';
-					}
-					
-					switch(item.class_CATEGORY){
-		        	    case 'table' :
-		        	    	output += '<td>책상</td>';
-		        	        break;
-		        	    case 'chair' :
-		        	    	output += '<td>의자</td>';
-		        	        break;
-		        	    case 'bookshelf' :
-		        	    	output += '<td>책장</td>';
-		        	        break;
-		        	    case 'bed' :
-		        	    	output += '<td>침대</td>';
-		        	        break;
-		        	    case 'drawer' :
-		        	    	output += '<td>서랍장</td>';
-		        	        break;
-		        	    case 'sidetable' :
-		        	    	output += '<td>협탁</td>';
-		        	        break;
-		        	    case 'dressing_table' :
-		        	    	output += '<td>화장대</td>';
-		        	        break;
-		        	    case 'others' :
-		        	    	output += '<td>기타</td>';
-		        	        break;
-	     			}
-					
-					output += '<td>' + item.class_DATE_CONFIGURATION_1 + ' ~ ' + item.class_DATE_CONFIGURATION_2  + '</td>';
-					output += '<td>' + item.class_COUNT_MEMBER + '</td>';
-					output += '<td><button class="btn_modify" onclick="updateClass(' + item.class_NUMBER + ')">' + "수정" + '</button></td>';
-					output += '</tr>';
-					
-					$('#academyList').append(output);
-				});
+						output += '<tr>';
+						output += '<td><input type="checkbox" name="chk_status" value="'+ item.class_NUMBER + '"></td>';
+						
+						if(item.class_STATUS == 0) {
+							output += '<td>' + "강의종료" + '</td>';
+						} else if(item.class_STATUS == 1) {
+							output += '<td>' + "강의중" + '</td>';
+						}
+						
+						output += '<td>' + item.class_AREA + '</td>';
+						output += '<td>' + item.class_AMOUNT + '</td>';
+						output += '<td>' + item.class_DIVISION + '</td>';
+						
+						if(item.class_NAME.length >= 14) {
+							title = item.class_NAME.substr(0,14)+"...";
+							
+							output += '<td><a href="classdetail.ac?CLASS_NUMBER=' + item.class_NUMBER + '">' + title + '</a></td>';
+						} else {
+							output += '<td><a href="classdetail.ac?CLASS_NUMBER=' + item.class_NUMBER + '">' + item.class_NAME + '<a/></td>';
+						}
+						
+						switch(item.class_CATEGORY){
+			        	    case 'table' :
+			        	    	output += '<td>책상</td>';
+			        	        break;
+			        	    case 'chair' :
+			        	    	output += '<td>의자</td>';
+			        	        break;
+			        	    case 'bookshelf' :
+			        	    	output += '<td>책장</td>';
+			        	        break;
+			        	    case 'bed' :
+			        	    	output += '<td>침대</td>';
+			        	        break;
+			        	    case 'drawer' :
+			        	    	output += '<td>서랍장</td>';
+			        	        break;
+			        	    case 'sidetable' :
+			        	    	output += '<td>협탁</td>';
+			        	        break;
+			        	    case 'dressing_table' :
+			        	    	output += '<td>화장대</td>';
+			        	        break;
+			        	    case 'others' :
+			        	    	output += '<td>기타</td>';
+			        	        break;
+		     			}
+						
+						output += '<td>' + item.class_DATE_CONFIGURATION_1 + ' ~ ' + item.class_DATE_CONFIGURATION_2  + '</td>';
+						output += '<td>' + item.class_COUNT_MEMBER + '</td>';
+						output += '<td><button class="btn_modify" onclick="updateClass(' + item.class_NUMBER + ')">' + "수정" + '</button></td>';
+						output += '</tr>';
+						
+						$('#academyList').append(output);
+					});
+				} else{
+					output += '등록된 강의가 없습니다.';
+					$('#list_none').append(output);
+				}
 				page();
 			},
 			error: function() {
@@ -260,109 +317,30 @@
 		});
 	}
 	
-	$(document).on('click', '#btn_search', function(event) {
-		$('#remo').remove();
-		var searchType = $('#searchType').val();
-		var keyword = $('#keyword').val();
-		var title = "";
-		
-		$('#academyList').empty();
-		
-		if(!keyword || !searchType){
-			alertify.alert("카테고리 선택, 검색어를 입력하세요.");
-			classList();
-			return false;
-		}
-		
-		$.ajax({
-			url: '/NAGAGU/searchTypeList.my',
-			type: 'POST',
-			data: {"searchType" : searchType, "keyword" : keyword},
-			dataType: 'json',
-			contentType: 'application/x-www-form-urlencoded; charset=utf-8',
-			success: function(data) {
-				$('.listnum_num').text(data.length+"건");
-				console.log(data);
-				$.each(data, function(index, item) {
-					
-					var output = ' ';
-					output += '<tr>';
-					output += '<td><input type="checkbox" name="chk_status" value="'+ item.class_NUMBER + '"></td>';
-					
-					if(item.class_STATUS == 0) {
-						output += '<td>' + "강의종료" + '</td>';
-					} else if(item.class_STATUS == 1) {
-						output += '<td>' + "강의중" + '</td>';
-					}
-					
-					output += '<td>' + item.class_AREA + '</td>';
-					output += '<td>' + item.class_AMOUNT + '</td>';
-					output += '<td>' + item.class_DIVISION + '</td>';
-					
-					if(item.class_NAME.length >= 14) {
-						title = item.class_NAME.substr(0,14)+"...";
-						
-						output += '<td><a href="classdetail.ac?CLASS_NUMBER=' + item.class_NUMBER + '">' + title + '</a></td>';
-					} else {
-						output += '<td><a href="classdetail.ac?CLASS_NUMBER=' + item.class_NUMBER + '">' + item.class_NAME + '<a/></td>';
-					}
-					
-					switch(item.class_CATEGORY){
-		        	    case 'table' :
-		        	    	output += '<td>책상</td>';
-		        	        break;
-		        	    case 'chair' :
-		        	    	output += '<td>의자</td>';
-		        	        break;
-		        	    case 'bookshelf' :
-		        	    	output += '<td>책장</td>';
-		        	        break;
-		        	    case 'bed' :
-		        	    	output += '<td>침대</td>';
-		        	        break;
-		        	    case 'drawer' :
-		        	    	output += '<td>서랍장</td>';
-		        	        break;
-		        	    case 'sidetable' :
-		        	    	output += '<td>협탁</td>';
-		        	        break;
-		        	    case 'dressing_table' :
-		        	    	output += '<td>화장대</td>';
-		        	        break;
-		        	    case 'others' :
-		        	    	output += '<td>기타</td>';
-		        	        break;
-	     			}
-					
-					output += '<td>' + item.class_DATE_CONFIGURATION_1 + ' ~ ' + item.class_DATE_CONFIGURATION_2  + '</td>';
-					output += '<td>' + item.class_COUNT_MEMBER + '</td>';
-					output += '<td><button class="btn_modify" onclick="updateClass(' + item.class_NUMBER + ')">' + "수정" + '</button></td>';
-					output += '</tr>';
-					
-					$('#academyList').append(output);
-				});
-				page();
-			},
-			error: function() {
-				alert("ajax 통신 실패!");
-			}
-		});
-		event.preventDefault();
-	});
 	
-	function keyupSearch(event) {
+	$(document).on('click', '#btn_search', function(event) {
 		var searchType = $('#searchType').val();
 		var keyword = $('#keyword').val();
-		var title = "";
-		$('#remo').remove();
-		
-		$('#academyList').empty();
 		
 		if(!keyword || !searchType){
 			alertify.alert("카테고리 선택,검색어를 입력하세요.");
 			classList();
 			return false;
 		}
+
+		search(event);
+	});
+	
+	function search(event){
+		$('#remo').remove();
+		var searchType = $('#searchType').val();
+		var keyword = $('#keyword').val();
+		var title = "";
+		var output = '';
+		
+		$('#academyList').empty();
+		$('#list_none').empty();
+		
 		$.ajax({
 			url: '/NAGAGU/searchTypeList.my',
 			type: 'POST',
@@ -372,39 +350,68 @@
 			success: function(data) {
 				$('.listnum_num').text(data.length+"건");
 				console.log(data);
-				$.each(data, function(index, item) {
-					
-					var output = ' ';
-					output += '<tr>';
-					output += '<td><input type="checkbox" name="chk_status"></td>';
-					
-					if(item.class_STATUS == 0) {
-						output += '<td>' + "준비중" + '</td>';
-					} else if(item.class_STATUS == 1) {
-						output += '<td>' + "강의중" + '</td>';
-					} else {
-						output += '<td>' + "강의종료" + '</td>';
-					}
-					output += '<td>' + item.class_AREA + '</td>';
-					output += '<td>' + item.class_AMOUNT + '</td>';
-					output += '<td>' + item.class_DIVISION + '</td>';
-					
-					if(item.class_NAME.length >= 14) {
-						title = item.class_NAME.substr(0,14)+"...";
+				if(data.length != 0) {
+					$.each(data, function(index, item) {
 						
-						output += '<td><a href="classdetail.ac?CLASS_NUMBER=' + item.class_NUMBER + '">' + title + '</a></td>';
-					} else {
-						output += '<td><a href="classdetail.ac?CLASS_NUMBER=' + item.class_NUMBER + '">' + item.class_NAME + '<a/></td>';
-					}
-					
-					output += '<td>' + item.class_CATEGORY + '</td>';
-					output += '<td>' + item.class_DATE_CONFIGURATION_1 + ' ~ ' + item.class_DATE_CONFIGURATION_2  + '</td>';
-					output += '<td>' + item.class_COUNT_MEMBER + '</td>';
-					output += '<td><button class="btn_modify" onclick="updateClass(' + item.class_NUMBER + ')">' + "수정" + '</button></td>';
-					output += '</tr>';
-					
-					$('#academyList').append(output);
-				});
+						output += '<tr>';
+						output += '<td><input type="checkbox" name="chk_status" value="'+ item.class_NUMBER + '"></td>';
+						
+						if(item.class_STATUS == 0) {
+							output += '<td>' + "강의종료" + '</td>';
+						} else if(item.class_STATUS == 1) {
+							output += '<td>' + "강의중" + '</td>';
+						}
+						
+						output += '<td>' + item.class_AREA + '</td>';
+						output += '<td>' + item.class_AMOUNT + '</td>';
+						output += '<td>' + item.class_DIVISION + '</td>';
+						
+						if(item.class_NAME.length >= 14) {
+							title = item.class_NAME.substr(0,14)+"...";
+							
+							output += '<td><a href="classdetail.ac?CLASS_NUMBER=' + item.class_NUMBER + '">' + title + '</a></td>';
+						} else {
+							output += '<td><a href="classdetail.ac?CLASS_NUMBER=' + item.class_NUMBER + '">' + item.class_NAME + '<a/></td>';
+						}
+						
+						switch(item.class_CATEGORY){
+			        	    case 'table' :
+			        	    	output += '<td>책상</td>';
+			        	        break;
+			        	    case 'chair' :
+			        	    	output += '<td>의자</td>';
+			        	        break;
+			        	    case 'bookshelf' :
+			        	    	output += '<td>책장</td>';
+			        	        break;
+			        	    case 'bed' :
+			        	    	output += '<td>침대</td>';
+			        	        break;
+			        	    case 'drawer' :
+			        	    	output += '<td>서랍장</td>';
+			        	        break;
+			        	    case 'sidetable' :
+			        	    	output += '<td>협탁</td>';
+			        	        break;
+			        	    case 'dressing_table' :
+			        	    	output += '<td>화장대</td>';
+			        	        break;
+			        	    case 'others' :
+			        	    	output += '<td>기타</td>';
+			        	        break;
+		     			}
+						
+						output += '<td>' + item.class_DATE_CONFIGURATION_1 + ' ~ ' + item.class_DATE_CONFIGURATION_2  + '</td>';
+						output += '<td>' + item.class_COUNT_MEMBER + '</td>';
+						output += '<td><button class="btn_modify" onclick="updateClass(' + item.class_NUMBER + ')">' + "수정" + '</button></td>';
+						output += '</tr>';
+						
+						$('#academyList').append(output);
+					});
+				} else{
+					output += '검색 결과가 없습니다.';
+					$('#list_none').append(output);
+				}
 				page();
 			},
 			error: function() {

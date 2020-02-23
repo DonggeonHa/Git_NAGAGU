@@ -42,6 +42,7 @@
 	.title{
 		padding: 13px;
     	font-weight: bold;
+    	border-bottom: 1px solid #cacaca;
 	}
 	
 	#qna{
@@ -62,6 +63,9 @@
 	#store_num{
 		color: red;
 		font-weight: bold;
+	}
+	#th-s {
+		padding: 2px;
 	}
 </style>
 
@@ -89,17 +93,11 @@
 		</div>
 		<div class="d-flex justify-content-between col-12" style="padding-top: 0; padding-bottom: 0;">
 			<div class="col-6 justify-content-start p-2 box" style="background-color: white; padding-left: 20px;"> 
-				<div class="title"><span>상품 후기</span><a id="qna" href="workshop_review_qnaAcademy.ws"><span style="font-size: 12px;">더보기</span></a></div>
-			<div id="ReviewSection">
-				<div id="ReviewWrapSection" class="pb-1">
-					<div id="ReviewtableSection" class="pb-2">
-					</div>
-				</div>
-			</div>		
-			
-			
+				<div class="title"><span>상품 후기</span><a id="qna" href="workshop_review_Store.ws"><span style="font-size: 12px;">더보기</span></a></div>
+				<div id="ReviewtableSection" style="padding: 13px 13px 0px; font-size: 12px;">
+				</div>	
 			</div>
-			<div class="col-6 justify-content-end p-2 box" style="background-color: white;"> 
+			<div class="col-6 justify-content-end box" style="background-color: white;"> 
 				<canvas id="chart-area2"></canvas>
 			</div>
 		</div>
@@ -109,11 +107,11 @@
 				<table id="ClassQnaTable">
 					<thead class="dashboardQna">
 					<tr>
-						<th>번호</th>
-						<th>카테고리</th>
-						<th>강의명</th>
-						<th>작성자</th>
-						<th>문의내용</th>
+						<th id="th-s">번호</th>
+						<th id="th-s">카테고리</th>
+						<th id="th-s">강의명</th>
+						<th id="th-s">작성자</th>
+						<th id="th-s">문의내용</th>
 					</tr>
 					</thead>
 					<tbody id="ClassQnaList">
@@ -176,6 +174,10 @@ canvas {
     text-align: center;
     height: 75%;
     font-size: 13px;
+}
+
+.name {
+	font-weight: bold;
 }
 </style>
 <script>
@@ -297,7 +299,7 @@ function ClassQnaList() {
 				for(var j=0; j<5; j++){
 					
 					output += '<tr class="text-center">';
-					output += '<td>' + qnaList[j].CLASS_NAME + '</td>';
+					output += '<td>' + number + '</td>';
 					var CLASS_CATEGORY = qnaList[j].CLASS_CATEGORY;
 		      		switch(CLASS_CATEGORY){
 			      	    case 'table' : 
@@ -376,62 +378,49 @@ function getReviewList() {
 	$('#remo').empty();
 	$('#ReviewtableSection').empty();	//table 내부 내용을 제거(초기화)
 	$.ajax({
-		url:'/NAGAGU/getReviewList.pro',
+		url:'/NAGAGU/getDashBoardReviewList.my',
 		type:'POST',
-		data : { 'PRODUCT_NUM' : 1 },
 		dataType : "json", // 서버에서 보내줄 데이터 타입
 		contentType : 'application/x-www-form-urlencoded; charset=UTF-8',
-		success:function(retVal) {
-			var reviewCount = retVal.reviewCount;
-			console.log(retVal.reviewList)
-			console.log("retVal.reviewCount : "+retVal.reviewCount)
-			console.log("retVal.reviewList : "+retVal.reviewList)
-			console.log("retVal.review_RE_Count : "+retVal.review_RE_Count)
-			console.log("retVal.review_RE_List : "+retVal.review_RE_List)
+		success:function(reviewList) {
 			
-			if(retVal.reviewCount > 0) {
-				for(var i=0; i<retVal.reviewList.length; i++) {	//reviewCount도 상관 없음
+			if(reviewList.length > 0) {
+				for(var i=0; i<reviewList.length; i++) {	//reviewCount도 상관 없음
 					var output='';
-					var REVIEW_NUM = retVal.reviewList[i].REVIEW_NUM;
-					var MEMBER_PICTURE = retVal.reviewList[i].MEMBER_PICTURE;
-					var MEMBER_NICK = retVal.reviewList[i].MEMBER_NICK;
-					var REVIEW_DATE = new Date(retVal.reviewList[i].REVIEW_DATE);
+					var REVIEW_NUM = reviewList[i].REVIEW_NUM;
+					var MEMBER_PICTURE = reviewList[i].MEMBER_PICTURE;
+					var MEMBER_NICK = reviewList[i].MEMBER_NICK;
+					var REVIEW_DATE = new Date(reviewList[i].REVIEW_DATE);
 					var date = date_format(REVIEW_DATE);
-					var REVIEW_GRADE = retVal.reviewList[i].REVIEW_GRADE;
-					var rate = 20*retVal.reviewList[i].REVIEW_GRADE;
-					var REVIEW_FILE = retVal.reviewList[i].REVIEW_FILE;
-					var REVIEW_CONTENT = retVal.reviewList[i].REVIEW_CONTENT;
-
-					output += '<div class="ReviewAndReplySum pt-2 pb-1" id="ReviewAndReplySum'+ REVIEW_NUM +'">';
-						output += '<div class="ReviewSum" id="ReviewSum'+ REVIEW_NUM +'">';
-							output += '<div class="ReviewList pb-3" id="ReviewList'+ REVIEW_NUM +'">';
-									output += '<div class="row justify-content-center">';
-									output += '<div class="col-1 justify-content-end"><img src="'+ MEMBER_PICTURE +'" alt="" class="rounded-circle"></div>';
-										output += '<div class="col-11">';
-											output += '<div class="row pb-1">';
-												output += '<div class="col-2 justify-content-end name">'+ MEMBER_NICK +'</div>';
-												output += '<div class="col-8 justify-content-center"></div>';
-												output += '<div class="col-2 justify-content-center smallfont">'+ date +'</div>';
-											output += '</div>';
-											output += '<div class="row pb-2">';
-												output += '<div class="col-12" style="font-size:0.7em; font-weight:bold;">'+REVIEW_GRADE+' &nbsp;';
-													output += '<span class="star-rating">';
-														output += '<span style ="width:'+rate+'%"></span>';
-													output += '</span>';
-												output += '</div>';
-											output += '</div>';
-											output += '<div class="row pb-2">';
-												output += '<div class="col-11 pr-0">' + REVIEW_CONTENT + '</div>';
-											output += '</div>';
-										output += '</div>'; // <div class="col-11">
-									output += '</div>'; // <div class="row justify-content-center">
-							output += '</div>'; // <div class="ReviewList pb-3" id="ReviewList'+REVIEW_NUM+'">
-						output += '</div>'; // <div class="ReviewSum" id="ReviewSum'+REVIEW_NUM+'">
-					output += '</div>'; // <div class="ReviewAndReplySum pt-2 pb-1" id="ReviewAndReplySum'+REVIEW_NUM+'">
+					var REVIEW_GRADE = reviewList[i].REVIEW_GRADE;
+					var rate = 20*reviewList[i].REVIEW_GRADE;
+					var REVIEW_FILE = reviewList[i].REVIEW_FILE;
+					var REVIEW_CONTENT = reviewList[i].REVIEW_CONTENT;
+					
+					output += '<div class="row justify-content-center">';
+					output += '<div class="col-1 justify-content-end"><img src="'+ MEMBER_PICTURE +'" alt="" class="rounded-circle"></div>';
+						output += '<div class="col-11">';
+							output += '<div class="row pb-1">';
+								output += '<div class="col-2 justify-content-end name">'+ MEMBER_NICK +'</div>';
+								output += '<div class="col-8 justify-content-center"></div>';
+								output += '<div class="col-2 justify-content-center smallfont">'+ date +'</div>';
+							output += '</div>';
+							output += '<div class="row pb-2">';
+								output += '<div class="col-12" style="font-size:0.7em; font-weight:bold;">'+REVIEW_GRADE+' &nbsp;';
+									output += '<span class="star-rating">';
+										output += '<span style ="width:'+rate+'%"></span>';
+									output += '</span>';
+								output += '</div>';
+							output += '</div>';
+							output += '<div class="row pb-2">';
+								output += '<div class="col-11 pr-0">' + REVIEW_CONTENT + '</div>';
+							output += '</div>';
+						output += '</div>'; // <div class="col-11">
+					output += '</div>'; // <div class="row justify-content-center">
 					$('#ReviewtableSection').append(output);				
 				}					
 			} else {
-				var output = '<div class="justify-content-center pt-3 pb-1" style="text-align:center;">등록된 댓글이 없습니다.</div>';
+				var output = '<div class="justify-content-center pt-5 pb-1" style="text-align:center;">등록된 댓글이 없습니다.</div>';
 				$('#ReviewtableSection').append(output);	//이상한데...!?!?!?
 			}
           },

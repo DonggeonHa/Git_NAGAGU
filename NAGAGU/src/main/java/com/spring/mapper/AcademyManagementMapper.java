@@ -34,5 +34,6 @@ public interface AcademyManagementMapper {
 	
 	//대시보드
 	ArrayList<Map<String, Object>> getDashboardQna(@Param("WORKSHOP_NUM")int WORKSHOP_NUM);
-//	int countOrderState(@Param("number")int number, @Param("WORKSHOP_NUM")int WORKSHOP_NUM);
+	int countOrderState(@Param("number")int number, @Param("WORKSHOP_NUM")int WORKSHOP_NUM);
+	ArrayList<Map<String, Object>> getDashboardReviewList(@Param("WORKSHOP_NUM")int WORKSHOP_NUM);
 }

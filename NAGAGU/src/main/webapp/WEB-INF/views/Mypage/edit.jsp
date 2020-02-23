@@ -217,7 +217,7 @@
 	}
 	
 	.image-upload .image-edit input+label:after, .image-upload .image-edit input+label:after {
-		content: "\f040";
+		content: "\f083";
 		font-family: "FontAwesome";
 		color: #757575;
 		position: absolute;
@@ -247,6 +247,7 @@
 	
 	#imagePreview {
 		background-image: url('<%=MEMBER_PICTURE%>');
+		border-radius: 100px;
 	}
 	
 	.image-upload .image-edit input+label:after, .image-upload .image-edit input+label:after {
@@ -667,12 +668,12 @@
 	    var checkLength = /^[가-힣A-Za-z0-9]{2,12}$/;
 			var str2 = $("#MEMBER_NICK").val();
 		      if(str2==""){
-		    	  alert("최소 2자 이상 입력하세요.");
+		    	  alertify.alert("최소 2자 이상 입력하세요.");
 		    	  return false;
 		      }
 	
 	     if (!checkLength.test(str2)) {
-	   	  alert("입력한 정보를 다시 확인하고 누르세요.")
+	   	  alertify.alert("입력한 정보를 다시 확인하고 누르세요.")
 	         return false;
 	     }
 		      
@@ -691,10 +692,10 @@
 		         $("#nick_chk_btn").attr("value", "Y");
 		         $("#nick_chk").attr("value", str2);
 		         
-		         alert("사용가능한 별명입니다.");
+		         alertify.alert("사용가능한 별명입니다.");
 		      } else { // 실패했다면
 		      	$("#nick_chk_btn").attr("value", "N");
-		         alert("중복된 별명입니다.");
+		         alertify.alert("중복된 별명입니다.");
 		      }
 		   },
 		   error : function() {
@@ -807,13 +808,13 @@
 			var address2 = $('[name=ADDRESS_ADDRESS2]').val();
 			
 			if(nicknamecheckBtn == "N" || nick_submit == false){
-				alert("별명을 다시 확인하세요.");
+				alertify.alert("별명을 다시 확인하세요.");
 			} else if(nicknamecheckBtn =="Y" && nick != nick_chk) {
-				alert("중복체크 버튼을 다시 한번 눌러주세요.");
+				alertify.alert("중복체크 버튼을 다시 한번 눌러주세요.");
 			} else if(phone_chk == false){
-				alert("전화번호를 다시 확인하고 입력해주세요.");
+				alertify.alert("전화번호를 다시 확인하고 입력해주세요.");
 			} else if(zip_code==0){
-				alert("주소를 입력해주세요.");
+				alertify.alert("주소를 입력해주세요.");
 			} else {
 				document.edit_member_form.submit();
 			}
