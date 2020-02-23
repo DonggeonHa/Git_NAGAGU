@@ -268,7 +268,7 @@
 					if(pro.getPRODUCT_STATUS() == 0 || pro.getPRODUCT_STATUS() == 1) {
 	%>		
 		            	<div class="col-4 h-100 items">
-		            		<a href="./productdetail.pro?PRODUCT_NUM=<%=pro.getPRODUCT_NUM()%>&PRODUCT_CATEGORY=<%=pro.getPRODUCT_CATEGORY()%>&page=<%=nowpage%>">	
+		            		<a href="./productdetail.pro?PRODUCT_NUM=<%=pro.getPRODUCT_NUM()%>&PRODUCT_CATEGORY=<%=pro.getPRODUCT_CATEGORY()%>&page=<%=nowpage%>" style="text-decoration: none;">	
 								<div class="row">
 				                    <div class="store_item">
 				                        <div class="store_item_image ">

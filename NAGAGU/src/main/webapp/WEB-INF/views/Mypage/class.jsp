@@ -263,6 +263,7 @@ $(document).ready(function(){
        				alertify.error('강의가 없습니다')
        				return
        			}
+   				output += '<div class="col-12 tab-pane fade show active shadow pb-2 pt-1 mb-2 bg-white rounded" id="nav-waiting" role="tabpanel" aria-labelledby="nav-waiting-tab">'
 	        	for(var j=0; j<retVal.classList.length; j++){
 	        		console.log(retVal)
 	        		//구매날짜
@@ -270,7 +271,7 @@ $(document).ready(function(){
 	        		var b_date = date_format(buy_date); 
 	        		var url = './classdetail.ac?CLASS_NUMBER='
 	        				
-	        		output += '<div class="col-12 tab-pane fade show active shadow pb-2 pt-1 mb-2 bg-white rounded" id="nav-waiting" role="tabpanel" aria-labelledby="nav-waiting-tab">'
+	        		
 	      				output += '<div class="row justify-content-between order_tab">'
 	      				output += '<div><i style="font-size:0.7rem;">'+b_date+'</i>'
 		        		output += '<div><b>주문번호 '+retVal.classList[j].MY_CLASS_DATE+'</b></div></div>' 

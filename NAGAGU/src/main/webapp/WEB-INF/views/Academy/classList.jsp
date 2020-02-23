@@ -60,7 +60,7 @@
 	
 	.title {
 		line-height: 26px;
-		color: #645fab;
+		color: black;
 		font-size: 18px;
 		overflow: hidden;
 		height: 1.2em;
@@ -175,8 +175,8 @@
 						ClassVO cl = (ClassVO)classList.get(i); // 캐스트 연산 필수
 							if(cl.getCLASS_STATUS() == 1) {
 			%>
-								<div class="col mb-3" style="height: 400px;">
-									<a href="./classdetail.ac?CLASS_NUMBER=<%=cl.getCLASS_NUMBER()%>">
+								<div class="col mb-3 pt-3" style="height: 400px;">
+									<a href="./classdetail.ac?CLASS_NUMBER=<%=cl.getCLASS_NUMBER()%>" style="text-decoration: none;">
 										<div class="h-50 pic" style="background:url('/communityupload/image/<%=cl.getCLASS_IMAGE()%>') no-repeat center; background-size:cover;"></div>
 										<div style="border: 1px solid #EAEAEA;">
 											<div class="default" style="margin: 0 5% 3% 5%;">
