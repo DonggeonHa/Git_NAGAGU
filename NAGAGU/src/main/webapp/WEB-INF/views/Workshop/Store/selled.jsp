@@ -315,14 +315,14 @@
 	/*구매내역 상세보기*/
 	$(document).on('click', '.btn_detail', function(event) {
 		var ORDER_AMOUNT = $(this).attr("value");
-		var popupX = (window.screen.width / 2) - (500 / 2); // 만들 팝업창 좌우 크기의 1/2 만큼 보정값으로 뺴주었음
+		var popupX = (window.screen.width / 2) - (1200 / 2); // 만들 팝업창 좌우 크기의 1/2 만큼 보정값으로 뺴주었음
 		var popupY = (window.screen.height / 2) - (630 / 2); // 만들 팝업창 상하 크기의 1/2 만큼 보정값으로 뺴주었음
 		var pop = window.open('about:blank', 'Info', 'scrollbars=yes, resizable=yes, width=1200, height=630, left=' + popupX + ', top=' + popupY);
 		
 		pop.location.href="SproductSelledInfo.my?ORDER_AMOUNT=" + ORDER_AMOUNT;	
 
 	});	
-	/*날짜 형식 변경*/
+	/*날짜 형식 변경. */
 	function date_format(format) {
 		var year = format.getFullYear();
 		var month = format.getMonth() + 1;
