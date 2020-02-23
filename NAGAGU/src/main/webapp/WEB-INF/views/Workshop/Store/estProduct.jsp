@@ -28,21 +28,17 @@
 	#selectState {
 		margin-left:5px;
 	}
-	
 </style>
+
 <div id="page-content-wrapper" style="padding-top: 5%;">
-
-<!-- 리스트 폼 시작 -->
-<form id="listinfo" method="post">
-	<input type="hidden" id="search_category" name="search_category">
-	<input type="hidden" id="search_text" name="search_text">
-	<input type="hidden" id="eo_category" name="eo_category">
-	<input type="hidden" id="eo_state" name="eo_state">
-</form>
-
-<!-- 리스트 폼 끝 -->
-
-
+	<!-- 리스트 폼 시작 -->
+	<form id="listinfo" method="post">
+		<input type="hidden" id="search_category" name="search_category">
+		<input type="hidden" id="search_text" name="search_text">
+		<input type="hidden" id="eo_category" name="eo_category">
+		<input type="hidden" id="eo_state" name="eo_state">
+	</form>
+	<!-- 리스트 폼 끝 -->
 	<div class="container-fluid">
         <div class="pb-5">
             <h1>견적 주문 관리</h1>
@@ -60,7 +56,7 @@
 	    	<div class="justify-content-start" style="padding: 0;">
 				<div class="selector">
 					<select class="search_hidden_state form-control" id="selectCategory" name="selectCategory" style="height: 100%;">
-						<option disabled hidden>가구 종류</option>
+						<option disabled>가구 종류</option>
 						<option value="all">전체</option>
 						<option value="table">책상</option>
 						<option value="chair">의자</option>
@@ -115,8 +111,8 @@
 	            <tr>
 	                <th style="width: 5%;" class="th1" ><input id="all_select" type="checkbox"></th>      
 	                <th style="width: 5%;" class="th2">번호</th>            
-	                <th style="width: 5%;" class="th3">고객명</th>
-	                <th style="width: 22%;" class="th4">제목</th>
+	                <th style="width: 10%;" class="th3">고객명</th>
+	                <th style="width: 17%;" class="th4">제목</th>
 	                <th style="width: 10%;" class="th6">카테고리</th>
 	                <th style="width: 15%;" class="th7">주문금액</th>
 	                <th style="width: 10%;" class="th5">주문날짜</th>
@@ -137,9 +133,7 @@
 			<div id="pagination" class="pagination justify-content-center">
 			</div>
 		</div>
-
-		</div>
-    </div>
+	</div>
 </div>
 
 <script>

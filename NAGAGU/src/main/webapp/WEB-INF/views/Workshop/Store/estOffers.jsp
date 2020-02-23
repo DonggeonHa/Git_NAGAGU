@@ -112,8 +112,8 @@
 	            <tr>
 	                <th style="width: 5%;" class="th1" ><input id="all_select" type="checkbox"></th>      
 	                <th style="width: 5%;" class="th2">번호</th>            
-	                <th style="width: 5%;" class="th3">작성자</th>
-	                <th style="width: 30%;" class="th4">게시물 제목</th>
+	                <th style="width: 10%;" class="th3">작성자</th>
+	                <th style="width: 25%;" class="th4">게시물 제목</th>
 	                <th style="width: 10%;" class="th6">카테고리</th>
 	                <th style="width: 10%;" class="th7">제안가격</th>
 	                <th style="width: 10%;" class="th5">제안날짜</th>
