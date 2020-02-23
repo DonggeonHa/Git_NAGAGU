@@ -77,7 +77,7 @@
 	</select> 
 	<!-- 경태 로그인멤버 강의 후기 가져오기 -->
 	<select id="getLoginMemberReview" parameterType="int" resultMap="hashmapVO">
-		SELECT * FROM CLASS_REVIEW, ACADEMY  WHERE REVIEW_MEMBER=#{MEMBER_NUM} AND CLASS_NUMBER=REVIEW_CLASS
+		SELECT * FROM CLASS_REVIEW, ACADEMY  WHERE REVIEW_MEMBER=#{MEMBER_NUM} AND CLASS_NUMBER=REVIEW_CLASS ORDER BY REVIEW_NUM DESC
 	</select>	
 
 	<select id="getReviewCount" parameterType="java.util.HashMap" resultType="int">

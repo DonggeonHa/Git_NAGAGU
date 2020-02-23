@@ -109,9 +109,11 @@ create sequence store_review_seq
 		SELECT * 
 		FROM PRODUCT_REVIEW, PRODUCT,NAGAGU_MEMBER  
 		WHERE REVIEW_MEMBER=#{MEMBER_NUM} AND PRODUCT_NUM=REVIEW_PRODUCT AND MEMBER_NUM=REVIEW_MEMBER AND REVIEW_RE!=0
+		ORDER BY REVIEW_NUM DESC
 	</select>	
 	<select id="getLoginMemberReview" parameterType="int" resultMap="replyHashmapVO">
 		SELECT * FROM PRODUCT_REVIEW, PRODUCT  WHERE REVIEW_MEMBER=#{MEMBER_NUM} AND PRODUCT_NUM=REVIEW_PRODUCT AND REVIEW_RE=0
+		ORDER BY REVIEW_NUM DESC
 	</select>	
 	
 	<select id="getLoginMemberbyNUM" parameterType="com.spring.member.MemberVO" resultMap="memberReviewResultMap">

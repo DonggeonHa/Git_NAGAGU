@@ -263,7 +263,7 @@
 			        			imgsrc = imgs[0]
 				    		output += '<div class="col-2 each-row">'
 				    		if(imgsrc=='#'){
-					    		output += '<img src="/productupload/image/noimage.png"></div>'
+				    			output += '<img src="${pageContext.request.contextPath}/resources/images/noimage.jpg"></div>'
 				    		}else{
 				    			output += '<a href="./productdetail.pro?PRODUCT_NUM='+retVal.PicsNum[j].PRODUCT_NUM+'">'
 					    		output += '<img src="/productupload/image/'+imgsrc+'"></a></div>'
@@ -319,7 +319,7 @@
 		        				imgsrc = imgs[0]
 				    		output += '<div class="col-2 each-row">'
 				    			if(imgsrc=='#'){
-						    		output += '<img src="/productupload/image/noimage.png"></div>'
+						    		output += '<img src="${pageContext.request.contextPath}/resources/images/noimage.jpg"></div>'
 					    		}else{
 					    			output += '<a href="./classdetail.ac?CLASS_NUMBER='+retVal.PicsNum[j].CLASS_NUMBER+'">'
 					    			output += '<img src="/communityupload/image/'+imgsrc+'"></a></div>'
