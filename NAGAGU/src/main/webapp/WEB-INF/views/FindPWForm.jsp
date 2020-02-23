@@ -188,6 +188,7 @@ function chage_pw() {
 	console.log(sub_pw2);
 	console.log(sub_pw1);
 	if(sub_pw2==true && sub_pw1==true){
+		alertify.alert("비밀번호 변경 완료");
 		document.pw_form.submit();
 	}
 }

@@ -288,9 +288,9 @@ public class MainController {
     @RequestMapping(value = "/mailSending.ma")
     public String mailSending(HttpServletRequest request, @RequestParam("MEMBER_EMAIL") String email) {
      
-      String setfrom = "jieunkim.itit@gmail.com";  //host 메일 주소
+      String setfrom = "nagagu@gmail.com";  //host 메일 주소
       String title = "NAGAGU 인증메일";	//메일 이름
-      String content= "http://localhost:8000/NAGAGU/mailLink.ma?MEMBER_EMAIL=" + email;	//내용
+      String content= "아래 링크를 클릭하세요" + "\n" + "http://localhost:8000/NAGAGU/mailLink.ma?MEMBER_EMAIL=" + email;	//내용
      
       try {
         MimeMessage message = mailSender.createMimeMessage();

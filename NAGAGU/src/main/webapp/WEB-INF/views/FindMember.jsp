@@ -145,6 +145,7 @@ img {vertical-align:top;}
     </section>
 <script type="text/javascript">
 function find_pw_btn(){
+	alertify.alert("임시 비밀번호가 발송 되었습니다. 메일을 확인해주세요.");
 	document.find_pw_form.submit();
 }
 

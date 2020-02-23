@@ -89,7 +89,7 @@
 				</div>	
 			</div>	
 		</div>
-		<div style="height: 620px; overflow-y: auto;">
+		<div style="height: 620px;">
 			<table class="table" id="work_store">
 				<thead>
 					<tr class="text-center">
