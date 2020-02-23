@@ -125,12 +125,21 @@
 					 	<div class="row">
 					 		<div>
 								<select name="PICS_REVIEW" class="form-control">
-									<option value="">전체보기</option>
-									<option value="0">일반</option>
 									<option value="1">후기</option>
+									<option value="2">일반</option>
 								</select>
 							</div>
 					 	</div>	
+					 	<div class="row search_tab justify-content-start ">
+					 		<div class="search_form d-flex mr-5">
+						      <input class="form-control " id="search_product" placeholder="검색..." aria-label="Search">
+						      <button class="btn btn-outline-success my-2 my-sm-0">상품명</button>
+						      <input type="hidden" id="product_num" value="" name="PICS_PRODUCT"></button> 
+						    </div>
+						    <div class="search_form d-flex">
+						      <input class="form-control search_form text-center" id="search_gongbang" placeholder="공방명" aria-label="Search" readonly>
+						   	</div> 
+						</div>
 					</td>
 				</tr>
 				<tr>      
@@ -155,19 +164,6 @@
 						</div>
                 	</td>
                 </tr>
-                <tr>
-					<th>대표이미지 등록</th>
-					<td>
-						<div class="row">
-							<div class="custom-file">
-								<input type="file" name="PICS_MAIN_IMAGE" id="uploadFile"> 
-							</div>
-						</div>
-						<div>
-							<p class="noti">* 정사각형 이미지 추천</p>
-						</div>
-					</td>
-				</tr>
 			</table>
 			<div class="text-center">
 				<input class="btn btn-outline-dark btn-lg" type="reset" value="취소하기">&nbsp;&nbsp;&nbsp;
@@ -180,12 +176,12 @@
 		
 <!-- include summernote css/js -->
 <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.15/dist/summernote.min.js"></script>
-		
+<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 <script>
 	$(document).ready(function() {
 		//값 채우기
 		$('select[name=PICS_CATEGORY]').val('<%=category%>'); 	
-		$('select[name=PICS_REVIEW]').val('<%=review%>')
 		$('select[name=PICS_REVIEW]').val('<%=review%>')
 		
 		var tags = '<%=tags%>';
@@ -255,5 +251,62 @@
 			 	 }
 			  });
 		  }
+		
+		 $(function(){
+	 		$('#search_product').autocomplete({
+				source : function(request,response){
+					 $.ajax({
+						 url: "/NAGAGU/getMyPaidOrder.my",
+						 async: false,
+			             type: "POST",
+			             contentType:
+			 				'application/x-www-form-urlencoded; charset=utf-8',
+			             success: function (retVal){
+			       			 	if(retVal.res=="OK"){
+				       			 console.log(retVal.myPaidOrder)
+				       			 response(
+	                                $.map(retVal.myPaidOrder, function(item){    //json[i] 번째 에 있는게 item 임.
+	                                    return {
+	                                        label: item.PRODUCT_TITLE,     //UI 에서 보여지는 글자, 실제 검색어랑 비교 대상
+	                                        number: item.PRODUCT_NUM,   //그냥 사용자 설정값?
+	                                        gongbang: item.PRODUCT_SHOPNAME   //그냥 사용자 설정값?
+	                                	}
+	                                })
+	                             )
+								}else{
+									alert("update fail");
+								}  
+							 },
+						 error:function(){
+							alert("ajax통신 실패!!");
+						 }
+					});
+				},
+				select: function(event, ui) {
+		            console.log(ui.item);
+		            $('#search_gongbang').val(ui.item.gongbang)
+		            $('#product_num').val(ui.item.number)
+		        },
+		        focus: function(event, ui) {
+		            return false;
+		        }
+			}) 
+			//처음에 숨기고
+	 		if($('select[name=PICS_REVIEW]').val()!=1){
+	 			$('.search_tab').hide().css('margin-top','20px')	
+	 		}else{
+	 			$('.search_tab').show().css('margin-top','20px')	 			
+	 		}
+			$('.search_product').css('margin-right','20px')
+			$('select[name=PICS_REVIEW]').on('change',function(){
+				if($(this).val()==1){
+					$('.search_tab').show()	
+				}
+				if($(this).val()!=1){
+					$('.search_tab').hide()	
+				}
+			})
+			 
+		 });
 	});
-</script>
+</script>		

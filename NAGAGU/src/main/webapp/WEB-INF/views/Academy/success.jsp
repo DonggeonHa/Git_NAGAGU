@@ -127,10 +127,6 @@
 		text-align: center !important;
 	}
 	
-	.nav-link.active {
-		background-color: #EAEAEA !important;
-	}
-	
 	.mbody {
 		padding: 2rem !important;
 	}
@@ -143,7 +139,7 @@
 		margin-top : 30px;
 	}
 </style>
-<div class="container class-detail-container category_ac">
+<div class="container class-detail-container category_ac mt-5" >
 	<div class="text-center">
 		<font size="24;">공방 티켓 구매완료</font> <br>
 		<p>구매가 완료되었습니다. 클래스명과 시간, 장소를 확인해주세요.</p>

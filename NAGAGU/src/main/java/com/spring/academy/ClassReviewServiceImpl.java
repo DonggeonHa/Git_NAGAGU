@@ -156,7 +156,15 @@ public class ClassReviewServiceImpl implements ClassReviewService {
 		return res;
 	}
 	
-
+	//경태<리뷰  리스트 가져오기>
+	@Override
+	public ArrayList<Map<String, Object>> getLoginMemberReview(HashMap<String, Object> map) {
+		ArrayList<Map<String, Object>> reviewList =null;
+		ClassReviewMapper reviewMapper = sqlSession.getMapper(ClassReviewMapper.class);
+		reviewList= reviewMapper.getLoginMemberReview(map);
+		System.out.println("getLoginMemberReview Impl결과="+reviewList);
+		return reviewList;
+	}
 
 
 

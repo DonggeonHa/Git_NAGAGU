@@ -76,8 +76,10 @@
 	<select id="getLoginMemberbyNUM" parameterType="com.spring.member.MemberVO" resultMap="memberReviewResultMap">
 		SELECT * FROM nagagu_member WHERE MEMBER_NUM=#{MEMBER_NUM}
 	</select> 
-
-
+	<!-- 경태 로그인멤버 강의 후기 가져오기 -->
+	<select id="getLoginMemberReview" parameterType="int" resultMap="hashmapVO">
+		SELECT * FROM CLASS_REVIEW, ACADEMY  WHERE REVIEW_MEMBER=#{MEMBER_NUM} AND CLASS_NUMBER=REVIEW_CLASS
+	</select>	
 
 	<select id="getReviewCount" parameterType="java.util.HashMap" resultType="int">
 		SELECT count(*) FROM CLASS_REVIEW WHERE REVIEW_CLASS=#{CLASS_NUMBER} AND REVIEW_RE = 0
