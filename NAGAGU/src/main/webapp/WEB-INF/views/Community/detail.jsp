@@ -222,7 +222,7 @@
             <div class="d-flex justify-content-between title">  
                <div class="col-9 page-tap">  
                   <div>
-                  	<h6><a href="community.cm">COMMUNITY</a> > 상세보기 </h6>
+                  	<h3><a href="community.cm">COMMUNITY</a> > 상세보기 </h3>
                   </div>
               </div> 
               
@@ -250,7 +250,7 @@
                				content="";
             			}
             %>
-            	<div class="col-12">
+            	<div class="col-12 pics_content">
             	<%=picsVO.getPICS_CONTENT()%>
             	</div>
             <%       
@@ -313,23 +313,20 @@
 		<hr />
 		<h3 >REPLY</h3>
 		<!-- 로그인 해야 댓글 창 보임 -->
-		<%-- <c:set var="num" value="<%=MEMBER_NUM%>" />
-		<c:if test="${num != 0}"> --%>
-			<form id="insert_form" class="row justify-content-between"
-				name="commentForm" action="/NAGAGU/insertComment.cm" method="post">
-				<div class="col-1"></div>
-				<div class="col-10">
-					<div class="btn_wrap">
-						<textarea name="PICS_RE_CONTENT" id="text"
-							placeholder="칭찬과 격려의 댓글은 작성자에게 큰 힘이 됩니다:)" style="width: 100%"
-							cols="80" rows="2"></textarea>
-					</div>
+		<form id="insert_form" class="row justify-content-between"
+			name="commentForm" action="/NAGAGU/insertComment.cm" method="post">
+			<div class="col-1"></div>
+			<div class="col-10">
+				<div class="btn_wrap">
+					<textarea name="PICS_RE_CONTENT" id="text"
+						placeholder="칭찬과 격려의 댓글은 작성자에게 큰 힘이 됩니다:)" style="width: 100%"
+						cols="80" rows="2"></textarea>
 				</div>
-				<div class="col-1 text-right">
-					<button type="button" value="등록" id="input_data_jsp">등록</button>
-				</div>
-			</form>
-		<%-- </c:if> --%>
+			</div>
+			<div class="col-1 text-right">
+				<button type="button" value="등록" id="input_data_jsp">등록</button>
+			</div>
+		</form>
 		<!-- 댓글 테이블 끝 -->
 		
 		<div class="comments_table" id="output" style="color: #212529;">
@@ -351,7 +348,9 @@
 					data: {'PRODUCT_NUM':pro_num},
 					contentType:'application/x-www-form-urlencoded; charset=utf-8',
 					success:function(item){
-						console.log(item.vo) 
+						if(item.vo==null){
+							return false;
+						}
 						var p_output ='';
 						var imgsrc=item.vo.product_IMAGE;
 						p_output += '<div class="row product">';

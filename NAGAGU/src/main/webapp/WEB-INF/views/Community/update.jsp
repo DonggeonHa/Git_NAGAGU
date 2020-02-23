@@ -219,8 +219,8 @@
 	/* 썸머노트 부분 */
 	 $(document).ready(function() {
 		$('#summernote1').summernote({
-			width: 670,
-			height: 700,
+			width: 870,
+			height: 900,
 			lang: 'ko-KR',
 			callbacks: {
 				  onImageUpload: function(files) {
