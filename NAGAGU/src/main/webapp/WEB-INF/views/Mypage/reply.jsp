@@ -98,7 +98,11 @@
 	}
 	.content{
 		border-bottom: 1px solid rgba(0,0,0,0.05); 
+		padding-left: 25px; 
 	}
+	.content:hover { 
+		background-color: rgba(0,0,0,0.05);
+	} 
 	.re_wrap{
 		margin-bottom: 10px !important; 
 		font-size: 1.3rem;
@@ -292,11 +296,10 @@
 			        		var title = retVal.PicsNum[j].PRODUCT_TITLE
 			        		var d_date = new Date(retVal.PicsNum[j].PRODUCT_DATE);
 			        		var date = date_format(d_date);
-			        		console.log(imgsrc)
 				    		output += '<div class="col-1">'
 			    				output += '<a href="./productdetail.pro?PRODUCT_NUM='+retVal.PicsNum[j].PRODUCT_NUM+'">'
 					    		output += '<img src="/productupload/image/'+imgsrc+'"></a></div>'
-				    		output += '<div class="col-11"><div class="row justify-content-between"><div class="name">'+title+'</div>'
+				    		output += '<div class="col-11 content"><div class="row justify-content-between"><div class="name">'+title+'</div>'
 				    		output += '<div class="smallfont">'+date+'</div></div><div class="row">'
 				    		output += '<div class="comm_content">'+content+'</div></div></div>'
 			        	}

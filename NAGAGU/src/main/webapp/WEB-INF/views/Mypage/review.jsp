@@ -109,6 +109,13 @@
 	.each-row{
 		margin-top: 30px;
 	}
+	.content{
+		border-bottom: 2px solid rgba(0,0,0,0.15); 
+		padding-left: 25px; 
+	}
+	.content:hover { 
+		background-color: rgba(0,0,0,0.05);
+	} 
 </style>
  
 <div class="container-mypage container" role="main">
@@ -246,6 +253,7 @@
 	        			}
 			        	for(var j=0; j<retVal.PicsNum.length; j++){
 			        		var imgsrc = retVal.PicsNum[j].REVIEW_FILE
+			        		console.log(imgsrc);
 			        		var content = retVal.PicsNum[j].REVIEW_CONTENT
 			        		var title = retVal.PicsNum[j].PRODUCT_TITLE
 			        		
@@ -254,9 +262,13 @@
 			        		var imgs= imgsrc.split(',')
 			        			imgsrc = imgs[0]
 				    		output += '<div class="col-2 each-row">'
-			    				output += '<a href="./productdetail.pro?PRODUCT_NUM='+retVal.PicsNum[j].PRODUCT_NUM+'">'
+				    		if(imgsrc=='#'){
+					    		output += '<img src="/productupload/image/noimage.png"></div>'
+				    		}else{
+				    			output += '<a href="./productdetail.pro?PRODUCT_NUM='+retVal.PicsNum[j].PRODUCT_NUM+'">'
 					    		output += '<img src="/productupload/image/'+imgsrc+'"></a></div>'
-				    		output += '<div class="col-10 each-row"><div class="row justify-content-between"><div class="name"><b>'+title+'</b></div>'
+				    		}
+				    		output += '<div class="col-10 each-row content"><div class="row justify-content-between"><div class="name"><b>'+title+'</b></div>'
 				    		output += '<div class="smallfont">'+date+'</div></div><div class="row">'
 				    		output += '<div class="comm_content">'+content+'</div></div></div>'
 			        	}
@@ -303,11 +315,16 @@
 			        		
 			        		var d_date = new Date(retVal.PicsNum[j].REVIEW_DATE);
 			        		var date = date_format(d_date);
-			        		console.log(imgsrc)
+			        		var imgs= imgsrc.split(',')
+		        				imgsrc = imgs[0]
 				    		output += '<div class="col-2 each-row">'
-			    				output += '<a href="./classdetail.ac?CLASS_NUMBER='+retVal.PicsNum[j].CLASS_NUMBER+'">'
-					    		output += '<img src="/communityupload/image/'+imgsrc+'"></a></div>'
-				    		output += '<div class="col-10 each-row"><div class="row justify-content-between"><div class="name"><b>'+title+'</b></div>'
+				    			if(imgsrc=='#'){
+						    		output += '<img src="/productupload/image/noimage.png"></div>'
+					    		}else{
+					    			output += '<a href="./classdetail.ac?CLASS_NUMBER='+retVal.PicsNum[j].CLASS_NUMBER+'">'
+					    			output += '<img src="/communityupload/image/'+imgsrc+'"></a></div>'
+					    		}
+				    		output += '<div class="col-10 each-row content"><div class="row justify-content-between"><div class="name"><b>'+title+'</b></div>'
 				    		output += '<div class="smallfont">'+date+'</div></div><div class="row">' 
 				    		output += '<div class="comm_content">'+content+'</div></div></div>' 
 				    		

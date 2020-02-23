@@ -106,7 +106,9 @@ create sequence store_review_seq
 			
 	<!-- 경태 리뷰 댓글 가져오기 getLoginMemberReply -->
 	<select id="getLoginMemberReply" parameterType="int" resultMap="replyHashmapVO">
-		SELECT * FROM PRODUCT_REVIEW, PRODUCT  WHERE REVIEW_MEMBER=#{MEMBER_NUM} AND PRODUCT_NUM=REVIEW_PRODUCT AND REVIEW_RE!=0
+		SELECT * 
+		FROM PRODUCT_REVIEW, PRODUCT,NAGAGU_MEMBER  
+		WHERE REVIEW_MEMBER=#{MEMBER_NUM} AND PRODUCT_NUM=REVIEW_PRODUCT AND MEMBER_NUM=REVIEW_MEMBER AND REVIEW_RE!=0
 	</select>	
 	<select id="getLoginMemberReview" parameterType="int" resultMap="replyHashmapVO">
 		SELECT * FROM PRODUCT_REVIEW, PRODUCT  WHERE REVIEW_MEMBER=#{MEMBER_NUM} AND PRODUCT_NUM=REVIEW_PRODUCT AND REVIEW_RE=0
