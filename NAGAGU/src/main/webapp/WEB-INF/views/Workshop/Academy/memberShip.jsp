@@ -35,7 +35,7 @@
 	            </nav>
 	        </div>
 	    </div>
-		<div style="height: 600px; overflow-y: auto;">
+		<div style="height: 620px; overflow-y: auto;">
 			<table class="table table-hover" id="work_store">
 				<thead>
 				    <tr>

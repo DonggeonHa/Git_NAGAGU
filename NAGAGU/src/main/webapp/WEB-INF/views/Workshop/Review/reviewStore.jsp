@@ -89,22 +89,24 @@
 				</div>	
 			</div>	
 		</div>
-		<table class="table" id="work_store">
-			<thead>
-				<tr class="text-center">
-				    <th style="width: 5%;">번호</th>
-				    <th style="width: 7%;">카테고리</th>
-				    <th style="width: 5%;">작성자</th>
-				    <th style="width: 15%;">상품명</th>
-				    <th style="width: 5%;">평점</th>
-				    <th style="width: 48%;">후기 내용</th>
-				    <th style="width: 10%;">작성날짜</th>
-				    <th style="width: 5%;">상세</th>
-				</tr>
-			</thead>
-		    <tbody id="ProductreviewList"></tbody>
-		</table>
-		<div id="list_none"></div>
+		<div style="height: 620px; overflow-y: auto;">
+			<table class="table" id="work_store">
+				<thead>
+					<tr class="text-center">
+					    <th style="width: 5%;">번호</th>
+					    <th style="width: 7%;">카테고리</th>
+					    <th style="width: 5%;">작성자</th>
+					    <th style="width: 15%;">상품명</th>
+					    <th style="width: 5%;">평점</th>
+					    <th style="width: 48%;">후기 내용</th>
+					    <th style="width: 10%;">작성날짜</th>
+					    <th style="width: 5%;">상세</th>
+					</tr>
+				</thead>
+			    <tbody id="ProductreviewList"></tbody>
+			</table>
+			<div id="list_none"></div>
+		</div>
 		<div class="d-flex justify-content-center">
 			<nav aria-label="Page navigation example" class="paginated" id="user-page"></nav>
 		</div>
