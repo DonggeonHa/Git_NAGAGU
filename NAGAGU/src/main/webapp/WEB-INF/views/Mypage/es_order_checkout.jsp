@@ -46,6 +46,11 @@
     	text-align:right;
     	padding-left:5px;
     }
+    
+    .payment_no_selected {
+    	opacity:0.8;
+    	user-select:none;
+    }
 </style>
 
 <div class="container order-container">

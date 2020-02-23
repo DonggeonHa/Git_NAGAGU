@@ -36,7 +36,16 @@
 	
 	.container-mypage{
 		margin-top: 50px ;
-		margin-bottom: 50px ;				 
+		margin-bottom: 50px ;
+	}	
+	.container a {
+		color:black;	
+		transition:color 0.1s;		 
+	}		
+	
+	.container a:hover {
+		color:#737373;	
+		text-decoration:none;		 
 	}		
 	.container-mypage a,.container-mypage  a:link,.container-mypage  a:hover {
 		text-decoration: none;
@@ -55,7 +64,7 @@
 		color: white;
 	}
 	.card-wrap{
-		justify-content: center;
+		margin:0 auto;
 	}
 	@media screen and (max-width: 600px) {
 		.card {
@@ -93,7 +102,7 @@
 	}
 	@media ( min-width : 1200px) {
 		.card {
-			width: 9rem !important;  
+			width: 8.42rem !important;  
 			font-size: 0.7rem;
 		}
 		.card-header, .card-body, .card-footer {
@@ -128,6 +137,9 @@
           
           /* ----------------------------------------------------------- */
        
+    .main-output {
+	    font-weight:700;
+    }
     #nav-tab .nav-item {
     	color:black;
     }
@@ -137,12 +149,18 @@
     }
        
     .container {
-        font-weight:700;
+	    width: 100%;
+	    padding-right: 15px;
+	    padding-left: 15px;
+	    margin-right: auto;
+	    margin-left: auto;
     }
           
 	.thumbImg {
-		width:96px;
-		height:96px;
+		max-width:122px;
+		width:122px;
+		height:122px;
+		padding:16px;
 		overflow:hidden;
 	}
 	
@@ -160,7 +178,7 @@
 	.eo_tab .btn {
 		width:100%;
 		font-size:0.8rem;
-		margin-bottom:5px;
+		margin-bottom:3px;
 	}
 	
 	.no_list {   
@@ -183,10 +201,10 @@
 	} 
 	
 	.category {
-    border-bottom: 1px solid rgba(239,144,14,0.3);
-    color: rgb(0, 0, 0, 0.2) !important;
-    height:36px;
-    line-height:36px;
+	    border-bottom: 1px solid rgba(239,144,14,0.3);
+	    color: rgb(0, 0, 0, 0.2) !important;
+	    height:36px;
+	    line-height:36px;
 	}
 	
 	.price_wrap {
@@ -197,8 +215,19 @@
 		padding-right:13px;
 		padding-left:13px;
 	}
+	
+	.etc_col .btn {
+		width:72px;
+		font-size:0.8rem;
+		margin:3px;
+	}
+	
+	.info_tab {
+		margin-left:20px;
+	}
+	
 </style>
-	<div class="container-mypage " role="main">
+	<div class="container-mypage container" role="main">
 		<div class="row card-wrap  text-center">
 			<div class="card card-hover">
 				<a href="mypage_like.my" class="href">
@@ -363,7 +392,7 @@
 			</div>
 		</nav>
 
-		<div class="tab-content" id="nav-tabContent">
+		<div class="tab-content main-output" id="nav-tabContent">
 		<%
 		if (eoList.size() == 0) {
 	%>
@@ -380,6 +409,25 @@
 				EstimateOrderVO vo = eoList.get(i);
 				int eoState = vo.getES_ORDER_STATE();
 				System.out.println("eoState : " + eoState);
+
+				String category = "";
+					
+				if (vo.getES_ORDER_CATEGORY().equals("table")) { category = "책상"; }
+				else if (vo.getES_ORDER_CATEGORY().equals("chair")) {category = "의자";}
+				else if (vo.getES_ORDER_CATEGORY().equals("bookshelf")) {category = "책장";}
+				else if (vo.getES_ORDER_CATEGORY().equals("bed")) {category = "침대";}
+				else if (vo.getES_ORDER_CATEGORY().equals("drawer")) {category = "서랍장";}
+				else if (vo.getES_ORDER_CATEGORY().equals("sidetable")) {category = "협탁";}
+				else if (vo.getES_ORDER_CATEGORY().equals("dressing_table")) {category = "화장대";}
+				else {category = "기타";}
+					
+				String payment = "";
+				
+				if (vo.getES_ORDER_PAYMENT().equals("card")) {payment = "신용카드";}
+				else if (vo.getES_ORDER_PAYMENT().equals("Toss")) {payment = "토스";}
+				else if (vo.getES_ORDER_PAYMENT().equals("Kakao")) {payment = "카카오페이";}
+				else if (vo.getES_ORDER_PAYMENT().equals("payco")) {payment = "페이코";}
+				else if (vo.getES_ORDER_PAYMENT().equals("samsung")) {payment = "삼성페이";}
 	%>
 
 			<div class="col-12 tab-pane fade show active shadow pb-2 pt-1 mb-2 bg-white rounded" id="nav-waiting" role="tabpanel" aria-labelledby="nav-waiting-tab" style="padding-top: 30%;">
@@ -390,26 +438,29 @@
   	  	  				<div><b>주문번호 <%=vo.getES_ORDER_NUM()%></b></div></div>
  	    				<div><a href="./estimate_detail.es?ESTIMATE_NUM=<%=vo.getES_ORDER_ESTIMATE()%>">상세보기</a></div>
  	    			</div>
-				<br>
 				<div class="row">
-									<div class="col-2 thumbImg"><a href="<%=vo.getES_ORDER_PIC()%>">
+									<div class="col-2 thumbImg"><a href="estimate_detail.es?ESTIMATE_NUM=<%=vo.getES_ORDER_ESTIMATE()%>">
 							    		<img src="<%=vo.getES_ORDER_PIC()%>"></a></div>
-							    		<div class="col-10">
+							    		<div class="col-10 info_tab">
 						    				<div class="row category">
 						    					<div class="col-2">상품명</div>
 					    						<div class="col-2">제작공방</div>
 						    					<div class="col-1">종류</div>
-				    							<div class="col-1">결제수단</div>
+				    							<div class="col-2">결제수단</div>
 			    								<div class="col-2">상태</div>
 			    								<div class="col-2">금액</div>
-			    								<div class="col-2">기타</div>
+			    								<div class="col-1">기타</div>
 			                                </div>
 			                              	<div class="row values">
 			  			    					<a href="estimate_detail.es?ESTIMATE_NUM=<%=vo.getES_ORDER_ESTIMATE()%>">
-			  			    					<div class="col-2"><b><%=vo.getES_ORDER_TITLE()%></b></a><p><%=vo.getES_ORDER_MEMO()%></p></div>
+			  			    					<div class="col-2"><b><%=vo.getES_ORDER_TITLE()%></b></a></div>
 			  				    				<div class="col-2"><a href="workshop_page.my?ES_ORDER_WORKSHOP=<%=vo.getES_ORDER_WORKSHOP()%>"><%=vo.getES_ORDER_WORKSHOP()%></a></div>
-			  				    				<div class="col-1"><%=vo.getES_ORDER_CATEGORY() %></div>
-			  				    				<div class="col-1"><%=vo.getES_ORDER_PAYMENT() %></div>
+			  				    				<div class="col-1">
+													<%
+													%>
+			  				    					<%=category %>
+			  				    				</div>
+			  				    				<div class="col-2"><%=payment %></div>
 			  				    				<div class="col-2">
 												<%
 														if (eoState == 0) {
@@ -444,7 +495,7 @@
 												%>			
 												</div>
 			  				    				<div class="price_wrap col-2"><span><%=dfmp.format(vo.getES_ORDER_PRICE()) %></span></div>
-								    			<div class="col-2">
+								    			<div class="col-1 etc_col">
 								    			
 												<%
 													if (eoState == 0) {
@@ -456,7 +507,7 @@
 												%>
 												<button class="btn btn-outline-dark btn_modify"
 													onclick="location.href='mypage_estimate_updateForm.my?ES_ORDER_NUM=<%=vo.getES_ORDER_NUM()%>'">배송정보
-													수정</button> 
+												</button> 
 												<button class="btn btn-outline-dark btn_modify"
 													onclick="window.open('/NAGAGU/chatRoom.ch?ES_ORDER_NUM=<%=vo.getES_ORDER_NUM()%>', '1:1채팅방', 'width=400 height=740')">1:1 채팅</button> <%
 												 	}
