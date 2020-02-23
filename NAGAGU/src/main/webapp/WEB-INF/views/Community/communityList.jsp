@@ -156,7 +156,12 @@
 		color: rgba(0,0,0,0.5) !important;
 	}
 	.category_cm{
-		margin-bottom: 50px; 
+		margin-bottom: 100px; 
+	}
+	.container_page{
+		position: absolute;
+		bottom: 200px; 
+		left: 23.5%;
 	}
 </style>
 
@@ -265,12 +270,13 @@
 							<br />
 						</div>
 					</div>
-				
 				<!-- images end -->
 	<%
 			} 
 	%>
 			</div>
+		</div>
+		<div class="container container_page">
 			<!-- pagenation -->
 			<nav aria-label="Page navigation example">
 				<ul class="pagination d-flex justify-content-center">
@@ -341,7 +347,7 @@
 	<%
 		}
 	%>
-</div>
+	</div>
 <script>
 	//좋아요 기능
 	$(document).ready(function(){
