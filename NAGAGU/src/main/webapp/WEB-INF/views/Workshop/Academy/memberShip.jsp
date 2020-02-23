@@ -1,44 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 
-<style>
-	   .btn_search {
-       width:55px;
-       border-radius: 4px;
-       border:1px solid orangered;
-       color:orangered; 
-   }
-   
-   
-   .btn_search:hover {
-       color: #1b1b27;
-       background-color: #ef902e;
-       box-shadow: 200px 0 0 0 #ef902e inset,
-                   -200px 0 0 0 #ef902e inset;
-   }
-   .dropdown{
-      padding: 2px 4px;
-   }
-   .dropbtn {
-       width:68px;
-       border-radius: 4px;
-       border:1px solid orangered;
-       color:orangered;    
-   }
-   
-   .dropbtn:hover {
-       color: #1b1b27;
-       background-color: #ef902e;
-       box-shadow: 200px 0 0 0 #ef902e inset,
-                   -200px 0 0 0 #ef902e inset;
-   }
-   .btn_modify {
-       border-radius: 4px;
-       border: 1px solid orangered;
-       color: orangered;
-       font-size: 14px;
-       background: white;
-   }
-</style>
 <!-- 작업 구역 -->
 <div id="page-content-wrapper" style="padding-top: 5%;">
 	<div class="container-fluid">
@@ -56,7 +17,7 @@
 	
 	        <div class="d-flex justify-content-end">
 	            <div class="dropdown">
-	                <button class="btn dropbtn btn-sm dropdown-toggle btn-search-mode" type="button" id="searchType" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+	                <button class="btn btn_search btn-outline-danger dropbtn dropdown-toggle btn-search-mode" type="button" id="searchType" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 	                    	선택
 	                </button>
 	                <div class="dropdown-menu" aria-labelledby="searchType">
@@ -69,7 +30,7 @@
 	           <nav class="navbar-light">
 	             <form class="form-inline" onsubmit="return false">
 	               <input class="form-control mr-sm-2" id="keyword" type="search" aria-label="Search" style="height:90%">
-	                <button class="btn btn_search btn-sm my-2 my-sm-0" type="button" id="btn_search">검색</button>
+	                <button class="btn btn_search btn-outline-danger btn_search my-2 my-sm-0" type="button" id="btn_search">검색</button>
 	              </form>
 	            </nav>
 	        </div>
@@ -96,45 +57,7 @@
 		</div>
     </div>
 </div>
-<style>
-		.btn_search {
-	    width:55px;
-	    border-radius: 4px;
-	    border:1px solid orangered;
-	    color:orangered; 
-	}
-	
-	
-	.btn_search:hover {
-	    color: #1b1b27;
-	    background-color: #ef902e;
-	    box-shadow: 200px 0 0 0 #ef902e inset,
-	                -200px 0 0 0 #ef902e inset;
-	}
-	.dropdown{
-		padding: 2px 4px;
-	}
-	.dropbtn {
-	    width:68px;
-	    border-radius: 4px;
-	    border:1px solid orangered;
-	    color:orangered;    
-	}
-	
-	.dropbtn:hover {
-	    color: #1b1b27;
-	    background-color: #ef902e;
-	    box-shadow: 200px 0 0 0 #ef902e inset,
-	                -200px 0 0 0 #ef902e inset;
-	}
-	.btn_modify {
-	    border-radius: 4px;
-	    border: 1px solid orangered;
-	    color: orangered;
-	    font-size: 14px;
-	    background: white;
-	}
-</style>
+
 <script>
 	$(document).ready(function(){
 	    var all_check = false;
@@ -159,12 +82,10 @@
 	function member_name() {
 		$('#searchType').html('회원이름');
 		$('#searchType').val('memberName');
-		$('#searchType').css('width', '83px');
 	}
 	function member_phone() {
 		$('#searchType').html('전화번호');
 		$('#searchType').val('memberPhone');
-		$('#searchType').css('width', '83px');
 	}
 	
 	$("#keyword").keyup(function(event){
@@ -227,7 +148,7 @@
 						}
 						
 						output += '<td>' + item.member_EMAIL + '</td>';
-						output += '<td><button class="btn_modify" onclick="btn_delete('+ item.my_CLASS_MEMBERNUM +')">삭제</button></td>';
+						output += '<td><button class="btn_modify btn btn_search btn-outline-danger btn-sm" onclick="btn_delete('+ item.my_CLASS_MEMBERNUM +')">삭제</button></td>';
 						output += '</tr>';
 						
 						$('#memberList').append(output);

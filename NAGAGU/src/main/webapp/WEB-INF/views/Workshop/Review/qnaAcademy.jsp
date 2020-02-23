@@ -114,7 +114,7 @@
 	            	<div class="d-flex justify-content-end">
 						<!-- Example split danger button -->
 						<div class="dropdown">
-							<button class="btn dropbtn btn-sm dropdown-toggle btn-search-mode" type="button" id="searchType" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+							<button class="btn btn_search btn-outline-danger dropbtn dropdown-toggle btn-search-mode" type="button" id="searchType" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 								선택
 							</button>
 						    <div class="dropdown-menu" aria-labelledby="searchType">
@@ -124,11 +124,11 @@
 						    </div>
 						</div>
 						<!-- search -->
-						<nav class="navbar-light bg-light">
+						<nav class="navbar-light">
 							<!-- input에 enter키 누르면 자동으로 submit -->
 							<form class="form-inline" onsubmit="return false">
 								<input class="form-control mr-sm-2" type="search" id="keyword" aria-label="Search" style="height:90%">
-								<button class="btn btn_search btn-sm my-2 my-sm-0" type="button" id="btn_search">검색</button>
+								<button class="btn btn_search btn-outline-danger btn_search  my-2 my-sm-0" type="button" id="btn_search">검색</button>
 							</form>
 						</nav>
 					</div>
@@ -141,8 +141,8 @@
                 <th style="width: 5%;">번호</th>
                 <th style="width: 5%;">상태</th>
                 <th style="width: 7%;">카테고리</th>
-                <th style="width: 10%;">클래스</th>
                 <th style="width: 5%;">지역</th>
+                <th style="width: 10%;">클래스</th>
                 <th style="width: 5%;">작성자</th>
                 <th style="width: 15%;">강의명</th>
                 <th style="width: 23%;">문의내용</th>
@@ -427,7 +427,7 @@
 							output += '<td>' + date + '</td>';
 							output += '<td>'+'답변 완료'+'</td>';
 						}
-						output += '<td><button class="btn_detail" value="'+QNA_NUM+'">' + "상세" + '</button></td>';
+						output += '<td><button class="btn_detail btn btn_search btn-outline-danger btn-sm" value="'+QNA_NUM+'">' + "상세" + '</button></td>';
 						output += '</tr>';
 						number += 1;
 	 				}					

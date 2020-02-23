@@ -70,16 +70,16 @@ if (session.getAttribute("WORKSHOP_NUM") == null) {
 				<div class="d-flex justify-content-end">
 					<!-- Example split danger button -->
 					<div class="dropdown">
-						<button class="btn btn-sm " type="button" id="searchType" disabled="disabled">
+						<button class="btn btn_search btn-outline-danger" type="button" id="searchType" disabled="disabled">
 					        상품명
 					    </button>
 					</div>								
 					<!-- search -->
-					<nav class="navbar-light bg-light">
+					<nav class="navbar-light">
 						<!-- input에 enter키 누르면 자동으로 submit -->
 						<form class="form-inline" onsubmit="return false">
 							<input class="form-control mr-sm-2" type="search" id="keyword" aria-label="Search" style="height:90%">
-							<button class="btn btn_search btn-sm my-2 my-sm-0" type="button" id="btn_search">검색</button>
+							<button class="btn btn_search btn-outline-danger btn_search  my-2 my-sm-0" type="button" id="btn_search">검색</button>
 						</form>
 					</nav>
 				</div>
@@ -92,8 +92,8 @@ if (session.getAttribute("WORKSHOP_NUM") == null) {
 		        <th style="width: 5%;">번호</th>
 		        <th style="width: 5%;">상태</th>
 		        <th style="width: 9%;">카테고리</th>
-		        <th style="width: 18%;">상품명</th>
-		        <th style="width: 5%;">판매가</th>
+		        <th style="width: 13%;">상품명</th>
+		        <th style="width: 10%;">판매가</th>
 		        <th style="width: 5%;">재고량</th>
 		        <th style="width: 5%;">판매량</th>
 		        <th style="width: 5%;">평점</th>
@@ -476,10 +476,10 @@ if (session.getAttribute("WORKSHOP_NUM") == null) {
 						output += '<td>' + PRODUCT_LIKE + '</td>';
 						output += '<td>' + date + '</td>';
 
-						output += '<td><button class="btn_modify" onclick="updateProduct(' + PRODUCT_NUM + ')">' + "수정 " + '</button>&nbsp;';
-						output += '<button class="btn_remove" value="'+PRODUCT_NUM+'">' + "삭제" + '</button></td>';
-						output += '<td><button class="btn_review" value="'+PRODUCT_NUM+'" onclick="goreview(this.value)">' + "후기" + '</button>&nbsp;';
-						output += '<button class="btn_qna" value="'+PRODUCT_NUM+'" onclick="goqna(this.value)">' + "문의" + '</button></td>';
+						output += '<td><button class="btn_modify btn btn_search btn-outline-danger btn-sm" onclick="updateProduct(' + PRODUCT_NUM + ')">' + "수정 " + '</button>&nbsp;';
+						output += '<button class="btn_remove btn btn_search btn-outline-danger btn-sm" value="'+PRODUCT_NUM+'">' + "삭제" + '</button></td>';
+						output += '<td><button class="btn_review btn btn_search btn-outline-danger btn-sm" value="'+PRODUCT_NUM+'" onclick="goreview(this.value)">' + "후기" + '</button>&nbsp;';
+						output += '<button class="btn_qna btn btn_search btn-outline-danger btn-sm" value="'+PRODUCT_NUM+'" onclick="goqna(this.value)">' + "문의" + '</button></td>';
 						output += '</tr>';
 						number += 1;
      				}

@@ -109,7 +109,7 @@
                     </div>
                 </div>
             </div>
-            <div class="d-flex justify-content-center">
+            <div class="d-flex w_btn">
            		<button type="button" id="btn_submit" onclick="click_sub();">수정</button>
            		<input type='reset' id="btn_cancel" value="취소">
             </div>
@@ -124,6 +124,10 @@
 	#imagePreview {
 		background-image: url('<%=WORKSHOP_PICTURE%>');
 	}
+	.w_btn{
+      margin-left: 400px;
+      margin-top: 50px;
+   }
 </style>
 <script>
 $(document).ready(function() {

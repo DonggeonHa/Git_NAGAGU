@@ -63,8 +63,6 @@
 	color: #999;
 }
 
-
-
 .tableCSS thead {
 	font-size: 1.1rem;
 }
@@ -139,41 +137,3 @@ tr.pageing:hover {
 .sidebar_profile {
 	margin: -14px 0 0 0;
 }
-
-.btn_search {
-	    width:55px;
-	    border-radius: 4px;
-	    border:1px solid orangered;
-	    color:orangered; 
-	}
-	
-	
-	.btn_search:hover {
-	    color: #1b1b27;
-	    background-color: #ef902e;
-	    box-shadow: 200px 0 0 0 #ef902e inset,
-	                -200px 0 0 0 #ef902e inset;
-	}
-	.dropdown{
-		padding: 2px 4px;
-	}
-	.dropbtn {
-	    width:68px;
-	    border-radius: 4px;
-	    border:1px solid orangered;
-	    color:orangered;    
-	}
-	
-	.dropbtn:hover {
-	    color: #1b1b27;
-	    background-color: #ef902e;
-	    box-shadow: 200px 0 0 0 #ef902e inset,
-	                -200px 0 0 0 #ef902e inset;
-	}
-	.btn_modify {
-	    border-radius: 4px;
-	    border: 1px solid orangered;
-	    color: orangered;
-	    font-size: 14px;
-	    background: white;
-	}

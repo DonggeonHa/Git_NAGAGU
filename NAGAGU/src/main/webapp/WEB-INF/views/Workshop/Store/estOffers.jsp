@@ -28,7 +28,6 @@
 	#selectState {
 		margin-left:5px;
 	}
-	
 </style>
 <div id="page-content-wrapper" style="padding-top: 5%;">
 
@@ -87,7 +86,7 @@
 	        	<div class="d-flex justify-content-end">
 		            <!-- Example split danger button -->
 		            <div class="dropdown">
-		                <button class="btn dropbtn btn-sm dropdown-toggle btn-search-mode" type="button" id="scButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+		                <button class="btn btn_search btn-outline-danger dropbtn dropdown-toggle btn-search-mode" type="button" id="scButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 		                   	 선택
 		                </button>
 		                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
@@ -97,10 +96,10 @@
 		            </div>
 		
 		            <!-- search -->
-		            <nav class="navbar-light bg-light">
-		              <form class="form-inline" >
+		            <nav class="navbar-light">
+		              <form class="form-inline">
 		                <input class="form-control mr-sm-2" id="search_input"type="search" aria-label="Search" style="height:90%">
-		                <button class="btn btn_search btn-sm my-2 my-sm-0" id="btn_search">검색</button>
+		                <button class="btn btn_search btn-outline-danger btn_search my-2 my-sm-0" id="btn_search">검색</button>
 		              </form>
 		            </nav>
 	            </div>
@@ -112,14 +111,14 @@
 	            <tr>
 	                <th style="width: 5%;" class="th1" ><input id="all_select" type="checkbox"></th>      
 	                <th style="width: 5%;" class="th2">번호</th>            
-	                <th style="width: 10%;" class="th3">작성자</th>
+	                <th style="width: 5%;" class="th3">작성자</th>
 	                <th style="width: 25%;" class="th4">게시물 제목</th>
 	                <th style="width: 10%;" class="th6">카테고리</th>
 	                <th style="width: 10%;" class="th7">제안가격</th>
 	                <th style="width: 10%;" class="th5">제안날짜</th>
 	                <th style="width: 5%;" class="th8">상태</th>
 	                <th style="width: 15%;" class="th9">관리</th>
-	                <th style="width: 5%;" class="th10">문의</th>
+	                <th style="width: 10%;" class="th10">문의</th>
 	            </tr>
 	        </thead>
 	        <tbody>
@@ -165,9 +164,7 @@
 			<div id="pagination" class="pagination justify-content-center">
 			</div>
 		</div>
-
-		</div>
-    </div>
+	</div>
 </div>
 
 <script>
@@ -281,12 +278,12 @@
 				            output += '<td scope="col" >' + es_state + '</td>';
 				            output += '<td scope="col">';
 				            output += '<input type="hidden" id="offer_content_' + item.OFFER_NUM + '" value=' + item.OFFER_CONTENT + '>';
-				            output += '<button class="btn_detail" value=' + item.ESTIMATE_NUM + '>보기</button>';
-				            output += '<button class="btn_modify" of_num=' + item.OFFER_NUM + ' es_num=' + item.ESTIMATE_NUM + ' alt="" data-toggle="modal" data-target="#modifyFormModal" aria-haspopup="true" aria-expanded="false">수정</button>';
-				           	output += '<button class="btn_delete" of_num=' + item.OFFER_NUM + '>삭제</button>';
+				            output += '<button class="btn_detail btn btn_search btn-outline-danger btn-sm" value=' + item.ESTIMATE_NUM + '>보기</button>&nbsp;&nbsp;';
+				            output += '<button class="btn_modify btn btn_search btn-outline-danger btn-sm" of_num=' + item.OFFER_NUM + ' es_num=' + item.ESTIMATE_NUM + ' alt="" data-toggle="modal" data-target="#modifyFormModal" aria-haspopup="true" aria-expanded="false">수정</button>&nbsp;&nbsp;';
+				           	output += '<button class="btn_delete btn btn_search btn-outline-danger btn-sm" of_num=' + item.OFFER_NUM + '>삭제</button>';
 				            output += '</td>';
 				            output += '<td scope="col">';
-				            output += '<button class="btn_note" value=' + item.ESTIMATE_MEMBER + '>쪽지</button>';
+				            output += '<button class="btn_note btn btn_search btn-outline-danger btn-sm" value=' + item.ESTIMATE_MEMBER + '>쪽지</button>';
 				            output += '</td>';
 				            output += '</tr>';
 				            

@@ -17,3 +17,12 @@
 	<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/css/alertify.min.css"/>
 	<!-- Default theme -->
 	<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/css/themes/default.min.css"/>
+	
+	<style>
+		.page-item.active .page-link {
+			z-index: 0 !important;
+			background-color: #ef900e !important;
+			border-color: #dee2e6 !important;
+			color : white !important;
+		}
+	</style>

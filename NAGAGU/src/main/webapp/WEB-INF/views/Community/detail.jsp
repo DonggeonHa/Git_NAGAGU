@@ -321,8 +321,7 @@
 				<div class="col-10">
 					<div class="btn_wrap">
 						<textarea name="PICS_RE_CONTENT" id="text"
-							placeholder="칭찬과 격려의 댓글은 작성자에게 큰 힘이 됩니다:)" style="width: 100%"
-							cols="80" rows="2"></textarea>
+							placeholder="칭찬과 격려의 댓글은 작성자에게 큰 힘이 됩니다:)" style="width: 100%" cols="80" rows="2"></textarea>
 					</div>
 				</div>
 				<div class="col-1 text-right">
