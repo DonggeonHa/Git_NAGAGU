@@ -194,7 +194,7 @@
 	</h4>
 	<div>
 		<div style="padding: 0 0 1% 0;">
-			<b>주문번호 : <span class="date_num"></span>| 구매일시 :<span class="date"></span></b>
+			<b>주문번호 <span class="date_num"></span> / 주문날짜 <span class="date"></span></b>
 		</div>
 	</div>
 
@@ -209,10 +209,10 @@
 		</table>
 		<div class="col-12 row" style="padding-bottom:5%;">
 			<div class="col-6">
-				<a href="./index.ma" class="btn btn-outline-dark btn-lg w-100" role="button" aria-pressed="true">메인으로</a>
+				<a href="./index.ma" class="btn btn-outline-dark btn-lg w-100" role="button" aria-pressed="true">메인</a>
 			</div>
 			<div class="col-6">
-				<a href="./order_list.my" class="btn btn-outline-dark btn-lg w-100" role="button" aria-pressed="true">구매현황으로</a>
+				<a href="./order_list.my" class="btn btn-outline-dark btn-lg w-100" role="button" aria-pressed="true">목록</a>
 			</div>
 		</div>
 	</div>		

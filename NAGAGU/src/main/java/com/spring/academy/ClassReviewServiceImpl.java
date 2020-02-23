@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.spring.mapper.ClassReviewMapper;
+import com.spring.mapper.ProductReviewMapper;
 import com.spring.member.MemberVO;
 import com.spring.academy.Class_reviewVO;
 
@@ -146,7 +147,15 @@ public class ClassReviewServiceImpl implements ClassReviewService {
 		return res;
 	}
 	
-
+	//경태<리뷰  리스트 가져오기>
+	@Override
+	public ArrayList<Map<String, Object>> getLoginMemberReview(HashMap<String, Object> map) {
+		ArrayList<Map<String, Object>> reviewList =null;
+		ClassReviewMapper reviewMapper = sqlSession.getMapper(ClassReviewMapper.class);
+		reviewList= reviewMapper.getLoginMemberReview(map);
+		System.out.println("getLoginMemberReview Impl결과="+reviewList);
+		return reviewList;
+	}
 
 
 

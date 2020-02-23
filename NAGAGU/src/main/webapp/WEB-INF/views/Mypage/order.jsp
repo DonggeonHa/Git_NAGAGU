@@ -551,21 +551,21 @@
 		$(document).on('click','.IMP_pay',function(){
 			//유효성 검사
 			if($('.toName').val()==''){
-				alert('이름을 채워주세요'); 
+				alertify.alert('확인','이름을 채워주세요'); 
 				return
 			}if($('.toZip').val()=='' || $('.toAddress1').val()=='' || $('.toAddress2').val()==''){
-				alert('주소를 채워주세요');
+				alertify.alert('확인','주소를 채워주세요');
 				return
 			}if($('.toPhone').val()==''){
-				alert('번호를 채워주세요'); 
+				alertify.alert('확인','번호를 채워주세요');
 				return
 			}if(!$('.active').find('input').is(':checked')){
-				alert('동의란에 체크주세요'); 
+				alertify.alert('확인','동의란에 체크해주세요');
 				return
 			}
 			var ORDER_PERSON = $('.toName').val();
-			var ORDER_ADDRESS = $('.toZip').val();
-				ORDER_ADDRESS += $('.toAddress1').val();
+			var ORDER_ADDRESS = $('.toZip').val()+'  ';
+				ORDER_ADDRESS += $('.toAddress1').val()+'  ';
 				ORDER_ADDRESS += $('.toAddress2').val();
 			var ORDER_PHONE= $('.toPhone').val();
 			var ORDER_MEMO= '없음';

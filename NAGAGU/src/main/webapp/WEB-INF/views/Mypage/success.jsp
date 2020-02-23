@@ -178,7 +178,10 @@
     .price_wrap div{
     	margin-top: 0px;
     }
-	
+	.class-detail-container{
+		margin-top: 50px;
+		margin-bottom: 50px;
+	}
 </style>
 
 <div class="container class-detail-container">
@@ -198,10 +201,10 @@
 		</table>
 		<div class="col-12 row" style="padding-bottom:5%;">
 			<div class="col-6">
-				<a href="./index.ma" class="btn btn-outline-dark btn-lg w-100" role="button" aria-pressed="true">메인으로</a>
+				<a href="./index.ma" class="btn btn-outline-dark btn-lg w-100" role="button" aria-pressed="true">메인</a>
 			</div>
 			<div class="col-6">
-				<a href="./order_list.my" class="btn btn-outline-dark btn-lg w-100" role="button" aria-pressed="true">구매현황으로</a>
+				<a href="./order_list.my" class="btn btn-outline-dark btn-lg w-100" role="button" aria-pressed="true">목록</a> 
 			</div>
 		</div>
 	</div>		

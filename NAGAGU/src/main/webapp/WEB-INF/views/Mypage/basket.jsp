@@ -428,7 +428,7 @@
 		//셀렉트 한 값만 넘기기(구매하기 버튼)
 	 	$(document).on('click','.btn_commit',function(){
 	 		if(!$('.checkbox').is(":checked")){
-	 			alert('하나 이상 선택해주세요')
+	 			alertify.alert('확인','하나 이상 선택해주세요')
 	 			return
 	 		}
 			var arrChecked = new Array();

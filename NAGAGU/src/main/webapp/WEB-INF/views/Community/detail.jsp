@@ -75,7 +75,7 @@
 		font-weight: bold;
 	}
 	.smallfont {
-		font-size: 0.7em;
+		font-size: 1rem;
 	}
 	hr {
 		background-color: #EF902E;
@@ -92,7 +92,7 @@
 	    font-size: 14px;
 	}
 	.comments_table {
-	   font-size: 1rem;
+	   font-size: 1.2rem;
 	}
 	@media ( max-width : 700px) {
 	   .comments_table {
@@ -251,7 +251,6 @@
             			}
             %>
             	<div class="col-12">
-            	<img src="/communityupload/image/<%=picsVO.getPICS_MAIN_IMAGE()%>" style="width:500px; height:500px;">
             	<%=picsVO.getPICS_CONTENT()%>
             	</div>
             <%       
@@ -805,7 +804,7 @@
 		
 		
 		//이미지관련
-		$('.img-wrap').children().children().find('img').removeAttr("style").css('width','95%')
+		//$('.img-wrap').children().children().find('img').removeAttr("style").css('width','95%') 
 		$('img').addClass('img-responsive');
 		
 	});

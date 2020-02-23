@@ -10,6 +10,9 @@ import java.util.UUID;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
+import org.jsoup.select.Elements;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -20,6 +23,7 @@ import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.spring.academy.AcademyService;
+import com.spring.academy.ClassReviewService;
 import com.spring.member.KakaoController;
 import com.spring.member.MemberServiceImpl;
 import com.spring.member.MemberVO;
@@ -42,6 +46,8 @@ public class CommunityController {
 	private ProductServiceImpl productService;
 	@Autowired(required = false)
 	private AcademyService academyService;
+	@Autowired(required = false)
+	private ClassReviewService classReviewService;
 	/* NaverLoginBO */
     private NaverLoginBO naverLoginBO;
     private String apiResult = null;
@@ -209,20 +215,21 @@ public class CommunityController {
 		if(!request.getParameter("PICS_PRODUCT").equals("")) {
 			picsVO.setPICS_PRODUCT(Integer.parseInt((request.getParameter("PICS_PRODUCT"))));
 		}
-		//파일업로드 시작=-------------------------------------------------
-		String uploadPath="C:\\Project138\\upload\\";
-	    //사진 개수만큼 파일업로드 시작=-------------------------------------------------
-		if (!request.getFile("PICS_MAIN_IMAGE").isEmpty()) {
-			MultipartFile mf = request.getFile("PICS_MAIN_IMAGE");
-			String originalFileExtnesion = mf.getOriginalFilename().substring(mf.getOriginalFilename().lastIndexOf("."));
-			String storedFileName = UUID.randomUUID().toString().replaceAll("-", "") + originalFileExtnesion;
-			// 파일저장
-			if (mf.getSize() != 0) {
-				mf.transferTo(new File(uploadPath + storedFileName));
-			}
-			picsVO.setPICS_MAIN_IMAGE(storedFileName);
-		}
+
 		picsVO.setPICS_CONTENT(request.getParameter("PICS_CONTENT"));
+		
+		Document doc = null;
+	    if(request.getParameter("PICS_CONTENT")!=null) {
+    		doc = Jsoup.parse(request.getParameter("PICS_CONTENT"));
+    		Elements imgs = doc.getElementsByTag("img");
+    		if(imgs.size() > 0) { 
+    			String src = imgs.get(0).attr("src");
+    			System.out.println(src);
+    			String onlySrc = src.substring(22);
+    			System.out.println("cut"+onlySrc);
+    			picsVO.setPICS_MAIN_IMAGE(onlySrc);
+    		}
+	    }
 		
 		System.out.println("mem"+picsVO.getPICS_MEMBER());
 		System.out.println("nick"+picsVO.getPICS_NICK());
@@ -265,19 +272,20 @@ public class CommunityController {
 		picsVO.setPICS_TAG(request.getParameter("PICS_TAG"));
 		picsVO.setPICS_NUM(Integer.parseInt(request.getParameter("PICS_NUM")));
 		//파일업로드 시작=-------------------------------------------------
-		String uploadPath="C:\\Project138\\upload\\";
-	    //사진 개수만큼 파일업로드 시작=-------------------------------------------------
-		if (!request.getFile("PICS_MAIN_IMAGE").isEmpty()) {
-			MultipartFile mf = request.getFile("PICS_MAIN_IMAGE");
-			String originalFileExtnesion = mf.getOriginalFilename().substring(mf.getOriginalFilename().lastIndexOf("."));
-			String storedFileName = UUID.randomUUID().toString().replaceAll("-", "") + originalFileExtnesion;
-			// 파일저장
-			if (mf.getSize() != 0) {
-				mf.transferTo(new File(uploadPath + storedFileName));
-			}
-			picsVO.setPICS_MAIN_IMAGE(storedFileName);
-		}
 		picsVO.setPICS_CONTENT(request.getParameter("PICS_CONTENT"));
+		
+		Document doc = null;
+	    if(request.getParameter("PICS_CONTENT")!=null) {
+    		doc = Jsoup.parse(request.getParameter("PICS_CONTENT"));
+    		Elements imgs = doc.getElementsByTag("img");
+    		if(imgs.size() > 0) { 
+    			String src = imgs.get(0).attr("src");
+    			System.out.println(src);
+    			String onlySrc = src.substring(22);
+    			System.out.println("cut"+onlySrc);
+    			picsVO.setPICS_MAIN_IMAGE(onlySrc);
+    		}
+	    }
 		System.out.println("mem"+picsVO.getPICS_MEMBER());
 		System.out.println("nick"+picsVO.getPICS_NICK());
 		System.out.println("cate"+picsVO.getPICS_CATEGORY());
@@ -449,6 +457,10 @@ public class CommunityController {
 			if(category.equals("review_store")) {
 				System.out.println("reivew_store");
 				replyList = productReviewService.getLoginMemberReview(map);
+			}
+			if(category.equals("review_class")) {
+				System.out.println("review_class");
+				replyList = classReviewService.getLoginMemberReview(map);
 			}
 			retVal.put("PicsNum", replyList);
 			retVal.put("res", "OK");

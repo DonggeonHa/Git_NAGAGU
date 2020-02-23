@@ -158,19 +158,6 @@
 						</div>
                 	</td>
                 </tr>
-                <tr>
-					<th>대표이미지 등록</th>
-					<td>
-						<div class="row">
-							<div class="custom-file">
-								<input type="file" name="PICS_MAIN_IMAGE" id="uploadFile"> 
-							</div>
-						</div>
-						<div>
-							<p class="noti">* 정사각형 이미지 추천</p>
-						</div>
-					</td>
-				</tr>
 			</table>
 			<div class="text-center">
 				<input class="btn btn-outline-dark btn-lg" type="reset" value="취소하기">&nbsp;&nbsp;&nbsp;
@@ -202,9 +189,8 @@
 			$('#pics_review').focus();
 			return false;
 		}
-		if($('#uploadFile').val()==''){
-			alertify.alert('사진을 넣어주세요');
-			$('#uploadFile').focus();
+		if($('.note-editable img').length==0){
+			alertify.alert('하나 이상의 사진을 넣어주세요');
 			return false;
 		}
 		addboard()
@@ -231,7 +217,7 @@
 	 $(document).ready(function() {
 		$('#summernote1').summernote({
 			width: 670,
-			height: 300,
+			height: 600,
 			lang: 'ko-KR',
 			callbacks: {
 				  onImageUpload: function(files) {
@@ -263,7 +249,7 @@
 			  });
 		  }
 	});
-	
+	//후기 자동완성
 	 $(function(){
  		$('#search_product').autocomplete({
 			source : function(request,response){
