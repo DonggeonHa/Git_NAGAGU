@@ -19,7 +19,7 @@ if (session.getAttribute("WORKSHOP_NUM") == null) {
             		<a href="./product_write.pro" class="btn mx-2 btn-outline-dark" role="button" aria-pressed="true">상품등록</a>
                 </div>
             </div>
-           </div>
+        </div>
             
 		<div class="d-flex justify-content-start pb-2">
 		    <button type="button" id="to_ingSale" class="btn btn-sm btn-outline-dark mr-2">선택 판매중</button>  

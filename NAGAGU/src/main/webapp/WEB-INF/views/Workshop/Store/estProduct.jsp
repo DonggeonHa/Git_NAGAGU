@@ -43,43 +43,43 @@
         <div class="pb-5">
             <h1>견적 주문 관리</h1>
         </div>
-        <div class="d-flex justify-content-between pb-2">
-	        <div class="justify-content-start">
-	            <button type="button" id="btn_reset" class="btn btn-sm btn-outline-dark mr-2">전체표시</button>
-	            <button type="button" id="btn_select_note" class="btn btn-sm btn-outline-dark mr-2">선택 쪽지</button>    
-	            <button type="button" id="btn_select_delete" class="btn btn-sm btn-outline-dark mr-2">선택 삭제</button>                         
-	            <span class="listnum_txt pt-2">전체 제안내역</span>
-	            <span class="listnum_num pt-2" id="offer_count"></span>
-	        </div>
-	    </div>
+        <div class="d-flex justify-content-start pb-2">
+            <button type="button" id="btn_select_note" class="btn btn-sm btn-outline-dark mr-2">선택 쪽지</button>    
+            <button type="button" id="btn_select_delete" class="btn btn-sm btn-outline-dark mr-2">선택 삭제</button>                         
+            <span class="listnum_txt pt-2">전체 제안내역</span>
+            <span class="listnum_num pt-2" id="offer_count"></span>
+        </div>
 	    <div class="d-flex justify-content-between pb-2">
 	    	<div class="justify-content-start" style="padding: 0;">
-				<div class="selector">
-					<select class="search_hidden_state form-control" id="selectCategory" name="selectCategory" style="height: 100%;">
-						<option disabled>가구 종류</option>
-						<option value="all">전체</option>
-						<option value="table">책상</option>
-						<option value="chair">의자</option>
-						<option value="bookshelf">책장</option>
-						<option value="bed">침대</option>
-						<option value="drawer">서랍장</option>
-						<option value="sidetable">협탁</option>
-						<option value="dressing_table">화장대</option>
-						<option value="misc">기타</option>
-					</select>
-				</div>
-				<div class="selector">
-					<select class="search_hidden_state form-control" id="selectState" name="selectState" style="height: 100%;">
-						<option disabled hidden>현재 상태</option>
-						<option value="-1">전체</option>
-						<option value="0">입금대기</option>
-						<option value="1">결제완료</option>
-						<option value="2">제작중</option>
-						<option value="3">배송준비</option>
-						<option value="4">배송중</option>
-						<option value="5">배송완료</option>
-						<option value="6">구매확정</option>
-					</select>
+				<div class="d-flex justify-content-start">
+		    		<button type="button" id="btn_reset" class="btn btn-sm btn-outline-dark mr-2">전체표시</button>
+					<div class="selector">
+						<select class="search_hidden_state form-control" id="selectCategory" name="selectCategory" style="height: 33px;">
+							<option disabled>가구 종류</option>
+							<option value="all">전체</option>
+							<option value="table">책상</option>
+							<option value="chair">의자</option>
+							<option value="bookshelf">책장</option>
+							<option value="bed">침대</option>
+							<option value="drawer">서랍장</option>
+							<option value="sidetable">협탁</option>
+							<option value="dressing_table">화장대</option>
+							<option value="misc">기타</option>
+						</select>
+					</div>
+					<div class="selector">
+						<select class="search_hidden_state form-control" id="selectState" name="selectState" style="height: 33px;">
+							<option disabled hidden>현재 상태</option>
+							<option value="-1">전체</option>
+							<option value="0">입금대기</option>
+							<option value="1">결제완료</option>
+							<option value="2">제작중</option>
+							<option value="3">배송준비</option>
+							<option value="4">배송중</option>
+							<option value="5">배송완료</option>
+							<option value="6">구매확정</option>
+						</select>
+					</div>
 				</div>
 			</div>
         	<div class="d-flex justify-content-end">

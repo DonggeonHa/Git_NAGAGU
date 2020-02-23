@@ -6,15 +6,18 @@
 	    <div class="pb-5">
 	        <h1 class="">아카데미 회원 관리</h1>
 	    </div>
+		<div class="d-flex justify-content-start pb-2">
+			<button type="button" id="selectMember" class="btn btn-sm btn-outline-dark mr-2">선택 삭제</button> 
+	        <button type="button" id="all_select" class="btn btn-sm btn-outline-dark mr-2">선택 쪽지</button>                        
+		    <span class="listnum_txt pt-2 ">전체 회원 수</span>&nbsp;
+            <span class="listnum_num pt-2 ">0명</span>
+		</div>
 	    <div class="d-flex justify-content-between pb-2">
-	        <div class="d-flex flex-row bd-highlight mb-3">
-	            <button type="button" id="all_select" class="btn btn-sm btn-outline-dark mr-2">전체표시</button> 
-	            <button type="button" id="selectMember" class="btn btn-sm btn-outline-dark mr-2">선택 삭제</button> 
-	            <button type="button" id="all_select" class="btn btn-sm btn-outline-dark mr-2">선택 쪽지</button>                        
-	            <span class="listnum_txt pt-2 bd-highlight">전체 회원 수</span>&nbsp;
-	            <span class="listnum_num pt-2 bd-highlight">0명</span>
-	        </div>
-	
+		    <div class="justify-content-start" style="padding: 0;">
+				<div class="d-flex justify-content-start">
+    				<button type="button" id="all_select" class="btn btn-sm btn-outline-dark mr-2"  style="height: 33px;">전체표시</button> 
+	            </div>
+			</div>
 	        <div class="d-flex justify-content-end">
 	            <div class="dropdown">
 	                <button class="btn btn_search btn-outline-danger dropbtn dropdown-toggle btn-search-mode" type="button" id="searchType" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
