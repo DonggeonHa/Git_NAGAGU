@@ -82,28 +82,24 @@
 					</select>
 				</div>
 			</div>
-	        <div class="justify-content-end">
-	        	<div class="d-flex justify-content-end">
-		            <!-- Example split danger button -->
-		            <div class="dropdown">
-		                <button class="btn dropbtn btn-outline-danger dropdown-toggle btn-search-mode" type="button" id="scButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-		                   	 선택
-		                </button>
-		                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-		                    <button class="dropdown-item" value="cate_title">제목</button>
-		                    <button class="dropdown-item" value="cate_member">고객명</button>
-		                </div>
-		            </div>
-		
-		            <!-- search -->
-		            <nav class="navbar-light bg-light">
-		              <form class="form-inline" >
-		                <input class="form-control mr-sm-2 h-100" id="search_input"type="search" aria-label="Search" style="height:90%">
-		                <button class="btn btn_search btn-outline-danger my-2 my-sm-0" id="btn_search">검색</button>
-		              </form>
-		            </nav>
+        	<div class="d-flex justify-content-end">
+	            <!-- Example split danger button -->
+	            <div class="dropdown">
+	                <button class="btn dropbtn btn-outline-danger dropdown-toggle btn-search-mode" type="button" id="scButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+	                   	 선택
+	                </button>
+	                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+	                    <button class="dropdown-item" value="cate_title">제목</button>
+	                    <button class="dropdown-item" value="cate_member">고객명</button>
+	                </div>
 	            </div>
-	        </div>
+	
+	            <!-- search -->
+				<form class="form-inline" >
+					<input class="form-control mr-sm-2" id="search_input"type="search" aria-label="Search" style="height:90%">
+					<button class="btn btn_search btn-outline-danger my-2 my-sm-0" id="btn_search">검색</button>
+				</form>
+            </div>
         </div>
         <form id="chk_form">
 	    <table class="table" id="work_store">

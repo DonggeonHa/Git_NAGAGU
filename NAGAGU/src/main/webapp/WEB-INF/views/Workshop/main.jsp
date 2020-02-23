@@ -107,11 +107,11 @@
 				<table id="ClassQnaTable">
 					<thead class="dashboardQna">
 					<tr>
-						<th id="th-s">번호</th>
-						<th id="th-s">카테고리</th>
-						<th id="th-s">강의명</th>
-						<th id="th-s">작성자</th>
-						<th id="th-s">문의내용</th>
+						<th id="th-s" style="width: 10%">번호</th>
+						<th id="th-s" style="width: 10%">카테고리</th>
+						<th id="th-s" style="width: 30%">강의명</th>
+						<th id="th-s" style="width: 10%">작성자</th>
+						<th id="th-s" style="width: 40%">문의내용</th>
 					</tr>
 					</thead>
 					<tbody id="ClassQnaList">
@@ -385,7 +385,7 @@ function getReviewList() {
 		success:function(reviewList) {
 			
 			if(reviewList.length > 0) {
-				for(var i=0; i<reviewList.length; i++) {	//reviewCount도 상관 없음
+				for(var i = 0; i < 5 ; i++) {	//reviewCount도 상관 없음
 					var output='';
 					var REVIEW_NUM = reviewList[i].REVIEW_NUM;
 					var MEMBER_PICTURE = reviewList[i].MEMBER_PICTURE;

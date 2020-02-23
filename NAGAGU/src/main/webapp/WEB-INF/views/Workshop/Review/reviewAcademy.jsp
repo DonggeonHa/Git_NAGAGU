@@ -114,7 +114,7 @@
 	            	<div class="d-flex justify-content-end">
 	            		<!-- Example split danger button -->
 						<div class="dropdown">
-						    <button class="btn dropbtn btn-sm dropdown-toggle btn-search-mode" type="button" id="searchType" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+						    <button class="btn btn_search btn-outline-danger dropbtn dropdown-toggle btn-search-mode" type="button" id="searchType" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 						       	 선택
 						    </button>
 						    <div class="dropdown-menu" aria-labelledby="searchType">
@@ -124,36 +124,38 @@
 						    </div>
 						</div>
 						<!-- search -->
-						<nav class="navbar-light bg-light">
+						<nav class="navbar-light">
 							<!-- input에 enter키 누르면 자동으로 submit -->
 							<form class="form-inline" onsubmit="return false">
 								<input class="form-control mr-sm-2" type="search" id="keyword" aria-label="Search" style="height:90%">
-								<button class="btn btn_search btn-sm my-2 my-sm-0" type="button" id="btn_search">검색</button>
+								<button class="btn btn_search btn-outline-danger btn_search my-2 my-sm-0" type="button" id="btn_search">검색</button>
 							</form>
 						</nav>
 					</div>
 				</div>
 	        </div>
 		</div>
-        <table class="table" id="work_store">
-		    <thead>
-			    <tr class="text-center">
-					<th style="width: 3%;">번호</th>
-					<th style="width: 5%;">상태</th>
-					<th style="width: 7%;">카테고리</th>
-					<th style="width: 10%;">클래스</th>
-					<th style="width: 5%;">지역</th>
-					<th style="width: 10%;">작성자</th>
-					<th style="width: 18%;">강의명</th>
-					<th style="width: 5%;">평점</th>
-					<th style="width: 22%;">후기 내용</th>
-					<th style="width: 10%;">작성날짜</th>
-					<th style="width: 5%;">상세</th>
-			    </tr>
-		    </thead>
-		    <tbody id="ClassReviewList"></tbody>
-		</table>
-		<div id="list_none"></div>
+		<div style="height: 620px;">
+	        <table class="table pb-3" id="work_store">
+			    <thead>
+				    <tr class="text-center">
+						<th style="width: 5%;">번호</th>
+						<th style="width: 5%;">상태</th>
+						<th style="width: 7%;">카테고리</th>
+						<th style="width: 10%;">클래스</th>
+						<th style="width: 5%;">지역</th>
+						<th style="width: 10%;">작성자</th>
+						<th style="width: 18%;">강의명</th>
+						<th style="width: 5%;">평점</th>
+						<th style="width: 20%;">후기 내용</th>
+						<th style="width: 10%;">작성날짜</th>
+						<th style="width: 5%;">상세</th>
+				    </tr>
+			    </thead>
+			    <tbody id="ClassReviewList"></tbody>
+			</table>
+			<div id="list_none"></div>
+		</div>
 		<div class="d-flex justify-content-center">
 			<nav aria-label="Page navigation example" class="paginated" id="user-page"></nav>
 		</div>
@@ -412,12 +414,12 @@
 						} else {
 							output += '<td>-</td>';
 						}
-						if(REVIEW_CONTENT.length >= 45) {
-							REVIEW_CONTENT = REVIEW_CONTENT.substr(0,45)+"...";
+						if(REVIEW_CONTENT.length >= 30) {
+							REVIEW_CONTENT = REVIEW_CONTENT.substr(0,30)+"...";
 						}
 						output += '<td style="text-align:left;">'+REVIEW_CONTENT+'</td>';
 						output += '<td>' + date + '</td>';
-						output += '<td><button class="btn_detail" value="'+REVIEW_NUM+'">' + "상세" + '</button></td>';						
+						output += '<td><button class="btn_detail btn btn_search btn-outline-danger btn-sm" value="'+REVIEW_NUM+'">' + "상세" + '</button></td>';						
 						output += '</tr>';
 						number += 1;
      				}					

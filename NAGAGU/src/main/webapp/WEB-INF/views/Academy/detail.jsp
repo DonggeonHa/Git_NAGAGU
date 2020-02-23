@@ -1864,6 +1864,7 @@
 
 			//Review 등록하기 버튼(insert) //답글
 			$(document).on("click",".insertReviewReply",function(event){
+				$('#remo').remove();
 				var REVIEW_NUM = $(this).prev().val();	//원글번호(review_re로 저장할 것)
 				console.log("REVIEW_NUM : " + REVIEW_NUM)
 				
