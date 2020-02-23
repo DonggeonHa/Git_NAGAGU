@@ -135,25 +135,27 @@
 				</div>
 	        </div>
 		</div>
-        <table class="table" id="work_store">
-		    <thead>
-			    <tr class="text-center">
-					<th style="width: 5%;">번호</th>
-					<th style="width: 5%;">상태</th>
-					<th style="width: 7%;">카테고리</th>
-					<th style="width: 10%;">클래스</th>
-					<th style="width: 5%;">지역</th>
-					<th style="width: 10%;">작성자</th>
-					<th style="width: 18%;">강의명</th>
-					<th style="width: 5%;">평점</th>
-					<th style="width: 20%;">후기 내용</th>
-					<th style="width: 10%;">작성날짜</th>
-					<th style="width: 5%;">상세</th>
-			    </tr>
-		    </thead>
-		    <tbody id="ClassReviewList"></tbody>
-		</table>
-		<div id="list_none"></div>
+		<div style="height: 620px;">
+	        <table class="table pb-3" id="work_store">
+			    <thead>
+				    <tr class="text-center">
+						<th style="width: 5%;">번호</th>
+						<th style="width: 5%;">상태</th>
+						<th style="width: 7%;">카테고리</th>
+						<th style="width: 10%;">클래스</th>
+						<th style="width: 5%;">지역</th>
+						<th style="width: 10%;">작성자</th>
+						<th style="width: 18%;">강의명</th>
+						<th style="width: 5%;">평점</th>
+						<th style="width: 20%;">후기 내용</th>
+						<th style="width: 10%;">작성날짜</th>
+						<th style="width: 5%;">상세</th>
+				    </tr>
+			    </thead>
+			    <tbody id="ClassReviewList"></tbody>
+			</table>
+			<div id="list_none"></div>
+		</div>
 		<div class="d-flex justify-content-center">
 			<nav aria-label="Page navigation example" class="paginated" id="user-page"></nav>
 		</div>
@@ -412,8 +414,8 @@
 						} else {
 							output += '<td>-</td>';
 						}
-						if(REVIEW_CONTENT.length >= 45) {
-							REVIEW_CONTENT = REVIEW_CONTENT.substr(0,45)+"...";
+						if(REVIEW_CONTENT.length >= 30) {
+							REVIEW_CONTENT = REVIEW_CONTENT.substr(0,30)+"...";
 						}
 						output += '<td style="text-align:left;">'+REVIEW_CONTENT+'</td>';
 						output += '<td>' + date + '</td>';
