@@ -34,7 +34,6 @@
 <!-- 리스트 폼 시작 -->
 <form id="listinfo" method="post">
 	<input type="hidden" id="search_category" name="search_category">
-	<input type="hidden" id="search_text" name="search_text">
 	<input type="hidden" id="wo_category" name="wo_category">
 	<input type="hidden" id="wo_state" name="wo_state">
 </form>
@@ -46,44 +45,44 @@
         <div class="pb-5">
             <h1>견적 제안 관리</h1>
         </div>
-        <div class="d-flex justify-content-between pb-2">
-	        <div class="justify-content-start">
-	            <button type="button" id="btn_reset" class="btn btn-sm btn-outline-dark mr-2">전체표시</button>
-	            <button type="button" id="btn_select_note" class="btn btn-sm btn-outline-dark mr-2">선택 쪽지</button>    
-	            <button type="button" id="btn_select_delete" class="btn btn-sm btn-outline-dark mr-2">선택 삭제</button>                         
-	            <span class="listnum_txt pt-2">전체 제안내역</span>
-	            <span class="listnum_num pt-2" id="offer_count"></span>
-	        </div>
-	    </div>
+		<div class="d-flex justify-content-start pb-2">
+			<button type="button" id="btn_select_note" class="btn btn-sm btn-outline-dark mr-2">선택 쪽지</button>    
+            <button type="button" id="btn_select_delete" class="btn btn-sm btn-outline-dark mr-2">선택 삭제</button>                         
+            <span class="listnum_txt pt-2">전체 제안내역</span>
+            <span class="listnum_num pt-2" id="offer_count"></span>
+		</div>
 	    <div class="d-flex justify-content-between pb-2">
 	    	<div class="justify-content-start" style="padding: 0;">
-				<div class="selector">
-					<select class="search_hidden_state form-control" id="selectCategory" name="selectCategory" style="height: 100%;">
-						<option disabled hidden>가구 종류</option>
-						<option value="all">전체</option>
-						<option value="table">책상</option>
-						<option value="chair">의자</option>
-						<option value="bookshelf">책장</option>
-						<option value="bed">침대</option>
-						<option value="drawer">서랍장</option>
-						<option value="sidetable">협탁</option>
-						<option value="dressing_table">화장대</option>
-						<option value="misc">기타</option>
-					</select>
-				</div>
-				<div class="selector">
-					<select class="search_hidden_state form-control" id="selectState" name="selectState" style="height: 100%;">
-						<option disabled hidden>현재 상태</option>
-						<option value="-1">전체</option>
-						<option value="0">입찰중</option>
-						<option value="1">낙찰</option>
-						<option value="2">유찰</option>
-						<option value="3">취소</option>
-					</select>
+	    		<div class="d-flex justify-content-start">
+	    			<button type="button" id="btn_reset" class="btn btn-sm btn-outline-dark mr-2">전체표시</button>
+					<div class="selector">
+						<select class="search_hidden_state form-control" id="selectCategory" name="selectCategory" style="height: 33px;">
+							<option disabled hidden>가구 종류</option>
+							<option value="all">전체</option>
+							<option value="table">책상</option>
+							<option value="chair">의자</option>
+							<option value="bookshelf">책장</option>
+							<option value="bed">침대</option>
+							<option value="drawer">서랍장</option>
+							<option value="sidetable">협탁</option>
+							<option value="dressing_table">화장대</option>
+							<option value="misc">기타</option>
+						</select>
+					</div>
+					<div class="selector">
+						<select class="search_hidden_state form-control" id="selectState" name="selectState" style="height: 33px;">
+							<option disabled hidden>현재 상태</option>
+							<option value="-1">전체</option>
+							<option value="0">입찰중</option>
+							<option value="1">낙찰</option>
+							<option value="2">유찰</option>
+							<option value="3">취소</option>
+						</select>
+					</div>
 				</div>
 			</div>
 	        <div class="justify-content-end">
-	        	<div class="d-flex justify-content-end">
+	        	<div class="d-flex justify-content-end" style="padding: 0;">
 		            <!-- Example split danger button -->
 		            <div class="dropdown">
 		                <button class="btn btn_search btn-outline-danger dropbtn dropdown-toggle btn-search-mode" type="button" id="scButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
