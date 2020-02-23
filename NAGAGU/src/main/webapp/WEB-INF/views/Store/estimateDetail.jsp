@@ -33,6 +33,15 @@
 			
 	String images = vo.getESTIMATE_FILE();
 	String[] imgArr = images.split(",");
+	
+
+	String payment = "";
+	
+	if (vo.getESTIMATE_PAY().equals("card")) {payment = "신용카드";}
+	else if (vo.getESTIMATE_PAY().equals("Toss")) {payment = "토스";}
+	else if (vo.getESTIMATE_PAY().equals("Kakao")) {payment = "카카오페이";}
+	else if (vo.getESTIMATE_PAY().equals("payco")) {payment = "페이코";}
+	else if (vo.getESTIMATE_PAY().equals("samsung")) {payment = "삼성페이";}
 
 %>
 <style type="text/css">
@@ -279,7 +288,19 @@
 			<tr>
 				<th style="vertical-align:middle">제품 종류</th>
 				<td>
-					<%=vo.getESTIMATE_CATEGORY() %>
+				<%
+				String category = "";
+					
+					if (vo.getESTIMATE_CATEGORY().equals("table")) { category = "책상"; }
+					else if (vo.getESTIMATE_CATEGORY().equals("chair")) {category = "의자";}
+					else if (vo.getESTIMATE_CATEGORY().equals("bookshelf")) {category = "책장";}
+					else if (vo.getESTIMATE_CATEGORY().equals("bed")) {category = "침대";}
+					else if (vo.getESTIMATE_CATEGORY().equals("drawer")) {category = "서랍장";}
+					else if (vo.getESTIMATE_CATEGORY().equals("sidetable")) {category = "협탁";}
+					else if (vo.getESTIMATE_CATEGORY().equals("dressing_table")) {category = "화장대";}
+					else {category = "기타";}
+				%>
+					<%=category %>
 				</td>
 			</tr>
 			<tr>
@@ -304,6 +325,12 @@
 				<th style="vertical-align:middle">규격</th>
 				<td>
 					<%=vo.getESTIMATE_SIZE() %>
+				</td>
+			</tr>
+			<tr>
+				<th style="vertical-align:middle">결제수단</th>
+				<td>
+					<%=payment %>
 				</td>
 			</tr>
 			<tr>
@@ -340,6 +367,7 @@
 	%>
 		<button class="btn btn-dark btn-md" onclick="location.href='estimate.es?page=<%=nowpage%>'">목록</button>
 	</div>
+	<%  if (ES_STATE < 4) { %>
 	
 	<form id="offer_data">
 		<input type="hidden" name="ESTIMATE_NUM" value=<%=ESTIMATE_NUM%>>
@@ -369,6 +397,7 @@
 			</table>
 		</div>
 	</div>
+	<% } %>
 
 	<!--  견적 제시 modal -->
 	<div class="modal fade" id="offerFormModal" tabindex="-1" role="dialog"
@@ -481,124 +510,125 @@
 				}
 				
 			}
-			
-			var OFFER_DATA = $('#offer_data').serialize();
-			$.ajax({
-				url:'/NAGAGU/offer_list.es', 
-				type:'POST', 
-				data: OFFER_DATA,
-				dataType:"json", //서버에서 보내줄 데이터 타입
-				async:false,
-				contentType:'application/x-www-form-urlencoded; charset=utf-8',
-				success:function(data) {
-					console.log(data.offerList);
-					
-					var output = '';
-					var pagination = '';
-					
-					var offer_page = data.offer_page;
-					var max_page = data.offer_maxpage;
-					var ol = data.offerList;
-					var rnum = data.offer_rnum;
-					
-					if (ol.length == 0) {
-						output += '<tr><td colspan="5" class="list_caution">등록된 제안이 없습니다</td><tr>';
-					}
-					
-					else {
-						
-						/* 댓글 리스트 작성*/
-						$.each(ol, function(index, item) {
-							var offerPrice = addComma(item.offer_PRICE);
+				if (es_state < 4) {
+					var OFFER_DATA = $('#offer_data').serialize();
+					$.ajax({
+						url:'/NAGAGU/offer_list.es', 
+						type:'POST', 
+						data: OFFER_DATA,
+						dataType:"json", //서버에서 보내줄 데이터 타입
+						async:false,
+						contentType:'application/x-www-form-urlencoded; charset=utf-8',
+						success:function(data) {
+							console.log(data.offerList);
 							
-							output += '<tr value="' + index + '" class="item_head">';
-							output += '<td>' + rnum + '</td>';
-							output += '<td><b>' + item.offer_WORKSHOP + '</b></td>';
-							output += '<td id="offer_price_' + item.offer_NUM + '">' + offerPrice + '</td>';
-							if (login_state == 1) {
-								if (es_state == 1) {
-									if (item.offer_STATE == 1) {
-										output += '<td><button value="' + item.offer_WORKSHOP + '" class="btn_note btn btn-outline-dark btn-sm">쪽지보내기</button></td>';
-										output += '<td><button value="' + item.offer_NUM + '" class="btn_bid_cancel btn btn-outline-dark btn-sm">낙찰취소</button></td>';
+							var output = '';
+							var pagination = '';
+							
+							var offer_page = data.offer_page;
+							var max_page = data.offer_maxpage;
+							var ol = data.offerList;
+							var rnum = data.offer_rnum;
+							
+							if (ol.length == 0) {
+								output += '<tr><td colspan="5" class="list_caution">등록된 제안이 없습니다</td><tr>';
+							}
+							
+							else {
+								
+								/* 댓글 리스트 작성*/
+								$.each(ol, function(index, item) {
+									var offerPrice = addComma(item.offer_PRICE);
+									
+									output += '<tr value="' + index + '" class="item_head">';
+									output += '<td>' + rnum + '</td>';
+									output += '<td><b>' + item.offer_WORKSHOP + '</b></td>';
+									output += '<td id="offer_price_' + item.offer_NUM + '">' + offerPrice + '</td>';
+									if (login_state == 1) {
+										if (es_state == 1) {
+											if (item.offer_STATE == 1) {
+												output += '<td><button value="' + item.offer_WORKSHOP + '" class="btn_note btn btn-outline-dark btn-sm">쪽지보내기</button></td>';
+												output += '<td><button value="' + item.offer_NUM + '" class="btn_bid_cancel btn btn-outline-dark btn-sm">낙찰취소</button></td>';
+											} 
+											else {
+												output += '<td> - </td>';
+												output += '<td> - </td>';
+											}
+										}
+										else {
+											output += '<td><button value="' + item.offer_WORKSHOP + '" class="btn_note btn btn-outline-dark btn-sm">쪽지보내기</button></td>';
+											output += '<td><button value="' + item.offer_NUM + '" class="btn_bid btn btn-outline-dark btn-sm">낙찰하기</button></td>';
+										}
 									} 
 									else {
-										output += '<td> - </td>';
-										output += '<td> - </td>';
+									output += '<td> - </td>';
+									output += '<td><button value="' + item.offer_NUM + '" class="btn_offer_modify btn-sm" alt="" data-toggle="modal" data-target="#modifyFormModal" aria-haspopup="true" aria-expanded="false">수정</button>&nbsp;';
+									output += '<button value="' + item.offer_NUM + '" class="btn_offer_delete btn-sm">삭제</button></td>';
 									}
-								}
-								else {
-									output += '<td><button value="' + item.offer_WORKSHOP + '" class="btn_note btn btn-outline-dark btn-sm">쪽지보내기</button></td>';
-									output += '<td><button value="' + item.offer_NUM + '" class="btn_bid btn btn-outline-dark btn-sm">낙찰하기</button></td>';
+									output += '</tr>';
+									output += '<tr id="item_content_'+ index + '" class="item_content">';
+									output += '<td colspan="5">';
+									output += '<div id = "offer_content_' + item.offer_NUM + '" class="item_content_body">' + item.offer_CONTENT+ '</div>';
+									output += '</td></tr>';
+									
+									rnum--;
+								});
+							
+							/* 댓글 페이지네이션 */
+							
+							if (offer_page == max_page && offer_page > 5) {
+								pagination += '<div class="pageNum pagelink" value="' + Number(offer_page-5) + '"><i class="fas fa-angle-double-left page_num"></i></div>';
+								pagination += '<div class="pageNum pagelink" value="' + Number(offer_page-4) + '">' + Number(offer_page-4) + '</div>';
+								pagination += '<div class="pageNum pagelink" value="' + Number(offer_page-3) + '">' + Number(offer_page-3) + '</div>';
+							}
+							else if (offer_page == max_page-1 && offer_page > 4) {
+								pagination += '<div class="pageNum pagelink" value="' + Number(offer_page-4) + '"><i class="fas fa-angle-double-left page_num"></i></div>';
+								pagination += '<div class="pageNum pagelink" value="' + Number(offer_page-3) + '">' + Number(offer_page-3) + '</div>';
+							}
+							else {
+								if (offer_page > 3) {
+									pagination += '<div class="pageNum pagelink" value="' + Number(offer_page-3) + '"><i class="fas fa-angle-double-left page_num"></i></div>';
 								}
 							} 
-							else {
-							output += '<td> - </td>';
-							output += '<td><button value="' + item.offer_NUM + '" class="btn_offer_modify btn-sm" alt="" data-toggle="modal" data-target="#modifyFormModal" aria-haspopup="true" aria-expanded="false">수정</button>&nbsp;';
-							output += '<button value="' + item.offer_NUM + '" class="btn_offer_delete btn-sm">삭제</button></td>';
-							}
-							output += '</tr>';
-							output += '<tr id="item_content_'+ index + '" class="item_content">';
-							output += '<td colspan="5">';
-							output += '<div id = "offer_content_' + item.offer_NUM + '" class="item_content_body">' + item.offer_CONTENT+ '</div>';
-							output += '</td></tr>';
 							
-							rnum--;
-						});
-						
-						/* 댓글 페이지네이션 */
-						
-						if (offer_page == max_page && offer_page > 5) {
-							pagination += '<div class="pageNum pagelink" value="' + Number(offer_page-5) + '"><i class="fas fa-angle-double-left page_num"></i></div>';
-							pagination += '<div class="pageNum pagelink" value="' + Number(offer_page-4) + '">' + Number(offer_page-4) + '</div>';
-							pagination += '<div class="pageNum pagelink" value="' + Number(offer_page-3) + '">' + Number(offer_page-3) + '</div>';
-						}
-						else if (offer_page == max_page-1 && offer_page > 4) {
-							pagination += '<div class="pageNum pagelink" value="' + Number(offer_page-4) + '"><i class="fas fa-angle-double-left page_num"></i></div>';
-							pagination += '<div class="pageNum pagelink" value="' + Number(offer_page-3) + '">' + Number(offer_page-3) + '</div>';
-						}
-						else {
-							if (offer_page > 3) {
-								pagination += '<div class="pageNum pagelink" value="' + Number(offer_page-3) + '"><i class="fas fa-angle-double-left page_num"></i></div>';
+							if (offer_page > 2) {
+								pagination += '<div class="pageNum pagelink" value="' + Number(offer_page-2) + '">' + Number(offer_page-2) + '</div>';
 							}
-						} 
-						
-						if (offer_page > 2) {
-							pagination += '<div class="pageNum pagelink" value="' + Number(offer_page-2) + '">' + Number(offer_page-2) + '</div>';
-						}
-						if (offer_page > 1) {
-							pagination += '<div class="pageNum pagelink" value="' + Number(offer_page-1) + '">' + Number(offer_page-1) + '</div>';
-						}
-							pagination += '<div class="pageNum currentpage">' + offer_page + '</div>';
-						if (max_page > offer_page) {
-							pagination += '<div class="pageNum pagelink" value="' + Number(offer_page+1) + '">' + Number(offer_page+1) + '</div>';
-						}
-						if (max_page > offer_page+1) {
-							pagination += '<div class="pageNum pagelink" value="' + Number(offer_page+2) + '">' + Number(offer_page+2) + '</div>';
-						}
-						
-						if (offer_page == 1 && max_page > 5) {
-							pagination += '<div class="pageNum pagelink" value="' + Number(offer_page+3) + '">' + Number(offer_page+3) + '</div>';
-							pagination += '<div class="pageNum pagelink" value="' + Number(offer_page+4) + '">' + Number(offer_page+4) + '</div>';
-							pagination += '<div class="pageNum pagelink" value="' + Number(offer_page+5) + '"><i class="fas fa-angle-double-right page_num"></i></div>';
-						}
-						else if (offer_page == 2 && max_page > 6) {
-							pagination += '<div class="pageNum pagelink" value="' + Number(offer_page+3) + '">' + Number(offer_page+3) + '</div>';
-							pagination += '<div class="pageNum pagelink" value="' + Number(offer_page+4) + '"><i class="fas fa-angle-double-right page_num"></i></div>';
-						}
-						else {
-							if (max_page > offer_page+2) {
-								pagination += '<div class="pageNum pagelink" value="' + Number(offer_page+3) + '"><i class="fas fa-angle-double-right page_num"></i></div>';
+							if (offer_page > 1) {
+								pagination += '<div class="pageNum pagelink" value="' + Number(offer_page-1) + '">' + Number(offer_page-1) + '</div>';
+							}
+								pagination += '<div class="pageNum currentpage">' + offer_page + '</div>';
+							if (max_page > offer_page) {
+								pagination += '<div class="pageNum pagelink" value="' + Number(offer_page+1) + '">' + Number(offer_page+1) + '</div>';
+							}
+							if (max_page > offer_page+1) {
+								pagination += '<div class="pageNum pagelink" value="' + Number(offer_page+2) + '">' + Number(offer_page+2) + '</div>';
+							}
+							
+							if (offer_page == 1 && max_page > 5) {
+								pagination += '<div class="pageNum pagelink" value="' + Number(offer_page+3) + '">' + Number(offer_page+3) + '</div>';
+								pagination += '<div class="pageNum pagelink" value="' + Number(offer_page+4) + '">' + Number(offer_page+4) + '</div>';
+								pagination += '<div class="pageNum pagelink" value="' + Number(offer_page+5) + '"><i class="fas fa-angle-double-right page_num"></i></div>';
+							}
+							else if (offer_page == 2 && max_page > 6) {
+								pagination += '<div class="pageNum pagelink" value="' + Number(offer_page+3) + '">' + Number(offer_page+3) + '</div>';
+								pagination += '<div class="pageNum pagelink" value="' + Number(offer_page+4) + '"><i class="fas fa-angle-double-right page_num"></i></div>';
+							}
+							else {
+								if (max_page > offer_page+2) {
+									pagination += '<div class="pageNum pagelink" value="' + Number(offer_page+3) + '"><i class="fas fa-angle-double-right page_num"></i></div>';
+								}
 							}
 						}
+						
+						$('#offerList > tbody').html(output);
+						$('#pagination').html(pagination);
+					},
+					error:function(request, status, error){
+					    alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
 					}
-					
-					$('#offerList > tbody').html(output);
-					$('#pagination').html(pagination);
-				},
-				error:function(request, status, error){
-				    alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
-				}
-			});
+				});
+			}
 		}
 		
 		/* 페이지 이동 */

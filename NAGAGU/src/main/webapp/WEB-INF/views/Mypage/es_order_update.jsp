@@ -65,7 +65,7 @@
 						<label for="inputAddress">받는분</label>
 					</div>
 					<div class="col-5">
-						<input type="text" class="form-control toName" name="ES_ORDER_RECEIVER">
+						<input type="text" class="form-control toName" name="ES_ORDER_RECEIVER" value=<%=eovo.getES_ORDER_RECEIVER() %>>
 					</div>
 					<div class="col-5">
 					</div>
@@ -104,7 +104,7 @@
 						<label for="inputAddress">연락처</label>
 					</div>
 					<div class="col-5">
-						<input type="text" class="form-control toPhone" name="ES_ORDER_PHONE" >
+						<input type="text" class="form-control toPhone" name="ES_ORDER_PHONE" value=<%=eovo.getES_ORDER_PHONE() %> >
 					</div>
 					<div class="col-5">
 					</div>
@@ -114,7 +114,7 @@
 						<label for="inputAddress">배송 메모</label>
 					</div>
 					<div class="col-10 input-group">
-						<input type="text" class="form-control memo" name="ES_ORDER_MEMO">
+						<input type="text" class="form-control memo" name="ES_ORDER_MEMO" value=<%=eovo.getES_ORDER_MEMO() %>>
 					</div>
 				</div>
 		</div>

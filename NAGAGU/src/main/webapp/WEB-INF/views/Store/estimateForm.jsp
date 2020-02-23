@@ -224,63 +224,43 @@
 					<td>
 						<input type="hidden" id="ESTIMATE_PAY" name="ESTIMATE_PAY">
 						<ul class="nav nav-pills mb-3 table table-bordered" id="pills-tab" role="tablist">
-							<li class="nav-item payment" value="card">
-								<a class="nav-link bt" id="pills-card-tab" data-toggle="pill" href="#pills-card" role="tab" aria-controls="pills-home" aria-selected="true"> 
-									<label> 
-										<img width="64" src="https://bucketplace-v2-development.s3.amazonaws.com/pg/card.png" alt="Card">
-										<div class="text-center">
-											<font color="black">카드</font>
-										</div>
+							<li class="nav-item">
+								<a class="nav-link pay_method" value="toss" id="pills-toss-tab" data-toggle="pill" href="#pills-toss" role="tab" aria-controls="pills-home" aria-selected="true">
+									<label>
+										<img width="64" src="https://bucketplace-v2-development.s3.amazonaws.com/pg/toss.png" alt="Toss">
+										<div class="text-center"><font color="black">토스</font></div>
 									</label>
 								</a>
 							</li>
-							<li class="nav-item payment" value="nobook">
-								<a class="nav-link bt" id="pills-vbank-tab" data-toggle="pill" href="#pills-vbank" role="tab" aria-controls="pills-home" aria-selected="true"> 
-									<label> 
-										<img width="64" src="https://bucketplace-v2-development.s3.amazonaws.com/pg/vbank.png" alt="Vbank">
-										<div class="text-center">
-											<font color="black">무통장입금</font>
-										</div>
+							<li class="nav-item">
+								<a class="nav-link pay_method" value="card" id="pills-card-tab" data-toggle="pill" href="#pills-card" role="tab" aria-controls="pills-home" aria-selected="true">
+									<label>
+										<img width="64" src="https://bucketplace-v2-development.s3.amazonaws.com/pg/card.png" alt="Toss">
+										<div class="text-center"><font color="black">카드</font></div>
+									</labe	l>
+								</a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link pay_method" value="kakao" id="pills-naver-tab" data-toggle="pill" href="#pills-naver" role="tab" aria-controls="pills-home" aria-selected="true">
+									<label>
+										<img width="64" src="${pageContext.request.contextPath}/resources/images/Mypage/kakao.png" alt="Toss">
+										<div class="text-center"><font color="black">카카오페이</font></div>
 									</label>
 								</a>
 							</li>
-							<li class="nav-item payment" value="phone">
-								<a class="nav-link bt" id="pills-phone-tab" data-toggle="pill" href="#pills-phone" role="tab" aria-controls="pills-home" aria-selected="true"> 
-									<label> 
-										<img width="64"	src="https://bucketplace-v2-development.s3.amazonaws.com/pg/phone.png" alt="Phone">
-										<div class="text-center">
-											<font color="black">핸드폰</font>
-										</div>
+							<li class="nav-item">
+								<a class="nav-link pay_method" value="payco"  id="pills-vbank-tab" data-toggle="pill" href="#pills-vbank" role="tab" aria-controls="pills-home" aria-selected="true">
+									<label>
+										<img width="64" src="https://bucketplace-v2-development.s3.amazonaws.com/pg/vbank.png" alt="Toss">
+										<div class="text-center"><font color="black">페이코</font></div>
 									</label>
 								</a>
 							</li>
-							<li class="nav-item payment" value="toss">
-								<a class="nav-link bt" id="pills-toss-tab" data-toggle="pill" href="#pills-toss" role="tab" aria-controls="pills-home" aria-selected="true"> 
-									<label> 
-										<img width="64"	src="https://bucketplace-v2-development.s3.amazonaws.com/pg/toss.png" alt="Toss">
-										<div class="text-center">
-											<font color="black">토스</font>
-										</div>
-									</label>
-								</a>
-							</li>
-							<li class="nav-item payment" value="naver">
-								<a class="nav-link bt" id="pills-naver-tab" data-toggle="pill" href="#pills-naver" role="tab" aria-controls="pills-home" aria-selected="true"> 
-									<label> 
-										<img width="64"	src="https://bucketplace-v2-development.s3.amazonaws.com/pg/naver.png" alt="Naver">
-										<div class="text-center">
-											<font color="black">네이버페이</font>
-										</div>
-									</label>
-								</a>
-							</li>
-							<li class="nav-item payment" value="kakao">
-								<a class="nav-link bt" id="pills-kakao-tab" data-toggle="pill" href="#pills-kakao" role="tab" aria-controls="pills-home" aria-selected="true"> 
-									<label> 
-										<img width="64"	src="${pageContext.request.contextPath}/resources/images/Mypage/kakao.png" alt="Kakao">
-										<div class="text-center">
-											<font color="black">카카오페이</font>
-										</div>
+							<li class="nav-item">
+								<a class="nav-link pay_method" value="samsung" id="pills-phone-tab" data-toggle="pill" href="#pills-phone" role="tab" aria-controls="pills-home" aria-selected="true">
+									<label>
+										<img width="64" src="https://bucketplace-v2-development.s3.amazonaws.com/pg/phone.png" alt="Toss">
+										<div class="text-center"><font color="black">삼성페이</font></div>
 									</label>
 								</a>
 							</li>
