@@ -10,7 +10,7 @@
 
 	ArrayList<EstimateOrderVO> eoList = (ArrayList<EstimateOrderVO>)request.getAttribute("esOrderList");
 	
-	SimpleDateFormat df = new SimpleDateFormat("yyyy.MM.dd");
+	SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
 	DecimalFormat dfmp = new DecimalFormat("#,###원");
 
 	/* 상태별 상품 개수 */
@@ -21,7 +21,6 @@
 	}
 %>
       <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.2/animate.css">
-      <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/order_list.css">
 <style>
           img {
           	max-width:100%;
@@ -34,30 +33,30 @@
           
           /* ----------------------------------------------------------- */
           
+	
 	.container-mypage{
 		margin-top: 50px ;
 		margin-bottom: 50px ;				 
-	}			
+	}		
 	.container-mypage a,.container-mypage  a:link,.container-mypage  a:hover {
 		text-decoration: none;
 		color: white !important;
 	} 
 	
-   	.card-hover:hover {
+	.card-hover:hover {
 		transition: 0.5s;
 		z-index: 1;
 		background-color: #ef900e;
 	}
+	
 	.card {
-		background-color: #1b1b27;
+		background-color: #1b1b27 ;
 		margin: 15px 15px 15px 15px;
 		color: white;
 	}
 	.card-wrap{
 		justify-content: center;
-		padding-left:50px; 
 	}
-	
 	@media screen and (max-width: 600px) {
 		.card {
 			width: 2.5rem;
@@ -94,13 +93,13 @@
 	}
 	@media ( min-width : 1200px) {
 		.card {
-			width: 8rem !important;  
-			font-size: 0.7rem; 
+			width: 9rem !important;  
+			font-size: 0.7rem;
 		}
 		.card-header, .card-body, .card-footer {
 			padding: 18px !important;  
 		}
-	} 
+	}
 	
 	.tab-pane .col-4 {
 		padding-bottom: 50px;
@@ -121,6 +120,7 @@
 	}
 	.tab-content{
 		min-height:38vh;
+		margin-top:15px;
 	}
 	.tab-content img{
 		max-height:200px;
@@ -137,12 +137,12 @@
     }
        
     .container {
-        margin-top:30px;
+        font-weight:700;
     }
           
 	.thumbImg {
-		width:256px;
-		height:256px;
+		width:128px;
+		height:128px;
 		overflow:hidden;
 		display:block;
 		margin-right:10px;
@@ -165,17 +165,24 @@
 		margin-bottom:5px;
 	}
 	
-       .no_list {   
-           text-align:center;
-           font-size:1.5rem;
-           line-height:250px;
-           width:100%;
-           height:250px;
-       }
-         
-    .item_header {
-    	width:100%;
-    }  
+	.no_list {   
+		text-align:center;
+		font-size:1.5rem;
+		line-height:250px;
+		width:100%;
+		height:250px;
+	}
+    
+	.order_tab{ 
+		margin-top: 10px;
+		margin-left: 0px;
+		margin-bottom: 10px; 
+		padding-right: 40px;
+	} 
+	
+	.each-row, .each-row div{
+		padding-left: 8px;
+	} 
 </style>
 	<div class="container-mypage " role="main">
 		<div class="row card-wrap  text-center">
@@ -237,7 +244,7 @@
 					</div>
 				</a>  
 			</div>
-			<div class="card card-hover ">
+			<div class="card card-hover " style="background-color: rgb(239, 144, 14);">
 				<a href="mypage_estimate.my" class="href">
 					<div class="card-header">CUSTOM</div>
 					<div class="card-body">
@@ -342,6 +349,7 @@
 			</div>
 		</nav>
 
+		<div class="tab-content" id="nav-tabContent">
 		<%
 		if (eoList.size() == 0) {
 	%>
@@ -360,112 +368,110 @@
 				System.out.println("eoState : " + eoState);
 	%>
 
-		<div class="tab-content" id="nav-tabContent">
-			<div class="tab-pane fade show active shadow p-3 mb5 bg-white"
-				id="nav-waiting" role="tabpanel" aria-labelledby="nav-waiting-tab"
-				style="padding-top: 30%;">
-				<div class="row item_header" style="padding: 0 0 0 5%;">
-					<div class="col-7">
-						<b><%=vo.getES_ORDER_NUM()%> | <%=df.format(vo.getES_ORDER_DATE())%></b>
-					</div>
-					<div class="col-5 d-flex justify-content-end">
-						<a
-							href="./estimate_detail.es?ESTIMATE_NUM=<%=vo.getES_ORDER_ESTIMATE()%>"><font
-							size="2">상세보기 </font></a>
-					</div>
-				</div>
+			<div class="col-12 tab-pane fade show active shadow pb-2 pt-1 mb-2 bg-white rounded" id="nav-waiting" role="tabpanel" aria-labelledby="nav-waiting-tab" style="padding-top: 30%;">
+		
+				<div class="row justify-content-between order_tab">
+ 	    			<div>
+ 	    				<div><i style="font-size:0.7rem;"><%=df.format(vo.getES_ORDER_DATE())%></i></div>
+  	  	  				<div><b>주문번호 <%=vo.getES_ORDER_NUM()%></b></div></div>
+ 	    				<div><a href="./estimate_detail.es?ESTIMATE_NUM=<%=vo.getES_ORDER_ESTIMATE()%>">상세보기</a></div>
+ 	    			</div>
 				<br>
-				<div class="row" style="padding: 0 0 0 5%;">
-					<table class="table table-borderless">
-						<tr>
-							<td>
+				<div class="row">
 								<div class="row">
-									<div class="thumbImg">
-										<img src="<%=vo.getES_ORDER_PIC()%>"
-											style="padding: 0 3% 3% 0;">
-									</div>
-									<dl>
-										<dt><%=vo.getES_ORDER_TITLE()%></dt>
-										<dd>
-											<a href="workshop_page.my?ES_ORDER_WORKSHOP=<%=vo.getES_ORDER_WORKSHOP()%>"><%=vo.getES_ORDER_WORKSHOP()%>
-										</dd>
-									</dl>
-								</div>
-							</td>
-							<td>
-								<dl>
-									<dd><%=dfmp.format(vo.getES_ORDER_PRICE())%></dd>
-									<dd>
-										<%
-											if (eoState == 0) {
-										%>
-										입금대기
-										<%
-											} else if (eoState == 1) {
-										%>
-										결제완료
-										<%
-											} else if (eoState == 2) {
-										%>
-										제작중
-										<%
-											} else if (eoState == 3) {
-										%>
-										배송준비
-										<%
-											} else if (eoState == 4) {
-										%>
-										배송중
-										<%
-											} else if (eoState == 5) {
-										%>
-										배송완료
-										<%
-											} else if (eoState == 6) {
-										%>
-										구매확정
-										<%
-											}
-										%>
-									</dd>
-								</dl>
-							</td>
-							<td class="align-self-center eo_tab">
-								<%
-									if (eoState == 0) {
-								%>
-								<button class="btn btn-outline-dark btn_pay"
-									onclick="location.href='mypage_estimate_checkout.my?ES_ORDER_NUM=<%=vo.getES_ORDER_NUM()%>'">결제</button>
-								<%
-									} else if (eoState < 4) {
-								%>
-								<button class="btn btn-outline-dark btn_modify"
-									onclick="location.href='mypage_estimate_updateForm.my?ES_ORDER_NUM=<%=vo.getES_ORDER_NUM()%>'">배송정보
-									수정</button> 
-								<button class="btn btn-outline-dark btn_modify"
-									onclick="window.open('/NAGAGU/chatRoom.ch?ES_ORDER_NUM=<%=vo.getES_ORDER_NUM()%>', '1:1채팅방', 'width=400 height=740')">1:1 채팅</button> <%
- 	}
- 			if (eoState < 4) {
- %>
-								<button class="btn btn-outline-dark btn_cancel"
-									es_num=<%=vo.getES_ORDER_ESTIMATE()%>
-									offer_num=<%=vo.getES_ORDER_OFFER()%>>취소</button> <%
- 	} else if (eoState >= 4) {
- %>
-								<button class="btn btn-outline-dark btn_return">A/S</button>
-								<button class="btn btn-outline-dark btn_return">반품</button> <%
- 	}
- %>
-							</td>
-						</tr>
-					</table>
-				</div>
+									<div class="col-2"><a href="<%=vo.getES_ORDER_PIC()%>">
+							    		<img src="<%=vo.getES_ORDER_PIC()%>"></a></div>
+							    		<div class="col-10">
+						    				<div class="row category">
+						    					<div class="col-2">상품명</div>
+					    						<div class="col-2">제작공방</div>
+						    					<div class="col-1">종류</div>
+				    							<div class="col-1">결제수단</div>
+			    								<div class="col-2">상태</div>
+			    								<div class="col-2 text-right">금액</div>
+			    								<div class="col-2">기타</div>
+			                                </div>
+			                              	<div class="row values">
+			  			    					<a href="'+url+retVal.myPaidOrder[j].PRODUCT_NUM+'">
+			  			    					<div class="col-2"><b><%=vo.getES_ORDER_TITLE()%></b>
+			  				    					 <p><%=vo.getES_ORDER_MEMO()%></p></a></div>
+			  				    				<div class="col-2"><a href="workshop_page.my?ES_ORDER_WORKSHOP=<%=vo.getES_ORDER_WORKSHOP()%>">vo.getES_ORDER_WORKSHOP()</a></div>
+			  				    				<div class="col-1"><%=vo.getES_ORDER_CATEGORY() %></div>
+			  				    				<div class="col-1"><%=vo.getES_ORDER_PAYMENT() %></div>
+			  				    				<div class="col-2">
+												<%
+														if (eoState == 0) {
+													%>
+													입금대기
+													<%
+														} else if (eoState == 1) {
+													%>
+													결제완료
+													<%
+														} else if (eoState == 2) {
+													%>
+													제작중
+													<%
+														} else if (eoState == 3) {
+													%>
+													배송준비
+													<%
+														} else if (eoState == 4) {
+													%>
+													배송중
+													<%
+														} else if (eoState == 5) {
+													%>
+													배송완료
+													<%
+														} else if (eoState == 6) {
+													%>
+													구매확정
+													<%
+														}
+												%>			
+												</div>
+			  				    				<div class="price_wrap col-2">
+			  				    					<span><%=vo.getES_ORDER_PRICE() %>원</span></b>  
+								    			</div>
+								    			<div class="col-2">
+								    			
+											<%
+												if (eoState == 0) {
+											%>
+											<button class="btn btn-outline-dark btn_pay"
+												onclick="location.href='mypage_estimate_checkout.my?ES_ORDER_NUM=<%=vo.getES_ORDER_NUM()%>'">결제</button>
+											<%
+												} else if (eoState < 4) {
+											%>
+											<button class="btn btn-outline-dark btn_modify"
+												onclick="location.href='mypage_estimate_updateForm.my?ES_ORDER_NUM=<%=vo.getES_ORDER_NUM()%>'">배송정보
+												수정</button> 
+											<button class="btn btn-outline-dark btn_modify"
+												onclick="window.open('/NAGAGU/chatRoom.ch?ES_ORDER_NUM=<%=vo.getES_ORDER_NUM()%>', '1:1채팅방', 'width=400 height=740')">1:1 채팅</button> <%
+											 	}
+											 			if (eoState < 4) {
+											 %>
+																			<button class="btn btn-outline-dark btn_cancel"
+																				es_num=<%=vo.getES_ORDER_ESTIMATE()%>
+																				offer_num=<%=vo.getES_ORDER_OFFER()%>>취소</button> <%
+											 	} else if (eoState >= 4) {
+											 %>
+																			<button class="btn btn-outline-dark btn_return">A/S</button>
+																			<button class="btn btn-outline-dark btn_return">반품</button> <%
+											 	}
+											 %>
+											</div>
+						    				</div></div>
+						    				</div>
 			</div>
 		</div>
 		<%
 			}
 			}
 		%>
+			
+		</div>
 	</div>
 </div>
 

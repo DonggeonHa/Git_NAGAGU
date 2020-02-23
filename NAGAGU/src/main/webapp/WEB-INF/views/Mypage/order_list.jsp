@@ -5,7 +5,7 @@
 		margin-top: 50px ;
 		margin-bottom: 50px ;				 
 	}		
-	.container-mypage a,.container-mypage  a:link,.container-mypage  a:hover {
+	.contsainer-mypage a,.container-mypage  a:link,.container-mypage  a:hover {
 		text-decoration: none;
 		color: white !important;
 	} 
@@ -364,7 +364,6 @@
 	  	  							url: "/NAGAGU/getPaidDetail.my",
 	  	  				            type: "POST",
 	  	  				            data: {'ORDER_AMOUNT':ORDER_AMOUNT},
-	  	  				        async: false,
   	  				            contentType:
   	  				  			'application/x-www-form-urlencoded; charset=utf-8',
  	  				            	success: function (retVal) {
