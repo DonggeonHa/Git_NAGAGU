@@ -523,6 +523,7 @@
            {
         	   alertify.alert('약관에 동의해주세요.');
            } else  {
+        	  alertify.alert("인증을 위한 메일이 발송되었습니다.");
               document.signup_form.submit();
            }
         }
