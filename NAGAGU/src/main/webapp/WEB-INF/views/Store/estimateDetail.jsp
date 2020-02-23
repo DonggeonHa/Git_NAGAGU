@@ -380,12 +380,14 @@
 				</div>
 				<div class="modal-body">
 					<form id="offerForm" method="POST">
-					<input type="hidden" id="offer_price" name="OFFER_ESTIMATE" value="<%=vo.getESTIMATE_NUM() %>">
-					<input type="hidden" name="OFFER_WORKSHOP" value="<%=workshop_name %>">
+						<input type="hidden" id="offer_price" name="OFFER_ESTIMATE" value="<%=vo.getESTIMATE_NUM() %>">
+						<input type="hidden" name="OFFER_WORKSHOP" value="<%=workshop_name%>">
 						<label class="modalLabel" for="OFFER_PRICE">제시 가격</label>
-						<input class="modalInput" type="text" name="OFFER_PRICE"><br>
+						<div class="col-6" style="padding-left:0;">
+							<input class="modalInput form-control" type="text" name="OFFER_PRICE"><br>
+						</div>
 						<label class="modalLabel" for="OFFER_CONTENT">내용</label>
-						<textarea class="modalInput" id="offer_content" name="OFFER_CONTENT"></textarea>
+						<textarea class="modalInput form-control" id="offer_content" name="OFFER_CONTENT"></textarea>
 					</form>
 				</div>
 				<div class="modal-footer">

@@ -58,17 +58,11 @@ public class AdminServiceImpl implements AdminService {
 			id = adminVO.getADMIN_ID();
 			pass = adminVO.getADMIN_PASS();
 			
-			System.out.println("admin id : " + get_mapper_admin_id);
-			System.out.println("admin pass : " + get_mapper_admin_pass);
-			System.out.println("id : " + id);
-			System.out.println("pass : " + pass);
-			
 			//아이디, 비밀번호 같을 경우
 			if(get_mapper_admin_id.equals(id) && get_mapper_admin_pass.equals(pass)) {
 				result = 1;
 			}
 			
-			System.out.println("result : " + result);
 		} catch (Exception e) {
 			System.out.println("로그인 실패!" + e.getMessage());
 		}

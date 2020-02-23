@@ -92,7 +92,6 @@
 		position: -webkit-sticky;
 		position: sticky;
 		background-color: #FFFFFF;
-		border-radius: 10px;
 		top: 0;
 	}
 	
@@ -409,9 +408,18 @@
 	.nav-item .nav-link a {
 		background-color: black;
 	}
+	
+	.nav-item .active {
+		color : white !important;
+		background-color : #1B1B27 !important;
+	}
+	
+	li.nav-item a.nav-link {
+		color: black; 
+	}
 </style>
 
-<div class="container class-detail-container category_ac">
+<div class="container class-detail-container category_ac" style="word-break:break-all;">
 	<div class="text-center" style="padding-bottom: 5%;">
 		<div id="carouselExampleFade" class="carousel slide carousel-fade" data-ride="carousel">
 				<div class="carousel-inner text-center">
@@ -461,104 +469,111 @@
 					<dl><h5><%=cl.getCLASS_ABRIEF()%></h5></dl>
 				</dl>
 			</div>
-			<div class="row sticky">
-				<div class="col-12">
-					<ul class="nav nav-tabs nav-fill" id="list-example" style="z-index: 99;">
+			<div class="sticky">
+					<ul class="nav nav-tabs nav-fill d-flex justify-content-between" style="z-index: 10;">
 						<li class="nav-item">
-							<a class="nav-link" href="#t1"><h5>공방소개</h5></a>
+							<a class="nav-link" href="#t1"><h5 style="margin-top: .5rem;">공방소개</h5></a>
 						</li>
 						<li class="nav-item">
-							<a class="nav-link" href="#t2"><h5>위치정보</h5></a>
+							<a class="nav-link" href="#t2"><h5 style="margin-top: .5rem;">위치정보</h5></a>
 						</li>
 						<li class="nav-item">
-							<a class="nav-link" href="#t3"><h5>Review</h5></a>
+							<a class="nav-link" href="#t3"><h5 style="margin-top: .5rem;">Review</h5></a>
 						</li>
 						<li class="nav-item">
-							<a class="nav-link" href="#t4"><h5>Q&A</h5></a>
+							<a class="nav-link" href="#t4"><h5 style="margin-top: .5rem;">Q&A</h5></a>
 						</li>
 					</ul>
-				</div>
 			</div>
 			<!-- 공방소개 시작 -->
-			<div data-spy="scroll" data-target="#list-example" data-offset="0">
-				<span id="t1"></span>
-				<div class="row">
-					<div class="col-12">
-					<!-- 주문 주의사항 -->
-						<div class="mainText">
-							<br/> <!-- 상세 설명 -->
-							<dt id="subject">
-								<br><br>
-								<strong>공방을 소개해요</strong>
-							</dt> <br/>
-							<dl>
-								<dd><%=cl.getCLASS_INTRODUCTION_1()%></dd>
-							</dl>
-							<dt id="subject">
-								<strong>이렇게 진행해요</strong>
-							</dt> <br/>
-							<dl>
-								<dd><%=cl.getCLASS_INTRODUCTION_2()%></dd>
-							</dl>
-							<dt id="subject">
-								<strong>함께하고 싶어요</strong>
-							</dt> <br/>
-							<dl>
-								<dd><%=cl.getCLASS_INTRODUCTION_3()%></dd>
-							</dl>
-							<dt id="subject">
-								<strong>환불규정</strong>
-							</dt> <br/>
-							<dl>
-								<dd>
-									<div style="width:690px; font-size:12pt;line-height:16pt;">
-			                			<p>NAGAGU의 결제 취소 및 환불 규정은 관련 법령인 &lt;학원의 설립ㆍ운영 및 과외교습에 관한 법률 시행령 [별표4] [시행 2017.3.21.]&gt;의 &lt;교습비 등 반환기준(제18조 제3항 관련)&gt;을 준수합니다.</p>
-			                			
-			                			<p><strong>1. 클래스 수업 기간이 1개월 이내인 경우 환불 기준</strong>&nbsp;</p>
-			                			<p>① 클래스 시작 전 - 이미 납부한 교습비 등의 전액&nbsp;</p>
-			                			<p>② 총 클래스 수업시간의 1/3 경과 전 - 이미 납부한 교습비 등의 2/3에 해당하는 금액&nbsp;</p>
-			                			<p>③ 총 클래스 수업시간의 1/2 경과 전 - 이미 납부한 교습비 등의 1/2에 해당하는 금액&nbsp;</p>
-			                			<p>④ 총 클래스 수업시간의 1/2 경과 후 - 반환하지 않음&nbsp;</p>
-			                			
-			                			<p><strong>2. 클래스 수업 기간이 1개월을 초과하는 경우</strong>&nbsp;</p>
-			                			<p>① 클래스 수업 시작 전 - 이미 납부한 교습비 등의 전액&nbsp;</p>
-			                			<p>② 클래스 수업 시작 후 - 환불사유가 발생한 해당 월의 환불 대상 교습비 등 (클래스 수업 기간이</p>
-			                			<p>1개월 이내인 경우의 기준에 따라 산출한 금액을 말한다)과 나머지 월의 교습비 등의 전액을 합산한 금액&nbsp;</p>
-			                			
-			                			<p>단 클래스의 특성상 사전 준비(수업재료 준비, 장소 및 식사 사전예약 등)과정에서 불가피하게 손해비용 및 위약금 발생이 예상되는 경우, 마스터는 법령에서 제시한 내용 외에 별도의 환불규정을 수강생에게 고지할 수 있고, 수강생은 마스터가 고지한 환불수수료를 제외한 금액을 환불받을 수 있습니다.</p>
-			                		</div>
-								</dd>
-							</dl>
-							<dt id="subject">
-								<strong>기타사항</strong>
-							</dt><span id="t2"></span><br/>
-							<dl>
-								<dd><%=cl.getCLASS_ETC()%></dd>
-							</dl>
-							<dt id="subject">
-								<strong>공방 장소</strong>
-							</dt> <br/>
-							<dl>
-								<dd>
-									<p class="text-left"><%=cl.getCLASS_ADDRESS()%>&nbsp;&nbsp;<%=cl.getCLASS_DETAIL_ADDRESS()%></p>
-									<div id="map" style="width:675px;height:500px;"></div>
-								</dd>
-							</dl>
-						</div>
-					</div>
+			<div>
+			<!-- 주문 주의사항 -->
+				<div class="mainText">
+					<br/> <!-- 상세 설명 -->
+					<dt id="subject">
+						<span id="t1"></span>
+						<br><br><br>
+						<strong>공방을 소개해요</strong>
+					</dt> <br/>
+					<dl>
+						<dd><%=cl.getCLASS_INTRODUCTION_1()%></dd>
+					</dl>
+					<dt id="subject">
+						<strong>이렇게 진행해요</strong>
+					</dt> <br/>
+					<dl>
+						<dd><%=cl.getCLASS_INTRODUCTION_2()%></dd>
+					</dl>
+					<dt id="subject">
+						<strong>함께하고 싶어요</strong>
+					</dt> <br/>
+					<dl>
+						<dd><%=cl.getCLASS_INTRODUCTION_3()%></dd>
+					</dl>
+					<dt id="subject">
+						<strong>환불규정</strong>
+					</dt> <br/>
+					<dl>
+						<dd>
+							<div style="width:690px; font-size:12pt;line-height:16pt;">
+	                			<p>NAGAGU의 결제 취소 및 환불 규정은 관련 법령인 &lt;학원의 설립ㆍ운영 및 과외교습에 관한 법률 시행령 [별표4] [시행 2017.3.21.]&gt;의 &lt;교습비 등 반환기준(제18조 제3항 관련)&gt;을 준수합니다.</p>
+	                			
+	                			<p><strong>1. 클래스 수업 기간이 1개월 이내인 경우 환불 기준</strong>&nbsp;</p>
+	                			<p>① 클래스 시작 전 - 이미 납부한 교습비 등의 전액&nbsp;</p>
+	                			<p>② 총 클래스 수업시간의 1/3 경과 전 - 이미 납부한 교습비 등의 2/3에 해당하는 금액&nbsp;</p>
+	                			<p>③ 총 클래스 수업시간의 1/2 경과 전 - 이미 납부한 교습비 등의 1/2에 해당하는 금액&nbsp;</p>
+	                			<p>④ 총 클래스 수업시간의 1/2 경과 후 - 반환하지 않음&nbsp;</p>
+	                			
+	                			<p><strong>2. 클래스 수업 기간이 1개월을 초과하는 경우</strong>&nbsp;</p>
+	                			<p>① 클래스 수업 시작 전 - 이미 납부한 교습비 등의 전액&nbsp;</p>
+	                			<p>② 클래스 수업 시작 후 - 환불사유가 발생한 해당 월의 환불 대상 교습비 등 (클래스 수업 기간이</p>
+	                			<p>1개월 이내인 경우의 기준에 따라 산출한 금액을 말한다)과 나머지 월의 교습비 등의 전액을 합산한 금액&nbsp;</p>
+	                			
+	                			<p>단 클래스의 특성상 사전 준비(수업재료 준비, 장소 및 식사 사전예약 등)과정에서 불가피하게 손해비용 및 위약금 발생이 예상되는 경우, 마스터는 법령에서 제시한 내용 외에 별도의 환불규정을 수강생에게 고지할 수 있고, 수강생은 마스터가 고지한 환불수수료를 제외한 금액을 환불받을 수 있습니다.</p>
+	                		</div>
+						</dd>
+					</dl>
+					<dt id="subject">
+						<strong>기타사항</strong>
+					</dt><span id="t2"></span><br/>
+					<dl>
+						<dd><%=cl.getCLASS_ETC()%></dd>
+					</dl>
+					<dt id="subject">
+						<strong>공방 장소</strong>
+					</dt> <br/>
+					<dl>
+						<dd>
+							<p class="text-left"><%=cl.getCLASS_ADDRESS()%>&nbsp;&nbsp;<%=cl.getCLASS_DETAIL_ADDRESS()%></p>
+							<div id="map" style="width:675px;height:500px;"></div>
+						</dd>
+					</dl>
 				</div>
 			</div>
 			
-			<span id="t3"></span>
-			<br /><br /><hr />
-           
+			<!-- 댓글 테이블 시작 -->
+			<span id="t3" ></span>
+			<hr/>
 			<!-- 리뷰 테이블 시작 -->
-			<h3 id="review_scroll"><strong>Review</strong></h3>
-			<br /><br />	
 			<div id="ReviewSection">
-				<div id="ReviewButtonSection">	
-					<div class="row justify-content-center pt-3 pb-3"> <!-- 리뷰 댓글달기 버튼 -->
-						<button class="btn btn-dark btn-sm review_btn">후기 등록</button>
+				<div id="ReviewButtonSection">
+					<div class="d-flex justify-content-between pb-3 pt-2">	
+						<div class="justify-content-start">
+							<h3 id="review_scroll"><strong>Review</strong></h3>
+						</div>
+						<div class="justify-content-end"> <!-- 리뷰 댓글달기 버튼 -->
+							<%
+								if(MEMBER_STATUS == 100 && WORKSHOP_STATUS == 100) {
+							%>
+									<button class="btn btn-dark btn-sm" data-toggle="modal" data-target="#exampleModalCenter">리뷰쓰기</button>
+							<%
+								} else {
+							%>
+									<button class="btn btn-dark btn-sm review_btn">리뷰쓰기</button>
+							<%
+								}
+							%>
+						</div>
 					</div>
 				</div>
 				<div id="ReviewWrapSection" class="pb-1">
@@ -649,12 +664,26 @@
 			<br /><br /><hr />
 			
 			<!-- Q&A 테이블 시작 -->
-			<h3 id="qna_scroll"><strong>Q&A</strong></h3>
-			<br /><br />	
+		
 			<div id="QnaSection">
 				<div id="QnaButtonSection">	
-					<div class="row justify-content-center pt-3 pb-3"> <!-- 리뷰 댓글달기 버튼 -->
-						<button class="btn btn-dark btn-sm qna_btn">문의하기</button>
+					<div class="d-flex justify-content-between pb-3 pt-2">	
+						<div class="justify-content-start">
+								<h3 id="qna_scroll"><strong>Q&A</strong></h3>
+						</div>
+						<div class="justify-content-end"> <!-- 리뷰 댓글달기 버튼 -->
+							<%
+								if(MEMBER_STATUS == 100 && WORKSHOP_STATUS == 100) {
+							%>
+									<button class="btn btn-dark btn-sm" data-toggle="modal" data-target="#exampleModalCenter">문의하기</button>
+							<%
+								} else {
+							%>
+									<button class="btn btn-dark btn-sm qna_btn">문의하기</button>
+							<%
+								}
+							%>
+						</div>
 					</div>
 				</div>
 				<div id="QnaWrapSection" class="pb-1">
@@ -1799,6 +1828,7 @@
 //Review 등록하기----------------------------------------------------------------------------------------------------	  					
 			//Review 등록하기 버튼(insert) //원글
 			$(document).on("click",".insertReview",function(event){
+				$('#remo').remove();
 				var formId = 'ReviewForm';
 				var REVIEW_RE = 0;	//원글
 				
@@ -1866,6 +1896,7 @@
 //Review 수정하기----------------------------------------------------------------------------------------------------	  		
 			//review 수정 폼 (원글)
 			$(document).on("click",".gomodifyReviewform",function(event){
+				$('#remo').remove();
 				var REVIEW_NUM = $(this).prev().val();
 				console.log("REVIEW_NUM : " + REVIEW_NUM)
 				
@@ -1961,6 +1992,7 @@
 			
 			//review 수정 process (원글)
 			$(document).on("click",".modifyReview",function(event){
+				$('#remo').remove();
 				var REVIEW_NUM = $(this).prev().val();
 				console.log("REVIEW_NUM"+REVIEW_NUM)
 				
@@ -2000,6 +2032,7 @@
 			
 			//review 수정 process (답글)
 			$(document).on("click",".modifyReviewReply",function(event){
+				$('#remo').remove();
 				var REVIEW_NUM = $(this).prev().val();
 				console.log("REVIEW_NUM"+REVIEW_NUM)
 
@@ -2031,6 +2064,7 @@
 //Review 삭제하기----------------------------------------------------------------------------------------------------	  
 			//원글, 답글 same
 			$(document).on("click",".deleteReview",function(event){
+				$('#remo').remove();
 				var REVIEW_NUM = $(this).prev().prev().val();
 				console.log("REVIEW_NUM : " + REVIEW_NUM)
 				var delete_confirm = confirm("삭제하시겠습니까?");
@@ -2303,6 +2337,7 @@
 			
 			//Qna 등록하기 버튼(insert) //원글
 			$(document).on("click",".insertQna",function(event){
+				$('#remo2').remove();
 				var formId = 'QnaForm';
 				var QNA_RE = 0;	//원글
 			
@@ -2337,6 +2372,7 @@
 			
 			//qna 등록하기 버튼(insert) //답글
 			$(document).on("click",".insertQnaReply",function(event){
+				$('#remo2').remove();
 				var QNA_NUM = $(this).prev().val();	//원글번호(qna_re로 저장할 것)
 				console.log("QNA_NUM : " + QNA_NUM)
 				
@@ -2369,6 +2405,7 @@
 				
 			//qna 수정 폼 (원글)
 			$(document).on("click",".gomodifyQnaform",function(event){
+				$('#remo2').remove();
 				var QNA_NUM = $(this).prev().val();
 				console.log("QNA_NUM : " + QNA_NUM)
 				
@@ -2426,6 +2463,7 @@
 			
 			//qna 수정 process (원글)
 			$(document).on("click",".modifyQna",function(event){
+				$('#remo2').remove();
 				var QNA_NUM = $(this).prev().val();
 				console.log("QNA_NUM"+QNA_NUM)
 				var formId = 'modifyQnaForm'+QNA_NUM;
@@ -2454,6 +2492,7 @@
 			
 			//qna 수정 process (답글)
 			$(document).on("click",".modifyQnaReply",function(event){
+				$('#remo2').remove();
 				var QNA_NUM = $(this).prev().val();
 				console.log("QNA_NUM"+QNA_NUM)
 				var formId = 'modifyQnaFormReply'+QNA_NUM;
@@ -2485,6 +2524,7 @@
 		//Qna 삭제하기----------------------------------------------------------------------------------------------------	  
 			//원글, 답글 same
 			$(document).on("click",".deleteQna",function(event){
+				$('#remo2').remove();
 				var QNA_NUM = $(this).prev().prev().val();
 				console.log("QNA_NUM : " + QNA_NUM)
 				var delete_confirm = confirm("삭제하시겠습니까?");

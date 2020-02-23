@@ -1,5 +1,4 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.2/animate.css">
 <style>
 	.container-mypage{
@@ -86,9 +85,6 @@
 	.picOutput{
 		padding-left: 0px !important;
 	}
-	.tab-content{
-		min-height:38vh;
-	}
 	.tab-content img{
 		max-height:200px;
 	}
@@ -134,7 +130,7 @@
         text-align: center;
         color: rgb(0, 0, 0, 0.6);  
     }
-	 .basic_price, .shipPrice, .chongprice {
+	.basic_price, .shipPrice, .chongprice {
 		margin-bottom: 0;
 		margin-top: 10px;
 	}
@@ -181,7 +177,6 @@
 		padding-left: 8px;
 	} 
 </style>
-
 <div class="container container-mypage" role="main">
 	<div class="d-flex card-wrap  text-center">
 		<div class="card card-hover">
@@ -257,7 +252,7 @@
 		</div>
 	</div>
 </div>
-		
+        
 <div class="container container-mypage bg-light">
 	<nav>
 		<div class="nav d-flex justify-content-between shadow p-3 mb5 bg-white rounded" id="nav-tab" role="tablist">
@@ -314,7 +309,6 @@
 			</div>
 	</div>
 </div>
-
 <script>
 	$(document).ready(function(){
 		/*날짜 형식 변경*/

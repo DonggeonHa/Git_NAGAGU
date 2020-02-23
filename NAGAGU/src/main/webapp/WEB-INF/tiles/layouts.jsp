@@ -8,8 +8,8 @@
 		<tiles:insertAttribute name="css" ignore="true" />
 		<tiles:insertAttribute name="js" ignore="true" />
 	</head> 
-	<body class="order-body" style="margin: 0; height: 100;"> 
-		<div style="min-height: 100%; position: relative;">
+	<body class="order-body" style="margin: 0; height: 100; position: relative;" data-spy="scroll" data-target=".nav-tabs" data-offset="50"> 
+		<div style="min-height: 100%;">
 			<header>
 				<tiles:insertAttribute name="header" ignore="true" />
 			</header>

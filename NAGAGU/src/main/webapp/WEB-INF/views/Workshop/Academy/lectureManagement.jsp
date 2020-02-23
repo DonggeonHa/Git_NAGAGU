@@ -9,7 +9,45 @@
 	}
 
 %>
-
+<style>
+	   .btn_search {
+       width:55px;
+       border-radius: 4px;
+       border:1px solid orangered;
+       color:orangered; 
+   }
+   
+   
+   .btn_search:hover {
+       color: #1b1b27;
+       background-color: #ef902e;
+       box-shadow: 200px 0 0 0 #ef902e inset,
+                   -200px 0 0 0 #ef902e inset;
+   }
+   .dropdown{
+      padding: 2px 4px;
+   }
+   .dropbtn {
+       width:68px;
+       border-radius: 4px;
+       border:1px solid orangered;
+       color:orangered;    
+   }
+   
+   .dropbtn:hover {
+       color: #1b1b27;
+       background-color: #ef902e;
+       box-shadow: 200px 0 0 0 #ef902e inset,
+                   -200px 0 0 0 #ef902e inset;
+   }
+   .btn_modify {
+       border-radius: 4px;
+       border: 1px solid orangered;
+       color: orangered;
+       font-size: 14px;
+       background: white;
+   }
+</style>
 <div id="page-content-wrapper" style="padding-top: 5%;">
 	<div class="container-fluid">
 		<div class="d-flex justify-content-between pb-5">
@@ -71,16 +109,16 @@
             <table class="table table-hover" id="work_store">
                 <thead>
 	                <tr>
-	                    <th scope="col" class="th1"><input id="all_select" type="checkbox"></th>
-	                    <th scope="col" class="th3">상태</th>
-	                    <th scope="col" class="th4">지역</th>
-	                    <th scope="col" class="th5">가격</th>
-						<th scope="col" class="th11">클래스</th>
-	                    <th scope="col" class="th6">강의명</th>
-	                    <th scope="col" class="th7">카테고리</th>
-	                    <th scope="col" class="th8">일시</th>
-	                    <th scope="col" class="th9">회원수</th>
-	                    <th scope="col" class="th10">관리</th>                    
+	                    <th style="width: 5%;" class="th1"><input id="all_select" type="checkbox"></th>
+	                    <th style="width: 5%;" class="th3">상태</th>
+	                    <th style="width: 5%;" class="th4">지역</th>
+	                    <th style="width: 10%;" class="th5">가격</th>
+						<th style="width: 10%;" class="th11">클래스</th>
+	                    <th style="width: 30%;" class="th6">강의명</th>
+	                    <th style="width: 10%;" class="th7">카테고리</th>
+	                    <th style="width: 15%;" class="th8">일시</th>
+	                    <th style="width: 5%;" class="th9">회원수</th>
+	                    <th style="width: 5%;" class="th10">관리</th>                    
 	                </tr>
                 </thead>
                 <tbody id="academyList">

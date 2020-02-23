@@ -127,9 +127,9 @@
 			contentType : 'application/x-www-form-urlencoded; charset=UTF-8',
 			dataType : 'json',
 			success : function (retVal) {
-				alert("삭제 성공");
 				if (retVal.res == "OK") {
 					// 데이터 성공할 때 이벤트 작성
+					alertify.alert("삭제 성공");
 					selectData();
 				} else {
 					alert("delete Fail !!");

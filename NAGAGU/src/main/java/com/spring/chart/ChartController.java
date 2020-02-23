@@ -1,6 +1,5 @@
 package com.spring.chart;
 
-import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -29,10 +28,7 @@ public class ChartController {
 	
 	@RequestMapping(value = "/Alogin.ad", method = {RequestMethod.GET, RequestMethod.POST})
 	public ModelAndView Alogin(AdminMemberVO adminVO, HttpSession session, ModelAndView mav) throws Exception {
-		System.out.println("아이디 : " + adminVO.getADMIN_ID());
-		System.out.println("비밀번호 : " + adminVO.getADMIN_PASS());
 		int res = adminService.user_chk(adminVO);
-		System.out.println("admin res는" + res);
 		
 		if (res == 1) {	//로그인(아이디,비번 맞음)-이메일 인증 완료
 			session.setAttribute("ADMIN_NUM", adminVO.getADMIN_NUM());
@@ -73,22 +69,16 @@ public class ChartController {
 	            selectDate = sdf.format(c.getTime());
 	            
 	            memberCount = chartService.insertMemberCount(selectDate);
-	            System.out.println("memberCount: "+memberCount);
 	            WSCount = chartService.insertWSMemberCount(selectDate);
-	            System.out.println("WSCount: "+WSCount);
 	            delete_member = chartService.deleteMemberCount(selectDate);
-	            System.out.println("delete_member: "+delete_member);
 	            delete_ws_member = chartService.deleteWSMemberCount(selectDate);
-	            System.out.println("delete_ws_member: "+delete_ws_member);
 	            
 	            totalCount = memberCount + WSCount;
 
-	            System.out.println(memberCount+ "  " + WSCount + "  " + totalCount);
 	            
 	            //일반 회원가입 수
 	            if(memberCount == 0) {
 	            	mav.addObject("memberCount"+i, 0);
-	            	System.out.println("회원가입 날짜는: " + selectDate + ", 회원 수는: " + memberCount);
 	            }else {
 	            	mav.addObject("memberCount"+i, memberCount);	
 	            }
@@ -121,7 +111,6 @@ public class ChartController {
 	            
 	            if(count == 0) {
 	            	mav.addObject("count"+i, 0);
-	            	System.out.println("날짜는: " + selectDate + ", 게시글 수는: " + 0);
 	            }
 	            
 	            mav.addObject("count"+i, count);	//게시글 수
