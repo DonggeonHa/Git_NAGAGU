@@ -1,6 +1,5 @@
 create table chatroom (
 chatroom_num NUMBER PRIMARY KEY,
-chatromm_es_order NUMBER,
 chatroom_customer VARCHAR2(80),
 chatroom_workshop VARCHAR2(80)
 );

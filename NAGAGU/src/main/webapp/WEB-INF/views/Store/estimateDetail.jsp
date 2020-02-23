@@ -63,10 +63,14 @@
 		}
 	}
 	
+	.es_table {
+		border:1px solid #d3d3d3;
+		border-radius:0 0 12px 12px;
+	}
+	
 	.es_content {
 		margin:0 auto;
-		background:#d3d3d3;
-		border-radius:8px;
+		border:1px solid #d3d3d3;
 		padding:10px;
 	}
 	
@@ -246,7 +250,7 @@
 	<div class="d-flex justify-content-center">			
 		<div class="d-flex flex-column bd-highlight pb-3">
 			<div class="thumbMain d-flex justify-content-center">
-				<a href=<%=imgArr[0] %> target="_blank"><img src=<%=imgArr[0] %>></a>
+				<img src=<%=imgArr[0] %> class="thumbImg" alt="" data-toggle="modal" data-target="#imgModal" aria-haspopup="true" aria-expanded="false">
 			</div>
 			<div class="thumbList d-flex justify-content-center">
 			<%
@@ -261,7 +265,7 @@
 	</div>
 	<br/><br/>
 	<div class="d-flex justify-content-center">
-		<table class="table table-borderless" style="width:800px;">
+		<table class="table es_table" style="width:800px;">
 			<colgroup>
 				<col style="width:40%">
 				<col style="width:60%">
@@ -303,13 +307,13 @@
 				</td>
 			</tr>
 			<tr>
-				<th colspan="2">
+				<th colspan="2" style="text-align:center;">
 					기타사항
 				</th>
 			</tr>
-			<tr>
+			<tr class="es_content">
 				<td colspan="2">
-					<div class="es_content justify-content-center">
+					<div class="justify-content-center">
 						<%=vo.getESTIMATE_CONTENT() %>
 					</div>
 				</td>
@@ -398,6 +402,18 @@
 			</div>
 		</div>
 	</div>
+	<!--  이미지 클릭 modal -->
+	<div class="modal fade" id="imgModal" tabindex="-1" role="dialog"
+		aria-labelledby="offerFormLabel" aria-hidden="true">
+		<div class="modal-dialog modal-dialog-centered" role="document">
+			<div class="modal-content">
+				<img src=<%=imgArr[0] %> id="thumbLarge">
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          			<span aria-hidden="true">&times;</span>
+        		</button>
+			</div>
+		</div>
+	</div>
 	
 	<!--  견적 수정 modal -->
 	<div class="modal fade" id="modifyFormModal" tabindex="-1" role="dialog"
@@ -406,10 +422,6 @@
 			<div class="modal-content">
 				<div class="modal-header">
 					<h5 class="modal-title" id="offerFormLabel">견적 수정</h5>
-					<button type="button" class="close" data-dismiss="modal"
-						aria-label="Close">
-						<span aria-hidden="true">&times;</span>
-					</button>
 				</div>
 				<div class="modal-body">
 					<form id="modifyForm" method="POST">
@@ -447,6 +459,7 @@
 	var es_num = <%=ESTIMATE_NUM%>;
 	var es_state = <%=ES_STATE%>;
 	var checkPrice =  /^[0-9]*$/;
+	var targetImg = '';
 	
 	$(document).ready(function (){
 		
@@ -814,16 +827,19 @@
 			$('.thumbItem').removeClass('thumbCheck');
 			$(this).addClass('thumbCheck');
 			if (idx == 0) {
-				$('.thumbMain').html('<a href="' + '<%=imgArr[0]%>' + '" target="_blank"><img src="' + '<%=imgArr[0]%>' + '"></a>');
+				targetImg = '<%=imgArr[0]%>';
 			} <% if (imgArr.length > 1) { %> else if (idx == 1) {
-				$('.thumbMain').html('<a href="' + '<%=imgArr[1]%>' + '" target="_blank"><img src="' + '<%=imgArr[1]%>' + '"></a>');
+				targetImg = '<%=imgArr[1]%>';
 			} <% } if (imgArr.length > 2) { %> else if (idx == 2) {
-				$('.thumbMain').html('<a href="' + '<%=imgArr[2]%>' + '" target="_blank"><img src="' + '<%=imgArr[2]%>' + '"></a>');
+				targetImg = '<%=imgArr[2]%>';
 			} <% } if (imgArr.length > 3) { %> else if (idx == 3) {
-				$('.thumbMain').html('<a href="' + '<%=imgArr[3]%>' + '" target="_blank"><img src="' + '<%=imgArr[3]%>' + '"></a>');
+				targetImg = '<%=imgArr[3]%>';
 			} <% } if (imgArr.length > 4) { %> else {
-				$('.thumbMain').html('<a href="' + '<%=imgArr[4]%>' + '" target="_blank"><img src="' + '<%=imgArr[4]%>' + '"></a>');
+				targetImg = '<%=imgArr[4]%>';
 			} <% } %>
+
+			$('#thumbLarge').attr('src', targetImg);
+			$('.thumbImg').css('opacity','0').stop().attr('src',targetImg).animate({opacity:1},500);
 		});
 		
 		getOfferList();

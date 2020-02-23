@@ -457,10 +457,8 @@
 						}
 					%>
 				</div>
-				<div class="thumbMain">
-					<a href=<%=imgArr[0]%> target="_blank">
-						<img src=<%=imgArr[0]%>>
-					</a>
+				<div class="thumbMain">               
+					<img src=<%=imgArr[0] %> class="thumbImg" alt="" data-toggle="modal" data-target="#imgModal" aria-haspopup="true" aria-expanded="false">
 				</div>
 			</div>
 		</div>
@@ -996,6 +994,18 @@
 	</div>
   	<br>
 </div>
+    <!--  이미지 클릭 modal -->
+    <div class="modal fade" id="imgModal" tabindex="-1" role="dialog"
+        aria-labelledby="offerFormLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <img src=<%=imgArr[0] %> id="thumbLarge">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                      <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+        </div>
+    </div>
    <!-- content end -->
 <script>
    	$('.basket_btn').on('click',function(){
@@ -1165,21 +1175,28 @@
       
 
 	//------------------------------------------- 상품 이미지 관련
+	var targetImg = '';
+	
 	$(document).delegate('.thumbItem', 'click', function() {
 		var idx = $(this).attr('thumb-idx');
 		$('.thumbItem').removeClass('thumbCheck');
 		$(this).addClass('thumbCheck');
 		if (idx == 0) {
-			$('.thumbMain').html('<a href="' + '<%=imgArr[0]%>' + '" target="_blank"><img src="' + '<%=imgArr[0]%>' + '"></a>');
+			targetImg = '<%=imgArr[0]%>';
 		} <% if (imgArr.length > 1) { %> else if (idx == 1) {
-			$('.thumbMain').html('<a href="' + '<%=imgArr[1]%>' + '" target="_blank"><img src="' + '<%=imgArr[1]%>' + '"></a>');
+			targetImg = '<%=imgArr[1]%>';
 		} <% } if (imgArr.length > 2) { %> else if (idx == 2) {
-			$('.thumbMain').html('<a href="' + '<%=imgArr[2]%>' + '" target="_blank"><img src="' + '<%=imgArr[2]%>' + '"></a>');
+			targetImg = '<%=imgArr[2]%>';
 		} <% } if (imgArr.length > 3) { %> else if (idx == 3) {
-			$('.thumbMain').html('<a href="' + '<%=imgArr[3]%>' + '" target="_blank"><img src="' + '<%=imgArr[3]%>' + '"></a>');
-		} <% } if (imgArr.length > 4) { %> else if (idx == 4) {
-			$('.thumbMain').html('<a href="' + '<%=imgArr[4]%>' + '" target="_blank"><img src="' + '<%=imgArr[4]%>' + '"></a>');
+			targetImg = '<%=imgArr[3]%>';
+		} <% } if (imgArr.length > 4) { %> else {
+			targetImg = '<%=imgArr[4]%>';
 		} <% } %>
+
+		console.log(targetImg);
+		$('#thumbLarge').attr('src', targetImg);
+		//$('.thumbImg').attr('src', targetImg);
+		$('.thumbImg').css('opacity','0').stop().attr('src',targetImg).animate({opacity:1},500);
 	});
 	 
 	

@@ -168,6 +168,14 @@
     	color:red;
     }
     
+	.mem_pic {
+		width:30px;
+		height:30px;
+		display:inline-block;
+	    border:1px solid #E6E9ED;
+	    border-radius:50%;
+	    padding:2px;
+	}
 </style>
 <script src="https://kit.fontawesome.com/b74b42490f.js" crossorigin="anonymous"></script>
 <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
@@ -188,7 +196,7 @@
                 <table class="top_form">
                     <tr>
                         <th>받는 사람</th>
-                        <td><img src="<%=receive_pic%>" width="30" height="30">&nbsp;<%=receive_nick %></td>
+                        <td><img src="<%=receive_pic%>" class="mem_pic">&nbsp;<%=receive_nick %></td>
                     </tr>
                     <tr>
                         <th>제목</th>

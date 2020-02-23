@@ -99,14 +99,18 @@
 	}
 	
 	.coat_label {
-		border-radius:4px;
+		width:32px;
+		border-radius:6px;
 		padding:4px;
 		margin:8px;
-           box-sizing:border-box;
+        box-sizing:border-box;
+        font-weight:700;
+        text-align:center;
 	}
 	
 	.coat_uncheck {
-		color:#d3d3d3;
+		color:black;
+		border:1px solid #ffffff;
 		transition:border 0.2s, color 0.2s, background 0.2s;
 	}
 	
@@ -201,11 +205,11 @@
 					<td>
 						<label id="coat_yes" class="coat_label coat_uncheck" for="check_yes">
 							<input type="radio" id="check_yes" class="coat_radio" name="ESTIMATE_COAT" value="코팅"> 
-							원함
+							O
 						</label> &nbsp;&nbsp; 
 						<label id="coat_no" class="coat_label coat_uncheck" for="check_no">
 							<input type="radio" id="check_no" class="coat_radio" name="ESTIMATE_COAT" value="코팅 안함"> 
-							원하지 않음
+							X
 						</label>
 					</td>
 				</tr>
@@ -493,7 +497,7 @@
     
     $("#coat_yes").click(function(e) {
     	if (coat_chk == 1){
-        	$(this).attr('class', 'coat_label');
+        	$(this).attr('class', 'coat_label coat_uncheck');
         	coat_chk = 0;
         	$("input:radio[id='check_yes']").prop('checked', false);
 	    	return false;
@@ -509,7 +513,7 @@
     
     $("#coat_no").click(function(e) {
     	if (coat_chk == 2) {
-        	$(this).attr('class', 'coat_label');
+        	$(this).attr('class', 'coat_label coat_uncheck');
         	coat_chk = 0;
         	$("input:radio[id='check_no']").prop('checked', false);
 	    	return false;

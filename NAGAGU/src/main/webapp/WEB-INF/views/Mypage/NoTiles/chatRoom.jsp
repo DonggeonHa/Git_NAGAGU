@@ -121,6 +121,9 @@
 		width:30px;
 		height:30px;
 		display:inline-block;
+	    border:1px solid #E6E9ED;
+	    border-radius:50%;
+	    padding:2px;
 	}
 	
 	p {
