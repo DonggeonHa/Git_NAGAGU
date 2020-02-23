@@ -35,7 +35,7 @@ if (session.getAttribute("WORKSHOP_NUM") == null) {
 					<button type="button" id="listall" class="btn btn-sm btn-outline-dark mr-2">전체표시</button>
 					<div class="select1">
 						<select class="search_hidden_state justify-content-start form-control" id="selectClassType" name="selectClassType" onchange="btn_select1()" style="height: 33px;">
-							<option value="allProducts">전체</option>
+							<option value="allProducts">판매상태</option>
 							<option value="ingSale">판매중</option>
 							<option value="pauseSale">품절</option>
 							<option value="endSale">판매종료</option>
@@ -43,7 +43,7 @@ if (session.getAttribute("WORKSHOP_NUM") == null) {
 					</div>
 					<div class="select2" style="padding-left:5px">
 						<select class="search_hidden_state justify-content-start form-control"  id="selectCategory" name="selectCategory" onchange="btn_select2()" style="height: 33px;">
-							<option value="all">전체</option>
+							<option value="all">카테고리</option>
 							<option value="table">책상</option>
 							<option value="chair">의자</option>
 							<option value="bookshelf">책장</option>

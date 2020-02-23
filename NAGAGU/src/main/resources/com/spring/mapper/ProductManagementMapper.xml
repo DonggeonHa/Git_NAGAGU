@@ -87,8 +87,8 @@
 		<result property="ORDER_PHONE" column="ORDER_PHONE" />		
 		<result property="PRODUCT_TITLE" column="PRODUCT_TITLE" />	
 		<result property="PRODUCT_NUM" column="PRODUCT_NUM" javaType="java.lang.Integer" />		
-		<result property="PRODUCT_COLOR" column="PRODUCT_COLOR" />		
-		<result property="PRODUCT_SIZE" column="PRODUCT_SIZE"  />		
+		<result property="BASKET_COLOR" column="BASKET_COLOR" />		
+		<result property="BASKET_SIZE" column="BASKET_SIZE"  />		
 		<result property="BASKET_AMOUNT" column="BASKET_AMOUNT" javaType="java.lang.Integer" />		
 	</resultMap>
 	
@@ -147,7 +147,9 @@
 		Q.QNA_CONTENT, Q.QNA_RE, Q.QNA_STATUS
 		FROM PRODUCT P, PRODUCT_QNA Q, nagagu_workshop_member W, nagagu_member N
 		WHERE P.PRODUCT_NUM =Q.QNA_PRODUCT
-		AND W.WORKSHOP_NUM=P.PRODUCT_WORKSHOP
+		AND P.PRODUCT_WORKSHOP = W.WORKSHOP_NUM 
+		AND Q.QNA_RE = 0 
+		AND W.WORKSHOP_NUM=P.PRODUCT_WORKSHOP 
 		AND W.WORKSHOP_NUM=#{WORKSHOP_NUM}
 		AND Q.QNA_MEMBER=N.MEMBER_NUM
 			
@@ -208,7 +210,7 @@
 	<select id="getSelledInfo" parameterType="java.util.HashMap" resultMap="SelledproductListResultMap">
 		SELECT O.ORDER_NUM, M.MEMBER_NICK, O.ORDER_PRICE, O.ORDER_DATE, O.ORDER_AMOUNT, O.ORDER_PERSON, 
 		O.ORDER_MEMO, O.ORDER_METHOD, O.ORDER_STATE, O.ORDER_ADDRESS, O.ORDER_PHONE, 
-		P.PRODUCT_TITLE, P.PRODUCT_NUM, P.PRODUCT_SIZE, P.PRODUCT_COLOR, B.BASKET_AMOUNT
+		P.PRODUCT_TITLE, P.PRODUCT_NUM, B.BASKET_SIZE, B.BASKET_COLOR, B.BASKET_AMOUNT
 			FROM PRODUCT_ORDER O, PRODUCT P, NAGAGU_WORKSHOP_MEMBER W, BASKET B, NAGAGU_MEMBER M
 				WHERE W.WORKSHOP_NUM = #{WORKSHOP_NUM}
 				AND B.BASKET_PRODUCT= P.PRODUCT_NUM 

@@ -45,14 +45,18 @@
 				font-weight: bold;
 				text-decoration: none;
 			}
-			td {
-				border-right: 1px solid black;
-			}		
+			.bgcolor {
+				background-color:#F2F2F2;
+			}			
+			.bgcolor2 {
+				background-color:#1B1B27;
+				color:white;
+			}
 		</style>
 	</head>
 	<body>
 		<div>
-			<table class="table table-striped">
+			<table class="table bgcolor">
   				<colgroup>
 					<col style="width:15%">
 					<col style="width:35%">
@@ -60,7 +64,7 @@
 					<col style="width:35%">
 				</colgroup>
 				<tr>
-					<th colspan="4" scope="colgroup">상품 후기 상세</th>
+					<th colspan="4" scope="colgroup" class="bgcolor2">상품 후기 상세</th>
 				</tr>
 				<tr>
 					<th scope="col">작성자</th>
@@ -94,7 +98,7 @@
 				if(REVIEW_RE == 0) {
 				%>
 					<tr>
-						<th scope="col" rowspan="2">후기 이미지</th>
+						<th scope="col" rowspan="2">이미지</th>
 						<td colspan="3" scope="colgroup">
 							<%
 								if(imagesExist.equals("Y")) {

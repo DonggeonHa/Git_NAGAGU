@@ -63,25 +63,27 @@
 				color: black; 
 				font-weight: bold;
 				text-decoration: none;
-			}
-			td {
-				border-right: 1px solid black;
-			}		
+			}	
 			.bgcolor {
 				background-color:#F2F2F2;
 			}
 			.bold {
 				font-weight: bold;
 			}
-			.headercol {
-				background-color:white;
-				font-weight: bold;
+
+			/*
+			border-right: 1px solid black;
+			
+			*/
+			.bgcolor2 {
+				background-color:#1B1B27;
+				color:white;
 			}
 		</style>
 	</head>
 	<body>
 		<div>
-			<table class="table table-striped mb-0">
+			<table class="table bgcolor mb-0">
   				<colgroup>
 					<col style="width:15%">
 					<col style="width:35%">
@@ -89,7 +91,7 @@
 					<col style="width:35%">
 				</colgroup>
 				<tr>
-					<th colspan="4" scope="colgroup">상품 판매 상세 페이지</th>
+					<th colspan="4" scope="colgroup" class="bgcolor2">상품 판매 상세 페이지</th>
 				</tr>
 				<tr>
 					<th scope="col">주문번호</th>
@@ -127,30 +129,30 @@
 					<td colspan="3" scope="colgroup"><%=ORDER_MEMO %></td>
 				</tr>	
 			</table>
-			<table class="table table-striped">
+			<table class="table ">
 				<tr>
-					<td scope="col" style="width:15%" class="headercol"></td>
-					<td style="width:21%;" class="headercol">상품명</td>
-					<td style="width:21%;" class="headercol">수량</td>
-					<td style="width:21%;" class="headercol">색상</td>
-					<td style="width:21%;" class="headercol">사이즈</td>
+					<td scope="col" style="width:15%" class="bgcolor2"></td>
+					<td style="width:21%;" class="bgcolor2">상품명</td>
+					<td style="width:21%;" class="bgcolor2">수량</td>
+					<td style="width:21%;" class="bgcolor2">색상</td>
+					<td style="width:21%;" class="bgcolor2">사이즈</td>
 				</tr>
 				<%	
 				for(int i=0; i<selledInfo.size(); i++) {
 					int PRODUCT_NUM = (int)selledInfo.get(i).get("PRODUCT_NUM");
 					String PRODUCT_TITLE = (String)selledInfo.get(i).get("PRODUCT_TITLE");				
-					String PRODUCT_COLOR = (String)selledInfo.get(i).get("PRODUCT_COLOR");				
-					String PRODUCT_SIZE = (String)selledInfo.get(i).get("PRODUCT_SIZE");				
+					String BASKET_COLOR = (String)selledInfo.get(i).get("BASKET_COLOR");				
+					String BASKET_SIZE = (String)selledInfo.get(i).get("BASKET_SIZE");				
 					int BASKET_AMOUNT = (int)selledInfo.get(i).get("BASKET_AMOUNT");				
 				%>										
 					<tr class="bgcolor">	
-						<td scope="col" class="headercol">
+						<td scope="col" class="bold">
 							<%if(i==0) {%>상품 내역<%} %>
 						</td>
 						<td><a href="productdetail.pro?PRODUCT_NUM=<%=PRODUCT_NUM %>" target="_blank" class="bold"><%=PRODUCT_TITLE %></a></td>
 						<td style="width:25%;"><%=BASKET_AMOUNT %>&nbsp;개</td>
-						<td style="width:25%;"><%=PRODUCT_COLOR %></td>
-						<td style="width:25%;"><%=PRODUCT_SIZE %></td>
+						<td style="width:25%;"><%=BASKET_COLOR %></td>
+						<td style="width:25%;"><%=BASKET_SIZE %></td>
 					</tr>
 				<%
 				}
