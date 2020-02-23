@@ -84,30 +84,32 @@ if (session.getAttribute("WORKSHOP_NUM") == null) {
 					</nav>
 				</div>
 			</div>
-		</div>       
-		<table class="table" id="work_store">
-		    <thead>
-		    <tr class="text-center">
-		        <th style="width: 3%;"><input id="all_select" type="checkbox"></th>
-		        <th style="width: 5%;">번호</th>
-		        <th style="width: 5%;">상태</th>
-		        <th style="width: 9%;">카테고리</th>
-		        <th style="width: 18%;">상품명</th>
-		        <th style="width: 5%;">판매가</th>
-		        <th style="width: 5%;">재고량</th>
-		        <th style="width: 5%;">판매량</th>
-		        <th style="width: 5%;">평점</th>
-		        <th style="width: 5%;">조회수</th>
-		        <th style="width: 5%;">좋아요</th>
-		        <th style="width: 10%;">작성날짜</th>
-		        <th style="width: 10%;">관리</th>
-		        <th style="width: 10%;">이동</th>
-		    </tr>
-		    </thead>
-		    <tbody id="productList">
-		     </tbody>
-		</table>
-		<div id="list_none"></div>
+		</div>
+		<div style="height: 620px; overflow-y: auto;">       
+			<table class="table" id="work_store">
+			    <thead>
+			    <tr class="text-center">
+			        <th style="width: 3%;"><input id="all_select" type="checkbox"></th>
+			        <th style="width: 5%;">번호</th>
+			        <th style="width: 5%;">상태</th>
+			        <th style="width: 9%;">카테고리</th>
+			        <th style="width: 18%;">상품명</th>
+			        <th style="width: 5%;">판매가</th>
+			        <th style="width: 5%;">재고량</th>
+			        <th style="width: 5%;">판매량</th>
+			        <th style="width: 5%;">평점</th>
+			        <th style="width: 5%;">조회수</th>
+			        <th style="width: 5%;">좋아요</th>
+			        <th style="width: 10%;">작성날짜</th>
+			        <th style="width: 10%;">관리</th>
+			        <th style="width: 10%;">이동</th>
+			    </tr>
+			    </thead>
+			    <tbody id="productList">
+			     </tbody>
+			</table>
+			<div id="list_none"></div>
+		</div>
 		<div class="d-flex justify-content-center">
 			<nav aria-label="Page navigation example" class="paginated" id="user-page"></nav>
 		</div>

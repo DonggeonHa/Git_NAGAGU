@@ -105,29 +105,28 @@
 	            </div>
 	        </div>
         </div>
-        <form id="chk_form">
-	    <table class="table" id="work_store">
-	        <thead>
-	            <tr>
-	                <th style="width: 5%;" class="th1" ><input id="all_select" type="checkbox"></th>      
-	                <th style="width: 5%;" class="th2">번호</th>            
-	                <th style="width: 10%;" class="th3">고객명</th>
-	                <th style="width: 17%;" class="th4">제목</th>
-	                <th style="width: 10%;" class="th6">카테고리</th>
-	                <th style="width: 15%;" class="th7">주문금액</th>
-	                <th style="width: 10%;" class="th5">주문날짜</th>
-	                <th style="width: 10%;" class="th8">상태</th>
-	                <th style="width: 8%;" class="th9">관리</th>
-	                <th style="width: 10%;" class="th10">1:1채팅</th>
-	            </tr>
-	        </thead>
-	        <tbody>
-	         </tbody>
-	    </table>
-	    </form>
-	   
-		<br/><br/><br/>
-	
+        <div style="height: 620px; overflow-y: auto;">
+	        <form id="chk_form">
+		    <table class="table" id="work_store">
+		        <thead>
+		            <tr>
+		                <th style="width: 5%;" class="th1" ><input id="all_select" type="checkbox"></th>      
+		                <th style="width: 5%;" class="th2">번호</th>            
+		                <th style="width: 10%;" class="th3">고객명</th>
+		                <th style="width: 17%;" class="th4">제목</th>
+		                <th style="width: 10%;" class="th6">카테고리</th>
+		                <th style="width: 15%;" class="th7">주문금액</th>
+		                <th style="width: 10%;" class="th5">주문날짜</th>
+		                <th style="width: 10%;" class="th8">상태</th>
+		                <th style="width: 8%;" class="th9">관리</th>
+		                <th style="width: 10%;" class="th10">1:1채팅</th>
+		            </tr>
+		        </thead>
+		        <tbody>
+		         </tbody>
+		    </table>
+		    </form>
+		</div>
 		<!-- 페이지네이션 -->
 		<div class="row justify-content-center">
 			<div id="pagination" class="pagination justify-content-center">

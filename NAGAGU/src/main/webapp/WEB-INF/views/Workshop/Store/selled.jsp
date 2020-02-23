@@ -105,24 +105,26 @@
 				</div>
 			</div>
 		</div>
-		<table class="table" id="work_store">
-			<thead>
-				<tr class="text-center">
-					<th style="width: 5%;"><input id="all_select" type="checkbox"></th>
-					<th style="width: 5%;">번호</th>
-					<th style="width: 20%;">주문번호</th>
-					<th style="width: 15%;">주문내역</th>
-					<th style="width: 10%;">주문상태</th>
-					<th style="width: 10%;">결제수단</th>
-					<th style="width: 10%;">결제금액</th>
-					<th style="width: 10%;">주문자</th>
-					<th style="width: 10%;">주문일자</th>
-					<th style="width: 5%;">상세</th>
-				</tr>
-			</thead>
-			<tbody id="SelledproductList"></tbody>
-		</table>
-		<div id="list_none"></div>
+		<div style="height: 620px; overflow-y: auto;">
+			<table class="table" id="work_store">
+				<thead>
+					<tr class="text-center">
+						<th style="width: 5%;"><input id="all_select" type="checkbox"></th>
+						<th style="width: 5%;">번호</th>
+						<th style="width: 20%;">주문번호</th>
+						<th style="width: 15%;">주문내역</th>
+						<th style="width: 10%;">주문상태</th>
+						<th style="width: 10%;">결제수단</th>
+						<th style="width: 10%;">결제금액</th>
+						<th style="width: 10%;">주문자</th>
+						<th style="width: 10%;">주문일자</th>
+						<th style="width: 5%;">상세</th>
+					</tr>
+				</thead>
+				<tbody id="SelledproductList"></tbody>
+			</table>
+			<div id="list_none"></div>
+		</div>
 		<div class="d-flex justify-content-center">
 			<nav aria-label="Page navigation example" class="paginated" id="user-page"></nav>
 		</div>
