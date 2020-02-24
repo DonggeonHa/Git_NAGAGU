@@ -41,3 +41,8 @@ create table delete_member(
     delete_sysdate DATE
 );
 
+
+
+insert into nagagu_member (member_num, member_email, member_name, member_nick, member_phone)
+values(nagagu_member_seq.NEXTVAL, nagagu_member_seq.currval||'yoa23na@daum.com', '김기자', '기재욥', '011-2234-5678');
+
