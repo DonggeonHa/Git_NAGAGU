@@ -297,7 +297,7 @@
 					
 				},
 				error:function(request, status, error){
-				    alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+				    alertify.alert("확인","code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
 				}
 			});
 		}
