@@ -49,13 +49,13 @@
 				title += '<thead class="text-center">';
 				title += '<tr>';
 				title += '<th style="width: 5%;">번호</th>';
-				title += '<th style="width: 15%;">이메일</th>';
+				title += '<th style="width: 12%;">이메일</th>';
 				title += '<th style="width: 10%;">공방명</th>';
 				title += '<th style="width: 5%;">대표자</th>';
 				title += '<th style="width: 10%;">핸드폰</th>';
 				title += '<th style="width: 10%;">사업자번호</th>';
 				title += '<th style="width: 18%;"">주소</th>';
-				title += '<th style="width: 12%;">상세주소</th>';
+				title += '<th style="width: 15%;">상세주소</th>';
 				title += '<th style="width: 10%;">상태</th>';
 				title += '<th colspan="2" style="width: 5%;">관리</th>';
 				title += '</tr>';

@@ -226,11 +226,9 @@
  	
 	<select id="getMembers" resultMap="memberResultMap"> <!-- 이거 처리한 결과물을 list 타입으로 만들어주면 된다. select id은 내용을 호출 함. -->
 		select *
-		from (select rownum rnum, MEMBER_NUM, MEMBER_EMAIL, MEMBER_NAME, MEMBER_NICK, MEMBER_PHONE, 
+		from (select ROW_NUMBER() OVER (order by MEMBER_STATUS DESC , MEMBER_NUM ASC) as RNUM, MEMBER_NUM, MEMBER_EMAIL, MEMBER_NAME, MEMBER_NICK, MEMBER_PHONE, 
 					 ADDRESS_ADDRESS1, ADDRESS_ADDRESS2, MEMBER_STATUS
-			  from(select * 
-			  	   from NAGAGU_MEMBER
-			  	   order by MEMBER_STATUS DESC , MEMBER_NUM ASC))
+			  from(select * from NAGAGU_MEMBER))
  	</select>
  	
  	<delete id="deleteMember" parameterType="com.spring.member.MemberVO">
@@ -248,11 +246,9 @@
  	
 	<select id="getWMembers" parameterType="int" resultMap="workshopMemberResultMap"> <!-- 이거 처리한 결과물을 list 타입으로 만들어주면 된다. select id은 내용을 호출 함. -->
 		select *
-		from (select rownum rnum, WORKSHOP_NUM, WORKSHOP_EMAIL, WORKSHOP_NAME, WORKSHOP_CEO_NAME, WORKSHOP_PHONE, 
+		from (select ROW_NUMBER() OVER (order by WORKSHOP_STATUS ASC , WORKSHOP_DATE ASC) as RNUM, WORKSHOP_NUM, WORKSHOP_EMAIL, WORKSHOP_NAME, WORKSHOP_CEO_NAME, WORKSHOP_PHONE, 
 					 WORKSHOP_LICENSE, WORKSHOP_ADDRESS1, WORKSHOP_ADDRESS2, WORKSHOP_STATUS
-			  from(select * 
-			  	   from NAGAGU_WORKSHOP_MEMBER 
-			  	   order by WORKSHOP_STATUS ASC , WORKSHOP_DATE ASC))
+			  from(select * from NAGAGU_WORKSHOP_MEMBER))
  	</select>
  	
  	<delete id="deleteWMember" parameterType="com.spring.workshop.WorkShopMemberVO">
@@ -270,10 +266,8 @@
  	<!-- 커뮤니티관리 -->
  	<select id="getPICS" parameterType="int" resultMap="picsResultMap"> <!-- 이거 처리한 결과물을 list 타입으로 만들어주면 된다. select id은 내용을 호출 함. -->
 		select *
-		from (select rownum rnum, PICS_NUM, PICS_NICK, PICS_CATEGORY, PICS_LIKE, PICS_READ, PICS_TAG
-			  from(select * 
-			  	   from PICS 
-			  	   order by PICS_DATE ASC , PICS_NUM ASC))
+		from (select ROW_NUMBER() OVER (order by PICS_DATE ASC , PICS_NUM ASC) as RNUM, PICS_NUM, PICS_NICK, PICS_CATEGORY, PICS_LIKE, PICS_READ, PICS_TAG
+			  from(select * from PICS))
  	</select>
  	
  	<delete id="deletePICS" parameterType="com.spring.community.PicsVO">
@@ -302,11 +296,9 @@
  	<!-- 아카데미 관리 -->
  	<select id="getAcademy" parameterType="int" resultMap="classResultMap"> <!-- 이거 처리한 결과물을 list 타입으로 만들어주면 된다. select id은 내용을 호출 함. -->
 		select *
-		from (select rownum rnum, CLASS_NUMBER, CLASS_DIVISION, WORKSHOP_NAME, CLASS_NAME, CLASS_AMOUNT, CLASS_DATE_CONFIGURATION_1, CLASS_DATE_CONFIGURATION_2, 
+		from (select ROW_NUMBER() OVER (order by CLASS_DATE ASC , CLASS_NUMBER ASC) as RNUM, CLASS_NUMBER, CLASS_DIVISION, WORKSHOP_NAME, CLASS_NAME, CLASS_AMOUNT, CLASS_DATE_CONFIGURATION_1, CLASS_DATE_CONFIGURATION_2, 
 			  CLASS_AREA, CLASS_CATEGORY, CLASS_ADDRESS, CLASS_DETAIL_ADDRESS, CLASS_STATUS
-			  from(select * 
-			  	   from ACADEMY
-			  	   order by CLASS_DATE ASC , CLASS_NUMBER ASC))
+			  from(select * from ACADEMY))
  	</select>
  	
  	<delete id="deleteAcademy" parameterType="com.spring.academy.ClassVO">
@@ -344,10 +336,8 @@
  	<!-- 상품관리 -->
  	<select id="getProduct" parameterType="int" resultMap="productResultMap"> <!-- 이거 처리한 결과물을 list 타입으로 만들어주면 된다. select id은 내용을 호출 함. -->
 		select *
-		from (select rownum rnum, PRODUCT_NUM, PRODUCT_SHOPNAME, PRODUCT_TITLE, PRODUCT_CATEGORY, PRODUCT_PRICE, PRODUCT_STATUS
-			  from(select * 
-			  	   from PRODUCT
-			  	   order by PRODUCT_DATE ASC , PRODUCT_NUM ASC))
+		from (select ROW_NUMBER() OVER (order by PRODUCT_DATE ASC , PRODUCT_NUM ASC) as RNUM, PRODUCT_NUM, PRODUCT_SHOPNAME, PRODUCT_TITLE, PRODUCT_CATEGORY, PRODUCT_PRICE, PRODUCT_STATUS
+			  from(select * from PRODUCT))
  	</select>
  	
  	<delete id="deleteProduct" parameterType="com.spring.store.ProductVO">
@@ -385,10 +375,8 @@
  	<!-- 견적관리 -->
  	<select id="getEstimate" parameterType="int" resultMap="estimateMap"> <!-- 이거 처리한 결과물을 list 타입으로 만들어주면 된다. select id은 내용을 호출 함. -->
 		select *
-		from (select rownum rnum, ESTIMATE_NUM, ESTIMATE_MEMBER, ESTIMATE_NICK, ESTIMATE_TITLE, ESTIMATE_CATEGORY, ESTIMATE_AVG, ESTIMATE_OFFERCOUNT, ESTIMATE_STATE
-			  from(select * 
-			  	   from ESTIMATE
-			  	   order by ESTIMATE_DATE ASC , ESTIMATE_NUM ASC))
+		from (select ROW_NUMBER() OVER (order by ESTIMATE_DATE ASC , ESTIMATE_NUM ASC) as RNUM, ESTIMATE_NUM, ESTIMATE_MEMBER, ESTIMATE_NICK, ESTIMATE_TITLE, ESTIMATE_CATEGORY, ESTIMATE_AVG, ESTIMATE_OFFERCOUNT, ESTIMATE_STATE
+			  from(select * from ESTIMATE))
  	</select>
  	
  	<delete id="deleteEstimate" parameterType="com.spring.estimate.EstimateVO">

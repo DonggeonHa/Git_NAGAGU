@@ -76,10 +76,26 @@
 					output += '<tbody class="text-center">'
 					output += '<tr>';
 					output += '<td>' + item.REVIEW_NUM + '</td>';
-					output += '<td>' + item.PRODUCT_TITLE + '</td>';
+					
+					if(item.PRODUCT_TITLE.length >= 20) {
+						title = item.PRODUCT_TITLE.substr(0,20)+"...";
+						
+						output += '<td>' + title + '</td>';
+					} else {
+						output += '<td>' + item.PRODUCT_TITLE + '</td>';
+					}
+					
 					output += '<td>' + item.MEMBER_NICK + '</td>';
 					output += '<td>' + date + '</td>';
-					output += '<td>' + item.REVIEW_CONTENT + '</td>';
+					
+					if(item.REVIEW_CONTENT.length >= 60) {
+						content = item.REVIEW_CONTENT.substr(0,60)+"...";
+						
+						output += '<td>' + content + '</td>';
+					} else {
+						output += '<td>' + item.REVIEW_CONTENT + '</td>';
+					}
+					
 					output += '<td><a href="./deleteProductReview.ad" class="del_data" ';
 					output += 'REVIEW_NUM=' + item.REVIEW_NUM +  '><i class="fas fa-trash-alt" ></i></a></td>';
 					output += '</tr>';

@@ -68,6 +68,7 @@
 				title += '</tr>';
 				title += '</thead>';
 				$('#academy-qna').append(title);
+				var number = 1; 
 				$.each(data, function(index, item) {
 					console.log(item)
 					var qna_date = new Date(item.QNA_DATE);
@@ -76,18 +77,26 @@
 					console.log(item);
 					output += '<tbody class="text-center">'
 					output += '<tr>';
-					output += '<td>' + item.QNA_NUM + '</td>'; 
+					output += '<td>' + number + '</td>'; 
 					output += '<td>' + item.CLASS_NAME + '</td>';
 					output += '<td>' + item.MEMBER_NICK + '</td>';
 					output += '<td>' + date + '</td>';
-					output += '<td>' + item.QNA_CONTENT + '</td>';
+					if(item.QNA_CONTENT.length >= 65) {
+						content = item.QNA_CONTENT.substr(0,65)+"...";
+						
+						output += '<td>' + content + '</td>';
+					} else {
+						output += '<td>' + item.QNA_CONTENT + '</td>';
+					}
 					output += '<td><a href="./deleteAcademyQnA.ad" class="del_data" ';
 					output += 'QNA_NUM=' + item.QNA_NUM +  '><i class="fas fa-trash-alt" ></i></a></td>';
 					output += '</tr>';
 					output += '</tbody>'
 					console.dir("output : " + output);
 					$('#academy-qna').append(output);
+					number++;
 				});
+				
 				page();
 			},
 			error: function(request,status,error) {

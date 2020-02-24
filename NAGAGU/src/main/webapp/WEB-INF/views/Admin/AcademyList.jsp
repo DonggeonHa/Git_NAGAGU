@@ -67,8 +67,15 @@
 					output += '<td>' + item.class_NUMBER + '</td>'; 
 					output += '<td>' + item.class_DIVISION + '</td>'; 
 					output += '<td>' + item.workshop_NAME + '</td>'; 
-					output += '<td><a href="./detailAcademy.ad" class="detail_data" '
-					output += 'CLASS_NUMBER=' + item.class_NUMBER + '>' + item.class_NAME + '</a></td>';
+					if(item.class_NAME.length >= 14) {
+						title = item.class_NAME.substr(0,14)+"...";
+						
+						output += '<td><a href="./detailAcademy.ad" class="detail_data" '
+						output += 'CLASS_NUMBER=' + item.class_NUMBER + '>' + title + '</a></td>';
+					} else {
+						output += '<td><a href="./detailAcademy.ad" class="detail_data" '
+						output += 'CLASS_NUMBER=' + item.class_NUMBER + '>' + item.class_NAME + '</a></td>';
+					}
 					output += '<td>' + item.class_AMOUNT.toLocaleString() + '원</td>'; 
 					output += '<td>' + item.class_DATE_CONFIGURATION_1 + '<br> ~ ' + item.class_DATE_CONFIGURATION_2 +'</td>';
 					output += '<td>' + item.class_AREA + '</td>';

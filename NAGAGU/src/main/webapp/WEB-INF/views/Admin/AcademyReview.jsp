@@ -79,7 +79,13 @@
 					output += '<td>' + item.CLASS_NAME + '</td>';
 					output += '<td>' + item.MEMBER_NICK + '</td>';
 					output += '<td>' + date + '</td>';
-					output += '<td>' + item.REVIEW_CONTENT + '</td>';
+					if(item.REVIEW_CONTENT.length >= 65) {
+						content = item.REVIEW_CONTENT.substr(0,65)+"...";
+						
+						output += '<td>' + content + '</td>';
+					} else {
+						output += '<td>' + item.REVIEW_CONTENT + '</td>';
+					}
 					output += '<td><a href="./deleteAcademyReview.ad" class="del_data" ';
 					output += 'REVIEW_NUM=' + item.REVIEW_NUM +  '><i class="fas fa-trash-alt"></i></a></td>';
 					output += '</tr>';
