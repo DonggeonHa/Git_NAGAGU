@@ -4,6 +4,10 @@
 	String MEMBER_EMAIL = (String)session.getAttribute("MEMBER_EMAIL");
 %>
 <style>
+	
+	.table_container {
+		min-height:550px;
+	}
 	#work_store th, td {
 		text-align:center;
 	}
@@ -28,6 +32,7 @@
 	#selectState {
 		margin-left:5px;
 	}
+	
 </style>
 <div id="page-content-wrapper" style="padding-top: 5%;">
 
@@ -78,6 +83,7 @@
 							<option value="1">낙찰</option>
 							<option value="2">유찰</option>
 							<option value="3">취소</option>
+							<option value="4">제작중</option>
 						</select>
 					</div>
 				</div>
@@ -105,26 +111,28 @@
 	            </div>
 	        </div>
         </div>
-        <form id="chk_form" name="chk_form">
-	    <table class="table" id="work_store">
-	        <thead>
-	            <tr>
-	                <th style="width: 5%;" class="th1" ><input id="all_select" type="checkbox"></th>      
-	                <th style="width: 5%;" class="th2">번호</th>            
-	                <th style="width: 5%;" class="th3">작성자</th>
-	                <th style="width: 25%;" class="th4">게시물 제목</th>
-	                <th style="width: 10%;" class="th6">카테고리</th>
-	                <th style="width: 10%;" class="th7">제안가격</th>
-	                <th style="width: 10%;" class="th5">제안날짜</th>
-	                <th style="width: 5%;" class="th8">상태</th>
-	                <th style="width: 15%;" class="th9">관리</th>
-	                <th style="width: 10%;" class="th10">문의</th>
-	            </tr>
-	        </thead>
-	        <tbody>
-	         </tbody>
-	    </table>
-	    </form>
+        <div class="table_container">
+	        <form id="chk_form" name="chk_form">
+			    <table class="table" id="work_store">
+			        <thead>
+			            <tr>
+			                <th style="width: 5%;" class="th1" ><input id="all_select" type="checkbox"></th>      
+			                <th style="width: 5%;" class="th2">번호</th>            
+			                <th style="width: 5%;" class="th3">작성자</th>
+			                <th style="width: 25%;" class="th4">게시물 제목</th>
+			                <th style="width: 8%;" class="th6">카테고리</th>
+			                <th style="width: 10%;" class="th7">제안가격</th>
+			                <th style="width: 10%;" class="th5">제안날짜</th>
+			                <th style="width: 7%;" class="th8">상태</th>
+			                <th style="width: 15%;" class="th9">관리</th>
+			                <th style="width: 10%;" class="th10">문의</th>
+			            </tr>
+			        </thead>
+			        <tbody>
+			         </tbody>
+			    </table>
+		    </form>
+	    </div>
 	    
 	    <!--  견적 수정 modal -->
 		<div class="modal fade" id="modifyFormModal" tabindex="-1" role="dialog"
@@ -160,11 +168,11 @@
 		<br/><br/><br/>
 	
 		<!-- 댓글 페이지네이션 -->
+	</div>
 		<div class="row justify-content-center">
 			<div id="pagination" class="pagination justify-content-center">
 			</div>
 		</div>
-	</div>
 </div>
 
 <script>
@@ -194,6 +202,7 @@
 					console.log(data.woList);
 					
 					var output = '';
+					var pagination = '';
 					
 					var woList = data.woList;
 					var rnum = data.rnum;
@@ -232,6 +241,9 @@
 								break;
 							case 3 :
 								es_state = '취소';
+								break;
+							case 4 :
+								es_state = '<b><font color="#ef900e">제작중</font></b>';
 								break;
 							}
 
@@ -293,26 +305,50 @@
 						
 						/* 페이지네이션 */
 						
-				            var nowpage = item.page;
-				            var maxpage = item.maxpage;
-				            var startpage = item.startpage;
-				            var endpage = item.endpage;
-				            var startRow = item.startRow;
-				            var endRow = item.endRow;
+				            var nowpage = data.page;
+				            var maxpage = data.maxpage;
+				            var startpage = data.startpage;
+				            var endpage = data.endpage;
+				            var startRow = data.startRow;
+				            var endRow = data.endRow;
 				            
-							pagination += '<li class="page-item" cursor: "pointer" value=0><a class="page-link" href="#">처음</a></li>';
-							pagination += '<li class="page-item" cursor: "pointer" value=' + Num(startpage - 1) + '><a class="page-link" href="#">이전</a></li>';
+				            console.log("nowpage : " + nowpage);
+				            console.log("maxpage : " + maxpage);
+				            console.log("startpage : " + startpage);
+				            console.log("endpage : " + endpage);
+				            
+							pagination += '<li class="page-item" cursor: "pointer" value=1><a class="page-link" href="#">처음</a></li>';
+							pagination += '<li class="page-item" cursor: "pointer" value=';
 							
-							for (var page = startpage; page < endpage; page++) {
-								pagination += '<li class="page-item';
-								if (page == nowpage) {
-									pagination += ' currentPage';
-								}
-								pagination += '" cursor: "pointer" value=' + page + '><a class="page-link" href="#">' + Num(page + 1) + '</a></li>';
+							if (startpage < 6) {
+								pagination += '-1';
+							}
+							else {
+								pagination += (startpage - 1);
 							}
 							
-							pagination += '<li class="page-item" cursor: "pointer"><a class="page-link" href="#">다음</a></li>';
-							pagination += '<li class="page-item" cursor: "pointer"><a class="page-link" href="#">끝</a></li>';
+							pagination += '><a class="page-link" href="#">이전</a></li>';
+							
+							for (var page = startpage; page < endpage+1; page++) {
+								pagination += '<li class="page-item';
+								if (page == nowpage) {
+									pagination += ' active';
+								}
+								pagination += '" cursor: "pointer" value=' + page + '><a class="page-link" href="#">' + page + '</a></li>';
+					            console.log("page : " + page);
+							}
+							
+							pagination += '<li class="page-item" cursor: "pointer" value=';
+							
+							if (maxpage < 11) {
+								pagination += '-1';
+							}
+							else {
+								pagination += (endpage + 1);
+							}
+							
+							pagination += '><a class="page-link" href="#">다음</a></li>';
+							pagination += '<li class="page-item" cursor: "pointer" value=' + maxpage + '><a class="page-link" href="#">끝</a></li>';
 					}
 					
 					$('#work_store > tbody').html(output);
@@ -326,6 +362,9 @@
 		}
 		
 		$(document).delegate('.page-item','click' , function() {
+			if ($(this).attr('value') == -1) {
+				return false;
+			}
 			var pageLink = $(this).attr('value');
 			$('#wo_page').val(pageLink);
 			getList();

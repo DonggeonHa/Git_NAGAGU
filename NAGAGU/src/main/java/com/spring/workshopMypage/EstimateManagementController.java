@@ -45,7 +45,7 @@ public class EstimateManagementController {
 		int limit = 20;
 		int offerCount = estimateService.offerCount(countMap);
 		
-		if (request.getParameter("page") != null) {
+		if (request.getParameter("page") != "") {
 			page = Integer.parseInt(request.getParameter("page"));
 		}
 		
@@ -56,8 +56,8 @@ public class EstimateManagementController {
 		int endpage = startpage+9;
 		
 		if (maxpage > 1) {     // 한페이지 이상이면
-			if (page < 5 && (maxpage-page) >= 5) {   // 현재 5p 이하이면
-				startpage = 0;     // 1부터 
+			if (page < 6 && (maxpage-page) >= 6) {   // 현재 5p 이하이면
+				startpage = 1;     // 1부터 
 				endpage = 10;    // 10까지
 			} else {
 				startpage = page -5;  // 6넘어가면 2부터 찍고
@@ -68,11 +68,11 @@ public class EstimateManagementController {
 				endpage = maxpage;   // 마지막페이지를 갯수 만큼
 				startpage = maxpage-10;  // 시작페이지를   갯수 -10
 			}
-			if (startpage < 1) {     // 시작이 음수 or 0 이면
+			if (startpage < 2) {     // 시작이 음수 or 0 이면
 				startpage = 0;     // 1페이지부터 시작
 			}
 		} else {       // 한페이지 이하이면
-			startpage = 0;      // 한번만 페이징 생성
+			startpage = 1;      // 한번만 페이징 생성
 			endpage = maxpage;
 		}
 		
@@ -125,7 +125,7 @@ public class EstimateManagementController {
 		int limit = 20;
 		int offerCount = estimateService.esOrderCount(countMap);
 		
-		if (request.getParameter("page") != null) {
+		if (request.getParameter("page") != "") {
 			page = Integer.parseInt(request.getParameter("page"));
 		}
 		
@@ -134,6 +134,27 @@ public class EstimateManagementController {
 		int endRow = startRow+limit-1;
 		int startpage = (((int) ((double)page/10 + 0.9)) - 1) * 10 + 1;
 		int endpage = startpage+9;
+		
+		if (maxpage > 1) {     // 한페이지 이상이면
+			if (page < 6 && (maxpage-page) >= 6) {   // 현재 5p 이하이면
+				startpage = 1;     // 1부터 
+				endpage = 10;    // 10까지
+			} else {
+				startpage = page -5;  // 6넘어가면 2부터 찍고
+				endpage = startpage+10;   // 10까지
+			}
+		 
+			if (maxpage < endpage) {   // 10페이지가 안되면
+				endpage = maxpage;   // 마지막페이지를 갯수 만큼
+				startpage = maxpage-10;  // 시작페이지를   갯수 -10
+			}
+			if (startpage < 2) {     // 시작이 음수 or 0 이면
+				startpage = 0;     // 1페이지부터 시작
+			}
+		} else {       // 한페이지 이하이면
+			startpage = 1;      // 한번만 페이징 생성
+			endpage = maxpage;
+		}
 		
 		listmap.put("ES_ORDER_WORKSHOP", ES_ORDER_WORKSHOP);
 		listmap.put("startRow", startRow);
