@@ -167,6 +167,18 @@
 	
 	
 	<select id="getManagementClassList" resultMap="classResultMap">
+		select CLASS_NUMBER, CLASS_STATUS, CLASS_AREA, CLASS_AMOUNT, CLASS_DIVISION, CLASS_NAME, CLASS_CATEGORY, 
+			    CLASS_DATE_CONFIGURATION_1, CLASS_DATE_CONFIGURATION_2, CLASS_COUNT_MEMBER FROM ACADEMY 
+		WHERE WORKSHOP_NUM = #{WORKSHOP_NUM}
+	    	<if test="selectClassType == 'inClass'"> CLASS_STATUS=1 </if>
+	    	<if test="selectClassType == 'endClass'"> CLASS_STATUS=2 </if>
+	    	<if test="selectClassType == 'onedayClass'"> CLASS_DIVISION='원데이클래스'</if>
+	    	<if test="selectClassType == 'regularClass'"> CLASS_DIVISION='정규클래스' </if>
+    	order by CLASS_DATE DESC
+	</select>
+	
+<!-- 	
+	<select id="getManagementClassList" resultMap="classResultMap">
 	    select * from (select CLASS_NUMBER, CLASS_STATUS, CLASS_AREA, CLASS_AMOUNT, CLASS_DIVISION, CLASS_NAME, CLASS_CATEGORY, 
 	    CLASS_DATE_CONFIGURATION_1, CLASS_DATE_CONFIGURATION_2, CLASS_COUNT_MEMBER from (select * from ACADEMY where
 	    	<if test="selectClassType == 'allClass'"> 1=1 and WORKSHOP_NAME=#{WORKSHOP_NAME})</if>
@@ -176,6 +188,7 @@
 	    	<if test="selectClassType == 'regularClass'"> CLASS_DIVISION='정규클래스' and WORKSHOP_NAME=#{WORKSHOP_NAME})</if>
 	    	 order by CLASS_DATE ASC)
 	</select>
+	 -->
 	
 	<select id="getSearchList" resultMap="classResultMap">
 		select * from (select CLASS_NUMBER, CLASS_STATUS, CLASS_AREA, CLASS_AMOUNT, CLASS_DIVISION, CLASS_NAME, CLASS_CATEGORY, 

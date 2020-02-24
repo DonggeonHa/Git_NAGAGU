@@ -24,11 +24,11 @@ public class AcademyManagementServiceImpl implements AcademyManagementService {
 	private SqlSession sqlSession;
 	
 	@Override
-	public List<ClassVO> getManagementClassList(String selectClassType, String WORKSHOP_NAME) {
+	public List<ClassVO> getManagementClassList(String selectClassType, int WORKSHOP_NUM) {
 		List<ClassVO> mypageClassList = null;
 		
 		AcademyManagementMapper managementMapper = sqlSession.getMapper(AcademyManagementMapper.class);
-		mypageClassList = managementMapper.getManagementClassList(selectClassType, WORKSHOP_NAME);
+		mypageClassList = managementMapper.getManagementClassList(selectClassType, WORKSHOP_NUM);
 		
 		return mypageClassList;
 	}

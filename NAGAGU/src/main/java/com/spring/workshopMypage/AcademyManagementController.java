@@ -128,7 +128,8 @@ public class AcademyManagementController {
 		classVO.setCLASS_DETAIL_ADDRESS(request.getParameter("CLASS_DETAIL_ADDRESS"));
 		
 		ModelAndView mav = new ModelAndView();
-		mav.setViewName("redirect:classlist.ac");
+//		mav.setViewName("redirect:classlist.ac");
+		mav.setViewName("redirect:workshop_academy_Management.ws");
 		mav.addObject("ClassVO", classVO);
 		
 		int result = academyManagementService.updateClass(classVO);
