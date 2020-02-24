@@ -282,7 +282,7 @@
 	}
 
 	.replytext {	
-		font-size:0.7em; font-weight:bold;	/*답글 버튼*/
+		font-weight:bold;	/*답글 버튼*/
 	}
 	
 	.ReviewList {
@@ -318,12 +318,10 @@
 	
 	
 	.ReviewbeforeControl {
-		font-size:0.7em; 
 		font-weight:bold;
 	}
 	.ReviewafterControl {
 		display:none;	
-		font-size:0.7em; 
 		font-weight:bold;	
 	}
 
@@ -393,12 +391,10 @@
 	}	
 		
 	.QnabeforeControl {
-		font-size:0.7em; 
 		font-weight:bold;
 	}
 	.QnaafterControl {
 		display:none;	
-		font-size:0.7em; 
 		font-weight:bold;	
 	}	
 	.page-link {
@@ -410,8 +406,10 @@
 	}
 	
 	.nav-item .active {
-		color : white !important;
 		background-color : #1B1B27 !important;
+	}
+	.sticky .nav-item .active{
+		color : white !important;
 	}
 	
 	li.nav-item a.nav-link {
@@ -637,7 +635,7 @@
 									<div class="row"> <!-- 수정, 삭제 -->
 										<div class="col-2 justify-content-center"></div>
 										<div class="col-8 justify-content-center"></div>
-										<div class="col-2 justify-content-center" style="font-size:0.7em; font-weight:bold;">
+										<div class="col-2 justify-content-center" style="font-weight:bold;">
 											<a class="insertReview">작성</a> &nbsp;
 											<a class="formCancel" value="ReviewForm">취소</a>
 										</div>
@@ -710,7 +708,7 @@
 									<div class="row"> <!-- 수정, 삭제 -->
 										<div class="col-2 justify-content-center"></div>
 										<div class="col-8 justify-content-center"></div>
-										<div class="col-2 justify-content-center" style="font-size:0.7em; font-weight:bold;">
+										<div class="col-2 justify-content-center" style=" font-weight:bold;">
 											<a class="insertQna">작성</a> &nbsp;
 											<a class="formCancel" value="QnaForm">취소</a>
 										</div>
@@ -1642,14 +1640,14 @@
 								output += '<div class="row pb-2">';
 								output += '<div class="col-11 pr-0">' + REVIEW_CONTENT + '</div></div>';
 								output += '<div class="row">';
-								output += '<div class="col-2 justify-content-center" style="font-size:0.7em; font-weight:bold; cursor: pointer;">';
+								output += '<div class="col-2 justify-content-center" style="font-weight:bold; cursor: pointer;">';
 								output += '<a class="review_replybtn" id="review_replybtn' + REVIEW_NUM + '" value="' + REVIEW_NUM + '">답글</a>';
 								output += '</div>';
 								output += '<div class="col-8 justify-content-center"></div>';
 								console.log("MEMBER_NICK = " + MEMBER_NICK)
 								//작성 본인만 수정,삭제버튼 보인다
 								if('<%=MEMBER_NICK%>' == MEMBER_NICK) {
-									output += '<div class="col-2 ReviewbeforeControl justify-content-center" id="ReviewbeforeControl'+REVIEW_NUM+'" style="font-size:0.7em; font-weight:bold;">';
+									output += '<div class="col-2 ReviewbeforeControl justify-content-center" id="ReviewbeforeControl'+REVIEW_NUM+'" style="font-weight:bold;">';
 									output += '<input type="hidden" name="REVIEW_NUM" value="'+REVIEW_NUM+'">';
 									output += '<a class="gomodifyReviewform">수정</a> &nbsp;';
 									output += '<a class="deleteReview">삭제</a>';
@@ -1969,7 +1967,7 @@
 			 				output += '<div class="row">';	
 			 				output += '<div class="col-2 justify-content-center"></div>';	
 			 				output += '<div class="col-8 justify-content-center"></div>';	
-			 				output += '<div class="col-2 justify-content-center" id="ReviewafterControl" style="font-size:0.7em; font-weight:bold;">';	///응?
+			 				output += '<div class="col-2 justify-content-center" id="ReviewafterControl" style="font-weight:bold;">';	///응?
 			 				output += '<input type="hidden" name="deleteImg" value="">';		
 			 				output += '<input type="hidden" name="beforeImg" value="">';		
 			 				output += '<input type="hidden" name="REVIEW_NUM" value="'+REVIEW_NUM+'">';	
@@ -2143,7 +2141,7 @@
 								output += '<div class="row pb-2">';
 								output += '<div class="col-11 pr-0">' + QNA_CONTENT + '</div></div>';
 								output += '<div class="row">';
-								output += '<div class="col-2 justify-content-center" style="font-size:0.7em; font-weight:bold; cursor: pointer;">';
+								output += '<div class="col-2 justify-content-center" style="font-weight:bold; cursor: pointer;">';
 								//답글 버튼은 작성한 공방만 보인다
 								if(<%=WORKSHOP_NUM%> == <%=WorkshopMatchingNumber%>) {
 									output += '<a class="qna_replybtn" id="qna_replybtn' + QNA_NUM + '" value="' + QNA_NUM + '">답글</a>';
@@ -2153,7 +2151,7 @@
 								console.log("MEMBER_NICK = " + MEMBER_NICK)
 								//수정,삭제버튼은 작성 본인만 보인다
 								if('<%=MEMBER_NICK%>' == MEMBER_NICK) {
-									output += '<div class="col-2 QnabeforeControl justify-content-center" id="QnabeforeControl'+QNA_NUM+'" style="font-size:0.7em; font-weight:bold;">';
+									output += '<div class="col-2 QnabeforeControl justify-content-center" id="QnabeforeControl'+QNA_NUM+'" style="font-weight:bold;">';
 									output += '<input type="hidden" name="REVIEW_NUM" value="'+QNA_NUM+'">';
 									output += '<a class="gomodifyQnaform">수정</a> &nbsp;';
 									output += '<a class="deleteQna">삭제</a>';
@@ -2443,7 +2441,7 @@
 			 				output += '<div class="row">';	
 			 				output += '<div class="col-2 justify-content-center"></div>';	
 			 				output += '<div class="col-8 justify-content-center"></div>';	
-			 				output += '<div class="col-2 justify-content-center" id="QnaafterControl" style="font-size:0.7em; font-weight:bold;">';		
+			 				output += '<div class="col-2 justify-content-center" id="QnaafterControl" style=" font-weight:bold;">';		
 			 				output += '<input type="hidden" name="QNA_NUM" value="'+QNA_NUM+'">';	
 			 				output += '<a class="modifyQna" style="cursor: pointer;">수정</a> &nbsp;';	
 			 				output += '<a class="formCancel" value="qnaModify" style="cursor: pointer;">취소</a>';	

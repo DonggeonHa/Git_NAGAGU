@@ -86,7 +86,15 @@
 		font-size: small;
 		float: left;
 	}
-				
+	.container_page{
+		position: absolute;
+		bottom: 200px; 
+		left: 50%;
+		transform: translateX(-50%);
+	}
+	.container_page a{
+		color: black;
+	}			
 </style>
 
 	
@@ -210,87 +218,88 @@
 					}
 			%>
 					</div>
-					<!-- pagenation -->
-					<nav aria-label="Page navigation example">
-						<ul class="pagination d-flex justify-content-center">
-						<% 
-							if(nowpage <= 1) { 
-						%>
-								<li class="page-item disabled">
-									<a class="page-link" href="#" tabindex="-1" aria-disabled="true">
-										이전
-									</a>
-							    </li>
-						<% 
-							} 
-							else { 
-						%>
-								<li class="page-item">
-									<a class="page-link" href="./classlist.ac?CLASS_CATEGORY=<%=CLASS_CATEGORY%>&page=<%=nowpage - 1%>">
-										이전
-									</a>
-								</li>
-						<%	
-							} 
-						%>
-							
-						<%
-							for(int a = startpage; a <= endpage; a++) {
-								if(a == nowpage) { 
-						%>
-									<li class="page-item list active">
-										<span class="page-link" style="border-color:#dee2e6;">
-											<%=a%>
-										</span>
-									</li> <!-- 현재 보고있는 페이지에는 링크를 걸지 않겠다. -->
-						<% 
-								} else { 
-						%>
-									<li class="page-item">
-										<a class="page-link" href="./classlist.ac?CLASS_CATEGORY=<%=CLASS_CATEGORY%>&page=<%=a%>">
-											<%=a%>
-										</a>
-									</li>
-						<% 
-								}
-							}
-						%>	
-		
-						<!-- 현재 보는 페이지가 마지막 페이지 이면 -->
-						<%
-							if(nowpage >= maxpage) {  
-						%> 
-								<li class="page-item disabled">
-									<a class="page-link" href="#" tabindex="-1" aria-disabled="true">
-										다음
-									</a>
-							    </li>
-						<%	
-							} else { 
-						%>
-								<li class="page-item">
-									<a class="page-link" href="./classlist.ac?CLASS_CATEGORY=<%=CLASS_CATEGORY%>&page=<%=nowpage + 1%>">
-										다음
-									</a>
-								</li>
-						<%
-							} 
-						%>
-						</ul>
-					</nav>
-			<%
-				} else {
-			%>
-					<div class="text-center" style="padding-top: 50px;">
-						<p> 현재 진행중인 강의가 없습니다. </p>
-					</div>
-			<%
-				}
-			%>
+				</div>
+			</div>
 		</div>
-	</div>
-</div>
+		<div class="container container_page">
+			<!-- pagenation -->
+			<nav aria-label="Page navigation example">
+				<ul class="pagination d-flex justify-content-center">
+				<% 
+					if(nowpage <= 1) { 
+				%>
+						<li class="page-item disabled">
+							<a class="page-link" href="#" tabindex="-1" aria-disabled="true">
+								이전
+							</a>
+					    </li>
+				<% 
+					} 
+					else { 
+				%>
+						<li class="page-item">
+							<a class="page-link" href="./classlist.ac?CLASS_CATEGORY=<%=CLASS_CATEGORY%>&page=<%=nowpage - 1%>">
+								이전
+							</a>
+						</li>
+				<%	
+					} 
+				%>
+					
+				<%
+					for(int a = startpage; a <= endpage; a++) {
+						if(a == nowpage) { 
+				%>
+							<li class="page-item list active">
+								<span class="page-link" style="border-color:#dee2e6;">
+									<%=a%>
+								</span>
+							</li> <!-- 현재 보고있는 페이지에는 링크를 걸지 않겠다. -->
+				<% 
+						} else { 
+				%>
+							<li class="page-item">
+								<a class="page-link" href="./classlist.ac?CLASS_CATEGORY=<%=CLASS_CATEGORY%>&page=<%=a%>">
+									<%=a%>
+								</a>
+							</li>
+				<% 
+						}
+					}
+				%>	
 
+				<!-- 현재 보는 페이지가 마지막 페이지 이면 -->
+				<%
+					if(nowpage >= maxpage) {  
+				%> 
+						<li class="page-item disabled">
+							<a class="page-link" href="#" tabindex="-1" aria-disabled="true">
+								다음
+							</a>
+					    </li>
+				<%	
+					} else { 
+				%>
+						<li class="page-item">
+							<a class="page-link" href="./classlist.ac?CLASS_CATEGORY=<%=CLASS_CATEGORY%>&page=<%=nowpage + 1%>">
+								다음
+							</a>
+						</li>
+				<%
+					} 
+				%>
+				</ul>
+			</nav>
+		<%
+			} else {
+		%>
+				<div class="text-center" style="padding-top: 50px;">
+					<p> 현재 진행중인 강의가 없습니다. </p>
+				</div>
+		<%
+			}
+		%>
+		</div>
 		
 <script>
 	$(function(){ 

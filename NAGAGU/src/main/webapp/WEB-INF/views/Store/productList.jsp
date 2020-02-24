@@ -190,6 +190,15 @@
 	.page-item.active .page-link {
 		background-color: #ef900e !important;
 	}
+	.container_page{
+		position: absolute;
+		bottom: 200px; 
+		left: 50%;
+		transform: translateX(-50%);
+	}
+	.container_page a{
+		color: black;
+	}		
 </style>
 
 <!-- content start -->
@@ -307,7 +316,8 @@
 			}
 	%>     
 			</div>		<!-- 사진 상세정보 row1 row2 끝 -->
-	
+	</div> <!-- site-wrap 끝 -->
+	<div class="container_page container">
 			<!-- pagenation -->
 			<nav aria-label="Page navigation example">
 				<ul class="pagination d-flex justify-content-center">
@@ -379,7 +389,7 @@
 	<%
 		}
 	%>
-</div> <!-- site-wrap 끝 -->
+	</div>
 
 <script>
 	var sort='<%=sort%>';

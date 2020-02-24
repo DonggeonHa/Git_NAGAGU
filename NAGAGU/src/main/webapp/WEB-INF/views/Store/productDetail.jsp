@@ -266,7 +266,7 @@
 	}
 
 	.replytext {	
-		font-size:0.7em; font-weight:bold;	/*답글 버튼*/
+		font-weight:bold;	/*답글 버튼*/
 	}
 	
 	.ReviewList {
@@ -302,12 +302,10 @@
 	
 	
 	.ReviewbeforeControl {
-		font-size:0.7em; 
 		font-weight:bold;
 	}
 	.ReviewafterControl {
 		display:none;	
-		font-size:0.7em; 
 		font-weight:bold;	
 	}
 
@@ -415,12 +413,10 @@
 		cursor: pointer;	/*QnaReply 수정버튼*/
 	}	
 	.QnabeforeControl {
-		font-size:0.7em; 
 		font-weight:bold;
 	}
 	.QnaafterControl {
 		display:none;	
-		font-size:0.7em; 
 		font-weight:bold;	
 	}		
 	.page-link {
@@ -434,6 +430,9 @@
 	
 	li.nav-item a.nav-link {
 		color: black; 
+	}
+	.name, .content{
+		font-size:1.2rem;
 	}
 </style>
 
@@ -651,50 +650,32 @@
 				<div class="ship_info" style="width: 100%; margin: 0 auto; font-size: 0.9em; color: #212529;">
 					<div class="row_ship_info">
 				    	<h5>배송정보</h5>
-						모든 제품은 메이킹퍼니처 직원이 직접 배송하며 배송비는 고객 부담입니다. 지역, 제품 수량 또는 설치 여부에 따라 주문 시
-						배송비를 미리 안내해드립니다. 기본 배송비 외에 사다리차, 엘레베이터, 주차비 사용료 등 추가 비용이 발생 시 고객님
-						부담입니다.
 						<%=vo.getPRODUCT_SHIP_INFO() %>
 					</div>
 					<div class="row_ship_info">
 						<h5>배송정보</h5>
-						모든 제품은 메이킹퍼니처 직원이 직접 배송하며 배송비는 고객 부담입니다. 지역, 제품 수량 또는 설치 여부에 따라 주문 시
-						배송비를 미리 안내해드립니다. 기본 배송비 외에 사다리차, 엘레베이터, 주차비 사용료 등 추가 비용이 발생 시 고객님
-						부담입니다.
-						반품 배송지 : <%=vo.getPRODUCT_SHIP_RETURN_PLACE() %>
+						</br>반품 배송지 : <%=vo.getPRODUCT_SHIP_RETURN_PLACE() %>
 					</div>
 					<br />
 					
 					<div class="row_ship_info">
 						<h5>A/S</h5>
-						핸드메이드 제품으로 나뭇결, 무늬, 옹이의 형태나 파임, 칠과 색상이 다를 수 있고 약간의 흠집이나 찍힘(표면의 크랙 또는
-						뜯김)이 있을 수 있으며, 100% 원목으로 기후변화에 따른 수축, 팽창으로 인한 휘어짐(상판), 갈라짐(마구리면)이
-						발생할 수 있습니다. 이런 자연스러운 현상들은 교체 및 교환 대상이 아니며 무상 A/S 사유가 되지 않습니다. 구매 전 꼭
-						참고해주시기 바랍니다.
 						<%=vo.getPRODUCT_AS_INFO() %>
 					</div>
 					<br />
 					
 					<div class="row_ship_info">
 						<h5>Wood Furniture</h5>
-						원목가구의 수축 및 팽창은 원목만의 자연스러운 특징입니다.<br /> -지나치게 건조한 곳, 습한 곳은 피하세요. -가구의
-						수평을 유지해주세요.(수평이 안 맞게 되면 가구가 뒤틀려버립니다.) -가구에 화학약품(신나, 메니큐어 등)이 닿지 않게
-						해주세요. -평소에는 물걸레 청소하시면 됩니다. -뜨거운 냄비와 같은 고온의 뜨거운 물체에 직접 닿는 것은 피하시기
-						바랍니다. -한 달에 1~2번 가구용 왁스로 닦아주세요. -원목가구는 수축기와 팽창기(계절의 변화)에 따라 갈라짐이나
-						미세한 크랙이 발생할 수 있으며, 시간이 경과하면 원상회복이 될 수 있습니다. 이는 원목가구만의 자연스러운 현상이며 제품의
-						하자가 아닙니다.
 						<%=vo.getPRODUCT_STORE_INFO() %>
 					</div>
 					<br />
 					
 					<div class="row_ship_info">
 						<h5>A/S규정[1년 무상]</h5>
-						무상 A/S -보증기간 이내의 제품으로 정상적인 상태에서 제조상의 결함 제품 -원/부나내의 결함이 발생된 경우
-						-메이킹퍼니처의 귀책 사유로 인한 결함 발생 제품
 						<%=vo.getPRODUCT_RETURN_INFO() %>
 					</div>
 					<div class="row_ship_info">
-						유상 A/S -고객의 취급 부주의 및 고의적 훼손 경우 -고객 임의 개조에 의한 파손의 경우나 타 업체에서 수리해 변경된 경우 -유상 서비스 요금은 [수리비+부품비+출장비+기타실 비용] 등이 포함됩니다.
+						
 					</div>
 				</div>
 			</div>
@@ -784,7 +765,7 @@
 									<div class="row"> <!-- 수정, 삭제 -->
 										<div class="col-2 justify-content-center"></div>
 										<div class="col-8 justify-content-center"></div>
-										<div class="col-2 justify-content-center" style="font-size:0.7em; font-weight:bold;">
+										<div class="col-2 justify-content-center" style="font-weight:bold;">
 											<a class="insertReview">작성</a> &nbsp;
 											<a class="formCancel" value="ReviewForm">취소</a>
 										</div>
@@ -855,7 +836,7 @@
 									<div class="row"> <!-- 수정, 삭제 -->
 										<div class="col-2 justify-content-center"></div>
 										<div class="col-8 justify-content-center"></div>
-										<div class="col-2 justify-content-center" style="font-size:0.7em; font-weight:bold;">
+										<div class="col-2 justify-content-center" style="font-weight:bold;">
 											<a class="insertQna">작성</a> &nbsp;
 											<a class="formCancel" value="QnaForm">취소</a>
 										</div>
@@ -1037,11 +1018,11 @@
        					list = retVal.getbasketList[0].BASKET_NUM
        					return
        				}
-        			if(confirm('장바구니로 이동하시겠습니까?')){
+       				alertify.confirm('확인', '장바구니로 이동하시겠습니까?', function(){
         				location.href= './mypage_basket.my'
-        			}else{
-        				alertify.alert('확인',"장바구니에 담겼습니다")
-        			}
+        			},function(){ 
+       		        	alertify.error('장바구니에 담겼습니다')
+   		        	});
         			return 
 				}else{
 					alertify.alert('확인',"update fail");
@@ -1050,11 +1031,19 @@
 			error:function(){
 				alertify.alert('확인',"ajax통신 실패!!");
 			}
-		})
+		}) 
 		return list
-   	}
+   	};
    	$('.order_btn').on('click',function(){
-		if(confirm('바로 구매 하시겠습니까??')){
+   		if($('.BASKET_COLOR').val()==''){
+   			alertify.alert('확인','색상을 선택해주세요') 
+   			return
+   		}
+   		if($('.BASKET_SIZE').val()==''){
+   			alertify.alert('확인','사이즈를 선택해주세요') 
+   			return
+   		}
+		alertify.confirm('확인', '바로 구매 하시겠습니까?', function(){
 			var bNum = insert_basket('order')
 			var category='order'
 			var arr = new Array();
@@ -1073,7 +1062,9 @@
 					alertify.alert('확인',"ajax통신 실패!!");
 				} 
 			});		
-		}	
+		},function(){ 
+	        	alertify.error('취소')
+       	});
    	})
 
     /*장바구니 수량 변경*/
@@ -1262,7 +1253,7 @@
 														output += '<div class="col-2 justify-content-center smallfont">'+ date +'</div>';
 													output += '</div>';
 													output += '<div class="row pb-2">';
-														output += '<div class="col-12" style="font-size:0.7em; font-weight:bold;">'+REVIEW_GRADE+' &nbsp;';
+														output += '<div class="col-12" style="font-weight:bold;">'+REVIEW_GRADE+' &nbsp;';
 															output += '<span class="star-rating">';
 																output += '<span style ="width:'+rate+'%"></span>';
 															output += '</span>';
@@ -1281,10 +1272,10 @@
 														output += '</div>';
 													output += '</div>';
 													output += '<div class="row pb-2">';
-														output += '<div class="col-11 pr-0">' + REVIEW_CONTENT + '</div>';
+														output += '<div class="col-11 pr-0 content">' + REVIEW_CONTENT + '</div>';
 													output += '</div>';
 													output += '<div class="row">';
-														output += '<div class="col-2 justify-content-center" style="font-size:0.7em; font-weight:bold; cursor: pointer;">';
+														output += '<div class="col-2 justify-content-center" style="font-weight:bold; cursor: pointer;">';
 															output += '<a class="review_replybtn" id="review_replybtn' + REVIEW_NUM + '" value="' + REVIEW_NUM + '">답글</a>';
 														output += '</div>';
 														output += '<div class="col-8 justify-content-center"></div>';
@@ -1293,7 +1284,7 @@
 							
 													//작성 본인만 수정,삭제버튼 보인다
 													if('<%=MEMBER_NICK%>' == MEMBER_NICK) {
-														output += '<div class="col-2 ReviewbeforeControl justify-content-center" id="ReviewbeforeControl'+REVIEW_NUM+'" style="font-size:0.7em; font-weight:bold;">';
+														output += '<div class="col-2 ReviewbeforeControl justify-content-center" id="ReviewbeforeControl'+REVIEW_NUM+'" style="font-weight:bold;">';
 															output += '<input type="hidden" name="REVIEW_NUM" value="'+REVIEW_NUM+'">';
 															output += '<a class="gomodifyReviewform">수정</a> &nbsp;';
 															output += '<a class="deleteReview">삭제</a>';
@@ -1330,7 +1321,7 @@
 												output += '</div>';
 												output += '<div class="beforeModifyReviewReply" id="beforeModifyReviewReply'+REPLY_NUM+'">';
 													output += '<div class="row">';
-														output += '<div class="col-11 pr-0">'+ REPLY_CONTENT + '</div>';
+														output += '<div class="col-11 pr-0 content">'+ REPLY_CONTENT + '</div>';
 													output += '</div>';
 												output += '</div>';
 												output += '<div class="afterModifyReviewReply" id="afterModifyReviewReply'+REPLY_NUM+'">';
@@ -1626,7 +1617,7 @@
 		 				output += '<div class="row">';	
 		 				output += '<div class="col-2 justify-content-center"></div>';	
 		 				output += '<div class="col-8 justify-content-center"></div>';	
-		 				output += '<div class="col-2 justify-content-center" id="ReviewafterControl" style="font-size:0.7em; font-weight:bold;">';	///응?
+		 				output += '<div class="col-2 justify-content-center" id="ReviewafterControl" style="font-weight:bold;">';	///응?
 		 				output += '<input type="hidden" name="deleteImg" value="">';		
 		 				output += '<input type="hidden" name="beforeImg" value="">';		
 		 				output += '<input type="hidden" name="REVIEW_NUM" value="'+REVIEW_NUM+'">';	
@@ -1727,8 +1718,7 @@
 			$('#remo').remove();
 			var REVIEW_NUM = $(this).prev().prev().val();
 			console.log("REVIEW_NUM : " + REVIEW_NUM)
-			var delete_confirm = confirm("삭제하시겠습니까?");
-			if(delete_confirm) {
+			alertify.confirm('확인', '정말 삭제하시겠습니까?', function(){
 				$.ajax({
 					url : "/NAGAGU/deleteReview.do", 
 					type:'GET',
@@ -1751,7 +1741,10 @@
 					}
 				});
 				event.preventDefault();					
-			}
+			}, function(){ 
+	        	alertify.error('Cancel')
+	        	}
+	        );
 		})				
 		
 //QNA----------------------------------------------------------------------------------------------------	 		
@@ -1801,9 +1794,9 @@
 								output += '<div class="row pb-2">';
 								output += '</div>';
 								output += '<div class="row pb-2">';
-								output += '<div class="col-11 pr-0">' + QNA_CONTENT + '</div></div>';
+								output += '<div class="col-11 pr-0 content">' + QNA_CONTENT + '</div></div>';
 								output += '<div class="row">';
-								output += '<div class="col-2 justify-content-center" style="font-size:0.7em; font-weight:bold; cursor: pointer;">';
+								output += '<div class="col-2 justify-content-center" style="font-weight:bold; cursor: pointer;">';
 								//답글 버튼은 작성한 공방만 보인다
 								if(<%=WORKSHOP_NUM%> == <%=WorkshopMatchingNumber%>) {
 									output += '<a class="qna_replybtn" id="qna_replybtn' + QNA_NUM + '" value="' + QNA_NUM + '">답글</a>';
@@ -1813,7 +1806,7 @@
 								console.log("MEMBER_NICK = " + MEMBER_NICK)
 								//수정,삭제버튼은 작성 본인만 보인다
 								if('<%=MEMBER_NICK%>' == MEMBER_NICK) {
-									output += '<div class="col-2 QnabeforeControl justify-content-center" id="QnabeforeControl'+QNA_NUM+'" style="font-size:0.7em; font-weight:bold;">';
+									output += '<div class="col-2 QnabeforeControl justify-content-center" id="QnabeforeControl'+QNA_NUM+'" style="font-weight:bold;">';
 									output += '<input type="hidden" name="REVIEW_NUM" value="'+QNA_NUM+'">';
 									output += '<a class="gomodifyQnaform">수정</a> &nbsp;';
 									output += '<a class="deleteQna">삭제</a>';
@@ -2105,7 +2098,7 @@
 		 				output += '<div class="row">';	
 		 				output += '<div class="col-2 justify-content-center"></div>';	
 		 				output += '<div class="col-8 justify-content-center"></div>';	
-		 				output += '<div class="col-2 justify-content-center" id="QnaafterControl" style="font-size:0.7em; font-weight:bold;">';		
+		 				output += '<div class="col-2 justify-content-center" id="QnaafterControl" style="font-weight:bold;">';		
 		 				output += '<input type="hidden" name="QNA_NUM" value="'+QNA_NUM+'">';	
 		 				output += '<a class="modifyQna" style="cursor: pointer;">수정</a> &nbsp;';	
 		 				output += '<a class="formCancel" value="qnaModify" style="cursor: pointer;">취소</a>';	
@@ -2193,8 +2186,7 @@
 			$('#remo2').remove();
 			var QNA_NUM = $(this).prev().prev().val();
 			console.log("QNA_NUM : " + QNA_NUM)
-			var delete_confirm = confirm("삭제하시겠습니까?");
-			if(delete_confirm) {
+			alertify.confirm('확인', '정말 삭제하시겠습니까?', function(){
 				$.ajax({
 					url : "/NAGAGU/deleteQna.do", 
 					type:'GET',
@@ -2216,8 +2208,11 @@
 						alertify.alert('확인',"ajax통신 실패!!!");
 					}
 				});
-				event.preventDefault();					
-			}
+				event.preventDefault();				
+			}, function(){ 
+	        	alertify.error('Cancel')
+	        	}
+	        );
 		})						
 		
 	//ready 끝	

@@ -161,8 +161,13 @@
 	.container_page{
 		position: absolute;
 		bottom: 200px; 
-		left: 23.5%;
+		left: 50%;
+		transform: translateX(-50%);
 	}
+	.container_page a{
+		color: black;
+	}
+	
 </style>
 
 <div class="container cm-main-content category_cm">

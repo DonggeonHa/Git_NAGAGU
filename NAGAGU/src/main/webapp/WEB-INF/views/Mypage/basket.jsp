@@ -115,7 +115,10 @@
     .price_wrap div{
     	margin-top: 0px;
     }
-    
+    .amount_tap{
+    	padding-right: 13px;
+    	padding-left: 13px;
+    }
 </style>
 
 <div class="container">
@@ -184,13 +187,13 @@
 		<!-- sidebar start -->
 		<div class="sidebar" id="sidebar">
 			<div class="row justify-content-around text-right sidebarOutput">
-				<div class="col-6 forcss">상품금액</div>
-                <div class="col-6 forcss totalPrice"></div>
-                <div class="col-6 forcss">+배송비</div>
-                <div class="col-6 forcss totalShipPrice">+</div>
+				<div class="col-5 forcss">상품금액</div>
+                <div class="col-7 forcss totalPrice"></div>
+                <div class="col-5 forcss">+배송비</div>
+                <div class="col-7 forcss totalShipPrice">+</div>
                 <div class="col-12 line"></div>
-                <div class="col-6 forcss" style="font-size:1.5rem;">결제금액</div>
-                <div class="col-6 forcss totalPayPrice" style="font-size:1.5rem;"></div>
+                <div class="col-5 forcss" style="font-size:1.5rem;">결제금액</div>
+                <div class="col-7 forcss totalPayPrice" style="font-size:1.5rem;"></div>
 				<div class="">
 					<a href="#" class="btn btn-secondary text-white btn_commit">구매하기</a> 
 				</div>
@@ -239,18 +242,16 @@
 			    						output += '<div class="col-2">배송</div>'
 				    					output += '<div class="col-2">사이즈</div>'
 			    						output += '<div class="col-2">컬러</div>'
-		    							output += '<div class="col-2">수량</div>'  
-	                                    output += '<div class="col-2 btn_wrap"><button class="btn btn-outline-light delete_btn">삭제</button></div></div>'   
+		    							output += '<div class="col-1 amount_tap">수량</div>'  
+	                                    output += '<div class="col-3 btn_wrap"><button class="btn btn-outline-light delete_btn">삭제</button></div></div>'   
 					    				
 					    				output += '<div class="row values">' 
 				    					output += '<a href="'+url+retVal.getbasketList[j].PRODUCT_NUM+'">'
-				    					output += '<div class="col-2"><b>'+retVal.getbasketList[j].PRODUCT_TITLE+'</b></p>'
-					    					 output += '<p>'+retVal.getbasketList[j].PRODUCT_BRIEF+'</a></div>'
-					    					 
+				    					output += '<div class="col-2">'+retVal.getbasketList[j].PRODUCT_TITLE+'</a></div>'
 					    				output += '<div class="col-2">'+retVal.getbasketList[j].PRODUCT_SHIP_COMPANY+'</div>'
 					    				output += '<div class="col-2">'+retVal.getbasketList[j].BASKET_SIZE+'</div>'
 					    				output += '<div class="col-2">'+retVal.getbasketList[j].BASKET_COLOR+'</div>'
-					    				output += '<div class="price col-2" value="수량">'
+					    				output += '<div class="price col-1" value="수량">'
 						    				switch(amount){
 							    			case 1:
 							    				output += '<select class="amount forTotal"><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option></select></div>'
@@ -267,7 +268,7 @@
 							    			case 5:
 							    				output += '<select class="amount forTotal"><option>1</option><option>2</option><option>3</option><option>4</option><option selected>5</option></select></div>'
 							    		}
-					    				output += '<div class="price_wrap text-right col-2">'
+					    				output += '<div class="price_wrap text-right col-3">'
 							    			output += '<div class="basic_price text-right" value='+retVal.getbasketList[j].PRODUCT_PRICE+'>가격</div><span>'+retVal.getbasketList[j].PRODUCT_PRICE+'</span>'
 							    			output += '<div class="shipPrice text-right" value='+retVal.getbasketList[j].PRODUCT_SHIP_PRICE+'>+배송비</div><span>'+retVal.getbasketList[j].PRODUCT_SHIP_PRICE+'</span>'
 						    				output += '<div class="chongprice text-right">총가격</div><span></span></b>'  
