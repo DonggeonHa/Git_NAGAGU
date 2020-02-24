@@ -484,13 +484,11 @@
 					</ul>
 			</div>
 			<!-- 공방소개 시작 -->
-			<div>
+			<div id="t1">
 			<!-- 주문 주의사항 -->
 				<div class="mainText">
-					<br/> <!-- 상세 설명 -->
+					<br/><br/><br/><!-- 상세 설명 -->
 					<dt id="subject">
-						<span id="t1"></span>
-						<br><br><br>
 						<strong>공방을 소개해요</strong>
 					</dt> <br/>
 					<dl>
@@ -532,8 +530,8 @@
 						</dd>
 					</dl>
 					<dt id="subject">
-						<strong>기타사항</strong>
-					</dt><span id="t2"></span><br/>
+						<strong id="t2">기타사항</strong>
+					</dt><span></span>
 					<dl>
 						<dd><%=cl.getCLASS_ETC()%></dd>
 					</dl>
@@ -550,8 +548,8 @@
 			</div>
 			
 			<!-- 댓글 테이블 시작 -->
-			<span id="t3" ></span>
-			<hr/>
+			<span id="t3"></span>
+			<br /><br /><hr />
 			<!-- 리뷰 테이블 시작 -->
 			<div id="ReviewSection">
 				<div id="ReviewButtonSection">
@@ -741,7 +739,7 @@
 					</div><hr>
 					<div class="col-9">
 						<h3><p><%=cl.getWORKSHOP_NAME()%></p></h3>
-						<p><font size="2"><%=cl.getCLASS_ABRIEF()%></font></p>
+						<p><font size="2"><%=ws.getWORKSHOP_INTRO()%></font></p>
 					</div> 
 				</div>
 				</a>

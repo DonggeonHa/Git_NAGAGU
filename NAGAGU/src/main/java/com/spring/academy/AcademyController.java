@@ -56,12 +56,8 @@ public class AcademyController {
 	public ModelAndView ClassList(ClassVO classVO, Model model, HttpServletRequest request, HttpSession session) throws Exception  {
 		ArrayList<ClassVO> classList = new ArrayList<ClassVO>();
 		ModelAndView mav = new ModelAndView();
-		System.out.println("classVO ㅇㅔ서 AREA " + request.getParameter("CLASS_AREA"));
-		System.out.println("classVO ㅇㅔ서 CLASS_CATEGORY " + request.getParameter("CLASS_CATEGORY"));
 		classVO.setCLASS_AREA(request.getParameter("CLASS_AREA"));
 		classVO.setCLASS_CATEGORY(request.getParameter("CLASS_CATEGORY"));
-		System.out.println("잘 들어갔니 : " + classVO.getCLASS_AREA());
-		System.out.println("잘 들어갔니2 : " + classVO.getCLASS_CATEGORY());
 		/* 네이버아이디로 인증 URL을 생성하기 위하여 naverLoginBO클래스의 getAuthorizationUrl메소드 호출 */
 	    String naverAuthUrl = naverLoginBO.getAuthorizationUrl(session);
 	    System.out.println("네이버:" + naverAuthUrl);

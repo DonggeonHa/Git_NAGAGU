@@ -108,7 +108,7 @@
 					<if test="CLASS_CATEGORY != 'all'"> AND CLASS_CATEGORY = #{CLASS_CATEGORY}</if>
 					<if test="CLASS_AREA != '지역'"> AND CLASS_AREA = #{CLASS_AREA}</if>
 					ORDER BY CLASS_DATE DESC))
-					<!-- [CDATA[ WHERE RNUM >= #{startrow} AND RNUM <= #{endrow} ]]-->  
+		<![CDATA[ WHERE RNUM >= #{startrow} AND RNUM <= #{endrow} ]]>  
  	</select>
 
 	 

@@ -98,7 +98,7 @@
 </style>
 
 	
-<div class="container category_ac">
+<div class="container category_ac mb-5">
 	<!-- 클래스 nav -->
 	<div class="content">
 		<div class="search-tap">
@@ -218,9 +218,9 @@
 					}
 			%>
 					</div>
-				</div>
-			</div>
 		</div>
+	</div>
+</div>
 		<div class="container container_page">
 			<!-- pagenation -->
 			<nav aria-label="Page navigation example">
