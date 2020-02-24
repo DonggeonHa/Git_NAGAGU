@@ -143,7 +143,8 @@
 	
 	.like-wrap, .pics-wrap{
 		border-top: 1px solid black;
-		border-color: rgba(0, 0, 0, 0.1) 
+		border-color: rgba(0, 0, 0, 0.1);
+		margin-top: 30px;
 	}
 	.img-wrap{ 
 		padding-left:15px;
@@ -175,11 +176,11 @@
 						<h2>사진</h2>
 					</div>
 					<div class="col-2 text-right">
-						<a href="memberLikePics.cm?uploadOrLike=upload&MEMBER_NUM=<%=memberVO.getMEMBER_NUM()%>">more</a>
+						<a href="memberLikePics.cm?uploadOrLike=upload&MEMBER_NUM=<%=memberVO.getMEMBER_NUM()%>&category=pics">more</a>
 					</div> 
 				</div>
 				<div class="row justify-content-start img-wrap">  
-					<c:forEach var="pics" items="${memberPicsList}" varStatus="status">
+					<c:forEach var="pics" items="${memberPicsList}" varStatus="vs" begin="0" end="2" step="1">
 					    <div class="col-4 img-wrap">
 						    <a href="${pageContext.request.contextPath}/community_detail.cm?PICS_NUM=${pics.PICS_NUM}&MEMBER_NUM=${pics.PICS_MEMBER}">
 							<img src="/communityupload/image/${pics.PICS_MAIN_IMAGE}"></a>
@@ -193,15 +194,16 @@
 						<h2>LIKE</h2> 
 					</div>
 					<div class="col-2 text-right">
-						<a href="memberLikePics.cm?uploadOrLike=like&MEMBER_NUM=<%=memberVO.getMEMBER_NUM()%>">more</a>
+						<a href="memberLikePics.cm?uploadOrLike=like&MEMBER_NUM=<%=memberVO.getMEMBER_NUM()%>&category=like">more</a>
 					</div>
 				</div>
 				<div class="row justify-content-start img-wrap ">
-					<c:forEach var="pics" items="${memberLikePics}" varStatus="status">
+					<c:forEach var="pics" items="${memberLikePics}" varStatus="vs" begin="0" end="2" step="1">
 					    <div class="col-4 img-wrap">
 						    <a href="${pageContext.request.contextPath}/community_detail.cm?PICS_NUM=${pics.PICS_NUM}&MEMBER_NUM=${pics.PICS_MEMBER}">
 							<img src="/communityupload/image/${pics.PICS_MAIN_IMAGE}"></a>
 						</div>   
+						
 					</c:forEach> 
 				</div>
 			</div>
@@ -214,7 +216,7 @@
 					<c:set var="objectMember" value="<%=memberVO.getMEMBER_NUM()%>"/>
 					<c:choose>
 						<c:when test="${loginMember == objectMember}">
-							<a href="mypage.my?MEMBER_NUM=<%=memberVO.getMEMBER_NUM()%>">
+							<a href="mypage.my?MEMBER_NUM=<%=memberVO.getMEMBER_NUM()%>"></a>
 						</c:when>
 					</c:choose>
 						<div class="card-header"><%=memberVO.getMEMBER_NICK()%></div>
@@ -222,9 +224,10 @@
 							<img src=<%=memberVO.getMEMBER_PICTURE()%>>
 						</div>
 						<a href="followList.cm?MEMBER_NUM=<%=memberVO.getMEMBER_NUM()%>">
-							<div class="card-footer bg-transparent ">Follow List</div>
+							<div class="card-footer bg-transparent">Follow List</div>
 						</a>
-					</div>
+						
+					</div> 	
 				</div>
 			</div>
 		</div>

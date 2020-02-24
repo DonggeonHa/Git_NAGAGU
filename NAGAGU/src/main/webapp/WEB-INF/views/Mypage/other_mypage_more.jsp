@@ -23,6 +23,7 @@
 	//System.out.println(memberLikePics.get(0).getPICS_FILE_1());
 	System.out.println("니가누른 사진 멤버는="+memberVO.getMEMBER_NUM());
 	System.out.println("로그인 멤버는="+LOGIN_MEMBER_NUM);
+	String category = request.getParameter("category");
 %>
  
 <style>
@@ -156,6 +157,7 @@
 		border-radius:10px; 
 		width: 100%;
 		height: 250px; 
+		margin-bottom: 50px;
 	}
 </style>
 
@@ -172,7 +174,19 @@
 			<div class="pics-wrap">
 				<div class="row justify-content-between title mx-0 pt-2">
 			        <div class="col-4">
-			          <h2>사진 27</h2>
+			        <%
+			        	if(category.equals("pics")){
+			        		%>
+			        		<h2>사진</h2>
+			        		<%
+			        	}else{
+			        		%>
+			        		<h2>LIKE</h2>
+			        		<%
+			        	}
+			        	
+			        %>
+			          
 			        </div>          
 				</div>
 				<c:set var="name" value="<%=uploadOrLike%>" />
