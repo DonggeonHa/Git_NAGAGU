@@ -37,6 +37,7 @@
 		<input type="hidden" id="search_text" name="search_text">
 		<input type="hidden" id="eo_category" name="eo_category">
 		<input type="hidden" id="eo_state" name="eo_state">
+		<input type="hidden" id="eo_page" name="page">
 	</form>
 	<!-- 리스트 폼 끝 -->
 	<div class="container-fluid">
@@ -160,6 +161,7 @@
 					console.log(data.eoList);
 					
 					var output = '';
+					var pagination = '';
 					
 					var eoList = data.eoList;	
 					var rnum = data.rnum;
@@ -258,18 +260,68 @@
 						});
 						
 						/* 페이지네이션 */
-					}
-					
-					$('#work_store > tbody').html(output);
-					$('#pagination').html(pagination);
-					
-				},
-				error:function(request, status, error){
-				    alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+
+			            var nowpage = data.page;
+			            var maxpage = data.maxpage;
+			            var startpage = data.startpage;
+			            var endpage = data.endpage;
+			            var startRow = data.startRow;
+			            var endRow = data.endRow;
+			            
+			            console.log("nowpage : " + nowpage);
+			            console.log("maxpage : " + maxpage);
+			            console.log("startpage : " + startpage);
+			            console.log("endpage : " + endpage);
+			            
+						pagination += '<li class="page-item" cursor: "pointer" value=1><a class="page-link" href="#">처음</a></li>';
+						pagination += '<li class="page-item" cursor: "pointer" value=';
+						
+						if (startpage < 6) {
+							pagination += '-1';
+						}
+						else {
+							pagination += (startpage - 1);
+						}
+						
+						pagination += '><a class="page-link" href="#">이전</a></li>';
+						
+						for (var page = startpage; page < endpage+1; page++) {
+							pagination += '<li class="page-item';
+							if (page == nowpage) {
+								pagination += ' active';
+							}
+							pagination += '" cursor: "pointer" value=' + page + '><a class="page-link" href="#">' + page + '</a></li>';
+				            console.log("page : " + page);
+						}
+						
+						pagination += '<li class="page-item" cursor: "pointer" value=';
+						
+						if (maxpage < 11) {
+							pagination += '-1';
+						}
+						else {
+							pagination += (endpage + 1);
+						}
+						
+						pagination += '><a class="page-link" href="#">다음</a></li>';
+						pagination += '<li class="page-item" cursor: "pointer" value=' + maxpage + '><a class="page-link" href="#">끝</a></li>';
 				}
-			});
-		}
-		
+				
+				$('#work_store > tbody').html(output);
+				$('#pagination').html(pagination);
+				
+			},
+			error:function(request, status, error){
+			    alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+			}
+		});
+	}
+
+		$(document).delegate('.page-item','click' , function() {
+			var pageLink = $(this).attr('value');
+			$('#wo_page').val(pageLink);
+			getList();
+		});
 		
 	    function setSelect() {
 	        if ($("#all_select").is(":checked")) {
