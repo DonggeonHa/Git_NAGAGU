@@ -435,14 +435,14 @@
   							else {
   								if(i == 0) {
 					%>    				
-								<div class="carousel-item active" style="width: 1300px; height: 530px;">
+								<div class="carousel-item active" style="width: 1100px; height: 530px;">
    	      							<img src="/communityupload/image/<%=cl.getCLASS_BANNER().split(",")[i]%>" class="d-block w-100" style="max-width: 100%; height: 100%;">
    	    						</div>
   	    			<%
   	    							continue;
   								}
   	    			%>				
-  								<div class="carousel-item" style="width: 1300px; height: 530px;">
+  								<div class="carousel-item" style="width: 1100px; height: 530px;">
   	      							<img src="/communityupload/image/<%=cl.getCLASS_BANNER().split(",")[i]%>" class="d-block w-100" style="max-width: 100%; height: 100%;">
   	    						</div>    								
   	    			<%

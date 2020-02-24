@@ -1193,7 +1193,6 @@
 			targetImg = '<%=imgArr[4]%>';
 		} <% } %>
 
-		console.log(targetImg);
 		$('#thumbLarge').attr('src', targetImg);
 		//$('.thumbImg').attr('src', targetImg);
 		$('.thumbImg').css('opacity','0').stop().attr('src',targetImg).animate({opacity:1},500);
