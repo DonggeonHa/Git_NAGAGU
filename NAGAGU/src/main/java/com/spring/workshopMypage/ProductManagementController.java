@@ -163,7 +163,8 @@ public class ProductManagementController {
 
 		
 		ModelAndView mav = new ModelAndView();
-		mav.setViewName("redirect:productlist.pro?PRODUCT_CATEGORY=all");
+		mav.setViewName("redirect:workshop_product_items.ws");
+//		mav.setViewName("redirect:productlist.pro?PRODUCT_CATEGORY=all");
 		mav.addObject("ProductVO", vo);
 		return mav;
 	}

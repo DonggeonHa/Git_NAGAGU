@@ -222,9 +222,11 @@ public class ProductController {
 		int WorkshopMatchingNumber = workshopVO.getWORKSHOP_NUM();
 		int WorkshopNum = workshopVO.getWORKSHOP_NUM();
 		String WorkshopPic = workshopVO.getWORKSHOP_PICTURE();
+		String WorkshopIntro = workshopVO.getWORKSHOP_INTRO();
 		model.addAttribute("WorkshopNum",WorkshopNum);
 		model.addAttribute("WorkshopMatchingNumber",WorkshopMatchingNumber);
 		model.addAttribute("WorkshopPic",WorkshopPic);
+		model.addAttribute("WorkshopIntro",WorkshopIntro);
 
 		
 		

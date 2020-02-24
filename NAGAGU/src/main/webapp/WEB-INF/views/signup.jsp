@@ -165,7 +165,7 @@
 	            	$("#email_chk_btn").attr("value", "Y");
 	            	alertify.alert("사용가능한 이메일입니다.");
 	            } else { // 실패했다면
-	            	alertify.alert("중복된 이메일입니다.");
+	            	alertify.alert("확인","중복된 이메일입니다.");
 	            }
 	         },
 	         error : function() {
@@ -190,9 +190,9 @@
 	         success : function(retVal) {
 	            if (retVal.res == "OK") {
 	               $("#nick_chk_btn").attr("value", "Y");
-	               alertify.alert("사용가능한 별명입니다.");
+	               alertify.alert("확인","사용가능한 별명입니다.");
 	            } else { // 실패했다면
-	            	alertify.alert("중복된 별명입니다.");
+	            	alertify.alert("확인","중복된 별명입니다.");
 	            }
 	         },
 	         error : function() {

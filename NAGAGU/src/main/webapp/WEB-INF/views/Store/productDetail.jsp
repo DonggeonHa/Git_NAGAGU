@@ -48,10 +48,10 @@
 //	System.out.println("MEMBER_STATUS="+MEMBER_STATUS);
 //	System.out.println("WORKSHOP_STATUS="+WORKSHOP_STATUS);
 	
-	//(QNA)글쓴이만 답글 버튼이 보인다. 글쓴이인지 체크하기 위해 이 글의 WORKSHOP_NUM 받아옴
-	int WorkshopMatchingNumber = (int)request.getAttribute("WorkshopMatchingNumber");
+	int WorkshopMatchingNumber = (int)request.getAttribute("WorkshopMatchingNumber");	//(QNA)글쓴이만 답글 버튼이 보인다. 글쓴이인지 체크하기 위해 사용
 	Integer WORKSHOP_NUM = (Integer)session.getAttribute("WORKSHOP_NUM");
 	String WorkshopPic = (String)request.getAttribute("WorkshopPic");
+	String WorkshopIntro = (String)request.getAttribute("WorkshopIntro");
 //	System.out.println("WotkshopMatchingNumber="+WorkshopMatchingNumber);
 
 	//상품상세 관련
@@ -469,7 +469,7 @@
 					<div class="col-9">
 						<h3 name="PRODUCT_SHOPNAME"><%=vo.getPRODUCT_SHOPNAME()%></h3>
 						<p name="PRODUCT_TITLE">
-							<font size="2"><%=vo.getPRODUCT_BRIEF()%></font>
+							<font size="2"><%=WorkshopIntro%></font>
 						</p>
 					</div>
 				</div>
@@ -1228,6 +1228,7 @@
 						for(var i=0; i<retVal.reviewList.length; i++) {	//reviewCount도 상관 없음
 							var output='';
 							var REVIEW_NUM = retVal.reviewList[i].REVIEW_NUM;
+							var MEMBER_NUM = retVal.reviewList[i].MEMBER_NUM;
 							var MEMBER_PICTURE = retVal.reviewList[i].MEMBER_PICTURE;
 							var MEMBER_NICK = retVal.reviewList[i].MEMBER_NICK;
 							var REVIEW_DATE = new Date(retVal.reviewList[i].REVIEW_DATE);
@@ -1236,13 +1237,14 @@
 							var rate = 20*retVal.reviewList[i].REVIEW_GRADE;
 							var REVIEW_FILE = retVal.reviewList[i].REVIEW_FILE;
 							var REVIEW_CONTENT = retVal.reviewList[i].REVIEW_CONTENT;
+				//			var REVIEW_MEMBER = retVal.reviewList[i].REVIEW_MEMBER;
 
 							output += '<div class="ReviewAndReplySum pt-2 pb-1" id="ReviewAndReplySum'+ REVIEW_NUM +'">';
 								output += '<div class="ReviewSum" id="ReviewSum'+ REVIEW_NUM +'">';
 									output += '<div class="ReviewList pb-3" id="ReviewList'+ REVIEW_NUM +'">';
 										output += '<div class="beforeModifyReview" id="beforeModifyReview'+ REVIEW_NUM +'">';
 											output += '<div class="row justify-content-center">';
-												output += '<div class="col-1 justify-content-end"><img src="'+ MEMBER_PICTURE +'" alt="" class="rounded-circle"></div>';
+												output += '<div class="col-1 justify-content-end"><a href="memberLikePics.cm?MEMBER_NUM='+MEMBER_NUM+'"><img src="'+ MEMBER_PICTURE +'" alt="" class="rounded-circle"></a></div>';
 												output += '<div class="col-11">';
 													output += '<div class="row pb-1">';
 														output += '<div class="col-2 justify-content-end name">'+ MEMBER_NICK +'</div>';
@@ -1301,6 +1303,7 @@
 								if(REVIEW_NUM == retVal.review_RE_List[j].REVIEW_RE) {
 									var REPLY_NUM = retVal.review_RE_List[j].REVIEW_NUM;
 									var REPLY_NICK = retVal.review_RE_List[j].MEMBER_NICK;
+									var REPLY_MEMBER_NUM = retVal.review_RE_List[j].MEMBER_NUM;
 									var REPLY_PICTURE = retVal.review_RE_List[j].MEMBER_PICTURE;
 									var REPLY_CONTENT = retVal.review_RE_List[j].REVIEW_CONTENT;
 									var REPLY_DATE = new Date(retVal.review_RE_List[j].REVIEW_DATE);
@@ -1309,7 +1312,7 @@
 									output += '<div class="ReviewReplyList pb-2" id="ReviewReplyList'+REPLY_NUM+'">';
 										output += '<div class="row justify-content-center">';
 											output += '<div class="col-1"></div>';
-											output += '<div class="col-1"><img src="'+REPLY_PICTURE+'" alt="" class="rounded-circle"></div>';
+											output += '<div class="col-1"><a href="memberLikePics.cm?MEMBER_NUM='+REPLY_MEMBER_NUM+'"><img src="'+REPLY_PICTURE+'" alt="" class="rounded-circle"></a></div>';
 											output += '<div class="col-10">';
 												output += '<div class="row">';
 													output += '<div class="col-2 justify-content-end name">'+REPLY_NICK+'</div>';
@@ -1770,6 +1773,7 @@
 							var QNA_NUM = retVal.qnaList[i].QNA_NUM;
 							var MEMBER_PICTURE = retVal.qnaList[i].MEMBER_PICTURE;
 							var MEMBER_NICK = retVal.qnaList[i].MEMBER_NICK;
+							var MEMBER_NUM = retVal.qnaList[i].MEMBER_NUM;
 							var QNA_DATE = new Date(retVal.qnaList[i].QNA_DATE);
 							var date = date_format(QNA_DATE);
 							var QNA_CONTENT = retVal.qnaList[i].QNA_CONTENT;
@@ -1781,7 +1785,7 @@
 								output += '<div class="QnaList pb-3" id="QnaList'+QNA_NUM+'">';
 								output += '<div class="beforeModifyQna" id="beforeModifyQna'+QNA_NUM+'">';
 								output += '<div class="row justify-content-center">';
-								output += '<div class="col-1 justify-content-end"><img src="'+MEMBER_PICTURE+'" alt="" class="rounded-circle"></div>';
+								output += '<div class="col-1 justify-content-end"><a href="memberLikePics.cm?MEMBER_NUM='+MEMBER_NUM+'"><img src="'+MEMBER_PICTURE+'" alt="" class="rounded-circle"></a></div>';
 								output += '<div class="col-11">';
 								output += '<div class="row pb-1">';
 								output += '<div class="col-2 justify-content-end name">'+MEMBER_NICK+'</div>';
@@ -1821,6 +1825,7 @@
 											var REPLY_NUM = retVal.qna_RE_List[j].QNA_NUM;
 											var WORKSHOP_PICTURE = retVal.qna_RE_List[j].WORKSHOP_PICTURE;
 											var WORKSHOP_NAME = retVal.qna_RE_List[j].WORKSHOP_NAME;
+											var WORKSHOP_NUM = retVal.qna_RE_List[j].WORKSHOP_NUM;
 											var REPLY_CONTENT = retVal.qna_RE_List[j].QNA_CONTENT;
 											var REPLY_DATE = new Date(retVal.qna_RE_List[j].QNA_DATE);
 											var replydate = date_format(REPLY_DATE);
@@ -1829,7 +1834,7 @@
 											output += '<div class="QnaReplyList pb-2" id="QnaReplyList'+REPLY_NUM+'">';
 											output += '<div class="row justify-content-center">';
 											output += '<div class="col-1"></div>';
-											output += '<div class="col-1"><img src="'+WORKSHOP_PICTURE+'" alt="" class="rounded-circle"></div>';
+											output += '<div class="col-1"><a href="workshop_page.my?WORKSHOP_NUM='+WORKSHOP_NUM+'"><img src="'+WORKSHOP_PICTURE+'" alt="" class="rounded-circle"></a></div>';
 											output += '<div class="col-10">';
 											output += '<div class="row">';
 											output += '<div class="col-2 justify-content-end name">'+WORKSHOP_NAME+'</div>';
