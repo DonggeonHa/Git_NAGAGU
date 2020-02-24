@@ -540,13 +540,13 @@
 	      var maxSize = 20971520;  //20MB
 	      
 	      if(fileSize >= maxSize){
-	        alert('파일 사이즈 초과');
+	        alertify.alert('확인','파일 사이즈 초과');
 	        $("input[type='file']").val("");  //파일 초기화
 	        return false;
 	      }
 	      
 	      if(regex.test(fileName)){
-	        alert('업로드 불가능한 파일이 있습니다.');
+	    	alertify.alert('확인','업로드 불가능한 파일이 있습니다.');
 	        $("input[type='file']").val("");  //파일 초기화
 	        return false;
 	      }

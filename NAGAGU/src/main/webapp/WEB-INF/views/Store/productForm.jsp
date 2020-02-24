@@ -68,7 +68,7 @@
 				<td>
 				 	<div class="row">
 				 		<div class="input_box" style="width:670px">
-				 			<input class="form-control" type="text" name="PRODUCT_TITLE" placeholder="" value="">		
+				 			<input class="form-control" type="text" id="PRODUCT_TITLE" name="PRODUCT_TITLE" placeholder="" value="">		
 				 		</div>
 				 	</div>	
 				</td>
