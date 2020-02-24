@@ -7,7 +7,7 @@ Drop table delete_member;
 Select * from nagagu_member;
 Select * from delete_member;
 
-/**************************** WORKSHOP_MEMBER *******************/
+/**************************** WORKSHOP_MEMBER ********************/
 
 Drop table nagagu_workshop_member;
 Drop sequence nagagu_workshop_member_seq;
