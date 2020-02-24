@@ -118,19 +118,12 @@
 			font-size: 1.5rem;
 		}
 		.card-group img{
-			width: 70%;
-			height: auto; 
+			width: 120px;
+			height: 120px; 
 			border-radius:100%;		 
 		}
 	}
 	/* card-size end */
-	.othermain img {
-		width: 100%;
-		max-height: 250px;
-		height: auto; 
-		margin: 20px 0 !important;  
-	}
-	
 	a, .card a:link, .card a:visited {
 		color: white;
 		text-decoration: none !important;
@@ -152,12 +145,21 @@
 		border-top: 1px solid black;
 		border-color: rgba(0, 0, 0, 0.1) 
 	}
+	.img-wrap{ 
+		padding-left:15px;
+	}
 	.img-wrap img{
 		border-radius:10px; 
+		width: 100%;
+		height: 250px; 
+		margin: 20px 0 !important;  
+	}
+	.container-mypage{
+		padding: 50px 0;
 	}
 </style>
 
-<div class="container" style="margin-top: 20px; margin-bottom: 20px;">
+<div class="container container-mypage">
 	<div class="wrapper row justify-content-between">
 		<div class="col-10 nickNameTap">
 			<div>

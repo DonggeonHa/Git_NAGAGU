@@ -125,7 +125,7 @@
 		width: 100%;
 		max-height: 300px;
 		height: auto; 
-		padding: 20px 0 !important;  
+		margin-bottom:15px;
 	}
 	
 	a, .card a:link, .card a:visited {
@@ -145,6 +145,8 @@
 	}
 	
 	.img_wrap img{
+		width: 50px;
+		height: 50px;
 		border-radius: 100%;
 	}
 	.img_wrap{
@@ -194,8 +196,7 @@
 						<c:forEach var="list" items="${followMembers}" varStatus="status">
 							<div>
 								<a href="memberLikePics.cm?MEMBER_NUM=${list.MEMBER_NUM}">
-									<img src="${list.MEMBER_PICTURE}"
-									style="width: 50px; height: auto;">&nbsp;&nbsp;&nbsp;${list.MEMBER_NICK}
+									<img src="${list.MEMBER_PICTURE}">&nbsp;&nbsp;&nbsp;${list.MEMBER_NICK}
 								</a>
 							</div> 
 						</c:forEach> 
@@ -205,8 +206,7 @@
 							varStatus="status">
 							<div>
 								<a href="memberLikePics.cm?MEMBER_NUM=${list.MEMBER_NUM}">
-									<img src="${list.MEMBER_PICTURE}"
-									style="width: 50px; height: auto;">&nbsp;&nbsp;&nbsp;${list.MEMBER_NICK}
+									<img src="${list.MEMBER_PICTURE}">&nbsp;&nbsp;&nbsp;${list.MEMBER_NICK}
 								</a>
 							</div>
 						</c:forEach>

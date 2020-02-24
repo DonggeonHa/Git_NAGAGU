@@ -63,7 +63,7 @@
 	</select>
 	
 	 <select id="getCommentList" parameterType="com.spring.community.PicsCommentDB" resultMap="hashmapVO">
-		SELECT * FROM PICS_COMMENT WHERE PICS_RE_PICS=#{PICS_RE_PICS} ORDER BY PICS_RE_REF DESC, PICS_RE_STEP DESC 
+		SELECT * FROM PICS_COMMENT,NAGAGU_MEMBER WHERE PICS_RE_PICS=#{PICS_RE_PICS} AND PICS_RE_MEMBER=MEMBER_NUM ORDER BY PICS_RE_REF DESC, PICS_RE_STEP DESC 
 	</select> 
 	
 	<select id="getCommentCount" parameterType="com.spring.community.PicsCommentDB" resultMap="hashmapVO">

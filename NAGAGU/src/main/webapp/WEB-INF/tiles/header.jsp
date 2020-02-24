@@ -25,7 +25,7 @@
 		vertical-align: top;
 		line-height: 25px;
 		padding: 8px 9px 0 10px;
-		font-size: 13px;
+		font-size: 15px;
 		position: relative;
 		z-index: 72;
 	}
@@ -241,12 +241,16 @@
 	.nav-item .active{
 		color: rgba(239,144,14,0.5) !important;  
 	}
+	.header_font{
+		font-size:20px !important;
+	}
+	
 </style>
 
 <div class="bg" >
 	<div class="container">
 		<div class="row">
-			<nav class="navbar navbar-expand-lg navbar-dark w-100">
+			<nav class="header_font navbar navbar-expand-lg navbar-dark w-100">
 				<!-- Navbar content -->
 				<a class="navbar-brand" href="./index.ma">
 					<img src="${pageContext.request.contextPath}/resources/images/Main/NAGAGU2.png">

@@ -115,17 +115,19 @@
 	    margin-right: 10px;
 	}
 	/* follow button */
-	.follow_btn{
+	.follow_btn {
 		border: none;
-		background: #ef900e;	
+		background: rgba(0,0,0,0.3);  	
 		font-size: 1rem;	 
 		border-radius: 10px;
 		transition:all 0.2s; 
-		box-shadow: 0px 3px rgba(239,144,14,0.5); 	 
+		box-shadow: 0px 3px rgba(0,0,0,0.1); 
 		color: white;
+		margin-left: 5px;
 	}
-	.follow_btn:active, .delete-btn:active, .update-btn:active{		
-			transform: translateY(3px);
+	.follow_btn:hover, .follow_btn:active, .flw_btn_active{
+		background: #ef900e; 
+		box-shadow: 0px 3px rgba(239,144,14,0.5);
 	}
 	 *:focus { 
 	 	outline:none !important; 
@@ -135,6 +137,7 @@
 	   width: 145px;
 	   height: 145px;
 	   border-radius: 7px;
+	   padding: 2%;
 	}	
 	.member_upload_img div{
 	  padding: 0 ;
@@ -191,17 +194,7 @@
 		margin-bottom: 0px !important;
 	}
 	.reply_container{
-		margin-bottom: 50px;
-	}
-	.follow_btn {
-		border: none;
-		background: rgba(0,0,0,0.3);  	
-		font-size: 1rem;	 
-		border-radius: 10px;
-		transition:all 0.2s; 
-		box-shadow: 0px 3px rgba(0,0,0,0.1); 
-		color: white;
-		margin-left: 5px;
+		margin-bottom: 100px;
 	}
 	.product{
 		margin-top:50px;
@@ -428,10 +421,11 @@
 		        		
 		        		if(item.list[i].PICS_RE_REF==item.list[i].PICS_RE_NUM){
 		        			var re_count = item.countList[j].RE_COUNT - 1;
-							output += '<div class="row mb-3 reply_line"><div class="col-1"><img src='
-							output += '<%=memberVO.getMEMBER_PICTURE()%> '; 
+		        			console.log(item.list)
+							output += '<div class="row mb-3 reply_line"><div class="col-1">'
+							output += '<a href="memberLikePics.cm?MEMBER_NUM='+item.list[i].MEMBER_NUM+'"><img src="'+item.list[i].MEMBER_PICTURE+'" '; 
 							output += 'class="img-circle" style="width: 50px; height: 50px; margin: 0 20% auto;"></div>'
-							output += '<div class="col-11"><div class="row reply'+item.list[i].PICS_RE_NUM+'"><div class="col-10"><b><%=memberVO.getMEMBER_NICK()%></b></div>'
+							output += '<div class="col-11"><div class="row reply'+item.list[i].PICS_RE_NUM+'"><div class="col-10"><b>'+item.list[i].MEMBER_NICK+'</b></a></div>'
 							output += '<div class="col-2 smallfont px-0 text-right">'+date+'</div>	';
 							output += '<div class="col-12" id="commentNum'+item.list[i].PICS_RE_NUM+'">'+item.list[i].PICS_RE_CONTENT+'</div>';
 							output += '<div class="col-12"><div class="row justify-content-between"><div>';
@@ -439,10 +433,10 @@
 							output += '<a href="#" class="smallfont show_re_reply" num='+item.list[i].PICS_RE_NUM+'>답글'+re_count+'개</a></div>'
 							j++;
 						}else{
-							output += '<div class="row ml-5 re_reply_line re_num'+item.list[i].PICS_RE_REF+'"><div class="col-1"><img src='
-							output += '<%=memberVO.getMEMBER_PICTURE()%> '; 
+							output += '<div class="row ml-5 re_reply_line re_num'+item.list[i].PICS_RE_REF+'"><div class="col-1">'
+							output += '<a href="memberLikePics.cm?MEMBER_NUM='+item.list[i].MEMBER_NUM+'"><img src="'+item.list[i].MEMBER_PICTURE+'" '; 
 							output += 'class="img-circle" style="width: 50px; height: 50px; margin: 0 20% auto;"></div>'
-							output += '<div class="col-11"><div class="row reply'+item.list[i].PICS_RE_NUM+'"><div class="col-10"><b><%=memberVO.getMEMBER_NICK()%></b></div>'
+							output += '<div class="col-11"><div class="row reply'+item.list[i].PICS_RE_NUM+'"><div class="col-10"><b>'+item.list[i].MEMBER_NICK+'</b></a></div>'
 							output += '<div class="col-2 smallfont px-0 text-right">'+date+'</div>';
 							output += '<div class="col-12" id="commentNum'+item.list[i].PICS_RE_NUM+'">'+item.list[i].PICS_RE_CONTENT+'</div>'; 
 							output += '<div class="col-12"><div class="row justify-content-end"><div>';

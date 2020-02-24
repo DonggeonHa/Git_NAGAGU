@@ -49,7 +49,9 @@
 		display: flex;
 		justify-content: space-around;
 	}
-	
+	.img-wrap{
+		padding:0 5%;
+	}
 	.img-wrap .profile{
 		margin-bottom:10px;
 	}
@@ -148,6 +150,9 @@
 	 .caption .active{
 	 	color: rgba(0,0,0,1) !important;
 	 }
+	 .img img{
+	 	height:300px;
+	 }
 	.img-tag{
 		padding-left:10px; 
 	}.img-tag a{
@@ -166,6 +171,9 @@
 	}
 	.container_page a{
 		color: black;
+	}
+	.each_row{
+		margin-bottom:40px;  
 	}
 	
 </style>
@@ -226,14 +234,14 @@
 	<%
 		if (listcount > 0) {
 	%>
-			<div class="d-flex justify-content-start pt-2 mt-4 mb-5 row">
+			<div class="d-flex justify-content-start pt-2 mb-5 row img-wrap">
 	<%
 			for (int i = 0; i < picsList.size(); i++) {								
 				PicsVO pics_vo = picsList.get(i);								
 				MemberVO member_vo=memberList.get(i);
 	%>
 				
-					<div class="col-4 img-wrap">
+					<div class="col-4 each_row">
 						<div class="profile">
 							<div class="profile_children">
 								<div>
