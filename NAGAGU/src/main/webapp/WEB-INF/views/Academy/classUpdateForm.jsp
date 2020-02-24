@@ -366,13 +366,31 @@
 <script>
 	/* 달력 부분 ========== 현재 적용되지 않음 */
 	$(document).ready(function() {
-        $('#datetimepicker1').datetimepicker({});
-        $('#datetimepicker2').datetimepicker({});
+		$('#datetimepicker1').datetimepicker({ format: 'L'});
+		$('#datetimepicker2').datetimepicker({
+			format: 'L',
+		    useCurrent: false
+		});
+		$("#datetimepicker1").on("change.datetimepicker", function (e) {
+			$('#datetimepicker2').datetimepicker('minDate', e.date);
+		});
+		$("#datetimepicker2").on("change.datetimepicker", function (e) {
+			$('#datetimepicker1').datetimepicker('maxDate', e.date);
+		});
     });
 	
 	$(document).ready(function() {
-        $('#datetimepicker3').datetimepicker({});
-        $('#datetimepicker4').datetimepicker({});
+		$('#datetimepicker3').datetimepicker({ format: 'L'});
+		$('#datetimepicker4').datetimepicker({
+			format: 'L',
+		    useCurrent: false
+		});
+		$("#datetimepicker3").on("change.datetimepicker", function (e) {
+			$('#datetimepicker4').datetimepicker('minDate', e.date);
+		});
+		$("#datetimepicker4").on("change.datetimepicker", function (e) {
+			$('#datetimepicker3').datetimepicker('maxDate', e.date);
+		});
     });
 	
 	$(document).ready(function() {

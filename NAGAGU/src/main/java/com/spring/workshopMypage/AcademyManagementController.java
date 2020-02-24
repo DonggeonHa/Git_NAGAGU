@@ -116,8 +116,8 @@ public class AcademyManagementController {
 		classVO.setCLASS_ABRIEF(request.getParameter("CLASS_ABRIEF"));
 		classVO.setCLASS_AMOUNT(Integer.parseInt(request.getParameter("CLASS_AMOUNT")));
 		classVO.setCLASS_DATE(new Timestamp(System.currentTimeMillis()));
-		classVO.setCLASS_DATE_CONFIGURATION_1(request.getParameter("CLASS_DATE_CONFIGURATION_1").substring(0,11));
-		classVO.setCLASS_DATE_CONFIGURATION_2(request.getParameter("CLASS_DATE_CONFIGURATION_2").substring(0,11));
+		classVO.setCLASS_DATE_CONFIGURATION_1(request.getParameter("CLASS_DATE_CONFIGURATION_1"));
+		classVO.setCLASS_DATE_CONFIGURATION_2(request.getParameter("CLASS_DATE_CONFIGURATION_2"));
 		classVO.setCLASS_AREA(request.getParameter("CLASS_AREA"));
 		classVO.setCLASS_CATEGORY(request.getParameter("CLASS_CATEGORY"));
 		classVO.setCLASS_INTRODUCTION_1(request.getParameter("CLASS_INTRODUCTION_1"));
