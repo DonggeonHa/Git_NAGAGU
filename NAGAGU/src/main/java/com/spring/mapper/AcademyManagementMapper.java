@@ -13,7 +13,7 @@ import com.spring.workshop.WorkShopMemberVO;
 import com.spring.workshopMypage.WsMemberVO;
 
 public interface AcademyManagementMapper {
-	List<ClassVO> getManagementClassList(@Param("selectClassType") String selectClassType, @Param("WORKSHOP_NAME")String WORKSHOP_NAME);
+	List<ClassVO> getManagementClassList(@Param("selectClassType") String selectClassType, @Param("WORKSHOP_NUM")int wORKSHOP_NUM);
 	List<ClassVO> getSearchList(@Param("keyword") String keyword, @Param("searchType") String searchType, @Param("WORKSHOP_NAME")String WORKSHOP_NAME);
 	
 	List<WsMemberVO> getMemberList(@Param("WORKSHOP_NUM") int WORKSHOP_NUM);

@@ -226,8 +226,9 @@
 						output += '<td><button class="btn_modify btn btn_search btn-outline-danger btn-sm" onclick="updateClass(' + item.class_NUMBER + ')">' + "수정" + '</button></td>';
 						output += '</tr>';
 						
-						$('#academyList').append(output);
-					});
+						
+					})
+					$('#academyList').append(output);
 				} else{
 					output += '등록된 강의가 없습니다.';
 					$('#list_none').append(output);

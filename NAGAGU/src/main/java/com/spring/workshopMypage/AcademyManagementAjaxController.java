@@ -25,9 +25,11 @@ public class AcademyManagementAjaxController {
 	@PostMapping(value="/classManagementList.my" ,produces="application/json;charset=UTF-8")
 	public List<ClassVO> classManagementList(String selectClassType, HttpSession session) {
 		
-		String WORKSHOP_NAME = (String)session.getAttribute("WORKSHOP_NAME");
+		int WORKSHOP_NUM = (int)(session).getAttribute("WORKSHOP_NUM");
 		
-		List<ClassVO> list = academyManagementService.getManagementClassList(selectClassType, WORKSHOP_NAME);
+	//	String WORKSHOP_NAME = (String)session.getAttribute("WORKSHOP_NAME");
+		
+		List<ClassVO> list = academyManagementService.getManagementClassList(selectClassType, WORKSHOP_NUM);
 		
 		return list;
 	}
