@@ -509,7 +509,7 @@
     
     /* --------------------------- 결제 수단 선택 ------------------------------*/
     
-    $('.payment').click(function() {
+    $('.pay_method').click(function() {
     	$('#ESTIMATE_PAY').val($(this).attr('value'));
     	console.log($('#ESTIMATE_PAY').val());
     });

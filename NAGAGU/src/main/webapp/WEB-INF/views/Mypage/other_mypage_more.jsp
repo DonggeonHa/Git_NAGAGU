@@ -119,19 +119,12 @@
 			font-size: 1.5rem;
 		}
 		.card-group img{
-			width: 70%;
-			height: auto; 
+			width: 120px;
+			height: 120px; 
 			border-radius:100%;		 
 		}
 	}
 	/* card-size end */
-	.othermain img {
-		width: 100%;
-		max-height: 300px;
-		height: auto; 
-		padding: 20px 0 !important;  
-	}
-	
 	a, .card a:link, .card a:visited {
 		color: white;
 		text-decoration: none !important;
@@ -148,11 +141,9 @@
 		width: 25%;
 		height: 25vh;
 	}
-	
 	.container-mypage{
-		margin: 50px 0;
+		padding: 50px 0;
 	}
-	
 	.pagenation-wrap{
 		position: relative;
 		top:55%; 
@@ -160,6 +151,11 @@
 	.like-wrap, .pics-wrap{
 		border-top: 1px solid black;
 		border-color: rgba(0, 0, 0, 0.1) 
+	}
+	.img-wrap img{
+		border-radius:10px; 
+		width: 100%;
+		height: 250px; 
 	}
 </style>
 
@@ -203,24 +199,6 @@
 						</c:forEach>
 					</div>
 				</c:if>
-			</div>
-			<!-- pagenation -->
-			<div class="row justify-content-center pagenation-wrap">
-		        <nav aria-label="...">
-					<ul class="pagination">
-						<li class="page-item disabled">
-							<a class="page-link" href="#" tabindex="-1" aria-disabled="true">Previous</a>
-						</li>
-						<li class="page-item"><a class="page-link" href="#">1</a></li>
-						<li class="page-item active" aria-current="page">
-							<a class="page-link" href="#">2 <span class="sr-only">(current)</span></a>
-						</li>
-						<li class="page-item"><a class="page-link" href="#">3</a></li>
-						<li class="page-item">
-							<a class="page-link" href="#">Next</a>
-						</li>
-					</ul>
-		        </nav>
 			</div>
 	    </div><!-- main end -->
 	

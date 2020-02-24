@@ -422,14 +422,12 @@
 	.page-link {
 		color: black !important;
 	}
-	
-	.nav-item .active {
-		color : white !important;
-		background-color : #1B1B27 !important;
-	}
-	
 	li.nav-item a.nav-link {
 		color: black; 
+	}
+	.sticky .nav-item .active {
+		color : white !important;
+		background-color : #1B1B27 !important;
 	}
 	.name, .content{
 		font-size:1.2rem;
