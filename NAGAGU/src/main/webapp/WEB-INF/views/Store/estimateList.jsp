@@ -148,8 +148,8 @@
 		<div class="tab-content" id="nav-tabContent">
 			<div class="tab-pane fade shadow p-3 mb5 bg-white rounded" id="nav-waiting" role="tabpanel" aria-labelledby="nav-waiting-tab">
 				<div>
-					<p>1. 회원이 아닐경우에는 글쓰기 버튼이 뜨질 않으니 회원 로그인을 해 주시고 글쓰기 버튼을 클릭해서 들어가줍니다.</p>
-					<p>2. 글쓰기 폼의 양식에 맞게 글을 쓴 뒤 신청버튼을 누릅니다.</p>
+					<p>1. 회원 로그인 하신 상태에서 글쓰기 버튼을 클릭합니다.</p>
+					<p>2. 제공되는 양식에 맞게 글을 쓴 뒤 신청을 클릭하면 수제가구 의뢰글이 등록됩니다.</p>
 				</div>
 				<hr>
 			</div>
@@ -194,7 +194,7 @@
 <div class="container">
 	<br /> <br /> <br />
 	<%
-		if (MEMBER_EMAIL != null) {
+		if (MEMBER_EMAIL != "") {
 	%>
 	
 			<div class="row justify-content-end">
