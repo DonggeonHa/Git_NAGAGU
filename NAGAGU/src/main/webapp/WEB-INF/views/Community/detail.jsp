@@ -201,6 +201,7 @@
 		font-weight:800;
 	}
 	.product img{
+		border-radius: 5px;
 		width:100px;
 		height:100px;
 	}
@@ -253,7 +254,7 @@
          </div>
          <!-- main end -->
          <!-- sidebar start -->
-         <div class="sidebar" id="sidebar">
+         <div class="sidebar" id="sidebar" style="height: 600px;">
 				<div class="d-flex justify-content-between pb-2">
 					<div class="profile-img">
 						<a href="memberLikePics.cm?MEMBER_NUM=<%=memberVO.getMEMBER_NUM()%>">
@@ -347,13 +348,12 @@
 						var p_output ='';
 						var imgsrc=item.vo.product_IMAGE;
 						p_output += '<div class="row product">';
-							p_output += '<div class="col-11 text-left product_text mx-3 px-0">관련 상품</div>';    
-								p_output += '<div class="col-5">'
+							p_output += '<div class="col-11 text-left product_text mx-3 px-0 pb-2">관련 상품</div>';    
+								p_output += '<div class="col-5 pt-2">'
 								p_output += '<a href="./productdetail.pro?PRODUCT_NUM='+item.vo.product_NUM+'">'
 					    		p_output += '<img src="/productupload/image/'+imgsrc+'"></a></div>';
 								p_output += '<div class="row col-7 text-center">';
-									p_output += '<div class="title col-12">'+item.vo.product_TITLE+'</div>'; 
-									p_output += '<div class="brief col-12">'+item.vo.product_BRIEF+'</div>';
+									p_output += '<div class="title">'+item.vo.product_TITLE+'</div>'; 
 							p_output += '</div></div>';
 							
 

@@ -76,7 +76,9 @@
 	.caption .active {
 		color: rgba(0, 0, 0, 1) !important;
 	}
-
+	.category_ac{
+		margin-bottom:100px;
+	}
 	
 	/*별 이미지 색상*/
 	.fa-star {
@@ -98,7 +100,7 @@
 </style>
 
 	
-<div class="container category_ac mb-5">
+<div class="container category_ac">
 	<!-- 클래스 nav -->
 	<div class="content">
 		<div class="search-tap">
