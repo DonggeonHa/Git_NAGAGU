@@ -5,7 +5,7 @@
 	<div class="container-fluid">
 		<div class="d-flex bd-highlight mb-3">
 			<div class="mr-auto p-2 bd-highlight align-self-end">
-				<h6>아카데미관리 > 클래스관리 </h6>
+				<h6>아카데미관리 > 강의관리 </h6>
 			</div>
 			<br><br>
 			<div class="input-group p-2 bd-highlight" style="width: 300px !important;">
@@ -16,7 +16,7 @@
 			</div>
 		</div>
 		
-		<div style="height: 550px; overflow-y: auto;">
+		<div style="height: 700px; overflow-y: auto;">
 			<table class="table table-hover tableCSS" id="academy-table"></table>
 		</div>
 		<div class="d-flex justify-content-center">

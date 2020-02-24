@@ -16,7 +16,7 @@
 			</div>
 		</div>
 		
-		<div style="height: 550px; overflow-y: auto;">
+		<div style="height: 700px; overflow-y: auto;">
 			<table class="table table-hover tableCSS" id="product-qna"></table>
 		</div>
 		<div class="d-flex justify-content-center">
@@ -60,10 +60,10 @@
 				title += '<thead class="text-center">';
 				title += '<tr>';
 				title += '<th style="width: 5%;">번호</th>';
-				title += '<th style="width: 10%;">상품</th>';
+				title += '<th style="width: 25%;">상품</th>';
 				title += '<th style="width: 10%;">글쓴이</th>';
 				title += '<th style="width: 10%;">등록일자</th>';
-				title += '<th style="width: 60%;">내용</th>';
+				title += '<th style="width: 45%;">내용</th>';
 				title += '<th style="width: 5%;">관리</th>';
 				title += '</tr>';
 				title += '</thead>';

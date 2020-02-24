@@ -230,7 +230,7 @@
 					 ADDRESS_ADDRESS1, ADDRESS_ADDRESS2, MEMBER_STATUS
 			  from(select * 
 			  	   from NAGAGU_MEMBER
-			  	   order by MEMBER_STATUS DESC , MEMBER_DATE ASC))
+			  	   order by MEMBER_STATUS DESC , MEMBER_NUM ASC))
  	</select>
  	
  	<delete id="deleteMember" parameterType="com.spring.member.MemberVO">
@@ -363,7 +363,7 @@
 		FROM PRODUCT P, PRODUCT_REVIEW R, nagagu_member N
 		WHERE P.PRODUCT_NUM = R.REVIEW_PRODUCT        
 		AND R.REVIEW_MEMBER = N.MEMBER_NUM
-		ORDER BY R.REVIEW_PRODUCT ASC , R.REVIEW_NUM ASC
+		ORDER BY R.REVIEW_DATE ASC , R.REVIEW_NUM ASC
  	</select>
  	
  	<delete id="deleteProductReview" parameterType="com.spring.store.Product_reviewVO">

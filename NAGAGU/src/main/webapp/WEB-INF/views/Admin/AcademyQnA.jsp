@@ -16,7 +16,7 @@
 			</div>
 		</div>
 		
-		<div style="height: 550px; overflow-y: auto;">
+		<div style="height: 700px; overflow-y: auto;">
 			<table class="table table-hover tableCSS" id="academy-qna"></table>
 		</div>
 		<div class="d-flex justify-content-center">
