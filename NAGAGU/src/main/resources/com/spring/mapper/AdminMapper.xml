@@ -375,7 +375,7 @@
 		FROM PRODUCT P, PRODUCT_QNA Q, nagagu_member N
 		WHERE P.PRODUCT_NUM = Q.QNA_PRODUCT
 		AND Q.QNA_MEMBER = N.MEMBER_NUM
-		ORDER BY Q.QNA_PRODUCT ASC , Q.QNA_NUM ASC
+		ORDER BY Q.QNA_DATE ASC , Q.QNA_NUM ASC
  	</select>
  	
  	<delete id="deleteProductQnA" parameterType="com.spring.store.Product_qnaVO">
