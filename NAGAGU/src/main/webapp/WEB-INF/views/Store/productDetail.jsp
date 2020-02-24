@@ -432,6 +432,16 @@
 	.name, .content{
 		font-size:1.2rem;
 	}
+	#t4::before{
+		content: '';
+		display: block;
+		height: 12vh;
+	}
+	#t2::before{
+		content: '';
+		display: block;
+		height: 3vh;
+	}
 </style>
 
 <div class="container class-detail-container category_st">
@@ -642,9 +652,8 @@
 				<!-- 상세 사진정보 끝 -->
 	      
 	            <!-- 배송 및 환불 시작 -->
-	      
-	            <h3 id="t4">배송 및 환불</h3>
-	            <br /><br />
+	            <h3 id="t4">배송 및 환불</h3> 
+	            <br />
 				<div class="ship_info" style="width: 100%; margin: 0 auto; font-size: 0.9em; color: #212529;">
 					<div class="row_ship_info">
 				    	<h5>배송정보</h5>
@@ -786,7 +795,7 @@
 
 	
 			<span id="t3"></span>
-			<br /><br /><hr />
+			<br /><hr />
 			
 			<!-- Q&A 테이블 시작 -->
 			<div id="QnaSection">

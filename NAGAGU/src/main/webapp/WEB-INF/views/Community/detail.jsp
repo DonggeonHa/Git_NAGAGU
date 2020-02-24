@@ -797,7 +797,7 @@
 		
 		
 		//이미지관련
-		//$('.img-wrap').children().children().find('img').removeAttr("style").css('width','95%') 
+		$('.img-wrap').children().children().find('img').removeAttr("style").css('width','100%') 
 		$('img').addClass('img-responsive');
 		
 	});

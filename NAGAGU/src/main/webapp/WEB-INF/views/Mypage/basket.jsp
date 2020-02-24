@@ -403,28 +403,32 @@
 		}); 
 		//누르면 장바구니에서 삭제
         $(document).on('click','.delete_btn',function(){
-            if(!confirm('삭제하시겠습니까?')){
-                return
-            }
-			var num = $(this).parent().parent().parent().parent().attr('bnum')
-			$.ajax({
-				  url: "/NAGAGU/deleteBasket.my",
-	              type: "POST",
-	              data: { 'BASKET_NUM' : num},
-	              contentType:
-	  				'application/x-www-form-urlencoded; charset=utf-8',
-	              success: function (retVal) {
-	        		if(retVal.res=="OK"){
-						getBasket()
-						changePrice()
-					}else{
-						alert("update fail");
-					}  
-				 },
-				error:function(){
-					alert("ajax통신 실패!!");
-				}
-			})
+            alertify.confirm('확인', '정말 삭제하시겠습니까?', function(){ 
+    			alertify.success('Ok') 
+    			var num = $(this).parent().parent().parent().parent().attr('bnum')
+				$.ajax({
+					  url: "/NAGAGU/deleteBasket.my",
+		              type: "POST",
+		              data: { 'BASKET_NUM' : num},
+		              contentType:
+		  				'application/x-www-form-urlencoded; charset=utf-8',
+		              success: function (retVal) {
+		        		if(retVal.res=="OK"){
+							getBasket()
+							changePrice()
+						}else{
+							alert("update fail");
+						}  
+					 },
+					error:function(){
+						alert("ajax통신 실패!!");
+					}
+				})
+   			}
+            , function(){ 
+            	alertify.error('Cancel')
+            	}
+            );
 		});
 		//셀렉트 한 값만 넘기기(구매하기 버튼)
 	 	$(document).on('click','.btn_commit',function(){
