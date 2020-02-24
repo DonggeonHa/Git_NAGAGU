@@ -834,7 +834,8 @@ public class AcademyController {
 		vo.setCLASS_GRADE(0);
 		
 		ModelAndView mav = new ModelAndView();
-		mav.setViewName("redirect:classlist.ac");
+//		mav.setViewName("redirect:classlist.ac");
+		mav.setViewName("redirect:Workshop/Academy/lectureManagement");
 		mav.addObject("ClassVO", vo);
 		
 		result = academyService.insertClass(vo);
