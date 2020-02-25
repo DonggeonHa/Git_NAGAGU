@@ -419,8 +419,6 @@ public class NoteController {
 		NoteVO vo = new NoteVO();
 		String sender_mail = "";
 		String sender_nick = "";
-		System.out.println("test1 : " + (String)session.getAttribute("MEMBER_EMAIL"));
-		System.out.println("test1 : " + (String)session.getAttribute("WORKSHOP_EMAIL"));
 		
 		if (session.getAttribute("MEMBER_EMAIL") != null) {
 			sender_mail = (String)session.getAttribute("MEMBER_EMAIL");
@@ -441,5 +439,31 @@ public class NoteController {
 			
 		return null;
 	}
-
+	
+	@RequestMapping("selectedWrite.nt")
+	@ResponseBody
+	public String selectedWrite(HttpServletRequest request, HttpSession session) throws Exception {
+		NoteVO vo = new NoteVO();
+		String sender_mail = (String)session.getAttribute("WORKSHOP_EMAIL");
+		String sender_nick = (String)session.getAttribute("WORKSHOP_NAME");
+		int resCount = 0;
+		
+		String receiver_mails[] = request.getParameterValues("receiver_mail");
+		String receiver_nicks[] = request.getParameterValues("receiver_nick");
+		
+		for (int i=0; i<receiver_mails.length; i++) {
+			vo.setNOTE_SENDER_MAIL(sender_mail);
+			vo.setNOTE_SENDER_NICK(sender_nick);
+			vo.setNOTE_RECEIVER_MAIL(receiver_mails[i]);
+			vo.setNOTE_RECEIVER_NICK(receiver_nicks[i]);
+			vo.setNOTE_TITLE(request.getParameter("note_title"));
+			vo.setNOTE_CONTENT(request.getParameter("note_content"));
+			
+			resCount += noteService.noteSend(vo);
+		}
+		
+		System.out.println("note result :" + resCount);
+			
+		return null;
+	}
 }

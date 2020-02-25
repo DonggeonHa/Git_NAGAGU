@@ -7,15 +7,15 @@
 	        <h1 class="">아카데미 회원 관리</h1>
 	    </div>
 		<div class="d-flex justify-content-start pb-2">
-			<button type="button" id="selectMember" class="btn btn-sm btn-outline-dark mr-2">선택 삭제</button> 
-	        <button type="button" id="all_select" class="btn btn-sm btn-outline-dark mr-2">선택 쪽지</button>                        
+	        <button type="button" id="btn_select_note" class="btn btn-sm btn-outline-dark mr-2">선택 쪽지</button>    
+			<button type="button" id="selectMember" class="btn btn-sm btn-outline-dark mr-2">선택 삭제</button>                     
 		    <span class="listnum_txt pt-2 ">전체 회원 수</span>&nbsp;
             <span class="listnum_num pt-2 ">0명</span>
 		</div>
 	    <div class="d-flex justify-content-between pb-2">
 		    <div class="justify-content-start" style="padding: 0;">
 				<div class="d-flex justify-content-start">
-    				<button type="button" id="all_select" class="btn btn-sm btn-outline-dark mr-2"  style="height: 33px;">전체표시</button> 
+    				<button type="button" class="btn btn-sm btn-outline-dark mr-2"  style="height: 33px;">전체표시</button> 
 	            </div>
 			</div>
 	        <div class="d-flex justify-content-end">
@@ -39,6 +39,7 @@
 	        </div>
 	    </div>
 		<div style="height: 620px; overflow-y: auto;">
+	        <form id="chk_form">
 			<table class="table table-hover" id="work_store">
 				<thead>
 				    <tr>
@@ -53,6 +54,7 @@
 				</thead>
 			    <tbody id="memberList"></tbody>
 			</table>
+			</form>
 			<div id="list_none"></div>
 		</div>
 		<div class="d-flex justify-content-center">
@@ -62,21 +64,6 @@
 </div>
 
 <script>
-	$(document).ready(function(){
-	    var all_check = false;
-	
-	    $("#all_select").click(function() {
-	        if (all_check == false) {
-                $("input[type=checkbox]").prop("checked",true);
-                all_check = true;
-	        }
-	        else {
-                $("input[type=checkbox]").prop("checked",false);
-                all_check = false;
-	        }
-	        
-	    });
-	});
 	
 	function class_name() {
 		$('#searchType').html('강의명');
@@ -110,6 +97,72 @@
 	$(document).ready(function() {
 		memberList();
 		
+
+		
+		/* --------------------------- 선택 쪽지 ------------------------------- */
+		
+		$(document).delegate('#btn_select_note', 'click', function() {
+				if ($("input[name='chk']:checked").length==0) {
+		    		return false;
+		    	}
+			    
+			    window.open('', 'new_pop' ,'width=600,height=700');
+			    
+			    var frm = document.forms["chk_form"];
+			    
+			    frm.action = 'selectedForm.nt';
+			    frm.target = 'new_pop';
+			    frm.method = 'post';
+			    
+			    frm.submit();
+			    
+			    return false;
+			});
+		
+
+	    /* --------------------------- 체트박스 관련 ------------------------------- */
+	    
+	    
+		    function setSelect() {
+		        if ($("#all_select").is(":checked")) {
+		               $("input[type=checkbox]").prop("checked", true);
+		               $('.chechbox2').attr('disabled', 'true');
+		        } else {
+		                $("input[type=checkbox]").prop("checked", false);
+			            $('.chechbox2').attr('disabled', 'false');
+		        }
+			}
+
+	    function checkSelect() {
+	        
+	        if ($("input[class='chk']:checked").length == $("input[class='chk']").length) {
+	            $("#all_select").prop("checked",true);
+	        }
+	        else {
+	            $("#all_select").prop("checked",false);
+	        }
+	        
+	        return true;
+	   	}
+	        
+	    $("#all_select").click(function() {
+	        setSelect();
+	    });
+
+	    $(document).delegate('.chk', 'click', function() {
+	    	var check2 = $(this).parent().find('input[name="chk2"]');
+	    	if (check2.attr('disabled') == 'true') {
+	        	check2.attr('disabled', 'false');
+	    	}
+	    	else {
+	        	check2.attr('disabled', 'true');
+	    	}
+	    	console.log(check2.val());
+	        checkSelect();
+	    });
+	    $("#all_select").prop("checked",false);
+	    setSelect();
+		
 	});
 	
 	function memberList() {
@@ -131,7 +184,7 @@
 					$.each(data, function(index, item) {
 						
 						output += '<tr>';
-						output += '<td><input type="checkbox" name="chk_status" value="'+ item.my_CLASS_MEMBERNUM +'"></td>';
+						output += '<td><input type="checkbox" class="chk" name="chk" value=' + item.my_CLASS_MEMBERNUM + '><input type="hidden" class="disabled" name="chk2" value=' + item.member_EMAIL + '></td>';
 						output += '<td>' + item.class_DIVISION + '</td>';
 						
 						if(item.class_NAME.length >= 14) {
@@ -272,7 +325,7 @@
 	$(document).on('click', '#selectMember', function(event) {
 		var checkArray = new Array();
 		 
-		 $("input[name=chk_status]:checked").each(function(i){   //jQuery로 for문 돌면서 check 된값 배열에 담는다
+		 $("input[name=chk]:checked").each(function(i){   //jQuery로 for문 돌면서 check 된값 배열에 담는다
 			 checkArray.push($(this).val());
 	     });
 		 
@@ -300,7 +353,8 @@
 		    }
 		 }
 	});
-	
+    
+    
 	// 만들어진 테이블에 페이지 처리
 	function page() { 	
 		$('#remo').empty();

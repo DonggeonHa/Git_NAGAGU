@@ -5,6 +5,9 @@
 <%
 	EstimateOrderVO eovo = (EstimateOrderVO)request.getAttribute("eovo");
 	MemberVO memvo = (MemberVO)request.getAttribute("memvo");
+	
+	String payment = eovo.getES_ORDER_PAYMENT();
+	System.out.println(payment);
 %>
 
 <link rel="stylesheet" type="text/css" href="./resources/css/Mypage/order.css">
@@ -35,9 +38,27 @@
 	.nav-link.active {
 		background-color: #EAEAEA !important;
 	}
+	
+	table {
+		maring:0;
+	}
+	
     td dl div{
         text-align: right;  
     }
+    
+    .es_title a {
+    	color:#1B1B27;
+    	text-decoration:none;
+    	padding-left:1.8rem;
+    	font-size:1.2rem;
+    }
+    
+    .es_title a:hover {
+    	color:#5f5f27;
+    	text-decoration:none;
+    }
+    
     .second-container .table{
         font-weight:600; 
     }
@@ -46,10 +67,9 @@
     	text-align:right;
     	padding-left:5px;
     }
-    
-    .payment_no_selected {
-    	opacity:0.8;
-    	user-select:none;
+    .payway {
+    	font-size:1.1rem;
+    	text-align:right;
     }
 </style>
 
@@ -57,6 +77,7 @@
 	<form id="orderForm" method="POST" action="mypage_estimate_payment.my">
 	<input type="hidden" name="ES_ORDER_NUM" value=<%=eovo.getES_ORDER_NUM()%>>
 	<input type="hidden" name="ES_ORDER_PRICE" value=<%=eovo.getES_ORDER_PRICE() %>> 
+	<input type="hidden" name="ES_ORDER_PAYMENT" value=<%=payment %>> 
 	<div class="second-container">
 		<div>
 		<h3>주문/결제</h3>
@@ -66,6 +87,10 @@
 		</div>
 		<div class="mb-5">
 				<table class="table table-hover">
+				<colgroup>
+					<col width="10%">
+					<col width="90%">
+				</colgroup>
 					<tr>
 						<td align="center">
 							<a href="estimate_detail.es?ESTIMATE_NUM=<%=eovo.getES_ORDER_ESTIMATE()%>"><img class="basket-size" src="<%=eovo.getES_ORDER_PIC()%>"></a>
@@ -73,16 +98,7 @@
 						</td>
 						<td colspan="2">
 							<dl>
-								<dt><a href="estimate_detail.es?ESTIMATE_NUM=<%=eovo.getES_ORDER_ESTIMATE()%>"><%=eovo.getES_ORDER_TITLE()%></a></dt>
-								<dd><%=eovo.getES_ORDER_CATEGORY()%></dd>
-							</dl>
-						</td>
-						<td>
-							<dl>
-								<div>
-									<span style="font-size: 1.2rem;">낙찰가</span> 
-									<span class="text-center eo_price" style="font-size: 1.2rem;"><%=eovo.getES_ORDER_PRICE()%></span>
-								</div>
+								<dt class="es_title"><a href="estimate_detail.es?ESTIMATE_NUM=<%=eovo.getES_ORDER_ESTIMATE()%>"><%=eovo.getES_ORDER_TITLE()%></a></dt>
 							</dl>
 						</td>
 					</tr>
@@ -111,9 +127,13 @@
 						<label for="inputAddress">우편번호</label>
 					</div>
 					<div class="col-3">
-						<input type="text" class="form-control zip" name="ES_ORDER_BUYER_ZIP">
+						<input type="text" id="postcode1" class="txtInp form-control toZip" name="ES_ORDER_ZIP" value="1" readonly />
 					</div>
-					<div class="col-7"></div>
+					<div class="col-2">
+						<input type = "button" class="btn_post" idx=1 value = "주소검색" class="btn btn-outline-dark">
+					</div>
+					<div class="col-5">
+					</div>
 				</div>
 				<div class="form-group row">
 					<div class="col-2">
@@ -132,10 +152,18 @@
 				</div>
 				<div class="form-group row">
 					<div class="col-2">
+					</div>
+					<div class="col-10 input-group">
+						<input id= "detailAddress1" class = "txtInp form-control toAddress2" type = "text" name="ES_ORDER_ADDRESS2" placeholder = "상세 주소를 입력해주세요."/>
+						<input id="extraAddress" type="hidden" placeholder="참고항목">
+					</div>	
+				</div>
+				<div class="form-group row">
+					<div class="col-2">
 						<label for="inputAddress">연락처</label>
 					</div>
 					<div class="col-5">
-						<input type="text" class="form-control phone" name="ES_ORDER_BUYER_PHONE">
+						<input type="text" class="form-control phone" name="ES_ORDER_BUYER_PHONE" value=<%=memvo.getMEMBER_PHONE() %>>
 					</div>
 					<div class="col-5">
 					</div>
@@ -167,10 +195,10 @@
 						<label for="inputAddress">우편번호</label>
 					</div>
 					<div class="col-3">
-						<input type="text" id="postcode" class="txtInp form-control toZip" name="ES_ORDER_ZIP" readonly />
+						<input type="text" id="postcode2" class="txtInp form-control toZip" name="ES_ORDER_ZIP"/>
 					</div>
 					<div class="col-2">
-						<input type = "button" onclick="execDaumPostcode()" value = "주소검색" class="btn btn-outline-dark">
+						<input type = "button" class="btn_post" idx=2 value = "주소검색" class="btn btn-outline-dark">
 					</div>
 					<div class="col-5">
 					</div>
@@ -187,8 +215,7 @@
 					<div class="col-2">
 					</div>
 					<div class="col-10 input-group">
-						<input id= "detailAddress" class = "txtInp form-control toAddress2" type = "text" name="ES_ORDER_ADDRESS2" placeholder = "상세 주소를 입력해주세요."/>
-						<input id="extraAddress" type="hidden" placeholder="참고항목">
+						<input id= "detailAddress2" class = "txtInp form-control toAddress2" type = "text" name="ES_ORDER_ADDRESS2" placeholder = "상세 주소를 입력해주세요."/>
 					</div>
 				</div>
 				<div class="form-group row">
@@ -234,53 +261,20 @@
 				<div class="col-4">
 					<h5 style="padding-top: 2%;">결제 수단</h5>
 				</div>
-				<div class="col-8">
+				<div class="col-8 payway">
+					<% if (payment.equals("toss"))  { %>
+									토스
+					<% } else if (payment.equals("card")) { %>
+									카드
+					<% } else if (payment.equals("kakao")) { %>
+									카카오페이
+					<% } else if (payment.equals("payco")) { %>
+									페이코
+					<% } else  { %>
+									삼성페이
+					<% } %>
 				</div>
 			</div>
-			<hr>
-			<div>
-				<ul class="nav nav-pills mb-3 table table-bordered" id="pills-tab" role="tablist">
-					<li class="nav-item">
-						<a class="nav-link pay_method" value="toss" id="pills-toss-tab" data-toggle="pill" href="#pills-toss" role="tab" aria-controls="pills-home" aria-selected="true">
-							<label>
-								<img width="64" src="https://bucketplace-v2-development.s3.amazonaws.com/pg/toss.png" alt="Toss">
-								<div class="text-center"><font color="black">토스</font></div>
-							</label>
-						</a>
-					</li>
-					<li class="nav-item">
-						<a class="nav-link pay_method" value="card" id="pills-card-tab" data-toggle="pill" href="#pills-card" role="tab" aria-controls="pills-home" aria-selected="true">
-							<label>
-								<img width="64" src="https://bucketplace-v2-development.s3.amazonaws.com/pg/card.png" alt="Toss">
-								<div class="text-center"><font color="black">카드</font></div>
-							</label>
-						</a>
-					</li>
-					<li class="nav-item">
-						<a class="nav-link pay_method" value="kakao" id="pills-naver-tab" data-toggle="pill" href="#pills-naver" role="tab" aria-controls="pills-home" aria-selected="true">
-							<label>
-								<img width="64" src="${pageContext.request.contextPath}/resources/images/Mypage/kakao.png" alt="Toss">
-								<div class="text-center"><font color="black">카카오페이</font></div>
-							</label>
-						</a>
-					</li>
-					<li class="nav-item">
-						<a class="nav-link pay_method" value="payco"  id="pills-vbank-tab" data-toggle="pill" href="#pills-vbank" role="tab" aria-controls="pills-home" aria-selected="true">
-							<label>
-								<img width="64" src="https://bucketplace-v2-development.s3.amazonaws.com/pg/vbank.png" alt="Toss">
-								<div class="text-center"><font color="black">페이코</font></div>
-							</label>
-						</a>
-					</li>
-					<li class="nav-item">
-						<a class="nav-link pay_method" value="samsung" id="pills-phone-tab" data-toggle="pill" href="#pills-phone" role="tab" aria-controls="pills-home" aria-selected="true">
-							<label>
-								<img width="64" src="https://bucketplace-v2-development.s3.amazonaws.com/pg/phone.png" alt="Toss">
-								<div class="text-center"><font color="black">삼성페이</font></div>
-							</label>
-						</a>
-					</li>
-				</ul>
 				<div class="tab-content" id="pills-tabContent">
 					<div class="tab-pane fade" id="pills-toss" role="tabpanel" aria-labelledby="pills-toss-tab">
 						<div style="padding: 1%; " class="radius mb-5">
@@ -362,7 +356,10 @@
 <script src="https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 <script>
 	/* 우편번호 api */
-	function execDaumPostcode() {
+	$('.btn_post').click(function() {
+		var idx = $(this).attr('idx');
+		console.log("idx : " + idx);
+        console.log(document.getElementById("postcode"+idx));
 	    new daum.Postcode({
 			oncomplete: function(data) {
 	            // 팝업에서 검색결과 항목을 클릭했을때 실행할 코드를 작성하는 부분.
@@ -414,13 +411,13 @@
 	            }
 	
 	            // 우편번호와 주소 정보를 해당 필드에 넣는다.
-	            document.getElementById("postcode").value = data.zonecode;
-	            document.getElementById("address").value = addr;
+	            document.getElementById("postcode"+idx).value = data.zonecode;
+	            document.getElementById("address"+idx).value = addr;
 	            // 커서를 상세주소 필드로 이동한다.
-	            document.getElementById("detailAddress").focus();
+	            document.getElementById("detailAddress"+idx).focus();
 	        }
 	    }).open();
-	}
+	});
 
 	$(document).ready(function(){
 		

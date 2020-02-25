@@ -38,8 +38,8 @@
 	String payment = "";
 	
 	if (vo.getESTIMATE_PAY().equals("card")) {payment = "신용카드";}
-	else if (vo.getESTIMATE_PAY().equals("Toss")) {payment = "토스";}
-	else if (vo.getESTIMATE_PAY().equals("Kakao")) {payment = "카카오페이";}
+	else if (vo.getESTIMATE_PAY().equals("toss")) {payment = "토스";}
+	else if (vo.getESTIMATE_PAY().equals("kakao")) {payment = "카카오페이";}
 	else if (vo.getESTIMATE_PAY().equals("payco")) {payment = "페이코";}
 	else if (vo.getESTIMATE_PAY().equals("samsung")) {payment = "삼성페이";}
 
@@ -532,9 +532,13 @@
 							var max_page = data.offer_maxpage;
 							var ol = data.offerList;
 							var rnum = data.offer_rnum;
+							var offerCount = data.offerCount;
 							
-							if (ol.length == 0) {
+							if (ol.length == 0 && login_state != 2) {
 								output += '<tr><td colspan="5" class="list_caution">등록된 제안이 없습니다</td><tr>';
+							}
+							else if (ol.length == 0 && login_state == 2) {
+								output += '<tr><td colspan="5" class="list_caution">회원님이 등록한 제안이 없습니다 (현재 총 제안글 : <b><font color="#f2400">' + offerCount + '건</font><b>)</td><tr>';
 							}
 							
 							else {

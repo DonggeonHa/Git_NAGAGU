@@ -251,7 +251,7 @@
         	var params = $("#note_form").serialize();
         	
         	$.ajax({
-        		url:"/NAGAGU/notewrite.nt",
+        		url:"/NAGAGU/selectedWrite.nt",
         		data:params,
         		type:"POST",
         		success:function(e){
