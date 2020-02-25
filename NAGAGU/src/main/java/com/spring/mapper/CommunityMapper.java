@@ -8,7 +8,7 @@ import com.spring.community.PicsVO;
 
 public interface CommunityMapper {
 	//리스트
-	ArrayList<PicsVO> getPicsAll(HashMap<String, Object> map);
+	ArrayList<HashMap<String, Object>> getPicsAll(HashMap<String, Object> map);
 	//사진 개수
 	int getPicsCount(HashMap<String, Object> map);
 	//조회수1증가

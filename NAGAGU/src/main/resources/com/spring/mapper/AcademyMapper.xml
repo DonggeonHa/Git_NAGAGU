@@ -144,8 +144,8 @@
 	
 	<!-- 경태 마이페이지 내강의 목록 -->
 	<select id="getLoginMemberClass" parameterType="java.util.HashMap" resultMap="hashmapVO">
-		SELECT * FROM ACADEMY, MY_CLASS
-		WHERE MY_CLASS_MEMBERNUM = #{MEMBER_NUM} AND MY_CLASS_CLASSNUM=CLASS_NUMBER
+	  SELECT * FROM ACADEMY, MY_CLASS
+      WHERE MY_CLASS_MEMBERNUM = #{MEMBER_NUM} AND MY_CLASS_CLASSNUM=CLASS_NUMBER ORDER BY MY_CLASS_NUM DESC
 	</select>
 	<select id="getClassListOfMember" parameterType="java.util.HashMap" resultMap="classResultMap">
 		SELECT * FROM ACADEMY WHERE WORKSHOP_NUM=#{WORKSHOP_NUM} ORDER BY CLASS_NUMBER DESC
