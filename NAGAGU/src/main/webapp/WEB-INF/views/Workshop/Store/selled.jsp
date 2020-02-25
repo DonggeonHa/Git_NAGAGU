@@ -390,10 +390,15 @@
 					$('.listnum_num').text(selledProductList.length+"건");
 			     	for(var j=0; j<selledProductList.length; j++){
 			     		if(selledProductList[j].length != 0) {
-				     		console.log('졸려')
+			     			console.log('졸려')
 				     		var productList = selledProductList[j];
 				     		console.log(productList)	//같은 주문번호를 가지고 있는 상품들 리스트
+				     		console.log(productList.length)
 				     		var PRODUCT_TITLE = productList[0].PRODUCT_TITLE + ' 외 ' + (productList.length-1) + '건';	//상품이름 외 다른 정보들은 다 같으므로 0번째 데이터의 값으로 출력
+				     		if(selectMYPRODUCT != 'MYPRODUCT') {
+				     			PRODUCT_TITLE = MYPRODUCT + '외' + (productList.length-1) + '건';
+				     		}
+				     		
 							var ORDER_STATE = productList[0].ORDER_STATE;
 				      		switch(ORDER_STATE){
 				      	    case 0 : 
