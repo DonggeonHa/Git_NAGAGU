@@ -141,13 +141,13 @@
 	            <thead>
 	            <tr class="text-center">
 	                <th style="width: 5%;">번호</th>
-	                <th style="width: 5%;">상태</th>
+	                <th style="width: 8%;">상태</th>
 	                <th style="width: 7%;">카테고리</th>
 	                <th style="width: 5%;">지역</th>
 	                <th style="width: 10%;">클래스</th>
 	                <th style="width: 5%;">작성자</th>
 	                <th style="width: 15%;">강의명</th>
-	                <th style="width: 23%;">문의내용</th>
+	                <th style="width: 20%;">문의내용</th>
 	                <th style="width: 10%;">작성날짜</th>
 	                <th style="width: 10%;">답변상태</th>
 	                <th style="width: 5%;">관리</th>

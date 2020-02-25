@@ -72,11 +72,11 @@
                 <thead>
 	                <tr>
 	                    <th style="width: 5%;"><input id="all_select" type="checkbox"></th>
-	                    <th style="width: 5%;">상태</th>
+	                    <th style="width: 10%;">상태</th>
 	                    <th style="width: 5%;" >지역</th>
 	                    <th style="width: 10%;">가격</th>
 						<th style="width: 10%;" >클래스</th>
-	                    <th style="width: 30%;">강의명</th>
+	                    <th style="width: 25%;">강의명</th>
 	                    <th style="width: 10%;">카테고리</th>
 	                    <th style="width: 15%;">일시</th>
 	                    <th style="width: 5%;">회원수</th>

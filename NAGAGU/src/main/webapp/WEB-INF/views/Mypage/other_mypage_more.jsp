@@ -23,11 +23,7 @@
 	//System.out.println(memberLikePics.get(0).getPICS_FILE_1());
 	System.out.println("니가누른 사진 멤버는="+memberVO.getMEMBER_NUM());
 	System.out.println("로그인 멤버는="+LOGIN_MEMBER_NUM);
-<<<<<<< HEAD
-    String category = request.getParameter("category");
-=======
 	String category = request.getParameter("category");
->>>>>>> 8118de2658b7b822f93764aaaf7880e37da749f0
 %>
  
 <style>
