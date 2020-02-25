@@ -52,6 +52,7 @@
 				background-color:#1B1B27;
 				color:white;
 			}
+			
 		</style>
 	</head>
 	<body>
@@ -104,7 +105,7 @@
 								if(imagesExist.equals("Y")) {
 									for(int i=0;i<size;i++) {
 							%>
-								<a href="/productupload/image/<%=imgArr[i] %>" target="_blank" ><img src="/productupload/image/<%=imgArr[i] %>" width="100px" height="100px"></a>
+								<img src="/productupload/image/<%=imgArr[i] %>" class="thumbItem" thumb-idx=<%=i %> width="100px" height="100px" class="thumbImg" alt="" data-toggle="modal" data-target="#imgModal" aria-haspopup="true" aria-expanded="false">
 							<%
 									}
 								} else {
@@ -124,7 +125,41 @@
 			<div class="d-flex justify-content-center">
 				<button type="button" class="btn btn-outline-dark btn-lg" onclick="window.close();">닫기</button>
 			</div>	
-		</div>					
+		</div>			
+		
+		<!--  이미지 클릭 modal -->
+		<div class="modal fade" id="imgModal" tabindex="-1" role="dialog"
+			aria-labelledby="offerFormLabel" aria-hidden="true">
+			<div class="modal-dialog modal-dialog-centered" role="document">
+				<div class="modal-content">
+					<img src='' id="thumbLarge">
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+	          			<span aria-hidden="true">&times;</span>
+	        		</button>
+				</div>
+			</div>
+		</div>	
+		<script>
+
+		$(document).delegate('.thumbItem', 'click', function() {
+			var idx = $(this).attr('thumb-idx');
+			var targetImg = '';
+			if (idx == 0) {
+				targetImg = '/productupload/image/' + '<%=imgArr[0]%>';
+			} <% if (imgArr.length > 1) { %> else if (idx == 1) {
+				targetImg = '/productupload/image/' + '<%=imgArr[1]%>';
+			} <% } if (imgArr.length > 2) { %> else if (idx == 2) {
+				targetImg = '/productupload/image/' + '<%=imgArr[2]%>';
+			} <% } if (imgArr.length > 3) { %> else if (idx == 3) {
+				targetImg = '/productupload/image/' + '<%=imgArr[3]%>';
+			} <% } if (imgArr.length > 4) { %> else {
+				targetImg = '/productupload/image/' + '<%=imgArr[4]%>';
+			} <% } %>
+			console.log(targetImg);
+
+			$('#thumbLarge').attr('src', targetImg);
+		});
+		</script>	
 		
 		<script src="https://code.jquery.com/jquery-3.4.1.js" integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU=" crossorigin="anonymous"></script>
 		<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>

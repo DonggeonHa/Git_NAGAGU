@@ -247,6 +247,10 @@
 		transform:scale(1.05);
 		cursor:pointer;
 	}
+	
+	.modal-dialog {
+		min-width:800px;
+	}
 </style>
 <!-- content starts -->
 <div class="container category_cs" style="margin-top: 30px; margin-bottom: 30px;">
@@ -432,10 +436,9 @@
 		</div>
 	</div>
 	<!--  이미지 클릭 modal -->
-	<div class="modal fade" id="imgModal" tabindex="-1" role="dialog"
-		aria-labelledby="offerFormLabel" aria-hidden="true">
-		<div class="modal-dialog modal-dialog-centered" role="document">
-			<div class="modal-content">
+    <div class="modal fade bd-example-modal-lg" id="imgModal" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+  		<div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+    		<div class="modal-content">
 				<img src=<%=imgArr[0] %> id="thumbLarge">
 				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
           			<span aria-hidden="true">&times;</span>
