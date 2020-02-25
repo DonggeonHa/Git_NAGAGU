@@ -25,9 +25,8 @@ public class ChartController {
 	@Autowired(required = false)
 	private AdminService adminService;
 	
-	
 	@RequestMapping(value = "/Alogin.ad", method = {RequestMethod.GET, RequestMethod.POST})
-	public ModelAndView Alogin(AdminMemberVO adminVO, HttpSession session, ModelAndView mav) throws Exception {
+	public String Alogin(AdminMemberVO adminVO, HttpSession session) throws Exception {
 		int res = adminService.user_chk(adminVO);
 		
 		if (res == 1) {	//로그인(아이디,비번 맞음)-이메일 인증 완료
@@ -37,6 +36,13 @@ public class ChartController {
 			System.out.println("아이디 또는 비밀번호 틀림");
 			return null;
 		}
+		
+		
+		return "redirect:/Chart.ad";
+	}
+	
+	@RequestMapping(value = "/Chart.ad", method = {RequestMethod.GET, RequestMethod.POST})
+	public ModelAndView Alogin(AdminMemberVO adminVO, HttpSession session, ModelAndView mav) throws Exception {
 		
 		int memberCount = 0;
 		int WSCount = 0;

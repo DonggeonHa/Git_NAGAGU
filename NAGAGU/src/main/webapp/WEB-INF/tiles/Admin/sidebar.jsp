@@ -5,7 +5,7 @@
 	<nav>
 		<ul class="sidebar-image">
 			<li class="sidebar-brand" style="margin: 15px 0;">
-				<a href="./index.ad">
+				<a href="./Chart.ad">
 					<img src="${pageContext.request.contextPath}/resources/images/Main/NAGAGU2.png">
 				</a>
 			</li>

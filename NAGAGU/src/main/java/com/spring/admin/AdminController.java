@@ -38,11 +38,11 @@ public class AdminController {
 	}
 	
 	
-	@RequestMapping(value = "/index.ad")
-	public String Menu() {
-		
-		return "Admin/Aindex";
-	}
+//	@RequestMapping(value = "/index.ad")
+//	public String Menu() {
+//		
+//		return "Admin/Aindex";
+//	}
 	
 	/*=========================== 일반회원관리 ==============================*/
 	@RequestMapping(value = "/MemberList.ad")
