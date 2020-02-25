@@ -4,7 +4,7 @@
 <%@ page import="com.spring.community.PicsVO"%>
 <%@ page import="com.spring.member.MemberVO"%>
 <%
-	ArrayList<PicsVO> picsList = (ArrayList<PicsVO>) request.getAttribute("picsList");
+	ArrayList<HashMap<String, Object>> picsList = (ArrayList<HashMap<String, Object>>) request.getAttribute("picsList");
 	ArrayList<MemberVO> memberList = (ArrayList<MemberVO>) request.getAttribute("memberList"); 
 	
 	//로그인 정보 확인(멤버)
@@ -18,7 +18,9 @@
 	int nowpage = ((Integer) request.getAttribute("page")).intValue();
 	int maxpage = ((Integer) request.getAttribute("maxpage")).intValue();
 	int startpage = ((Integer) request.getAttribute("startpage")).intValue();
-	int endpage = ((Integer) request.getAttribute("endpage")).intValue();
+	int endpage = ((Integer) request.getAttribute("endpage")).intValue(); 
+	
+	
 	
 	String PICS_CATEGORY = (String)request.getAttribute("pics_category");
 	String PICS_REVIEW= (String)request.getAttribute("pics_review");
@@ -232,45 +234,46 @@
 			<div class="d-flex justify-content-start pt-2 mb-5 row img-wrap">
 	<%
 			for (int i = 0; i < picsList.size(); i++) {								
-				PicsVO pics_vo = picsList.get(i);								
+				HashMap<String, Object> pics_vo = picsList.get(i);								
 				MemberVO member_vo=memberList.get(i);
+				String tags = (String)pics_vo.get("PICS_TAG");
 	%>
 				
 					<div class="col-4 each_row">
 						<div class="profile">
 							<div class="profile_children">
-								<div>
+								<div> 
 									<a href="memberLikePics.cm?MEMBER_NUM=<%=member_vo.getMEMBER_NUM()%>"> 
-										<img src=<%=member_vo.getMEMBER_PICTURE()%>	style="width:50px; height:50px;">&nbsp;&nbsp;<b><%=member_vo.getMEMBER_NICK()%></b> 
-									</a>
+										<img src=<%=pics_vo.get("MEMBER_PICTURE")%>	style="width:50px; height:50px;">&nbsp;&nbsp;<b><%=pics_vo.get("PICS_NICK")%></b> 
+									</a> 
 								</div >
 									<div id="output<%=member_vo.getMEMBER_NUM()%>" class="follow_btn_wrap">
 										<button type="button" class="follow_btn flw_btn<%=member_vo.getMEMBER_NUM()%>" id="<%=member_vo.getMEMBER_NUM()%>">follow</button>
 									</div>
 							</div>
 							<div class="follow_readcount">
-								<div>조회수<%=pics_vo.getPICS_READ()%></div>
+								<div>조회수<%=pics_vo.get("PICS_READ")%></div>
 							</div> 
 						</div>
-						<a href="./community_detail.cm?PICS_NUM=<%=pics_vo.getPICS_NUM()%>&MEMBER_NUM=<%=member_vo.getMEMBER_NUM()%>&PICS_MEMBER=<%=pics_vo.getPICS_MEMBER()%>">
+						<a href="./community_detail.cm?PICS_NUM=<%=pics_vo.get("PICS_NUM")%>&MEMBER_NUM=<%=member_vo.getMEMBER_NUM()%>&PICS_MEMBER=<%=pics_vo.get("PICS_MEMBER")%>">
 							<div class="img">
-								<img src="/communityupload/image/<%=pics_vo.getPICS_MAIN_IMAGE()%>" class="img" />
-								<div class="hover-image heart_output" id="<%=pics_vo.getPICS_NUM()%>" name="picnum<%=pics_vo.getPICS_NUM()%>">
+								<img src="/communityupload/image/<%=pics_vo.get("PICS_MAIN_IMAGE")%>" class="img" />
+								<div class="hover-image heart_output" id="<%=pics_vo.get("PICS_NUM")%>" name="picnum<%=pics_vo.get("PICS_NUM")%>">
 									<a href="#"> 
-										<span class="button likeBtn" id="heart_output<%=pics_vo.getPICS_NUM()%>"  >  
+										<span class="button likeBtn" id="heart_output<%=pics_vo.get("PICS_NUM")%>"  >  
 											<i class="far fa-heart fa-2x" id="far"></i>
-										</span><%=pics_vo.getPICS_LIKE()%>
+										</span><%=pics_vo.get("PICS_LIKE")%>
 									</a> 
 										<!-- <a href=""><i class="far fa-share-square fa-2x"></i> -->
 								</div>
 							</div>
 						</a>
 						<div class="img-tag">
-							<%	if(pics_vo.getPICS_TAG().length()>0){
-									String tags[]  = pics_vo.getPICS_TAG().split(",");
-									for(int j=0; j<tags.length; j++){
+							<%	if(tags.length()>0){
+									String tag[]  = tags.split(",");
+									for(int j=0; j<tag.length; j++){
 							%>
-										<a href="#"><span class=img-tags>#<%=tags[j]%></span></a>
+										<a href="#"><span class=img-tags>#<%=tag[j]%></span></a>
 							<%
 									} 
 								}
@@ -286,7 +289,7 @@
 		</div>
 		<div class="container container_page">
 			<!-- pagenation -->
-			<nav aria-label="Page navigation example">
+<%-- 			<nav aria-label="Page navigation example">
 				<ul class="pagination d-flex justify-content-center">
 				<%
 					if (nowpage <= 1) {
@@ -346,7 +349,7 @@
 					}
 				%>
 				</ul>
-			</nav>
+			</nav> --%>
 			<!-- pagenation 끝 -->
 	<% 
 		} else {

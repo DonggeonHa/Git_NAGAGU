@@ -8,7 +8,7 @@ import com.spring.member.MemberVO;
 
 
 public interface CommunityService {
-	ArrayList<PicsVO> getPicsAll(HashMap<String, Object> map);
+	ArrayList<HashMap<String, Object>> getPicsAll(HashMap<String, Object> map);
 	int getPicsCount(HashMap<String, Object> map);
 	PicsVO getPicsDetail(PicsVO picsVO);
 	ArrayList<PicsVO> getPicsOfMemberUpload(PicsVO picsVO);

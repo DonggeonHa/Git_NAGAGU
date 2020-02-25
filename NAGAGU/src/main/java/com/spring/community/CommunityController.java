@@ -84,7 +84,7 @@ public class CommunityController {
 		map.put("endrow", endrow);
 				
 		// 리스트 가져오기		
-		ArrayList<PicsVO> picsList =null;		
+		ArrayList<HashMap<String, Object>> picsList =null;		
 		int listcount = 0;
 		
 
@@ -180,7 +180,7 @@ public class CommunityController {
 	    System.out.println("카카오: "+ kakaoUrI);
 	    model.addAttribute("kakao_url", kakaoUrI);
 	    
-	    
+	    memberVO.setMEMBER_NUM(Integer.valueOf(request.getParameter("PICS_MEMBER")));
 		PicsVO picsDetail = communityService.getPicsDetail(picsVO);	
 		ArrayList<PicsVO> memberPicsList = communityService.getPicsOfMemberUpload(picsVO);
 		MemberVO memberDetail = memberService.getMemberDetail(memberVO);

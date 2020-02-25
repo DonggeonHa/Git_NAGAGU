@@ -20,15 +20,15 @@ public class CommunityServiceImpl implements CommunityService{
 	private SqlSession sqlSession;
 	
 	@Override
-	public ArrayList<PicsVO> getPicsAll(HashMap<String, Object> map) {
-		ArrayList<PicsVO> PicsAll = null;
+	public ArrayList<HashMap<String, Object>> getPicsAll(HashMap<String, Object> map) {
+		ArrayList<HashMap<String, Object>> PicsAll = null;
 		try {
 			CommunityMapper communityMapper=sqlSession.getMapper(CommunityMapper.class);
 			PicsAll=communityMapper.getPicsAll(map);
 		} catch (Exception e) { 
 			e.printStackTrace();
 		}
-		return PicsAll;
+		return PicsAll; 
 	}
 
 	@Override 

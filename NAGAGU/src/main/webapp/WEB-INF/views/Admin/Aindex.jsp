@@ -110,7 +110,7 @@ var barChartData = {
 				'${WSCount6}',
 			]
 		}, {
-			label: 'Dataset 3',
+			label: 'Delete Member',
 			backgroundColor: window.chartColors.delete_workshopMember,
 			stack: 'Stack 1',
 			data: [
@@ -123,7 +123,7 @@ var barChartData = {
 				'${deleteMember6}'
 			]
 		}, {
-			label: 'Dataset 4',
+			label: 'Delete Workshop Member',
 			backgroundColor: window.chartColors.delete_member,
 			stack: 'Stack 1',
 			data: [

@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <!-- 이 xml문서와 맵핑할 인터페이스 경로, 이름 -->
 <mapper namespace="com.spring.mapper.CommunityMapper">
-	<resultMap type="java.util.HashMap" id="hashmapVO">
+<!-- 	<resultMap type="java.util.HashMap" id="hashmapVO">
 		<result property="PICS_NUM" column="PICS_NUM" />	
 		<result property="PICS_MEMBER" column="PICS_MEMBER" />	
 		<result property="PICS_NICK" column="PICS_NICK" />
@@ -15,7 +15,7 @@
 		<result property="PICS_MAIN_IMAGE" column="PICS_MAIN_IMAGE" />	
 		<result property="PICS_CONTENT" column="PICS_CONTENT"/>
 		<result property="PICS_PRODUCT" column="PICS_PRODUCT" />
-	</resultMap>
+	</resultMap> -->
 
 	<resultMap type="com.spring.community.PicsVO" id="picsResultMap">
 		<result property="PICS_NUM" column="PICS_NUM" />	
@@ -31,6 +31,8 @@
 		<result property="PICS_CONTENT" column="PICS_CONTENT" />
 		<result property="PICS_PRODUCT" column="PICS_PRODUCT" />
 	</resultMap>
+	<resultMap type="java.util.HashMap" id="hashmapVO">
+	</resultMap>
 	
 	<select id="getPicsCount" parameterType="java.util.HashMap" resultType="int">
 			SELECT count(*) FROM PICS  WHERE 1=1
@@ -38,11 +40,10 @@
 		  <if test="PICS_CATEGORY != 'all'"> AND PICS_CATEGORY=#{PICS_CATEGORY} </if> 
 	</select>
 	
-	<select id="getPicsAll" parameterType="java.util.HashMap" resultMap="picsResultMap">	
- 		SELECT * FROM
-		(SELECT rownum rnum, PICS_NUM, PICS_MEMBER, PICS_NICK, PICS_DATE, PICS_CATEGORY, PICS_LIKE, 
-		PICS_TAG, PICS_READ, PICS_REVIEW, PICS_MAIN_IMAGE, PICS_CONTENT
-        FROM (SELECT * FROM PICS WHERE 1=1
+	<select id="getPicsAll" parameterType="java.util.HashMap" resultMap="hashmapVO">	
+ 		SELECT *
+		FROM PICS P, NAGAGU_MEMBER M
+		WHERE P.PICS_MEMBER = M.MEMBER_NUM
 		  <if test="PICS_REVIEW != 0">  AND PICS_REVIEW=#{PICS_REVIEW} </if>
 		  <if test="PICS_CATEGORY != 'all'"> AND PICS_CATEGORY=#{PICS_CATEGORY} </if>
 		  <if test="option != null"> 
@@ -53,15 +54,15 @@
 				AND PICS_NICK LIKE '%'||#{keyword}||'%'
 			</if>
 			<if test="option == 'content'">
-				AND (PICS_CONTENT LIKE '%'||#{keyword}||'%')
+				AND PICS_CONTENT LIKE '%'||#{keyword}||'%'
 			</if>
 		  </if>
            ORDER BY
           <if test="sort == 'like'"> PICS_LIKE DESC </if>
           <if test="sort == 'read'"> PICS_READ DESC </if>                        
           <if test="sort == 'new'"> PICS_DATE DESC </if>
-          ))
-          <![CDATA[ WHERE rnum >= #{startrow} AND rnum <= #{endrow} ]]> 
+          
+          <!-- <![CDATA[ WHERE rnum >= #{startrow} AND rnum <= #{endrow} ]]>  -->
 	</select>
 	
 
