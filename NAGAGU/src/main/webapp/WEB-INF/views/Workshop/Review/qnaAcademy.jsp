@@ -32,7 +32,7 @@
 
 
 
-<div id="page-content-wrapper" style="padding-top: 5%;">
+<div id="page-content-wrapper" style="padding-top: 3%;">
 	<div class="container-fluid">
 		<div class="work_title">
 		
@@ -136,7 +136,7 @@
 				</div>
 	        </div>
 		</div>
-		<div style="height: 620px;">
+		<div style="height: 620px; overflow-y: auto;">
 	        <table class="table" id="work_store">
 	            <thead>
 	            <tr class="text-center">

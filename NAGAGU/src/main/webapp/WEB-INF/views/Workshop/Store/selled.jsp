@@ -14,7 +14,7 @@
 	
 %>
 
-<div id="page-content-wrapper" style="padding-top: 5%;">
+<div id="page-content-wrapper" style="padding-top: 3%;">
 	<div class="container-fluid">
 		<div class="pb-5">
 			<h1>판매된 상품 관리</h1>

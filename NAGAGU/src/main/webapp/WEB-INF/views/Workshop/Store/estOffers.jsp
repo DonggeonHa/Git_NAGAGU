@@ -7,6 +7,7 @@
 	
 	.table_container {
 		min-height:550px;
+		overflow-y: auto;
 	}
 	#work_store th, td {
 		text-align:center;
@@ -34,7 +35,7 @@
 	}
 	
 </style>
-<div id="page-content-wrapper" style="padding-top: 5%;">
+<div id="page-content-wrapper" style="padding-top: 3%;">
 
 <!-- 리스트 폼 시작 -->
 <form id="listinfo" method="post">

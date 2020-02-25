@@ -8,7 +8,7 @@
 		response.sendRedirect("/index.ma");
 	}
 %>
-<div id="page-content-wrapper" style="padding-top: 5%;">
+<div id="page-content-wrapper" style="padding-top: 3%;">
 	<div class="container-fluid">
 		<div class="d-flex justify-content-between pb-5">
 		   	<div class="justify-content-start">
@@ -67,7 +67,7 @@
 				</div>
 			</div>
 		</div>
-           <div style="height: 620px;">
+           <div style="height: 620px; overflow-y: auto;">
             <table class="table table-hover" id="work_store">
                 <thead>
 	                <tr>
