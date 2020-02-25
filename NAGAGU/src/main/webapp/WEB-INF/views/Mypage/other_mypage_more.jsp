@@ -156,13 +156,8 @@
 	.img-wrap img{
 		border-radius:10px; 
 		width: 100%;
-<<<<<<< HEAD
-		height: 250px;
-        margin-bottom: 50px; 
-=======
 		height: 250px; 
 		margin-bottom: 50px;
->>>>>>> 8118de2658b7b822f93764aaaf7880e37da749f0
 	}
 </style>
 
@@ -179,20 +174,6 @@
 			<div class="pics-wrap">
 				<div class="row justify-content-between title mx-0 pt-2">
 			        <div class="col-4">
-<<<<<<< HEAD
-                        <%
-	                        if(category.equals("pics")){
-	                            %>
-	                            <h2>사진</h2>
-	                            <%
-	                        }else{
-	                            %>
-	                            <h2>LIKE</h2>
-	                            <%
-	                        }
-	                        
-	                    %>
-=======
 			        <%
 			        	if(category.equals("pics")){
 			        		%>
@@ -205,8 +186,6 @@
 			        	}
 			        	
 			        %>
-			          
->>>>>>> 8118de2658b7b822f93764aaaf7880e37da749f0
 			        </div>          
 				</div>
 				<c:set var="name" value="<%=uploadOrLike%>" />
