@@ -155,15 +155,15 @@ if (session.getAttribute("WORKSHOP_NUM") == null) {
 			contentType: 'application/x-www-form-urlencoded; charset=utf-8',
 			success: function(res) {
 				if(res == 1) {
-					alert("판매중으로 변경 완료!");						
+					alertify.alert('확인', "판매중으로 변경 완료!");						
 				} else if(res == 0) {
-					alert("품절로 변경 완료!");						
+					alertify.alert('확인', "품절로 변경 완료!");						
 				} else if(res == 2) {
-					alert("판매종료로 변경 완료!");						
+					alertify.alert('확인', "판매종료로 변경 완료!");						
 				} else if(res == -1) {
-					alert("삭제 완료!");	
+					alertify.alert('확인', "삭제 완료!");	
 				} else {
-					alert("실패!");
+					alertify.alert('확인', "실패!");
 				}
 				
 				$("#keyword").val('');
@@ -187,8 +187,9 @@ if (session.getAttribute("WORKSHOP_NUM") == null) {
 			alert('상품을 선택해주세요!');
 			return false;
 		}
-		var alert_confirm = confirm("선택하신 상품을 판매중 상태로 변경하시겠습니까??");
-		if (alert_confirm) {
+//		var alert_confirm = confirm("선택하신 상품을 판매중 상태로 변경하시겠습니까??");
+		alertify.confirm('확인','선택하신 상품을 판매중 상태로 변경하시겠습니까??', function() {
+			alertify.success('Ok')
 			var to_status = 1;
 			var checkBoxArr = [];
 			$("input[name=chk]:checked").each(function(i){
@@ -196,22 +197,34 @@ if (session.getAttribute("WORKSHOP_NUM") == null) {
 				checkBoxArr.push(PRODUCT_NUM);
 				console.log("판매중으로 update할 PRODUCT_NUM : " + PRODUCT_NUM)
 			});
-			
 			//상태 변경해주는 함수 호출
 			modifyProductStatus(to_status, checkBoxArr);				
 		}
+		 , function(){ 
+		    	alertify.error('Cancel')
+		    	}
+		);
 	});  
-	
-	
-	
+<%-- 	
+	alertify.confirm('확인', '정말 삭제하시겠습니까?', function(){ 
+		alertify.success('Ok') 
+		var url = '${pageContext.request.contextPath}/community_delete.cm'
+			+ '?PICS_NUM='+<%=picsVO.getPICS_NUM()%>
+		location.href=url;
+		}
+    , function(){ 
+    	alertify.error('Cancel')
+    	}
+    );
+	 --%>
 	
 	$(document).on('click', '#to_pauseSale', function(event) {
 		if ($("input[name=chk]:checked").length == 0) {
-			alert('상품을 선택해주세요!');
+			alertify.alert('상품을 선택해주세요!');
 			return false;
 		}
-		var alert_confirm = confirm("선택하신 상품을 품절상태로 변경하시겠습니까??");
-		if (alert_confirm) {
+		alertify.confirm('확인','선택하신 상품을 품절상태로 변경하시겠습니까??', function() {
+			alertify.success('Ok') 
 			var to_status = 0;
 			var checkBoxArr = [];
 			$("input[name=chk]:checked").each(function(i){
@@ -219,18 +232,19 @@ if (session.getAttribute("WORKSHOP_NUM") == null) {
 				checkBoxArr.push(PRODUCT_NUM);
 				console.log("품절상태로 update할 PRODUCT_NUM : " + PRODUCT_NUM)
 			});
-			
-			//상태 변경해주는 함수 호출
 			modifyProductStatus(to_status, checkBoxArr);				
-		}
+		}, function(){ 
+    	alertify.error('Cancel')
+    	}
+		);
 	});    
 	$(document).on('click', '#to_endSale', function(event) {
 		if ($("input[name=chk]:checked").length == 0) {
 			alert('상품을 선택해주세요!');
 			return false;
 		}
-		var alert_confirm = confirm("선택하신 상품을 판매종료 상태로 변경하시겠습니까??");
-		if (alert_confirm) {
+		alertify.confirm('확인', "선택하신 상품을 판매종료 상태로 변경하시겠습니까??", function() {
+			alertify.success('Ok') 
 			var to_status = 2;
 			var checkBoxArr = [];
 			$("input[name=chk]:checked").each(function(i){
@@ -241,7 +255,10 @@ if (session.getAttribute("WORKSHOP_NUM") == null) {
 			
 			//상태 변경해주는 함수 호출
 			modifyProductStatus(to_status, checkBoxArr);				
-		}
+		},  function(){ 
+    	alertify.error('Cancel')
+    	}
+		);
 	});    
 	$(document).on('click', '#deleteProducts', function(event) {
 		if ($("input[name=chk]:checked").length == 0) {
@@ -296,8 +313,8 @@ if (session.getAttribute("WORKSHOP_NUM") == null) {
 	
 	$("#keyword").keyup(function(event){
 		if (event.keyCode == 13) {
-			if(!$('#keyword').val() || !$('#searchType').val()){
-				alert("카테고리 선택, 검색어를 입력하세요!");
+			if(!$('#keyword').val()){
+				alert("검색어를 입력하세요!");
 				$('#keyword').focus();
 				return false;
 			}	

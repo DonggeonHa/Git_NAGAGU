@@ -426,13 +426,32 @@
 				      	    case 7 : 
 				      	    	ORDER_STATE = '환불완료'
 				      	        break;
-			   		   	    }				     		
+			   		   	    }				 
+				      		
+				      		var ORDER_METHOD = productList[0].ORDER_METHOD;
+				      		console.log(ORDER_METHOD)
+				      		switch(ORDER_METHOD){
+				      		
+				      	    case 'toss' : 
+				      	    	ORDER_STATE = '토스'
+				      	        break;
+				      	    case 'card' : 
+				      	    	ORDER_STATE = '카드' 
+				      	        break;  
+				      	    case 'kakao' : 
+				      	    	ORDER_STATE = '카카오페이'
+				      	        break;
+				      	    case 'payco' : 
+				      	    	ORDER_STATE = '페이코'
+				      	        break;
+				      	    case 'samsung' : 
+				      	    	ORDER_STATE = '삼성페이'
+				      	        break;
+			   		   	    }					      		
+				      		
 				    		var ORDER_NUM = productList[0].ORDER_NUM;
 				    		var ORDER_AMOUNT = productList[0].ORDER_AMOUNT;
-							var ORDER_METHOD = productList[0].ORDER_METHOD;
-							if(ORDER_METHOD == 'kakao') {
-								ORDER_METHOD = '카카오페이';
-							}
+
 							var ORDER_PRICE = productList[0].ORDER_PRICE;
 							var MEMBER_NICK = productList[0].MEMBER_NICK;
 				    		var ORDER_DATE = new Date(productList[0].ORDER_DATE);
