@@ -460,9 +460,9 @@
 					<input type="hidden" name="OFFER_ESTIMATE" value="<%=vo.getESTIMATE_NUM() %>">
 					<input type="hidden" id="modify_offer_num" name="OFFER_NUM">
 						<label class="modalLabel" for="OFFER_PRICE">제시 가격</label>
-						<input class="modalInput" id="modify_offer_price" type="text" name="OFFER_PRICE"><br>
+						<input class="modalInput form-control" id="modify_offer_price" type="text" name="OFFER_PRICE"><br>
 						<label class="modalLabel" for="OFFER_CONTENT">내용</label>
-						<textarea class="modalInput" id="modify_offer_content" name="OFFER_CONTENT" maxlength="200"></textarea>
+						<textarea class="modalInput form-control" id="modify_offer_content" name="OFFER_CONTENT" maxlength="200"></textarea>
 					</form>
 				</div>
 				<div class="modal-footer">
