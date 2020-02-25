@@ -266,7 +266,7 @@
  	<!-- 커뮤니티관리 -->
  	<select id="getPICS" parameterType="int" resultMap="picsResultMap"> <!-- 이거 처리한 결과물을 list 타입으로 만들어주면 된다. select id은 내용을 호출 함. -->
 		select *
-		from (select ROW_NUMBER() OVER (order by PICS_DATE ASC , PICS_NUM ASC) as RNUM, PICS_NUM, PICS_NICK, PICS_CATEGORY, PICS_LIKE, PICS_READ, PICS_TAG
+		from (select ROW_NUMBER() OVER (order by PICS_DATE DESC , PICS_NUM ASC) as RNUM, PICS_NUM, PICS_NICK, PICS_CATEGORY, PICS_LIKE, PICS_READ, PICS_TAG
 			  from(select * from PICS))
  	</select>
  	
@@ -286,7 +286,7 @@
 		SELECT * 
 		FROM PICS_COMMENT , NAGAGU_MEMBER PICS 
 		WHERE MEMBER_NUM = PICS_RE_MEMBER 
-		ORDER BY PICS_RE_DATE ASC , PICS_RE_NUM ASC
+		ORDER BY PICS_RE_DATE DESC , PICS_RE_NUM ASC
  	</select>
  	
  	<delete id="deletePICSComment" parameterType="com.spring.community.PicsCommentDB">
@@ -296,7 +296,7 @@
  	<!-- 아카데미 관리 -->
  	<select id="getAcademy" parameterType="int" resultMap="classResultMap"> <!-- 이거 처리한 결과물을 list 타입으로 만들어주면 된다. select id은 내용을 호출 함. -->
 		select *
-		from (select ROW_NUMBER() OVER (order by CLASS_DATE ASC , CLASS_NUMBER ASC) as RNUM, CLASS_NUMBER, CLASS_DIVISION, WORKSHOP_NAME, CLASS_NAME, CLASS_AMOUNT, CLASS_DATE_CONFIGURATION_1, CLASS_DATE_CONFIGURATION_2, 
+		from (select ROW_NUMBER() OVER (order by CLASS_DATE DESC , CLASS_NUMBER ASC) as RNUM, CLASS_NUMBER, CLASS_DIVISION, WORKSHOP_NAME, CLASS_NAME, CLASS_AMOUNT, CLASS_DATE_CONFIGURATION_1, CLASS_DATE_CONFIGURATION_2, 
 			  CLASS_AREA, CLASS_CATEGORY, CLASS_ADDRESS, CLASS_DETAIL_ADDRESS, CLASS_STATUS
 			  from(select * from ACADEMY))
  	</select>
@@ -314,7 +314,7 @@
 		FROM ACADEMY A, CLASS_REVIEW R, nagagu_member N
 		WHERE A.CLASS_NUMBER = R.REVIEW_CLASS        
 		AND R.REVIEW_MEMBER = N.MEMBER_NUM
-		ORDER BY REVIEW_CLASS ASC , REVIEW_NUM ASC
+		ORDER BY REVIEW_CLASS DESC , REVIEW_NUM ASC
  	</select>
  	
  	<delete id="deleteAcademyReview" parameterType="com.spring.academy.Class_reviewVO">
@@ -326,7 +326,7 @@
 		FROM ACADEMY A, CLASS_QNA Q, nagagu_member N
 		WHERE A.CLASS_NUMBER = Q.QNA_CLASS        
 		AND Q.QNA_MEMBER = N.MEMBER_NUM
-		ORDER BY QNA_CLASS ASC , QNA_NUM ASC
+		ORDER BY QNA_CLASS DESC , QNA_NUM ASC
  	</select>
  	
  	<delete id="deleteAcademyQnA" parameterType="com.spring.academy.Class_qnaVO">
@@ -336,7 +336,7 @@
  	<!-- 상품관리 -->
  	<select id="getProduct" parameterType="int" resultMap="productResultMap"> <!-- 이거 처리한 결과물을 list 타입으로 만들어주면 된다. select id은 내용을 호출 함. -->
 		select *
-		from (select ROW_NUMBER() OVER (order by PRODUCT_DATE ASC , PRODUCT_NUM ASC) as RNUM, PRODUCT_NUM, PRODUCT_SHOPNAME, PRODUCT_TITLE, PRODUCT_CATEGORY, PRODUCT_PRICE, PRODUCT_STATUS
+		from (select ROW_NUMBER() OVER (order by PRODUCT_DATE DESC , PRODUCT_NUM ASC) as RNUM, PRODUCT_NUM, PRODUCT_SHOPNAME, PRODUCT_TITLE, PRODUCT_CATEGORY, PRODUCT_PRICE, PRODUCT_STATUS
 			  from(select * from PRODUCT))
  	</select>
  	
@@ -353,7 +353,7 @@
 		FROM PRODUCT P, PRODUCT_REVIEW R, nagagu_member N
 		WHERE P.PRODUCT_NUM = R.REVIEW_PRODUCT        
 		AND R.REVIEW_MEMBER = N.MEMBER_NUM
-		ORDER BY R.REVIEW_DATE ASC , R.REVIEW_NUM ASC
+		ORDER BY R.REVIEW_DATE DESC , R.REVIEW_NUM ASC
  	</select>
  	
  	<delete id="deleteProductReview" parameterType="com.spring.store.Product_reviewVO">
@@ -365,7 +365,7 @@
 		FROM PRODUCT P, PRODUCT_QNA Q, nagagu_member N
 		WHERE P.PRODUCT_NUM = Q.QNA_PRODUCT
 		AND Q.QNA_MEMBER = N.MEMBER_NUM
-		ORDER BY Q.QNA_DATE ASC , Q.QNA_NUM ASC
+		ORDER BY Q.QNA_DATE DESC , Q.QNA_NUM ASC
  	</select>
  	
  	<delete id="deleteProductQnA" parameterType="com.spring.store.Product_qnaVO">
@@ -375,7 +375,7 @@
  	<!-- 견적관리 -->
  	<select id="getEstimate" parameterType="int" resultMap="estimateMap"> <!-- 이거 처리한 결과물을 list 타입으로 만들어주면 된다. select id은 내용을 호출 함. -->
 		select *
-		from (select ROW_NUMBER() OVER (order by ESTIMATE_DATE ASC , ESTIMATE_NUM ASC) as RNUM, ESTIMATE_NUM, ESTIMATE_MEMBER, ESTIMATE_NICK, ESTIMATE_TITLE, ESTIMATE_CATEGORY, ESTIMATE_AVG, ESTIMATE_OFFERCOUNT, ESTIMATE_STATE
+		from (select ROW_NUMBER() OVER (order by ESTIMATE_DATE DESC , ESTIMATE_NUM ASC) as RNUM, ESTIMATE_NUM, ESTIMATE_MEMBER, ESTIMATE_NICK, ESTIMATE_TITLE, ESTIMATE_CATEGORY, ESTIMATE_AVG, ESTIMATE_OFFERCOUNT, ESTIMATE_STATE
 			  from(select * from ESTIMATE))
  	</select>
  	

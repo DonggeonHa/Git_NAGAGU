@@ -105,6 +105,8 @@
 						output += '<td>유찰</td>';
 					} else if(item.estimate_STATE == 3){
 						output += '<td>취소</td>';
+					} else if(item.estimate_STATE == 4){
+						output += '<td>입금완료</td>';
 					}
 					
 					output += '<td><a href="./deleteEstimate.ad" class="del_data" ';
