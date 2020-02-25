@@ -8,7 +8,7 @@
 	<nav>
 		<ul class="sidebar-image" style="margin-left: -36px;">
 			<li class="sidebar-brand" style="margin: 15px 0 0 0;">
-				<a href="./workshop.ws">
+				<a href="./workshop.ws" style="text-decoration:none;">
 					<div class="sidebar_title">
 						<i class="fas fa-store"></i> 공방관리센터
 					</div>

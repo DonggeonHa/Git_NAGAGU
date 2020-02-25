@@ -182,82 +182,62 @@ public class MypageController {
 	public ModelAndView Workshopadmin(HttpSession session, ModelAndView mav) throws Exception{
 		int WORKSHOP_NUM = (int)session.getAttribute("WORKSHOP_NUM");
 		int i = 0;
-		
 		ArrayList<ClassVO> myClassList = null;
 		ClassVO[] ClassList = new ClassVO[5];
 		String class_name = null;
 		int class_count_member = 0;
-		
 		ArrayList<ProductVO> productSellList = null;
 		ProductVO[] sellList = new ProductVO[5];
 		String product_category = null;
 		String product_title = null;
 		int product_sales = 0;
-		
 		int order_state = 0;
-		
 		try {
 			productSellList = academyService.productSellList(WORKSHOP_NUM);
 			for(i=0 ; i < productSellList.size(); i++) {
 				sellList[i] = productSellList.get(i);
 			}
 			for(i=0 ; i < 5; i++) {
-				
 				if(sellList[i] == null) {
 					product_category = "nothing";
 					product_title = "nothing";
 					product_sales = 0;
-					
 					mav.addObject("product_category"+i, product_category);
 					mav.addObject("product_title"+i, product_title);
 					mav.addObject("product_sales"+i, product_sales);
-					
 					continue;
 				} else {
 					product_category = sellList[i].getPRODUCT_CATEGORY();
 					product_title = sellList[i].getPRODUCT_TITLE();
 					product_sales = sellList[i].getPRODUCT_SALES();
-					
 					if(product_sales == 0)
 						product_sales = 1;
-					
 					mav.addObject("product_sales"+i, product_sales);
 					mav.addObject("product_category"+i, product_category);
 					mav.addObject("product_title"+i, product_title);
-					
 					continue;
 				}
-				
 			}
-			
-			
-			
 			myClassList = academyService.myClassList(WORKSHOP_NUM);
 			for(i=0 ; i < myClassList.size(); i++) {
 				ClassList[i] = myClassList.get(i);
 			}
 			for(i=0 ; i < 5; i++) {
-				
 				if(ClassList[i] == null) {
 					class_name = "nothing";
 					System.out.println("ClassList i는?" + i);
 					mav.addObject("class_name"+i, class_name);
 					mav.addObject("class_count_member"+i, 0);
-					
 					continue;
 				}else {
 					System.out.println("else문 ClassList i는?" + i);
 					class_name = ClassList[i].getCLASS_NAME();
 					class_count_member = ClassList[i].getCLASS_COUNT_MEMBER();
-					
 					mav.addObject("class_name"+i, class_name);
 					mav.addObject("class_count_member"+i, class_count_member);
-					
 					continue;
 				}
-				
 			}
-			
 			for(int number=0 ; number < 8; number++) {
 				System.out.println("worknum: " + WORKSHOP_NUM + "number: " + number);
 				order_state = academyManagementService.countOrderState(number, WORKSHOP_NUM);				
@@ -266,9 +246,7 @@ public class MypageController {
 		} catch(Exception e) {
 			System.out.println("대시보드 컨트롤러 차트 에러" + e.getMessage());
 		}
-
 		mav.setViewName("Workshop/main");
-		
 		return mav;
 	}
 	

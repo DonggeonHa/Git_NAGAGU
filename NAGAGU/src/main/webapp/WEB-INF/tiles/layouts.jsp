@@ -8,7 +8,7 @@
 		<tiles:insertAttribute name="css" ignore="true" />
 		<tiles:insertAttribute name="js" ignore="true" />
 	</head> 
-	<body class="order-body" style="position: relative;" data-spy="scroll" data-target=".nav-tabs" data-offset="50"> 
+	<body class="order-body" data-spy="scroll" data-target=".nav-tabs" data-offset="50"> 
 		<div style="display : flex; flex-direction:column; height: 100%;">
 			<header>
 				<tiles:insertAttribute name="header" ignore="true" />
