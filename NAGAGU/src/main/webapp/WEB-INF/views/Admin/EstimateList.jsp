@@ -33,7 +33,7 @@
 	});
   
 
-	// 목록
+	// 목록ㅎ
 	function selectData() {
 		$('#remo').remove();
 		// table 내부 내용 모두 제거(초기화)
