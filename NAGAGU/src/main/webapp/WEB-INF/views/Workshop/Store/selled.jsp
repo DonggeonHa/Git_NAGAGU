@@ -396,7 +396,8 @@
 				     		console.log(productList.length)
 				     		var PRODUCT_TITLE = productList[0].PRODUCT_TITLE + ' 외 ' + (productList.length-1) + '건';	//상품이름 외 다른 정보들은 다 같으므로 0번째 데이터의 값으로 출력
 				     		if(selectMYPRODUCT != 'MYPRODUCT') {
-				     			PRODUCT_TITLE = MYPRODUCT + '외' + (productList.length-1) + '건';
+				     			console.log(selectMYPRODUCT)
+				     			PRODUCT_TITLE = selectMYPRODUCT + '외' + (productList.length-1) + '건';
 				     		}
 				     		
 							var ORDER_STATE = productList[0].ORDER_STATE;

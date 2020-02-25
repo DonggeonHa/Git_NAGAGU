@@ -182,7 +182,7 @@
 				<div class="row justify-content-start img-wrap">  
 					<c:forEach var="pics" items="${memberPicsList}" varStatus="vs" begin="0" end="2" step="1">
 					    <div class="col-4 img-wrap">
-						    <a href="${pageContext.request.contextPath}/community_detail.cm?PICS_NUM=${pics.PICS_NUM}&MEMBER_NUM=${pics.PICS_MEMBER}">
+							<a href="${pageContext.request.contextPath}/community_detail.cm?PICS_NUM=${pics.PICS_NUM}&MEMBER_NUM=${pics.PICS_MEMBER}&PICS_MEMBER=${pics.PICS_MEMBER}">
 							<img src="/communityupload/image/${pics.PICS_MAIN_IMAGE}"></a>
 						</div>   
 					</c:forEach> 
@@ -200,7 +200,7 @@
 				<div class="row justify-content-start img-wrap ">
 					<c:forEach var="pics" items="${memberLikePics}" varStatus="vs" begin="0" end="2" step="1">
 					    <div class="col-4 img-wrap">
-						    <a href="${pageContext.request.contextPath}/community_detail.cm?PICS_NUM=${pics.PICS_NUM}&MEMBER_NUM=${pics.PICS_MEMBER}">
+						    <a href="${pageContext.request.contextPath}/community_detail.cm?PICS_NUM=${pics.PICS_NUM}&MEMBER_NUM=${pics.PICS_MEMBER}&PICS_MEMBER=${pics.PICS_MEMBER}">
 							<img src="/communityupload/image/${pics.PICS_MAIN_IMAGE}"></a>
 						</div>   
 						

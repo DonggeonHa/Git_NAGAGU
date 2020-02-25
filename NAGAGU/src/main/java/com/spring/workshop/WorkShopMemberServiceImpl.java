@@ -65,7 +65,7 @@ public class WorkShopMemberServiceImpl implements WorkShopMemberService {
 	}
 
 	@Override
-	public int workshop_name_chk(WorkShopMemberVO workshopVO) {
+	public int workshop_email_chk(WorkShopMemberVO workshopVO) {
 		WorkShopMemberVO workshop_email = null;
 		int res = -1;
 		
@@ -87,7 +87,7 @@ public class WorkShopMemberServiceImpl implements WorkShopMemberService {
 	}
 
 	@Override
-	public int workshop_email_chk(WorkShopMemberVO workshopVO) {
+	public int workshop_name_chk(WorkShopMemberVO workshopVO) {
 		WorkShopMemberVO workshop_name = null;
 		int res = -1;
 		

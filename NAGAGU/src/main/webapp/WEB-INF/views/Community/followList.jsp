@@ -169,6 +169,13 @@
 		border-top: 1px solid black;
 		border-color: rgba(0, 0, 0, 0.1) 
 	}
+	.img_wrap>div{
+       padding-left:150px;
+    }
+    .card-body img{
+        width:100px;
+        height:100px;
+    }
 </style>
 
 <div class="container" style="margin-top: 30px; margin-bottom: 30px;">
@@ -192,7 +199,7 @@
 				</div>
 				
 				<div class="row justify-content-center title pt-2 img_wrap">
-					<div class="col-6 text-center">
+					<div class="col-6 text-left">
 						<c:forEach var="list" items="${followMembers}" varStatus="status">
 							<div>
 								<a href="memberLikePics.cm?MEMBER_NUM=${list.MEMBER_NUM}">
@@ -201,7 +208,7 @@
 							</div> 
 						</c:forEach> 
 					</div>
-					<div class="col-6 text-center">
+					<div class="col-6 text-left">
 						<c:forEach var="list" items="${followedMembers}"
 							varStatus="status">
 							<div>
