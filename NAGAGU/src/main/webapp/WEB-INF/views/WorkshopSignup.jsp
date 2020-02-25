@@ -73,7 +73,7 @@
                             <input type="email" class="form_input" id="WORKSHOP_EMAIL" name="WORKSHOP_EMAIL" placeholder="이메일" size="1" required>
                         </div>
                         <div class="email_chk_btn ml-3">
-                        	<button type="button" id="email_chk_btn" onclick="email_chk()" value="N" >중복체크</button>
+                        	<button type="button" id="email_chk_btn" onclick="work_email_chk();" value="N" >중복체크</button>
                         </div>
                     </div>
                 </div>
@@ -97,7 +97,7 @@
                 <div class="signup_form_label">공방 이름</div>
                 <div class="signup_form_input">
                     <input type="text" id="WORKSHOP_NAME" name="WORKSHOP_NAME" class="form_input" placeholder = "2~15자리 이내(특수문자 불가)">
-                    <button type="button" id="nick_chk_btn" onclick="name_chk()" value="N">중복체크</button>
+                    <button type="button" id="nick_chk_btn" onclick="work_name_chk();" value="N">중복체크</button>
                 </div>
                 <div class="error_next_box" id="nameMsg" style="display: hidden;" aria-live="assertive"></div>
             </div>
@@ -205,9 +205,8 @@
    
 <script>
 	//이메일 중복체크
-	function email_chk(){
+	function work_email_chk(){
 		var _str1 = $("#WORKSHOP_EMAIL").val();
-		
 		if(_str1==""){
 			alertify.alert("이메일을 입력하세요.");
 			
@@ -238,8 +237,8 @@
 	      });	
 	}
 	
-	function name_chk(){
-		var _str2 = $("#WORKSHOP_NAME").val();
+	function work_name_chk(){
+		var _str2 = $("#workshop_name").val();
 	      
 	      jQuery.ajax({
 	         url : '/NAGAGU/workshopNicknameChk.ws',
