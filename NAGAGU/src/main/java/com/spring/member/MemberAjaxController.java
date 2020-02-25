@@ -102,6 +102,7 @@ public class MemberAjaxController {
 					session.setAttribute("MEMBER_NAME", member.getMEMBER_NAME());
 					session.setAttribute("MEMBER_PHONE", member.getMEMBER_PHONE());
 					session.setAttribute("MEMBER_PICTURE", member.getMEMBER_PICTURE());
+					session.setAttribute("MEMBER_PASS", member.getMEMBER_PASS());
 					retVal.put("res", "login_success");
 					
 				} else if(res == 0) { //아이디,비번은 맞지만 이메일 미인증일 때

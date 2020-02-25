@@ -5,6 +5,7 @@
 	String MEMBER_EMAIL = (String)session.getAttribute("MEMBER_EMAIL");
 	String WORKSHOP_NAME = (String)session.getAttribute("WORKSHOP_NAME");
 	String WORKSHOP_EMAIL = (String)session.getAttribute("WORKSHOP_EMAIL");
+	String MEMBER_PASS = (String)session.getAttribute("MEMBER_PASS");
 %>
 <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/css/footer.css">
 
@@ -103,7 +104,7 @@
 						<span aria-hidden="true">&times;</span>
 					</button>
 				</div>
-				<form action="./deleteMember.ma" method="post">
+				<form name="deleteForm" action="./deleteMember.ma" method="post">
 					<div class="modal-body">
 						<p> 이용해주셔서 감사합니다. 항상 노력하는 NAGAGU가 되겠습니다. </p>
 						<p> <h4>회원탈퇴 후 회원정보 보존기간</h4></p>
@@ -122,12 +123,12 @@
 						</div>
 						<div class="form-group">
 							<label for="message-text" class="password">비밀번호</label>
-							<input type="password" class="form-control" id="MEMBER_PASS" name="MEMBER_PASS">
+							<input type="password" class="form-control" id="pass" name="MEMBER_PASS">
 						</div>
 					</div>
 					<div class="modal-footer">
 						<button type="button" class="btn btn-outline-dark cancel" data-dismiss="modal">취소</button>
-						<input type="submit" class="btn btn-outline-dark delete_member" value="탈퇴">
+						<input type="button" class="btn btn-outline-dark delete_member" onclick="check_pw();" value="탈퇴">
 					</div>
 				</form>
 		<%
@@ -136,3 +137,16 @@
 		</div>
 	</div>
 </div>
+<script>
+function check_pw(){
+	 var pass = $("#pass").val();
+	 var MEMBER_PASS = "<%=MEMBER_PASS%>";
+	alert(pass);
+	if(MEMBER_PASS != pass){
+		alertify.alert("경고", "비밀번호가 맞지 않습니다. 확인하고 다시 해주세요.");
+	}else{
+		document.deleteForm.submit();
+	}
+	
+}
+</script>
