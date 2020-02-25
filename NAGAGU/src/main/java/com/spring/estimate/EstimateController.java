@@ -38,16 +38,20 @@ public class EstimateController {
 	@RequestMapping(value = "/estimate.es")
 	public String estimate(HttpServletRequest request, Model model, HttpSession session) {
 		HashMap <String, Object> map = new HashMap <String, Object>();
+		System.out.println(request.getParameter("MEMBER_EMAIL"));
+		if (request.getParameter("MEMBER_EMAIL") != null) {
+			map.put("MEMBER_EMAIL", request.getParameter("MEMBER_EMAIL"));
+		}
+		
 		map.put("ES_CATEGORY", request.getParameter("category"));
 		map.put("ES_SEARCH", request.getParameter("search_text"));
 		int page = 1;
 		int limit = 20;
 		int estimateCount = estimateService.estimateCount(map);
-		
+		System.out.println(estimateCount);
 		if (request.getParameter("page") != null) {
 			page = Integer.parseInt(request.getParameter("page"));
 		}
-		
 		int maxpage = (int)((double)estimateCount/limit+0.95);
 		int startRow = (page-1)*limit + 1;
 		int endRow = startRow+limit-1;

@@ -229,10 +229,10 @@
 							case 1 :
 								switch (item.OFFER_STATE) {
 								case 1 :
-									es_state = '<b><font color="red">낙찰</font></b>';
+									es_state = '<b><font color="blue">낙찰</font></b>';
 									break;
-								case 2 :
-									es_state = '<b><font color="#d3d3d3">낙찰 실패</font></b>';
+								case 0 :
+									es_state = '<font color="#a3a3a3">낙찰 실패</font>';
 									break;
 								}
 								break;
@@ -240,7 +240,7 @@
 								es_state = '유찰';
 								break;
 							case 3 :
-								es_state = '취소';
+								es_state = '<font color="red">취소</font>';
 								break;
 							case 4 :
 								es_state = '<b><font color="#ef900e">제작중</font></b>';

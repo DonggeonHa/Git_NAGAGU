@@ -171,11 +171,6 @@
 		text-decoration: none;
 	}
 	
-	.modal-dialog {
-		width:480px;
-		height:640px;
-	}
-	
 	.modalLabel {
 		width:80px;
 	}

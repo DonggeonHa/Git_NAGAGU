@@ -184,7 +184,7 @@
 							<option value="drawer">서랍장</option>
 							<option value="sidetable">협탁</option>
 							<option value="dressing_table">화장대</option>
-							<option value="others">기타</option>
+							<option value="misc">기타</option>
 						</select>
 					</td>
 				</tr>
@@ -336,22 +336,11 @@
         	
 
             if (this.files.length + uploadCnt > 5) {
-        		alert('첨부 파일은 총 5개까지 입니다.');
+        		alertify.alert('파일 첨부수 제한', '첨부 파일은 총 5개까지 입니다.');
         		return false;
             }
 			
             selectFile(this.files);
-            //this.files[0].size gets the size of your file.
-            //alert(this.files[0].size);
-        });
-        
-        $(document).on('mouseenter', '.imageThumb', function() {
-       		var test = $(this).find('div.thumb_title').attr('idx');
-        	$(this).find('div.thumb_title').show(200);
-        });
-        
-        $(document).on('mouseleave', '.imageThumb', function() {
-        	$(this).find('div.thumb_title').hide(200);
         });
     });
     
@@ -396,7 +385,7 @@
             var files = e.originalEvent.dataTransfer.files;
             
             if (files.length + uploadCnt > 5) {
-        		alert('첨부 파일은 총 5개까지 입니다.');
+        		alertify.alert('파일 첨부수 제한', '첨부 파일은 총 5개까지 입니다.');
         		return false;
             }
             
@@ -429,7 +418,7 @@
                     }
             		
             		if (!files[0].type.match('image.*')) {
-                        alert("등록이 불가능한 파일 입니다.("+fileName+")");
+                        alertify.alert("파일 첨부 오류", "등록이 불가능한 파일 입니다.("+fileName+")");
                     } else {
                 		var file = files[i];
                 		var size = fileList.push(file); //업로드 목록에 추가

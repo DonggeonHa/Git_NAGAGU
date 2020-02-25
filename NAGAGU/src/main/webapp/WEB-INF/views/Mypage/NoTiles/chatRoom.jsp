@@ -212,7 +212,7 @@ var output = $('#output');
 	
 	w = new WebSocket("ws://localhost:8000/NAGAGU/broadcasting.do");
 	w.onopen = function() {
-		alertify.alert("채팅방에 입장했습니다.");
+		alertify.alert("반갑습니다, <%=mem_nick%>님", "채팅방에 입장했습니다.");
 	}
 	
 	w.onmessage = function(e) {
