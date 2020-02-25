@@ -77,7 +77,7 @@
 		color: rgba(0, 0, 0, 1) !important;
 	}
 	.category_ac{
-		margin-bottom:100px;
+		margin-bottom:50px;
 	}
 	
 	/*별 이미지 색상*/
@@ -87,12 +87,6 @@
 	.grade {
 		font-size: small;
 		float: left;
-	}
-	.container_page{
-		position: absolute;
-		bottom: 200px; 
-		left: 50%;
-		transform: translateX(-50%);
 	}
 	.container_page a{
 		color: black;

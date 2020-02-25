@@ -161,14 +161,9 @@
 		color: rgba(0,0,0,0.5) !important;
 	}
 	.category_cm{
-		margin-bottom: 100px; 
+		margin-bottom: 50px; 
 	}
-	.container_page{
-		position: absolute;
-		bottom: 200px; 
-		left: 50%;
-		transform: translateX(-50%);
-	}
+
 	.container_page a{
 		color: black;
 	}
