@@ -247,6 +247,10 @@
 		transform:scale(1.05);
 		cursor:pointer;
 	}
+	
+	.modal-dialog {
+		min-width:800px;
+	}
 </style>
 <!-- content starts -->
 <div class="container category_cs" style="margin-top: 30px; margin-bottom: 30px;">
@@ -432,10 +436,9 @@
 		</div>
 	</div>
 	<!--  이미지 클릭 modal -->
-	<div class="modal fade" id="imgModal" tabindex="-1" role="dialog"
-		aria-labelledby="offerFormLabel" aria-hidden="true">
-		<div class="modal-dialog modal-dialog-centered" role="document">
-			<div class="modal-content">
+    <div class="modal fade bd-example-modal-lg" id="imgModal" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+  		<div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+    		<div class="modal-content">
 				<img src=<%=imgArr[0] %> id="thumbLarge">
 				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
           			<span aria-hidden="true">&times;</span>
@@ -673,10 +676,11 @@
 					data:params,
 					contentType:'application/x-www-form-urlencoded; charset=utf-8',
 					success: function(data) {
+						es_state = data.es_state;
 						alertify.confirm("낙찰 완료", "바로 결제창으로 이동하시겠습니까?", function() {
 							location.href='mypage_estimate_checkout.my?ESTIMATE_NUM=' + es_num;
 						}, function() {	
-							var info_text = data.workshop_name + ' 공방의 제안이 ' + addComma(data.offer_price) + '원에 낙찰되었습니다.';
+							var info_text = data.workshop_name + ' 공방의 제안을 ' + addComma(data.offer_price) + '원에 낙찰했습니다.';
 							alertify.success(info_text);
 							getOfferList();
 						});
@@ -703,8 +707,10 @@
 					url:"/NAGAGU/offer_bid.es",
 					type:"POST",
 					data:params,
+					async:false,
 					contentType:'application/x-www-form-urlencoded; charset=utf-8',
 					success: function(data) {
+							es_state = data.es_state;
 							getOfferList();
 							alertify.success('낙찰이 취소되었습니다.');
 					},
@@ -837,8 +843,8 @@
 					aync:false,
 					contentType: 'application/x-www-form-urlencoded; charset=utf-8',
 					success : function(data) {
-						alert("제안글이 성공적으로 삭제되었습니다.");
 						getOfferList();
+						alertify.alert("제안글이 성공적으로 삭제되었습니다.");
 					},
 				     error:function(request,status,error){
 				         alert("code = "+ request.status + " message = " + request.responseText + " error = " + error);

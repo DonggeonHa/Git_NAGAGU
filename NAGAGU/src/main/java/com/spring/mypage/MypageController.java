@@ -515,4 +515,29 @@ public class MypageController {
 		
 		return "Mypage/es_order_update";
 	}
+	
+	@RequestMapping(value = "/mypage_estimate_update.my")
+	public String MypageEsOrderUpdate(HttpServletRequest request, Model model) {
+		EstimateOrderVO eovo = new EstimateOrderVO();
+		
+		eovo.setES_ORDER_NUM(Integer.parseInt(request.getParameter("ES_ORDER_NUM")));
+		eovo.setES_ORDER_RECEIVER(request.getParameter("ES_ORDER_RECEIVER"));
+		eovo.setES_ORDER_ZIP(request.getParameter("ES_ORDER_ZIP"));
+		eovo.setES_ORDER_BUYER_ADDRESS(request.getParameter("ES_ORDER_ADDRESS1" + " " + request.getParameter("ES_ORDER_ADDRESS2")));
+		eovo.setES_ORDER_BUYER_PHONE(request.getParameter("ES_ORDER_PHONE"));
+		eovo.setES_ORDER_MEMO(request.getParameter("ES_ORDER_MEMO"));
+		
+		int res = estimateService.esOrderModify(eovo);
+		
+		if (res == 1) {
+			return "redirect:/mypage_estimate.my";
+		}
+		
+		else {
+			System.out.println("배송정보 수정 실패...");
+			model.addAttribute(Integer.parseInt(request.getParameter("ES_ORDER_NUM")));
+			
+			return "redirect:/mypage_estimate_updateForm.my";
+		}
+	}
 }

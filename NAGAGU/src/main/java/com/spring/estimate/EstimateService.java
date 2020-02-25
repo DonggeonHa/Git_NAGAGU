@@ -29,6 +29,7 @@ public interface EstimateService {
 	public int esOrderDelete (int ES_ORDER_NUM);
 	public int esOrderCount (HashMap<String, Object> map);
 	public int esOrderPay (EstimateOrderVO vo);
+	public int esOrderModify (EstimateOrderVO vo);
 	public int getEsOrderNum (int ESTIMATE_NUM);
 	public ArrayList<HashMap <String, Object>> workOfferList (HashMap<String, Object> map);
 }

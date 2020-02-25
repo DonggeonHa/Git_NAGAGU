@@ -445,6 +445,8 @@ public class EstimateController {
 				}
 			}
 		}
+		EstimateVO esvo2 = estimateService.estimateDetail(ESTIMATE_NUM);
+		resMap.put("es_state", esvo2.getESTIMATE_STATE());
 		
 		return resMap;
 	}

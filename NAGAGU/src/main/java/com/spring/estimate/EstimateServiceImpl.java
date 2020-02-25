@@ -339,6 +339,14 @@ public class EstimateServiceImpl implements EstimateService {
 		
 		return ES_ORDER_NUM;
 	}
+	
+	@Override
+	public int esOrderModify (EstimateOrderVO vo) {
+		EstimateMapper mapper = sqlSession.getMapper(EstimateMapper.class);
+		int res = mapper.esOrderUpdate(vo);
+		
+		return res;
+	}
 
 	/* !----- 공방 회원 : 견적 제안 댓글 리스트 -----! */
 	

@@ -32,6 +32,7 @@ public interface EstimateMapper {
 	public int esOrderDelete(int ESTIMATE_NUM);
 	public int esOrderCount(HashMap<String, Object> map);
 	public int esOrderPay (EstimateOrderVO vo);
+	public int esOrderUpdate (EstimateOrderVO vo);
 	public int esOrderPost (EstimateOrderVO vo);
 	public int esOrderState (EstimateOrderVO vo);
 	public int getEsOrderNum (int ESTIMATE_NUM);
