@@ -437,6 +437,26 @@
 			window.open('/NAGAGU/noteForm.nt?receive_mail=' + send_address, "쪽지 보내기", "width=440 height=580");
 			return false;
 		});
+
+		/* 선택 쪽지보내기 */
+		
+		$(document).delegate('#btn_select_note', 'click', function() {
+			if ($("input[name='chk']:checked").length==0) {
+	    		return false;
+	    	}
+		    
+		    window.open('', 'new_pop' ,'width=600,height=700');
+		    
+		    var frm = document.forms["chk_form"];
+		    
+		    frm.action = 'selectedForm.nt';
+		    frm.target = 'new_pop';
+		    frm.method = 'post';
+		    
+		    frm.submit();
+		    
+		    return false;
+		});
 		
 		/* 견적 제안글 상세보기 */
 		

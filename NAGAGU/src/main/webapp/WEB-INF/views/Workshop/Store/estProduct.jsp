@@ -207,7 +207,7 @@
 
 				            output += '<tr>';
 				            output += '<td scope="col" ><input type="checkbox" class="chk" name="chk" value=' + item.es_ORDER_NUM + '>';  
-				            output += '<input type="hidden" class="disabled" name="chk2" value=' + item.es_ORDER_BUYER_MAIL + '></td>';
+				            output += '<input type="hidden" class="disabled chechbox2" name="chk2" value=' + item.es_ORDER_BUYER_MAIL + '></td>';
 				            output += '<th scope="col" >' + rnum + '</th>';
 				            output += '<td scope="col" >' + item.es_ORDER_BUYER + '</td>';
 				            output += '<td scope="col" >' + item.es_ORDER_TITLE + '</td>';
