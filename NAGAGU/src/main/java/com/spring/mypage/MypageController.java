@@ -197,6 +197,7 @@ public class MypageController {
 			for(i=0 ; i < productSellList.size(); i++) {
 				sellList[i] = productSellList.get(i);
 			}
+			
 			for(i=0 ; i < 5; i++) {
 				if(sellList[i] == null) {
 					product_category = "nothing";
@@ -218,8 +219,11 @@ public class MypageController {
 					continue;
 				}
 			}
+			
+			
+			
 			myClassList = academyService.myClassList(WORKSHOP_NUM);
-			for(i=0 ; i < myClassList.size(); i++) {
+			for(i=0 ; i < 5; i++) {
 				ClassList[i] = myClassList.get(i);
 			}
 			for(i=0 ; i < 5; i++) {
@@ -244,7 +248,7 @@ public class MypageController {
 				mav.addObject("order_state"+number, order_state);
 			}
 		} catch(Exception e) {
-			System.out.println("대시보드 컨트롤러 차트 에러" + e.getMessage());
+			System.out.println("대시보드 컨트롤러 차트 에러" + e.toString());
 		}
 		mav.setViewName("Workshop/main");
 		return mav;
