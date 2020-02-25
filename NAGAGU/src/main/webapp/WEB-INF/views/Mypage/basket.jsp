@@ -249,7 +249,7 @@
 				    					output += '<a href="'+url+retVal.getbasketList[j].PRODUCT_NUM+'">'
 				    					output += '<div class="col-2">'+retVal.getbasketList[j].PRODUCT_TITLE+'</a></div>'
 					    				output += '<div class="col-2">'+retVal.getbasketList[j].PRODUCT_SHIP_COMPANY+'</div>'
-					    				output += '<div class="col-2">'+retVal.getbasketList[j].BASKET_SIZE+'</div>'
+					    				output += '<div class="col-2" style="word-break:break-all">'+retVal.getbasketList[j].BASKET_SIZE+'</div>'
 					    				output += '<div class="col-2">'+retVal.getbasketList[j].BASKET_COLOR+'</div>'
 					    				output += '<div class="price col-1" value="수량">'
 						    				switch(amount){
@@ -403,9 +403,10 @@
 		}); 
 		//누르면 장바구니에서 삭제
         $(document).on('click','.delete_btn',function(){
-            alertify.confirm('확인', '정말 삭제하시겠습니까?', function(){ 
+			var num = $(this).parent().parent().parent().parent().attr('bnum')
+        	alertify.confirm('확인', '정말 삭제하시겠습니까?', function(){ 
     			alertify.success('Ok') 
-    			var num = $(this).parent().parent().parent().parent().attr('bnum')
+    			console.log('num'+num)
 				$.ajax({
 					  url: "/NAGAGU/deleteBasket.my",
 		              type: "POST",

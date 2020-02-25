@@ -347,40 +347,40 @@
 		        			}
   							console.log(retVal.getCount)
 	                        console.log(retVal.myPaidOrder)
-	                        /* if(retVal.orderList.length!=0){
-	                            $('.count_unpaid').html(''+retVal.orderList.length+'건')
-	                        }
-  							if(retVal.getCount.length!=0){
-  								$('.count_paid').html(''+retVal.getCount.length+'건')
-  							} */
+	                        
   							//오더마다 안에 들어있는 리스트 받아서
   							$('.output').empty();
             				
   							for(var i=0; i<retVal.getCount.length; i++){
-  								var ORDER_AMOUNT= retVal.getCount[i].ORDER_AMOUNT
-  								var d_date = new Date(retVal.myPaidOrder[i].ORDER_DATE); 
-			        			var date = date_format(d_date);
+  								var ORDER_AMOUNT = 0;
+  									ORDER_AMOUNT= retVal.getCount[i].ORDER_AMOUNT
+  								
+			        			
+			        			
   								$.ajax({
 	  	  							url: "/NAGAGU/getPaidDetail.my",
 	  	  				            type: "POST",
 	  	  				            data: {'ORDER_AMOUNT':ORDER_AMOUNT},
+	  	  				        	async: false,
   	  				            contentType:
   	  				  			'application/x-www-form-urlencoded; charset=utf-8',
  	  				            	success: function (retVal) {
  	  				            		if(retVal.res=="OK"){
-  	  				            		console.log(retVal.myPaidOrder)
+  	  				            		console.log(retVal.myPaidOrder[0].ORDER_AMOUNT)
   	  				            		var paidPrice=0;
   	  				            		var url = './productdetail.pro?PRODUCT_NUM='
+  	  				            		var d_date = new Date(retVal.myPaidOrder[0].ORDER_DATE); 
+  	  			        				var date = date_format(d_date);
   	  				            		var output ='';
-  	  				            		//헤드
+  	  				            		//헤드 
+  	  				            		console.log('ornum'+ORDER_AMOUNT)
   	  				            		output += '<div class="col-12 tab-pane fade show active shadow pb-2 pt-1 mb-2 bg-white rounded" id="nav-waiting" role="tabpanel" aria-labelledby="nav-waiting-tab">'
   	  	  								output += '<div class="row justify-content-between order_tab">'
  	    				        			output += '<div><div><i style="font-size:0.7rem;">'+date+'</i></div>'
-  	  	  									output += '<div><b>주문번호 '+ORDER_AMOUNT+'</b></div></div>' 
- 	    				        			output += '<div><a href="./order_detail.my?order_amount='+ORDER_AMOUNT+'">상세보기</a></div></div>'
+  	  	  									output += '<div><b>주문번호 '+retVal.myPaidOrder[0].ORDER_AMOUNT+'</b></div></div>' 
+ 	    				        			output += '<div><a href="./order_detail.my?order_amount='+retVal.myPaidOrder[0].ORDER_AMOUNT+'">상세보기</a></div></div>'
   	  				            				
   	  				            		for(var j=0; j<retVal.myPaidOrder.length; j++){
-  	  				            			console.log('내부for문')
   	  				            		var price = retVal.myPaidOrder[j].PRODUCT_PRICE.toLocaleString();
 						        		var ship = retVal.myPaidOrder[j].PRODUCT_SHIP_PRICE.toLocaleString();
 						        		var chong = retVal.myPaidOrder[j].PRODUCT_PRICE+retVal.myPaidOrder[j].PRODUCT_SHIP_PRICE;
@@ -416,7 +416,7 @@
 						    				output += '</div></div></div>'
  	  				            		}
   	  	  								output += '<div class="end col-12"></div></div></div>' 
-  	  				            		console.log(output) 
+  	  				            		//console.log(output) 
 	  	  					        	$('.output').append(output)  
   	  				            	}
   	  				            }
