@@ -126,10 +126,8 @@
 		    function setSelect() {
 		        if ($("#all_select").is(":checked")) {
 		               $("input[type=checkbox]").prop("checked", true);
-		               $('.chechbox2').attr('disabled', 'true');
 		        } else {
 		                $("input[type=checkbox]").prop("checked", false);
-			            $('.chechbox2').attr('disabled', 'false');
 		        }
 			}
 
