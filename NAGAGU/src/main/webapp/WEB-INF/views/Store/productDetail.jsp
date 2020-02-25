@@ -487,7 +487,7 @@
 			<form name="goodsform" action="#" method="post" id="goodsform" class="goodsform">
 				<div class="row pt-4 pl-4">
 					<div class="col-3">
-						<img src="<%=WorkshopPic %>" width="95%">
+						<img src="<%=WorkshopPic %>" width="95%" style="border-radius: 100px;">
 					</div>
 					<hr>
 					<div class="col-9">
