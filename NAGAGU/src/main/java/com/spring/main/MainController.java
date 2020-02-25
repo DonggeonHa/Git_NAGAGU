@@ -290,7 +290,7 @@ public class MainController {
      
       String setfrom = "nagagu@gmail.com";  //host 메일 주소
       String title = "NAGAGU 인증메일";	//메일 이름
-      String content= "아래 링크를 클릭하세요" + "\n" + "http://localhost:8000/NAGAGU/mailLink.ma?MEMBER_EMAIL=" + email;	//내용
+      String content= "아래 링크를 클릭하세요" + "\n" + "http://192.168.0.37:8000/NAGAGU/mailLink.ma?MEMBER_EMAIL=" + email;	//내용
      
       try {
         MimeMessage message = mailSender.createMimeMessage();
@@ -503,7 +503,7 @@ public class MainController {
      
       String setfrom = "jieunkim.itit@gmail.com";  //host 메일 주소
       String title = "NAGAGU 비밀번호 재설정";	//메일 이름
-      String content1= "http://localhost:8000/NAGAGU/mailUpadteLink.ma?mm=" + email;	//내용
+      String content1= "http://192.168.0.37:8000/NAGAGU/mailUpadteLink.ma?mm=" + email;	//내용
       String content2="임시비밀번호: " + password;
       String content3="비밀번호 변경창이 사라졌을 경우 아래 링크를 클릭해주세요." + "\n";
      

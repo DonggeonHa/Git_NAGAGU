@@ -186,11 +186,8 @@
 	
 	/* 리뷰, QNA 부분 ===========================================================   */
 	img {
-		   max-width: 100%;
 		   height: auto;
 		}
-		
-	
 	hr {
 	   background-color: #EF902E;
 	}
@@ -415,6 +412,10 @@
 	li.nav-item a.nav-link {
 		color: black; 
 	}
+	img.rounded-circle {
+		width: 40px;
+		height: 40px;
+	} 
 </style>
 
 <div class="container class-detail-container category_ac" style="word-break:break-all;">

@@ -116,6 +116,13 @@
 	.content:hover { 
 		background-color: rgba(0,0,0,0.05);
 	} 
+	.container_review{
+		margin-bottom: 50px; 
+	}
+	.replyOutput a{
+		text-decoration: none;
+		color: black;
+	}
 </style>
  
 <div class="container-mypage container" role="main">
@@ -262,13 +269,13 @@
 			        		var imgs= imgsrc.split(',')
 			        			imgsrc = imgs[0]
 				    		output += '<div class="col-2 each-row">'
+				    		output += '<a href="./productdetail.pro?PRODUCT_NUM='+retVal.PicsNum[j].PRODUCT_NUM+'">'
 				    		if(imgsrc=='#'){
 				    			output += '<img src="${pageContext.request.contextPath}/resources/images/noimage.jpg"></div>'
 				    		}else{
-				    			output += '<a href="./productdetail.pro?PRODUCT_NUM='+retVal.PicsNum[j].PRODUCT_NUM+'">'
-					    		output += '<img src="/productupload/image/'+imgsrc+'"></a></div>'
+					    		output += '<img src="/productupload/image/'+imgsrc+'"></div>'
 				    		}
-				    		output += '<div class="col-10 each-row content"><div class="row justify-content-between"><div class="name"><b>'+title+'</b></div>'
+				    		output += '<div class="col-10 each-row content"><div class="row justify-content-between"><div class="name"><b>'+title+'</b></a></div>'
 				    		output += '<div class="smallfont">'+date+'</div></div><div class="row">'
 				    		output += '<div class="comm_content">'+content+'</div></div></div>'
 			        	}
@@ -318,15 +325,15 @@
 			        		var imgs= imgsrc.split(',')
 		        				imgsrc = imgs[0]
 				    		output += '<div class="col-2 each-row">'
+				    		output += '<a href="./classdetail.ac?CLASS_NUMBER='+retVal.PicsNum[j].CLASS_NUMBER+'">'
 				    			if(imgsrc=='#'){
 						    		output += '<img src="${pageContext.request.contextPath}/resources/images/noimage.jpg"></div>'
 					    		}else{
-					    			output += '<a href="./classdetail.ac?CLASS_NUMBER='+retVal.PicsNum[j].CLASS_NUMBER+'">'
-					    			output += '<img src="/communityupload/image/'+imgsrc+'"></a></div>'
+					    			output += '<img src="/communityupload/image/'+imgsrc+'"></div>'
 					    		}
-				    		output += '<div class="col-10 each-row content"><div class="row justify-content-between"><div class="name"><b>'+title+'</b></div>'
+				    		output += '<div class="col-10 each-row content"><div class="row justify-content-between"><div class="name"><b>'+title+'</b></a></div>'
 				    		output += '<div class="smallfont">'+date+'</div></div><div class="row">' 
-				    		output += '<div class="comm_content">'+content+'</div></div></div>' 
+				    		output += '<div class="comm_content">'+content+'</div></div></div>'   
 				    		
 			        	}
 			        	$('.replyOutput').html(output)
@@ -342,5 +349,6 @@
 		//처음 로드하고 사진 가져오기 호출
 		getPics();
 		$('.card-wrap').children().eq(6).css('background-color','#ef900e')
+		$('#picTab').addClass('active');
 	})
 </script>

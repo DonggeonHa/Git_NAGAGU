@@ -2,33 +2,33 @@
 
 <link rel="stylesheet" href="./resources/css/signup.css">
 <style>
-	.input_email_local {
-		width: 235px;
-	}
-	
-	#email_chk_btn, #nick_chk_btn{
-		width: 34%;
-		margin-left: 5px;
-   		border-radius: 4px;
-   		height: 42px;
-   		background: orange;
-	    color: white;
-	    border: 0px;
-	}
-	
-	input#member_nick {
-		width: 235px;
-	}
-	
-	#btn_google {
-		width: 49px;
-	    height: 49px;
-	    border-radius: 10px;
-	}
-	
-	#pass1, #pass2{
-		font-family: '유토이미지고딕R', 'BBTreeGR', BBTreeGR;
-	}
+   .input_email_local {
+      width: 235px;
+   }
+   
+   #email_chk_btn, #nick_chk_btn{
+      width: 34%;
+      margin-left: 5px;
+         border-radius: 4px;
+         height: 42px;
+         background: orange;
+       color: white;
+       border: 0px;
+   }
+   
+   input#member_nick {
+      width: 235px;
+   }
+   
+   #btn_google {
+      width: 49px;
+       height: 49px;
+       border-radius: 10px;
+   }
+   
+   #pass1, #pass2{
+      font-family: '유토이미지고딕R', 'BBTreeGR', BBTreeGR;
+   }
 </style>
 
 <div class="cbody">
@@ -44,7 +44,7 @@
                             <input type="email" class="form_input" id="member_ema" name="MEMBER_EMAIL" placeholder="이메일" size="1" required>
                         </div>
                         <div class="email_chk_btn ml-3">
-                        	<button type="button" id="email_chk_btn" onclick="email_chk()" value="N" >중복체크</button>
+                           <button type="button" id="email_chk_btn" onclick="email_chk()" value="N" >중복체크</button>
                         </div>
                     </div>
                 </div>
@@ -65,14 +65,14 @@
                 <div class="error_next_box" id="pass2Msg" style="display: hidden;" aria-live="assertive"></div>
             </div>
             <div class="signup_form_name form_group">
-            	<div class="signup_form_label">이름</div>
+               <div class="signup_form_label">이름</div>
                 <div class="signup_form_input">
                     <input type="text" id="member_name" name="MEMBER_NAME" class="form_input" required>
                 </div>
                 <div class="error_next_box" id="nameMsg" style="display: hidden;" aria-live="assertive"></div>
             </div>
             <div class="signup_form_name form_group">
-            	<div class="signup_form_label">휴대폰</div>
+               <div class="signup_form_label">휴대폰</div>
                 <div class="signup_form_input">
                     <input type="text" id="member_phone" name="MEMBER_PHONE" class="form_input" required>
                 </div>
@@ -142,90 +142,95 @@
    
 <script>
   //이메일 중복체크
-	function email_chk(){
-		var _str1 = $("#member_ema").val();
-	      
-		if(_str1==""){
-			alertify.alert("이메일을 입력하세요.");
-			
-			return false;
-		}
-	      
-	      jQuery.ajax({
-	         url : '/NAGAGU/emailChk.su',
-	         type : "post",
-	         dataType : "json",
-	         data : {
-	        	 MEMBER_EMAIL : $("#member_ema").val()
-	         },
-	         contentType : 'application/x-www-form-urlencoded; charset=utf-8',
+   function email_chk(){
+      var _str1 = $("#member_ema").val();
+         
+      if(_str1==""){
+         alertify.alert("경고", "이메일을 입력하세요.");
+         
+         return false;
+      }
+         
+         jQuery.ajax({
+            url : '/NAGAGU/emailChk.su',
+            type : "post",
+            dataType : "json",
+            data : {
+               MEMBER_EMAIL : $("#member_ema").val()
+            },
+            contentType : 'application/x-www-form-urlencoded; charset=utf-8',
 
-	         success : function(retVal) {
-	            if (retVal.res == "OK") {
-	            	$("#email_chk_btn").attr("value", "Y");
-	            	alertify.alert("사용가능한 이메일입니다.");
-	            } else { // 실패했다면
-	            	alertify.alert("확인","중복된 이메일입니다.");
-	            }
-	         },
-	         error : function() {
-	            alert("ajax통신 실패!!!");
-	         }
+            success : function(retVal) {
+               if (retVal.res == "OK") {
+                  $("#email_chk_btn").attr("value", "Y");
+                  alertify.alert("확인", "사용가능한 이메일입니다.");
+               } else { // 실패했다면
+                  alertify.alert("확인","중복된 이메일입니다.");
+               }
+            },
+            error : function() {
+               alert("ajax통신 실패!!!");
+            }
 
-	      });	
-	}
-	
-	function nickname_chk(){
-		var _str2 = $("#member_nick").val();
-	      
-	      jQuery.ajax({
-	         url : '/NAGAGU/nicknameChk.su',
-	         type : "post",
-	         dataType : "json",
-	         data : {
-	        	 MEMBER_NICK : $("#member_nick").val()
-	         },
-	         contentType : 'application/x-www-form-urlencoded; charset=utf-8',
+         });   
+   }
+   
+   function nickname_chk(){
+      var _str2 = $("#member_nick").val();
+      if(_str2==""){
+         alertify.alert("경고", "별명을 입력하세요.");
+         
+         return false;
+      }
+         
+         jQuery.ajax({
+            url : '/NAGAGU/nicknameChk.su',
+            type : "post",
+            dataType : "json",
+            data : {
+               MEMBER_NICK : $("#member_nick").val()
+            },
+            contentType : 'application/x-www-form-urlencoded; charset=utf-8',
 
-	         success : function(retVal) {
-	            if (retVal.res == "OK") {
-	               $("#nick_chk_btn").attr("value", "Y");
-	               alertify.alert("확인","사용가능한 별명입니다.");
-	            } else { // 실패했다면
-	            	alertify.alert("확인","중복된 별명입니다.");
-	            }
-	         },
-	         error : function() {
-	            alert("ajax통신 (별명) 실패!!!");
-	         }
+            success : function(retVal) {
+               if (retVal.res == "OK") {
+                  $("#nick_chk_btn").attr("value", "Y");
+                  alertify.alert("확인","사용가능한 별명입니다.");
+               } else { // 실패했다면
+                  alertify.alert("확인","중복된 별명입니다.");
+               }
+            },
+            error : function() {
+               alert("ajax통신 (별명) 실패!!!");
+            }
 
-	      });	
-	}
+         });   
+   }
     
-	// 비밀번호 정규식(특수문자 / 문자 / 숫자 포함 형태의 8~15자리 이내의 암호 정규식)
-	var pwJ = /^.*(?=^.{8,15}$)(?=.*\d)(?=.*[a-zA-Z])(?=.*[!@#$%^&+=]).*$/;
-	// 이름 정규식
-	var nameJ = /^[가-힣]{2,6}$/;
-	// 이메일 검사 정규식
-	var mailJ = /^[a-z0-9_+.-]+@([a-z0-9-]+\.)+[a-z0-9]{2,4}$/;
-	// 휴대폰 번호 정규식
-	var phoneJ = /^\d{3}\d{3,4}\d{4}$/;
-	// 별명 정규식
-	var nickJ = /^[ㄱ-ㅎ|가-힣|a-z|A-Z|0-9|\*]{2,15}$/;
-	// 숫자 정규식
-	var num = /^[0-9]{5}$/;
+   // 비밀번호 정규식(특수문자 / 문자 / 숫자 포함 형태의 8~15자리 이내의 암호 정규식)
+   var pwJ = /^.*(?=^.{8,15}$)(?=.*\d)(?=.*[a-zA-Z])(?=.*[!@#$%^&+=]).*$/;
+   // 이름 정규식
+   var nameJ = /^[가-힣]{2,6}$/;
+   // 이메일 검사 정규식
+   var mailJ = /^[a-z0-9_+.-]+@([a-z0-9-]+\.)+[a-z0-9]{2,4}$/;
+   // 휴대폰 번호 정규식
+   var phoneJ = /^\d{3}\d{3,4}\d{4}$/;
+   // 별명 정규식
+   var nickJ = /^[ㄱ-ㅎ|가-힣|a-z|A-Z|0-9|\*]{2,15}$/;
+   // 숫자 정규식
+   var num = /^[0-9]{5}$/;
     
-	var sub_email = false;
-	var sub_pw1 = false;
-	var sub_pw2 = false;
-	var sub_name = false;
-	var sub_phone = false;
-	var sub_nick = false;
-	
+   var sub_email = false;
+   var sub_pw1 = false;
+   var sub_pw2 = false;
+   var sub_name = false;
+   var sub_phone = false;
+   var sub_nick = false;
+   
     function showErrorMsg(obj, msg) {
-	    obj.attr("class", "error_next_box");
-	    obj.html(msg);
-	    obj.show();
+       obj.attr("class", "error_next_box");
+       obj.html(msg);
+       obj.show();
     }
     
     var isShift = false;
@@ -308,16 +313,16 @@
             showErrorMsg(oMsg, "필수 정보입니다.");
             return false;
         } else if(!mailJ.test(member_email)) {
-			showErrorMsg(oMsg, "이메일 형식을 확인하고 다시 입력해주세요.");
-			$("#member_ema").focus();
-			
-			return false;
-    		
-		} else {
-	        oMsg.hide();
-	        sub_email = true;
-	        
-	        return true;
+         showErrorMsg(oMsg, "이메일 형식을 확인하고 다시 입력해주세요.");
+         $("#member_ema").focus();
+         
+         return false;
+          
+      } else {
+           oMsg.hide();
+           sub_email = true;
+           
+           return true;
         }
     }
     
@@ -331,15 +336,15 @@
             setFocusToInputObject(oInput);
             return false;
         } else if(!pwJ.test(pass1)) {
-			showErrorMsg(oMsg, "8자 이상 영문+숫자+하나 이상의 특수문자를 사용하세요.");
-			oInput.focus();
-			
-			return false;
-    	} else {
-	        oMsg.hide();
-	        sub_pw1 = true;
-	        
-	        return true;
+         showErrorMsg(oMsg, "8자 이상 영문+숫자+하나 이상의 특수문자를 사용하세요.");
+         oInput.focus();
+         
+         return false;
+       } else {
+           oMsg.hide();
+           sub_pw1 = true;
+           
+           return true;
         }
     }
     
@@ -355,7 +360,7 @@
             setFocusToInputObject(oInput);
             return false;
         } else {
-        	oMsg.hide();
+           oMsg.hide();
         }
         
         if (pass1 != pass2) {
@@ -371,41 +376,41 @@
     }
     
     function checkName(event) {
-    	var name = $("#member_name").val();
-    	var oMsg = $("#nameMsg");
-    	var oInput = $("#member_name");
-    	
-    	if(name == "") {
-    		showErrorMsg(oMsg, "필수 정보입니다.");
-    		
-    		return false;
-    	} else {
-    		oMsg.hide();
-    		sub_name = true;
-    		
-    		return true;
-    	}
+       var name = $("#member_name").val();
+       var oMsg = $("#nameMsg");
+       var oInput = $("#member_name");
+       
+       if(name == "") {
+          showErrorMsg(oMsg, "필수 정보입니다.");
+          
+          return false;
+       } else {
+          oMsg.hide();
+          sub_name = true;
+          
+          return true;
+       }
     }
     
     function checkPhone(evnet) {
-    	var phone = $("#member_phone").val();
+       var phone = $("#member_phone").val();
         var oMsg = $("#phoneMsg");
         
         if(phone==""){
-        	showErrorMsg(oMsg, "필수 정보입니다.");
+           showErrorMsg(oMsg, "필수 정보입니다.");
             return false;
-        }  else if(!phoneJ.test(phone)) {
-			showErrorMsg(oMsg, "올바른 번호를 입력하세요.");
-			$("#member_phone").focus();
-			
-			return false;
-    		
-		} else {
-			oMsg.hide();
-			sub_phone = true;
-			
+        }  else if(!phoneJ.test(콜)) {
+         showErrorMsg(oMsg, "올바른 번호를 입력하세요.");
+         $("#member_phone").focus();
+         
+         return false;
+          
+      } else {
+         oMsg.hide();
+         sub_phone = true;
+         
             return true;
-		}
+      }
     }
     
     function checkNick(event) {
@@ -428,10 +433,10 @@
             
             return false;
         } else {
-	        oMsg.hide();
-	        sub_nick = true;
-	        
-	        return true;
+           oMsg.hide();
+           sub_nick = true;
+           
+           return true;
         }
     }
     
@@ -512,18 +517,18 @@
      var phone = $("#member_phone").val();
      
      if(email=="" || nick=="" || pass1=="" || pass2=="" || name=="" || phone==""){
-    	 alertify.alert("빈 칸 없이 입력해주세요.");
+        alertify.alert("경고", "빈 칸 없이 입력해주세요.");
      }else if(emailcheckBtn == "N") {
-    	 alertify.alert("이메일 중복확인 버튼을 눌러주세요.");
+        alertify.alert("경고", "이메일 중복확인 버튼을 눌러주세요.");
      }else if(emailcheckBtn == "Y") {
         if(nicknamecheckBtn == "N"){
-        	alertify.alert("닉네임 중복확인 버튼을 눌러주세요.");
+           alertify.alert("경고", "닉네임 중복확인 버튼을 눌러주세요.");
         }else if(nicknamecheckBtn == "Y"){
            if(($('#check_privacy').prop("checked")&&$('#check_service').prop("checked"))== false) 
            {
-        	   alertify.alert('약관에 동의해주세요.');
+              alertify.alert("경고", '약관에 동의해주세요.');
            } else  {
-        	  alertify.alert("인증을 위한 메일이 발송되었습니다.");
+             alertify.alert("확인", "인증을 위한 메일이 발송되었습니다.");
               document.signup_form.submit();
            }
         }

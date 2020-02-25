@@ -90,10 +90,13 @@
 	}
 	.picOutput{
 		padding-left: 0px !important;
+		margin-bottom: 50px;
 	}
 	.picOutput img{
-		margin-top: 30px;
 		border-radius: 10px;
+	}
+	.tab_wrap{
+		margin-bottom: 50px;
 	}
 	.tab-content{
 		min-height:38vh;
@@ -185,7 +188,7 @@
 </div>
 
 <div class="container container_like">
-	<div class="d-flex">
+	<div class="d-flex tab_wrap">
 		<ul class="nav nav-tabs" id="myTab" role="tablist">
 			<li class="nav-item"><a class="nav-link active" id="picTab"
 				data-toggle="tab" href="#home" role="tab" aria-controls="home"

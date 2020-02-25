@@ -107,6 +107,9 @@
 		margin-bottom: 10px !important; 
 		font-size: 1.3rem;
 	}
+	.container_reply{
+		margin-bottom: 50px;
+	}
 </style>	 
 <div class="container-mypage container" role="main">
 	<div class="d-flex card-wrap  text-center">
@@ -249,7 +252,7 @@
 				    		output += '<div class="col-1 profile">'
 				    			output += '<a href="./community_detail.cm?PICS_NUM='+retVal.PicsNum[j].PICS_NUM+'&MEMBER_NUM='+retVal.PicsNum[j].MEMBER_NUM+'&PICS_MEMBER='+retVal.PicsNum[j].PICS_MEMBER+'">'
 				    			output += '<img src='+imgsrc+'></a></div>'
-				    		output += '<div class="col-11 content"><div class="row justify-content-between"><div class="name">'+nickname+'에게 단 댓글</div>'
+				    		output += '<div class="col-11 content"><div class="row justify-content-between"><div class="name">'+nickname+'님의 글에 단 댓글</div>'
 				    		output += '<div class="smallfont">'+date+'</div></div><div class="row">'
 				    		output += '<div class="comm_content">'+content+'</div></div></div>'
 			        	}
@@ -315,6 +318,7 @@
 		}) 
 		//처음 로드하고 사진 가져오기 호출
 		getPics();
-		$('.card-wrap').children().eq(5).css('background-color','#ef900e')
+		$('.card-wrap').children().eq(5).css('background-color','#ef900e');
+		$('#picTab').addClass('active');
 	})
 </script>

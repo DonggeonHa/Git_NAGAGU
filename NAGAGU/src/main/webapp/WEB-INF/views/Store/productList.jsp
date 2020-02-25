@@ -190,11 +190,8 @@
 	.page-item.active .page-link {
 		background-color: #ef900e !important;
 	}
-	.container_page{
-		position: absolute;
-		bottom: 200px; 
-		left: 50%;
-		transform: translateX(-50%);
+	.category_st {
+		padding-bottom: 50px;
 	}
 	.container_page a{
 		color: black;

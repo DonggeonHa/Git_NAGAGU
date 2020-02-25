@@ -456,6 +456,13 @@
 			max-width:70%;
 		}
 	}
+	.rounded-circle{
+		width:50px;
+		height:50px; 
+	}
+	.small_img, .small_img img{
+		padding-right:0px;
+	} 
 </style>
 
 <div class="container class-detail-container category_st">
@@ -1266,7 +1273,7 @@
 									output += '<div class="ReviewList pb-3" id="ReviewList'+ REVIEW_NUM +'">';
 										output += '<div class="beforeModifyReview" id="beforeModifyReview'+ REVIEW_NUM +'">';
 											output += '<div class="row justify-content-center">';
-												output += '<div class="col-1 justify-content-end"><a href="memberLikePics.cm?MEMBER_NUM='+MEMBER_NUM+'"><img src="'+ MEMBER_PICTURE +'" alt="" class="rounded-circle"></a></div>';
+												output += '<div class="col-1 justify-content-end small_img"><a href="memberLikePics.cm?MEMBER_NUM='+MEMBER_NUM+'"><img src="'+ MEMBER_PICTURE +'" alt="" class="rounded-circle"></a></div>';
 												output += '<div class="col-11">';
 													output += '<div class="row pb-1">';
 														output += '<div class="col-2 justify-content-end name">'+ MEMBER_NICK +'</div>';
@@ -1334,7 +1341,7 @@
 									output += '<div class="ReviewReplyList pb-2" id="ReviewReplyList'+REPLY_NUM+'">';
 										output += '<div class="row justify-content-center">';
 											output += '<div class="col-1"></div>';
-											output += '<div class="col-1"><a href="memberLikePics.cm?MEMBER_NUM='+REPLY_MEMBER_NUM+'"><img src="'+REPLY_PICTURE+'" alt="" class="rounded-circle"></a></div>';
+											output += '<div class="col-1 small_img"><a href="memberLikePics.cm?MEMBER_NUM='+REPLY_MEMBER_NUM+'"><img src="'+REPLY_PICTURE+'" alt="" class="rounded-circle"></a></div>';
 											output += '<div class="col-10">';
 												output += '<div class="row">';
 													output += '<div class="col-2 justify-content-end name">'+REPLY_NICK+'</div>';
@@ -1593,7 +1600,7 @@
 						
 		 				output += '<form class="modifyReviewForm" id="modifyReviewForm'+REVIEW_NUM+'">';
 		 				output += '<div class="row justify-content-center">';
-		 				output += '<div class="col-1 justify-content-end"><img src="<%=MEMBER_PICTURE%>" alt="" class="rounded-circle"></div>';
+		 				output += '<div class="col-1 justify-content-end small_img"><img src="<%=MEMBER_PICTURE%>" alt="" class="rounded-circle"></div>';
 		 				output += '<div class="col-11">';
 		 				output += '<div class="row pb-1">';
 		 				output += '<div class="col-2 justify-content-end name"><%=MEMBER_NICK%></div>';
@@ -1807,7 +1814,7 @@
 								output += '<div class="QnaList pb-3" id="QnaList'+QNA_NUM+'">';
 								output += '<div class="beforeModifyQna" id="beforeModifyQna'+QNA_NUM+'">';
 								output += '<div class="row justify-content-center">';
-								output += '<div class="col-1 justify-content-end"><a href="memberLikePics.cm?MEMBER_NUM='+MEMBER_NUM+'"><img src="'+MEMBER_PICTURE+'" alt="" class="rounded-circle"></a></div>';
+								output += '<div class="col-1 justify-content-end small_img"><a href="memberLikePics.cm?MEMBER_NUM='+MEMBER_NUM+'"><img src="'+MEMBER_PICTURE+'" alt="" class="rounded-circle"></a></div>';
 								output += '<div class="col-11">';
 								output += '<div class="row pb-1">';
 								output += '<div class="col-2 justify-content-end name">'+MEMBER_NICK+'</div>';
@@ -1856,7 +1863,7 @@
 											output += '<div class="QnaReplyList pb-2" id="QnaReplyList'+REPLY_NUM+'">';
 											output += '<div class="row justify-content-center">';
 											output += '<div class="col-1"></div>';
-											output += '<div class="col-1"><a href="workshop_page.my?WORKSHOP_NUM='+WORKSHOP_NUM+'"><img src="'+WORKSHOP_PICTURE+'" alt="" class="rounded-circle"></a></div>';
+											output += '<div class="col-1 small_img"><a href="workshop_page.my?WORKSHOP_NUM='+WORKSHOP_NUM+'"><img src="'+WORKSHOP_PICTURE+'" alt="" class="rounded-circle"></a></div>';
 											output += '<div class="col-10">';
 											output += '<div class="row">';
 											output += '<div class="col-2 justify-content-end name">'+WORKSHOP_NAME+'</div>';
@@ -2108,7 +2115,7 @@
 		 				
 		 				output += '<form class="modifyQnaForm" id="modifyQnaForm'+QNA_NUM+'">';
 		 				output += '<div class="row justify-content-center">';
-		 				output += '<div class="col-1 justify-content-end"><img src="<%=MEMBER_PICTURE%>" alt="" class="rounded-circle"></div>';
+		 				output += '<div class="col-1 justify-content-end small_img"><img src="<%=MEMBER_PICTURE%>" alt="" class="rounded-circle"></div>';
 		 				output += '<div class="col-11">';
 		 				output += '<div class="row pb-1">';
 		 				output += '<div class="col-2 justify-content-end name"><%=MEMBER_NICK%></div>';
@@ -2476,7 +2483,7 @@
 			replyform += '<form class="ReviewReplyform" id="ReviewReplyform'+REVIEW_NUM+'" name="REVIEW_CONTENT" enctype="multipart/form-data">';
 			replyform += '<div class="row justify-content-center">';
 			replyform += '<div class="col-1"></div>';
-			replyform += '<div class="col-1"><img src="<%=MEMBER_PICTURE%>" alt="" class="rounded-circle"></div>';
+			replyform += '<div class="col-1 small_img"><img src="<%=MEMBER_PICTURE%>" alt="" class="rounded-circle"></div>';
 			replyform += '<div class="col-10">';
 			replyform += '<div class="row">';
 			replyform += '<div class="col-2 justify-content-end name"><%=MEMBER_NICK%></div>';
@@ -2540,7 +2547,7 @@
 			replyform += '<form class="QnaReplyform" id="QnaReplyform'+QNA_NUM+'" name="QNA_CONTENT">';
 			replyform += '<div class="row justify-content-center">';
 			replyform += '<div class="col-1"></div>';
-			replyform += '<div class="col-1"><img src="<%=WORKSHOP_PICTURE%>" alt="" class="rounded-circle"></div>';
+			replyform += '<div class="col-1 small_img"><img src="<%=WORKSHOP_PICTURE%>" alt="" class="rounded-circle"></div>';
 			replyform += '<div class="col-10">';
 			replyform += '<div class="row">';
 			replyform += '<div class="col-2 justify-content-end name"><%=WORKSHOP_NAME%></div>';

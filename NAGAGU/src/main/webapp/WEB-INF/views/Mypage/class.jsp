@@ -135,6 +135,9 @@
 	.chongprice {
 		margin-top: 0;
 	}
+	.container_myclass{
+		margin-bottom: 50px;
+	}
 </style> 
 
 <div class="container-mypage container" role="main">

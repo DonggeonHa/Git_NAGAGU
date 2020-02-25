@@ -93,12 +93,12 @@
 		padding-left: 0px !important;
 	}
 	.picOutput img{
-		margin-top: 30px;
+		margin-top: 50px; 
 		border-radius: 10px;
 	}
 	.tab-content{
 		min-height:38vh;
-	}
+	} 
 	.tab-content img{
 		height:200px;
 	}

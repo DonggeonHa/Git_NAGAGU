@@ -129,7 +129,7 @@
 					 	<div class="row search_tab justify-content-start ">
 					 		<div class="search_form d-flex mr-5">
 						      <input class="form-control " id="search_product" placeholder="검색..." aria-label="Search">
-						      <button class="btn btn-outline-dark ml-2 my-2 my-sm-0">상품명</button>
+						      <button type="button" class="btn btn-outline-dark ml-2 my-2 my-sm-0">상품명</button>
 						      <input type="hidden" id="product_num" value="" name="PICS_PRODUCT"></button> 
 						    </div>
 						    <div class="search_form d-flex">

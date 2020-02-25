@@ -331,7 +331,7 @@
 	
 	<div class="tab-content main-output" id="nav-tabContent">
 		<div class="tab-pane fade show active shadow p-3 mb5 bg-white rounded" id="nav-waiting" role="tabpanel" aria-labelledby="nav-waiting-tab" style="padding-top: 30%;">
-			<div class="row output">
+			<div class="row output"> 
 			</div>
 		</div>
 	</div>

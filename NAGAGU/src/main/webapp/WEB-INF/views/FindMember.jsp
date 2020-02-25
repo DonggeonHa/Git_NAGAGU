@@ -82,8 +82,8 @@ img {vertical-align:top;}
 }
 
 .two_form {
-	margin: 0 auto;
-	justify-content: center;
+   margin: 0 auto;
+   justify-content: center;
 }
 </style>
 </head>
@@ -145,43 +145,43 @@ img {vertical-align:top;}
     </section>
 <script type="text/javascript">
 function find_pw_btn(){
-	alertify.alert("임시 비밀번호가 발송 되었습니다. 메일을 확인해주세요.");
-	document.find_pw_form.submit();
+   alertify.alert("확인" ,"임시 비밀번호가 발송 되었습니다. 메일을 확인해주세요.");
+   document.find_pw_form.submit();
 }
 
 function find_email_btn() {
-	// 팝업을 가운데 위치시키기 위해 아래와 같이 값 구하기
-	var popupX = (window.screen.width / 2) - (600 / 2);
-	var popupY = (window.screen.height / 2) - (378 / 2);
+   // 팝업을 가운데 위치시키기 위해 아래와 같이 값 구하기
+   var popupX = (window.screen.width / 2) - (600 / 2);
+   var popupY = (window.screen.height / 2) - (378 / 2);
 
-	var name = $("#name").val();
-	var phone = $("#phone").val();
-	
-	jQuery.ajax({
-		url: '/NAGAGU/CheckIdPhone.su',
-		type: "post",
-		dataType: "json",
-		data: {
-			MEMBER_NAME: $("#name").val(),
-			MEMBER_PHONE: $("#phone").val()
-		},
-		contentType: 'application/x-www-form-urlencoded; charset=utf-8',
-		
-		success: function(retVal) {
-			if(retVal.res == "success"){
-				var pop = window.open('about:blank', 'Info', 'resizable=yes, width=600, height=378, left=' + popupX + ', top=' + popupY);
-				pop.location.href="FindMemberEmail.ma?MEMBER_NAME=" + name + "&MEMBER_PHONE=" + phone;
-				
-			} else{
-				alertify.alert("입력한 정보로 아이디를 찾은 결과, 일치하는 아이디가 없습니다.");
-			}
-		},
-		error : function() {
-			alert("ajax통신 실패!!!");
-	    }
-	});
-	
-	
+   var name = $("#name").val();
+   var phone = $("#phone").val();
+   
+   jQuery.ajax({
+      url: '/NAGAGU/CheckIdPhone.su',
+      type: "post",
+      dataType: "json",
+      data: {
+         MEMBER_NAME: $("#name").val(),
+         MEMBER_PHONE: $("#phone").val()
+      },
+      contentType: 'application/x-www-form-urlencoded; charset=utf-8',
+      
+      success: function(retVal) {
+         if(retVal.res == "success"){
+            var pop = window.open('about:blank', 'Info', 'resizable=yes, width=600, height=378, left=' + popupX + ', top=' + popupY);
+            pop.location.href="FindMemberEmail.ma?MEMBER_NAME=" + name + "&MEMBER_PHONE=" + phone;
+            
+         } else{
+            alertify.alert("확인", "입력한 정보로 아이디를 찾은 결과, 일치하는 아이디가 없습니다.");
+         }
+      },
+      error : function() {
+         alert("ajax통신 실패!!!");
+       }
+   });
+   
+   
 }
 </script>
 </body>
