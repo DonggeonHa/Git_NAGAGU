@@ -203,6 +203,7 @@
 		select DISTINCT mc.my_class_classnum, mc.my_class_membernum, ac.class_name, ac.class_division, m.member_email, m.member_name, m.member_phone, m.member_num 
 		from my_class mc inner join academy ac on mc.my_class_classnum = ac.class_number inner join nagagu_member m on mc.my_class_membernum = m.member_num 
 		where ac.workshop_num = #{WORKSHOP_NUM}
+		order by WORKSHOP_NUM DESC
 	</select>
 	
 	<select id="getMemberSearch" resultMap="myclassMemberResultMap">

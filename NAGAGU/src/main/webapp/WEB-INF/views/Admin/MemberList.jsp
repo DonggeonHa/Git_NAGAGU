@@ -49,11 +49,11 @@
 				title += '<tr>';
 				title += '<th style="width: 5%;">번호</th>';
 				title += '<th style="width: 16%;">이메일</th>';
-				title += '<th style="width: 11%;">이름</th>';
+				title += '<th style="width: 5%;">이름</th>';
 				title += '<th style="width: 11%;">닉네임</th>';
 				title += '<th style="width: 11%;">핸드폰</th>';
 				title += '<th style="width: 18%;"">주소</th>';
-				title += '<th style="width: 12%;">상세주소</th>';
+				title += '<th style="width: 18%;">상세주소</th>';
 				title += '<th style="width: 11%;">상태</th>';
 				title += '<th style="width: 5%;">관리</th>';
 				title += '</tr>';
