@@ -147,9 +147,9 @@
 		action="./estimate_update.es" method="post"
 		enctype="multipart/form-data">
 	<input type="hidden" name="ESTIMATE_NUM" value=<%=vo.getESTIMATE_NUM()%>>
-	<input type="hidden" name="ESTIMATE_MEMBER" value=<%=vo.getESTIMATE_MEMBER()%>>
-	<input type="hidden" name="ESTIMATE_NICK" value=<%=vo.getESTIMATE_NICK()%>>
-	<input type="hidden" id="ESTIMATE_FILE" NAME="ESTIMATE_FILE" value=<%=vo.getESTIMATE_FILE() %>>
+	<input type="hidden" name="ESTIMATE_MEMBER" value="<%=vo.getESTIMATE_MEMBER()%>">
+	<input type="hidden" name="ESTIMATE_NICK" value="<%=vo.getESTIMATE_NICK()%>">
+	<input type="hidden" id="ESTIMATE_FILE" NAME="ESTIMATE_FILE" value="<%=vo.getESTIMATE_FILE() %>">
 	<input type="hidden" name="page" value=<%=nowpage %>>
 	<table class="table table-borderless d-flex justify-content-center">
 			<tbody>
@@ -165,19 +165,19 @@
 				<tr>
 					<th style="vertical-align:middle">제목</th>
 					<td>
-						<input type="text" class="form-control" id="ESTIMATE_TITLE" name="ESTIMATE_TITLE" size="50" maxlength="30" placeholder="제목을 입력하세요" value=<%=vo.getESTIMATE_TITLE() %>>
+						<input type="text" class="form-control" id="ESTIMATE_TITLE" name="ESTIMATE_TITLE" size="50" maxlength="30" value="<%=vo.getESTIMATE_TITLE() %>">
 					</td>
 				</tr>
 				<tr>
 					<th style="vertical-align:middle">배송희망지역</th>
 					<td>
-						<input type="text" class="form-control" id="ESTIMATE_AREA" name="ESTIMATE_AREA" size="50" maxlength="30" placeholder="배송을 원하는 지역을 입력하세요" value=<%=vo.getESTIMATE_AREA() %>>
+						<input type="text" class="form-control" id="ESTIMATE_AREA" name="ESTIMATE_AREA" size="50" maxlength="30" value="<%=vo.getESTIMATE_AREA() %>">
 					</td>
 				</tr>
 				<tr>
 					<th style="vertical-align:middle">카테고리</th>
 					<td>
-						<select name="ESTIMATE_CATEGORY" id="ESTIMATE_CATEGORY" class="form-control" value=<%=vo.getESTIMATE_CATEGORY() %>>
+						<select name="ESTIMATE_CATEGORY" id="ESTIMATE_CATEGORY" class="form-control" value="<%=vo.getESTIMATE_CATEGORY() %>">
 							<option value="all" selected>전체</option>
 							<option value="table">책상</option>
 							<option value="chair">의자</option>
@@ -193,13 +193,13 @@
 				<tr>
 					<th style="vertical-align:middle">소재</th>
 					<td>
-						<input type="text" id="ESTIMATE_SOURCE" name="ESTIMATE_SOURCE" class="form-control" size="50" maxlength="20" placeholder="ex)편백나무 원목(상판), 소나무 (하부)" value=<%=vo.getESTIMATE_SOURCE() %>>
+						<input type="text" id="ESTIMATE_SOURCE" name="ESTIMATE_SOURCE" class="form-control" size="50" maxlength="20"  value="<%=vo.getESTIMATE_SOURCE() %>">
 					</td>
 				</tr>
 				<tr>
 					<th style="vertical-align:middle">색상(염색)</th>
 					<td>
-						<input type="text" id="ESTIMATE_COLOR" name="ESTIMATE_COLOR" class="form-control" size="50" maxlength="20" placeholder="ex)투명, 블루.." value=<%=vo.getESTIMATE_COLOR() %>>
+						<input type="text" id="ESTIMATE_COLOR" name="ESTIMATE_COLOR" class="form-control" size="50" maxlength="20" value="<%=vo.getESTIMATE_COLOR() %>">
 					</td>
 				</tr>
 				<tr>
@@ -217,7 +217,7 @@
 				<tr>
 					<th style="vertical-align:middle">규격</th>
 					<td>
-						<input type="text" id="ESTIMATE_SIZE" name="ESTIMATE_SIZE" class="form-control" size="50" maxlength="50" placeholder="ex)가로100*세로150*높이200 value=<%=vo.getESTIMATE_SIZE()%>">
+						<input type="text" id="ESTIMATE_SIZE" name="ESTIMATE_SIZE" class="form-control" size="50" maxlength="50" value="<%=vo.getESTIMATE_SIZE()%>">
 					</td>
 				</tr>
 				<tr>
@@ -271,8 +271,8 @@
 				<tr>
 					<th style="vertical-align:middle">기타</th>
 					<td>
-						<textarea id="ESTIMATE_CONTENT" name="ESTIMATE_CONTENT" placeholder="기타 설명 (500자 까지)" maxlength="500"></textarea>
-					</td>
+						<textarea id="ESTIMATE_CONTENT" name="ESTIMATE_CONTENT" maxlength="500"><%=vo.getESTIMATE_CONTENT() %></textarea>
+					</td>	
 				</tr>
 			</tbody>
 		</table>
@@ -341,15 +341,6 @@
             selectFile(this.files);
             //this.files[0].size gets the size of your file.
             //alert(this.files[0].size);
-        });
-        
-        $(document).on('mouseenter', '.imageThumb', function() {
-       		var test = $(this).find('div.thumb_title').attr('idx');
-        	$(this).find('div.thumb_title').show(200);
-        });
-        
-        $(document).on('mouseleave', '.imageThumb', function() {
-        	$(this).find('div.thumb_title').hide(200);
         });
     });
     

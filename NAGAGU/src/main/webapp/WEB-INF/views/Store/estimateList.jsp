@@ -21,8 +21,10 @@
 	}
 	
 	String MEMBER_EMAIL = "";
+	String MEMBER_NICK = "";
 	if (session.getAttribute("MEMBER_EMAIL") != null) {
 		MEMBER_EMAIL = session.getAttribute("MEMBER_EMAIL").toString();
+		MEMBER_NICK = session.getAttribute("MEMBER_NICK").toString();
 	}
 	
 	SimpleDateFormat df = new SimpleDateFormat("yyyy.MM.dd HH:mm");
@@ -183,7 +185,7 @@
 			<div class="tab-pane fade shadow p-3 mb5 bg-white rounded" id="nav-completed" role="tabpanel" aria-labelledby="nav-completed-tab">
 				<div>
 					<div class="d-flex justify-content-start">
-						<p>낙찰 확정 우째함.. ? </p>
+						<p>마이페이지 견적 주문 관리에서 결제를 완료하여 주문을 완료합니다. </p>
 					</div>
 				</div>
 				<hr>
@@ -193,17 +195,22 @@
 </div>
 <div class="container">
 	<br /> <br /> <br />
+	<div class="row list_header">
 	<%
 		if (MEMBER_EMAIL != "") {
 	%>
-	
-			<div class="row justify-content-end">
-				<a class="btn btn-outline-dark mb-2" onClick="location.href='./estimate_form.es'" style="cursor: pointer;">글쓰기</a>
+			
+			<div class="col-10 justify-content-start">
+				<a class="btn btn-outline-warning sm-2" onClick="location.href='./estimate.es?MEMBER_EMAIL=<%=MEMBER_EMAIL %>'" style="cursor: pointer;">내가 쓴 글</a>
 			</div>
 	
+			<div class="col-2 justify-content-end">
+				<a class="btn btn-outline-dark mb-2" onClick="location.href='./estimate_form.es'" style="cursor: pointer; float:right;">글쓰기</a>
+			</div>
 	<%
 		}
 	%>
+	</div>
 	<div class="row justify-content-center">
 
 		<div class="table-responsive ">
@@ -235,7 +242,6 @@
 					else if (el.getESTIMATE_CATEGORY().equals("dressing_table")) {category = "화장대";}
 					else {category = "기타";}
 					
-					System.out.println("TESTTEXT : " + MEMBER_EMAIL);
 					if (el.getESTIMATE_STATE() != 0 && !(MEMBER_EMAIL.equals(el.getESTIMATE_MEMBER()))) {
 		%>
 						<tr class="bid">

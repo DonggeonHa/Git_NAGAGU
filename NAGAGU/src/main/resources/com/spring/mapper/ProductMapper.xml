@@ -27,7 +27,7 @@
 		<result property="PRODUCT_SHIP_DAYS" column="PRODUCT_SHIP_DAYS" />		
 		<result property="PRODUCT_SHIP_INFO" column="PRODUCT_SHIP_INFO" />		
 		<result property="PRODUCT_AS_INFO" column="PRODUCT_AS_INFO" />		
-		<result property="PRODUCT_RETURN_INFO" column="PRODUCT_RETURN_INFO" />		
+		<result property="PRODUCT_RETURN_INFO" column="PRODUCT_RETURN_INFO" />	
 		<result property="PRODUCT_STORE_INFO" column="PRODUCT_STORE_INFO" />		
 		<result property="PRODUCT_BANNER" column="PRODUCT_BANNER" />		
 		<result property="PRODUCT_IMAGE" column="PRODUCT_IMAGE" />		
