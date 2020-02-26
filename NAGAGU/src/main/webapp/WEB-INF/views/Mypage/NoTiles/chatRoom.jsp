@@ -5,7 +5,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page session="true" %>
 <% 
-	String mem_mail = (String)session.getAttribute("MEMBER_EMAIL");
+	String mem_mail = (String)request.getAttribute("MEMBER_EMAIL");
 	String mem_nick = (String)request.getAttribute("MEMBER_NICK");
 	String mem_pic = (String)request.getAttribute("MEMBER_PICTURE");
 	int chatroom_num = (int)request.getAttribute("CHATROOM_NUM");

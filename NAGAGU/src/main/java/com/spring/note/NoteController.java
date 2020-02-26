@@ -326,6 +326,7 @@ public class NoteController {
 			receive_mail = noteService.getWorkshopMail(vo);
 		}
 		else {
+			
 			receive_mail = request.getParameter("receive_mail");
 			
 		}
@@ -417,25 +418,14 @@ public class NoteController {
 	@ResponseBody
 	public String noteWrite(HttpServletRequest request, HttpSession session) throws Exception {
 		NoteVO vo = new NoteVO();
-		String sender_mail = "";
-		String sender_nick = "";
-		
-		if (session.getAttribute("MEMBER_EMAIL") != null) {
-			sender_mail = (String)session.getAttribute("MEMBER_EMAIL");
-			sender_nick = (String)session.getAttribute("MEMBER_NICK");
-		}
-		else if (session.getAttribute("WORKSHOP_EMAIL") != null) {
-			sender_mail = (String)session.getAttribute("WORKSHOP_EMAIL");
-			sender_nick = (String)session.getAttribute("WORKSHOP_NAME");
-		}
-			vo.setNOTE_SENDER_MAIL(sender_mail);
-			vo.setNOTE_SENDER_NICK(sender_nick);
-			vo.setNOTE_RECEIVER_MAIL(request.getParameter("receiver_mail"));
-			vo.setNOTE_RECEIVER_NICK(request.getParameter("receiver_nick"));
-			vo.setNOTE_TITLE(request.getParameter("note_title"));
-			vo.setNOTE_CONTENT(request.getParameter("note_content"));
+		vo.setNOTE_SENDER_MAIL(request.getParameter("sender_mail"));
+		vo.setNOTE_SENDER_NICK(request.getParameter("sender_nick"));
+		vo.setNOTE_RECEIVER_MAIL(request.getParameter("receiver_mail"));
+		vo.setNOTE_RECEIVER_NICK(request.getParameter("receiver_nick"));
+		vo.setNOTE_TITLE(request.getParameter("note_title"));
+		vo.setNOTE_CONTENT(request.getParameter("note_content"));
 			
-			int res = noteService.noteSend(vo);
+		int res = noteService.noteSend(vo);
 			
 		return null;
 	}
@@ -452,6 +442,7 @@ public class NoteController {
 		String receiver_nicks[] = request.getParameterValues("receiver_nick");
 		
 		for (int i=0; i<receiver_mails.length; i++) {
+			
 			vo.setNOTE_SENDER_MAIL(sender_mail);
 			vo.setNOTE_SENDER_NICK(sender_nick);
 			vo.setNOTE_RECEIVER_MAIL(receiver_mails[i]);

@@ -507,37 +507,37 @@
     /* --------------------------- submit 실행부  ----------------------------*/
     function checkList() {
     	if ($("#ESTIMATE_TITLE").val() == "") {
-    		alert("제목을 입력해주십시오.");
+    		alertify.alert('입력 오류', "제목을 입력해주십시오.");
     		$("#ESTIMATE_TITLE").focus();
     		return false;
     	}
     	if ($("#ESTIMATE_CATEGORY").val() == "") {
-    		alert("제품 종류를 입력해주십시오.");
+    		alertify.alert('입력 오류', "제품 종류를 입력해주십시오.");
     		$("#ESTIMATE_CATEGORY").focus();
     		return false;
     	}
     	if ($("#ESTIMATE_SOURCE").val() == "") {
-    		alert("소재를 입력해주십시오.");
+    		alertify.alert('입력 오류', "소재를 입력해주십시오.");
     		$("#ESTIMATE_SOURCE").focus();
     		return false;
     	}
     	if ($("#ESTIMATE_COLOR").val() == "") {
-    		alert("색상을 입력해주십시오.");
+    		alertify.alert('입력 오류', "색상을 입력해주십시오.");
     		$("#ESTIMATE_COLOR").focus();
     		return false;
     	}
     	if (coat_chk == 0) {
-    		alert("코팅 여부를 선택해 주십시오.");
+    		alertify.alert('입력 오류', "코팅 여부를 선택해 주십시오.");
     		$("#coat_yes").focus();
     		return false;
     	}
     	if ($("#ESTIMATE_SIZE").val() == "") {
-    		alert("희망 규격을 입력해주십시오.");
+    		alertify.alert('입력 오류', "희망 규격을 입력해주십시오.");
     		$("#ESTIMATE_SIZE").focus();
     		return false;
     	}
     	if ($("#ESTIMATE_PAY").val() == "") {
-    		alert("결제 방법을 선택해주십시오.");
+    		alertify.alert('입력 오류', "결제 방법을 선택해주십시오.");
     		$("#ESTIMATE_PAY").focus();
     		return false;
     	}
@@ -577,7 +577,7 @@
 	                                    fileUrlList += result + ', ';
 	                                }
 	                            } else {
-	                                alert("실패");
+	                                alertify.alert('AJAX 오류', "실패");
 	                            }
 	                        }
 	               });
@@ -586,7 +586,7 @@
 			$('#ESTIMATE_FILE').val(fileUrlList);
 		}
         else {
-            alert("ERROR");
+            alertify.alert('입력 오류', "ERROR");
         }
 		
 		$('#estimate').submit();

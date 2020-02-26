@@ -34,11 +34,13 @@ public class ChatController {
 		
 		if (session.getAttribute("MEMBER_EMAIL") != null) {
 			vo = chatService.getMember((String)session.getAttribute("MEMBER_EMAIL"));
+			model.addAttribute("MEMBER_EMAIL", (String)session.getAttribute("MEMBER_EMAIL"));
 			model.addAttribute("MEMBER_NICK", vo.getMEMBER_NICK());
 			model.addAttribute("MEMBER_PICTURE", vo.getMEMBER_PICTURE());
 		}
 		else if (session.getAttribute("WORKSHOP_EMAIL") != null) {
 			wvo = chatService.getWorkshop((String)session.getAttribute("WORKSHOP_EMAIL"));
+			model.addAttribute("MEMBER_EMAIL", (String)session.getAttribute("WORKSHOP_EMAIL"));
 			model.addAttribute("MEMBER_NICK", wvo.getWORKSHOP_NAME());
 			model.addAttribute("MEMBER_PICTURE", wvo.getWORKSHOP_PICTURE());
 		}

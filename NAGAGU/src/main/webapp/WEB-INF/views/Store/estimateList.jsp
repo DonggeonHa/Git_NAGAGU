@@ -330,13 +330,13 @@
 	$('#btn_search').click(function() {
 		var category = $('#category').val();
 		if (category == "") {
-			alert('카테고리를 선택해주십시오.');
+			alertify.alert('입력 오류', '카테고리를 선택해주십시오.');
 			
 			return false;
 		}
 		var search_text = $('#search_text').val();
 		if (search_text == "") {
-			alert('검색어를 입력해주십시오.');
+			alertify.alert('입력 오류', '검색어를 입력해주십시오.');
 			$('#search_text').focus();
 			
 			return false;

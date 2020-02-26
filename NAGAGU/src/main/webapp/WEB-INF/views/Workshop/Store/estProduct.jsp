@@ -312,7 +312,7 @@
 				
 			},
 			error:function(request, status, error){
-			    alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+				 alertify.alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
 			}
 		});
 	}
@@ -421,11 +421,11 @@
 					aync:false,
 					contentType: 'application/x-www-form-urlencoded; charset=utf-8',
 					success : function(data) {
-						alert("제안글이 성공적으로 삭제되었습니다.");
+						 alertify.success("성공", "제안글이 성공적으로 삭제되었습니다.");
 						getList();
 					},
 				     error:function(request,status,error){
-				         alert("code = "+ request.status + " message = " + request.responseText + " error = " + error);
+				    	 alertify.alert("code = "+ request.status + " message = " + request.responseText + " error = " + error);
 					}
 					
 				});
@@ -534,11 +534,11 @@
 					aync:false,
 					contentType: 'application/x-www-form-urlencoded; charset=utf-8',
 					success : function(data) {
-						alert("제안글이 성공적으로 삭제되었습니다.");
+						alertify.success("성공", "제안글이 성공적으로 삭제되었습니다.");
 						getList();
 					},
 				     error:function(request,status,error){
-				         alert("code = "+ request.status + " message = " + request.responseText + " error = " + error);
+				    	 alertify.alert("code = "+ request.status + " message = " + request.responseText + " error = " + error);
 					}
 					
 				});

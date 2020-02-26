@@ -1,11 +1,19 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ page import = "java.util.*" %>
-<%	if ((String)session.getAttribute("MEMBER_EMAIL") != "") {
-		String sender_mail = (String)session.getAttribute("MEMBER_EMAIL");
+<%
+	String sender_mail = "";
+	String sender_nick = "";
+
+	if ((String)session.getAttribute("MEMBER_EMAIL") != null) {
+		sender_mail = (String)session.getAttribute("MEMBER_EMAIL");
+		sender_nick = (String)session.getAttribute("MEMBER_NICK");
+		System.out.println((String)session.getAttribute("MEMBER_EMAIL"));
+		System.out.println((String)session.getAttribute("MEMBER_NICK"));
 	}
-	else if ((String)session.getAttribute("WORKSHOP_EMAIL") != "") {
-		String sender_mail = (String)session.getAttribute("WORKSHOP_EMAIL");
+	else if ((String)session.getAttribute("WORKSHOP_EMAIL") != null) {
+		sender_mail = (String)session.getAttribute("WORKSHOP_EMAIL");
+		sender_nick = (String)session.getAttribute("WORKSHOP_NAME");
 	}
 	String receive_mail = (String)request.getAttribute("receive_mail");
 	String receive_nick = (String)request.getAttribute("receive_nick");
@@ -193,6 +201,8 @@
             </div>
         </div>
         <form method="post" action="notewrite.nt" id="note_form">
+        <input type="hidden" name="sender_mail" value=<%=sender_mail %>>
+        <input type="hidden" name="sender_nick" value=<%=sender_nick %>>
         <input type="hidden" name="receiver_mail" value=<%=receive_mail %>>
         <input type="hidden" name="receiver_nick" value=<%=receive_nick %>>
         <div class="pop_body">
@@ -259,7 +269,7 @@
         		data:params,
         		type:"POST",
         		success:function(e){
-        			alert("쪽지를 보냈습니다");
+        			alertify.success("쪽지 보내기", "쪽지를 보냈습니다");
         			window.close();
         		},
         		error: function(e) {
