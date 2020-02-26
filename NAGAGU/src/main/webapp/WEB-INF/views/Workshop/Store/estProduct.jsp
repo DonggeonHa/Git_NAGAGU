@@ -124,7 +124,7 @@
 		    </table>
 		    </form>
 		</div>
-		<!-- 페이지네이션 --->
+		<!-- 페이지네이션. --->
 		<div class="row justify-content-center">
 			<div id="pagination" class="pagination justify-content-center">
 			</div>
