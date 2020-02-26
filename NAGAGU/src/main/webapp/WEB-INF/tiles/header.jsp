@@ -332,7 +332,7 @@
 												<a href="./order_list.my" style="text-decoration: none;">주문조회</a>
 												<a href="./mypage_edit.my" style="text-decoration: none;">내정보수정</a>
 												<a href="./mypage_like.my" style="text-decoration: none;">좋아요</a>
-												<a href="#" onclick="window.open('receiveList.nt', 'new', 'scrollbars=yes, resizable=yes, width=520, height=620, left=0, top=0');" style="text-decoration: none;">쪽지</a>
+												<a href="#" onclick="window.open('receiveList.nt', 'new', 'scrollbars=yes, resizable=yes, width=550, height=640, left=0, top=0');" style="text-decoration: none;">쪽지</a>
 											</div>
 										</div>
 									</li>
@@ -357,7 +357,7 @@
 								} else {
 							%>
 									<li>
-										<a onclick="window.open('receiveList.nt', 'new', 'scrollbars=yes, resizable=yes, width=520, height=620, left=0, top=0');"><i class="fas fa-envelope" style="width: 20px; height: 25px;"></i></a>
+										<a onclick="window.open('receiveList.nt', 'new', 'scrollbars=yes, resizable=yes, width=550, height=640, left=0, top=0');"><i class="fas fa-envelope" style="width: 20px; height: 25px;"></i></a>
 									</li>
 									<li>
 										<a href="./logout.ma">로그아웃</a>
