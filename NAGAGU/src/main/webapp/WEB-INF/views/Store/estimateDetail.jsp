@@ -732,25 +732,25 @@
 			console.log(login_state);
 			
 			if (login_state == 2 && workshop_chk > 0) {
-				alert('이미 제안글을 등록하셨습니다.');
+				alertify.alert('등록 오류', '이미 제안글을 등록하셨습니다.');
 				
 				return false;
 			}
 			
 			if (!checkPrice.test(offer_price)) {
-				alert("가격란은 숫자만 입력 가능합니다.");
+				alertify.alert('입력 오류', "가격란은 숫자만 입력 가능합니다.");
 				$('offer_price').focus();
 				
 				return false;
 			}
 			if (offer_price == "") {
-				alert("가격을 입력해주십시시오.");
+				alertify.alert('입력 오류', "가격을 입력해주십시시오.");
 				$('#offer_price').focus();
 				
 				return false;
 			}
 			if (offer_content == "") {
-				alert("내용을 입력해주십시오.");
+				alertify.alert('입력 오류', "내용을 입력해주십시오.");
 				$('#offer_content').focus();
 			}
 			
@@ -762,11 +762,11 @@
 				aync:false,
 				contentType: 'application/x-www-form-urlencoded; charset=utf-8',
 				success : function(data) {
-					alert("제안글이 성공적으로 등록되었습니다.");
+					alertify.success('입력 오류',"제안글이 성공적으로 등록되었습니다.");
 					location.reload();
 				},
 			     error:function(request,status,error){
-			         alert("code = "+ request.status + " message = " + request.responseText + " error = " + error);
+			    	 alertify.alert('AJAX 오류', "code = "+ request.status + " message = " + request.responseText + " error = " + error);
 				}
 				
 			});
@@ -792,19 +792,19 @@
 			var modify_content = $('#modify_offer_content').val();
 			
 			if (!checkPrice.test(modify_price)) {
-				alert("가격란은 숫자만 입력 가능합니다.");
+				alertify.alert('입력 오류', "가격란은 숫자만 입력 가능합니다.");
 				$('#modify_offer_price').focus();
 				
 				return false;
 			}
 			if (modify_price == "") {
-				alert("가격을 입력해주십시시오.");
+				alertify.alert('입력 오류', "가격을 입력해주십시시오.");
 				$('#modify_offer_price').focus();
 				
 				return false;
 			}
 			if (modify_content == "") {
-				alert("내용을 입력해주십시오.");
+				alertify.alert('입력 오류', "내용을 입력해주십시오.");
 				$('#modify_offer_content').focus();
 			}
 			
@@ -816,11 +816,11 @@
 				aync:false,
 				contentType: 'application/x-www-form-urlencoded; charset=utf-8',
 				success : function(data) {
-					alert("제안글이 성공적으로 수정되었습니다.");
+					alertify.success('성공',"제안글이 성공적으로 수정되었습니다.");
 					location.reload();
 				},
 			     error:function(request,status,error){
-			         alert("code = "+ request.status + " message = " + request.responseText + " error = " + error);
+			    	 alertify.alert('AJAX 오류', "code = "+ request.status + " message = " + request.responseText + " error = " + error);
 				}
 				
 			});

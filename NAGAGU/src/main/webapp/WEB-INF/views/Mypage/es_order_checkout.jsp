@@ -457,16 +457,16 @@
 		$(document).on('click','.IMP_pay',function(){
 			//유효성 검사
 			if($('.toName').val()==''){
-				alert('이름을 채워주세요'); 
+				alertify.alert("입력 오류",'이름을 채워주세요'); 
 				return
 			}if($('.toZip').val()=='' || $('.toAddress1').val()=='' || $('.toAddress2').val()==''){
-				alert('주소를 채워주세요');
+				alertify.alert("입력 오류",'주소를 채워주세요');
 				return
 			}if($('.toPhone').val()==''){
-				alert('번호를 채워주세요'); 
+				alertify.alert("입력 오류",'번호를 채워주세요'); 
 				return
 			}if(!$('.active').find('input').is(':checked')){
-				alert('동의란에 체크주세요'); 
+				alertify.alert("입력 오류",'동의란에 체크주세요'); 
 				return
 			}
 			var ORDER_PERSON = $('.toName').val();

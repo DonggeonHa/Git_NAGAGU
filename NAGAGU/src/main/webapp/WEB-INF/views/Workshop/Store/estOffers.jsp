@@ -357,7 +357,7 @@
 					
 				},
 				error:function(request, status, error){
-				    alertify.alert("확인","code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+				    alertify.alert("AJAX 오류","code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
 				}
 			});
 		}
@@ -413,13 +413,13 @@
 
 		$("#modform4").click(function() {
 			var data = $("mod3").val();
-			alert(data);
+			alertify.alert("Modal", data);
 		});
 
 		function modifyform(num) {
 			var id = $('#exam').val();
 			var data = $("mod3").val();
-			alert(data);
+			alertify.alert("Modal", data);
 		}
 
 		function addComma(inputNumber) {
@@ -489,19 +489,19 @@
 			var modify_content = $('#modify_offer_content').val();
 			
 			if (!checkPrice.test(modify_price)) {
-				alert("가격란은 숫자만 입력 가능합니다.");
+				alertify.alert("입력 오류", "가격란은 숫자만 입력 가능합니다.");
 				$('#modify_offer_price').focus();
 				
 				return false;
 			}
 			if (modify_price == "") {
-				alert("가격을 입력해주십시시오.");
+				alertify.alert("입력 오류", "가격을 입력해주십시시오.");
 				$('#modify_offer_price').focus();
 				
 				return false;
 			}
 			if (modify_content == "") {
-				alert("내용을 입력해주십시오.");
+				alertify.alert("입력 오류", "내용을 입력해주십시오.");
 				$('#modify_offer_content').focus();
 			}
 			
@@ -514,11 +514,11 @@
 				aync:false,
 				contentType: 'application/x-www-form-urlencoded; charset=utf-8',
 				success : function(data) {
-					alert("제안글이 성공적으로 수정되었습니다.");
+					alertify.success("성공", "제안글이 성공적으로 수정되었습니다.");
 					location.reload();
 				},
 			     error:function(request,status,error){
-			         alert("code = "+ request.status + " message = " + request.responseText + " error = " + error);
+			    	 alertify.alert("AJAX 오류", "code = "+ request.status + " message = " + request.responseText + " error = " + error);
 				}
 				
 			});
@@ -537,11 +537,11 @@
 					aync:false,
 					contentType: 'application/x-www-form-urlencoded; charset=utf-8',
 					success : function(data) {
-						alert("제안글이 성공적으로 삭제되었습니다.");
+						alertify.success("입력 오류", "제안글이 성공적으로 삭제되었습니다.");
 						getList();
 					},
 				     error:function(request,status,error){
-				         alert("code = "+ request.status + " message = " + request.responseText + " error = " + error);
+				    	 alertify.alert("AJAX 오류", "code = "+ request.status + " message = " + request.responseText + " error = " + error);
 					}
 					
 				});
@@ -648,11 +648,11 @@
 					aync:false,
 					contentType: 'application/x-www-form-urlencoded; charset=utf-8',
 					success : function(data) {
-						alert("제안글이 성공적으로 삭제되었습니다.");
+						alertify.success("성공", "제안글이 성공적으로 삭제되었습니다.");
 						getList();
 					},
 				     error:function(request,status,error){
-				         alert("code = "+ request.status + " message = " + request.responseText + " error = " + error);
+				    	 alertify.alert("AJAX 오류", "code = "+ request.status + " message = " + request.responseText + " error = " + error);
 					}
 					
 				});

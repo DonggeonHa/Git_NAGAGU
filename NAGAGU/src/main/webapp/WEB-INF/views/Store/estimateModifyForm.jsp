@@ -339,8 +339,6 @@
             }
             
             selectFile(this.files);
-            //this.files[0].size gets the size of your file.
-            //alert(this.files[0].size);
         });
     });
     
@@ -385,7 +383,7 @@
             var files = e.originalEvent.dataTransfer.files;
             
             if (files.length + uploadCnt > 5) {
-        		alert('첨부 파일은 총 5개까지 입니다.');
+				alertify.alert('확인','첨부 파일은 총 5개까지 입니다.');
         		return false;
             }
 			
@@ -405,7 +403,7 @@
             } else {
             	
             	if (uploadCnt >= 5) {
-            		alert('첨부 파일은 총 5개까지 입니다.');
+            		alertify.alert('확인','첨부 파일은 총 5개까지 입니다.');
             		return false;
             	}
             	
@@ -423,7 +421,7 @@
                     }
             		
             		if (!files[0].type.match('image.*')) {
-                        alert("등록이 불가능한 파일 입니다.("+fileName+")");
+                        alertify.alert("확장자 오류", "등록이 불가능한 파일 입니다.("+fileName+")");
                     } else {
                 		var file = files[i];
                 		var size = fileList.push(file); //업로드 목록에 추가
@@ -436,7 +434,7 @@
             	$("#fileDragDesc").hide();
             }
         } else {
-            alert("ERROR");
+            alertify.alert("오류", "ERROR");
         }
     }
     
@@ -518,37 +516,37 @@
     /* --------------------------- submit 실행부  ----------------------------*/
     function checkList() {
     	if ($("#ESTIMATE_TITLE").val() == "") {
-    		alert("제목을 입력해주십시오.");
+    		alertify.alert("입력 오류", "제목을 입력해주십시오.");
     		$("#ESTIMATE_TITLE").focus();
     		return false;
     	}
     	if ($("#ESTIMATE_CATEGORY").val() == "") {
-    		alert("제품 종류를 입력해주십시오.");
+    		alertify.alert("입력 오류", "제품 종류를 입력해주십시오.");
     		$("#ESTIMATE_CATEGORY").focus();
     		return false;
     	}
     	if ($("#ESTIMATE_SOURCE").val() == "") {
-    		alert("소재를 입력해주십시오.");
+    		alertify.alert("입력 오류", "소재를 입력해주십시오.");
     		$("#ESTIMATE_SOURCE").focus();
     		return false;
     	}
     	if ($("#ESTIMATE_COLOR").val() == "") {
-    		alert("색상을 입력해주십시오.");
+    		alertify.alert("입력 오류", "색상을 입력해주십시오.");
     		$("#ESTIMATE_COLOR").focus();
     		return false;
     	}
     	if (coat_chk == 0) {
-    		alert("코팅 여부를 선택해 주십시오.");
+    		alertify.alert("입력 오류", "코팅 여부를 선택해 주십시오.");
     		$("#coat_yes").focus();
     		return false;
     	}
     	if ($("#ESTIMATE_SIZE").val() == "") {
-    		alert("희망 규격을 입력해주십시오.");
+    		alertify.alert("입력 오류", "희망 규격을 입력해주십시오.");
     		$("#ESTIMATE_SIZE").focus();
     		return false;
     	}
     	if ($("#ESTIMATE_PAY").val() == "") {
-    		alert("결제 방법을 선택해주십시오.");
+    		alertify.alert("입력 오류", "결제 방법을 선택해주십시오.");
     		$("#ESTIMATE_PAY").focus();
     		return false;
     	}
@@ -585,7 +583,7 @@
 	                                    fileUrlList += result + ', ';
 	                                }
 	                            } else {
-	                                alert("실패");
+	                                alertify.alert("AJAX 오류","실패");
 	                            }
 	                        }
 	               });
@@ -595,7 +593,7 @@
 			$('#ESTIMATE_FILE').val(fileUrlList);
 		}
         else {
-            alert("ERROR");
+            alertify.alert("AJAX 오류","ERROR");
         }
 		
 		$('#estimate').submit();

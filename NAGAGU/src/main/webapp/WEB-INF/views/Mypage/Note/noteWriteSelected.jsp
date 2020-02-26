@@ -321,7 +321,7 @@
         		data:params,
         		type:"POST",
         		success:function(e){
-        			alert("쪽지를 보냈습니다");
+        			alertify.success("쪽지 보내기", "쪽지를 보냈습니다");
         			window.close();
         		},
         		error: function(e) {
