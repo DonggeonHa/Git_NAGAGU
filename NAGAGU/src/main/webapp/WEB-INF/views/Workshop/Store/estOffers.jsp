@@ -6,7 +6,7 @@
 <style>
 	
 	.table_container {
-		min-height:550px;
+		min-height:560px;
 		overflow-y: auto;
 	}
 	#work_store th, td {

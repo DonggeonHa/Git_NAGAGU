@@ -38,7 +38,7 @@
 	            </nav>
 	        </div>
 	    </div>
-		<div style="height: 620px; overflow-y: auto;">
+		<div style="height: 630px; overflow-y: auto;">
 	        <form id="chk_form">
 			<table class="table table-hover" id="work_store">
 				<thead>
@@ -55,7 +55,7 @@
 			    <tbody id="memberList"></tbody>
 			</table>
 			</form>
-			<div id="list_none"></div>
+			<span id="list_none"></span>
 		</div>
 		<div class="d-flex justify-content-center">
 			<nav aria-label="Page navigation example" class="paginated" id="user-page"></nav>

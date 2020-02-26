@@ -85,7 +85,7 @@ if (session.getAttribute("WORKSHOP_NUM") == null) {
 				</div>
 			</div>
 		</div>
-		<div style="height: 620px; overflow-y: auto;">       
+		<div style="height: 630px; overflow-y: auto;">       
 			<table class="table" id="work_store">
 			    <thead>
 			    <tr class="text-center">
@@ -108,7 +108,7 @@ if (session.getAttribute("WORKSHOP_NUM") == null) {
 			    <tbody id="productList">
 			     </tbody>
 			</table>
-			<div id="list_none"></div>
+			<span id="list_none"></span>
 		</div>
 		<div class="d-flex justify-content-center">
 			<nav aria-label="Page navigation example" class="paginated" id="user-page"></nav>

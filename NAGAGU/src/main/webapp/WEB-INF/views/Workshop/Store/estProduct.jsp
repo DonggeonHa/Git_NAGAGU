@@ -102,7 +102,7 @@
 				</form>
             </div>
         </div>
-        <div style="height: 620px; overflow-y: auto;">
+        <div style="height: 630px; overflow-y: auto;">
 	        <form id="chk_form">
 		    <table class="table" id="work_store">
 		        <thead>

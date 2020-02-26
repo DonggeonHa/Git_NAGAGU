@@ -91,7 +91,7 @@
 				</div>
 			</div>
 		</div>
-		<div style="height: 620px; overflow-y: auto;">
+		<div style="height: 630px; overflow-y: auto;">
 			<table class="table" id="work_store">
 				<thead>
 				<tr class="text-center">
@@ -107,7 +107,7 @@
 				</thead>
 				<tbody id="ProductqnaList"></tbody>
 			</table>
-			<div id="list_none"></div>
+			<span id="list_none"></span>
 		</div>
 		<div class="d-flex justify-content-center">
 			<nav aria-label="Page navigation example" class="paginated" id="user-page"></nav>
