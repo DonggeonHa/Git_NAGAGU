@@ -30,7 +30,7 @@
 	}
 </style>
 
-<div id="page-content-wrapper" style="padding-top: 5%;">
+<div id="page-content-wrapper" style="padding-top: 3%;">
 	<!-- 리스트 폼 시작 -->
 	<form id="listinfo" method="post">
 		<input type="hidden" id="search_category" name="search_category">

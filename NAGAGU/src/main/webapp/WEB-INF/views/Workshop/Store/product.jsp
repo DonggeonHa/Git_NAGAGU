@@ -8,7 +8,7 @@ if (session.getAttribute("WORKSHOP_NUM") == null) {
 } 
 %>
 
-<div id="page-content-wrapper" style="padding-top: 5%;">
+<div id="page-content-wrapper" style="padding-top: 3%;">
 	<div class="container-fluid">
 		<div class="d-flex justify-content-between pb-5">
 			<div class="justify-content-start">

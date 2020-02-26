@@ -118,7 +118,7 @@
 			contentType : 'application/x-www-form-urlencoded; charset=UTF-8',
 			dataType : 'json',
 			success : function (retVal) {
-				alertify.alert("삭제 되었습니다.");
+				alertify.alert("탈퇴처리 되었습니다.");
 				if (retVal.res == "OK") {
 					// 데이터 성공할 때 이벤트 작성
 					selectData();

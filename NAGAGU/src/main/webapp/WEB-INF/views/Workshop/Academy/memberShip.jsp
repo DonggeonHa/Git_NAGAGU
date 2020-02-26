@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 
 <!-- 작업 구역 -->
-<div id="page-content-wrapper" style="padding-top: 5%;">
+<div id="page-content-wrapper" style="padding-top: 3%;">
 	<div class="container-fluid">
 	    <div class="pb-5">
 	        <h1 class="">아카데미 회원 관리</h1>
@@ -43,13 +43,13 @@
 			<table class="table table-hover" id="work_store">
 				<thead>
 				    <tr>
-				        <th style="width: 5%;" class="th1"><input id="all_select" type="checkbox"></th>
-				        <th style="width: 15%;" class="th2">분류</th>
-				        <th style="width: 25%;" class="th3">강의명</th>
-				        <th style="width: 10%;" class="th4">회원이름</th>
-				        <th style="width: 15%;" class="th5">전화번호</th>
-				        <th style="width: 20%;" class="th6">이메일</th>
-				        <th style="width: 10%;" class="th7">관리</th>
+				        <th style="width: 5%;"><input id="all_select" type="checkbox"></th>
+				        <th style="width: 15%;">분류</th>
+				        <th style="width: 25%;">강의명</th>
+				        <th style="width: 10%;">회원이름</th>
+				        <th style="width: 15%;">전화번호</th>
+				        <th style="width: 20%;">이메일</th>
+				        <th style="width: 10%;">관리</th>
 					</tr>
 				</thead>
 			    <tbody id="memberList"></tbody>
@@ -204,6 +204,7 @@
 						output += '<td>' + item.member_EMAIL + '</td>';
 						output += '<td><button class="btn_modify btn btn_search btn-outline-danger btn-sm" onclick="btn_delete('+ item.my_CLASS_MEMBERNUM +')">삭제</button></td>';
 						output += '</tr>';
+						
 						
 						$('#memberList').append(output);
 					});

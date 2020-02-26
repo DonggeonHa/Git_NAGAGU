@@ -68,9 +68,9 @@ function selectData() {
 			title += '<tr>';
 			title += '<th style="width: 5%;">번호</th>';
 			title += '<th style="width: 10%;">게시글</th>';
-			title += '<th style="width: 5%;">닉네임</th>';
+			title += '<th style="width: 15%;">닉네임</th>';
 			title += '<th style="width: 5%;">이름</th>';
-			title += '<th style="width: 50%;">내용</th>';
+			title += '<th style="width: 40%;">내용</th>';
 			title += '<th style="width: 15%;">작성일자</th>';
 			title += '<th style="width: 10%;">관리</th>';
 			title += '</tr>';
