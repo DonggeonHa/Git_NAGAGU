@@ -186,7 +186,7 @@
 							<option value="drawer">서랍장</option>
 							<option value="sidetable">협탁</option>
 							<option value="dressing_table">화장대</option>
-							<option value="others">기타</option>
+							<option value="misc">기타</option>
 						</select>
 					</td>
 				</tr>

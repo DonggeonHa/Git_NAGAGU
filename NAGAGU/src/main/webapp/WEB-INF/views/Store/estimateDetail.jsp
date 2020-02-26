@@ -656,7 +656,7 @@
 		$(document).delegate('.btn_note', 'click', function() {
 			var send_workshop = $(this).attr("value");
 			console.log(send_workshop);
-			window.open('/NAGAGU/noteForm.nt?workshop_name=' + send_workshop, "쪽지 보내기", "width=600 height=700");
+			window.open('/NAGAGU/noteForm.nt?workshop_name=' + send_workshop, "쪽지 보내기", "width=440 height=580");
 			return false;
 		});
 		

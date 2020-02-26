@@ -1,8 +1,12 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ page import = "java.util.*" %>
-<%
-	String sender_mail = (String)session.getAttribute("WORKSHOP_EMAIL");
+<%	if ((String)session.getAttribute("MEMBER_EMAIL") != "") {
+		String sender_mail = (String)session.getAttribute("MEMBER_EMAIL");
+	}
+	else if ((String)session.getAttribute("WORKSHOP_EMAIL") != "") {
+		String sender_mail = (String)session.getAttribute("WORKSHOP_EMAIL");
+	}
 	String receive_mail = (String)request.getAttribute("receive_mail");
 	String receive_nick = (String)request.getAttribute("receive_nick");
 	String receive_pic = (String)request.getAttribute("receive_pic");
