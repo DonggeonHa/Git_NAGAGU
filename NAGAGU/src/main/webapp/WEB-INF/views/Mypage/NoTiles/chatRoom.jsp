@@ -210,7 +210,7 @@ var output = $('#output');
 	
 	var chatarea = $("#output");
 	
-	w = new WebSocket("ws://localhost:8000/NAGAGU/broadcasting.do");
+	w = new WebSocket("ws://192.168.0.37:8000/NAGAGU/broadcasting.do");
 	w.onopen = function() {
 		alertify.alert("반갑습니다, <%=mem_nick%>님", "채팅방에 입장했습니다.");
 	}
