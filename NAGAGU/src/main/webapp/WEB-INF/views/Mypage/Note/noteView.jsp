@@ -316,7 +316,7 @@
                         <tbody>
                         	<tr>
                         		<td class="note_info" colspan=2>
-                        			<div class="note_sender"><a href="noteForm.nt?receiver_mail=<%=notevo.getNOTE_SENDER_MAIL()%>&redirection='noteView.nt'"><%=notevo.getNOTE_SENDER_NICK() %></a></div>
+                        			<div class="note_sender"><a href="noteForm.nt?receive_mail=<%=notevo.getNOTE_SENDER_MAIL()%>&redirection='noteView.nt'"><%=notevo.getNOTE_SENDER_NICK() %></a></div>
                         			<div class="note_date"><%=format.format(notevo.getNOTE_DATE()) %></div>
                         		</td>
                         	</tr>

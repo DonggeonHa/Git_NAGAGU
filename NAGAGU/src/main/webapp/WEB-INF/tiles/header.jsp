@@ -357,7 +357,7 @@
 								} else {
 							%>
 									<li>
-										<a onclick="window.open('receiveList.nt', 'new', 'scrollbars=yes, resizable=yes, width=600, height=700, left=0, top=0');"><i class="fas fa-envelope" style="width: 20px; height: 25px;"></i></a>
+										<a onclick="window.open('receiveList.nt', 'new', 'scrollbars=yes, resizable=yes, width=520, height=600, left=0, top=0');"><i class="fas fa-envelope" style="width: 20px; height: 25px;"></i></a>
 									</li>
 									<li>
 										<a href="./logout.ma">로그아웃</a>
