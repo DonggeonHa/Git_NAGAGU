@@ -95,10 +95,10 @@
 					<tr class="text-center">
 					    <th style="width: 5%;">번호</th>
 					    <th style="width: 7%;">카테고리</th>
-					    <th style="width: 5%;">작성자</th>
+					    <th style="width: 10%;">작성자</th>
 					    <th style="width: 15%;">상품명</th>
 					    <th style="width: 5%;">평점</th>
-					    <th style="width: 48%;">후기 내용</th>
+					    <th style="width: 43%;">후기 내용</th>
 					    <th style="width: 10%;">작성날짜</th>
 					    <th style="width: 5%;">상세</th>
 					</tr>

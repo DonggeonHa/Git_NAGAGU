@@ -431,24 +431,22 @@
 				      		var ORDER_METHOD = productList[0].ORDER_METHOD;
 				      		console.log(ORDER_METHOD)
 				      		switch(ORDER_METHOD){
-				      		
 				      	    case 'toss' : 
-				      	    	ORDER_STATE = '토스'
+				      	    	ORDER_METHOD = '토스'
 				      	        break;
 				      	    case 'card' : 
-				      	    	ORDER_STATE = '카드' 
+				      	    	ORDER_METHOD = '카드' 
 				      	        break;  
 				      	    case 'kakao' : 
-				      	    	ORDER_STATE = '카카오페이'
+				      	    	ORDER_METHOD = '카카오페이'
 				      	        break;
 				      	    case 'payco' : 
-				      	    	ORDER_STATE = '페이코'
+				      	    	ORDER_METHOD = '페이코'
 				      	        break;
 				      	    case 'samsung' : 
-				      	    	ORDER_STATE = '삼성페이'
+				      	    	ORDER_METHOD = '삼성페이'
 				      	        break;
 			   		   	    }					      		
-				      		
 				    		var ORDER_NUM = productList[0].ORDER_NUM;
 				    		var ORDER_AMOUNT = productList[0].ORDER_AMOUNT;
 

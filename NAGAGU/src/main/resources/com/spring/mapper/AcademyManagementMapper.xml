@@ -317,7 +317,7 @@
 				AND B.BASKET_PRODUCT= P.PRODUCT_NUM 
 				AND B.BASKET_NUM = O.ORDER_NUM
 				AND O.ORDER_MEMBER = M.MEMBER_NUM
-				and w.workshop_num = B.BASKET_NUM
+				and w.workshop_num = P.PRODUCT_WORKSHOP
  	</select>
 	
 </mapper>

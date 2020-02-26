@@ -194,7 +194,7 @@ public class MypageController {
 		int order_state = 0;
 		try {
 			productSellList = academyService.productSellList(WORKSHOP_NUM);
-			for(i=0 ; i < productSellList.size(); i++) {
+			for(i=0 ; i < 5; i++) {
 				sellList[i] = productSellList.get(i);
 			}
 			

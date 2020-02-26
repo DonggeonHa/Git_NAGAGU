@@ -142,7 +142,7 @@
 			success : function (retVal) {
 				if (retVal.res == "OK") {
 					// 데이터 성공할 때 이벤트 작성
-					alertify.alert("수정 성공");
+					alertify.alert("승인완료");
 					selectData();
 				} else {
 					alert("update Fail !!");

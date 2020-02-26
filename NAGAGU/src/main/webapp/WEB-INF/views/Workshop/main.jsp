@@ -13,6 +13,11 @@
 	   height: auto;
 	}
 	
+	.dashImg {
+	   width: 100%;
+	   height: 50%;
+	}
+	
  	/*별점주기*/
 	.star-rating { 
 		width:52px; 
@@ -250,11 +255,11 @@ var config2 = {
 				label: 'Dataset 1'
 			}],
 			labels: [
-				'1st Product'+ '-\n '+'${product_title0}'+ '-\n '+'${product_category0}',
-				'2st Product'+ '-\n '+'${product_title1}'+ '-\n '+'${product_category1}',
-				'3st Product'+ '-\n '+'${product_title2}'+ '-\n '+'${product_category2}',
-				'4St Product'+ '-\n '+'${product_title3}'+ '-\n '+'${product_category3}',
-				'5st Product'+ '-\n '+'${product_title4}'+ '-\n '+'${product_category4}'
+				'1st Product'+ '-\n '+'${product_title0}'+ '\n ',
+				'2st Product'+ '-\n '+'${product_title1}'+ '\n ',
+				'3st Product'+ '-\n '+'${product_title2}'+ '\n ',
+				'4St Product'+ '-\n '+'${product_title3}'+ '\n ',
+				'5st Product'+ '-\n '+'${product_title4}'+ '\n '
 			]
 		},
 		options: {
@@ -405,7 +410,7 @@ function getReviewList() {
 					var REVIEW_CONTENT = reviewList[i].REVIEW_CONTENT;
 					
 					output += '<div class="row justify-content-center">';
-					output += '<div class="col-1 justify-content-end"><img src="'+ MEMBER_PICTURE +'" alt="" class="rounded-circle"></div>';
+					output += '<div class="col-1 justify-content-end"><img src="'+ MEMBER_PICTURE +'" alt="" class="rounded-circle dashImg"></div>';
 						output += '<div class="col-11">';
 							output += '<div class="row pb-1">';
 								output += '<div class="col-2 justify-content-end name">'+ MEMBER_NICK +'</div>';
